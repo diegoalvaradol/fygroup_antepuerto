@@ -42,7 +42,7 @@
                 <!-- Nested Row within Card Body -->
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block bg-register-image text-center p-4" style="align-content:space-around">
-                        <img src="../img/ssl-logo-azul.png" alt="FY Chile" class="img-fluid mb-3">
+                        <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3">
 
                         <small class="text-primary" style="font-size:xx-large">Sistema Integral SSL.</small>
                         <br>
