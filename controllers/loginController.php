@@ -26,11 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($userData = $user->login()) {
       $_SESSION["user"] = $userData;
 
-
       echo "OK";
     } else {
       echo "NOOK";
     }
   }
-
 }
