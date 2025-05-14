@@ -1,10 +1,18 @@
 <?php
 class Database
 {
+  /*
   private $host     = "localhost";
   private $db_name  = "ssl_chile";
   private $username = "root";
   private $password = "seatrade1313";
+  public $conexion;
+   */
+
+  private $host     = "localhost";
+  private $db_name  = "l0011525_myssl";
+  private $username = "l0011525_myssl";
+  private $password = "nodisu47VA";
   public $conexion;
 
   public function getConnection()
