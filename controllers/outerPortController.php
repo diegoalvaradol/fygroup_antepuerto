@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->carplate        = strtoupper($_POST["carplate"]);
   $port->guide           = $_POST["guidenumber"];
   $port->container       = isset($_POST["container"]) ? $_POST["container"] : 'N/A';
-  $port->seal            = isset($_POST["sealnumber"]) ? $_POST["sealnumber"] : 'N/A';
+  $port->seal            = isset($_POST["sealnumber"]) ? strtoupper($_POST["sealnumber"]) : 'N/A';
   $port->exporter        = strtoupper($_POST["exporter"]);
   $port->agency          = isset($_POST["agency"]) ? strtoupper($_POST["agency"]) : 'N/A';
   $port->pallets         = $_POST["palletsquantity"];
