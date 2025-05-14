@@ -1,4 +1,3 @@
-
 <?php
 if (isset($_SESSION['user'])) {
   header("Location: dashboard.php");
@@ -16,7 +15,7 @@ if (isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Vista Inicio de Sesión" content="">
     <meta name="Diego Alvarado L" content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" href="../apple-touch-icon.png"/>
     <title>Iniciar Sesión</title>
 
     <!-- Custom fonts for this template-->
@@ -24,7 +23,7 @@ if (isset($_SESSION['user'])) {
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/ssl-chile/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
