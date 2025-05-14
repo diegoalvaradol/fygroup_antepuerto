@@ -1,9 +1,10 @@
 <?php
 session_start();
+$exemptFiles = ['login.php', 'register.php'];
 
-// Si el usuario no está autenticado, lo redirigimos al login
-if (!isset($_SESSION['user'])) {
-  $redirectBack = urlencode($_SERVER['REQUEST_URI']); // Página que intentaba acceder
+$currentFile = basename($_SERVER['PHP_SELF']);
+if (!isset($_SESSION['user']) && !in_array($currentFile, $exemptFiles)) {
+  $redirectBack = urlencode($_SERVER['REQUEST_URI']);
   header("Location: login.php?redirect=$redirectBack");
   exit();
 }
