@@ -1,0 +1,160 @@
+<?php
+date_default_timezone_set("America/Santiago");
+
+class user
+{
+  private $conexion;
+  protected $table = "app_users";
+
+  public $id              = "user_id";
+  public $run             = "run";
+  public $name            = "name";
+  public $lastname        = "last_name";
+  public $email           = "email";
+  public $password        = "password";
+  public $division        = "division"; /* Indica si el usuario pertenece a SSL o Portal clientes */
+  public $lastsession     = "last_session"; /* Indica la hora del inicion de sesion (SOLO APLICA PARA USUARIOS PORTAL DE CLIENTE) */
+  public $token           = "reset_token"; /* Token temporal al reestablecer contraseña */
+  public $tokenexpiration = "token_expiration"; /* Duración del token proporcionado (duración: 1 hora) */
+  public $created         = "created";
+  public $lastupdate      = "last_update";
+
+  public function __construct($db)
+  {
+    $this->conexion = $db;
+  }
+
+  public function save()
+  {
+    $query = "INSERT INTO $this->table (run, name, last_name, email, password, division, created, last_update) VALUES (:run, :name, :lastname, :email, :password, :division, :created, :lastupdate)";
+    $stmt  = $this->conexion->prepare($query);
+
+    $this->run        = htmlspecialchars(strip_tags($this->run));
+    $this->name       = htmlspecialchars(strip_tags($this->name));
+    $this->lastname   = htmlspecialchars(strip_tags($this->lastname));
+    $this->email      = htmlspecialchars(strip_tags($this->email));
+    $this->password   = password_hash($this->password, PASSWORD_DEFAULT);
+    $this->division   = htmlspecialchars(strip_tags($this->division));
+    $this->created    = $this->created;
+    $this->lastupdate = $this->lastupdate;
+
+    $stmt->bindParam(":run", $this->run);
+    $stmt->bindParam(":name", $this->name);
+    $stmt->bindParam(":lastname", $this->lastname);
+    $stmt->bindParam(":email", $this->email);
+    $stmt->bindParam(":password", $this->password);
+    $stmt->bindParam(":division", $this->division);
+    $stmt->bindParam(":created", $this->created);
+    $stmt->bindParam(":lastupdate", $this->lastupdate);
+
+    return $stmt->execute();
+  }
+
+  public function update()
+  {
+    $query = "UPDATE $this->table SET name = :name, last_name = :lastname, email = :email, password = :password, division = :division, last_update = :lastupdate WHERE run = :run";
+    $stmt  = $this->conexion->prepare($query);
+
+    $this->run        = htmlspecialchars(strip_tags($this->run));
+    $this->name       = htmlspecialchars(strip_tags($this->name));
+    $this->lastname   = htmlspecialchars(strip_tags($this->lastname));
+    $this->email      = htmlspecialchars(strip_tags($this->email));
+    $this->password   = $this->password;
+    $this->division   = htmlspecialchars(strip_tags($this->division));
+    $this->lastupdate = $this->lastupdate;
+
+    $stmt->bindParam(":run", $this->run);
+    $stmt->bindParam(":name", $this->name);
+    $stmt->bindParam(":lastname", $this->lastname);
+    $stmt->bindParam(":email", $this->email);
+    $stmt->bindParam(":password", $this->password);
+    $stmt->bindParam(":division", $this->division);
+    $stmt->bindParam(":lastupdate", $this->lastupdate);
+
+    return $stmt->execute();
+  }
+
+  public function login()
+  {
+    $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division LIMIT 1";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(":run", $this->run);
+    $stmt->bindParam(":division", $this->division);
+    $stmt->execute();
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($stmt->rowCount() > 0) {
+      $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      /* Verificar la contraseña y la división */
+      if ($user && password_verify($this->password, $user['password'])) {
+        /* Aquí se guarda la sesión correctamente */
+        $_SESSION["user"]         = $data;
+        $_SESSION["last_session"] = time(); // Guarda la hora de inicio de sesión
+
+        /* Actualiza la base de datos con la hora de la sesión */
+        $updateQuery = "UPDATE app_users SET last_session = NOW() WHERE run = :run";
+        $updateStmt  = $this->conexion->prepare($updateQuery);
+        $updateStmt->bindParam(":run", $this->run);
+        $updateStmt->execute();
+
+        return $user;
+      }
+    }
+
+    return false;
+  }
+
+  /*
+  public function login()
+  {
+  $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division LIMIT 1";
+  $stmt  = $this->conexion->prepare($query);
+  $stmt->bindParam(":run", $this->run);
+  $stmt->bindParam(":division", $this->division);
+  $stmt->execute();
+
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($user && password_verify($this->password, $user['password'])) {
+  return $user;
+  }
+
+  return false;
+  }
+   */
+
+  public function setResetToken($email, $token, $expiration)
+  {
+    $query = "UPDATE $this->table SET reset_token = :token, token_expiration = :expiration WHERE email = :email";
+    $stmt  = $this->conexion->prepare($query);
+
+    $stmt->bindParam(":token", $token);
+    $stmt->bindParam(":expiration", $expiration);
+    $stmt->bindParam(":email", $email);
+
+    return $stmt->execute();
+  }
+
+  public function resetPassword($token, $newPassword)
+  {
+    $query = "SELECT * FROM $this->table WHERE reset_token = :token AND token_expiration > NOW() LIMIT 1";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(":token", $token);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+      $update = "UPDATE $this->table SET password = :password, reset_token = NULL, token_expiration = NULL WHERE user_id = :id";
+      $stmt2  = $this->conexion->prepare($update);
+
+      $this->password = password_hash($newPassword, PASSWORD_DEFAULT);
+
+      $stmt2->bindParam(":id", $user['user_id']); // o $user[$this->id] si está bien definido
+      $stmt2->bindParam(":password", $this->password);
+
+      return $stmt2->execute();
+    }
+
+    return false;
+  }
+}

@@ -1,0 +1,39 @@
+LICENCIA DE USO DE SOFTWARE
+
+Nombre del Software: Sistema Integral SSL
+Versión: 1.36.b (Beta)
+Titular de los Derechos: Diego Alvarado López
+Fecha de Emisión: 01 de mayo de 2025
+País: Chile
+
+1. OBJETO DE LA LICENCIA
+Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos. Esta versión está en fase Beta (versión 1.36.b).
+
+2. CONCESIÓN DE LICENCIA
+El titular concede al usuario una licencia de uso no exclusiva, intransferible y revocable, para ejecutar, probar y operar el software con fines internos. El software no puede ser redistribuido ni modificado sin autorización expresa por escrito del titular.
+
+3. DERECHOS RESERVADOS
+Todos los derechos no expresamente concedidos en esta licencia son reservados por el titular. El código fuente, diseño y estructura de base de datos son propiedad intelectual protegida.
+
+4. RESTRICCIONES
+El usuario se compromete a:
+- No copiar, modificar ni distribuir el software.
+- No revender ni sublicenciar el software.
+- No modificar o crear obras derivadas del software.
+- No usar el software en productos o servicios comerciales sin licencia extendida.
+- No realizar ingeniería inversa sobre el código fuente o la base de datos.
+- No usarlo en servicios que compitan con el titular.
+
+5. PROPIEDAD INTELECTUAL
+Todo el contenido del software es propiedad exclusiva de Diego Alvarado López y está protegido por las leyes de propiedad intelectual.
+
+6. LIMITACIÓN DE GARANTÍA
+El software se entrega "tal cual", sin garantías. El titular no se responsabiliza por daños derivados de su uso.
+
+7. TERMINACIÓN
+El incumplimiento de cualquiera de los términos de esta licencia resultará en su terminación inmediata, debiendo el usuario cesar el uso del software y eliminar todas sus copias.
+
+8. LEGISLACIÓN APLICABLE
+Esta licencia se regirá por las leyes de Chile. Cualquier conflicto será sometido a los tribunales competentes del país.
+
+Firmado: Diego Alvarado López
