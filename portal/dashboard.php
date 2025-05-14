@@ -233,8 +233,8 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
                                                 <?php echo $totalTrucks . ' camiones.'; ?>
                                                 <br>
-                                                <small class="h5 mb-0 font-weight-bold text-suceess-800" style="font-size:small;color: green;"><?php print_r('Solicitados: ' . $totalTrucks - $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que han arrivado a antepuerto y que ya han sido solicitados por terminal."></i>
-                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;"><?php print_r('Pendientes: ' . $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que se encuentra en el antepuerto y que no han sido solicitados por terminal."></i>
+                                                <small class="h5 mb-0 font-weight-bold text-suceess-800" style="font-size:small;color: green;">Solicitados: <?php print_r($totalTrucks - $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que han arrivado a antepuerto y que ya han sido solicitados por terminal."></i>
+                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php print_r( $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que se encuentra en el antepuerto y que no han sido solicitados por terminal."></i>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -311,10 +311,10 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Selecciona 'Cerar sesión' si realmente deseas hacerlo.</div>
+                <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" data-dismiss="modal" >Cancelar</button>
-                    <a class="btn btn-danger" href="login.php" onclick="finishCountDown()"><i class='fas fa-solid fa-sign-out-alt'></i> Cerar sesión</a>
+                    <a class="btn btn-danger" href="logout.php" onclick="finishCountDown()"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
                 </div>
             </div>
         </div>

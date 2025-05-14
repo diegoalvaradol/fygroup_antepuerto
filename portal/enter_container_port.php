@@ -169,10 +169,10 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Selecciona 'Cerar sesión' si realmente deseas hacerlo.</div>
+                <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="login.php" onclick="finishCountDown()"><i class='fas fa-solid fa-sign-out-alt'></i> Cerar sesión</a>
+                    <a class="btn btn-danger" href="logout.php" onclick="finishCountDown()"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
                 </div>
             </div>
         </div>

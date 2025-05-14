@@ -218,7 +218,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <select class="form-control select2 form-control-user" id="comodity" name="comodity">
-                                                    <option selected>Seleccione una condición...</option>
+                                                        <option selected>Seleccione una condición...</option>
                                                         <option value="No Fumigado">No Fumigado</option>
                                                         <option value="USDA">USDA</option>
                                                         <option value="System Approach">System Approach</option>
@@ -291,10 +291,10 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Selecciona 'Cerar sesión' si realmente deseas hacerlo.</div>
+                <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="login.php"><i class='fas fa-solid fa-sign-out-alt'></i> Cerar sesión</a>
+                    <a class="btn btn-danger" href="logout.php"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
                 </div>
             </div>
         </div>

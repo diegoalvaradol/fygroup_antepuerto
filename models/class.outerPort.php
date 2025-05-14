@@ -173,7 +173,7 @@ class outerPort
     $total   = $result['total'];
     $percent = (($total * 100) / $goals);
 
-    return number_format($percent, 2, ',');
+    return number_format($percent, 2, ',', '');
   }
 
   public function getTotalTrucksInAnpuerto()
