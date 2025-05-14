@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 if (isset($_SESSION['user'])) {
   header("Location: dashboard.php");
   exit();
@@ -175,7 +177,9 @@ if (isset($_SESSION['user'])) {
       type: "POST",
     }).done(function(x) {
       if(x == 'OK'){
-        window.location.href = "dashboard.php";
+        setTimeout(function() {
+          window.location = "dashboard.php";
+        }, 3000); // Espera 3 segundos
       }else if(x == 'NOOK'){
         Swal.fire({
           title: 'Oops...',

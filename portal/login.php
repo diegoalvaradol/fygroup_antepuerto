@@ -173,7 +173,9 @@ if (isset($_SESSION['user'])) {
       type: "POST",
     }).done(function(x) {
       if(x == 'OK'){
-        window.location.href = "dashboard.php";
+        setTimeout(function() {
+          window.location = 'dashboard.php';
+        }, 1000);
       }else if(x == 'NOOK'){
         Swal.fire({
           title: 'Oops...',
