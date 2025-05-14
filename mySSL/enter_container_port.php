@@ -243,8 +243,9 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                                 <div class="col-sm-6">
                                                     <select class="form-control select2 form-control-user" id="comodity" name="comodity">
                                                         <option selected>Seleccione una condición...</option>
-                                                        <option value="NO FUMIGADO">NO FUMIGADO</option>
+                                                        <option value="No Fumigado">No Fumigado</option>
                                                         <option value="USDA">USDA</option>
+                                                        <option value="System Approach">System Approach</option>
                                                     </select>
                                                     <small class="text-danger" id="error-comodity"></small>
                                                 </div>
