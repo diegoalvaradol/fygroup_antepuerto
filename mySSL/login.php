@@ -1,7 +1,8 @@
-
 <?php
+include 'includes/config.php';
+
 if (isset($_SESSION['user'])) {
-  header("Location: dashboard.php");
+  header("Location: " . BASE_URL . "/dashboard.php");
   exit();
 }
 ?>
@@ -16,15 +17,15 @@ if (isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Vista Inicio de Sesión" content="">
     <meta name="Diego Alvarado L" content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" href="<?=BASE_URL?>/favicon/apple-touch-icon.png"/>
     <title>Iniciar Sesión</title>
 
     <!-- Custom fonts for this template-->
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="<?=BASE_URL?>/assets/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?=BASE_URL?>/assets/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -32,7 +33,7 @@ if (isset($_SESSION['user'])) {
 
 <style>
     body {
-    background-image: url("../img/coquimbo_port_background.jpg");
+    background-image: url("<?=BASE_URL?>/img/coquimbo_port_background.jpg");
     background-size: cover;
     }
 </style>
@@ -47,7 +48,7 @@ if (isset($_SESSION['user'])) {
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-12">
-                                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="padding: inherit;">
+                                <img src="<?=BASE_URL?>/img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="padding: inherit;">
 
                                 <div class="text-center">
                                   <small class="text-primary" style="font-size:xx-large">Sistema Integral SSL.</small>
@@ -90,14 +91,14 @@ if (isset($_SESSION['user'])) {
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?=BASE_URL?>/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="<?=BASE_URL?>/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="<?=BASE_URL?>/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
+    <script src="<?=BASE_URL?>/assets/js/sb-admin-2.min.js"></script>
 </body>
 </html>
 
@@ -171,7 +172,7 @@ if (isset($_SESSION['user'])) {
     }
 
     $.ajax({
-      url: '../controllers/loginController.php',
+      url: '<?=BASE_URL?>/controllers/loginController.php',
       data: $('#loginForm').serialize() + '&division=' + encodeURIComponent(division),
       type: "POST",
     }).done(function(x) {
