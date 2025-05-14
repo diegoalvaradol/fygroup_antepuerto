@@ -262,6 +262,7 @@ class outerPort
     $thead .= "<th>Teléfono</th>";
     $thead .= "<th>Entrada</th>";
     $thead .= "<th>Salida</th>";
+    $thead .= "<th>Tiempo de Estadía</th>";
     $thead .= "<th>Condición</th>";
     $thead .= "<th>Booking</th>";
     $thead .= "<th>Estadía</th>";
@@ -271,26 +272,37 @@ class outerPort
     $thead .= "</thead>";
     $thead .= "<tbody>";
 
-    $tr = null;
+    $tr       = null;
+    $stayTime = null;
+
     if ($result !== []) {
       foreach ($result as $data) {
-        $createdTime = new DateTime($data[$this->created]);
-        $created     = $createdTime->format('d-m-Y H:i');
+        $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
+        $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
-        $arrivalTime = new DateTime($data[$this->arrivaldate]);
-        $arrival     = $arrivalTime->format('d-m-Y H:i');
-
-        if ($data[$this->comodity] == 'USDA') {
+        if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
           $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
         } else {
           $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
         }
 
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
-          $departureTime = new DateTime($data[$this->departuredate]);
-          $departure     = $departureTime->format('d-m-Y H:i');
+          $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
           $departure = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : 'Sin hora de salida.';
+        }
+
+        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+          $arrivalDate   = new DateTime($data[$this->arrivaldate]);
+          $departureDate = new DateTime($data[$this->departuredate]);
+
+          $interval = $arrivalDate->diff($departureDate);
+          $hours    = $interval->format('%h');
+          $minutes  = $interval->format('%i');
+
+          $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+          $stayTime = 'No disponible.';
         }
 
         $tr .= "<tr>";
@@ -306,6 +318,7 @@ class outerPort
         $tr .= "<td>" . $data[$this->cellphonedriver] . "</td>";
         $tr .= "<td>" . $arrival . "</td>";
         $tr .= "<td>" . $departure . "</td>";
+        $tr .= "<td>" . $stayTime . "</td>";
         $tr .= "<td>" . $comodity . "</td>";
         $tr .= "<td>" . $data[$this->booking] . "</td>";
         $tr .= "<td>" . $data[$this->stay] . "</td>";
@@ -333,7 +346,7 @@ class outerPort
       </div>
 
       <div class='table-responsive'>
-        <table class='table table-bordered table-hover' style='width: max-content;'>
+        <table class='table table-striped table-bordered table-hover' style='table-layout:fixed;width:275%;'>
         " . $thead . $tr . $tbclose . "
         </table>
       </div>
@@ -374,21 +387,35 @@ class outerPort
     /* Crear Excel */
     $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
     $sheet       = $spreadsheet->getActiveSheet();
+    $sheet->setTitle('Listado de Contenedores');
 
     /* Encabezados */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Agencia',
-      'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Condición', 'Booking', 'Estadía',
-      'Observaciones', 'Creado'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Agencia', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
     /* Agregar los datos */
-    $row = 2;
+    $row      = 2;
+    $stayTime = null;
+
     foreach ($result as $data) {
       $created   = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
       $arrival   = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
       $departure = $data[$this->departuredate] != '0000-00-00 00:00:00' ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+
+      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+        $arrivalDate   = new DateTime($data[$this->arrivaldate]);
+        $departureDate = new DateTime($data[$this->departuredate]);
+
+        $interval = $arrivalDate->diff($departureDate);
+        $hours    = $interval->format('%h');
+        $minutes  = $interval->format('%i');
+
+        $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+        $stayTime = 'No disponible.';
+      }
 
       $sheet->fromArray([
         $data[$this->id],
@@ -403,6 +430,7 @@ class outerPort
         $data[$this->cellphonedriver],
         $arrival,
         $departure,
+        $stayTime,
         $data[$this->comodity],
         $data[$this->booking],
         $data[$this->stay],
@@ -494,6 +522,7 @@ class outerPort
     $thead .= "<th>Pallets</th>";
     $thead .= "<th>Entrada</th>";
     $thead .= "<th>Salida</th>";
+    $thead .= "<th>Tiempo de Estadia</th>";
     $thead .= "<th>Condición</th>";
     $thead .= "<th>Booking</th>";
     $thead .= "<th>Estadía</th>";
@@ -503,27 +532,37 @@ class outerPort
     $thead .= "</thead>";
     $thead .= "<tbody>";
 
-    $tr = null;
+    $tr       = null;
+    $stayTime = null;
 
     if ($result !== []) {
       foreach ($result as $data) {
-        $createdTime = new DateTime($data[$this->created]);
-        $created     = $createdTime->format('d-m-Y H:i');
+        $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
+        $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
-        $arrivalTime = new DateTime($data[$this->arrivaldate]);
-        $arrival     = $arrivalTime->format('d-m-Y H:i');
-
-        if ($data[$this->comodity] == 'USDA') {
+        if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
           $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
         } else {
           $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
         }
 
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
-          $departureTime = new DateTime($data[$this->departuredate]);
-          $departure     = $departureTime->format('d-m-Y H:i');
+          $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
           $departure = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : 'Sin hora de salida.';
+        }
+
+        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+          $arrivalDate   = new DateTime($data[$this->arrivaldate]);
+          $departureDate = new DateTime($data[$this->departuredate]);
+
+          $interval = $arrivalDate->diff($departureDate);
+          $hours    = $interval->format('%h');
+          $minutes  = $interval->format('%i');
+
+          $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+          $stayTime = 'No disponible.';
         }
 
         $tr .= "<tr>";
@@ -535,6 +574,7 @@ class outerPort
         $tr .= "<td>" . $data[$this->pallets] . "</td>";
         $tr .= "<td>" . $arrival . "</td>";
         $tr .= "<td>" . $departure . "</td>";
+        $tr .= "<td style='width:350px;'>" . $stayTime . "</td>";
         $tr .= "<td>" . $comodity . "</td>";
         $tr .= "<td>" . $data[$this->booking] . "</td>";
         $tr .= "<td>" . $data[$this->stay] . "</td>";
@@ -562,7 +602,7 @@ class outerPort
       </div>
 
       <div class='table-responsive'>
-        <table class='table table-bordered table-hover'>
+        <table class='table table-striped table-bordered table-hover' style='table-layout:fixed;width:200%;'>
         " . $thead . $tr . $tbclose . "
         </table>
       </div>
@@ -601,20 +641,35 @@ class outerPort
 
     $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
     $sheet       = $spreadsheet->getActiveSheet();
+    $sheet->setTitle('Listado de Termos');
 
     /* Encabezados del Excel */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada',
-      'Salida', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
     /* Filas de datos */
-    $row = 2;
+    $row      = 2;
+    $stayTime = null;
+
     foreach ($result as $data) {
       $created   = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
       $arrival   = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
       $departure = $data[$this->departuredate] != '0000-00-00 00:00:00' ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+
+      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+        $arrivalDate   = new DateTime($data[$this->arrivaldate]);
+        $departureDate = new DateTime($data[$this->departuredate]);
+
+        $interval = $arrivalDate->diff($departureDate);
+        $hours    = $interval->format('%h');
+        $minutes  = $interval->format('%i');
+
+        $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+        $stayTime = 'No disponible.';
+      }
 
       $sheet->fromArray([
         $data[$this->id],
@@ -625,6 +680,7 @@ class outerPort
         $data[$this->pallets],
         $arrival,
         $departure,
+        $stayTime,
         $data[$this->comodity],
         $data[$this->booking],
         $data[$this->stay],
