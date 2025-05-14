@@ -74,9 +74,7 @@
                                         <button type="button" id="resetpassword" class="btn btn-success btn-user btn-block" onclick="resetPassword()" disabled><i class='fas fa-solid fa-check-circle'></i> Restablecer Contraseña</button>
                                     </form>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="register.php" style="font-size: medium;">¿No tienes una cuenta? Crea una!</a>
-                                    </div>
+
                                     <div class="text-center">
                                         <a class="small" href="login.php" style="font-size: medium;">¿Tienes cuenta? Inicia Sesión!</a>
                                     </div>
