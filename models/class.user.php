@@ -81,30 +81,24 @@ class user
     $stmt->bindParam(":run", $this->run);
     $stmt->bindParam(":division", $this->division);
     $stmt->execute();
-
+  
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($stmt->rowCount() > 0) {
-      $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      /* Verificar la contraseña y la división */
-      if ($user && password_verify($this->password, $user['password'])) {
-        /* Aquí se guarda la sesión correctamente */
-        $_SESSION["user"]         = $data;
-        $_SESSION["last_session"] = time(); // Guarda la hora de inicio de sesión
-
-        /* Actualiza la base de datos con la hora de la sesión */
-        $updateQuery = "UPDATE app_users SET last_session = NOW() WHERE run = :run";
-        $updateStmt  = $this->conexion->prepare($updateQuery);
-        $updateStmt->bindParam(":run", $this->run);
-        $updateStmt->execute();
-
-        return $user;
-      }
+  
+    if ($user && password_verify($this->password, $user['password'])) {
+      $_SESSION["user"]         = $user;
+      $_SESSION["last_session"] = time();
+  
+      $updateQuery = "UPDATE app_users SET last_session = NOW() WHERE run = :run";
+      $updateStmt  = $this->conexion->prepare($updateQuery);
+      $updateStmt->bindParam(":run", $this->run);
+      $updateStmt->execute();
+  
+      return $user;
     }
-
+  
     return false;
   }
-
+  
   /*
   public function login()
   {
