@@ -173,9 +173,7 @@ if (isset($_SESSION['user'])) {
       type: "POST",
     }).done(function(x) {
       if(x == 'OK'){
-        const params = new URLSearchParams(window.location.search);
-        const redirectTo = params.get('redirect') || 'dashboard.php';
-        window.location = redirectTo;
+        window.location.href = "dashboard.php";
       }else if(x == 'NOOK'){
         Swal.fire({
           title: 'Oops...',
