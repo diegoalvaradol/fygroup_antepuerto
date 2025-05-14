@@ -47,7 +47,7 @@ if (isset($_SESSION['user'])) {
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-12">
-                                <img src="../img/ssl-logo-azul.png" alt="FY Chile" class="img-fluid" style="padding: inherit;">
+                                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="padding: inherit;">
 
                                 <div class="text-center">
                                   <small class="text-primary" style="font-size:xx-large">Sistema Integral SSL.</small>
