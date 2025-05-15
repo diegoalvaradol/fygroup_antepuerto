@@ -1,18 +1,9 @@
 {
-    "name": "opera/ssl-chile",
-    "autoload": {
-        "psr-4": {
-            "Opera\\SslChile\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Diego Alvarado Lopez",
-            "email": "diego.alvaraado@gmail.com"
-        }
-    ],
     "require": {
-        "phpoffice/phpspreadsheet": "^1.29",
-        "phpmailer/phpmailer": "^6.10"
+      "php": "^7.4",
+      "phpoffice/phpspreadsheet": "^1.21",
+      "php-webdriver/webdriver": "^1.11",
+      "symfony/process": "^5.4",
+      "psr/simple-cache": "^1.0"
     }
-}
+  }

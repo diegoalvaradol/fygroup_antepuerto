@@ -179,7 +179,11 @@ if (isset($_SESSION['user'])) {
       if(x == 'OK'){
         setTimeout(function() {
           window.location = "dashboard.php";
+<<<<<<< HEAD
         }, 3000);
+=======
+        }, 3000); // Espera 3 segundos
+>>>>>>> develop
       }else if(x == 'NOOK'){
         Swal.fire({
           title: 'Oops...',
