@@ -1,5 +1,4 @@
 <?php
-
 class iRequest
 {
   /* Obtener un valor desde $_GET o $_POST (prioriza POST) */

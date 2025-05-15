@@ -22,7 +22,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <meta name="Dasboard" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Inicio</title>
+    <title>Dashboard | Sistema Antepuerto</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -167,7 +167,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Inicio</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -250,7 +250,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                                 <?php echo $totalTrucks . ' camiones.'; ?>
                                                 <br>
                                                 <small class="h5 mb-0 font-weight-bold text-suceess-800" style="font-size:small;color: green;">Solicitados: <?php print_r($totalTrucks - $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que han arrivado a antepuerto y que ya han sido solicitados por terminal."></i>
-                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php print_r( $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que se encuentra en el antepuerto y que no han sido solicitados por terminal."></i>
+                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php print_r($trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que se encuentra en el antepuerto y que no han sido solicitados por terminal."></i>
                                             </div>
                                         </div>
                                         <div class="col-auto">
