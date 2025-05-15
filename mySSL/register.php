@@ -93,7 +93,6 @@
                                   </div>
                                 </div>
 
-                                <input type="hidden" id="division" name="division" value="ssl">
                                 <button type="button" name="saveuser" class="btn btn-primary btn-user btn-block" onclick="saveUser()"><i class='fas fa-solid fa-check-circle'></i> Registrar</button>
                             </form>
                             <hr>

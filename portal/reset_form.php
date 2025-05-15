@@ -62,9 +62,7 @@
                                             <br>
                                             <input type="password" class="form-control form-control-user" id="password2" name="confirm_password" placeholder="Confirmar contraseña" required>
                                         </div>
-
                                         <hr>
-
                                         <button type="button" id="resetpassword" class="btn btn-success btn-user btn-block" onclick="resetPassword()"><i class='fas fa-solid fa-check-circle'></i> Restablecer </button>
                                     </form>
                                 </div>

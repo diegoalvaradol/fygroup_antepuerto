@@ -70,7 +70,6 @@
                                             <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" onblur="validaEmail(this.value)" placeholder="Correo Electrónico">
                                         </div>
 
-                                        <input type="hidden" id="division" name="division" value="ssl">
                                         <button type="button" id="resetpassword" class="btn btn-primary btn-user btn-block" onclick="resetPassword()" disabled><i class='fas fa-solid fa-check-circle'></i> Restablecer Contraseña</button>
                                     </form>
                                     <hr>

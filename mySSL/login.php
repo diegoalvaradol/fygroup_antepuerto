@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 if (isset($_SESSION['user'])) {
   header("Location: dashboard.php");
   exit();
@@ -71,7 +69,6 @@ if (isset($_SESSION['user'])) {
                                         <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
                                       </div>
 
-                                      <input type="hidden" id="division" name="division" value="ssl">
                                       <button type='button' class='btn btn-primary btn-user btn-block' onclick="loadSession()"> <i class='fas fa-solid fa-right-to-bracket'></i> Iniciar Sesión</button>
                                     </form>
                                     <hr>

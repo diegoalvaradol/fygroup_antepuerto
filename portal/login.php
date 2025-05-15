@@ -70,7 +70,6 @@ if (isset($_SESSION['user'])) {
                                         <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
                                       </div>
 
-
                                       <button type='button' class='btn btn-success btn-user btn-block' onclick="loadSession()"> <i class='fas fa-solid fa-right-to-bracket'></i> Iniciar Sesión</button>
                                     </form>
                                     <hr>
