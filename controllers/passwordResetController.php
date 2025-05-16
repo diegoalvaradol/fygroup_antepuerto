@@ -8,6 +8,14 @@ require_once __DIR__ . '/../models/class.user.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  /* Define si es localhost */
+  $whitelist = ['127.0.0.1', '::1', 'localhost'];
+  $localHost = false;
+
+  if (in_array($_SERVER['REMOTE_ADDR'], $whitelist) || in_array($_SERVER['SERVER_NAME'], $whitelist)) {
+    $localHost = true;
+  }
+
   $email      = $_POST["email"];
   $division   = $_POST["division"];
   $token      = bin2hex(random_bytes(16));
@@ -29,9 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userDivision  = $userData['division'];
 
     if ($userDivision == 'ssl') {
-      $link = "http://localhost/ssl/mySSL/reset_form.php?token=$token";
+      $link = $localHost ? "http://localhost/ssl-chile/mySSL/reset_form.php?token=$token" : "https://myssl.ssl-lines.com/mySSL/reset_form.php?token=$token";
     } elseif ($userDivision == 'portal') {
-      $link = "http://localhost/ssl/portal/reset_form.php?token=$token";
+      $link = $localHost ? "http://localhost/ssl-chile/myPortal/reset_form.php?token=$token" : "https://myssl.ssl-lines.com/myPortal/reset_form.php?token=$token";
     }
 
     $mail = new PHPMailer(true);
