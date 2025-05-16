@@ -22,7 +22,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Ingreso Termos</title>
+    <title>SSL | Ingreso Termos</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -70,7 +70,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href="enter_ship.php">Naves</a>
-                        <a class="collapse-item" href="enter_ship_line.php">Lineas</a>
+                        <a class="collapse-item" href="enter_ship_line.php">Lineas Navieras</a>
                         <a class="collapse-item" href="enter_port.php">Puertos</a>
                     </div>
                 </div>
@@ -176,7 +176,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                   <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
-                                                  <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado."></i>
+                                                  <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
                                                   <small class="text-danger" id="error-vessel"></small>
                                                 </div>
                                                 <div class="col-sm-6">

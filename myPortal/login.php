@@ -17,7 +17,7 @@ if (isset($_SESSION['user'])) {
     <meta name="Vista Inicio de Sesión" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Iniciar Sesión - Portal</title>
+    <title>Portal - SSL | Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">

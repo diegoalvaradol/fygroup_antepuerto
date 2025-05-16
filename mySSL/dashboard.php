@@ -73,7 +73,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href="enter_ship.php">Naves</a>
-                        <a class="collapse-item" href="enter_ship_line.php">Lineas</a>
+                        <a class="collapse-item" href="enter_ship_line.php">Lineas Navieras</a>
                         <a class="collapse-item" href="enter_port.php">Puertos</a>
                     </div>
                 </div>

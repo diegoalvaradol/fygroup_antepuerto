@@ -22,7 +22,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Naves</title>
+    <title>SSL | Naves</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -70,7 +70,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href="enter_ship.php">Naves</a>
-                        <a class="collapse-item" href="enter_ship_line.php">Lineas</a>
+                        <a class="collapse-item" href="enter_ship_line.php">Lineas Navieras</a>
                         <a class="collapse-item" href="enter_port.php">Puertos</a>
                     </div>
                 </div>
@@ -153,9 +153,8 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Ingreso de Naves</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Naves</h1>
 
                     <!-- Content Row -->
                     <div class="row">

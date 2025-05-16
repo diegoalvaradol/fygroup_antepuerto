@@ -16,7 +16,7 @@ if (isset($_SESSION['user'])) {
     <meta name="Vista Inicio de Sesión" content="">
     <meta name="Diego Alvarado L" content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Iniciar Sesión</title>
+    <title>SSL | Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -31,8 +31,8 @@ if (isset($_SESSION['user'])) {
 
 <style>
     body {
-    background-image: url("../img/coquimbo_port_background.jpg");
-    background-size: cover;
+      background-image: url("../img/coquimbo_port_background.jpg");
+      background-size: cover;
     }
 </style>
 
