@@ -155,8 +155,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Formulario Ingreso de Lineas Navieras</h1>
-                    <p class="mb-4">Formulario de ingreso de lineas navieras a ser utilizados en el sistema.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Lineas Navieras</h1>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -180,7 +179,6 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                             <button type='button' class='btn btn-primary btn-user btn-block' onclick="saveShipLine()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>

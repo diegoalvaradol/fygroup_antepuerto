@@ -154,10 +154,12 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Formulario Ingreso de Contenedores <button type='button' class='btn btn-primary btn-user' style='float:right' onclick="window.location.href='enter_thermo_port.php';"><i class='fas fa-fw fa-truck'></i> Ingreso de Termos</button></h1>
-                    <p class="mb-4">Formulario de ingreso de camiones arrivados a antepuerto. Este listado contempla todos aquellos camiones del tipo contenedor que han arrivado a antepuerto panul,
-                        puedes revisar nuestro archivo online en el siguiente link: <a href="https://1drv.ms/x/s!AsvILqv5w9sBgxL8pTbcd8Pp85hK?e=D5AHbk" target="__blank">Listado Contenedores En Línea</a>.
-                    </p>
+                    <h1 class="h3 mb-1 text-gray-800">Contenedores</h1>
+
+                    <div class="col-sm-12">
+                      <div class="alert alert-info" role="alert"><i class="fa-solid fa-circle-info"></i>
+                      <b>¡Atención! : </b> Todos aquellos camiones que superen un (1) día de estadía en antepuerto serán destacados de color rojo.</div>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -172,9 +174,10 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 <div class="card-body">
                                         <form class="form-container" id="inContainerForm">
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
-                                                    <small class="text-danger" id="error-vessel"></small>
+                                            <div class="col-sm-6">
+                                                  <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
+                                                  <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
+                                                  <small class="text-danger" id="error-vessel"></small>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <small class="text-black" id="info-vessel"></small>
@@ -183,13 +186,13 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="carplate" name="carplate" placeholder="Patente">
+                                                    <select class="form-control select2 form-control-user" id="carplate" name="carplate"></select>
                                                     <small class="text-danger" id="error-carplate"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía">
-                                                    <i class="fas fa-info-circle text-info" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Si el camión trae mas de una guía saparalo con una coma. (Ej: 123, 456)"></i>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Si el camión trae mas de una guía saparalo con una coma. (Ej: 123, 456)"></i>
                                                     <small class="text-danger" id="error-guidenumber"></small>
                                                 </div>
                                             </div>
@@ -268,6 +271,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                             </div>
 
                                             <input type="hidden" id="origin" name="origin" value="1">
+                                            <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
                                             <button type='button' class='btn btn-primary btn-user btn-block' onclick="saveInContainer()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
                                         </form
                                 </div>
@@ -694,9 +698,33 @@ $(document).ready(function() {
     placeholder: 'Seleccione una motonave...',
     allowClear: true,
     tags: false,
-    width: '100%',
+    width: '95%',
     ajax: {
       url: '../controllers/vesselJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#carplate').select2({
+    placeholder: 'Seleccione una patente...',
+    allowClear: true,
+    tags: true,
+    width: '100%',
+    ajax: {
+      url: '../controllers/carPlateJsonController.php',
       method: 'POST',
       dataType: 'json',
       delay: 250,

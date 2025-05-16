@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->observations    = strtoupper($_POST["observations"]);
   $port->origin          = $_POST["origin"]; /* [1 => Contenedores, 2 => Termos] */
   $port->created         = date('Y-m-d H:i:s');
+  $port->createdby       = $_POST["createdby"];
 
   if ($port->save()) {
     echo $_POST["origin"] == 1 ? "OKC" : "OKT";

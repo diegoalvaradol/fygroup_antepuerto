@@ -26,6 +26,7 @@ class outerPort
   public $pallets         = "pallets_quantity";
   public $origin          = "origin";
   public $created         = "created";
+  public $createdby       = "created_by";
 
   public function __construct($db)
   {
@@ -34,8 +35,8 @@ class outerPort
 
   public function save()
   {
-    $query = "INSERT INTO $this->table (vessel_id, car_plate, guide_number, container, seal_number, exporter, agency, cellphone_driver, arrival_date, comodity, booking, stay, observations, pallets_quantity, origin, created)";
-    $query .= " VALUES (:vessel, :carplate, :guide, :container, :seal, :exporter, :agency, :cellphonedriver, :arrivaldate, :comodity, :booking, :stay, :observations, :palletsquantity, :origin, :created)";
+    $query = "INSERT INTO $this->table (vessel_id, car_plate, guide_number, container, seal_number, exporter, agency, cellphone_driver, arrival_date, comodity, booking, stay, observations, pallets_quantity, origin, created, created_by)";
+    $query .= " VALUES (:vessel, :carplate, :guide, :container, :seal, :exporter, :agency, :cellphonedriver, :arrivaldate, :comodity, :booking, :stay, :observations, :palletsquantity, :origin, :created, :createdby)";
 
     $stmt = $this->conexion->prepare($query);
 
@@ -56,6 +57,7 @@ class outerPort
     $this->pallets      = htmlspecialchars(strip_tags($this->pallets));
     $this->origin       = htmlspecialchars(strip_tags($this->origin));
     $this->created      = $this->created;
+    $this->createdby    = htmlspecialchars(strip_tags($this->createdby));
 
     $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
     $stmt->bindParam(":carplate", $this->carplate);
@@ -74,6 +76,7 @@ class outerPort
     $stmt->bindParam(":palletsquantity", $this->pallets, PDO::PARAM_INT);
     $stmt->bindParam(":origin", $this->origin);
     $stmt->bindParam(":created", $this->created);
+    $stmt->bindParam(":createdby", $this->createdby);
 
     return $stmt->execute();
   }
@@ -188,6 +191,20 @@ class outerPort
     return $total;
   }
 
+  public function findByUser($run)
+  {
+
+    $query = "SELECT * FROM app_users WHERE run = :run";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(":run", $run);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $name = $result["name"] . ' ' . $result["last_name"];
+
+    return $name;
+  }
+
   public function getTableContainer()
   {
     $ship  = new ship($this->conexion);
@@ -268,15 +285,17 @@ class outerPort
     $thead .= "<th>Estadía</th>";
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
+    $thead .= "<th>Ingresado Por</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
 
-    $tr       = null;
-    $stayTime = null;
+    $tr = $stayTime = null;
 
     if ($result !== []) {
       foreach ($result as $data) {
+        $attr = null;
+
         $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
         $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
@@ -297,15 +316,20 @@ class outerPort
           $departureDate = new DateTime($data[$this->departuredate]);
 
           $interval = $arrivalDate->diff($departureDate);
+          $days     = $interval->format('%d');
           $hours    = $interval->format('%h');
           $minutes  = $interval->format('%i');
 
-          $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+          $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
+
+          if ($days >= 1) {
+            $attr = "style='background-color:red; color:white;'";
+          }
         } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
           $stayTime = 'No disponible.';
         }
 
-        $tr .= "<tr>";
+        $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->id] . "</td>";
         $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
         $tr .= "<td>" . $data[$this->carplate] . "</td>";
@@ -324,13 +348,14 @@ class outerPort
         $tr .= "<td>" . $data[$this->stay] . "</td>";
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
+        $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
         $tr .= "</tr>";
 
         $count++;
       }
     } else {
       $tr .= "<tr>";
-      $tr .= "<td colspan='17' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= "<td colspan='19' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 
@@ -354,7 +379,6 @@ class outerPort
     ";
 
     return $table;
-
   }
 
   public function downloadTableContainerExcel($nave = '', $condicion = '', $exportador = '')
@@ -391,7 +415,7 @@ class outerPort
 
     /* Encabezados */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Agencia', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Agencia', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Ingresado Por'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
@@ -409,10 +433,11 @@ class outerPort
         $departureDate = new DateTime($data[$this->departuredate]);
 
         $interval = $arrivalDate->diff($departureDate);
+        $days     = $interval->format('%d');
         $hours    = $interval->format('%h');
         $minutes  = $interval->format('%i');
 
-        $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+        $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
       } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
         $stayTime = 'No disponible.';
       }
@@ -435,7 +460,8 @@ class outerPort
         $data[$this->booking],
         $data[$this->stay],
         $data[$this->observations],
-        $created
+        $created,
+        $this->findByUser($data[$this->createdby])
       ], null, 'A' . $row);
 
       $row++;
@@ -449,6 +475,7 @@ class outerPort
     /* Descargar el archivo */
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
     $writer->save('php://output');
+
     exit;
   }
 
@@ -528,15 +555,17 @@ class outerPort
     $thead .= "<th>Estadía</th>";
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
+    $thead .= "<th>Ingresado Por</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
 
-    $tr       = null;
-    $stayTime = null;
+    $tr = $stayTime = null;
 
     if ($result !== []) {
       foreach ($result as $data) {
+        $attr = null;
+
         $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
         $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
@@ -557,15 +586,20 @@ class outerPort
           $departureDate = new DateTime($data[$this->departuredate]);
 
           $interval = $arrivalDate->diff($departureDate);
+          $days     = $interval->format('%d');
           $hours    = $interval->format('%h');
           $minutes  = $interval->format('%i');
 
-          $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+          $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
+
+          if ($days >= 1) {
+            $attr = "style='background-color:red; color:white;'";
+          }
         } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
           $stayTime = 'No disponible.';
         }
 
-        $tr .= "<tr>";
+        $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->id] . "</td>";
         $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
         $tr .= "<td>" . $data[$this->carplate] . "</td>";
@@ -580,13 +614,14 @@ class outerPort
         $tr .= "<td>" . $data[$this->stay] . "</td>";
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
+        $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
         $tr .= "</tr>";
 
         $count++;
       }
     } else {
       $tr .= "<tr>";
-      $tr .= "<td colspan='14' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= "<td colspan='15' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 
@@ -645,7 +680,7 @@ class outerPort
 
     /* Encabezados del Excel */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Creado Por'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
@@ -663,10 +698,12 @@ class outerPort
         $departureDate = new DateTime($data[$this->departuredate]);
 
         $interval = $arrivalDate->diff($departureDate);
+        $days     = $interval->format('%d');
         $hours    = $interval->format('%h');
         $minutes  = $interval->format('%i');
 
-        $stayTime = $hours . ' horas y ' . $minutes . ' minutos';
+        $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
+
       } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
         $stayTime = 'No disponible.';
       }
@@ -685,7 +722,8 @@ class outerPort
         $data[$this->booking],
         $data[$this->stay],
         $data[$this->observations],
-        $created
+        $created,
+        $this->findByUser($data[$this->createdby])
       ], null, 'A' . $row);
 
       $row++;
@@ -699,6 +737,7 @@ class outerPort
     /* Descargar el archivo */
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
     $writer->save('php://output');
+
     exit;
   }
 

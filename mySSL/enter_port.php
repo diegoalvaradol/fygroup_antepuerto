@@ -155,8 +155,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Formulario Ingreso de Puertos</h1>
-                    <p class="mb-4">Formulario de ingreso de puertos a ser utilizados en el sistema.</p>
+                    <h1 class="h3 mb-1 text-gray-800"> Puertos</h1>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -185,7 +184,6 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                             <button type='button' class='btn btn-primary btn-user btn-block' onclick="savePort()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
                                         </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>

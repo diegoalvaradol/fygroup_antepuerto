@@ -6,7 +6,8 @@ $searchForm = isset($_POST['search']) ? $_POST['search'] : '';
 
 $search = "%{$searchForm}%";
 
-$query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search LIMIT 10";
+/* Solo muestra aquellos barcos que posean una ETD mayor al día en curso */
+$query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search AND etd > NOW() LIMIT 10";
 $stmt  = $db->prepare($query);
 $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();

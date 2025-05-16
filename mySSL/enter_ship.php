@@ -155,8 +155,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Formulario Ingreso de Naves</h1>
-                    <p class="mb-4">Formulario de ingreso de naves a ser utilizados en el sistema.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Ingreso de Naves</h1>
 
                     <!-- Content Row -->
                     <div class="row">
