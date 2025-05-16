@@ -228,7 +228,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" placeholder="N° del Chofer Ej: 987654321">
+                                                    <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" pattern="[0-9]{9}" placeholder="N° del Chofer Ej: 987654321">
                                                     <small class="text-danger" id="error-cellphonedriver"></small>
                                                 </div>
                                             </div>
@@ -520,11 +520,25 @@ var validarContenedor = function (container){
   if(digitoCalculado !== digitoReal){
     Swal.fire({
       title: 'Oops...',
-      text: 'El número de contenedor: '+container+' es inválido, favor reintenta nuevamente.',
-      icon: 'error',
-      cancelButtonColor: '#d33'
+      html: 'El número de contenedor: '+container+' es inválido. </br> ¿Deseas ingresarlo de todas formas?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#4CAF50',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, continuar!",
+      cancelButtonText: "No, editar!",
+      allowOutsideClick: false,
+      allowEscapeKey: false
     }).then((result) => {
-      $('#container').focus();
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '¡Atención!',
+          html: 'Contenedor: '+container+' ingresado con éxito.',
+          icon: 'success'
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        $('#container').focus();
+      }
     });
   }
 }

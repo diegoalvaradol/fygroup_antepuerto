@@ -5,8 +5,8 @@ require_once __DIR__ . '/../models/class.outerPort.php';
 $db           = (new Database())->getConnection();
 $contenedores = new outerPort($db);
 
-$nave       = $_POST['nave'] ?? '';
-$condicion  = $_POST['condicion'] ?? '';
-$exportador = $_POST['exportador'] ?? '';
+$nave    = $_POST['nave'] ?? '';
+$patente = $_POST['patente'] ?? '';
+$guia    = $_POST['guia'] ?? '';
 
-$contenedores->downloadTableContainerExcel($nave, $condicion, $exportador);
+$contenedores->downloadTableContainerExcel($nave, $patente, $guia);

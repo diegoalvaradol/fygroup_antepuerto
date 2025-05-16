@@ -211,9 +211,9 @@ class outerPort
     $count = 0;
 
     /* Filtros */
-    $filterNave       = isset($_POST['nave']) ? trim($_POST['nave']) : '';
-    $filterCondicion  = isset($_POST['condicion']) ? trim($_POST['condicion']) : '';
-    $filterExportador = isset($_POST['exportador']) ? trim($_POST['exportador']) : '';
+    $filterNave    = isset($_POST['nave']) ? trim($_POST['nave']) : '';
+    $filterPatente = isset($_POST['patente']) ? trim($_POST['patente']) : '';
+    $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
 
     /* Construir cláusulas WHERE dinámicamente */
     $conditions = ["$this->origin = 1"];
@@ -224,14 +224,14 @@ class outerPort
       $params[':nave'] = "%$filterNave%";
     }
 
-    if ($filterCondicion !== '') {
-      $conditions[]         = "$this->comodity LIKE :condicion";
-      $params[':condicion'] = "%$filterCondicion%";
+    if ($filterPatente !== '') {
+      $conditions[]       = "$this->carplate LIKE :patente";
+      $params[':patente'] = "%$filterPatente%";
     }
 
-    if ($filterExportador !== '') {
-      $conditions[]          = "$this->exporter LIKE :exportador";
-      $params[':exportador'] = "%$filterExportador%";
+    if ($filterGuia !== '') {
+      $conditions[]    = "$this->guide LIKE :guia";
+      $params[':guia'] = "%$filterGuia%";
     }
 
     $whereClause = implode(' AND ', $conditions);
@@ -242,23 +242,23 @@ class outerPort
 
     /* Formulario de filtros */
     $form = "
-      <form method='POST' class='mb-3 sticky-form col-8' id='filterFormThermo'>
+      <form method='POST' class='mb-3 sticky-form col-8' id='filterFormContainer'>
         <div class='form-row mb-2'>
           <div class='col'>
             <input type='text' name='nave' class='form-control' placeholder='Motonave' value='" . htmlspecialchars($filterNave) . "'>
           </div>
           <div class='col'>
-            <input type='text' name='condicion' class='form-control' placeholder='Condición' value='" . htmlspecialchars($filterCondicion) . "'>
+            <input type='text' name='patente' class='form-control' placeholder='Patente' value='" . htmlspecialchars($filterPatente) . "'>
           </div>
           <div class='col'>
-            <input type='text' name='exportador' class='form-control' placeholder='Exportador' value='" . htmlspecialchars($filterExportador) . "'>
+            <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
           </div>
         </div>
 
         <div class='form-row'>
           <div class='col'>
             <button type='submit' class='btn btn-sm btn-primary'><i class='fas fa-solid fa-search'></i> Buscar</button>
-            <button type='button' class='btn btn-sm btn-success' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['condicion'] ?? "") . "', '" . htmlspecialchars($_POST['exportador'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+            <button type='button' class='btn btn-sm btn-success' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
             <button type='button' class='btn btn-sm btn-warning' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
           </div>
         </div>
@@ -381,7 +381,7 @@ class outerPort
     return $table;
   }
 
-  public function downloadTableContainerExcel($nave = '', $condicion = '', $exportador = '')
+  public function downloadTableContainerExcel($nave = '', $patente = '', $guia = '')
   {
     $ship = new ship($this->conexion);
 
@@ -393,14 +393,14 @@ class outerPort
       $filtros[] = "%$nave%";
     }
 
-    if (!empty($condicion)) {
-      $where .= " AND $this->comodity LIKE ?";
-      $filtros[] = "%$condicion%";
+    if (!empty($patente)) {
+      $where .= " AND $this->carplate LIKE ?";
+      $filtros[] = "%$patente%";
     }
 
-    if (!empty($exportador)) {
-      $where .= " AND $this->exporter LIKE ?";
-      $filtros[] = "%$exportador%";
+    if (!empty($guia)) {
+      $where .= " AND $this->guide LIKE ?";
+      $filtros[] = "%$guia%";
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY row_id ASC";
@@ -485,12 +485,12 @@ class outerPort
     $count = 0;
 
     /* Filtros */
-    $filterNave       = isset($_POST['nave']) ? trim($_POST['nave']) : '';
-    $filterCondicion  = isset($_POST['condicion']) ? trim($_POST['condicion']) : '';
-    $filterExportador = isset($_POST['exportador']) ? trim($_POST['exportador']) : '';
+    $filterNave    = isset($_POST['nave']) ? trim($_POST['nave']) : '';
+    $filterPatente = isset($_POST['patente']) ? trim($_POST['patente']) : '';
+    $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
 
     /* Construir cláusulas WHERE dinámicamente */
-    $conditions = ["$this->origin = 2"];
+    $conditions = ["$this->origin = 1"];
     $params     = [];
 
     if ($filterNave !== '') {
@@ -498,14 +498,14 @@ class outerPort
       $params[':nave'] = "%$filterNave%";
     }
 
-    if ($filterCondicion !== '') {
-      $conditions[]         = "$this->comodity LIKE :condicion";
-      $params[':condicion'] = "%$filterCondicion%";
+    if ($filterPatente !== '') {
+      $conditions[]       = "$this->carplate LIKE :patente";
+      $params[':patente'] = "%$filterPatente%";
     }
 
-    if ($filterExportador !== '') {
-      $conditions[]          = "$this->exporter LIKE :exportador";
-      $params[':exportador'] = "%$filterExportador%";
+    if ($filterGuia !== '') {
+      $conditions[]    = "$this->guide LIKE :guia";
+      $params[':guia'] = "%$filterGuia%";
     }
 
     $whereClause = implode(' AND ', $conditions);
@@ -522,17 +522,17 @@ class outerPort
             <input type='text' name='nave' class='form-control' placeholder='Motonave' value='" . htmlspecialchars($filterNave) . "'>
           </div>
           <div class='col'>
-            <input type='text' name='condicion' class='form-control' placeholder='Condición' value='" . htmlspecialchars($filterCondicion) . "'>
+            <input type='text' name='patente' class='form-control' placeholder='Patente' value='" . htmlspecialchars($filterPatente) . "'>
           </div>
           <div class='col'>
-            <input type='text' name='exportador' class='form-control' placeholder='Exportador' value='" . htmlspecialchars($filterExportador) . "'>
+            <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
           </div>
         </div>
 
         <div class='form-row'>
           <div class='col'>
             <button type='submit' class='btn btn-sm btn-primary'><i class='fas fa-solid fa-search'></i> Buscar</button>
-            <button type='button' class='btn btn-sm btn-success' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['condicion'] ?? "") . "', '" . htmlspecialchars($_POST['exportador'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+            <button type='button' class='btn btn-sm btn-success' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
             <button type='button' class='btn btn-sm btn-warning' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
           </div>
         </div>
@@ -647,7 +647,7 @@ class outerPort
     return $table;
   }
 
-  public function downloadTableThermoExcel($nave = '', $condicion = '', $exportador = '')
+  public function downloadTableThermoExcel($nave = '', $patente = '', $guia = '')
   {
     $ship = new ship($this->conexion);
 
@@ -659,14 +659,14 @@ class outerPort
       $filtros[] = "%$nave%";
     }
 
-    if (!empty($condicion)) {
-      $where .= " AND $this->comodity LIKE ?";
-      $filtros[] = "%$condicion%";
+    if (!empty($patente)) {
+      $where .= " AND $this->carplate LIKE ?";
+      $filtros[] = "%$patente%";
     }
 
-    if (!empty($exportador)) {
-      $where .= " AND $this->exporter LIKE ?";
-      $filtros[] = "%$exportador%";
+    if (!empty($guia)) {
+      $where .= " AND $this->guide LIKE ?";
+      $filtros[] = "%$guia%";
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY row_id ASC";
@@ -680,7 +680,7 @@ class outerPort
 
     /* Encabezados del Excel */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Creado Por'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Ingresado Por'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
