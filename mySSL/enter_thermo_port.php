@@ -160,7 +160,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     </p>
 
                     <!-- Content Row -->
-                    <div class="row" style="margin-left:200px;margin-right:200px;">
+                    <div class="row">
                         <!-- First Column -->
                         <div class="col-lg-12">
                             <!-- Custom Text Color Utilities -->
@@ -170,8 +170,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 </div>
 
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <form id="inTermoForm">
+                                        <form class="form-container" id="inTermoForm">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <select class="form-control select2" id="vessel" name="vessel"></select>
@@ -247,9 +246,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                             <input type="hidden" id="origin" name="origin" value="2">
                                             <button type='button' class='btn btn-primary btn-user btn-block' onclick="saveInTermo()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
                                         </form>
-                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -323,7 +320,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <br>
                     <small><b>Autor: </b> Diego Alvarado López.</small>
                     <br>
-                    <small><b>Programador y Diseañador: </b> Diego Alvarado López.</small>
+                    <small><b>Programador y Diseñador: </b> Diego Alvarado López.</small>
                     <br>
                     <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
                     <br>

@@ -346,7 +346,7 @@ class outerPort
       </div>
 
       <div class='table-responsive'>
-        <table class='table table-striped table-bordered table-hover' style='table-layout:fixed;width:275%;'>
+        <table class='table table-bordered table-hover' style='width:max-content;'>
         " . $thead . $tr . $tbclose . "
         </table>
       </div>
@@ -586,7 +586,7 @@ class outerPort
       }
     } else {
       $tr .= "<tr>";
-      $tr .= "<td colspan='13' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= "<td colspan='14' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 
@@ -602,7 +602,7 @@ class outerPort
       </div>
 
       <div class='table-responsive'>
-        <table class='table table-striped table-bordered table-hover' style='table-layout:fixed;width:200%;'>
+        <table class='table table-bordered table-hover' style='width:max-content;'>
         " . $thead . $tr . $tbclose . "
         </table>
       </div>

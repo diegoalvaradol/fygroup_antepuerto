@@ -201,7 +201,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                     <br>
                     <small><b>Autor: </b> Diego Alvarado López.</small>
                     <br>
-                    <small><b>Programador y Diseañador: </b> Diego Alvarado López.</small>
+                    <small><b>Programador y Diseñador: </b> Diego Alvarado López.</small>
                     <br>
                     <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
                     <br>

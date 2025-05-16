@@ -159,7 +159,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <p class="mb-4">Formulario de ingreso de naves a ser utilizados en el sistema.</p>
 
                     <!-- Content Row -->
-                    <div class="row" style="margin-left:250px; margin-right:250px;">
+                    <div class="row">
                         <!-- First Column -->
                         <div class="col-lg-12">
                             <!-- Custom Text Color Utilities -->
@@ -169,8 +169,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 </div>
 
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <form id="shipForm">
+                                        <form class="form-container" id="shipForm">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control form-control-user" id="vessel" name="vessel" placeholder="Nombre de la Nave">
@@ -211,7 +210,6 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
                                             <button type='button' class='btn btn-primary btn-user btn-block' onclick="saveShip()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
                                         </form>
-                                    </div>
                                 </div>
 
                             </div>
@@ -287,7 +285,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <br>
                     <small><b>Autor: </b> Diego Alvarado López.</small>
                     <br>
-                    <small><b>Programador y Diseañador: </b> Diego Alvarado López.</small>
+                    <small><b>Programador y Diseñador: </b> Diego Alvarado López.</small>
                     <br>
                     <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
                     <br>

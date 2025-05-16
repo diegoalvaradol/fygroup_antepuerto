@@ -65,7 +65,7 @@
                                         <h1 class="h4 text-gray-900 mb-2">¿Olvidaste tu contraseña?</h1>
                                         <p class="mb-4">Lo entendemos, a veces pasan cosas. Solo introduce tu correo electrónico a continuación y te enviaremos un enlace para restablecer tu contraseña.</p>
                                     </div>
-                                    <form id="resetForm">
+                                    <form class="form-container" id="resetForm">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" onblur="validaEmail(this.value)" placeholder="Correo Electrónico">
                                         </div>

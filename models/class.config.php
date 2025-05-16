@@ -91,7 +91,5 @@ class cfg
 
     return json_encode($result);
   }
-
-
   
 }
