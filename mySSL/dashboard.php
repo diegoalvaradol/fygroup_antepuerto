@@ -178,21 +178,14 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 <div class="text-sm font-weight-bold text-primary text-uppercase mb-1" style="text-align:center;">Contenedores</div>
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                        <div class="col mr-4">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Camiones</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalContainer = $port->getTotalContainer(); ?>
-                                                <?php echo $totalContainer; ?>
-                                            </div>
-                                        </div>
-                                        <div class="col mr-4">
+                                        <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Contenedores</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php $totalContainer = $port->getTotalContainer(); ?>
                                                 <?php echo $totalContainer; ?>
                                             </div>
                                         </div>
-                                        <div class="col mr-4">
+                                        <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pallets</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php $totalPallets = $port->getTotalContainerPallets(); ?>
@@ -213,14 +206,14 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 <div class="text-sm font-weight-bold text-success text-uppercase mb-1" style="text-align:center;">Termos</div>
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
+                                        <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Camiones</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php $totalThermo = $port->getTotalThermo(); ?>
                                                 <?php echo $totalThermo; ?>
                                             </div>
                                         </div>
-                                        <div class="col mr-2">
+                                        <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pallets</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php $totalPallets = $port->getTotalPallets(); ?>
@@ -241,8 +234,8 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 <div class="text-sm font-weight-bold text-warning text-uppercase mb-1" style="text-align:center;">Arrivos</div>
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Camiones Arrivados</div>
+                                        <div class="col mr-12">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total de Arrivados</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php $totalTrucks        = $port->getTotalTrucks(); ?>
                                                 <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto(); ?>
@@ -268,7 +261,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Ocupación en Antepuerto</div>
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Ocupación de Antepuerto</div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
