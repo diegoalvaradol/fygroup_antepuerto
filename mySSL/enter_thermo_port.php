@@ -713,5 +713,53 @@ $(document).ready(function() {
       $('#info-vessel').html('');
     }
   });
+
+  $('#nave').select2({
+    placeholder: 'Seleccione una motonave...',
+    allowClear: true,
+    tags: false,
+    width: '95%',
+    ajax: {
+      url: '../controllers/vesselJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#patente').select2({
+    placeholder: 'Seleccione una patente...',
+    allowClear: true,
+    tags: false,
+    width: '100%',
+    ajax: {
+      url: '../controllers/carPlateJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
 });
 </script>

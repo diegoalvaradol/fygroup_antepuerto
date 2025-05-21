@@ -42,52 +42,61 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-5 d-none d-lg-block bg-register-image text-center p-5" style="align-content:space-around">
-                                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row w-100 justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <div class="row">
+              <!-- Lado izquierdo con imagen (solo visible en pantallas grandes) -->
+              <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center align-items-center bg-light text-center p-4">
+                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                <small class="text-primary" style="font-size:x-large;">Sistema Integral SSL.</small>
+                <br>
+                <small class="text-primary" style="font-size:large;">Personal SSL.</small>
+              </div>
 
-                                <div class="text-center">
-                                    <small class="text-primary" style="font-size:x-large">Sistema Integral SSL.</small>
-                                    <br>
-                                    <small class="text-primary" style="font-size:large; text-align: center; margin: auto;">Personal SSL.</small>
-                                </div>
-                            </div>
-                            <div class="col-lg-7">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">¿Olvidaste tu contraseña?</h1>
-                                        <p class="mb-4">Lo entendemos, a veces pasan cosas. Solo introduce tu correo electrónico a continuación y te enviaremos un enlace para restablecer tu contraseña.</p>
-                                    </div>
-                                    <form class="form-container" id="resetForm">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" onblur="validaEmail(this.value)" placeholder="Correo Electrónico">
-                                        </div>
+              <!-- Lado derecho con formulario -->
+              <div class="col-lg-7 col-12">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-2">¿Olvidaste tu contraseña?</h1>
+                    <p class="mb-4">Lo entendemos, a veces pasan cosas. Solo introduce tu correo electrónico a continuación y te enviaremos un enlace para restablecer tu contraseña.</p>
+                  </div>
 
-                                        <button type="button" id="resetpassword" class="btn btn-primary btn-user btn-block" onclick="resetPassword()" disabled><i class='fas fa-solid fa-check-circle'></i> Restablecer Contraseña</button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="register.php" style="font-size: medium;">¿No tienes una cuenta? Crea una!</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="login.php" style="font-size: medium;">¿Tienes cuenta? Inicia Sesión!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                  <form class="form-container" id="resetForm">
+                    <div class="form-group">
+                      <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" onblur="validaEmail(this.value)" placeholder="Correo Electrónico">
                     </div>
+                    <button type="button" id="resetpassword" class="btn btn-primary btn-user btn-block" onclick="resetPassword()" disabled>
+                      <i class='fas fa-solid fa-check-circle'></i> Restablecer Contraseña
+                    </button>
+                  </form>
+
+                  <hr>
+
+                  <div class="text-center">
+                    <a class="small" href="register.php" style="font-size: medium;">¿No tienes una cuenta? Crea una!</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="login.php" style="font-size: medium;">¿Tienes cuenta? Inicia Sesión!</a>
+                  </div>
                 </div>
-            </div>
-        </div>
-    </div>
+              </div> <!-- col-lg-7 -->
+            </div> <!-- row -->
+          </div> <!-- card-body -->
+        </div> <!-- card -->
+      </div> <!-- col -->
+    </div> <!-- row -->
+  </div> <!-- container -->
+
+  <!-- JS scripts -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
+
 </html>
 
 <!-- JAVASCRIPT -->

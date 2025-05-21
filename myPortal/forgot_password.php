@@ -43,23 +43,20 @@
 
 <body>
     <div class="container">
-        <!-- Outer Row -->
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-5 d-none d-lg-block bg-register-image text-center p-5" style="align-content:space-around">
-                                <img src="../img/ssl-logo-azul.png" alt="FY Chile" class="img-fluid mb-3">
-
-                                <div class="text-center">
-                                    <small class="text-success" style="font-size:x-large">Sistema Integral SSL.</small>
-                                    <br>
-                                    <small class="text-success" style="font-size:large; text-align: center; margin: auto;">Portal Cliente.</small>
-                                </div>
+                            <!-- Imagen y texto lateral: visible solo en pantallas grandes -->
+                            <div class="col-lg-5 d-none d-lg-flex flex-column align-items-center justify-content-center bg-light text-center p-4">
+                                <img src="../img/ssl-logo-azul.png" alt="FY Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                                <small class="text-success fs-4">Sistema Integral SSL.</small>
+                                <small class="text-success fs-5">Portal Cliente.</small>
                             </div>
-                            <div class="col-lg-7">
+
+                            <!-- Formulario -->
+                            <div class="col-lg-7 col-md-12">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-2">¿Olvidaste tu contraseña?</h1>
@@ -70,7 +67,9 @@
                                             <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" onblur="validaEmail(this.value)" placeholder="Correo Electrónico">
                                         </div>
 
-                                        <button type="button" id="resetpassword" class="btn btn-success btn-user btn-block" onclick="resetPassword()" disabled><i class='fas fa-solid fa-check-circle'></i> Restablecer Contraseña</button>
+                                        <button type="button" id="resetpassword" class="btn btn-success btn-user btn-block" onclick="resetPassword()" disabled>
+                                            <i class="fas fa-check-circle"></i> Restablecer Contraseña
+                                        </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
@@ -78,12 +77,18 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> <!-- End .row -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
 </html>
 

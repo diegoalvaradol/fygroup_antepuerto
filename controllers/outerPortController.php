@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/class.outerPort.php';
 require_once __DIR__ . '/../config/database.php';
-date_default_timezone_set("America/Santiago");
+date_default_timezone_set('America/Santiago');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $database = new Database();
@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $rawDateInf = str_replace('T', ' ', $_POST['datein']);
   $dateIn     = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
+  $created = 
 
   /* $rawDateOut = str_replace('T', ' ', $_POST['dateout']);
   $dateOut    = DateTime::createFromFormat('Y-m-d H:i', $rawDateOut);

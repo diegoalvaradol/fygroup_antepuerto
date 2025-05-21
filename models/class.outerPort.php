@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../models/class.ship.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../models/class.config.php';
+date_default_timezone_set('America/Santiago');
 
 class outerPort
 {
@@ -211,8 +212,8 @@ class outerPort
     $count = 0;
 
     /* Filtros */
-    $filterNave    = isset($_POST['nave']) ? trim($_POST['nave']) : '';
-    $filterPatente = isset($_POST['patente']) ? trim($_POST['patente']) : '';
+    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '';
+    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '';
     $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
 
     /* Construir cláusulas WHERE dinámicamente */
@@ -220,13 +221,13 @@ class outerPort
     $params     = [];
 
     if ($filterNave !== '') {
-      $conditions[]    = "sh.vessel_name LIKE :nave";
-      $params[':nave'] = "%$filterNave%";
+      $conditions[]    = "sh.ship_id = :nave";
+      $params[':nave'] = $filterNave;
     }
 
     if ($filterPatente !== '') {
-      $conditions[]       = "$this->carplate LIKE :patente";
-      $params[':patente'] = "%$filterPatente%";
+      $conditions[]       = "$this->carplate = :patente";
+      $params[':patente'] = $filterPatente;
     }
 
     if ($filterGuia !== '') {
@@ -242,27 +243,35 @@ class outerPort
 
     /* Formulario de filtros */
     $form = "
-      <form method='POST' class='mb-3 sticky-form col-8' id='filterFormContainer'>
-        <div class='form-row mb-2'>
-          <div class='col'>
-            <input type='text' name='nave' class='form-control' placeholder='Motonave' value='" . htmlspecialchars($filterNave) . "'>
+    <div class='row'>
+      <div class='col-lg-12'>
+        <div class='card shadow mb-4'>
+          <div class='card-header py-3'>
+            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
           </div>
-          <div class='col'>
-            <input type='text' name='patente' class='form-control' placeholder='Patente' value='" . htmlspecialchars($filterPatente) . "'>
-          </div>
-          <div class='col'>
-            <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
-          </div>
-        </div>
 
-        <div class='form-row'>
-          <div class='col'>
-            <button type='submit' class='btn btn-sm btn-primary'><i class='fas fa-solid fa-search'></i> Buscar</button>
-            <button type='button' class='btn btn-sm btn-success' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-            <button type='button' class='btn btn-sm btn-warning' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+          <div class='card-body'>
+            <form method='POST' class='form-container' id='filterFormContainer'>
+              <div class='form-group row'>
+                <div class='col-sm-4'>
+                  <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
+                </div>
+                <div class='col-sm-4'>
+                  <select class='form-control select2 form-control-user' id='patente' name='patente'></select>
+                </div>
+                <div class='col-sm-4'>
+                  <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                </div>
+              </div>
+
+              <button type='submit' class='btn btn-sm btn-primary btn-user btn-block'><i class='fas fa-solid fa-search'></i> Buscar</button>
+              <button type='button' class='btn btn-sm btn-success btn-user btn-block' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+              <button type='button' class='btn btn-sm btn-warning btn-user btn-block' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+            </form>
           </div>
         </div>
-      </form>
+      </div>
+    </div>
     ";
 
     $thead = "<thead style='background-color:#2653d4; color:white;'>";
@@ -296,8 +305,11 @@ class outerPort
       foreach ($result as $data) {
         $attr = null;
 
-        $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
-        $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
+        $createdTime = new DateTime($data[$this->created]);
+        $arrivalTime = new DateTime($data[$this->arrivaldate]);
+
+        $created = $createdTime->format('d-m-Y H:i');
+        $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
           $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
@@ -361,11 +373,9 @@ class outerPort
 
     $tbclose = "</tbody>";
 
-    $table = "
+    $table = $form . "
     <div class='container-fluid'>
       <div class='sticky-form bg-white pr-3 pl-3 mb-3'>
-        <h6 class='h3 mb-1 text-gray-800'>Filtro de Búsqueda</h6>
-        " . $form . "
         <h6 class='h3 mb-1 text-gray-800'>Listado de Contenedores</h6>
         <h6> Total de Registros: " . $count . "</h6>
       </div>
@@ -379,7 +389,15 @@ class outerPort
     ";
 
     return $table;
-  }
+
+    ?>
+    <script>
+      let nave = $('#nave').val();
+      $('#nave').empty();
+      $('#nave').append($('<option>', {value: nave, text: nave}));
+    </script>
+    <?php
+}
 
   public function downloadTableContainerExcel($nave = '', $patente = '', $guia = '')
   {
@@ -389,13 +407,13 @@ class outerPort
     $where   = "WHERE $this->origin = 1";
 
     if (!empty($nave)) {
-      $where .= " AND sh.vessel_name LIKE ?";
-      $filtros[] = "%$nave%";
+      $where .= " AND sh.ship_id = ?";
+      $filtros[] = "$nave";
     }
 
     if (!empty($patente)) {
-      $where .= " AND $this->carplate LIKE ?";
-      $filtros[] = "%$patente%";
+      $where .= " AND $this->carplate = ?";
+      $filtros[] = "$patente";
     }
 
     if (!empty($guia)) {
@@ -424,8 +442,11 @@ class outerPort
     $stayTime = null;
 
     foreach ($result as $data) {
-      $created   = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
-      $arrival   = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
+      $createdTime = new DateTime($data[$this->created]);
+      $arrivalTime = new DateTime($data[$this->arrivaldate]);
+
+      $created   = $createdTime->format('d-m-Y H:i');
+      $arrival   = $arrivalTime->format('d-m-Y H:i');
       $departure = $data[$this->departuredate] != '0000-00-00 00:00:00' ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
       if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
@@ -485,22 +506,22 @@ class outerPort
     $count = 0;
 
     /* Filtros */
-    $filterNave    = isset($_POST['nave']) ? trim($_POST['nave']) : '';
-    $filterPatente = isset($_POST['patente']) ? trim($_POST['patente']) : '';
+    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '';
+    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '';
     $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
 
     /* Construir cláusulas WHERE dinámicamente */
-    $conditions = ["$this->origin = 1"];
+    $conditions = ["$this->origin = 2"];
     $params     = [];
 
     if ($filterNave !== '') {
-      $conditions[]    = "sh.vessel_name LIKE :nave";
-      $params[':nave'] = "%$filterNave%";
+      $conditions[]    = "sh.ship_id = :nave";
+      $params[':nave'] = $filterNave;
     }
 
     if ($filterPatente !== '') {
-      $conditions[]       = "$this->carplate LIKE :patente";
-      $params[':patente'] = "%$filterPatente%";
+      $conditions[]       = "$this->carplate = :patente";
+      $params[':patente'] = $filterPatente;
     }
 
     if ($filterGuia !== '') {
@@ -516,27 +537,35 @@ class outerPort
 
     /* Formulario de filtros */
     $form = "
-      <form method='POST' class='mb-3 sticky-form col-8' id='filterFormThermo'>
-        <div class='form-row mb-2'>
-          <div class='col'>
-            <input type='text' name='nave' class='form-control' placeholder='Motonave' value='" . htmlspecialchars($filterNave) . "'>
+    <div class='row'>
+      <div class='col-lg-12'>
+        <div class='card shadow mb-4'>
+          <div class='card-header py-3'>
+            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
           </div>
-          <div class='col'>
-            <input type='text' name='patente' class='form-control' placeholder='Patente' value='" . htmlspecialchars($filterPatente) . "'>
-          </div>
-          <div class='col'>
-            <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
-          </div>
-        </div>
 
-        <div class='form-row'>
-          <div class='col'>
-            <button type='submit' class='btn btn-sm btn-primary'><i class='fas fa-solid fa-search'></i> Buscar</button>
-            <button type='button' class='btn btn-sm btn-success' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-            <button type='button' class='btn btn-sm btn-warning' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+          <div class='card-body'>
+            <form method='POST' class='form-container' id='filterFormThermo'>
+              <div class='form-group row'>
+                <div class='col-sm-4'>
+                  <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
+                </div>
+                <div class='col-sm-4'>
+                  <select class='form-control select2 form-control-user' id='patente' name='patente'></select>
+                </div>
+                <div class='col-sm-4'>
+                  <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                </div>
+              </div>
+
+              <button type='submit' class='btn btn-sm btn-primary btn-user btn-block'><i class='fas fa-solid fa-search'></i> Buscar</button>
+              <button type='button' class='btn btn-sm btn-success btn-user btn-block' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+              <button type='button' class='btn btn-sm btn-warning btn-user btn-block' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+            </form>
           </div>
         </div>
-      </form>
+      </div>
+    </div>
     ";
 
     $thead = "<thead style='background-color:#2653d4; color:white;'>";
@@ -566,8 +595,11 @@ class outerPort
       foreach ($result as $data) {
         $attr = null;
 
-        $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
-        $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
+        $createdTime = new DateTime($data[$this->created]);
+        $arrivalTime = new DateTime($data[$this->arrivaldate]);
+
+        $created = $createdTime->format('d-m-Y H:i');
+        $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
           $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
@@ -627,11 +659,9 @@ class outerPort
 
     $tbclose = "</tbody>";
 
-    $table = "
+    $table = $form . "
     <div class='container-fluid'>
       <div class='sticky-form bg-white pr-3 pl-3 mb-3'>
-        <h6 class='h3 mb-1 text-gray-800'>Filtro de Búsqueda</h6>
-        " . $form . "
         <h6 class='h3 mb-1 text-gray-800'>Listado de Termos</h6>
         <h6> Total de Registros: " . $count . "</h6>
       </div>
@@ -655,13 +685,13 @@ class outerPort
     $where   = "WHERE $this->origin = 2";
 
     if (!empty($nave)) {
-      $where .= " AND sh.vessel_name LIKE ?";
-      $filtros[] = "%$nave%";
+      $where .= " AND sh.ship_id = ?";
+      $filtros[] = $nave;
     }
 
     if (!empty($patente)) {
-      $where .= " AND $this->carplate LIKE ?";
-      $filtros[] = "%$patente%";
+      $where .= " AND $this->carplate = ?";
+      $filtros[] = $patente;
     }
 
     if (!empty($guia)) {
@@ -689,8 +719,12 @@ class outerPort
     $stayTime = null;
 
     foreach ($result as $data) {
-      $created   = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
-      $arrival   = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
+      $createdTime = new DateTime($data[$this->created]);
+      $arrivalTime = new DateTime($data[$this->arrivaldate]);
+
+      $created = $createdTime->format('d-m-Y H:i');
+      $arrival = $arrivalTime->format('d-m-Y H:i');
+
       $departure = $data[$this->departuredate] != '0000-00-00 00:00:00' ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
       if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {

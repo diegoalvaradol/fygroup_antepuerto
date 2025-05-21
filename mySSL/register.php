@@ -36,88 +36,88 @@
 </head>
 
 <body>
-    <div class="container">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row w-100 justify-content-center">
+      <div class="col-xl-10 col-lg-10 col-md-12">
         <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image text-center p-4" style="align-content:space-around">
-                        <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3">
+          <div class="card-body p-0">
+            <div class="row">
+              <!-- Lado izquierdo con imagen e info -->
+              <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center align-items-center bg-light text-center p-4">
+                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                <small class="text-primary" style="font-size: xx-large;">Sistema Integral SSL.</small>
+                <br>
+                <small class="text-primary" style="font-size: x-large;">Personal SSL.</small>
+              </div>
 
-                        <small class="text-primary" style="font-size:xx-large">Sistema Integral SSL.</small>
-                        <br>
-                        <small class="text-primary" style="font-size:x-large; text-align: center; margin: auto;">Personal SSL.</small>
+              <!-- Lado derecho con formulario -->
+              <div class="col-lg-7 col-12">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">¡Crea tu cuenta!</h1>
+                  </div>
+
+                  <form id="registerForm">
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value), verifyRun(this.value)" placeholder="12.345.678-9">
+                      <small class="text-danger" id="error-run"></small>
+                      <small class="text-success" id="info-run"></small>
                     </div>
-                    <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">¡Crea tu cuenta!</h1>
-                            </div>
-                            <form id="registerForm">
-                                <div class="form-group row">
-                                  <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value), verifyRun(this.value)" placeholder="12.345.678-9">
-                                    <small class="text-danger" id="error-run"></small>
-                                    <small class="text-success" id="info-run"></small>
-                                  </div>
-                                </div>
 
-                                <div class="form-group row">
-                                  <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="Juan">
-                                    <small class="text-danger" id="error-name"></small>
-                                  </div>
-
-                                  <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="lastname" name="lastname" placeholder="Peréz Soto">
-                                    <small class="text-danger" id="error-lastname"></small>
-                                  </div>
-                                </div>
-
-                                <div class="form-group row">
-                                  <div class="col-sm-12">
-                                    <input type="email" class="form-control form-control-user" id="email" name="email" onblur="verifyEmail(this.value)" placeholder="correo@dominio.com">
-                                    <small class="text-danger" id="error-email"></small>
-                                  </div>
-                                </div>
-
-                                <div class="form-group row">
-                                  <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
-                                    <small class="text-danger" id="error-password"></small>
-                                  </div>
-
-                                  <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Repetir Contraseña">
-                                    <small class="text-danger" id="error-password2"></small>
-                                  </div>
-                                </div>
-
-                                <button type="button" name="saveuser" class="btn btn-primary btn-user btn-block" onclick="saveUser()"><i class='fas fa-solid fa-check-circle'></i> Registrar</button>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.php" style="font-size: medium;">¿Tienes cuenta? Inicia Sesión!</a>
-                            </div>
-                        </div>
+                    <div class="form-group row">
+                      <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="Juan">
+                        <small class="text-danger" id="error-name"></small>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" class="form-control form-control-user" id="lastname" name="lastname" placeholder="Peréz Soto">
+                        <small class="text-danger" id="error-lastname"></small>
+                      </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <div class="form-group">
+                      <input type="email" class="form-control form-control-user" id="email" name="email" onblur="verifyEmail(this.value)" placeholder="correo@dominio.com">
+                      <small class="text-danger" id="error-email"></small>
+                    </div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+                    <div class="form-group row">
+                      <div class="col-sm-6 mb-3 mb-sm-0">
+                        <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
+                        <small class="text-danger" id="error-password"></small>
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Repetir Contraseña">
+                        <small class="text-danger" id="error-password2"></small>
+                      </div>
+                    </div>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
+                    <button type="button" name="saveuser" class="btn btn-primary btn-user btn-block" onclick="saveUser()">
+                      <i class="fas fa-solid fa-check-circle"></i> Registrar
+                    </button>
+                  </form>
+
+                  <hr>
+
+                  <div class="text-center">
+                    <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="login.php" style="font-size: medium;">¿Tienes cuenta? Inicia Sesión!</a>
+                  </div>
+                </div> <!-- End p-5 -->
+              </div> <!-- End col-lg-7 -->
+            </div> <!-- End row -->
+          </div> <!-- End card-body -->
+        </div> <!-- End card -->
+      </div> <!-- End col-xl-10 -->
+    </div> <!-- End row -->
+  </div> <!-- End container -->
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
 </html>
 

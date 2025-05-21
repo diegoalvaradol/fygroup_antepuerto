@@ -37,65 +37,69 @@ if (isset($_SESSION['user'])) {
 </style>
 
 <body>
-    <div class="container" style="justify-items: center;">
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12 col-md-9" style="justify-items: center;">
-                <div class="card o-hidden border-0 shadow-lg my-5" style="width: 50%;">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="padding: inherit;">
-
-                                <div class="text-center">
-                                  <small class="text-primary" style="font-size:xx-large">Sistema Integral SSL.</small>
-                                  <br>
-                                  <small class="text-primary" style="font-size:x-large; text-align: center; margin: auto;">Personal SSL.</small>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="pl-5 pb-5 pr-5 pt-3">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
-                                    </div>
-                                    <form id="loginForm">
-                                      <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
-                                        <small id="info-run"></small>
-                                      </div>
-
-                                      <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
-                                      </div>
-
-                                      <button type='button' class='btn btn-primary btn-user btn-block' onclick="loadSession()"> <i class='fas fa-solid fa-right-to-bracket'></i> Iniciar Sesión</button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.php" style="font-size: medium;">¿No tienes una cuenta? Crea una!</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row justify-content-center w-100">
+      <div class="col-xl-6 col-lg-8 col-md-10">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-12 text-center pt-4">
+                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                <div>
+                  <small class="text-primary" style="font-size:xx-large;">Sistema Integral SSL.</small><br>
+                  <small class="text-primary" style="font-size:x-large;">Personal SSL.</small>
                 </div>
-            </div>
-        </div>
-    </div>
+              </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+              <div class="col-12">
+                <div class="px-4 pb-5 pt-3">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
+                  </div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+                  <form id="loginForm">
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user" id="run" name="run"
+                        oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
+                      <small id="info-run"></small>
+                    </div>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
+                    <div class="form-group">
+                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-user btn-block" onclick="loadSession()">
+                      <i class="fas fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+                    </button>
+                  </form>
+
+                  <hr>
+
+                  <div class="text-center">
+                    <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="register.php" style="font-size: medium;">¿No tienes una cuenta? ¡Crea una!</a>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- End row -->
+          </div> <!-- End card-body -->
+        </div> <!-- End card -->
+      </div> <!-- End col -->
+    </div> <!-- End row -->
+  </div> <!-- End container -->
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
 </html>
 

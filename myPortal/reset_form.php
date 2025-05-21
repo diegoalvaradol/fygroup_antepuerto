@@ -32,57 +32,52 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+        <div class="row w-100 justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card o-hidden border-0 shadow-lg">
                     <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-5 d-none d-lg-block bg-register-image text-center p-5" style="align-content:space-around">
-                                <img src="../img/ssl-logo-azul.png" alt="FY Chile" class="img-fluid mb-3">
-
-                                <div class="text-center">
-                                    <small class="text-success" style="font-size:x-large">Sistema Integral SSL.</small>
-                                    <br>
-                                    <small class="text-success" style="font-size:large; text-align: center; margin: auto;">Portal Cliente.</small>
-                                </div>
+                            <!-- Columna de imagen y textos -->
+                            <div class="col-lg-5 d-none d-lg-flex flex-column align-items-center justify-content-center bg-light p-4 text-center">
+                                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                                <small class="text-success" style="font-size:x-large">Sistema Integral SSL.</small>
+                                <br>
+                                <small class="text-success" style="font-size:large;">Portal Cliente.</small>
                             </div>
-                            <div class="col-lg-7">
+
+                            <!-- Columna de formulario -->
+                            <div class="col-lg-7 col-12">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-2">Ingreso Nueva Contraseña</h1>
                                         <p class="mb-4">Favor ingresa tu nueva contraseña.</p>
                                     </div>
                                     <form id="resetPasswordForm">
+                                        <input type="hidden" name="token" value="<?=htmlspecialchars($_GET['token'])?>">
                                         <div class="form-group">
-                                            <input type="hidden" name="token" value="<?=htmlspecialchars($_GET['token'])?>">
-                                            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Nueva contraseña" required>
-                                            <br>
+                                            <input type="password" class="form-control form-control-user mb-3" id="password" name="password" placeholder="Nueva contraseña" required>
                                             <input type="password" class="form-control form-control-user" id="password2" name="confirm_password" placeholder="Confirmar contraseña" required>
                                         </div>
                                         <hr>
-                                        <button type="button" id="resetpassword" class="btn btn-success btn-user btn-block" onclick="resetPassword()"><i class='fas fa-solid fa-check-circle'></i> Restablecer </button>
+                                        <button type="button" id="resetpassword" class="btn btn-success btn-user btn-block" onclick="resetPassword()">
+                                            <i class="fas fa-check-circle"></i> Restablecer
+                                        </button>
                                     </form>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                            </div> <!-- col formulario -->
+                        </div> <!-- row -->
+                    </div> <!-- card-body -->
+                </div> <!-- card -->
+            </div> <!-- col -->
+        </div> <!-- row -->
+    </div> <!-- container -->
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
+  <!-- JS scripts -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
 </html>
 

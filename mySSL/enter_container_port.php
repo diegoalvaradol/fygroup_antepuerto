@@ -174,13 +174,13 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                 <div class="card-body">
                                         <form class="form-container" id="inContainerForm">
                                             <div class="form-group row">
-                                            <div class="col-sm-6">
+                                                <div class="col-sm-6">
                                                   <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
                                                   <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
                                                   <small class="text-danger" id="error-vessel"></small>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <small class="text-black" id="info-vessel"></small>
+                                                  <small class="text-black" id="info-vessel"></small>
                                                 </div>
                                             </div>
 
@@ -273,7 +273,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                             <input type="hidden" id="origin" name="origin" value="1">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
                                             <button type='button' class='btn btn-primary btn-user btn-block' onclick="saveInContainer()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
-                                        </form
+                                      </form>
                                 </div>
                             </div>
                         </div>
@@ -821,6 +821,54 @@ $(document).ready(function() {
       });
     }else{
       $('#info-vessel').html('');
+    }
+  });
+
+  $('#nave').select2({
+    placeholder: 'Seleccione una motonave...',
+    allowClear: true,
+    tags: false,
+    width: '95%',
+    ajax: {
+      url: '../controllers/vesselJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#patente').select2({
+    placeholder: 'Seleccione una patente...',
+    allowClear: true,
+    tags: false,
+    width: '100%',
+    ajax: {
+      url: '../controllers/carPlateJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
     }
   });
 });
