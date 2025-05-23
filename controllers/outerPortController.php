@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->stay            = strtoupper($_POST["stay"]);
   $port->observations    = strtoupper($_POST["observations"]);
   $port->origin          = $_POST["origin"]; /* [1 => Contenedores, 2 => Termos] */
-  $port->created         = $created;
+  $port->created         = $created ? $created->format('Y-m-d H:i:s') : null;
   $port->createdby       = $_POST["createdby"];
 
   if ($port->save()) {
