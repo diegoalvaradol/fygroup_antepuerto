@@ -86,8 +86,6 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
-                        <!-- <a class="collapse-item" href="program_maersk.php">Programación Maersk</a> -->
-                        <!-- <a class="collapse-item" href="program_msc.php">Programación MSC</a> -->
                     </div>
                 </div>
             </li>
@@ -634,7 +632,8 @@ $(document).ready(function() {
       delay: 250,
       data: function (params) {
         return {
-          search: params.term /* Lo que escribe el usuario */
+          search: params.term, /* Lo que escribe el usuario */
+          current: 1 /* Muestra las naves que cuentan con una ETA mayor a la fecha actual */
         };
       },
       processResults: function (data) {
@@ -718,7 +717,7 @@ $(document).ready(function() {
     placeholder: 'Seleccione una motonave...',
     allowClear: true,
     tags: false,
-    width: '95%',
+    width: '100%',
     ajax: {
       url: '../controllers/vesselJsonController.php',
       method: 'POST',
@@ -726,7 +725,8 @@ $(document).ready(function() {
       delay: 250,
       data: function (params) {
         return {
-          search: params.term /* Lo que escribe el usuario */
+          search: params.term, /* Lo que escribe el usuario */
+          current: 1 /* Muestra las naves que cuentan con una ETA mayor a la fecha actual */
         };
       },
       processResults: function (data) {

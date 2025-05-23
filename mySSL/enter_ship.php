@@ -86,8 +86,6 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
-                        <!-- <a class="collapse-item" href="program_maersk.php">Programación Maersk</a> -->
-                        <!-- <a class="collapse-item" href="program_msc.php">Programación MSC</a> -->
                     </div>
                 </div>
             </li>
@@ -522,6 +520,45 @@ var deleteShip = function(id) {
           Swal.fire({
             title: 'Oops...',
             text: 'La motonave que tratas de eliminar se encuentra asociado a una ingreso de contenedor/termo registrado, favor revisa e intenta nuevamente.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
+      });
+    }
+  });
+}
+
+var finishStackingShip = function(id, name, voyage) {
+  Swal.fire({
+    title: 'Cerrar Embarque de Motonave.',
+    html: 'Motonave: '+name+' - Viaje: '+voyage+'.'+'</br>'+'¿Estas seguro de cerrar el embarque de esta motonave?',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "¡Si, cerrar embarque!",
+    cancelButtonText : 'Cancelar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: '../controllers/shipEndStackingController.php',
+        type: 'POST',
+        data: { shipId: id },
+      }).done(function(x) {
+        if(x == 'OK'){
+          Swal.fire({
+            title: '¡Éxito!',
+            html: ' Embarque'+'</br>'+'Motonave: '+name+' - Viaje: '+voyage+'</br>'+'cerrado con éxito.',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50'
+          }).then((result) => {
+            window.location = 'enter_ship.php';
+          });
+        } else  {
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Error al finalizar el embarque de la motonave.',
             icon: 'error',
             cancelButtonColor: '#d33',
           });

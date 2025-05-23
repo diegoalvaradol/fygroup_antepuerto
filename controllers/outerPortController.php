@@ -9,11 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $rawDateInf = str_replace('T', ' ', $_POST['datein']);
   $dateIn     = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
-  $created = 
-
-  /* $rawDateOut = str_replace('T', ' ', $_POST['dateout']);
-  $dateOut    = DateTime::createFromFormat('Y-m-d H:i', $rawDateOut);
-   */
+  $created    = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
 
   $port                  = new outerPort($db);
   $port->vessel          = $_POST["vessel"];
@@ -26,13 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->pallets         = $_POST["palletsquantity"];
   $port->cellphonedriver = isset($_POST["cellphonedriver"]) ? $_POST["cellphonedriver"] : '000000000';
   $port->arrivaldate     = $dateIn ? $dateIn->format('Y-m-d H:i:s') : null;
-  $port->departuredate   = /* $dateOut ? $dateOut->format('Y-m-d H:i:s') : */null;
+  $port->departuredate   = null;
   $port->comodity        = strtoupper($_POST["comodity"]);
   $port->booking         = strtoupper($_POST["booking"]);
   $port->stay            = strtoupper($_POST["stay"]);
   $port->observations    = strtoupper($_POST["observations"]);
   $port->origin          = $_POST["origin"]; /* [1 => Contenedores, 2 => Termos] */
-  $port->created         = date('Y-m-d H:i:s');
+  $port->created         = $created;
   $port->createdby       = $_POST["createdby"];
 
   if ($port->save()) {

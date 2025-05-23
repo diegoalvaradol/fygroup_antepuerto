@@ -3,12 +3,18 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/class.outerPort.php';
 require_once __DIR__ . '/../models/class.config.php';
+require_once __DIR__ . '/../models/class.user.php';
 
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
 $cfg  = new cfg($db);
+$user = new user($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
+$admin   = $user->isAdmin($_SESSION["user"]["run"]);
+
+$releasedTime = new DateTime($infoCfg['released_date']);
+$updateTime   = new DateTime($infoCfg['update_date']);
 ?>
 
 <!-- HTML -->
@@ -89,11 +95,25 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
-                        <!-- <a class="collapse-item" href="program_maersk.php">Programación Maersk</a> -->
-                        <!-- <a class="collapse-item" href="program_msc.php">Programación MSC</a> -->
                     </div>
                 </div>
             </li>
+
+            <?php if ($admin): ?>
+            <!-- Nav Item - Reportes Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReporte" aria-expanded="true" aria-controls="collapseReporte">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Reportes</span>
+                </a>
+                <div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Items:</h6>
+                        <a class="collapse-item" href="program_tpc.php">Reporte de Naves</a>
+                    </div>
+                </div>
+            </li>
+            <?php endif; ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -346,13 +366,13 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <br>
                     <small><b>Compilación: </b><?php echo $infoCfg['compilation']; ?></small>
                     <br>
-                    <small><b>Lanzamiento: </b> 01 de mayo de 2025.</small>
+                    <small><b>Lanzamiento: </b><?php echo $releasedTime->format('d-m-Y H:i'); ?></small>
                     <br>
-                    <small><b>Últ. Actualización: </b> 06 de mayo de 2025.</small>
+                    <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
                     <br>
-                    <small><b>Autor: </b> Diego Alvarado López.</small>
+                    <small><b>Autor: </b><?php echo $infoCfg['author']; ?></small>
                     <br>
-                    <small><b>Programador y Diseñador: </b> Diego Alvarado López.</small>
+                    <small><b>Programador y Diseñador: </b><?php echo $infoCfg['author']; ?></small>
                     <br>
                     <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
                     <br>
@@ -508,7 +528,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <!-- Bootstrap JS (necesario para popover) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+
 
 <!-- JAVASCRIPT -->
 <script>
@@ -681,3 +701,4 @@ $(document).ready(function() {
   actualizarReloj(); /* Primera llamada */
 });
 </script>
+</html>

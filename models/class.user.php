@@ -81,24 +81,24 @@ class user
     $stmt->bindParam(":run", $this->run);
     $stmt->bindParam(":division", $this->division);
     $stmt->execute();
-  
+
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-  
+
     if ($user && password_verify($this->password, $user['password'])) {
       $_SESSION["user"]         = $user;
       $_SESSION["last_session"] = time();
-  
+
       $updateQuery = "UPDATE app_users SET last_session = NOW() WHERE run = :run";
       $updateStmt  = $this->conexion->prepare($updateQuery);
       $updateStmt->bindParam(":run", $this->run);
       $updateStmt->execute();
-  
+
       return $user;
     }
-  
+
     return false;
   }
-  
+
   /*
   public function login()
   {
@@ -151,4 +151,20 @@ class user
 
     return false;
   }
+
+  public function isAdmin($run)
+  {
+    $query = "SELECT * FROM $this->table WHERE run = :run AND division = 'SSL' LIMIT 1";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(":run", $run);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (in_array($result['run'], ['18.923.079-6'])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

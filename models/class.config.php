@@ -9,6 +9,9 @@ class cfg
   public $name        = "name";
   public $version     = "version";
   public $compilation = "compilation";
+  public $author      = "author";
+  public $released    = "released_date";
+  public $update      = "update_date";
   public $goals       = "goals";
   public $created     = "created";
   public $lastupdate  = "last_update";
@@ -20,13 +23,16 @@ class cfg
 
   public function save()
   {
-    $query = "INSERT INTO $this->table (mark, name, version, compilation, goals, created, last_update) VALUES (:mark, :name, :version, :compilation, :goals, :created, :lastupdate)";
+    $query = "INSERT INTO $this->table (mark, name, version, compilation, author, released_date, update_date, goals, created, last_update) VALUES (:mark, :name, :version, :compilation, :author, :released, :update, :goals, :created, :lastupdate)";
     $stmt  = $this->conexion->prepare($query);
 
     $this->mark        = htmlspecialchars(strip_tags($this->mark));
     $this->name        = htmlspecialchars(strip_tags($this->name));
     $this->version     = htmlspecialchars(strip_tags($this->version));
     $this->compilation = htmlspecialchars(strip_tags($this->compilation));
+    $this->author      = htmlspecialchars(strip_tags($this->author));
+    $this->released    = $this->released;
+    $this->update      = $this->update;
     $this->goals       = htmlspecialchars(strip_tags($this->goals));
     $this->created     = $this->created;
     $this->lastupdate  = $this->lastupdate;
@@ -35,6 +41,9 @@ class cfg
     $stmt->bindParam(":name", $this->name);
     $stmt->bindParam(":version", $this->version);
     $stmt->bindParam(":compilation", $this->compilation);
+    $stmt->bindParam(":author", $this->author);
+    $stmt->bindParam(":released", $this->released);
+    $stmt->bindParam(":update", $this->update);
     $stmt->bindParam(":goals", $this->goals);
     $stmt->bindParam(":created", $this->created);
     $stmt->bindParam(":lastupdate", $this->lastupdate);
@@ -44,7 +53,7 @@ class cfg
 
   public function update()
   {
-    $query = "UPDATE $this->table SET mark = :mark, name = :name, version = :version, compilation = :compilation, goals = :goals, last_update = :lastupdate WHERE id = :id";
+    $query = "UPDATE $this->table SET mark = :mark, name = :name, version = :version, compilation = :compilation, author = :author, released_date = :released, update_date = :update, goals = :goals, last_update = :lastupdate WHERE id = :id";
     $stmt  = $this->conexion->prepare($query);
 
     $this->id          = htmlspecialchars(strip_tags($this->id));
@@ -52,6 +61,9 @@ class cfg
     $this->name        = htmlspecialchars(strip_tags($this->name));
     $this->version     = htmlspecialchars(strip_tags($this->version));
     $this->compilation = htmlspecialchars(strip_tags($this->compilation));
+    $this->author      = htmlspecialchars(strip_tags($this->author));
+    $this->released    = $this->released;
+    $this->update      = $this->update;
     $this->goals       = htmlspecialchars(strip_tags($this->goals));
     $this->lastupdate  = $this->lastupdate;
 
@@ -60,6 +72,9 @@ class cfg
     $stmt->bindParam(":name", $this->name);
     $stmt->bindParam(":version", $this->version);
     $stmt->bindParam(":compilation", $this->compilation);
+    $stmt->bindParam(":author", $this->author);
+    $stmt->bindParam(":released", $this->released);
+    $stmt->bindParam(":update", $this->update);
     $stmt->bindParam(":goals", $this->goals);
     $stmt->bindParam(":lastupdate", $this->lastupdate);
 
@@ -83,7 +98,7 @@ class cfg
 
   public function getInfo($id)
   {
-    $query = "SELECT * FROM  $this->table WHERE $this->id = :id LIMIT 1";
+    $query = "SELECT * FROM $this->table WHERE $this->id = :id LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
@@ -91,5 +106,5 @@ class cfg
 
     return json_encode($result);
   }
-  
+
 }

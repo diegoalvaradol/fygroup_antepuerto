@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../models/class.ship.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../models/class.config.php';
-date_default_timezone_set('America/Santiago');
 
 class outerPort
 {
@@ -50,15 +49,14 @@ class outerPort
     $this->agency          = htmlspecialchars(strip_tags($this->agency ?? ''));
     $this->cellphonedriver = htmlspecialchars(strip_tags($this->cellphonedriver ?? ''));
     $this->arrivaldate     = $this->arrivaldate;
-    //$this->departuredate   = $this->departuredate;
-    $this->comodity     = htmlspecialchars(strip_tags($this->comodity));
-    $this->booking      = htmlspecialchars(strip_tags($this->booking));
-    $this->stay         = htmlspecialchars(strip_tags($this->stay ?? ''));
-    $this->observations = htmlspecialchars(strip_tags($this->observations));
-    $this->pallets      = htmlspecialchars(strip_tags($this->pallets));
-    $this->origin       = htmlspecialchars(strip_tags($this->origin));
-    $this->created      = $this->created;
-    $this->createdby    = htmlspecialchars(strip_tags($this->createdby));
+    $this->comodity        = htmlspecialchars(strip_tags($this->comodity));
+    $this->booking         = htmlspecialchars(strip_tags($this->booking));
+    $this->stay            = htmlspecialchars(strip_tags($this->stay ?? ''));
+    $this->observations    = htmlspecialchars(strip_tags($this->observations));
+    $this->pallets         = htmlspecialchars(strip_tags($this->pallets));
+    $this->origin          = htmlspecialchars(strip_tags($this->origin));
+    $this->created         = $this->created;
+    $this->createdby       = htmlspecialchars(strip_tags($this->createdby));
 
     $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
     $stmt->bindParam(":carplate", $this->carplate);
@@ -69,7 +67,6 @@ class outerPort
     $stmt->bindParam(":agency", $this->agency);
     $stmt->bindParam(":cellphonedriver", $this->cellphonedriver);
     $stmt->bindParam(":arrivaldate", $this->arrivaldate);
-    //$stmt->bindParam(":departuredate", $this->departuredate);
     $stmt->bindParam(":comodity", $this->comodity);
     $stmt->bindParam(":booking", $this->booking);
     $stmt->bindParam(":stay", $this->stay);
@@ -236,7 +233,7 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY row_id ASC";
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY row_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -389,15 +386,7 @@ class outerPort
     ";
 
     return $table;
-
-    ?>
-    <script>
-      let nave = $('#nave').val();
-      $('#nave').empty();
-      $('#nave').append($('<option>', {value: nave, text: nave}));
-    </script>
-    <?php
-}
+  }
 
   public function downloadTableContainerExcel($nave = '', $patente = '', $guia = '')
   {
@@ -421,7 +410,7 @@ class outerPort
       $filtros[] = "%$guia%";
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY row_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY row_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -530,8 +519,9 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY row_id ASC";
-    $stmt        = $this->conexion->prepare($query);
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY row_id ASC";
+    print_r($query);
+    $stmt = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -699,7 +689,7 @@ class outerPort
       $filtros[] = "%$guia%";
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY row_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY row_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
