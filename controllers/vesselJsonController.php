@@ -6,16 +6,17 @@ $searchForm = isset($_POST['search']) ? $_POST['search'] : '';
 $search     = "%{$searchForm}%";
 
 /* Solo muestra aquellas naves que posean una ETD mayor al día en curso */
-if(isset($_POST['current']) && ($_POST['current'] == 1)){
+if (isset($_POST['current']) && ($_POST['current'] == 1)) {
   $query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search AND finished = 1 AND etd > NOW() LIMIT 10";
 }
 
 /* Muestra todas las naves cargadas en el sistema */
-if(isset($_POST['all']) && ($_POST['all'] == 1)){
+if (isset($_POST['all']) && ($_POST['all'] == 1)) {
   $query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search LIMIT 10";
 }
 
-$stmt  = $db->prepare($query);
+print_r($query);
+$stmt = $db->prepare($query);
 $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
