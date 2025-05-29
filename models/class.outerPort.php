@@ -954,7 +954,7 @@ class outerPort
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
           $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
-          'Sin hora de salida.';
+          $departure = 'Sin hora de salida.';
         }
 
         if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
