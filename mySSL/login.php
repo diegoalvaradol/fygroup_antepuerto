@@ -69,8 +69,9 @@ if (isset($_SESSION['user'])) {
                       <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-user btn-block" onclick="loadSession()">
-                      <i class="fas fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+                    <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="loadSession()">
+                      <span id="loadBtnText"><i class="fas fa-solid fa-right-to-bracket"></i> Iniciar Sesión</span>
+                      <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                     </button>
                   </form>
 
@@ -91,14 +92,10 @@ if (isset($_SESSION['user'])) {
     </div> <!-- End row -->
   </div> <!-- End container -->
 
-  <!-- Bootstrap core JavaScript-->
+  <!-- Scripts -->
   <script src="../assets/vendor/jquery/jquery.min.js"></script>
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
   <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
   <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
 </html>
@@ -126,7 +123,7 @@ if (isset($_SESSION['user'])) {
     inputRun.value = cuerpoFormateado + '-' + dv;
   }
 
-  var validaRut = function(rut) {
+  var validaRut = function (rut) {
     rut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
 
     if (rut.length < 2) return false;
@@ -156,10 +153,13 @@ if (isset($_SESSION['user'])) {
     }
   }
 
-  var loadSession = function() {
+  var loadSession = function () {
     const run = $('#run').val();
     const password = $('#password').val();
-    var division = 'ssl'; /* Division ssl */
+    const division = 'ssl'; // División ssl
+    const btn = $('#loadBtn');
+    const text = $('#loadBtnText');
+    const spinner = $('#loadBtnSpinner');
 
     if (!run || !password) {
       Swal.fire({
@@ -168,9 +168,13 @@ if (isset($_SESSION['user'])) {
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
-
       return;
     }
+
+    // Mostrar spinner, ocultar texto y desactivar botón
+    text.addClass('d-none');
+    spinner.removeClass('d-none');
+    btn.prop('disabled', true);
 
     $.ajax({
       url: '../controllers/loginController.php',
@@ -178,7 +182,7 @@ if (isset($_SESSION['user'])) {
       type: "POST",
     }).done(function(x) {
       if(x == 'OK'){
-        setTimeout(function() {
+        setTimeout(function () {
           window.location = "dashboard.php";
         }, 3000);
       }else if(x == 'NOOK'){

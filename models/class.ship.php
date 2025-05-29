@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/class.port.php';
 require_once __DIR__ . '/../models/class.shipLine.php';
-
 class ship
 {
   private $conexion;

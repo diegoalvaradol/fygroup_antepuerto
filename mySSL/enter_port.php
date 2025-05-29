@@ -179,7 +179,10 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                                                 </div>
                                             </div>
 
-                                            <button type='button' class='btn btn-primary btn-user btn-block' onclick="savePort()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
+                                            <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="savePort()">
+                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Registrar Puerto</span>
+                                              <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                            </button>
                                         </form>
                                 </div>
                             </div>
@@ -500,6 +503,9 @@ var savePort = function() {
   const form = document.getElementById('portForm');
   const formData = new FormData(form);
   let hasError = false;
+  const btn = $('#loadBtn');
+  const text = $('#loadBtnText');
+  const spinner = $('#loadBtnSpinner');
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));

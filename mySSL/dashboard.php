@@ -12,7 +12,6 @@ $user = new user($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $admin   = $user->isAdmin($_SESSION["user"]["run"]);
-
 $releasedTime = new DateTime($infoCfg['released_date']);
 $updateTime   = new DateTime($infoCfg['update_date']);
 ?>
@@ -528,7 +527,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
     <!-- Bootstrap JS (necesario para popover) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
+</html>
 
 <!-- JAVASCRIPT -->
 <script>
@@ -701,4 +700,3 @@ $(document).ready(function() {
   actualizarReloj(); /* Primera llamada */
 });
 </script>
-</html>

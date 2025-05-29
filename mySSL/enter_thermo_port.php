@@ -246,7 +246,10 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
                                             <input type="hidden" id="origin" name="origin" value="2">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
-                                            <button type='button' class='btn btn-primary btn-user btn-block' onclick="saveInTermo()"><i class='fas fa-solid fa-check-circle'></i> Ingresar</button>
+                                            <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveInTermo()">
+                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Ingresar Termo</span>
+                                              <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                            </button>
                                         </form>
                                 </div>
                             </div>
@@ -545,6 +548,9 @@ var saveInTermo = function() {
   const form = document.getElementById('inTermoForm');
   const formData = new FormData(form);
   let hasError = false;
+  const btn = $('#loadBtn');
+  const text = $('#loadBtnText');
+  const spinner = $('#loadBtnSpinner');
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
@@ -566,6 +572,10 @@ var saveInTermo = function() {
 
   /* Hace envio de los datos a traves del formulario */
   if(!hasError){
+    text.addClass('d-none');
+    spinner.removeClass('d-none');
+    btn.prop('disabled', true);
+
     $.ajax({
       url: '../controllers/outerPortController.php',
       data: $('#inTermoForm').serialize(),

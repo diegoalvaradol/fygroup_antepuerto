@@ -261,9 +261,13 @@ class outerPort
                 </div>
               </div>
 
-              <button type='submit' class='btn btn-sm btn-primary btn-user btn-block'><i class='fas fa-solid fa-search'></i> Buscar</button>
-              <button type='button' class='btn btn-sm btn-success btn-user btn-block' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-              <button type='button' class='btn btn-sm btn-warning btn-user btn-block' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+              <div class='d-flex gap-2'>
+                <button type='submit' class='btn btn-sm btn-primary btn-user'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                </br>
+                <button type='button' class='btn btn-sm btn-success btn-user' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+                </br>
+                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+              </div>
             </form>
           </div>
         </div>
@@ -520,8 +524,7 @@ class outerPort
 
     $whereClause = implode(' AND ', $conditions);
     $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY row_id ASC";
-    print_r($query);
-    $stmt = $this->conexion->prepare($query);
+    $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -548,9 +551,11 @@ class outerPort
                 </div>
               </div>
 
-              <button type='submit' class='btn btn-sm btn-primary btn-user btn-block'><i class='fas fa-solid fa-search'></i> Buscar</button>
-              <button type='button' class='btn btn-sm btn-success btn-user btn-block' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-              <button type='button' class='btn btn-sm btn-warning btn-user btn-block' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+              <div class='d-flex gap-2'>
+                <button type='submit' class='btn btn-sm btn-primary btn-user'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                <button type='button' class='btn btn-sm btn-success btn-user' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+              </div>
             </form>
           </div>
         </div>

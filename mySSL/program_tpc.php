@@ -132,7 +132,6 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
-
                     </div>
                 </div>
             </li>
