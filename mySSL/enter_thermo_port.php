@@ -3,12 +3,15 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/class.outerPort.php';
 require_once __DIR__ . '/../models/class.config.php';
+require_once __DIR__ . '/../models/class.user.php';
 
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
 $cfg  = new cfg($db);
+$user = new user($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
+$admin   = $user->isAdmin($_SESSION["user"]["run"]);
 ?>
 
 <!-- HTML -->
@@ -89,6 +92,22 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     </div>
                 </div>
             </li>
+
+            <?php if ($admin): ?>
+            <!-- Nav Item - Reportes Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReporte" aria-expanded="true" aria-controls="collapseReporte">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Reportes</span>
+                </a>
+                <div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Items:</h6>
+                        <a class="collapse-item" href="ship_report.php">Reporte de Naves</a>
+                    </div>
+                </div>
+            </li>
+            <?php endif; ?>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

@@ -69,6 +69,10 @@ switch ($url) {
     require 'reset_form.php';
     break;
 
+  case '/ship_report':
+    require 'ship_report.php';
+    break;
+
   default:
     http_response_code(404);
     require __DIR__ . '/mySSL/404.php';

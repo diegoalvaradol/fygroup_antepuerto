@@ -129,9 +129,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userModal" style="color: #0483cd;">
                                     <i class="fas fa-user fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Perfil
                                 </a>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">
-                                    <i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema
-                                </a>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#licenceModal" style="color: #0483cd;">
                                     <i class="fas fa-copyright fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Licencia
                                 </a>
@@ -310,39 +307,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" data-dismiss="modal" >Cancelar</button>
                     <a class="btn btn-danger" href="logout.php" onclick="finishCountDown()"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Info System Modal-->
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Acerca del Sistema</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <small><b>Nombre: </b><?php echo $infoCfg['name']; ?></small>
-                    <br>
-                    <small><b>Versión: </b><?php echo $infoCfg['version']; ?></small>
-                    <br>
-                    <small><b>Compilación: </b><?php echo $infoCfg['compilation']; ?></small>
-                    <br>
-                    <small><b>Lanzamiento: </b><?php echo $releasedTime->format('d-m-Y H:i'); ?></small>
-                    <br>
-                    <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
-                    <br>
-                    <small><b>Autor: </b><?php echo $infoCfg['author']; ?></small>
-                    <br>
-                    <small><b>Programador y Diseñador: </b><?php echo $infoCfg['author']; ?></small>
-                    <br>
-                    <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
-                    <br>
-                    <small><b> Correo: </b><a href="mailto:diego.alvaraado@gmail.com" target="_blank"><b><i class="fas fa-solid fa-envelope" style="color: #1768a6;"></i></i> diego.alvaraado@gmail.com </b></a></small>
                 </div>
             </div>
         </div>

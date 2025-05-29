@@ -53,7 +53,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
             <!-- Heading -->
             <div class="sidebar-heading">Sistema Antepuerto</div>
-            <div class="sidebar-heading">(Portal Cliente)</div>
 
             <!-- Nav Item - Antepuerto Collapse Menu -->
             <li class="nav-item">
@@ -108,11 +107,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
-                        <label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,9 +115,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">
-                                    <i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema
-                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">
                                     <i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión
@@ -134,9 +125,16 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Tabla de Contenedores -->
-                <?php $tableContainer = $port->getTableContainer(); ?>
-                <?php echo $tableContainer; ?>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-1 text-gray-800">Reporte de Contenedores</h1>
+
+                    <!-- Tabla de Contenedores -->
+                    <?php $tableContainer = $port->getTableContainer(); ?>
+                    <?php echo $tableContainer; ?>
+                </div>
+                <!-- container-fluid -->
             </div>
             <!-- End of Main Content -->
 
@@ -176,61 +174,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Info System Modal-->
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Acerca del Sistema</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <small><b>Nombre: </b><?php echo $infoCfg['name']; ?></small>
-                    <br>
-                    <small><b>Versión: </b><?php echo $infoCfg['version']; ?></small>
-                    <br>
-                    <small><b>Compilación: </b><?php echo $infoCfg['compilation']; ?></small>
-                    <br>
-                    <small><b>Lanzamiento: </b> 01 de mayo de 2025.</small>
-                    <br>
-                    <small><b>Últ. Actualización: </b> 06 de mayo de 2025.</small>
-                    <br>
-                    <small><b>Autor: </b> Diego Alvarado López.</small>
-                    <br>
-                    <small><b>Programador y Diseñador: </b> Diego Alvarado López.</small>
-                    <br>
-                    <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
-                    <br>
-                    <small><b> Correo: </b><a href="mailto:diego.alvaraado@gmail.com" target="_blank"><b><i class="fas fa-solid fa-envelope" style="color: #1768a6;"></i></i> diego.alvaraado@gmail.com </b></a></small>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Añadir hora de salida del camión contenedor -->
-    <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="addHourContainerModal" style="display:none; position:fixed; width:50%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-    <h4 id="h4-departure-hour"></h4>
-    <form id="addHourContainerForm">
-        <div class="form-group row">
-            <div class="col-sm-12">
-              <label id="label-stay" style="color:darkorange;"></label>
-              </br>
-              <label>Hora de salida:</label>
-              <input type="datetime-local" class="form-control form-control-user" id="dateout" name="dateout">
-              <small class="text-danger" id="error-dateout"></small>
-            </div>
-        </div>
-
-        <input type="hidden" id="rowId" name="rowId">
-        <input type="hidden" id="originId" name="originId">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
-        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
-    </form>
     </div>
 
     <!-- SweetAlert2 CDN -->
@@ -398,5 +341,54 @@ $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
   actualizarReloj(); /* Primera llamada */
   startCountDown();
+
+  $('#nave').select2({
+    placeholder: 'Seleccione una motonave...',
+    allowClear: true,
+    tags: false,
+    width: '100%',
+    ajax: {
+      url: '../controllers/vesselJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term, /* Lo que escribe el usuario */
+          current: 1 /* Muestra las naves que cuentan con una ETA mayor a la fecha actual */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#patente').select2({
+    placeholder: 'Seleccione una patente...',
+    allowClear: true,
+    tags: false,
+    width: '100%',
+    ajax: {
+      url: '../controllers/carPlateJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
 });
 </script>

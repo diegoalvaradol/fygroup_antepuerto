@@ -32,61 +32,74 @@ if (isset($_SESSION['user'])) {
 
 <style>
     body {
-    background-image: url("../img/coquimbo_port_background.jpg");
-    background-size: cover;
+      background-image: url("../img/coquimbo_port_background.jpg");
+      background-size: cover;
     }
 </style>
 
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5 mx-auto" style="max-width: 500px;">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <div class="col-lg-12 text-center p-4">
-                                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
-                                <small class="text-success" style="font-size: xx-large;">Sistema Integral SSL.</small>
-                                <br>
-                                <small class="text-success" style="font-size: x-large;">Portal Cliente.</small>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="px-5 pb-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
-                                    </div>
-                                    <form id="loginForm">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
-                                            <small id="info-run" class="text-danger"></small>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
-                                        </div>
-                                        <button type="button" class="btn btn-success btn-user btn-block" onclick="loadSession()">
-                                            <i class="fas fa-right-to-bracket"></i> Iniciar Sesión
-                                        </button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="row justify-content-center w-100">
+      <div class="col-xl-6 col-lg-8 col-md-10">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-12 text-center pt-4">
+                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                <div>
+                  <small class="text-success" style="font-size:xx-large;">Sistema Integral SSL.</small><br>
+                  <small class="text-success" style="font-size:x-large;">Portal Cliente.</small>
                 </div>
-            </div>
-        </div>
-    </div>
+              </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="../assets/js/sb-admin-2.min.js"></script>
+              <div class="col-12">
+                <div class="px-4 pb-5 pt-3">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
+                  </div>
+
+                  <form id="loginForm">
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user" id="run" name="run"
+                        oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
+                      <small id="info-run"></small>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
+                    </div>
+
+                    <button id="loadBtn" type="button" class="btn btn-success btn-user btn-block" onclick="loadSession()">
+                      <span id="loadBtnText"><i class="fas fa-solid fa-right-to-bracket"></i> Iniciar Sesión</span>
+                      <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    </button>
+                  </form>
+
+                  <hr>
+
+                  <div class="text-center">
+                    <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" href="register.php" style="font-size: medium;">¿No tienes una cuenta? ¡Crea una!</a>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- End row -->
+          </div> <!-- End card-body -->
+        </div> <!-- End card -->
+      </div> <!-- End col -->
+    </div> <!-- End row -->
+  </div> <!-- End container -->
+
+  <!-- Scripts -->
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
-
+</html>
 </html>
 
 <!-- JAVASCRIPT -->
@@ -146,6 +159,9 @@ if (isset($_SESSION['user'])) {
     const run = $('#run').val();
     const password = $('#password').val();
     var division = 'portal'; /* Division portal cliente */
+    const btn = $('#loadBtn');
+    const text = $('#loadBtnText');
+    const spinner = $('#loadBtnSpinner');
 
     if (!run || !password) {
       Swal.fire({
@@ -157,6 +173,12 @@ if (isset($_SESSION['user'])) {
 
       return;
     }
+
+    // Mostrar spinner, ocultar texto y desactivar botón
+    text . addClass('d-none');
+    spinner . removeClass('d-none');
+    btn . prop('disabled', true);
+
 
     $.ajax({
       url: '../controllers/loginController.php',

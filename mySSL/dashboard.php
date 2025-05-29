@@ -10,8 +10,8 @@ $port = new outerPort($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg = json_decode($cfg->getInfo(1), true);
-$admin   = $user->isAdmin($_SESSION["user"]["run"]);
+$infoCfg      = json_decode($cfg->getInfo(1), true);
+$admin        = $user->isAdmin($_SESSION["user"]["run"]);
 $releasedTime = new DateTime($infoCfg['released_date']);
 $updateTime   = new DateTime($infoCfg['update_date']);
 ?>
@@ -108,7 +108,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="program_tpc.php">Reporte de Naves</a>
+                        <a class="collapse-item" href="ship_report.php">Reporte de Naves</a>
                     </div>
                 </div>
             </li>

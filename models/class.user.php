@@ -160,7 +160,7 @@ class user
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (in_array($result['run'], ['18.923.079-6'])) {
+    if (in_array($result['run'], ['18.923.079-6', '15.798.016-5'])) {
       return true;
     } else {
       return false;

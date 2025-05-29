@@ -102,7 +102,7 @@ if (isset($_SESSION['user'])) {
 
 <!-- JAVASCRIPT -->
 <script>
-  function formatearRut(inputRun) {
+  function formatearRut (inputRun) {
     let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
 
     /* Separar cuerpo y DV */
