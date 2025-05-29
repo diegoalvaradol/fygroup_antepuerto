@@ -954,7 +954,7 @@ class outerPort
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
           $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
-          $departure = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : 'Sin hora de salida.';
+          'Sin hora de salida.';
         }
 
         if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
