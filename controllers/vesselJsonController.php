@@ -7,7 +7,7 @@ $search     = "%{$searchForm}%";
 
 /* Solo muestra aquellas naves que posean una ETD mayor al día en curso */
 if (isset($_POST['current']) && ($_POST['current'] == 1)) {
-  $query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search AND finished = 0 AND etd > NOW() LIMIT 10";
+  $query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search AND finished = 0 LIMIT 10";
 }
 
 /* Muestra todas las naves cargadas en el sistema */

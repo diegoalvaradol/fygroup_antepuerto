@@ -3,13 +3,13 @@ require_once __DIR__ . '/../models/class.ship.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../models/class.config.php';
 require_once __DIR__ . '/../models/class.user.php';
-
 class outerPort
 {
   private $conexion;
   protected $table = "app_outer_port";
 
   public $id              = "row_id";
+  public $countervessel   = "counter_vessel";
   public $vessel          = "vessel_id";
   public $carplate        = "car_plate";
   public $guide           = "guide_number";
@@ -25,7 +25,7 @@ class outerPort
   public $stay            = "stay";
   public $observations    = "observations";
   public $pallets         = "pallets_quantity";
-  public $origin          = "origin";
+  public $origin          = "origin"; /* [1 => Contenedores, 2 => Termos] */
   public $created         = "created";
   public $createdby       = "created_by";
 
@@ -36,11 +36,12 @@ class outerPort
 
   public function save()
   {
-    $query = "INSERT INTO $this->table (vessel_id, car_plate, guide_number, container, seal_number, exporter, agency, cellphone_driver, arrival_date, comodity, booking, stay, observations, pallets_quantity, origin, created, created_by)";
-    $query .= " VALUES (:vessel, :carplate, :guide, :container, :seal, :exporter, :agency, :cellphonedriver, :arrivaldate, :comodity, :booking, :stay, :observations, :palletsquantity, :origin, :created, :createdby)";
+    $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate, guide_number, container, seal_number, exporter, agency, cellphone_driver, arrival_date, comodity, booking, stay, observations, pallets_quantity, origin, created, created_by)";
+    $query .= " VALUES (:countervessel, :vessel, :carplate, :guide, :container, :seal, :exporter, :agency, :cellphonedriver, :arrivaldate, :comodity, :booking, :stay, :observations, :palletsquantity, :origin, :created, :createdby)";
 
     $stmt = $this->conexion->prepare($query);
 
+    $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
     $this->vessel          = htmlspecialchars(strip_tags($this->vessel));
     $this->carplate        = htmlspecialchars(strip_tags($this->carplate));
     $this->guide           = htmlspecialchars(strip_tags($this->guide));
@@ -59,6 +60,7 @@ class outerPort
     $this->created         = $this->created;
     $this->createdby       = htmlspecialchars(strip_tags($this->createdby));
 
+    $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
     $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
     $stmt->bindParam(":carplate", $this->carplate);
     $stmt->bindParam(":guide", $this->guide);
@@ -289,7 +291,7 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY row_id ASC";
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.vessel_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -362,7 +364,7 @@ class outerPort
       foreach ($result as $data) {
         $attr = null;
 
-        $createdTime = new DateTime($data[$this->created]);
+        $createdTime = new DateTime($data[$this->arrivaldate]);
         $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
         $created = $createdTime->format('d-m-Y H:i');
@@ -399,7 +401,7 @@ class outerPort
         }
 
         $tr .= "<tr " . $attr . ">";
-        $tr .= "<td>" . $data[$this->id] . "</td>";
+        $tr .= "<td>" . $data[$this->countervessel] . "</td>";
         $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
         $tr .= "<td>" . $data[$this->carplate] . "</td>";
         $tr .= "<td>" . $data[$this->guide] . "</td>";
@@ -470,7 +472,7 @@ class outerPort
       $filtros[] = "%$guia%";
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY row_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -491,7 +493,7 @@ class outerPort
     $stayTime = null;
 
     foreach ($result as $data) {
-      $createdTime = new DateTime($data[$this->created]);
+      $createdTime = new DateTime($data[$this->arrivaldate]);
       $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
       $created   = $createdTime->format('d-m-Y H:i');
@@ -513,7 +515,7 @@ class outerPort
       }
 
       $sheet->fromArray([
-        $data[$this->id],
+        $data[$this->countervessel],
         $ship->getVesselName($data[$this->vessel]),
         $data[$this->carplate],
         $data[$this->guide],
@@ -579,7 +581,7 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY row_id ASC";
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.vessel_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -646,7 +648,7 @@ class outerPort
       foreach ($result as $data) {
         $attr = null;
 
-        $createdTime = new DateTime($data[$this->created]);
+        $createdTime = new DateTime($data[$this->arrivaldate]);
         $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
         $created = $createdTime->format('d-m-Y H:i');
@@ -683,7 +685,7 @@ class outerPort
         }
 
         $tr .= "<tr " . $attr . ">";
-        $tr .= "<td>" . $data[$this->id] . "</td>";
+        $tr .= "<td>" . $data[$this->countervessel] . "</td>";
         $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
         $tr .= "<td>" . $data[$this->carplate] . "</td>";
         $tr .= "<td>" . $data[$this->guide] . "</td>";
@@ -750,7 +752,7 @@ class outerPort
       $filtros[] = "%$guia%";
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY row_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -770,7 +772,7 @@ class outerPort
     $stayTime = null;
 
     foreach ($result as $data) {
-      $createdTime = new DateTime($data[$this->created]);
+      $createdTime = new DateTime($data[$this->arrivaldate]);
       $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
       $created = $createdTime->format('d-m-Y H:i');
@@ -794,7 +796,7 @@ class outerPort
       }
 
       $sheet->fromArray([
-        $data[$this->id],
+        $data[$this->countervessel],
         $ship->getVesselName($data[$this->vessel]),
         $data[$this->carplate],
         $data[$this->guide],
@@ -865,7 +867,7 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY p.row_id ASC";
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY p.vessel_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -939,7 +941,7 @@ class outerPort
       foreach ($result as $data) {
         $attr = null;
 
-        $createdTime = new DateTime($data[$this->created]);
+        $createdTime = new DateTime($data[$this->arrivaldate]);
         $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
         $created = $createdTime->format('d-m-Y H:i');
@@ -976,7 +978,7 @@ class outerPort
         }
 
         $tr .= "<tr " . $attr . ">";
-        $tr .= "<td>" . $data[$this->id] . "</td>";
+        $tr .= "<td>" . $data[$this->countervessel] . "</td>";
         $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
         $tr .= "<td>" . $data[$this->carplate] . "</td>";
         $tr .= "<td>" . $data[$this->guide] . "</td>";
@@ -1048,7 +1050,7 @@ class outerPort
       $filtros[] = $hasta . ' 23:59:59';
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY p.row_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -1068,7 +1070,7 @@ class outerPort
     $stayTime = null;
 
     foreach ($result as $data) {
-      $createdTime = new DateTime($data[$this->created]);
+      $createdTime = new DateTime($data[$this->arrivaldate]);
       $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
       $created = $createdTime->format('d-m-Y H:i');
@@ -1092,7 +1094,7 @@ class outerPort
       }
 
       $sheet->fromArray([
-        $data[$this->id],
+        $data[$this->countervessel],
         $ship->getVesselName($data[$this->vessel]),
         $data[$this->carplate],
         $data[$this->guide],

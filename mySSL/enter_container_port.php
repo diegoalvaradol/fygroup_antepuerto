@@ -191,6 +191,13 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                 <div class="card-body">
                                         <form class="form-container" id="inContainerForm">
                                             <div class="form-group row">
+                                              <div class="col-sm-6">
+                                                <label for="countervessel" style="color:#293c74;"><b>N° de Camión</b></label>
+                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" style="width:10%;">
+                                              </div>
+                                            </div>
+
+                                            <div class="form-group row">
                                                 <div class="col-sm-6">
                                                   <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
                                                   <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
@@ -839,7 +846,7 @@ $(document).ready(function() {
       $.ajax({
         url: '../controllers/vesselInfoController.php',
         method: 'POST',
-        data: {id: vessel},
+        data: {id: vessel, origin: 1},
         success: function (response) {
           $('#info-vessel').html(response);
         },
@@ -847,8 +854,21 @@ $(document).ready(function() {
           $('#info-vessel').html('Error al obtener la información.');
         }
       });
+
+      $.ajax({
+        url: '../controllers/setCounterVesselController.php',
+        method: 'POST',
+        data: {id: vessel, origin: 1},
+        success: function (response) {
+          $('#countervessel').val(response);
+        },
+        error: function () {
+          $('#countervessel').val(0);
+        }
+      });
     }else{
       $('#info-vessel').html('');
+      $('#countervessel').val(null);
     }
   });
 

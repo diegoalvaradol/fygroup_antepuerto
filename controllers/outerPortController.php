@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $created    = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
 
   $port                  = new outerPort($db);
+  $port->countervessel   = $_POST["countervessel"];
   $port->vessel          = $_POST["vessel"];
   $port->carplate        = strtoupper($_POST["carplate"]);
   $port->guide           = $_POST["guidenumber"];
