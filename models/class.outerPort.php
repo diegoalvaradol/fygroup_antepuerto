@@ -291,7 +291,7 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.vessel_id ASC";
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -472,7 +472,7 @@ class outerPort
       $filtros[] = "%$guia%";
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.vessel_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -581,7 +581,7 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.vessel_id ASC";
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -752,7 +752,7 @@ class outerPort
       $filtros[] = "%$guia%";
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.vessel_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -867,7 +867,7 @@ class outerPort
     }
 
     $whereClause = implode(' AND ', $conditions);
-    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY p.vessel_id ASC";
+    $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -1050,7 +1050,7 @@ class outerPort
       $filtros[] = $hasta . ' 23:59:59';
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY p.vessel_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
