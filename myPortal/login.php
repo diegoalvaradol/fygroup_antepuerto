@@ -60,14 +60,14 @@ if (isset($_SESSION['user'])) {
                   </div>
 
                   <form id="loginForm">
-                    <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="run" name="run"
-                        oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
-                      <small id="info-run"></small>
+                    <div class="form-group" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                      <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9" style="text-align: center;">
+                      <span id="info-run"></span>
                     </div>
 
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Contraseña">
+                    <div class="form-group" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                      <input type="password" class="form-control form-control-user" id="password" name="password" oninput="validaPassword(this.value)" placeholder="Contraseña" style="text-align: center;">
+                      <span id="info-password"></span>                    
                     </div>
 
                     <button id="loadBtn" type="button" class="btn btn-success btn-user btn-block" onclick="loadSession()">
@@ -95,7 +95,7 @@ if (isset($_SESSION['user'])) {
 
 <!-- JAVASCRIPT -->
 <script>
-  function formatearRut(inputRun) {
+  var formatearRut = function (inputRun) {
     let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
 
     /* Separar cuerpo y DV */
@@ -114,6 +114,14 @@ if (isset($_SESSION['user'])) {
     }
 
     inputRun.value = cuerpoFormateado + '-' + dv;
+  }
+
+  var validaPassword = function (password){
+    if(password !== ''){
+      $('#info-password').html('<i class="fas fa-solid fa-check-circle fa-lg" style="color: #63E6BE;"></i>');
+    }else{
+      $('#info-password').html('<i class="fa-solid fa-triangle-exclamation fa-lg" style="color: #FFD43B;"></i>');
+    }
   }
 
   var validaRut = function(rut) {
@@ -140,16 +148,16 @@ if (isset($_SESSION['user'])) {
     else dvCalculado = dvEsperado.toString();
 
     if(dvCalculado === dvIngresado){
-      $('#info-run').html('¡Run valido!').addClass('text-success');
+      $('#info-run').html('<i class="fas fa-solid fa-check-circle fa-lg" style="color: #63E6BE;"></i>');
     }else{
-      $('#info-run').html('¡Run invalido!').addClass('text-danger');
+      $('#info-run').html('<i class="fas fa-solid fa-circle-xmark fa-lg" style="color: #EA5353;"></i>');
     }
   }
 
   var loadSession = function() {
     const run = $('#run').val();
     const password = $('#password').val();
-    var division = 'portal'; /* Division portal cliente */
+    const division = 'portal'; /* Division portal cliente */
     const btn = $('#loadBtn');
     const text = $('#loadBtnText');
     const spinner = $('#loadBtnSpinner');
