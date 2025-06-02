@@ -97,6 +97,52 @@ class outerPort
     return $stmt->execute();
   }
 
+  public function updateContainerThermo()
+  {
+    $query = "UPDATE $this->table SET counter_vessel = :countervessel, vessel_id = :vessel, car_plate = :carplate, guide_number = :guide, container = :container, seal_number = :seal, exporter = :exporter, agency = :agency, cellphone_driver = :cellphonedriver, arrival_date = :arrivaldate, comodity = :comodity, booking = :booking, stay = :stay, observations = :observations, pallets_quantity = :palletsquantity, created_by = :createdby WHERE row_id = :id AND origin = :origin";
+    $stmt  = $this->conexion->prepare($query);
+
+    $this->id              = htmlspecialchars(strip_tags($this->id));
+    $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
+    $this->vessel          = htmlspecialchars(strip_tags($this->vessel));
+    $this->carplate        = htmlspecialchars(strip_tags($this->carplate));
+    $this->guide           = htmlspecialchars(strip_tags($this->guide));
+    $this->container       = htmlspecialchars(strip_tags($this->container ?? ''));
+    $this->seal            = htmlspecialchars(strip_tags($this->seal ?? ''));
+    $this->exporter        = htmlspecialchars(strip_tags($this->exporter));
+    $this->agency          = htmlspecialchars(strip_tags($this->agency ?? ''));
+    $this->cellphonedriver = htmlspecialchars(strip_tags($this->cellphonedriver ?? ''));
+    $this->arrivaldate     = $this->arrivaldate;
+    $this->comodity        = htmlspecialchars(strip_tags($this->comodity));
+    $this->booking         = htmlspecialchars(strip_tags($this->booking));
+    $this->stay            = htmlspecialchars(strip_tags($this->stay ?? ''));
+    $this->observations    = htmlspecialchars(strip_tags($this->observations));
+    $this->pallets         = htmlspecialchars(strip_tags($this->pallets));
+    $this->origin          = htmlspecialchars(strip_tags($this->origin));
+    $this->createdby       = htmlspecialchars(strip_tags($this->createdby));
+
+    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+    $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
+    $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
+    $stmt->bindParam(":carplate", $this->carplate);
+    $stmt->bindParam(":guide", $this->guide);
+    $stmt->bindParam(":container", $this->container);
+    $stmt->bindParam(":seal", $this->seal);
+    $stmt->bindParam(":exporter", $this->exporter);
+    $stmt->bindParam(":agency", $this->agency);
+    $stmt->bindParam(":cellphonedriver", $this->cellphonedriver);
+    $stmt->bindParam(":arrivaldate", $this->arrivaldate);
+    $stmt->bindParam(":comodity", $this->comodity);
+    $stmt->bindParam(":booking", $this->booking);
+    $stmt->bindParam(":stay", $this->stay);
+    $stmt->bindParam(":observations", $this->observations);
+    $stmt->bindParam(":palletsquantity", $this->pallets, PDO::PARAM_INT);
+    $stmt->bindParam(":origin", $this->origin, PDO::PARAM_INT);
+    $stmt->bindParam(":createdby", $this->createdby);
+
+    return $stmt->execute();
+  }
+
   public function getTotalContainer()
   {
     $user  = new user($this->conexion);
@@ -263,8 +309,10 @@ class outerPort
 
   public function getTableContainer()
   {
-    $ship  = new ship($this->conexion);
-    $count = 0;
+    $ship      = new ship($this->conexion);
+    $user      = new user($this->conexion);
+    $adminEdit = $user->isAdminEdit($_SESSION["user"]["run"]);
+    $count     = 0;
 
     /* Filtros */
     $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '';
@@ -354,6 +402,7 @@ class outerPort
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Ingresado Por</th>";
+    $adminEdit ? $thead .= "<th>Acciones</th>" : null;
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -400,6 +449,8 @@ class outerPort
           $stayTime = 'No disponible.';
         }
 
+        $btnEdit = "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
         $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
@@ -420,6 +471,7 @@ class outerPort
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
+        $adminEdit ? $tr .= "<td>" . $btnEdit . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;
@@ -553,8 +605,10 @@ class outerPort
 
   public function getTableThermo()
   {
-    $ship  = new ship($this->conexion);
-    $count = 0;
+    $ship      = new ship($this->conexion);
+    $user      = new user($this->conexion);
+    $adminEdit = $user->isAdminEdit($_SESSION["user"]["run"]);
+    $count     = 0;
 
     /* Filtros */
     $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '';
@@ -638,6 +692,7 @@ class outerPort
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Ingresado Por</th>";
+    $adminEdit ? $thead .= "<th>Acciones</th>" : null;
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -684,6 +739,8 @@ class outerPort
           $stayTime = 'No disponible.';
         }
 
+        $btnEdit = "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
         $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
@@ -700,6 +757,7 @@ class outerPort
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
+        $adminEdit ? $tr .= "<td>" . $btnEdit . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;

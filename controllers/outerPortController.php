@@ -10,8 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $rawDateInf = str_replace('T', ' ', $_POST['datein']);
   $dateIn     = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
   $created    = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
+  $id         = $_POST["origin"] == 1 ? $_POST["cntId"] : $_POST["thermoId"];
 
   $port                  = new outerPort($db);
+  $port->id              = $id;
   $port->countervessel   = $_POST["countervessel"];
   $port->vessel          = $_POST["vessel"];
   $port->carplate        = strtoupper($_POST["carplate"]);
@@ -32,9 +34,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->created         = $created ? $created->format('Y-m-d H:i:s') : null;
   $port->createdby       = $_POST["createdby"];
 
-  if ($port->save()) {
-    echo $_POST["origin"] == 1 ? "OKC" : "OKT";
+  if ($_POST["isUpdate"] == 1) {
+    if ($port->updateContainerThermo()) {
+      echo $_POST["origin"] == 1 ? "OKUC" : "OKUT";
+    } else {
+      echo $_POST["origin"] == 1 ? "NOOKUC" : "NOOKUT";
+    }
   } else {
-    echo $_POST["origin"] == 1 ? "NOOKC" : "NOOKT";
+    if ($port->save()) {
+      echo $_POST["origin"] == 1 ? "OKC" : "OKT";
+    } else {
+      echo $_POST["origin"] == 1 ? "NOOKC" : "NOOKT";
+    }
   }
 }

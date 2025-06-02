@@ -12,6 +12,7 @@ $user = new user($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $admin   = $user->isAdmin($_SESSION["user"]["run"]);
+
 ?>
 
 <!-- HTML -->
@@ -190,11 +191,10 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
 
                                 <div class="card-body">
                                         <form class="form-container" id="inContainerForm">
-                                            <div class="form-group row">
-                                              <div class="col-sm-6">
-                                                <label for="countervessel" style="color:#293c74;"><b>N° de Camión</b></label>
-                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" style="width:10%;">
-                                              </div>
+                                            <div class="form-inline mb-3">
+                                                <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
+                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
+                                                <small class="text-danger" id="error-countervessel"></small>
                                             </div>
 
                                             <div class="form-group row">
@@ -203,6 +203,7 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                                   <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
                                                   <small class="text-danger" id="error-vessel"></small>
                                                 </div>
+
                                                 <div class="col-sm-6">
                                                   <small class="text-black" id="info-vessel"></small>
                                                 </div>
@@ -295,6 +296,8 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                             </div>
 
                                             <input type="hidden" id="origin" name="origin" value="1">
+                                            <input type="hidden" id="cntId" name="cntId" value="">
+                                            <input type="hidden" id="isUpdate" name="isUpdate" value="0">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveInContainer()">
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Ingresar Contenedor</span>
@@ -659,6 +662,7 @@ var saveChanges = function() {
 var saveInContainer = function() {
   const form = document.getElementById('inContainerForm');
   const formData = new FormData(form);
+  const isUpdate = $('#isUpdate').val();
   let hasError = false;
   const btn = $('#loadBtn');
   const text = $('#loadBtnText');
@@ -693,22 +697,42 @@ var saveInContainer = function() {
       data: $('#inContainerForm').serialize(),
       type: 'POST',
     }).done(function(x) {
-      if(x == 'OKC'){
-        Swal.fire({
-          title: '¡Éxito!',
-          text: '¡Ingreso de contenedor registrado exitosamente!',
-          icon: 'success',
-          confirmButtonColor: '#4CAF50'
-        }).then((result) => {
-          window.location = 'enter_container_port.php';
-        });
-      }else if(x == 'NOOKC') {
-        Swal.fire({
-          title: 'Oops...',
-          text: 'Error al registrar el ingreso del contenedor.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        });
+      if(isUpdate == 1){
+        if(x == 'OKUC'){
+          Swal.fire({
+            title: '¡Éxito!',
+            text: '¡Contenedor actualizado con éxito!',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50'
+          }).then((result) => {
+            window.location = 'enter_container_port.php';
+          });
+        }else if(x == 'NOOKUC') {
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Error al actualizar el contenedor.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
+      } else {
+        if(x == 'OKC'){
+          Swal.fire({
+            title: '¡Éxito!',
+            text: '¡Ingreso de contenedor registrado exitosamente!',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50'
+          }).then((result) => {
+            window.location = 'enter_container_port.php';
+          });
+        }else if(x == 'NOOKC') {
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Error al registrar el ingreso del contenedor.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
       }
     });
   }
@@ -737,6 +761,45 @@ var exportExcel = function(nave, condicion, exportador) {
   document.body.appendChild(form);
   form.submit();
 }
+
+var editContainer = function(id) {
+  $.ajax({
+    url: '../controllers/containerEditController.php',
+     type: 'POST',
+     data: { id: id },
+     dataType: 'json',
+     success: function(data) {
+      $('#cntId').val(id);
+      $('#countervessel').val(data.counter_vessel);
+      $('#vessel').empty();
+      $('#vessel').append($('<option>', {value: data.vessel_id, text: data.vessel_name + ' (Viaje: ' + data.voyage + ')'}));
+      $('#carplate').empty();
+      $('#carplate').append($('<option>', {value: data.car_plate, text: data.car_plate}));
+      $('#guidenumber').val(data.guide_number);
+      $('#container').val(data.container);
+      $('#sealnumber').val(data.seal_number);
+      $('#exporter').empty();
+      $('#exporter').append($('<option>', {value: data.exporter, text: data.exporter}));
+      $('#agency').empty();
+      $('#agency').append($('<option>', {value: data.agency, text: data.agency}));
+      $('#palletsquantity').val(data.pallets_quantity);
+      $('#cellphonedriver').val(data.cellphone_driver);
+      $('#datein').val(data.arrival_date);
+      $('#comodity').val(data.comodity);
+      $('#booking').val(data.booking);
+      $('#stay').val(data.stay);
+      $('#observations').val(data.observations);
+      $('#isUpdate').val(1);
+      $('#loadBtn').addClass('btn-info');
+      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Contenedor');
+      $('.scroll-to-top').trigger('click');
+    },
+    error: function() {
+      alert('Error al cargar los datos.');
+    }
+  });
+}
+
 
 $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
@@ -846,7 +909,7 @@ $(document).ready(function() {
       $.ajax({
         url: '../controllers/vesselInfoController.php',
         method: 'POST',
-        data: {id: vessel, origin: 1},
+        data: {id: vessel},
         success: function (response) {
           $('#info-vessel').html(response);
         },
@@ -920,5 +983,12 @@ $(document).ready(function() {
       cache: true
     }
   });
+});
+
+$(document).on('select2:open', function () {
+  let searchField = document.querySelector('.select2-container--open .select2-search__field');
+  if (searchField) {
+    searchField.focus();
+  }
 });
 </script>

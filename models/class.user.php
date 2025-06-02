@@ -167,4 +167,19 @@ class user
     }
   }
 
+  public function isAdminEdit($run)
+  {
+    $query = "SELECT * FROM $this->table WHERE run = :run AND division = 'SSL' LIMIT 1";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(":run", $run);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (in_array($result['run'], ['18.923.079-6', '15.798.016-5', '21.394.463-0'])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

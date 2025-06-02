@@ -190,11 +190,10 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
 
                                 <div class="card-body">
                                         <form class="form-container" id="inTermoForm">
-                                            <div class="form-group row">
-                                              <div class="col-sm-6">
-                                                <label for="countervessel" style="color:#293c74;"><b>N° de Camión</b></label>
-                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" style="width:10%;">
-                                              </div>
+                                            <div class="form-inline mb-3">
+                                                <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
+                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
+                                                <small class="text-danger" id="error-countervessel"></small>
                                             </div>
 
                                             <div class="form-group row">
@@ -271,6 +270,8 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                             </div>
 
                                             <input type="hidden" id="origin" name="origin" value="2">
+                                            <input type="hidden" id="thermoId" name="thermoId" value="">
+                                            <input type="hidden" id="isUpdate" name="isUpdate" value="0">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveInTermo()">
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Ingresar Termo</span>
@@ -573,6 +574,7 @@ var saveChanges = function() {
 var saveInTermo = function() {
   const form = document.getElementById('inTermoForm');
   const formData = new FormData(form);
+  const isUpdate = $('#isUpdate').val();
   let hasError = false;
   const btn = $('#loadBtn');
   const text = $('#loadBtnText');
@@ -607,22 +609,42 @@ var saveInTermo = function() {
       data: $('#inTermoForm').serialize(),
       type: 'POST',
     }).done(function(x) {
-      if(x == 'OKT'){
-        Swal.fire({
-          title: '¡Éxito!',
-          text: '¡Ingreso de termo registrado exitosamente!',
-          icon: 'success',
-          confirmButtonColor: '#4CAF50'
-        }).then((result) => {
-          window.location = 'enter_thermo_port.php';
-        });
-      }else if(x == 'NOOKT') {
-        Swal.fire({
-          title: 'Oops...',
-          text: 'Error al registrar el ingreso del termo.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        });
+      if(isUpdate == 1){
+        if(x == 'OKUT'){
+          Swal.fire({
+            title: '¡Éxito!',
+            text: '¡Termo actualizado con éxito!',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50'
+          }).then((result) => {
+            window.location = 'enter_thermo_port.php';
+          });
+        }else if(x == 'NOOKUT') {
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Error al actualizar el termo.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
+      } else {
+        if(x == 'OKT'){
+          Swal.fire({
+            title: '¡Éxito!',
+            text: '¡Ingreso de termo registrado exitosamente!',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50'
+          }).then((result) => {
+            window.location = 'enter_thermo_port.php';
+          });
+        }else if(x == 'NOOKT') {
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Error al registrar el ingreso del termo.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
       }
     });
   }
@@ -650,6 +672,40 @@ var exportExcel = function(nave, condicion, exportador) {
 
   document.body.appendChild(form);
   form.submit();
+}
+
+var editThermo = function(id) {
+  $.ajax({
+    url: '../controllers/thermoEditController.php',
+     type: 'POST',
+     data: { id: id },
+     dataType: 'json',
+     success: function(data) {
+      $('#thermoId').val(id);
+      $('#countervessel').val(data.counter_vessel);
+      $('#vessel').empty();
+      $('#vessel').append($('<option>', {value: data.vessel_id, text: data.vessel_name + ' (Viaje: ' + data.voyage + ')'}));
+      $('#carplate').empty();
+      $('#carplate').append($('<option>', {value: data.car_plate, text: data.car_plate}));
+      $('#guidenumber').val(data.guide_number);
+      $('#exporter').empty();
+      $('#exporter').append($('<option>', {value: data.exporter, text: data.exporter}));
+      $('#palletsquantity').val(data.pallets_quantity);
+      $('#cellphonedriver').val(data.cellphone_driver);
+      $('#datein').val(data.arrival_date);
+      $('#comodity').val(data.comodity);
+      $('#booking').val(data.booking);
+      $('#stay').val(data.stay);
+      $('#observations').val(data.observations);
+      $('#isUpdate').val(1);
+      $('#loadBtn').addClass('btn-info');
+      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Termo');
+      $('.scroll-to-top').trigger('click');
+    },
+    error: function() {
+      alert('Error al cargar los datos.');
+    }
+  });
 }
 
 $(document).ready(function() {
@@ -810,5 +866,12 @@ $(document).ready(function() {
       cache: true
     }
   });
+});
+
+$(document).on('select2:open', function () {
+  let searchField = document.querySelector('.select2-container--open .select2-search__field');
+  if (searchField) {
+    searchField.focus();
+  }
 });
 </script>
