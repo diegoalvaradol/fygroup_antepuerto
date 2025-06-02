@@ -683,6 +683,7 @@ class outerPort
     $thead .= "<th>Guía</th>";
     $thead .= "<th>Exportador</th>";
     $thead .= "<th>Pallets</th>";
+    $thead .= "<th>Teléfono</th>";
     $thead .= "<th>Entrada</th>";
     $thead .= "<th>Salida</th>";
     $thead .= "<th>Tiempo de Estadia</th>";
@@ -748,6 +749,7 @@ class outerPort
         $tr .= "<td>" . $data[$this->guide] . "</td>";
         $tr .= "<td>" . $data[$this->exporter] . "</td>";
         $tr .= "<td>" . $data[$this->pallets] . "</td>";
+        $tr .= "<td>" . $data[$this->cellphonedriver] . "</td>";
         $tr .= "<td>" . $arrival . "</td>";
         $tr .= "<td>" . $departure . "</td>";
         $tr .= "<td style='width:350px;'>" . $stayTime . "</td>";
@@ -821,7 +823,7 @@ class outerPort
 
     /* Encabezados del Excel */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Ingresado Por'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Ingresado Por'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
@@ -860,6 +862,7 @@ class outerPort
         $data[$this->guide],
         $data[$this->exporter],
         $data[$this->pallets],
+        $data[$this->cellphonedriver],
         $arrival,
         $departure,
         $stayTime,
@@ -954,9 +957,11 @@ class outerPort
                 </div>
                 <div class='col-sm-3'>
                   <input type='date' class='form-control form-control-user' id='desde' name='desde'>
+                  <small class='text-grey'>Desde</small>
                 </div>
                 <div class='col-sm-3'>
                   <input type='date' class='form-control form-control-user' id='hasta' name='hasta'>
+                  <small class='text-grey'>Hasta</small>
                 </div>
               </div>
 

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $rawDateInf = str_replace('T', ' ', $_POST['datein']);
   $dateIn     = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
   $created    = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
-  $id         = $_POST["origin"] == 1 ? $_POST["cntId"] : $_POST["thermoId"];
+  $id         = isset($_POST["cntId"]) && $_POST["cntId"] != 0 ? $_POST["cntId"] : null;
 
   $port                  = new outerPort($db);
   $port->id              = $id;

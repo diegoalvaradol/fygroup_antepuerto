@@ -227,7 +227,7 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="30" step="1" placeholder="N° de Pallets">
+                                                    <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="30" step="1" oninput="validarMaximo(this)" placeholder="N° de Pallets">
                                                     <small class="text-danger" id="error-palletsquantity"></small>
                                                 </div>
                                             </div>
@@ -237,6 +237,12 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                                     <input type="datetime-local" class="form-control form-control-user" id="datein" name="datein">
                                                     <small class="text-grey">Fecha y Hora de Entrada</small>
                                                     <small class="text-danger" id="error-datein"></small>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" maxlength="9" pattern="\d{9}" oninput="limitarTelefono(this)" placeholder="987654321">
+                                                    <small class="text-grey">N° de Teléfono</small>
+                                                    <small class="text-danger" id="error-cellphonedriver"></small>
                                                 </div>
                                             </div>
 
@@ -270,7 +276,7 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                             </div>
 
                                             <input type="hidden" id="origin" name="origin" value="2">
-                                            <input type="hidden" id="thermoId" name="thermoId" value="">
+                                            <input type="hidden" id="rowId" name="rowId" value="0">
                                             <input type="hidden" id="isUpdate" name="isUpdate" value="0">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveInTermo()">
@@ -681,7 +687,7 @@ var editThermo = function(id) {
      data: { id: id },
      dataType: 'json',
      success: function(data) {
-      $('#thermoId').val(id);
+      $('#rowId').val(id);
       $('#countervessel').val(data.counter_vessel);
       $('#vessel').empty();
       $('#vessel').append($('<option>', {value: data.vessel_id, text: data.vessel_name + ' (Viaje: ' + data.voyage + ')'}));
@@ -706,6 +712,27 @@ var editThermo = function(id) {
       alert('Error al cargar los datos.');
     }
   });
+}
+
+/* Valida maxima cantidad de pallets */
+function validarMaximo(input) {
+  if (parseInt(input.value) > 40) {
+    input.value = 40;
+  }
+  if (parseInt(input.value) < 0) {
+    input.value = 0;
+  }
+}
+
+/* Restringe el numero de telefono a 9 numeros */
+function limitarTelefono(input) {
+  // Elimina cualquier caracter no numérico
+  input.value = input.value.replace(/\D/g, '');
+
+  // Limita a 9 caracteres
+  if (input.value.length > 9) {
+    input.value = input.value.slice(0, 9);
+  }
 }
 
 $(document).ready(function() {
