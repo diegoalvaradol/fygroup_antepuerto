@@ -60,14 +60,14 @@ if (isset($_SESSION['user'])) {
                   </div>
 
                   <form id="loginForm">
-                    <div class="form-group" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                      <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9" style="text-align: center;">
+                    <div class="form-group" style="display:flex;align-items:center;justify-content:center;gap:10px;">
+                      <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9" style="text-align:center;margin-left:5%;">
                       <span id="info-run"></span>
                     </div>
 
-                    <div class="form-group" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                      <input type="password" class="form-control form-control-user" id="password" name="password" oninput="validaPassword(this.value)" placeholder="Contraseña" style="text-align: center;">
-                      <span id="info-password"></span>                    
+                    <div class="form-group" style="display:flex;align-items:center;justify-content:center;gap:10px;">
+                      <input type="password" class="form-control form-control-user" id="password" name="password" oninput="validaPassword(this.value)" placeholder="Contraseña" style="text-align:center;margin-left:5%;">
+                      <span id="info-password"></span>
                     </div>
 
                     <button id="loadBtn" type="button" class="btn btn-success btn-user btn-block" onclick="loadSession()">
@@ -185,22 +185,38 @@ if (isset($_SESSION['user'])) {
       type: "POST",
     }).done(function(x) {
       if(x == 'OK'){
-        setTimeout(function() {
-          window.location = "dashboard.php";
-        }, 3000);
+        Swal.fire({
+          title: '¡Bienvenido!',
+          html: 'Estamos cargando las preferencias de tu cuenta 🚀 </br> Por favor se paciente.',
+          icon: 'info',
+          timer: 3000,
+          showConfirmButton: false,
+          allowOutsideClick: false
+        }).then(() => {
+          // Cuando termine el timer, redirige al dashboard
+          window.location.href = "dashboard.php";
+        });
       }else if(x == 'NOOK'){
         Swal.fire({
           title: 'Oops...',
-          text: 'El correo electrónico y/o contraseña ingresados son invalidos, favor reintenta nuevamente.',
+          html: 'El run y/o contraseña ingresados son invalidos. </br> Por favor reintenta nuevamente.',
           icon: 'error',
           cancelButtonColor: '#d33',
+        }).then(() => {
+          text.removeClass('d-none');
+          spinner.addClass('d-none');
+          btn.prop('disabled', false);
         });
       }else if(x == 'NOOK2'){
         Swal.fire({
           title: 'Oops...',
-          text: 'Tu perfil no se encuentra asociado a Portal Cliente, por favor contacta al administrador.',
+          html: 'Tu perfil no se encuentra asociado a Portal Cliente. </br> Por favor contacta al administrador.',
           icon: 'info',
           cancelButtonColor: '#d33',
+        }).then(() => {
+          text.removeClass('d-none');
+          spinner.addClass('d-none');
+          btn.prop('disabled', false);
         });
       }else{
         Swal.fire({
@@ -208,6 +224,10 @@ if (isset($_SESSION['user'])) {
           text: x,
           icon: 'error',
           cancelButtonColor: '#d33',
+        }).then(() => {
+          text.removeClass('d-none');
+          spinner.addClass('d-none');
+          btn.prop('disabled', false);
         });
       }
     });

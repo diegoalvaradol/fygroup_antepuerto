@@ -276,7 +276,7 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                                             </div>
 
                                             <input type="hidden" id="origin" name="origin" value="2">
-                                            <input type="hidden" id="cntId" name="rowId" value="0">
+                                            <input type="hidden" id="cntId" name="cntId" value="0">
                                             <input type="hidden" id="isUpdate" name="isUpdate" value="0">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveInTermo()">
@@ -510,6 +510,7 @@ var editTermoHour = function(id) {
       $('#originId').val(data.origin);
       $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate);
       $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`);
+      $('#dateout').val(data.departure_date ? data.departure_date : '');
 
       /* Mostrar overlay y modal */
       $('#modalOverlay').fadeIn(200);

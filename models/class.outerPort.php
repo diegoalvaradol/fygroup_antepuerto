@@ -428,7 +428,7 @@ class outerPort
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
           $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
-          $departure = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : 'Sin hora de salida.';
+          $departure = '<em>Sin hora de salida.</em>';
         }
 
         if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
@@ -449,7 +449,8 @@ class outerPort
           $stayTime = 'No disponible.';
         }
 
-        $btnEdit = "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnEdit             = "<button id='editcontainer' type='button' class='btn btn-sm btn-primary btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnAddContainerHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -471,7 +472,7 @@ class outerPort
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $adminEdit ? $tr .= "<td>" . $btnEdit . "</td>" : null;
+        $adminEdit ? $tr .= "<td>" . $btnAddContainerHour . ' ' . $btnEdit . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;
@@ -719,7 +720,7 @@ class outerPort
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
           $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
-          $departure = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : 'Sin hora de salida.';
+          $departure = '<em>Sin hora de salida.</em>';
         }
 
         if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
@@ -740,7 +741,8 @@ class outerPort
           $stayTime = 'No disponible.';
         }
 
-        $btnEdit = "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnEdit          = "<button id='editcontainer' type='button' class='btn btn-sm btn-primary btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnAddThermoHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -759,7 +761,7 @@ class outerPort
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $adminEdit ? $tr .= "<td>" . $btnEdit . "</td>" : null;
+        $adminEdit ? $tr .= "<td>" . $btnAddThermoHour . ' ' . $btnEdit . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;

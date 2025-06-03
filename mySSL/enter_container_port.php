@@ -593,6 +593,7 @@ var editContainerHour = function(id) {
       $('#originId').val(data.origin);
       $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate);
       $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`);
+      $('#dateout').val(data.departure_date ? data.departure_date : '');
 
       /* Mostrar overlay y modal */
       $('#modalOverlay').fadeIn(200);
