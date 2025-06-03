@@ -373,13 +373,13 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
                     <br>
                     <small><b>Compilación: </b><?php echo $infoCfg['compilation']; ?></small>
                     <br>
-                    <small><b>Lanzamiento: </b> 01 de mayo de 2025.</small>
+                    <small><b>Lanzamiento: </b><?php echo $releasedTime->format('d-m-Y H:i'); ?></small>
                     <br>
-                    <small><b>Últ. Actualización: </b> 06 de mayo de 2025.</small>
+                    <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
                     <br>
-                    <small><b>Autor: </b> Diego Alvarado López.</small>
+                    <small><b>Autor: </b><?php echo $infoCfg['author']; ?></small>
                     <br>
-                    <small><b>Programador y Diseñador: </b> Diego Alvarado López.</small>
+                    <small><b>Programador y Diseñador: </b><?php echo $infoCfg['author']; ?></small>
                     <br>
                     <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
                     <br>
@@ -388,6 +388,7 @@ $admin   = $user->isAdmin($_SESSION["user"]["run"]);
             </div>
         </div>
     </div>
+
 
     <!-- Modal Añadir hora de salida del camión contenedor -->
     <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
