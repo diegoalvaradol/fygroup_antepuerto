@@ -12,6 +12,8 @@ $user = new user($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $admin   = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime = new DateTime($infoCfg['released_date']);
+$updateTime   = new DateTime($infoCfg['update_date']);
 
 ?>
 
