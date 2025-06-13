@@ -1,11 +1,8 @@
 <?php
-header("Location: maintenance.php");
-exit;
-
 require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.config.php';
-require_once __DIR__ . '/../models/class.user.php';
+require_once __DIR__ . '/../config/includes.php';
+header("Location: maintenance.php");
+
 
 $db   = (new Database())->getConnection();
 $cfg  = new cfg($db);
@@ -60,8 +57,23 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_container_port.php">Ingreso Contenedores</a>
-                        <a class="collapse-item" href="enter_thermo_port.php">Ingreso Termos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port');?> >Ingreso Contenedores</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port');?> >Ingreso Termos</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Internacional Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInternational" aria-expanded="true" aria-controls="collapseInternational">
+                    <i class="fa fa-fw fa-earth-americas"></i>
+                    <span>Internacional</span>
+                </a>
+                <div id="collapseInternational" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Items:</h6>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_international');?> >Carga Internacional</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('tracking');?> >Seguimiento</a>
                     </div>
                 </div>
             </li>
@@ -75,9 +87,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapsePuerto" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_ship.php">Naves</a>
-                        <a class="collapse-item" href="enter_ship_line.php">Lineas Navieras</a>
-                        <a class="collapse-item" href="enter_port.php">Puertos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship');?> >Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship_line');?> >Lineas Navieras</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_port');?> >Puertos</a>
                     </div>
                 </div>
             </li>
@@ -91,7 +103,10 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseProgramacion" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
+                        <?php if ($admin): ?>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
@@ -106,7 +121,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="ship_report.php">Reporte de Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('ship_report');?> >Reporte de Naves</a>
                     </div>
                 </div>
             </li>
@@ -175,31 +190,21 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Color Utilities</h1>
-                    <p class="mb-4">Bootstrap's default utility classes can be found on the official
-                        <a href="https://getbootstrap.com/docs">Bootstrap Documentation</a>
-                        page. The custom utilities below were created to extend this theme past the default utility classes built into Bootstrap's framework.
-                    </p>
+                    <h1 class="h3 mb-1 text-gray-800">Programación Maersk</h1>
+                    <p class="mb-4">Acá puedes revisar el stacking de naves Maersk que recalarán en Coquimbo.</p>
 
                     <!-- Content Row -->
                     <div class="row">
                         <!-- First Column -->
-                        <div class="col-lg-4">
+                        <div class="col-lg">
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Custom Text Color Utilities</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Detalle de Naves Maersk</h6>
                                 </div>
+
                                 <div class="card-body">
-                                    <p class="text-gray-100 p-3 bg-dark m-0">.text-gray-100</p>
-                                    <p class="text-gray-200 p-3 bg-dark m-0">.text-gray-200</p>
-                                    <p class="text-gray-300 p-3 bg-dark m-0">.text-gray-300</p>
-                                    <p class="text-gray-400 p-3 bg-dark m-0">.text-gray-400</p>
-                                    <p class="text-gray-500 p-3 m-0">.text-gray-500</p>
-                                    <p class="text-gray-600 p-3 m-0">.text-gray-600</p>
-                                    <p class="text-gray-700 p-3 m-0">.text-gray-700</p>
-                                    <p class="text-gray-800 p-3 m-0">.text-gray-800</p>
-                                    <p class="text-gray-900 p-3 m-0">.text-gray-900</p>
+                                
                                 </div>
                             </div>
                         </div>

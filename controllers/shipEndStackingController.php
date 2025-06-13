@@ -1,11 +1,9 @@
 <?php
-require_once __DIR__ . '/../models/class.ship.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $database = new Database();
-  $db       = $database->getConnection();
+  $db       = (new Database())->getConnection();
 
   $ship               = new ship($db);
   $ship->id           = $_POST["shipId"];

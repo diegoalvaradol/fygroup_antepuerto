@@ -1,8 +1,7 @@
 <?php
-http_response_code(404); // Asegura el código HTTP correcto
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.config.php';
+http_response_code(404);
+require_once __DIR__ . '/config/auth.php';
+require_once __DIR__ . '/config/includes.php';
 
 $db  = (new Database())->getConnection();
 $cfg = new cfg($db);
@@ -20,7 +19,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Portal - SSL | 404</title>
+    <title>Página No Encontrada</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -51,8 +50,11 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                         <br>
                         <p class="lead text-gray-800">Oops...</p>
                         <p class="lead text-gray-800">Página No Encontrada.</p>
-                        <p class="text-gray-500 mb-0">Parece que encontraste un fallo en la matriz...</p>
-                        <a href="dashboard.php" style="font-size:larger;">&larr; Vuelve al Inicio...</a>
+                        <p class="lead text-gray-800">Parece que encontraste un fallo en la matriz...</p>
+                        
+                        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
+                            <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
+                        </button>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -92,65 +94,3 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <script src="../assets/js/sb-admin-2.min.js"></script>
 </body>
 </html>
-
-<!-- JAVASCRIPT -->
-<script>
-/* Conteo regresivo para cierre de sesion */
-let inactivityTime = function () {
-  let time;
-  let warningTimeout = 60 * 60 * 1000; /* Minutos a convenir */
-  let countdownTime = 30; /* 30 segundos para responder */
-
-  function startTimer() {
-    window.addEventListener('mousemove', resetTimer, false);
-    window.addEventListener('keypress', resetTimer, false);
-    window.addEventListener('click', resetTimer, false);
-    window.addEventListener('scroll', resetTimer, false);
-    resetTimer();
-  }
-
-  function logoutCountdown() {
-    let timerInterval;
-    Swal.fire({
-      title: "¿Sigues ahí?",
-      html: `Serás desconectado en <b></b> segundos por inactividad.`,
-      icon: "warning",
-      timer: countdownTime * 1000,
-      timerProgressBar: true,
-      showCancelButton: true,
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      confirmButtonColor: '#4e73df',
-      cancelButtonColor: '#d33',
-      confirmButtonText: "¡Sigo aquí!",
-      cancelButtonText: "Cerrar sesión",
-      didOpen: () => {
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-        }, 1000);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        resetTimer(); /* Usuario activo, reiniciar contador */
-      } else {
-        window.location = 'login.php?msg=sesion_expirada';
-      }
-    });
-  }
-
-  function resetTimer() {
-    clearTimeout(time);
-    time = setTimeout(logoutCountdown, warningTimeout);
-  }
-
-  startTimer();
-};
-
-window.onload = function () {
-  inactivityTime();
-};
-</script>

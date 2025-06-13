@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../models/class.port.php';
-require_once __DIR__ . '/../models/class.shipLine.php';
-class ship
+require_once __DIR__ . '/../config/includes.php';
+class ship extends iQuery
 {
   private $conexion;
-  protected $table = "app_ships";
+  protected $table      = "app_ships";
+  protected $primaryKey = 'ship_id';
 
   public $id           = "ship_id";
   public $vessel       = "vessel_name";
@@ -37,14 +37,14 @@ class ship
     $this->created    = $this->created;
     $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":vessel", $this->vessel);
+    $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_STR);
     $stmt->bindParam(":shipline", $this->line, PDO::PARAM_INT);
-    $stmt->bindParam(":voyage", $this->voyage);
+    $stmt->bindParam(":voyage", $this->voyage, PDO::PARAM_STR);
     $stmt->bindParam(":portdischarge", $this->port, PDO::PARAM_INT);
-    $stmt->bindParam(":eta", $this->eta);
-    $stmt->bindParam(":etd", $this->etd);
-    $stmt->bindParam(":created", $this->created);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":eta", $this->eta, PDO::PARAM_STR);
+    $stmt->bindParam(":etd", $this->etd, PDO::PARAM_STR);
+    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -64,13 +64,13 @@ class ship
     $this->lastupdate = $this->lastupdate;
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":vessel", $this->vessel);
+    $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_STR);
     $stmt->bindParam(":shipline", $this->line, PDO::PARAM_INT);
-    $stmt->bindParam(":voyage", $this->voyage);
+    $stmt->bindParam(":voyage", $this->voyage, PDO::PARAM_STR);
     $stmt->bindParam(":portdischarge", $this->port, PDO::PARAM_INT);
-    $stmt->bindParam(":eta", $this->eta);
-    $stmt->bindParam(":etd", $this->etd);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":eta", $this->eta, PDO::PARAM_STR);
+    $stmt->bindParam(":etd", $this->etd, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -99,8 +99,8 @@ class ship
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
     $stmt->bindParam(":finished", $this->finished, PDO::PARAM_INT);
-    $stmt->bindParam(":finisheddate", $this->finisheddate);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":finisheddate", $this->finisheddate, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }

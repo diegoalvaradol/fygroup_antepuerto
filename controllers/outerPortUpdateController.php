@@ -1,12 +1,10 @@
 <?php
-require_once __DIR__ . '/../models/class.outerPort.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $database = new Database();
-  $db       = $database->getConnection();
-
+  $db         = (new Database())->getConnection();
+  
   $rawDateOut = str_replace('T', ' ', $_POST['dateout']);
   $dateOut    = DateTime::createFromFormat('Y-m-d H:i', $rawDateOut);
 

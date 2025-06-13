@@ -1,8 +1,11 @@
 <?php
-class cfg
+require_once __DIR__ . '/../config/includes.php';
+
+class cfg extends iQuery
 {
   private $conexion;
-  protected $table = "app_config";
+  protected $table      = "app_config";
+  protected $primaryKey = 'id';
 
   public $id          = "id";
   public $mark        = "mark";

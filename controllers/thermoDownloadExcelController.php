@@ -1,6 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.outerPort.php';
+require_once __DIR__ . '/../config/includes.php';
 
 $db     = (new Database())->getConnection();
 $thermo = new outerPort($db);

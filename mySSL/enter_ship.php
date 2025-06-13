@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.ship.php';
-require_once __DIR__ . '/../models/class.config.php';
-require_once __DIR__ . '/../models/class.user.php';
+require_once __DIR__ . '/../config/includes.php';
 
 $db   = (new Database())->getConnection();
 $ship = new ship($db);
@@ -47,7 +44,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <img src="../img/ssl-logo-azul.png" style="width:100%;">
             </a>
 
-           <!-- Heading -->
+            <!-- Heading -->
             <div class="sidebar-heading">Sistema Antepuerto</div>
 
             <!-- Nav Item - Antepuerto Collapse Menu -->
@@ -59,8 +56,23 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_container_port.php">Ingreso Contenedores</a>
-                        <a class="collapse-item" href="enter_thermo_port.php">Ingreso Termos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port');?> >Ingreso Contenedores</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port');?> >Ingreso Termos</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Internacional Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInternational" aria-expanded="true" aria-controls="collapseInternational">
+                    <i class="fa fa-fw fa-earth-americas"></i>
+                    <span>Internacional</span>
+                </a>
+                <div id="collapseInternational" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Items:</h6>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_international');?> >Carga Internacional</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('tracking');?> >Seguimiento</a>
                     </div>
                 </div>
             </li>
@@ -74,9 +86,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapsePuerto" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_ship.php">Naves</a>
-                        <a class="collapse-item" href="enter_ship_line.php">Lineas Navieras</a>
-                        <a class="collapse-item" href="enter_port.php">Puertos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship');?> >Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship_line');?> >Lineas Navieras</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_port');?> >Puertos</a>
                     </div>
                 </div>
             </li>
@@ -90,7 +102,10 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseProgramacion" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
+                        <?php if ($admin): ?>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
@@ -105,7 +120,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="ship_report.php">Reporte de Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('ship_report');?> >Reporte de Naves</a>
                     </div>
                 </div>
             </li>
@@ -494,7 +509,7 @@ var saveChanges = function() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = 'enter_ship.php';
+        window.location = '<?php echo generateMkey('enter_ship');?>';
       });
     } else {
       Swal.fire({
@@ -531,7 +546,7 @@ var deleteShip = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = 'enter_ship.php';
+            window.location = '<?php echo generateMkey('enter_ship');?>';
           });
         } else if(x == 'NOOK') {
           Swal.fire({
@@ -577,7 +592,7 @@ var finishStackingShip = function(id, name, voyage) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = 'enter_ship.php';
+            window.location = '<?php echo generateMkey('enter_ship');?>';
           });
         } else  {
           Swal.fire({
@@ -636,7 +651,7 @@ var saveShip = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = 'enter_ship.php';
+          window.location = '<?php echo generateMkey('enter_ship');?>';
         });
       } else {
         Swal.fire({
@@ -644,6 +659,10 @@ var saveShip = function() {
           text: 'Error al registrar la motonave.',
           icon: 'error',
           cancelButtonColor: '#d33',
+        }).then(() => {
+          text.removeClass('d-none');
+          spinner.addClass('d-none');
+          btn.prop('disabled', false);
         });
       }
     });

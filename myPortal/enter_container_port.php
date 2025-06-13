@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.outerPort.php';
-require_once __DIR__ . '/../models/class.config.php';
+require_once __DIR__ . '/../config/includes.php';
 
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
@@ -63,8 +61,8 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                 <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_container_port.php">Ingreso Contenedores</a>
-                        <a class="collapse-item" href="enter_thermo_port.php">Ingreso Termos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port', 'myPortal');?> >Ingreso Contenedores</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port', 'myPortal');?> >Ingreso Termos</a>
                     </div>
                 </div>
             </li>
@@ -115,7 +113,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">
                                     <i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión
                                 </a>

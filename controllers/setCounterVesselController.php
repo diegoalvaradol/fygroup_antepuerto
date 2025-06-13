@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/includes.php';
 
 if (isset($_POST['id'], $_POST['origin'])) {
   $db = (new Database())->getConnection();

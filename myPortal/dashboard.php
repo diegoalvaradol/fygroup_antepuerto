@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.outerPort.php';
-require_once __DIR__ . '/../models/class.config.php';
+require_once __DIR__ . '/../config/includes.php';
 
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
@@ -69,8 +67,8 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                 <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_container_port.php">Listado Contenedores</a>
-                        <a class="collapse-item" href="enter_thermo_port.php">Listado Termos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port', 'myPortal');?> >Ingreso Contenedores</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port', 'myPortal');?> >Ingreso Termos</a>
                     </div>
                 </div>
             </li>
@@ -110,12 +108,10 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                     <ul class="navbar-nav ml-auto">
                         <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
                         <label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
                         <label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -367,13 +363,13 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                 <div class="modal-body">
                     <div class="container mt-4 p-3 border rounded" style="background-color: #f9f9f9;">
                         <h3 class="text-center">Licencia de Uso de Software</h3>
-                        <p><strong>Nombre del Software:</strong> Sistema Integral SSL</p>
-                        <p><strong>Versión:</strong> 1.36.b (Beta)</p>
-                        <p><strong>Titular de los derechos:</strong> Diego Alvarado López</p>
-                        <p><strong>Fecha:</strong> 01 de mayo de 2025</p>
+                        <p><strong>Nombre del Software: </strong><?php echo $infoCfg['name']; ?></p>
+                        <p><strong>Versión: </strong><?php echo $infoCfg['version']; ?></p>
+                        <p><strong>Titular de los derechos: </strong><?php echo $infoCfg['author']; ?></p>
+                        <p><strong>Fecha de Lanzamiento: </strong><?php echo $releasedTime->format('d-m-Y H:i'); ?></p>
 
                         <h5>1. OBJETO DE LA LICENCIA</h5>
-                        <p>Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos. Esta versión está en fase Beta (versión 1.36.b).</p>
+                        <p>Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos.</p>
 
                         <h5>2. CONCESIÓN DE LICENCIA</h5>
                         <p>El titular concede al usuario una licencia de uso no exclusiva, intransferible y revocable, para ejecutar, probar y operar el software con fines internos. El software no puede ser redistribuido ni modificado sin autorización expresa por escrito del titular.</p>
@@ -393,7 +389,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                         </ul>
 
                         <h5>5. PROPIEDAD INTELECTUAL</h5>
-                        <p>Todo el contenido del software es propiedad exclusiva de Diego Alvarado López y está protegido por las leyes de propiedad intelectual.</p>
+                        <p>Todo el contenido del software es propiedad exclusiva de <?php echo $infoCfg['author']; ?> y está protegido por las leyes de propiedad intelectual.</p>
 
                         <h5>6. LIMITACIÓN DE GARANTÍA</h5>
                         <p>El software se entrega "tal cual", sin garantías. El titular no se responsabiliza por daños derivados de su uso.</p>
@@ -404,7 +400,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                         <h5>8. LEGISLACIÓN APLICABLE</h5>
                         <p>Esta licencia se regirá por las leyes de Chile. Cualquier conflicto será sometido a los tribunales competentes del país.</p>
 
-                        <p class="mt-4"><strong>Firmado:</strong><br>Diego Alvarado López</p>
+                        <p class="mt-4"><strong>Firmado: </strong><br><?php echo $infoCfg['author']; ?></p>
                     </div>
                 </div>
             </div>

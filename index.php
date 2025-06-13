@@ -1,80 +1,50 @@
 <?php
-//header("Location: login.php");
-//exit;
+require_once __DIR__ . '/config/includes.php';
 
-require_once __DIR__ . '/config/database.php';
+$pag  = $_GET['pag']  ?? '/';
+$area = $_GET['area'] ?? 'mySSL';
+$mkey = $_GET['mkey'] ?? '';
 
-$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$url = rtrim($url, '/');
+/* Carpeta accedida desde la URL */
+$uriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+$folderFromUrl = $uriParts[1] ?? ''; /* Después de ssl-chile */
 
-switch ($url) {
-  case '':
-  case '/':
-    require 'dashboard.php';
-    break;
+/* Valida que la url contenga el mkey */
+if ($mkey === '') {
+  http_response_code(400);
+  require __DIR__ . '/mkey_error.php';
+  exit;
+}
 
-  case '/enter_container_port':
-    require 'enter_container_port.php';
-    break;
+/* Valida el area con el directorio */
+if ($folderFromUrl !== $area) {
+  http_response_code(400);
+  require __DIR__ . '/error.php';
+  exit;
+}
 
-  case '/enter_port':
-    require 'enter_port.php';
-    break;
+/* Vista especial para raíz */
+if ($pag === '/') {
+  require __DIR__ . '/dashboard.php';
+  exit;
+}
 
-  case '/enter_ship_line':
-    require 'enter_ship_line.php';
-    break;
+/* Solo permitir estas carpetas */
+$allowedAreas = ['mySSL', 'myPortal'];
 
-  case '/enter_ship':
-    require 'enter_ship.php';
-    break;
+if (!in_array($area, $allowedAreas)) {
+  http_response_code(404);
+  require __DIR__ . '/404.php';
+  exit;
+}
 
-  case '/enter_thermo_port':
-    require 'enter_thermo_port.php';
-    break;
+/* Construir ruta */
+$filePath = __DIR__ . "/{$area}/{$pag}.php";
 
-  case '/forgot_password':
-    require 'forgot_password.php';
-    break;
-
-  case '/login':
-    require 'login.php';
-    break;
-
-  case '/logout':
-    require 'logout.php';
-    break;
-
-  case '/maintenance':
-    require 'maintenance.php';
-    break;
-
-  case '/program_maersk':
-    require 'program_maersk.php';
-    break;
-
-  case '/program_msc':
-    require 'program_msc.php';
-    break;
-
-  case '/program_tpc':
-    require 'program_tpc.php';
-    break;
-
-  case '/register':
-    require 'register.php';
-    break;
-
-  case '/reset_form':
-    require 'reset_form.php';
-    break;
-
-  case '/ship_report':
-    require 'ship_report.php';
-    break;
-
-  default:
-    http_response_code(404);
-    require __DIR__ . '/mySSL/404.php';
-    break;
+/* Verificar que exista solo en esa carpeta */
+if (file_exists($filePath)) {
+  require $filePath;
+} else {
+  http_response_code(404);
+  require __DIR__ . '/404.php';
 }

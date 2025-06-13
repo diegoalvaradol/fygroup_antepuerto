@@ -1,10 +1,12 @@
 <?php
+require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
-class user
+class user extends iQuery
 {
   private $conexion;
-  protected $table = "app_users";
+  protected $table      = "app_users";
+  protected $primaryKey = 'user_id';
 
   public $id              = "user_id";
   public $run             = "run";
@@ -38,14 +40,14 @@ class user
     $this->created    = $this->created;
     $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":run", $this->run);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":lastname", $this->lastname);
-    $stmt->bindParam(":email", $this->email);
-    $stmt->bindParam(":password", $this->password);
-    $stmt->bindParam(":division", $this->division);
-    $stmt->bindParam(":created", $this->created);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":run", $this->run, PDO::PARAM_STR);
+    $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
+    $stmt->bindParam(":lastname", $this->lastname, PDO::PARAM_STR);
+    $stmt->bindParam(":email", $this->email, PDO::PARAM_STR);
+    $stmt->bindParam(":password", $this->password, PDO::PARAM_STR);
+    $stmt->bindParam(":division", $this->division, PDO::PARAM_STR);
+    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -63,13 +65,13 @@ class user
     $this->division   = htmlspecialchars(strip_tags($this->division));
     $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":run", $this->run);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":lastname", $this->lastname);
-    $stmt->bindParam(":email", $this->email);
-    $stmt->bindParam(":password", $this->password);
-    $stmt->bindParam(":division", $this->division);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":run", $this->run, PDO::PARAM_STR);
+    $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
+    $stmt->bindParam(":lastname", $this->lastname, PDO::PARAM_STR);
+    $stmt->bindParam(":email", $this->email, PDO::PARAM_STR);
+    $stmt->bindParam(":password", $this->password, PDO::PARAM_STR);
+    $stmt->bindParam(":division", $this->division, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -78,7 +80,7 @@ class user
   {
     $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":run", $this->run);
+    $stmt->bindParam(":run", $this->run, PDO::PARAM_STR);
     $stmt->bindParam(":division", $this->division);
     $stmt->execute();
 
@@ -90,7 +92,7 @@ class user
 
       $updateQuery = "UPDATE app_users SET last_session = NOW() WHERE run = :run";
       $updateStmt  = $this->conexion->prepare($updateQuery);
-      $updateStmt->bindParam(":run", $this->run);
+      $updateStmt->bindParam(":run", $this->run, PDO::PARAM_STR);
       $updateStmt->execute();
 
       return $user;
@@ -99,32 +101,14 @@ class user
     return false;
   }
 
-  /*
-  public function login()
-  {
-  $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division LIMIT 1";
-  $stmt  = $this->conexion->prepare($query);
-  $stmt->bindParam(":run", $this->run);
-  $stmt->bindParam(":division", $this->division);
-  $stmt->execute();
-
-  $user = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($user && password_verify($this->password, $user['password'])) {
-  return $user;
-  }
-
-  return false;
-  }
-   */
-
   public function setResetToken($email, $token, $expiration)
   {
     $query = "UPDATE $this->table SET reset_token = :token, token_expiration = :expiration WHERE email = :email";
     $stmt  = $this->conexion->prepare($query);
 
-    $stmt->bindParam(":token", $token);
-    $stmt->bindParam(":expiration", $expiration);
-    $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":token", $token, PDO::PARAM_STR);
+    $stmt->bindParam(":expiration", $expiration, PDO::PARAM_STR);
+    $stmt->bindParam(":email", $email, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -133,7 +117,7 @@ class user
   {
     $query = "SELECT * FROM $this->table WHERE reset_token = :token AND token_expiration > NOW() LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":token", $token);
+    $stmt->bindParam(":token", $token, PDO::PARAM_STR);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -144,7 +128,7 @@ class user
       $this->password = password_hash($newPassword, PASSWORD_DEFAULT);
 
       $stmt2->bindParam(":id", $user['user_id']); // o $user[$this->id] si está bien definido
-      $stmt2->bindParam(":password", $this->password);
+      $stmt2->bindParam(":password", $this->password, PDO::PARAM_STR);
 
       return $stmt2->execute();
     }
@@ -156,11 +140,11 @@ class user
   {
     $query = "SELECT * FROM $this->table WHERE run = :run AND division = 'SSL' LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":run", $run);
+    $stmt->bindParam(":run", $run, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (in_array($result['run'], ['18.923.079-6', '15.798.016-5'])) {
+    if ($result && in_array($result['run'], ['18.923.079-6', '15.798.016-5'])) {
       return true;
     } else {
       return false;
@@ -171,11 +155,11 @@ class user
   {
     $query = "SELECT * FROM $this->table WHERE run = :run AND division = 'SSL' LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":run", $run);
+    $stmt->bindParam(":run", $run, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (in_array($result['run'], ['18.923.079-6', '15.798.016-5', '21.394.463-0'])) {
+    if ($result && isset($result['run']) && in_array($result['run'], ['18.923.079-6', '15.798.016-5'])) {
       return true;
     } else {
       return false;

@@ -1,8 +1,11 @@
 <?php
-class shipLine
+require_once __DIR__ . '/../config/includes.php';
+
+class shipLine extends iQuery
 {
   private $conexion;
-  protected $table = "app_ship_lines";
+  protected $table      = "app_ship_lines";
+  protected $primaryKey = 'line_id';
 
   public $id         = "line_id";
   public $name       = "name";
@@ -23,9 +26,9 @@ class shipLine
     $this->created    = $this->created;
     $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":created", $this->created);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
+    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -40,8 +43,8 @@ class shipLine
     $this->lastupdate = $this->lastupdate;
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }

@@ -1,10 +1,8 @@
 <?php
-require_once __DIR__ . '/../models/class.shipLine.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/includes.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $database = new Database();
-  $db       = $database->getConnection();
+  $db = (new Database())->getConnection();
 
   /* Verifica si la linea naviera se encuentra asociado a una motonave registrada */
   $query = "SELECT * FROM app_ships WHERE ship_line = " . $_POST["id"] . "";

@@ -3,8 +3,7 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 require '../vendor/autoload.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.user.php';
+require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

@@ -1,11 +1,9 @@
 <?php
-require_once __DIR__ . '/../models/class.outerPort.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set('America/Santiago');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $database = new Database();
-  $db       = $database->getConnection();
+  $db       = (new Database())->getConnection();
 
   $rawDateInf = str_replace('T', ' ', $_POST['datein']);
   $dateIn     = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);
@@ -31,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->stay            = strtoupper($_POST["stay"]);
   $port->observations    = strtoupper($_POST["observations"]);
   $port->origin          = $_POST["origin"]; /* [1 => Contenedores, 2 => Termos] */
-  $port->created         = $created ? $created->format('Y-m-d H:i:s') : null;
+  $port->created         = date('Y-m-d H:i:s');
   $port->createdby       = $_POST["createdby"];
 
   if ($_POST["isUpdate"] == 1) {

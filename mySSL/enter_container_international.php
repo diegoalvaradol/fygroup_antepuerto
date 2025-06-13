@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
 $db   = (new Database())->getConnection();
-$line = new shipLine($db);
+$port = new outerPort($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
@@ -24,7 +24,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Lineas Navieras</title>
+    <title>SSL | Carga Internacional</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -145,9 +145,8 @@ $updateTime   = new DateTime($infoCfg['update_date']);
             </div>
         </ul>
         <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+					<!-- Content Wrapper -->
+					<div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
@@ -187,9 +186,13 @@ $updateTime   = new DateTime($infoCfg['update_date']);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Lineas Navieras</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Carga Internacional</h1>
+
+                    <div class="col-sm-12">
+                      <div class="alert alert-warning" role="alert"><i class="fa-solid fa-circle-info"></i>
+                      <b>¡Información! : </b> Formulario de carga y contenedores provenientes desde el exterior.</div>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -202,29 +205,91 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                 </div>
 
                                 <div class="card-body">
-                                    <form class="form-container" id="shipLineForm">
-                                        <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control form-control-user" id="shipline" name="shipline" onblur="verifyShipLine(this.value)" placeholder="Nombre de la Linea">
-                                                <small class="text-danger" id="error-shipline"></small>
+                                        <form class="form-container" id="inInternationalContainerForm">
+                                            <div class="form-inline mb-3">
+                                                <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
+                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
+                                                <small class="text-danger" id="error-countervessel"></small>
                                             </div>
-                                        </div>
 
-                                        <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveShipLine()">
-                                          <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Registrar Naviera</span>
-                                          <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                        </button>
-                                    </form>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                  <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
+                                                  <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
+                                                  <small class="text-danger" id="error-vessel"></small>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                  <small class="text-black" id="info-vessel"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <select class="form-control select2 form-control-user" id="carplate" name="carplate"></select>
+                                                    <small class="text-danger" id="error-carplate"></small>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía">
+                                                    <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Si el camión trae mas de una guía saparalo con una coma. (Ej: 123, 456)"></i>
+                                                    <small class="text-danger" id="error-guidenumber"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control form-control-user" id="container" name="container" minlength="11" maxlength="11" onblur="validarContenedor(this.value)" placeholder="Contenedor Ej:(UETU6168056)">
+                                                    <small class="text-danger" id="error-container"></small>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control form-control-user" id="sealnumber" name="sealnumber" placeholder="N° de Sello">
+                                                    <small class="text-danger" id="error-sealnumber"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                  <select class="form-control select2 form-control-user" id="exporter" name="exporter"></select>
+                                                  <small class="text-danger" id="error-exporter"></small>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="30" step="1" oninput="validarMaximo(this)" placeholder="N° de Pallets">
+                                                    <small class="text-danger" id="error-palletsquantity"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control form-control-user" id="drivername" name="drivername" placeholder="Nombre Conductor">
+                                                    <small class="text-danger" id="error-drivername"></small>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" maxlength="9" pattern="\d{9}" oninput="limitarTelefono(this)" placeholder="987654321">
+                                                    <small class="text-grey">N° de Teléfono</small>
+                                                    <small class="text-danger" id="error-cellphonedriver"></small>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" id="digitedby" name="digitedby" value="<?php echo $_SESSION["user"]["run"]; ?>">
+                                            <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveIntContainer()">
+                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Ingresar Contenedor</span>
+                                              <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                            </button>
+                                      </form>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Listado de Lineas Navieras -->
-                    <?php $tableshipLines = $line->getTableShipLine(); ?>
-                    <?php echo $tableshipLines; ?>
+                    <!-- Tabla de Contenedores -->
+                    <?php $tableContainer = $port->getTableContainer(); ?>
+                    <?php echo $tableContainer; ?>
                 </div>
-                <!-- /.container-fluid -->
+                <!-- container-fluid -->
             </div>
             <!-- End of Main Content -->
 
@@ -260,7 +325,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="logout.php"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
+                    <a class="btn btn-danger" href="logout.php" onclick="finishCountDown()"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
                 </div>
             </div>
         </div>
@@ -299,24 +364,6 @@ $updateTime   = new DateTime($infoCfg['update_date']);
         </div>
     </div>
 
-    <!-- Modal Editar Linea-->
-    <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="editLineModal" style="display:none; position:fixed; width:50%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-    <h4>Editar Línea</h4>
-    <form id="editLineForm">
-        <div class="form-group row">
-            <div class="col-sm-12">
-              <label>Linea Naviera:</label>
-              <input type="text" class="form-control form-control-user" id="lineName" name="lineName">
-            </div>
-        </div>
-
-        <input type="hidden" id="lineId" name="lineId">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
-        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
-    </form>
-    </div>
-
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -335,11 +382,22 @@ $updateTime   = new DateTime($infoCfg['update_date']);
 
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- Bootstrap JS (necesario para popover) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
 <!-- JAVASCRIPT -->
 <script>
+/* Inicializa el popover */
+document.addEventListener('DOMContentLoaded', function () {
+  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  popoverTriggerList.forEach(function (el) {
+    new bootstrap.Popover(el);
+  });
+});
+
 /* Conteo regresivo para cierre de sesion */
 let inactivityTime = function () {
   let time;
@@ -407,126 +465,85 @@ function actualizarReloj() {
   $('#relojFecha').html(`${fecha} - ${hora}`);
 }
 
-var verifyShipLine = function(name) {
-  $.ajax({
-    url: '../controllers/shipLineVerifyController.php',
-    data: {
-      name: name
-    },
-    type: "POST",
-    }).done(function(x) {
-      if(x == 'NOOK'){
+var validarContenedor = function (container){
+  const regex = /^[A-Z]{4}\d{7}$/;
+
+  if (container.length !== 11) {
+    return false;
+  }
+
+  if (!regex.test(container)){
+    return false;
+  }
+
+  /* Convertir letras a números según ISO 6346 */
+  const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const valores = {};
+  for (let i = 0; i < letras.length; i++) {
+    /* Saltar múltiplos de 11 según el estándar */
+    valores[letras[i]] = (i < 11) ? i : i + 1;
+  }
+
+  const base = 2; // factor base
+  let suma = 0;
+  for (let i = 0; i < 10; i++) {
+    const char = container[i];
+    const val = isNaN(char) ? valores[char] : parseInt(char);
+    suma += val * Math.pow(base, i);
+  }
+
+  const digitoCalculado = (suma % 11) === 10 ? 0 : suma % 11;
+  const digitoReal = parseInt(container[10]);
+
+  if(digitoCalculado !== digitoReal){
+    Swal.fire({
+      title: 'Oops...',
+      html: 'El número de contenedor: '+container+' es inválido. </br> ¿Deseas ingresarlo de todas formas?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#4CAF50',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Si, continuar!",
+      cancelButtonText: "No, editar!",
+      allowOutsideClick: false,
+      allowEscapeKey: false
+    }).then((result) => {
+      if (result.isConfirmed) {
         Swal.fire({
-          title: 'Oops...',
-          text: 'La Linea '+name+' ya se encuentra registrado.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then((result) => {
-          $('#shipline').val('').focus();
+          title: '¡Atención!',
+          html: 'Contenedor: '+container+' ingresado con éxito.',
+          icon: 'success'
         });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        $('#container').focus();
       }
     });
+  }
 }
 
-var editShipLine = function(id) {
-  $.ajax({
-    url: '../controllers/shipLineEditController.php',
-     type: 'POST',
-     data: { id: id },
-     dataType: 'json',
-     success: function(data) {
-      $('#lineId').val(data.line_id);
-      $('#lineName').val(data.name);
-
-      /* Mostrar overlay y modal */
-      $('#modalOverlay').fadeIn(200);
-      $('#editLineModal').fadeIn(200);
-    },
-    error: function() {
-      alert('Error al cargar los datos.');
-    }
-  });
+/* Valida maxima cantidad de pallets */
+function validarMaximo(input) {
+  if (parseInt(input.value) > 40) {
+    input.value = 40;
+  }
+  if (parseInt(input.value) < 0) {
+    input.value = 0;
+  }
 }
 
-var closeModal = function() {
-  $('#editLineModal').fadeOut(200);
-  $('#modalOverlay').fadeOut(200);
+/* Restringe el numero de telefono a 9 numeros */
+function limitarTelefono(input) {
+  // Elimina cualquier caracter no numérico
+  input.value = input.value.replace(/\D/g, '');
+
+  // Limita a 9 caracteres
+  if (input.value.length > 9) {
+    input.value = input.value.slice(0, 9);
+  }
 }
 
-var saveChanges = function() {
-  $.ajax({
-    url: '../controllers/shipLineUpdateController.php',
-    data: $('#editLineForm').serialize(),
-    type: 'POST',
-  }).done(function(x) {
-    if(x == 'OK'){
-      Swal.fire({
-        title: '¡Éxito!',
-        text: '¡Linea actualizada con éxito!',
-        icon: 'success',
-        confirmButtonColor: '#4CAF50'
-      }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_ship_line');?>';
-      });
-    } else {
-      Swal.fire({
-        title: 'Oops...',
-        text: 'Error al actualizar la linea.',
-        icon: 'error',
-        cancelButtonColor: '#d33',
-      });
-    }
-  });
-}
-
-var deleteShipLine = function(id) {
-  Swal.fire({
-    title: 'Eliminar Linea Naviera.',
-    text: '¿Estas seguro de eliminar esta linea?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "¡Si, elimimar!",
-    cancelButtonText : 'Cancelar',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      $.ajax({
-        url: '../controllers/shipLineDeleteController.php',
-        type: 'POST',
-        data: { id: id },
-      }).done(function(x) {
-        if(x == 'OK'){
-          Swal.fire({
-            title: '¡Éxito!',
-            text: '¡Linea eliminada con éxito!',
-            icon: 'success',
-            confirmButtonColor: '#4CAF50'
-          }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_ship_line');?>';
-          });
-        } else if(x == 'NOOK'){
-          Swal.fire({
-            title: 'Oops...',
-            text: 'Error al eliminar la linea.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          });
-        }else if(x == 'NOOK2'){
-          Swal.fire({
-            title: 'Oops...',
-            text: 'La linea naviera que tratas de eliminar se encuentra asociado a una motonave registrada, favor revisa e intenta nuevamente.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          });
-        }
-      });
-    }
-  });
-}
-
-var saveShipLine = function() {
-  const form = document.getElementById('shipLineForm');
+var saveIntContainer = function() {
+  const form = document.getElementById('inInternationalContainerForm');
   const formData = new FormData(form);
   let hasError = false;
   const btn = $('#loadBtn');
@@ -558,23 +575,23 @@ var saveShipLine = function() {
     btn.prop('disabled', true);
 
     $.ajax({
-      url: '../controllers/shipLineController.php',
-      data: $('#shipLineForm').serialize(),
+      url: '../controllers/internationalChargueController.php',
+      data: $('#inInternationalContainerForm').serialize(),
       type: 'POST',
     }).done(function(x) {
       if(x == 'OK'){
         Swal.fire({
           title: '¡Éxito!',
-          text: '¡Linea registrada con éxito!',
+          text: '¡Contenedor ingresado con éxito!',
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = 'enter_ship_line.php';
+          window.location = '<?php echo generateMkey('enter_container_international');?>';
         });
       } else {
         Swal.fire({
           title: 'Oops...',
-          text: 'Error al registrar la linea.',
+          text: 'Error al ingresar el contenedor.',
           icon: 'error',
           cancelButtonColor: '#d33',
         }).then(() => {
@@ -587,8 +604,195 @@ var saveShipLine = function() {
   }
 }
 
+var exportExcel = function(nave, tipo, desde, hasta) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '../controllers/shipsReportDownloadExcelController.php';
+  form.style.display = 'none';
+
+  const fields = {
+    nave: nave,
+    tipo: tipo,
+    desde: desde,
+    hasta: hasta
+  };
+
+  for (const key in fields) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = fields[key];
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+}
+
 $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
   actualizarReloj(); /* Primera llamada */
+
+  $('#vessel').select2({
+    placeholder: 'Seleccione una motonave...',
+    allowClear: true,
+    tags: false,
+    width: '95%',
+    ajax: {
+      url: '../controllers/vesselJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term, /* Lo que escribe el usuario */
+          current: 1 /* Muestra las naves que cuentan con una ETA mayor a la fecha actual */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#carplate').select2({
+    placeholder: 'Seleccione una patente...',
+    allowClear: true,
+    tags: true,
+    width: '100%',
+    ajax: {
+      url: '../controllers/carPlateJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#exporter').select2({
+    placeholder: 'Seleccione una exportador...',
+    allowClear: true,
+    tags: true,
+    width: '100%',
+    ajax: {
+      url: '../controllers/exporterJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#vessel').on('change', function () {
+    const vessel = $(this).val();
+
+    if (vessel != '-') {
+      $.ajax({
+        url: '../controllers/vesselInfoController.php',
+        method: 'POST',
+        data: {id: vessel},
+        success: function (response) {
+          $('#info-vessel').html(response);
+        },
+        error: function () {
+          $('#info-vessel').html('Error al obtener la información.');
+        }
+      });
+
+      $.ajax({
+        url: '../controllers/setCounterVesselController.php',
+        method: 'POST',
+        data: {id: vessel, origin: 1},
+        success: function (response) {
+          $('#countervessel').val(response);
+        },
+        error: function () {
+          $('#countervessel').val(0);
+        }
+      });
+    }else{
+      $('#info-vessel').html('');
+      $('#countervessel').val(null);
+    }
+  });
+
+  $('#nave').select2({
+    placeholder: 'Seleccione una motonave...',
+    allowClear: true,
+    tags: false,
+    width: '100%',
+    ajax: {
+      url: '../controllers/vesselJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term, /* Lo que escribe el usuario */
+          current: 1 /* Muestra las naves que cuentan con una ETA mayor a la fecha actual */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#patente').select2({
+    placeholder: 'Seleccione una patente...',
+    allowClear: true,
+    tags: false,
+    width: '100%',
+    ajax: {
+      url: '../controllers/carPlateJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term /* Lo que escribe el usuario */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+});
+
+$(document).on('select2:open', function () {
+  let searchField = document.querySelector('.select2-container--open .select2-search__field');
+  if (searchField) {
+    searchField.focus();
+  }
 });
 </script>

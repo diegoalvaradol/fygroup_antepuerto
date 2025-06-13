@@ -1,10 +1,12 @@
 <?php
+require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set('America/Santiago');
 
-class port
+class port extends iQuery
 {
   private $conexion;
-  protected $table = "app_ports";
+  protected $table      = "app_ports";
+  protected $primaryKey = 'port_id';
 
   public $id         = "port_id";
   public $city       = "city";
@@ -27,10 +29,10 @@ class port
     $this->created    = $this->created;
     $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":city", $this->city);
-    $stmt->bindParam(":country", $this->country);
-    $stmt->bindParam(":created", $this->created);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":city", $this->city, PDO::PARAM_STR);
+    $stmt->bindParam(":country", $this->country, PDO::PARAM_STR);
+    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -46,9 +48,9 @@ class port
     $this->lastupdate = $this->lastupdate;
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":city", $this->city);
-    $stmt->bindParam(":country", $this->country);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+    $stmt->bindParam(":city", $this->city, PDO::PARAM_STR);
+    $stmt->bindParam(":country", $this->country, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -161,7 +163,7 @@ class port
   public function getflagImage($countryName)
   {
     $countryToIso = [
-      'Afganistán'     => 'af',
+      'Afganistan'     => 'af',
       'Albania'        => 'al',
       'Argelia'        => 'dz',
       'Andorra'        => 'ad',
@@ -169,10 +171,10 @@ class port
       'Argentina'      => 'ar',
       'Australia'      => 'au',
       'Austria'        => 'at',
-      'Bélgica'        => 'be',
+      'Belgica'        => 'be',
       'Bolivia'        => 'bo',
       'Brasil'         => 'br',
-      'Canadá'         => 'ca',
+      'Canada'         => 'ca',
       'Chile'          => 'cl',
       'China'          => 'cn',
       'Colombia'       => 'co',
@@ -187,23 +189,23 @@ class port
       'Indonesia'      => 'id',
       'Irlanda'        => 'ie',
       'Italia'         => 'it',
-      'Japón'          => 'jp',
+      'Japon'          => 'jp',
       'México'         => 'mx',
       'Países Bajos'   => 'nl',
       'Nueva Zelanda'  => 'nz',
       'Noruega'        => 'no',
-      'Panamá'         => 'pa',
+      'Panama'         => 'pa',
       'Paraguay'       => 'py',
-      'Perú'           => 'pe',
+      'Peru'           => 'pe',
       'Polonia'        => 'pl',
       'Portugal'       => 'pt',
       'Rusia'          => 'ru',
-      'Sudáfrica'      => 'za',
+      'Sudafrica'      => 'za',
       'Corea del Sur'  => 'kr',
       'España'         => 'es',
       'Suecia'         => 'se',
       'Suiza'          => 'ch',
-      'Turquía'        => 'tr',
+      'Turquia'        => 'tr',
       'Ucrania'        => 'ua',
       'Reino Unido'    => 'gb',
       'Estados Unidos' => 'us',

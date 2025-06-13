@@ -1,12 +1,12 @@
 <?php
-require_once __DIR__ . '/../models/class.ship.php';
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../models/class.config.php';
-require_once __DIR__ . '/../models/class.user.php';
-class outerPort
+require_once __DIR__ . '/../config/includes.php';
+
+class outerPort extends iQuery
 {
   private $conexion;
-  protected $table = "app_outer_port";
+  protected $table      = "app_outer_port";
+  protected $primaryKey = 'row_id';
 
   public $id              = "row_id";
   public $countervessel   = "counter_vessel";
@@ -62,22 +62,22 @@ class outerPort
 
     $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
     $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
-    $stmt->bindParam(":carplate", $this->carplate);
-    $stmt->bindParam(":guide", $this->guide);
-    $stmt->bindParam(":container", $this->container);
-    $stmt->bindParam(":seal", $this->seal);
-    $stmt->bindParam(":exporter", $this->exporter);
-    $stmt->bindParam(":agency", $this->agency);
-    $stmt->bindParam(":cellphonedriver", $this->cellphonedriver);
-    $stmt->bindParam(":arrivaldate", $this->arrivaldate);
-    $stmt->bindParam(":comodity", $this->comodity);
-    $stmt->bindParam(":booking", $this->booking);
-    $stmt->bindParam(":stay", $this->stay);
-    $stmt->bindParam(":observations", $this->observations);
+    $stmt->bindParam(":carplate", $this->carplate, PDO::PARAM_STR);
+    $stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
+    $stmt->bindParam(":container", $this->container, PDO::PARAM_STR);
+    $stmt->bindParam(":seal", $this->seal, PDO::PARAM_STR);
+    $stmt->bindParam(":exporter", $this->exporter, PDO::PARAM_STR);
+    $stmt->bindParam(":agency", $this->agency, PDO::PARAM_STR);
+    $stmt->bindParam(":cellphonedriver", $this->cellphonedriver, PDO::PARAM_STR);
+    $stmt->bindParam(":arrivaldate", $this->arrivaldate, PDO::PARAM_STR);
+    $stmt->bindParam(":comodity", $this->comodity, PDO::PARAM_STR);
+    $stmt->bindParam(":booking", $this->booking, PDO::PARAM_STR);
+    $stmt->bindParam(":stay", $this->stay, PDO::PARAM_STR);
+    $stmt->bindParam(":observations", $this->observations, PDO::PARAM_STR);
     $stmt->bindParam(":palletsquantity", $this->pallets, PDO::PARAM_INT);
-    $stmt->bindParam(":origin", $this->origin);
-    $stmt->bindParam(":created", $this->created);
-    $stmt->bindParam(":createdby", $this->createdby);
+    $stmt->bindParam(":origin", $this->origin, PDO::PARAM_STR);
+    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+    $stmt->bindParam(":createdby", $this->createdby, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -92,7 +92,7 @@ class outerPort
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
     $stmt->bindParam(":origin", $this->origin, PDO::PARAM_INT);
-    $stmt->bindParam(":departuredate", $this->departuredate);
+    $stmt->bindParam(":departuredate", $this->departuredate, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -124,18 +124,18 @@ class outerPort
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
     $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
     $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
-    $stmt->bindParam(":carplate", $this->carplate);
-    $stmt->bindParam(":guide", $this->guide);
-    $stmt->bindParam(":container", $this->container);
-    $stmt->bindParam(":seal", $this->seal);
-    $stmt->bindParam(":exporter", $this->exporter);
-    $stmt->bindParam(":agency", $this->agency);
-    $stmt->bindParam(":cellphonedriver", $this->cellphonedriver);
-    $stmt->bindParam(":arrivaldate", $this->arrivaldate);
-    $stmt->bindParam(":comodity", $this->comodity);
-    $stmt->bindParam(":booking", $this->booking);
-    $stmt->bindParam(":stay", $this->stay);
-    $stmt->bindParam(":observations", $this->observations);
+    $stmt->bindParam(":carplate", $this->carplate, PDO::PARAM_STR);
+    $stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
+    $stmt->bindParam(":container", $this->container, PDO::PARAM_STR);
+    $stmt->bindParam(":seal", $this->seal, PDO::PARAM_STR);
+    $stmt->bindParam(":exporter", $this->exporter, PDO::PARAM_STR);
+    $stmt->bindParam(":agency", $this->agency, PDO::PARAM_STR);
+    $stmt->bindParam(":cellphonedriver", $this->cellphonedriver, PDO::PARAM_STR);
+    $stmt->bindParam(":arrivaldate", $this->arrivaldate, PDO::PARAM_STR);
+    $stmt->bindParam(":comodity", $this->comodity, PDO::PARAM_STR);
+    $stmt->bindParam(":booking", $this->booking, PDO::PARAM_STR);
+    $stmt->bindParam(":stay", $this->stay, PDO::PARAM_STR);
+    $stmt->bindParam(":observations", $this->observations, PDO::PARAM_STR);
     $stmt->bindParam(":palletsquantity", $this->pallets, PDO::PARAM_INT);
     $stmt->bindParam(":origin", $this->origin, PDO::PARAM_INT);
     $stmt->bindParam(":createdby", $this->createdby);
@@ -298,7 +298,7 @@ class outerPort
   {
     $query = "SELECT * FROM app_users WHERE run = :run";
     $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":run", $run);
+    $stmt->bindParam(":run", $run, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -368,10 +368,8 @@ class outerPort
               </div>
 
               <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                </br>
-                <button type='button' class='btn btn-sm btn-success btn-user' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-                </br>
+                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
                 <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
               </div>
             </form>
@@ -665,8 +663,8 @@ class outerPort
               </div>
 
               <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                <button type='button' class='btn btn-sm btn-success btn-user' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
                 <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
               </div>
             </form>
@@ -968,8 +966,8 @@ class outerPort
               </div>
 
               <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                <button type='button' class='btn btn-sm btn-success btn-user' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['tipo'] ?? "") . "', '" . ($_POST['desde'] ?? "") . "', '" . ($_POST['hasta'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
+                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['tipo'] ?? "") . "', '" . ($_POST['desde'] ?? "") . "', '" . ($_POST['hasta'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
                 <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
               </div>
             </form>

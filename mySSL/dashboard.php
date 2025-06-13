@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.outerPort.php';
-require_once __DIR__ . '/../models/class.config.php';
-require_once __DIR__ . '/../models/class.user.php';
+require_once __DIR__ . '/../config/includes.php';
 
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
@@ -62,8 +59,23 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_container_port.php">Ingreso Contenedores</a>
-                        <a class="collapse-item" href="enter_thermo_port.php">Ingreso Termos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port');?> >Ingreso Contenedores</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port');?> >Ingreso Termos</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Internacional Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInternational" aria-expanded="true" aria-controls="collapseInternational">
+                    <i class="fa fa-fw fa-earth-americas"></i>
+                    <span>Internacional</span>
+                </a>
+                <div id="collapseInternational" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Items:</h6>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_international');?> >Carga Internacional</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('tracking');?> >Seguimiento</a>
                     </div>
                 </div>
             </li>
@@ -77,9 +89,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapsePuerto" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_ship.php">Naves</a>
-                        <a class="collapse-item" href="enter_ship_line.php">Lineas Navieras</a>
-                        <a class="collapse-item" href="enter_port.php">Puertos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship');?> >Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship_line');?> >Lineas Navieras</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_port');?> >Puertos</a>
                     </div>
                 </div>
             </li>
@@ -93,7 +105,10 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseProgramacion" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
+                        <?php if ($admin): ?>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
@@ -108,7 +123,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="ship_report.php">Reporte de Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('ship_report');?> >Reporte de Naves</a>
                     </div>
                 </div>
             </li>
@@ -163,9 +178,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userModal" style="color: #0483cd;">
                                     <i class="fas fa-user fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Perfil
                                 </a>
-                                <?php if ($admin): ?> 
+                                <?php if ($admin): ?>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#goalModal" style="color: #0483cd;">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Ajustar Capacidad 
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Ajustar Capacidad
                                 </a>
                                 <?php endif; ?>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">
@@ -465,13 +480,13 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div class="modal-body">
                     <div class="container mt-4 p-3 border rounded" style="background-color: #f9f9f9;">
                         <h3 class="text-center">Licencia de Uso de Software</h3>
-                        <p><strong>Nombre del Software:</strong> Sistema Integral SSL</p>
-                        <p><strong>Versión:</strong><?php echo $infoCfg['version']; ?></p>
-                        <p><strong>Titular de los derechos:</strong><?php echo $infoCfg['author']; ?></p>
-                        <p><strong>Fecha de Lanzamiento:</strong><?php echo $releasedTime->format('d-m-Y H:i'); ?>></p>
+                        <p><strong>Nombre del Software: </strong><?php echo $infoCfg['name']; ?></p>
+                        <p><strong>Versión: </strong><?php echo $infoCfg['version']; ?></p>
+                        <p><strong>Titular de los derechos: </strong><?php echo $infoCfg['author']; ?></p>
+                        <p><strong>Fecha de Lanzamiento: </strong><?php echo $releasedTime->format('d-m-Y H:i'); ?></p>
 
                         <h5>1. OBJETO DE LA LICENCIA</h5>
-                        <p>Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos. Esta versión está en fase Beta (versión 1.36.b).</p>
+                        <p>Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos.</p>
 
                         <h5>2. CONCESIÓN DE LICENCIA</h5>
                         <p>El titular concede al usuario una licencia de uso no exclusiva, intransferible y revocable, para ejecutar, probar y operar el software con fines internos. El software no puede ser redistribuido ni modificado sin autorización expresa por escrito del titular.</p>
@@ -502,7 +517,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         <h5>8. LEGISLACIÓN APLICABLE</h5>
                         <p>Esta licencia se regirá por las leyes de Chile. Cualquier conflicto será sometido a los tribunales competentes del país.</p>
 
-                        <p class="mt-4"><strong>Firmado:</strong><br><?php echo $infoCfg['author']; ?></p>
+                        <p class="mt-4"><strong>Firmado: </strong><br><?php echo $infoCfg['author']; ?></p>
                     </div>
                 </div>
             </div>

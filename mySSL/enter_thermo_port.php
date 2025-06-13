@@ -1,9 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.outerPort.php';
-require_once __DIR__ . '/../models/class.config.php';
-require_once __DIR__ . '/../models/class.user.php';
+require_once __DIR__ . '/../config/includes.php';
 
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
@@ -59,8 +56,23 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_container_port.php">Ingreso Contenedores</a>
-                        <a class="collapse-item" href="enter_thermo_port.php">Ingreso Termos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port');?> >Ingreso Contenedores</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port');?> >Ingreso Termos</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Internacional Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInternational" aria-expanded="true" aria-controls="collapseInternational">
+                    <i class="fa fa-fw fa-earth-americas"></i>
+                    <span>Internacional</span>
+                </a>
+                <div id="collapseInternational" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Items:</h6>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_international');?> >Carga Internacional</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('tracking');?> >Seguimiento</a>
                     </div>
                 </div>
             </li>
@@ -74,9 +86,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapsePuerto" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="enter_ship.php">Naves</a>
-                        <a class="collapse-item" href="enter_ship_line.php">Lineas Navieras</a>
-                        <a class="collapse-item" href="enter_port.php">Puertos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship');?> >Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_ship_line');?> >Lineas Navieras</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('enter_port');?> >Puertos</a>
                     </div>
                 </div>
             </li>
@@ -90,7 +102,10 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseProgramacion" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="program_tpc.php">Planificación Naviera TPC</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
+                        <?php if ($admin): ?>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </li>
@@ -105,7 +120,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                 <div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href="ship_report.php">Reporte de Naves</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('ship_report');?> >Reporte de Naves</a>
                     </div>
                 </div>
             </li>
@@ -187,7 +202,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Formulario</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Formulario de Ingreso</h6>
                                 </div>
 
                                 <div class="card-body">
@@ -204,6 +219,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                                   <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
                                                   <small class="text-danger" id="error-vessel"></small>
                                                 </div>
+
                                                 <div class="col-sm-6">
                                                     <small class="text-black" id="info-vessel"></small>
                                                 </div>
@@ -216,8 +232,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía">
-                                                    <i class="fas fa-info-circle text-info" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Si el camión trae mas de una guía saparalo con una coma. (Ej: 123, 456)"></i>
+                                                    <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía (Ej: 123 ó 123, 456)">
                                                     <small class="text-danger" id="error-guidenumber"></small>
                                                 </div>
                                             </div>
@@ -229,7 +244,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="30" step="1" oninput="validarMaximo(this)" placeholder="N° de Pallets">
+                                                    <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="30" step="1" oninput="validarMaximo(this)" value="20" placeholder="N° de Pallets">
                                                     <small class="text-danger" id="error-palletsquantity"></small>
                                                 </div>
                                             </div>
@@ -566,7 +581,7 @@ var saveChanges = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = 'enter_thermo_port.php';
+          window.location = '<?php echo generateMkey('enter_thermo_port');?>';
         });
       } else {
         Swal.fire({
@@ -634,6 +649,10 @@ var saveInTermo = function() {
             text: 'Error al actualizar el termo.',
             icon: 'error',
             cancelButtonColor: '#d33',
+          }).then(() => {
+            text.removeClass('d-none');
+            spinner.addClass('d-none');
+            btn.prop('disabled', false);
           });
         }
       } else {
@@ -652,6 +671,10 @@ var saveInTermo = function() {
             text: 'Error al registrar el ingreso del termo.',
             icon: 'error',
             cancelButtonColor: '#d33',
+          }).then(() => {
+            text.removeClass('d-none');
+            spinner.addClass('d-none');
+            btn.prop('disabled', false);
           });
         }
       }

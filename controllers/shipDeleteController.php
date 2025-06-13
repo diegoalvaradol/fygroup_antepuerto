@@ -1,10 +1,8 @@
 <?php
-require_once __DIR__ . '/../models/class.ship.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/includes.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $database = new Database();
-  $db       = $database->getConnection();
+  $db = (new Database())->getConnection();
 
   /* Verifica si la motonave se encuentra asociado a un ingreso de contenedor o termo */
   $query = "SELECT * FROM app_outer_port WHERE vessel_id = " . $_POST['id'] . "";
