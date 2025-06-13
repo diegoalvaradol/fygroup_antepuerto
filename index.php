@@ -7,7 +7,7 @@ $mkey = $_GET['mkey'] ?? '';
 
 /* Carpeta accedida desde la URL */
 $uriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-$folderFromUrl = $uriParts[1] ?? ''; /* Después de ssl-chile */
+$folderFromUrl =  esLocalhost() ? ($uriParts[1] ?? '') : ($uriParts[0] ?? ''); /* Después de ssl-chile */
 
 /* Valida que la url contenga el mkey */
 if ($mkey === '') {
