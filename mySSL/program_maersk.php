@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
-header("Location: maintenance.php");
-
 
 $db   = (new Database())->getConnection();
 $cfg  = new cfg($db);
@@ -105,6 +103,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
                         <?php if ($admin): ?>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_maersk');?> >Programa Stacking Maersk</a>
                         <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
                         <?php endif; ?>
                     </div>
@@ -203,8 +202,15 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                     <h6 class="m-0 font-weight-bold text-primary">Detalle de Naves Maersk</h6>
                                 </div>
 
-                                <div class="card-body">
-                                
+                                <div class="card-body" style="align-self:anchor-center;">
+                                    <button type="button" class="btn btn-info btn-lg" onclick="window.open('https://sway.cloud.microsoft/U5rT4hqClDmMHjqE?ref=Link', '_blank')">
+                                        <i class="fas fa-fw fa-ship"></i> Itinerarios Maersk
+                                    </button>
+                                </div>
+
+                                <div class="text-center">
+                                    <img src="../img/logo-maersk.png" style="width:10%;">
+                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:dodgerblue;">Powered by Maersk.</h6>
                                 </div>
                             </div>
                         </div>

@@ -102,7 +102,10 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                     <ul class="navbar-nav ml-auto">
                         <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
                         <label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>
+                        <div class="topbar-divider d-none d-sm-block"></div>
 
+                        <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
+                        <label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->

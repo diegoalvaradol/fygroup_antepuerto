@@ -107,6 +107,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
                         <?php if ($admin): ?>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_maersk');?> >Programa Stacking Maersk</a>
                         <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
                         <?php endif; ?>
                     </div>
