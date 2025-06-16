@@ -570,7 +570,7 @@ var deleteShip = function(id) {
   });
 }
 
-var stackimgShip = function(id, name, voyage, status) {
+var stackingShip = function(id, name, voyage, status) {
   var statusLabel = statusMsg = null;
   if(status == 1){
     statusLabel = 'Cerrar';
@@ -579,7 +579,6 @@ var stackimgShip = function(id, name, voyage, status) {
     statusLabel = 'Abrir';
     statusMsg = 'abierto';
   }
-
 
   Swal.fire({
     title: statusLabel + ' Embarque de Motonave.',
