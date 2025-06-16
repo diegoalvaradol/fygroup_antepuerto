@@ -159,7 +159,7 @@ class user extends iQuery
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result && isset($result['run']) && in_array($result['run'], ['18.923.079-6', '15.798.016-5'])) {
+    if ($result && isset($result['run']) && in_array($result['run'], ['18.923.079-6', '15.798.016-5', '21.394.463-0'])) {
       return true;
     } else {
       return false;

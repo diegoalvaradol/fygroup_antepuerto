@@ -307,6 +307,39 @@ class outerPort extends iQuery
     return $name;
   }
 
+  public function vesselTransfer($fromVessel, $toVessel)
+  {
+    $query = "UPDATE $this->table SET vessel_id = :tovessel WHERE vessel_id = :fromvessel";
+    $stmt  = $this->conexion->prepare($query);
+
+    $stmt->bindParam(":fromvessel", $fromVessel, PDO::PARAM_STR);
+    $stmt->bindParam(":tovessel", $toVessel, PDO::PARAM_STR);
+
+    return $stmt->execute();
+  }
+
+  public function trucksPerDay()
+  {
+    /* Consulta agrupando por día (sin hora) */
+    $query = "SELECT DATE(arrival_date) AS dia, COUNT(*) AS total FROM app_outer_port GROUP BY dia ORDER BY dia ASC";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->execute();
+
+    /* Generar array de puntos para Chart.js */
+    $data = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      if ((int)$row['total'] > 0) {
+        $data[] = [
+            'x' => date('d-m-y', strtotime($row['dia'])), // formato d-m-y
+            'y' => (int)$row['total']
+        ];
+      }
+    }
+
+    /* Convertir a JSON para insertar en JS */
+    return json_encode($data);
+  }
+
   public function getTableContainer()
   {
     $ship      = new ship($this->conexion);

@@ -11,6 +11,7 @@ $infoCfg      = json_decode($cfg->getInfo(1), true);
 $admin        = $user->isAdmin($_SESSION["user"]["run"]);
 $releasedTime = new DateTime($infoCfg['released_date']);
 $updateTime   = new DateTime($infoCfg['update_date']);
+$jsonData     = $port->trucksPerDay();
 ?>
 
 <!-- HTML -->
@@ -35,6 +36,11 @@ $updateTime   = new DateTime($infoCfg['update_date']);
 
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
 
 <body id="page-top">
@@ -92,6 +98,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         <a class="collapse-item" href=<?php echo generateMkey('enter_ship');?> >Naves</a>
                         <a class="collapse-item" href=<?php echo generateMkey('enter_ship_line');?> >Lineas Navieras</a>
                         <a class="collapse-item" href=<?php echo generateMkey('enter_port');?> >Puertos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('vessel_transfer');?> >Roleo de Carga</a>
                     </div>
                 </div>
             </li>
@@ -107,8 +114,8 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
                         <?php if ($admin): ?>
-                        <a class="collapse-item" href=<?php echo generateMkey('program_maersk');?> >Programa Stacking Maersk</a>
-                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_maersk');?> >Programación Maersk</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programación MSC</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -209,7 +216,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
 
                     <!-- Content Row -->
                     <div class="row">
-                        <!-- Resumen de Contenedores Card Example -->
+                        <!-- Resumen de Contenedores -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="text-sm font-weight-bold text-primary text-uppercase mb-1" style="text-align:center;">Contenedores</div>
@@ -237,7 +244,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                             </div>
                         </div>
 
-                        <!-- Resumen de Termos Card Example -->
+                        <!-- Resumen de Termos -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="text-sm font-weight-bold text-success text-uppercase mb-1" style="text-align:center;">Termos</div>
@@ -265,7 +272,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                             </div>
                         </div>
 
-                        <!-- Resumen de Arrivos Card Example -->
+                        <!-- Resumen de Arrivos -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="text-sm font-weight-bold text-warning text-uppercase mb-1" style="text-align:center;">Arrivos</div>
@@ -291,7 +298,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                             </div>
                         </div>
 
-                        <!-- Resumen de Capacidad Card Example -->
+                        <!-- Resumen de Capacidad -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="text-sm font-weight-bold text-info text-uppercase mb-1" style="text-align:center;">Capacidad</div>
@@ -322,6 +329,20 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Gráfico de Camiones Por Día -->
+                        <?php if ($admin): ?>
+                        <div class="col-xl-12 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="text-sm font-weight-bold text-info text-uppercase mb-1" style="text-align:center;">Camiones por Día</div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <canvas id="graficoCamiones" width="800" height="400"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -535,13 +556,6 @@ $updateTime   = new DateTime($infoCfg['update_date']);
     <!-- Custom scripts for all pages-->
     <script src="../assets/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="../assets/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="../assets/js/demo/chart-area-demo.js"></script>
-    <script src="../assets/js/demo/chart-pie-demo.js"></script>
-
     <!-- Bootstrap JS (necesario para popover) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
@@ -642,6 +656,64 @@ function actualizarReloj() {
   const hora = ahora.toLocaleTimeString('es-ES');
   $('#relojFecha').html(`${fecha} - ${hora}`);
 }
+
+const ctx = document.getElementById('graficoCamiones').getContext('2d');
+const data = {
+  datasets: [{
+    label: 'Camiones por día',
+    data: <?= $jsonData ?>,
+    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+    borderColor: 'rgba(75, 192, 192, 1)',
+    fill: false,
+    tension: 0.1,
+    pointRadius: 4,
+    pointHoverRadius: 6,
+    parsing: {
+      xAxisKey: 'x',
+      yAxisKey: 'y'
+    }
+  }]
+};
+
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    plugins: {
+      datalabels: {
+         align: 'top',
+        anchor: 'end',
+        font: {
+          weight: 'bold'
+        },
+        color: '#000'
+      }
+    },
+    scales: {
+      x: {
+        type: 'category',
+        title: {
+          display: true,
+          text: 'Fecha'
+        },
+        ticks: {
+          callback: function(value) {
+            return this.getLabelForValue(value);
+          }
+        }
+      },
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Cantidad de camiones'
+        }
+      }
+    }
+  },
+  plugins: [ChartDataLabels]
+};
+new Chart(ctx, config);
 
 var saveNewGoals = function() {
   $.ajax({

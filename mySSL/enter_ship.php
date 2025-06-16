@@ -89,6 +89,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         <a class="collapse-item" href=<?php echo generateMkey('enter_ship');?> >Naves</a>
                         <a class="collapse-item" href=<?php echo generateMkey('enter_ship_line');?> >Lineas Navieras</a>
                         <a class="collapse-item" href=<?php echo generateMkey('enter_port');?> >Puertos</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('vessel_transfer');?> >Roleo de Carga</a>
                     </div>
                 </div>
             </li>
@@ -104,8 +105,8 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         <h6 class="collapse-header">Items:</h6>
                         <a class="collapse-item" href=<?php echo generateMkey('program_tpc');?> >Planificación Naviera TPC</a>
                         <?php if ($admin): ?>
-                        <a class="collapse-item" href=<?php echo generateMkey('program_maersk');?> >Programa Stacking Maersk</a>
-                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programa Stacking MSC</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_maersk');?> >Programación Maersk</a>
+                        <a class="collapse-item" href=<?php echo generateMkey('program_msc');?> >Programación MSC</a>
                         <?php endif; ?>
                     </div>
                 </div>

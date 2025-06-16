@@ -264,6 +264,21 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                 </div>
                             </div>
                         </div>
+
+
+                        <!-- Resumen de Termos Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="text-sm font-weight-bold text-success text-uppercase mb-1" style="text-align:center;">Camiones por Día</div>
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-6">
+                                            <canvas id="graficoCamiones" width="800" height="400"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
