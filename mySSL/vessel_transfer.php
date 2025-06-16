@@ -230,7 +230,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                             <div class="col-sm-6">
                                                 <div class="form-inline mb-3">
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Información Nave de Origen</label>
-                                                    </br>
+                                                </div>
+
+                                                <div class="form-inline mb-3">
                                                     <small class="text-black" id="info-fromvessel"></small>
                                                 </div>
                                             </div>
@@ -238,7 +240,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                             <div class="col-sm-6">
                                                 <div class="form-inline mb-3">
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Información Nave de Destino</label>
-                                                    </br>
+                                                </div>
+
+                                                <div class="form-inline mb-3">
                                                     <small class="text-black" id="info-tovessel"></small>
                                                 </div>
                                             </div>
@@ -460,10 +464,10 @@ var saveVesselTransfer = function() {
 
   if(fromVessel === toVessel){
     Swal.fire({
-        title: 'Oops...',
-        text: 'El roleo no se puede realizar a la misma nave.',
-        icon: 'error',
-        cancelButtonColor: '#d33',
+      title: 'Oops...',
+      text: 'El roleo no se puede realizar a la misma nave.',
+      icon: 'error',
+      cancelButtonColor: '#d33',
     });
 
     hasError = true;
@@ -543,7 +547,7 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-fromvessel').html(response);
+          $('#info-fromvessel').html(response).addClass('text-green');
         },
         error: function () {
           $('#info-fromvessel').html('Error al obtener la información.');
@@ -563,7 +567,7 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-tovessel').html(response);
+          $('#info-tovessel').html(response).css({'color': 'dodgerblue'});
         },
         error: function () {
           $('#info-tovessel').html('Error al obtener la información.');

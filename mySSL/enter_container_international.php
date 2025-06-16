@@ -717,7 +717,7 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-vessel').html(response);
+          $('#info-vessel').html(response).css({'color': 'dodgerblue'});
         },
         error: function () {
           $('#info-vessel').html('Error al obtener la información.');
