@@ -983,10 +983,11 @@ class outerPort extends iQuery
                 </div>
                 <div class='col-sm-3'>
                   <select class='form-control select2 form-control-user' id='tipo' name='tipo'>
-                    <option value='-' selected>Seleccione una tipo...</option>
+                    <option value='-' selected>Seleccione una tipo de carga...</option>
                     <option value='1'>Contenedores</option>
                     <option value='2'>Termos</option>
                   </select>
+                  <small class='text-grey'>Tipo de Carga</small>
                 </div>
                 <div class='col-sm-3'>
                   <input type='date' class='form-control form-control-user' id='desde' name='desde'>
