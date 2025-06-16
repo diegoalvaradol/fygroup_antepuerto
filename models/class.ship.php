@@ -143,7 +143,7 @@ class ship extends iQuery
     $thead .= "<th>Zarpe</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Actualizado</th>";
-    $thead .= "<th>Finalizar</th>";
+    $thead .= "<th>Embarque</th>";
     $thead .= "<th>Acciones</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
@@ -169,7 +169,7 @@ class ship extends iQuery
       }
 
       $btnFinishedDate = '<i class="fas fa-info-circle text-info" title="Fecha de Finalización: ' . $finish . '" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"></i>';
-      $btnEndStacking  = $data[$this->finished] == 0 ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='finishStackingShip(" . $data[$this->id] . ", \"" . $data[$this->vessel] . "\", \"" . $data[$this->voyage] . "\")'><i class='fas fa-solid fa-check'></i> Finalizar</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-check'></i> Finalizar</button>";
+      $btnEndStacking  = $data[$this->finished] == 0 ? "<button type='button' class='btn btn-danger btn-sm' onclick='stackimgShip(" . $data[$this->id] . ", \"" . $data[$this->vessel] . "\", \"" . $data[$this->voyage] . "\", 1)'><i class='fas fa-solid fa-lock'></i> Cerrar</button>" : "<button type='button' class='btn btn-success btn-sm' onclick='stackimgShip(" . $data[$this->id] . ", \"" . $data[$this->vessel] . "\", \"" . $data[$this->voyage] . "\", 0)'><i class='fas fa-solid fa-unlock'></i> Abrir</button>";
       $btnEdit         = "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editShip(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pen'></i> Editar</button>";
       $btnDelete       = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteShip(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 

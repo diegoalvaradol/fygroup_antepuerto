@@ -1,5 +1,5 @@
 <?php
-require_once 
+require_once __DIR__ . '/../config/includes.php';
 
 $db         = (new Database())->getConnection();
 $searchForm = isset($_POST['search']) ? $_POST['search'] : '';

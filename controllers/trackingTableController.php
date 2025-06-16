@@ -1,5 +1,5 @@
 <?php
-require
+require_once __DIR__ . '/../config/includes.php';
 
 $db       = (new Database())->getConnection();
 $tracking = new tracking($db);

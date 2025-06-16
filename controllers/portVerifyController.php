@@ -1,6 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../models/class.port.php';
+require_once __DIR__ . '/../config/includes.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = (new Database())->getConnection();

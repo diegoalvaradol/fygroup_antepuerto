@@ -570,27 +570,40 @@ var deleteShip = function(id) {
   });
 }
 
-var finishStackingShip = function(id, name, voyage) {
+var stackimgShip = function(id, name, voyage, status) {
+  var statusLabel = statusMsg = null;
+  if(status == 1){
+    statusLabel = 'Cerrar';
+    statusMsg = 'cerrado';
+  }else{
+    statusLabel = 'Abrir';
+    statusMsg = 'abierto';
+  }
+
+
   Swal.fire({
-    title: 'Cerrar Embarque de Motonave.',
-    html: 'Motonave: '+name+' - Viaje: '+voyage+'.'+'</br>'+'¿Estas seguro de cerrar el embarque de esta motonave?',
+    title: statusLabel + ' Embarque de Motonave.',
+    html: 'Motonave: '+name+' - Viaje: '+voyage+'.'+'</br>'+'¿Estas seguro de '+statusLabel+' el embarque de esta motonave?',
     icon: 'info',
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "¡Si, cerrar embarque!",
+    confirmButtonText: "¡Si, "+statusLabel+" embarque!",
     cancelButtonText : 'Cancelar',
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
         url: '../controllers/shipEndStackingController.php',
         type: 'POST',
-        data: { shipId: id },
+        data: {
+          shipId: id,
+          status: status 
+        },
       }).done(function(x) {
         if(x == 'OK'){
           Swal.fire({
             title: '¡Éxito!',
-            html: ' Embarque'+'</br>'+'Motonave: '+name+' - Viaje: '+voyage+'</br>'+'cerrado con éxito.',
+            html: 'Embarque de:'+'</br>'+'Motonave: '+name+' - Viaje: '+voyage+'</br>'+'Fue '+statusMsg+' con éxito.',
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {

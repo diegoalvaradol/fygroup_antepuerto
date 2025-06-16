@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $ship               = new ship($db);
   $ship->id           = $_POST["shipId"];
-  $ship->finished     = 1;
-  $ship->finisheddate = date('Y-m-d H:i:s');
+  $ship->finished     = $_POST["status"];
+  $ship->finisheddate = $_POST["status"] == 1 ? date('Y-m-d H:i:s') :'0000-00-00 00:00:00';
   $ship->lastupdate   = date('Y-m-d H:i:s');
 
   if ($ship->endStacking()) {
