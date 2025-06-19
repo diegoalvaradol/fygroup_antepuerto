@@ -38,4 +38,21 @@ class get
 
     return $types;
   }
+  
+  /**
+   * Method getDivisionName //Devuelve el nombre de la División
+   *
+   * @return void
+   */
+  public static function getDivisionName()
+  {
+    $types = [
+      'ssl'      => 'SSL',
+      'terminal' => 'Terminal',
+      'exporter' => 'Exportador'
+    ];
+
+    return $types;
+  }
+
 }

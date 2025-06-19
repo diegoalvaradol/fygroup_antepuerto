@@ -1,5 +1,5 @@
 <?php
-http_response_code(400);
+http_response_code(401);
 require_once __DIR__ . '/config/auth.php';
 require_once __DIR__ . '/config/includes.php';
 
@@ -43,13 +43,13 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- 404 Error Text -->
+                    <!-- 401 Error Server -->
                     <div class="text-center">
                         <img src="../img/ssl-logo-azul.png">
                         <div class="error mx-auto" data-text=⚠️>⚠️</div>
                         <p class="lead text-gray-800">Acceso Inválido.</p>
                         <br>
-                        <p class="lead text-gray-800">La URL consultada no cuneta con la clave de acceso obligatoria requerida.</p>
+                        <p class="lead text-gray-800">La URL consultada no cuenta con la clave de acceso obligatoria requerida.</p>
                         <p class="lead text-gray-800">Por favor contacta a soporte.</p>
                         
                         <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">

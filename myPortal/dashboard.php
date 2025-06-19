@@ -2,9 +2,10 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db   = (new Database())->getConnection();
-$port = new outerPort($db);
-$cfg  = new cfg($db);
+$db            = (new Database())->getConnection();
+$port          = new outerPort($db);
+$cfg           = new cfg($db);
+$arrayDivision = get::getDivisionName();
 
 $infoCfg      = json_decode($cfg->getInfo(1), true);
 $releasedTime = new DateTime($infoCfg['released_date']);
@@ -218,9 +219,8 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php $totalTrucks        = $port->getTotalTrucks(); ?>
                                                 <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto(); ?>
-
                                                 <?php echo $totalTrucks . ' camiones.'; ?>
-                                                <br>
+                                                
                                                 <small class="h5 mb-0 font-weight-bold text-suceess-800" style="font-size:small;color: green;">Solicitados: <?php print_r($totalTrucks - $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que han arrivado a antepuerto y que ya han sido solicitados por terminal."></i>
                                                 <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php print_r($trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que se encuentra en el antepuerto y que no han sido solicitados por terminal."></i>
                                             </div>
@@ -259,21 +259,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-circle-notch fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Resumen de Termos Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="text-sm font-weight-bold text-success text-uppercase mb-1" style="text-align:center;">Camiones por Día</div>
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-6">
-                                            <canvas id="graficoCamiones" width="800" height="400"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -334,7 +319,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                     </button>
                 </div>
                 <div class="row justify-content-center">
-                    <h6 class="modal-title" id="exampleModalLabel">División: <?php echo strtoupper($_SESSION["user"]["division"]); ?></h6>
+                    <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION["user"]["division"]]; ?></h6>
                 </div>
                 <div class="modal-body">
                     <form id="editUserInfoForm">

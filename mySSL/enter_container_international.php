@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
 $db   = (new Database())->getConnection();
-$port = new outerPort($db);
+$port = new internationalChargue($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
@@ -233,8 +233,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía">
-                                                    <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Si el camión trae mas de una guía saparalo con una coma. (Ej: 123, 456)"></i>
+                                                    <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía (Ej: 123 ó 123, 456)">
                                                     <small class="text-danger" id="error-guidenumber"></small>
                                                 </div>
                                             </div>
@@ -270,7 +269,7 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" maxlength="9" pattern="\d{9}" oninput="limitarTelefono(this)" placeholder="987654321">
+                                                    <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" maxlength="13" pattern="\d{13}" oninput="limitarTelefono(this)" placeholder="+54 9 XXX XXX XXXX">
                                                     <small class="text-grey">N° de Teléfono</small>
                                                     <small class="text-danger" id="error-cellphonedriver"></small>
                                                 </div>
@@ -287,9 +286,9 @@ $updateTime   = new DateTime($infoCfg['update_date']);
                         </div>
                     </div>
 
-                    <!-- Tabla de Contenedores -->
-                    <?php $tableContainer = $port->getTableContainer(); ?>
-                    <?php echo $tableContainer; ?>
+                    <!-- Tabla de Contenedores Internacional -->
+                    <?php $tableContainerInternational = $port->getTableContainerInternational(); ?>
+                    <?php echo $tableContainerInternational; ?>
                 </div>
                 <!-- container-fluid -->
             </div>
@@ -533,14 +532,14 @@ function validarMaximo(input) {
   }
 }
 
-/* Restringe el numero de telefono a 9 numeros */
+/* Restringe el numero de telefono a 13 numeros */
 function limitarTelefono(input) {
   // Elimina cualquier caracter no numérico
   input.value = input.value.replace(/\D/g, '');
 
-  // Limita a 9 caracteres
-  if (input.value.length > 9) {
-    input.value = input.value.slice(0, 9);
+  // Limita a 13 caracteres
+  if (input.value.length > 13) {
+    input.value = input.value.slice(0, 13);
   }
 }
 
@@ -606,17 +605,16 @@ var saveIntContainer = function() {
   }
 }
 
-var exportExcel = function(nave, tipo, desde, hasta) {
+var exportExcel = function(nave, condicion, exportador) {
   const form = document.createElement('form');
   form.method = 'POST';
-  form.action = '../controllers/shipsReportDownloadExcelController.php';
+  form.action = '../controllers/internationalChargueDownloadExcelController.php';
   form.style.display = 'none';
 
   const fields = {
     nave: nave,
-    tipo: tipo,
-    desde: desde,
-    hasta: hasta
+    condicion: condicion,
+    exportador: exportador
   };
 
   for (const key in fields) {

@@ -69,8 +69,7 @@ class tracking extends iQuery
 
   public function getTableTracking($id)
 	{
-		$query = "SELECT * FROM $this->table AS t JOIN app_international_chargue AS ic ON t.id_chargue = ic.row_id WHERE t.id_chargue = :id";
-							
+		$query = "SELECT * FROM $this->table AS t JOIN app_international_chargue AS ic ON t.id_chargue = ic.row_id JOIN app_ships AS sh ON sh.ship_id = ic.vessel_id WHERE t.id_chargue = :id";
 		$stmt = $this->conexion->prepare($query);
 		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 		$stmt->execute();
@@ -80,8 +79,10 @@ class tracking extends iQuery
 			$fechas = [];
 			foreach ($result as $row) {
 				$fechas[(int)$row[$this->status]] = (new DateTime($row[$this->statusdate]))->format('d-m-Y H:i');
-				$container = htmlspecialchars($row["container"]);
-				$chargueid = $row[$this->chargueid];
+				$container     = htmlspecialchars($row["container"]);
+				$vessel        = htmlspecialchars($row["vessel_name"]);
+				$voyage        = htmlspecialchars($row["voyage"]);
+				$chargueid     = $row[$this->chargueid];
 				$currentStatus = $row[$this->status];
 			}
 
@@ -92,6 +93,7 @@ class tracking extends iQuery
 				<div class="card shadow rounded-4">
 					<div class="card-body">
 						<h5 class="card-title mb-4">Tracking del Contenedor: ' . $container . '</h5>
+						<h6 class="card-title mb-4">Nave: ' . $vessel . ' - ' . 'Viaje: ' . $voyage . '</h6>
 						<ul class="timeline list-unstyled">
 				';
 				

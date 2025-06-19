@@ -403,7 +403,7 @@ class outerPort extends iQuery
               <div class='d-flex gap-2'>
                 <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
                 <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
               </div>
             </form>
           </div>
@@ -432,8 +432,8 @@ class outerPort extends iQuery
     $thead .= "<th>Estadía</th>";
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
-    $thead .= "<th>Ingresado Por</th>";
-    $adminEdit ? $thead .= "<th>Acciones</th>" : null;
+    $thead .= "<th>Digitado Por</th>";
+    $thead .= "<th>Acciones</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -480,7 +480,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnEdit             = "<button id='editcontainer' type='button' class='btn btn-sm btn-primary btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnEdit             =  $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnAddContainerHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
 
         $tr .= "<tr " . $attr . ">";
@@ -503,7 +503,7 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $adminEdit ? $tr .= "<td>" . $btnAddContainerHour . ' ' . $btnEdit . "</td>" : null;
+        $tr .= "<td>" . $btnAddContainerHour . ' ' . $btnEdit . "</td>";
         $tr .= "</tr>";
 
         $count++;
@@ -568,7 +568,7 @@ class outerPort extends iQuery
 
     /* Encabezados */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Agencia', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Ingresado Por'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Agencia', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Digitado Por'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
@@ -698,7 +698,7 @@ class outerPort extends iQuery
               <div class='d-flex gap-2'>
                 <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
                 <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['patente'] ?? "") . "', '" . htmlspecialchars($_POST['guia'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
               </div>
             </form>
           </div>
@@ -724,8 +724,8 @@ class outerPort extends iQuery
     $thead .= "<th>Estadía</th>";
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
-    $thead .= "<th>Ingresado Por</th>";
-    $adminEdit ? $thead .= "<th>Acciones</th>" : null;
+    $thead .= "<th>Digitado Por</th>";
+    $thead .= "<th>Acciones</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -772,7 +772,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnEdit          = "<button id='editcontainer' type='button' class='btn btn-sm btn-primary btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnAddThermoHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
 
         $tr .= "<tr " . $attr . ">";
@@ -792,7 +792,7 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $adminEdit ? $tr .= "<td>" . $btnAddThermoHour . ' ' . $btnEdit . "</td>" : null;
+        $tr .= "<td>" . $btnAddThermoHour . ' ' . $btnEdit . "</td>";
         $tr .= "</tr>";
 
         $count++;
@@ -856,7 +856,7 @@ class outerPort extends iQuery
 
     /* Encabezados del Excel */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Ingresado Por'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Digitado Por'
     ];
     $sheet->fromArray($headers, null, 'A1');
 
@@ -1002,7 +1002,7 @@ class outerPort extends iQuery
               <div class='d-flex gap-2'>
                 <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
                 <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? "") . "', '" . htmlspecialchars($_POST['tipo'] ?? "") . "', '" . ($_POST['desde'] ?? "") . "', '" . ($_POST['hasta'] ?? "") . "')" . "\"><i class='fas fa-solid fa-download'></i> Descargar Excel</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=location.pathname'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
               </div>
             </form>
           </div>
@@ -1027,7 +1027,7 @@ class outerPort extends iQuery
     $thead .= "<th>Estadía</th>";
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
-    $thead .= "<th>Ingresado Por</th>";
+    $thead .= "<th>Digitado Por</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -1158,7 +1158,7 @@ class outerPort extends iQuery
 
     /* Encabezados del Excel */
     $headers = [
-      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Ingresado Por'
+      'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Digitado Por'
     ];
     $sheet->fromArray($headers, null, 'A1');
 

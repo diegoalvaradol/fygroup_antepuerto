@@ -60,6 +60,14 @@ if (isset($_SESSION['user'])) {
                   </div>
 
                   <form id="loginForm">
+                    <div class="form-group" style="display:flex;align-items:center;gap:10px;">
+                      <select class="form-control select2" id="division" name="division" style="margin-left:15%;margin-right:15%;">
+                        <option value="-" selected>Seleccione una División...</option>
+                        <option value="terminal">Terminal</option>
+                        <option value="exporter">Exportador</option>
+                      </select>
+                    </div>
+
                     <div class="form-group" style="display:flex;align-items:center;justify-content:center;gap:10px;">
                       <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9" style="text-align:center;margin-left:5%;">
                       <span id="info-run"></span>
@@ -155,9 +163,9 @@ if (isset($_SESSION['user'])) {
   }
 
   var loadSession = function() {
+    const division = $('#division').val();
     const run = $('#run').val();
     const password = $('#password').val();
-    const division = 'portal'; /* Division portal cliente */
     const btn = $('#loadBtn');
     const text = $('#loadBtnText');
     const spinner = $('#loadBtnSpinner');
@@ -177,7 +185,6 @@ if (isset($_SESSION['user'])) {
     text . addClass('d-none');
     spinner . removeClass('d-none');
     btn . prop('disabled', true);
-
 
     $.ajax({
       url: '../controllers/loginController.php',

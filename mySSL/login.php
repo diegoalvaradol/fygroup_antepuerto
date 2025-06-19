@@ -60,7 +60,7 @@ if (isset($_SESSION['user'])) {
 
                   <form id="loginForm">
                     <div class="form-group" style="display:flex;align-items:center;justify-content:center;gap:10px;">
-                      <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9" style="text-align:center;margin-left:5%;">
+                      <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9" style="text-align:center;margin-left:5%;margin-right:5%;">
                       <span id="info-run"></span>
                     </div>
 

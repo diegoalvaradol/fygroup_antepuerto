@@ -1,4 +1,9 @@
 <?php
+/* Código para incluir la mantencíon en la pagina requerida */
+//header("Location: maintenance.php");
+//exit;
+
+http_response_code(503);
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
@@ -14,6 +19,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
@@ -41,14 +47,18 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- 404 Error Text -->
+                    <!-- 503 Maintenance Text -->
                     <div class="text-center">
-                        <img src="../img/ssl-logo-azul.png">
+                        <img src="../img/ssl-logo-azul.png" style="width:25%;">
                         <p class="lead text-gray-800" style="font-size:500%;">¡Página en Mantención!</p>
+                        <img src="../img/img-maintenance.jpg" style="width:75%;">
                         <br>
                         <p class="lead text-gray-800">Sentimos las molestias.</p>
                         <p class="lead text-gray-800">Volveremos tan pronto sea posible.</p>
-                        <a href="dashboard.php" style="font-size:larger;">&larr; Vuelve al Inicio...</a>
+                        
+                        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
+                            <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
+                        </button>
                     </div>
                 </div>
                 <!-- /.container-fluid -->

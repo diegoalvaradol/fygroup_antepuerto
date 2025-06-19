@@ -6,9 +6,9 @@ abstract class iQuery {
   protected $table;
   protected $primaryKey = 'id'; /* Id por defecto */
 
-  public function __construct($pdo) {
-		$this->db = $pdo;
-	}
+  public function __construct($conexion) {
+    $this->db = $conexion;
+  }
 
 	public function length(): bool {
 		$sql = "SELECT 1 FROM {$this->table} LIMIT 1";
@@ -17,11 +17,20 @@ abstract class iQuery {
 		return (bool) $stmt->fetch();
 	}
 
-  public function find($id) {
-    $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE {$this->primaryKey} = :id");
-    $stmt->execute(['id' => $id]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-  }
+  public function find(int $id): array {
+		$sql = "SELECT * FROM {$this->table} WHERE {$this->primaryKey} = :id";
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue(":id", $id, PDO::PARAM_INT);
+		$stmt->execute();
+		
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		
+		if (!$result) {
+			throw new Exception("Registro con ID {$id} no encontrado en {$this->table}");
+		}
+	
+		return $result;
+	}
 
 	public function getFirstMember(string $sql, array $params = []): ?array {
 		$stmt = $this->db->prepare($sql);

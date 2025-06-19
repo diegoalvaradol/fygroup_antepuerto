@@ -1,5 +1,5 @@
 <?php
-http_response_code(400);
+http_response_code(403);
 require_once __DIR__ . '/config/auth.php';
 require_once __DIR__ . '/config/includes.php';
 
@@ -43,7 +43,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- 404 Error Text -->
+                    <!-- 403 Error Server -->
                     <div class="text-center">
                         <img src="../img/ssl-logo-azul.png">
                         <div class="error mx-auto" data-text=⚠️>⚠️</div>

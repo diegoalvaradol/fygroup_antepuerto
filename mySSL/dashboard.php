@@ -7,11 +7,12 @@ $port = new outerPort($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$jsonData     = $port->trucksPerDay();
+$infoCfg       = json_decode($cfg->getInfo(1), true);
+$admin         = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime  = new DateTime($infoCfg['released_date']);
+$updateTime    = new DateTime($infoCfg['update_date']);
+$jsonData      = $port->trucksPerDay();
+$arrayDivision = get::getDivisionName();
 ?>
 
 <!-- HTML -->
@@ -657,6 +658,7 @@ function actualizarReloj() {
   $('#relojFecha').html(`${fecha} - ${hora}`);
 }
 
+<?php if ($admin): ?>
 const ctx = document.getElementById('graficoCamiones').getContext('2d');
 const data = {
   datasets: [{
@@ -714,6 +716,7 @@ const config = {
   plugins: [ChartDataLabels]
 };
 new Chart(ctx, config);
+<?php endif; ?>
 
 var saveNewGoals = function() {
   $.ajax({
