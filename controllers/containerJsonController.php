@@ -6,7 +6,6 @@ $searchForm = isset($_POST['search']) ? $_POST['search'] : '';
 $search     = "%{$searchForm}%";
 
 $query = "SELECT * FROM app_international_chargue AS ic JOIN app_ships AS sh ON ic.vessel_id = sh.ship_id WHERE container LIKE :search LIMIT 10";
-
 $stmt = $db->prepare($query);
 $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();

@@ -459,7 +459,7 @@ $arrayDivision = get::getDivisionName();
                     </button>
                 </div>
                 <div class="row justify-content-center">
-                    <h6 class="modal-title" id="exampleModalLabel">División: <?php echo strtoupper($_SESSION["user"]["division"]); ?></h6>
+                    <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION["user"]["division"]]; ?></h6>
                 </div>
                 <div class="modal-body">
                     <form id="editUserInfoForm">

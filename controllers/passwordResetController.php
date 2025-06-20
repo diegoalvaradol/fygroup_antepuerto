@@ -6,8 +6,6 @@ date_default_timezone_set("America/Santiago");
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
-
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   /* Define si es localhost */
   $whitelist = ['127.0.0.1', '::1', 'localhost'];
@@ -39,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($userDivision == 'ssl') {
       $link = $localHost ? "http://localhost/ssl-chile/mySSL/reset_form.php?token=$token" : "https://myssl.ssl-lines.com/mySSL/reset_form.php?token=$token";
-    } elseif ($userDivision == 'client' || $userDivision == 'exporter') {
+    } elseif ($userDivision == 'terminal' || $userDivision == 'exporter') {
       $link = $localHost ? "http://localhost/ssl-chile/myPortal/reset_form.php?token=$token" : "https://myssl.ssl-lines.com/myPortal/reset_form.php?token=$token";
     }
 

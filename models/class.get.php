@@ -47,7 +47,7 @@ class get
   public static function getDivisionName()
   {
     $types = [
-      'ssl'      => 'SSL',
+      'ssl'      => 'Personal SSL',
       'terminal' => 'Terminal',
       'exporter' => 'Exportador'
     ];
