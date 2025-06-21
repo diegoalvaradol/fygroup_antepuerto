@@ -5,6 +5,9 @@ require_once __DIR__ . '/../config/includes.php';
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
 $cfg  = new cfg($db);
+$sideBarPortal = menu::sideBarPortal();
+$tapBarPortal = menu::secondTapBarPortal();
+$footer = menu::footerSSL();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 
@@ -43,48 +46,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#293c74;">
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
-                <img src="../img/ssl-logo-azul.png" style="width:100%;">
-            </a>
-
-            <!-- Heading -->
-            <div class="sidebar-heading">Sistema Antepuerto</div>
-
-            <!-- Nav Item - Antepuerto Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAntepuerto" aria-expanded="true" aria-controls="collapseAntepuerto">
-                    <i class="fas fa-fw fa-truck"></i>
-                    <span>Antepuerto</span>
-                </a>
-                <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port', 'myPortal');?> >Ingreso Contenedores</a>
-                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port', 'myPortal');?> >Ingreso Termos</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Text Buttom (Sidebar) -->
-            <div class="d-flex flex-column h-100">
-                <div class="text-center d-none d-md-inline mt-auto">
-                    <hr class="sidebar-divider">
-                    <small><?php echo $infoCfg['name']; ?></small>
-                    <br>
-                    <small><b>Versión: </b><?php echo $infoCfg['version']; ?></small>
-                </div>
-            </div>
-        </ul>
+        <?php echo $sideBarPortal; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -92,37 +54,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#293c74;">
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
-                        <label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
-                        <label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, <?php echo $_SESSION["user"]["name"]; ?>!</span>
-                                <img class="img-profile rounded-circle" src="../img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">
-                                    <i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
+                <?php echo $tapBarPortal; ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -139,13 +71,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; <?php echo $infoCfg['mark']; ?> 2025</span>
-                    </div>
-                </div>
-            </footer>
+            <?php echo $footer; ?>
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->

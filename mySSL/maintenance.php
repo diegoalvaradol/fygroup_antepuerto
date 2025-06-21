@@ -11,6 +11,7 @@ $db  = (new Database())->getConnection();
 $cfg = new cfg($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
+$footer = menu::footerSSL();
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +25,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Inicio</title>
+    <title>SSL | Página en Mantención</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -50,11 +51,12 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                     <!-- 503 Maintenance Text -->
                     <div class="text-center">
                         <img src="../img/ssl-logo-azul.png" style="width:25%;">
-                        <p class="lead text-gray-800" style="font-size:500%;">¡Página en Mantención!</p>
-                        <img src="../img/img-maintenance.jpg" style="width:75%;">
+                        <p class="lead text-gray-800" style="font-size:400%;">¡Página en Mantención!</p>
+                        <img src="../img/img-maintenance.jpg" style="width:55%;">
                         <br>
                         <p class="lead text-gray-800">Sentimos las molestias.</p>
-                        <p class="lead text-gray-800">Volveremos tan pronto sea posible.</p>
+                        <p class="lead text-gray-800">Volveremos a estar disponible tan pronto sea posible.</p>
+                        <p class="lead text-gray-800">Gracias por la comprensión.</p>
                         
                         <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
                             <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
@@ -67,13 +69,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; <?php echo $infoCfg['mark']; ?> 2025</span>
-                    </div>
-                </div>
-            </footer>
+            <?php echo $footer; ?>
             <!-- End of Footer -->
 
         </div>

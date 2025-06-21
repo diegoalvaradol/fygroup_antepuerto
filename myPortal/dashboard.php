@@ -6,6 +6,9 @@ $db            = (new Database())->getConnection();
 $port          = new outerPort($db);
 $cfg           = new cfg($db);
 $arrayDivision = get::getDivisionName();
+$sideBarPortal = menu::sideBarPortal();
+$tapBarPortal  = menu::mainTapBarPortal();
+$footer        = menu::footerSSL();
 
 $infoCfg      = json_decode($cfg->getInfo(1), true);
 $releasedTime = new DateTime($infoCfg['released_date']);
@@ -41,7 +44,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- SweetAlert2 CDN -->
+    <!-- SweetAlert<?php echo $sideBarPortal; ?>2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -49,49 +52,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#293c74;">
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
-                <img src="../img/ssl-logo-azul.png" style="width:100%;">
-            </a>
-
-            <!-- Heading -->
-            <div class="sidebar-heading">Sistema Antepuerto</div>
-            <div class="sidebar-heading">(Portal Cliente)</div>
-
-            <!-- Nav Item - Antepuerto Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAntepuerto" aria-expanded="true" aria-controls="collapseAntepuerto">
-                    <i class="fas fa-fw fa-truck"></i>
-                    <span>Antepuerto</span>
-                </a>
-                <div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Items:</h6>
-                        <a class="collapse-item" href=<?php echo generateMkey('enter_container_port', 'myPortal');?> >Ingreso Contenedores</a>
-                        <a class="collapse-item" href=<?php echo generateMkey('enter_thermo_port', 'myPortal');?> >Ingreso Termos</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-            <!-- Text Buttom (Sidebar) -->
-            <div class="d-flex flex-column h-100">
-                <div class="text-center d-none d-md-inline mt-auto">
-                    <hr class="sidebar-divider">
-                    <small><?php echo $infoCfg['name']; ?></small>
-                    <br>
-                    <small><b>Versión: </b><?php echo $infoCfg['version']; ?></small>
-                </div>
-            </div>
-        </ul>
+        <?php echo $sideBarPortal; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -271,13 +232,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; <?php echo $infoCfg['mark']; ?> 2025</span>
-                    </div>
-                </div>
-            </footer>
+            <?php echo $footer; ?>
             <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->
