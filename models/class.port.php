@@ -148,7 +148,7 @@ class port extends iQuery
     $table = "
     <div class='container-fluid'>
       <div class='table-responsive'>
-        <table class='table table-bordered table-hover' style='width:max-content;'>
+        <table class='table table-bordered table-hover'>
           <h6 class='h3 mb-1 text-gray-800'>Listado de Puertos</h6>
           <h6> Total de Registros: " . $count . "</h6>
           " . $thead . $tr . $tbclose . "
