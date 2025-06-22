@@ -583,6 +583,7 @@ var editThermo = function(id) {
       $('#countervessel').val(data.counter_vessel);
       $('#vessel').empty();
       $('#vessel').append($('<option>', {value: data.vessel_id, text: data.vessel_name + ' (Viaje: ' + data.voyage + ')'}));
+      $('#vessel').trigger('change');
       $('#carplate').empty();
       $('#carplate').append($('<option>', {value: data.car_plate, text: data.car_plate}));
       $('#guidenumber').val(data.guide_number);

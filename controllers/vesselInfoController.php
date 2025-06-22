@@ -26,9 +26,27 @@ if (isset($_POST['id'])) {
 
   if ($id != null) {
     if ($infoVessel != null) {
+      ?>
+      <script>
+        $(document).ready(function() {
+          var seal = null;
+
+          <?php if(stripos($line, 'MAERSK') !== false) : ?>
+            seal = 'MLCL';
+          <?php elseif(stripos($line, 'MSC') !== false || stripos($line, 'MEDITERRANEAN') !== false) : ?>
+            seal = 'FX';
+          <?php endif; ?>
+
+          $('#sealnumber').val(seal);
+        }); 
+      </script>
+      <?php
+
       echo $infoVessel;
     } else {
       echo "Información no encontrada.";
     }
+  }else{
+    echo "No se ha seleccionado ninguna nave.";
   }
 }
