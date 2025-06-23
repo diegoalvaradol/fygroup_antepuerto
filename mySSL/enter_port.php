@@ -284,18 +284,18 @@ var verifyPort = function(city) {
       city: city
     },
     type: "POST",
-    }).done(function(x) {
-      if(x == 'NOOK'){
-        Swal.fire({
-          title: 'Oops...',
-          text: 'El Puerto '+city+' ya se encuentra registrado.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then((result) => {
-          $('#city').val('').focus();
-        });
-      }
-    });
+  }).done(function(x) {
+    if(x == 'NOOK'){
+      Swal.fire({
+        title: 'Oops...',
+        text: 'El Puerto '+city+' ya se encuentra registrado.',
+        icon: 'error',
+        cancelButtonColor: '#d33',
+      }).then((result) => {
+        $('#city').val('').focus();
+      });
+    }
+  });
 }
 
 var editPort = function(id) {
