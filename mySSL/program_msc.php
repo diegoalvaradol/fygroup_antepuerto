@@ -12,6 +12,7 @@ $releasedTime = new DateTime($infoCfg['released_date']);
 $updateTime   = new DateTime($infoCfg['update_date']);
 $sideBarSSL   = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
+$footer = menu::footerSSL();
 ?>
 
 <!-- HTML -->

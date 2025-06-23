@@ -30,6 +30,8 @@ if (isset($_POST['id'])) {
       <script>
         $(document).ready(function() {
           var seal = null;
+          var isUpdate = $('#isUpdate').val();
+          var sealNumber = $('#sealnumber');
 
           <?php if(stripos($line, 'MAERSK') !== false) : ?>
             seal = 'MLCL';
@@ -37,7 +39,7 @@ if (isset($_POST['id'])) {
             seal = 'FX';
           <?php endif; ?>
 
-          $('#sealnumber').val(seal);
+          isUpdate == 0 ? sealNumber.val(seal) : sealNumber.val();
         }); 
       </script>
       <?php
