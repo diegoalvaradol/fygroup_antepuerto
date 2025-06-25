@@ -2,12 +2,12 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db   = (new Database())->getConnection();
-$port = new outerPort($db);
-$cfg  = new cfg($db);
+$db            = (new Database())->getConnection();
+$port          = new outerPort($db);
+$cfg           = new cfg($db);
 $sideBarPortal = menu::sideBarPortal();
-$tapBarPortal = menu::secondTapBarPortal();
-$footer = menu::footerSSL();
+$tapBarPortal  = menu::secondTapBarPortal();
+$footer        = menu::footerSSL();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 

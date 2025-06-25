@@ -328,15 +328,16 @@ class outerPort extends iQuery
     /* Generar array de puntos para Chart.js */
     $data = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      if ((int)$row['total'] > 0) {
+      if ((int) $row['total'] > 0) {
         $data[] = [
-            'x' => date('d-m-y', strtotime($row['dia'])), // formato d-m-y
-            'y' => (int)$row['total']
+          'x' => date('d-m-y', strtotime($row['dia'])), // formato d-m-y
+          'y' => (int) $row['total']
         ];
       }
     }
 
     /* Convertir a JSON para insertar en JS */
+
     return json_encode($data);
   }
 
@@ -480,7 +481,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnEdit             =  $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
+        $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnAddContainerHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
 
         $tr .= "<tr " . $attr . ">";

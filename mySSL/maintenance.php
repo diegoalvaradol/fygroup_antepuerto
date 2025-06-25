@@ -11,7 +11,7 @@ $db  = (new Database())->getConnection();
 $cfg = new cfg($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
-$footer = menu::footerSSL();
+$footer  = menu::footerSSL();
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ $footer = menu::footerSSL();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
@@ -57,7 +57,7 @@ $footer = menu::footerSSL();
                         <p class="lead text-gray-800">Sentimos las molestias.</p>
                         <p class="lead text-gray-800">Volveremos a estar disponible tan pronto sea posible.</p>
                         <p class="lead text-gray-800">Gracias por la comprensión.</p>
-                        
+
                         <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
                             <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
                         </button>

@@ -7,13 +7,13 @@ $ship = new ship($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -370,7 +370,7 @@ var saveChanges = function() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_ship');?>';
+        window.location = '<?php echo generateMkey('enter_ship'); ?>';
       });
     } else {
       Swal.fire({
@@ -407,7 +407,7 @@ var deleteShip = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_ship');?>';
+            window.location = '<?php echo generateMkey('enter_ship'); ?>';
           });
         } else if(x == 'NOOK') {
           Swal.fire({
@@ -455,7 +455,7 @@ var stackingShip = function(id, name, voyage, status) {
         type: 'POST',
         data: {
           shipId: id,
-          status: status 
+          status: status
         },
       }).done(function(x) {
         if(x == 'OK'){
@@ -465,7 +465,7 @@ var stackingShip = function(id, name, voyage, status) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_ship');?>';
+            window.location = '<?php echo generateMkey('enter_ship'); ?>';
           });
         } else  {
           Swal.fire({
@@ -524,7 +524,7 @@ var saveShip = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_ship');?>';
+          window.location = '<?php echo generateMkey('enter_ship'); ?>';
         });
       } else {
         Swal.fire({

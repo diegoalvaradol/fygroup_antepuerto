@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $track            = new tracking($db);
     $track->chargueid = $_POST["chargueId"];
     $track->delete();
-    
+
     echo "OK";
   } else {
     echo "NOOK";

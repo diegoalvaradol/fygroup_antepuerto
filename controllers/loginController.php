@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../config/includes.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $db       = (new Database())->getConnection();
+  $db = (new Database())->getConnection();
 
   $user              = new User($db);
   $user->run         = $_POST["run"];

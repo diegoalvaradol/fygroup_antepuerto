@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../config/includes.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $db       = (new Database())->getConnection();
+  $db = (new Database())->getConnection();
 
   /* Verifica si el puerto se encuentra asociado a una motonave registrada */
   $query = "SELECT * FROM app_ships WHERE port_discharge = " . $_POST["id"] . "";

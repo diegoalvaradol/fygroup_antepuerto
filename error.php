@@ -51,7 +51,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                         <br>
                         <p class="lead text-gray-800">Estas tratando de acceder un directorio no autorizado.</p>
                         <p class="lead text-gray-800">Por favor contacta a soporte.</p>
-                        
+
                         <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
                             <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
                         </button>

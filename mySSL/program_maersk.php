@@ -6,13 +6,13 @@ $db   = (new Database())->getConnection();
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -53,7 +53,6 @@ $footer = menu::footerSSL();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Programación Maersk</h1>
                     <p class="mb-4">Acá puedes revisar el stacking de naves Maersk que recalarán en Coquimbo.</p>
@@ -65,7 +64,11 @@ $footer = menu::footerSSL();
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Detalle de Naves Maersk</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Servicio Atacama - Maersk</h6>
+                                </div>
+
+                                <div style="display:flex;justify-content:center; padding-top:2%; padding-right:3%; padding-left:3%;">
+                                    <img src="https://eus-www.sway-cdn.com/s/U5rT4hqClDmMHjqE/images/cyxaVcQwKs5JwZ?quality=3840&allowAnimation=true" alt="Imagen de Sway" style="max-width:100%; height:auto;">
                                 </div>
 
                                 <div class="card-body" style="align-self:anchor-center;">

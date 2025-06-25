@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set('America/Santiago');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $db       = (new Database())->getConnection();
+  $db = (new Database())->getConnection();
 
   $rawDateInf = str_replace('T', ' ', $_POST['datein']);
   $dateIn     = DateTime::createFromFormat('Y-m-d H:i', $rawDateInf);

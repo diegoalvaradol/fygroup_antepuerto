@@ -32,78 +32,79 @@ class internationalChargue extends iQuery
   public function save()
   {
     $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate, container, seal_number, guide_number, exporter, pallets_quantity, name_driver, cellphone_driver, digited_by, created, last_update)";
-		$query .=" VALUES (:countervessel, :vessel, :carplate, :container, :seal, :guide, :exporter, :pallets, :namedriver, :cellphonedriver, :digitedby, :created, :lastupdate)";
-    $stmt  = $this->conexion->prepare($query);
+    $query .= " VALUES (:countervessel, :vessel, :carplate, :container, :seal, :guide, :exporter, :pallets, :namedriver, :cellphonedriver, :digitedby, :created, :lastupdate)";
+    $stmt = $this->conexion->prepare($query);
 
-		$this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
-		$this->vessel          = htmlspecialchars(strip_tags($this->vessel));
-		$this->carplate        = htmlspecialchars(strip_tags($this->carplate));
-		$this->container       = htmlspecialchars(strip_tags($this->container));
-		$this->seal            = htmlspecialchars(strip_tags($this->seal));
-		$this->guide           = htmlspecialchars(strip_tags($this->guide));
-		$this->exporter        = htmlspecialchars(strip_tags($this->exporter));
-		$this->pallets         = htmlspecialchars(strip_tags($this->pallets));
-		$this->namedriver      = htmlspecialchars(strip_tags($this->namedriver));
-		$this->cellphonedriver = htmlspecialchars(strip_tags($this->cellphonedriver));
-		$this->digitedby       = htmlspecialchars(strip_tags($this->digitedby));
-		$this->created         = $this->created;
-		$this->lastupdate      = $this->lastupdate;
+    $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
+    $this->vessel          = htmlspecialchars(strip_tags($this->vessel));
+    $this->carplate        = htmlspecialchars(strip_tags($this->carplate));
+    $this->container       = htmlspecialchars(strip_tags($this->container));
+    $this->seal            = htmlspecialchars(strip_tags($this->seal));
+    $this->guide           = htmlspecialchars(strip_tags($this->guide));
+    $this->exporter        = htmlspecialchars(strip_tags($this->exporter));
+    $this->pallets         = htmlspecialchars(strip_tags($this->pallets));
+    $this->namedriver      = htmlspecialchars(strip_tags($this->namedriver));
+    $this->cellphonedriver = htmlspecialchars(strip_tags($this->cellphonedriver));
+    $this->digitedby       = htmlspecialchars(strip_tags($this->digitedby));
+    $this->created         = $this->created;
+    $this->lastupdate      = $this->lastupdate;
 
-		$stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
-		$stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
-		$stmt->bindParam(":carplate", $this->carplate, PDO::PARAM_STR);
-		$stmt->bindParam(":container", $this->container, PDO::PARAM_STR);
-		$stmt->bindParam(":seal", $this->seal, PDO::PARAM_STR);
-		$stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
-		$stmt->bindParam(":exporter", $this->exporter, PDO::PARAM_STR);
-		$stmt->bindParam(":pallets", $this->pallets, PDO::PARAM_INT);
-		$stmt->bindParam(":namedriver", $this->namedriver, PDO::PARAM_STR);
-		$stmt->bindParam(":cellphonedriver", $this->cellphonedriver, PDO::PARAM_STR);
-		$stmt->bindParam(":digitedby", $this->digitedby, PDO::PARAM_STR);
-		$stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
-		$stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
+    $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
+    $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
+    $stmt->bindParam(":carplate", $this->carplate, PDO::PARAM_STR);
+    $stmt->bindParam(":container", $this->container, PDO::PARAM_STR);
+    $stmt->bindParam(":seal", $this->seal, PDO::PARAM_STR);
+    $stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
+    $stmt->bindParam(":exporter", $this->exporter, PDO::PARAM_STR);
+    $stmt->bindParam(":pallets", $this->pallets, PDO::PARAM_INT);
+    $stmt->bindParam(":namedriver", $this->namedriver, PDO::PARAM_STR);
+    $stmt->bindParam(":cellphonedriver", $this->cellphonedriver, PDO::PARAM_STR);
+    $stmt->bindParam(":digitedby", $this->digitedby, PDO::PARAM_STR);
+    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
-		if ($stmt->execute()) {
-			$this->id = $this->conexion->lastInsertId();
-			return true;
-		}
-		
-		return false;
+    if ($stmt->execute()) {
+      $this->id = $this->conexion->lastInsertId();
+
+      return true;
+    }
+
+    return false;
   }
 
   public function update()
   {
-		$query = "UPDATE $this->table SET counter_vessel = :countervessel, vessel_id = :vessel, car_plate = :carplate, container = :container, seal_number = :seal, guide_number = :guide, exporter = :exporter, pallets_quantity = :pallets, name_driver = :namedriver, cellphone_driver = :cellphonedriver, digited_by = :digitedby, last_update = :lastupdate WHERE row_id = :id";
-		$stmt  = $this->conexion->prepare($query);
+    $query = "UPDATE $this->table SET counter_vessel = :countervessel, vessel_id = :vessel, car_plate = :carplate, container = :container, seal_number = :seal, guide_number = :guide, exporter = :exporter, pallets_quantity = :pallets, name_driver = :namedriver, cellphone_driver = :cellphonedriver, digited_by = :digitedby, last_update = :lastupdate WHERE row_id = :id";
+    $stmt  = $this->conexion->prepare($query);
 
-		$this->id              = htmlspecialchars(strip_tags($this->id));
-		$this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
-		$this->vessel          = htmlspecialchars(strip_tags($this->vessel));
-		$this->carplate        = htmlspecialchars(strip_tags($this->carplate));
-		$this->container       = htmlspecialchars(strip_tags($this->container));
-		$this->seal            = htmlspecialchars(strip_tags($this->seal));
-		$this->guide           = htmlspecialchars(strip_tags($this->guide));
-		$this->exporter        = htmlspecialchars(strip_tags($this->exporter));
-		$this->pallets         = htmlspecialchars(strip_tags($this->pallets));
-		$this->namedriver      = htmlspecialchars(strip_tags($this->namedriver));
-		$this->cellphonedriver = htmlspecialchars(strip_tags($this->cellphonedriver));
-		$this->digitedby       = htmlspecialchars(strip_tags($this->digitedby));
-		$this->lastupdate      = $this->lastupdate;
+    $this->id              = htmlspecialchars(strip_tags($this->id));
+    $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
+    $this->vessel          = htmlspecialchars(strip_tags($this->vessel));
+    $this->carplate        = htmlspecialchars(strip_tags($this->carplate));
+    $this->container       = htmlspecialchars(strip_tags($this->container));
+    $this->seal            = htmlspecialchars(strip_tags($this->seal));
+    $this->guide           = htmlspecialchars(strip_tags($this->guide));
+    $this->exporter        = htmlspecialchars(strip_tags($this->exporter));
+    $this->pallets         = htmlspecialchars(strip_tags($this->pallets));
+    $this->namedriver      = htmlspecialchars(strip_tags($this->namedriver));
+    $this->cellphonedriver = htmlspecialchars(strip_tags($this->cellphonedriver));
+    $this->digitedby       = htmlspecialchars(strip_tags($this->digitedby));
+    $this->lastupdate      = $this->lastupdate;
 
-		$stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-		$stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
-		$stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
-		$stmt->bindParam(":carplate", $this->carplate, PDO::PARAM_STR);
-		$stmt->bindParam(":container", $this->container, PDO::PARAM_STR);
-		$stmt->bindParam(":seal", $this->seal, PDO::PARAM_STR);
-		$stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
-		$stmt->bindParam(":exporter", $this->exporter, PDO::PARAM_STR);
-		$stmt->bindParam(":pallets", $this->pallets, PDO::PARAM_INT);
-		$stmt->bindParam(":namedriver", $this->namedriver, PDO::PARAM_STR);
-		$stmt->bindParam(":cellphonedriver", $this->cellphonedriver, PDO::PARAM_STR);
-		$stmt->bindParam(":digitedby", $this->digitedby, PDO::PARAM_STR);
-		$stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
-		
+    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+    $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
+    $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
+    $stmt->bindParam(":carplate", $this->carplate, PDO::PARAM_STR);
+    $stmt->bindParam(":container", $this->container, PDO::PARAM_STR);
+    $stmt->bindParam(":seal", $this->seal, PDO::PARAM_STR);
+    $stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
+    $stmt->bindParam(":exporter", $this->exporter, PDO::PARAM_STR);
+    $stmt->bindParam(":pallets", $this->pallets, PDO::PARAM_INT);
+    $stmt->bindParam(":namedriver", $this->namedriver, PDO::PARAM_STR);
+    $stmt->bindParam(":cellphonedriver", $this->cellphonedriver, PDO::PARAM_STR);
+    $stmt->bindParam(":digitedby", $this->digitedby, PDO::PARAM_STR);
+    $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
+
     return $stmt->execute();
   }
 
@@ -112,12 +113,12 @@ class internationalChargue extends iQuery
     $query = "DELETE FROM $this->table WHERE row_id = :id";
     $stmt  = $this->conexion->prepare($query);
 
-		$stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
 
-		return $stmt->execute();
+    return $stmt->execute();
   }
 
-	public function findByUser($run)
+  public function findByUser($run)
   {
     $query = "SELECT * FROM app_users WHERE run = :run";
     $stmt  = $this->conexion->prepare($query);
@@ -130,7 +131,7 @@ class internationalChargue extends iQuery
     return $name;
   }
 
-	public function getTableContainerInternational()
+  public function getTableContainerInternational()
   {
     $ship      = new ship($this->conexion);
     $user      = new user($this->conexion);
@@ -212,7 +213,7 @@ class internationalChargue extends iQuery
     $thead .= "<th>Sello</th>";
     $thead .= "<th>Exportador</th>";
     $thead .= "<th>Pallets</th>";
-		$thead .= "<th>Conductor</th>";
+    $thead .= "<th>Conductor</th>";
     $thead .= "<th>Teléfono</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Digitado Por</th>";
@@ -226,7 +227,7 @@ class internationalChargue extends iQuery
     if ($result !== []) {
       foreach ($result as $data) {
         $createdTime = new DateTime($data[$this->created]);
-        $created 		 = $createdTime->format('d-m-Y H:i');
+        $created     = $createdTime->format('d-m-Y H:i');
         $btnEdit     = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
 
         $tr .= "<tr>";
@@ -238,7 +239,7 @@ class internationalChargue extends iQuery
         $tr .= "<td>" . $data[$this->seal] . "</td>";
         $tr .= "<td>" . $data[$this->exporter] . "</td>";
         $tr .= "<td>" . $data[$this->pallets] . "</td>";
-				$tr .= "<td>" . $data[$this->namedriver] . "</td>";
+        $tr .= "<td>" . $data[$this->namedriver] . "</td>";
         $tr .= "<td>" . $data[$this->cellphonedriver] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->digitedby]) . "</td>";
@@ -273,9 +274,9 @@ class internationalChargue extends iQuery
     return $table;
   }
 
-	public function downloadTableInternationalChargueExcel($nave = '', $patente = '', $guia = '')
-	{
-		$ship = new ship($this->conexion);
+  public function downloadTableInternationalChargueExcel($nave = '', $patente = '', $guia = '')
+  {
+    $ship = new ship($this->conexion);
 
     $filtros = [];
     $where   = "WHERE 1";
@@ -304,46 +305,46 @@ class internationalChargue extends iQuery
     $sheet       = $spreadsheet->getActiveSheet();
     $sheet->setTitle('Listado de Termos');
 
-		// Encabezados
-		$headers = ['Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Pallets', 'Conductor', 'Teléfono', 'Creado', 'Digitado Por'];
-		$col = 'A';
-		foreach ($headers as $header) {
-			$sheet->setCellValue($col . '1', $header);
-			$col++;
-		}
+    // Encabezados
+    $headers = ['Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Pallets', 'Conductor', 'Teléfono', 'Creado', 'Digitado Por'];
+    $col     = 'A';
+    foreach ($headers as $header) {
+      $sheet->setCellValue($col . '1', $header);
+      $col++;
+    }
 
-		// Cuerpo
-		$row = 2;
-		foreach ($result as $data) {
-			$createdTime = new DateTime($data[$this->created]);
-			$created = $createdTime->format('d-m-Y H:i');
+    // Cuerpo
+    $row = 2;
+    foreach ($result as $data) {
+      $createdTime = new DateTime($data[$this->created]);
+      $created     = $createdTime->format('d-m-Y H:i');
 
-			$sheet->fromArray([
+      $sheet->fromArray([
         $data[$this->countervessel],
         $ship->getVesselName($data[$this->vessel]),
         $data[$this->carplate],
         $data[$this->guide],
-				$data[$this->container],
-				$data[$this->seal],
-				$data[$this->exporter],
-				$data[$this->pallets],
-				$data[$this->namedriver],
-				$data[$this->cellphonedriver],
-				$created,
-				$this->findByUser($data[$this->digitedby])
-			], null, 'A' . $row);
+        $data[$this->container],
+        $data[$this->seal],
+        $data[$this->exporter],
+        $data[$this->pallets],
+        $data[$this->namedriver],
+        $data[$this->cellphonedriver],
+        $created,
+        $this->findByUser($data[$this->digitedby])
+      ], null, 'A' . $row);
 
       $row++;
-		}
+    }
 
-		// Enviar headers
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="Reporte_de_Carga_Internacional_' . date('d-m-Y H:i:s') . '.xlsx"');
-		header('Cache-Control: max-age=0');
+    // Enviar headers
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment; filename="Reporte_de_Carga_Internacional_' . date('d-m-Y H:i:s') . '.xlsx"');
+    header('Cache-Control: max-age=0');
 
-		$writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-		$writer->save('php://output');
-		exit;
-	}
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+    $writer->save('php://output');
+    exit;
+  }
 
 }

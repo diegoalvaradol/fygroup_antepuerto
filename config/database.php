@@ -14,7 +14,7 @@ class Database
       /* Localhost */
       $this->host     = "localhost";
       $this->db_name  = "ssl_chile";
-      $this->username = "root";
+      $this->username = "ssl_chile";
       $this->password = "seatrade1313";
     } else {
       /* Server Ferozo */

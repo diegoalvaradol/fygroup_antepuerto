@@ -6,13 +6,13 @@ $db   = (new Database())->getConnection();
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- JAVASCRIPT -->
@@ -122,7 +122,7 @@ $footer = menu::footerSSL();
                                     </form>
 
                                     <div class="text-center">
-                                        <img src="../img/logo-tpc-transparente.png" style="width:10%;">
+                                        <img src="../img/logo-tpc-transparente.png" style="width:10%; padding-top:1%;">
                                         <h6 class="m-0 font-weight-bold text-primary" style="text-align:center; font-size:small;">Powered by TPC.</h6>
                                     </div>
                                 </div>

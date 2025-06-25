@@ -6,13 +6,13 @@ $db   = (new Database())->getConnection();
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -67,9 +67,9 @@ $footer = menu::footerSSL();
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Detalle de Stacking MSC</h6>
                                 </div>
-                                
-                                <div class="card-body">
-                                    <iframe src="https://deadline.mscchile.cl/Stacking_esp.html" style="width:100%;max-width:100%;height:600px;border:none;"></iframe>
+
+                                <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
+                                    <iframe src="https://deadline.mscchile.cl/Stacking_esp.html" width="1000" height="600" style="border: none;"></iframe>
                                 </div>
 
                                 <div class="text-center">

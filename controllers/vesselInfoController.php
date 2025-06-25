@@ -33,14 +33,14 @@ if (isset($_POST['id'])) {
           var isUpdate = $('#isUpdate').val();
           var sealNumber = $('#sealnumber');
 
-          <?php if(stripos($line, 'MAERSK') !== false) : ?>
+          <?php if (stripos($line, 'MAERSK') !== false): ?>
             seal = 'MLCL';
-          <?php elseif(stripos($line, 'MSC') !== false || stripos($line, 'MEDITERRANEAN') !== false) : ?>
+          <?php elseif (stripos($line, 'MSC') !== false || stripos($line, 'MEDITERRANEAN') !== false): ?>
             seal = 'FX';
           <?php endif; ?>
 
           isUpdate == 0 ? sealNumber.val(seal) : sealNumber.val();
-        }); 
+        });
       </script>
       <?php
 
@@ -48,7 +48,7 @@ if (isset($_POST['id'])) {
     } else {
       echo "Información no encontrada.";
     }
-  }else{
+  } else {
     echo "No se ha seleccionado ninguna nave.";
   }
 }

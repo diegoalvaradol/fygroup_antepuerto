@@ -7,13 +7,13 @@ $port = new port($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -337,7 +337,7 @@ function saveChanges() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_port');?>';
+        window.location = '<?php echo generateMkey('enter_port'); ?>';
       });
     } else {
       Swal.fire({
@@ -374,7 +374,7 @@ var deletePort = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_port');?>';
+            window.location = '<?php echo generateMkey('enter_port'); ?>';
           });
         } else if(x == 'NOOK') {
           Swal.fire({
@@ -440,7 +440,7 @@ var savePort = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_port');?>';
+          window.location = '<?php echo generateMkey('enter_port'); ?>';
         });
       } else {
         Swal.fire({

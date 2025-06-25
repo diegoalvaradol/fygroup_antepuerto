@@ -6,13 +6,13 @@ $db   = (new Database())->getConnection();
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -76,7 +76,7 @@ $footer = menu::footerSSL();
                                                     <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave del origen del roleo."></i>
 
                                                     <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel"></select>
-                                                    <small class="text-danger" id="error-fromvessel"></small>                                                
+                                                    <small class="text-danger" id="error-fromvessel"></small>
                                                 </div>
                                             </div>
 
@@ -87,7 +87,7 @@ $footer = menu::footerSSL();
 
                                                     <select class="form-control select2 form-control-user" id="tovessel" name="tovessel"></select>
                                                     <small class="text-danger" id="error-tovessel"></small>
-                                                </div>                                                
+                                                </div>
                                             </div>
                                         </div>
 
@@ -350,7 +350,7 @@ var saveVesselTransfer = function() {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('vessel_transfer');?>';
+            window.location = '<?php echo generateMkey('vessel_transfer'); ?>';
           });
         } else {
           Swal.fire({

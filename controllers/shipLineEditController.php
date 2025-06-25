@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/includes.php'; 
+require_once __DIR__ . '/../config/includes.php';
 
 $db = (new Database())->getConnection();
 $id = $_POST['id'];

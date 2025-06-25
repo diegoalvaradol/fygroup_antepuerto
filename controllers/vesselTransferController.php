@@ -5,12 +5,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $db   = (new Database())->getConnection();
   $port = new outerPort($db);
 
-	$fromVessel = $_POST["fromvessel"]; 
-	$toVessel   = $_POST["tovessel"];
+  $fromVessel = $_POST["fromvessel"];
+  $toVessel   = $_POST["tovessel"];
 
   if ($port->vesselTransfer($fromVessel, $toVessel)) {
-		echo "OK";
-	} else {
-		echo "NOOK";
-	}
+    echo "OK";
+  } else {
+    echo "NOOK";
+  }
 }

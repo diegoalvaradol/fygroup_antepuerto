@@ -7,13 +7,13 @@ $port = new outerPort($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -119,7 +119,7 @@ $footer = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                  <select class="form-control select2 form-control-user" id="exporter" name="exporter"></select>
+                                                  <select class="form-control select2 form-control-user" id="exporter" name="exporter" onchange="setAgency(this.value)"></select>
                                                   <small class="text-danger" id="error-exporter"></small>
                                                 </div>
 
@@ -589,7 +589,7 @@ var saveInContainer = function() {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_container_port');?> ';
+            window.location = '<?php echo generateMkey('enter_container_port'); ?> ';
           });
         }else if(x == 'NOOKUC') {
           Swal.fire({
@@ -611,7 +611,7 @@ var saveInContainer = function() {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_container_port');?> ';
+            window.location = '<?php echo generateMkey('enter_container_port'); ?> ';
           });
         }else if(x == 'NOOKC') {
           Swal.fire({
@@ -689,6 +689,21 @@ var editContainer = function(id) {
     },
     error: function() {
       alert('Error al cargar los datos.');
+    }
+  });
+}
+
+var setAgency = function(exporter){
+  $.ajax({
+    url: '../controllers/setAgencyController.php',
+    data: {
+      exporter: exporter
+    },
+    type: 'POST',
+  }).done(function(name) {
+    if(name !== ''){
+      $('#agency').empty();
+      $('#agency').append($('<option>', {value: name, text: name}));
     }
   });
 }

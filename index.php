@@ -1,24 +1,24 @@
 <?php
 require_once __DIR__ . '/config/includes.php';
 
-$pag  = $_GET['pag']  ?? '/';
+$pag  = $_GET['pag'] ?? '/';
 $area = $_GET['area'] ?? 'mySSL';
 $mkey = $_GET['mkey'] ?? '';
 
 /* Carpeta accedida desde la URL */
-$uriParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-$folderFromUrl =  esLocalhost() ? ($uriParts[1] ?? '') : ($uriParts[0] ?? ''); /* Después de ssl-chile */
+$uriParts      = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+$folderFromUrl = esLocalhost() ? ($uriParts[1] ?? '') : ($uriParts[0] ?? ''); /* Después de ssl-chile */
 
 /* Valida que la url contenga el mkey */
 if ($mkey === '') {
-  http_response_code(400);
+  http_response_code(401);
   require __DIR__ . '/mkey_error.php';
   exit;
 }
 
 /* Valida el area con el directorio */
 if ($folderFromUrl !== $area) {
-  http_response_code(400);
+  http_response_code(403);
   require __DIR__ . '/error.php';
   exit;
 }

@@ -10,13 +10,13 @@ $port = new internationalChargue($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-$sideBarSSL   = menu::sideBarSSL();
+$infoCfg         = json_decode($cfg->getInfo(1), true);
+$admin           = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime    = new DateTime($infoCfg['released_date']);
+$updateTime      = new DateTime($infoCfg['update_date']);
+$sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
-$footer = menu::footerSSL();
+$footer          = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -61,7 +61,7 @@ $footer = menu::footerSSL();
 
                     <div class="col-sm-12">
                       <div class="alert alert-warning" role="alert"><i class="fa-solid fa-circle-info"></i>
-                        <b>¡Información! : </b> Formulario de carga y contenedores provenientes desde el exterior. 
+                        <b>¡Información! : </b> Formulario de carga y contenedores provenientes desde el exterior.
                         <img src="https://flagcdn.com/w20/ar.png" alt="Argentina" style="width: 25px; height: auto; margin-right: 5px;">
                       </div>
                     </div>
@@ -455,7 +455,7 @@ var saveIntContainer = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_container_international');?>';
+          window.location = '<?php echo generateMkey('enter_container_international'); ?>';
         });
       } else {
         Swal.fire({

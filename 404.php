@@ -51,7 +51,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                         <p class="lead text-gray-800">Oops...</p>
                         <p class="lead text-gray-800">Página No Encontrada.</p>
                         <p class="lead text-gray-800">Parece que encontraste un fallo en la matriz...</p>
-                        
+
                         <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
                             <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
                         </button>

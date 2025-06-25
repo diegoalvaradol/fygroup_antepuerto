@@ -38,7 +38,7 @@ class get
 
     return $types;
   }
-  
+
   /**
    * Method getDivisionName //Devuelve el nombre de la División
    *

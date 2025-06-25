@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../config/includes.php'; 
+require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

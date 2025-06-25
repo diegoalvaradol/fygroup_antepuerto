@@ -15,7 +15,7 @@ $jsonData      = $port->trucksPerDay();
 $arrayDivision = get::getDivisionName();
 $sideBarSSL    = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
-$footer = menu::footerSSL();
+$footer        = menu::footerSSL();
 ?>
 
 <!-- HTML -->
@@ -511,7 +511,7 @@ const ctx = document.getElementById('graficoCamiones').getContext('2d');
 const data = {
   datasets: [{
     label: 'Camiones por día',
-    data: <?= $jsonData ?>,
+    data: <?=$jsonData?>,
     backgroundColor: 'rgba(75, 192, 192, 0.6)',
     borderColor: 'rgba(75, 192, 192, 1)',
     fill: false,
