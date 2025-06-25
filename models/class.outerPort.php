@@ -330,8 +330,8 @@ class outerPort extends iQuery
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       if ((int) $row['total'] > 0) {
         $data[] = [
-          'x' => date('d-m-y', strtotime($row['dia'])), // formato d-m-y
-          'y' => (int) $row['total']
+          'Fecha' => date('d-m-y', strtotime($row['dia'])),
+          'Total' => (int) $row['total']
         ];
       }
     }

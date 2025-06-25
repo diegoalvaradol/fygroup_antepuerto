@@ -506,32 +506,31 @@ function actualizarReloj() {
   $('#relojFecha').html(`${fecha} - ${hora}`);
 }
 
+/* Dibuja el gráfico de barras */
 <?php if ($admin): ?>
 const ctx = document.getElementById('graficoCamiones').getContext('2d');
 const data = {
   datasets: [{
     label: 'Camiones por día',
     data: <?=$jsonData?>,
-    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-    borderColor: 'rgba(75, 192, 192, 1)',
-    fill: false,
-    tension: 0.1,
-    pointRadius: 4,
-    pointHoverRadius: 6,
+    backgroundColor: 'rgba(54, 133, 235, 0.6)',
+    borderColor: 'rgba(54, 162, 235, 1)',
+    barPercentage: 0.4,
+    categoryPercentage: 0.6,
     parsing: {
-      xAxisKey: 'x',
-      yAxisKey: 'y'
+      xAxisKey: 'Fecha',
+      yAxisKey: 'Total'
     }
   }]
 };
 
 const config = {
-  type: 'line',
+  type: 'bar',
   data: data,
   options: {
     plugins: {
       datalabels: {
-         align: 'top',
+        align: 'top',
         anchor: 'end',
         font: {
           weight: 'bold'
@@ -544,7 +543,7 @@ const config = {
         type: 'category',
         title: {
           display: true,
-          text: 'Fecha'
+          text: 'Fecha de Ingreso'
         },
         ticks: {
           callback: function(value) {
@@ -556,7 +555,7 @@ const config = {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Cantidad de camiones'
+          text: 'Total de Camiones'
         }
       }
     }
