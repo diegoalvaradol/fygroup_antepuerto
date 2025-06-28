@@ -809,7 +809,7 @@ class outerPort extends iQuery
       }
     } else {
       $tr .= "<tr>";
-      $tr .= "<td colspan='15' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= "<td colspan='17' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 
