@@ -7,11 +7,11 @@ $port = new outerPort($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg       = json_decode($cfg->getInfo(1), true);
-$admin         = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime  = new DateTime($infoCfg['released_date']);
-$updateTime    = new DateTime($infoCfg['update_date']);
-$jsonData      = $port->trucksPerDay();
+$infoCfg      = json_decode($cfg->getInfo(1), true);
+$admin        = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime = new DateTime($infoCfg['released_date']);
+$updateTime   = new DateTime($infoCfg['update_date']);
+//$jsonData      = $port->trucksPerDay();
 $arrayDivision = get::getDivisionName();
 $sideBarSSL    = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
@@ -191,9 +191,21 @@ $footer        = menu::footerSSL();
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="text-sm font-weight-bold text-info text-uppercase mb-1" style="text-align:center;">Camiones por Día</div>
                                 <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <canvas id="graficoCamiones" width="800" height="400"></canvas>
+                                  <div class="form-group row" style="place-content:center;">
+                                    <div class="col-sm-2">
+                                      <label for="fechaInicio">Fecha Inicio:</label>
+                                      <input type="date" class="form-control form-control-user" id="fechaInicio" style="width:auto;">
                                     </div>
+
+                                    <div class="col-sm-2">
+                                      <label for="fechaFin">Fecha Fin:</label>
+                                      <input type="date" class="form-control form-control-user" id="fechaFin" style="width:auto;">
+                                    </div>
+                                  </div>
+
+                                  <div class="row no-gutters align-items-center">
+                                    <canvas id="graficoCamiones" width="800" height="400"></canvas>
+                                  </div>
                                 </div>
                             </div>
                         </div>
@@ -509,60 +521,107 @@ function actualizarReloj() {
 /* Dibuja el gráfico de barras */
 <?php if ($admin): ?>
 const ctx = document.getElementById('graficoCamiones').getContext('2d');
-const data = {
-  datasets: [{
-    label: 'Camiones por día',
-    data: <?=$jsonData?>,
-    backgroundColor: 'rgba(54, 133, 235, 0.6)',
-    borderColor: 'rgba(54, 162, 235, 1)',
-    barPercentage: 0.4,
-    categoryPercentage: 0.6,
-    parsing: {
-      xAxisKey: 'Fecha',
-      yAxisKey: 'Total'
-    }
-  }]
-};
+let chart;
 
-const config = {
-  type: 'bar',
-  data: data,
-  options: {
-    plugins: {
-      datalabels: {
-        align: 'top',
-        anchor: 'end',
-        font: {
-          weight: 'bold'
-        },
-        color: '#000'
+const today = new Date().toLocaleString("en-CA", { timeZone: "America/Santiago", year: "numeric", month: "2-digit", day: "2-digit" });
+document.getElementById('fechaInicio').setAttribute('max', today);
+document.getElementById('fechaFin').setAttribute('max', today);
+
+/* Obtener datos desde PHP */
+async function cargarDatos(fechaInicio, fechaFin) {
+  const res = await fetch('../controllers/getTrucksPerDayController.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fechaInicio, fechaFin })
+  });
+  return await res.json();
+}
+
+/* Dibujar el gráfico */
+async function filtrarYActualizar(fechaInicio, fechaFin) {
+  const datos = await cargarDatos(fechaInicio, fechaFin);
+
+  const data = {
+    datasets: [{
+      label: 'Camiones por día',
+      data: datos,
+      backgroundColor: 'rgba(173, 216, 230, 0.7)',
+      borderColor: 'rgba(173, 216, 230, 1)',
+      barPercentage: 0.4,
+      categoryPercentage: 0.8,
+      parsing: {
+        xAxisKey: 'Fecha',
+        yAxisKey: 'Total'
       }
-    },
-    scales: {
-      x: {
-        type: 'category',
-        title: {
-          display: true,
-          text: 'Fecha de Ingreso'
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      plugins: {
+        datalabels: {
+          align: 'top',
+          anchor: 'end',
+          font: { weight: 'bold' },
+          color: '#000'
         },
-        ticks: {
-          callback: function(value) {
-            return this.getLabelForValue(value);
+        tooltip: {
+          callbacks: {
+            title: ctx => ctx[0].raw.Fecha,
+            label: ctx => ctx.raw.Total
           }
         }
       },
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Total de Camiones'
+      scales: {
+        x: {
+          type: 'category',
+          title: { display: true, text: 'Fecha de Ingreso' },
+          ticks: {
+            callback: function(value) {
+              return this.getLabelForValue(value);
+            }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Total de Camiones' },
+          ticks: { stepSize: 1, precision: 0 }
         }
       }
-    }
-  },
-  plugins: [ChartDataLabels]
-};
-new Chart(ctx, config);
+    },
+    plugins: [ChartDataLabels]
+  };
+
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, config);
+}
+
+/* Setear valores por defecto (últimos 7 días) */
+function formatDate(date) {
+  return date.toISOString().split('T')[0];
+}
+
+const hoy = new Date();
+const hace7dias = new Date();
+hace7dias.setDate(hoy.getDate() - 7);
+
+document.getElementById('fechaInicio').value = formatDate(hace7dias);
+document.getElementById('fechaFin').value = formatDate(hoy);
+
+/* Cargar gráfico inicial */
+filtrarYActualizar(formatDate(hace7dias), formatDate(hoy));
+
+/* Eventos de filtros */
+document.getElementById('fechaInicio').addEventListener('change', e => {
+  const fin = document.getElementById('fechaFin').value;
+  filtrarYActualizar(e.target.value, fin);
+});
+document.getElementById('fechaFin').addEventListener('change', e => {
+  const inicio = document.getElementById('fechaInicio').value;
+  filtrarYActualizar(inicio, e.target.value);
+});
 <?php endif; ?>
 
 var saveNewGoals = function() {

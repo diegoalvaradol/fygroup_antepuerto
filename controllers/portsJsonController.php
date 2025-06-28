@@ -13,7 +13,12 @@ $stmt->execute();
 
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$data = []; // Asegura que $data esté definido antes de usarlo
+$data = [
+  [
+    "id"   => "-",
+    "text" => "Seleccione un puerto..."
+  ]
+];
 
 foreach ($result as $info) {
   $data[] = [

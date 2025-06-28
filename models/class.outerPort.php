@@ -318,14 +318,15 @@ class outerPort extends iQuery
     return $stmt->execute();
   }
 
-  public function trucksPerDay()
+  public function trucksPerDay($inicio, $fin)
   {
-    /* Consulta agrupando por día (sin hora) */
-    $query = "SELECT DATE(arrival_date) AS dia, COUNT(*) AS total FROM app_outer_port GROUP BY dia ORDER BY dia ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $query = "SELECT DATE(arrival_date) AS dia, COUNT(*) AS total FROM app_outer_port WHERE arrival_date BETWEEN :inicio AND :fin GROUP BY dia ORDER BY dia ASC";
+
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bindParam(':inicio', $inicio);
+    $stmt->bindParam(':fin', $fin);
     $stmt->execute();
 
-    /* Generar array de puntos para Chart.js */
     $data = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       if ((int) $row['total'] > 0) {
@@ -335,8 +336,6 @@ class outerPort extends iQuery
         ];
       }
     }
-
-    /* Convertir a JSON para insertar en JS */
 
     return json_encode($data);
   }
@@ -349,20 +348,20 @@ class outerPort extends iQuery
     $count     = 0;
 
     /* Filtros */
-    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '';
-    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '';
+    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '-';
+    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '-';
     $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
 
     /* Construir cláusulas WHERE dinámicamente */
     $conditions = ["$this->origin = 1"];
     $params     = [];
 
-    if ($filterNave !== '') {
+    if ($filterNave !== '-') {
       $conditions[]    = "sh.ship_id = :nave";
       $params[':nave'] = $filterNave;
     }
 
-    if ($filterPatente !== '') {
+    if ($filterPatente !== '-') {
       $conditions[]       = "$this->carplate = :patente";
       $params[':patente'] = $filterPatente;
     }
@@ -391,10 +390,14 @@ class outerPort extends iQuery
             <form method='POST' class='form-container' id='filterFormContainer'>
               <div class='form-group row'>
                 <div class='col-sm-4'>
-                  <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
+                  <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                    <option value='-'>Seleccione una nave...</option>
+                  </select>
                 </div>
                 <div class='col-sm-4'>
-                  <select class='form-control select2 form-control-user' id='patente' name='patente'></select>
+                  <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                    <option value='-'>Seleccione una patente...</option>
+                  </select>
                 </div>
                 <div class='col-sm-4'>
                   <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
@@ -644,20 +647,20 @@ class outerPort extends iQuery
     $count     = 0;
 
     /* Filtros */
-    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '';
-    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '';
+    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '-';
+    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '-';
     $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
 
     /* Construir cláusulas WHERE dinámicamente */
     $conditions = ["$this->origin = 2"];
     $params     = [];
 
-    if ($filterNave !== '') {
+    if ($filterNave !== '-') {
       $conditions[]    = "sh.ship_id = :nave";
       $params[':nave'] = $filterNave;
     }
 
-    if ($filterPatente !== '') {
+    if ($filterPatente !== '-') {
       $conditions[]       = "$this->carplate = :patente";
       $params[':patente'] = $filterPatente;
     }
@@ -686,10 +689,14 @@ class outerPort extends iQuery
             <form method='POST' class='form-container' id='filterFormThermo'>
               <div class='form-group row'>
                 <div class='col-sm-4'>
-                  <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
+                  <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                    <option value='-'>Seleccione una nave...</option>
+                  </select>
                 </div>
                 <div class='col-sm-4'>
-                  <select class='form-control select2 form-control-user' id='patente' name='patente'></select>
+                  <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                    <option value='-'>Seleccione una patente...</option>
+                  </select>
                 </div>
                 <div class='col-sm-4'>
                   <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>

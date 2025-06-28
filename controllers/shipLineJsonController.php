@@ -12,7 +12,12 @@ $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$data = []; // Asegura que $data esté definido antes de usarlo
+$data = [
+  [
+    "id"   => "-",
+    "text" => "Seleccione una línea..."
+  ]
+];
 
 foreach ($result as $info) {
   $data[] = [

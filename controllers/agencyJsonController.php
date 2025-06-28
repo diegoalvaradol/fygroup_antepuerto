@@ -12,7 +12,12 @@ $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$data = [];
+$data = [
+  [
+    "id"   => "-",
+    "text" => "Seleccione una agencia..."
+  ]
+];
 
 foreach ($result as $info) {
   $data[] = [

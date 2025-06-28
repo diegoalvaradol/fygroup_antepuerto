@@ -20,7 +20,12 @@ $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$data = [];
+$data = [
+  [
+    "id"   => "-",
+    "text" => "Seleccione una motonave..."
+  ]
+];
 
 foreach ($result as $info) {
   $data[] = [

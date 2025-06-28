@@ -75,7 +75,9 @@ $footer          = menu::footerSSL();
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Nave de Origen</label>
                                                     <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave del origen del roleo."></i>
 
-                                                    <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel"></select>
+                                                    <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel">
+                                                      <option value="-">Seleccione una motonave...</option>
+                                                    </select>
                                                     <small class="text-danger" id="error-fromvessel"></small>
                                                 </div>
                                             </div>
@@ -85,7 +87,9 @@ $footer          = menu::footerSSL();
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Nave de Destino</label>
                                                     <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave de destino del roleo."></i>
 
-                                                    <select class="form-control select2 form-control-user" id="tovessel" name="tovessel"></select>
+                                                    <select class="form-control select2 form-control-user" id="tovessel" name="tovessel">
+                                                      <option value="-">Seleccione una motonave...</option>
+                                                    </select>
                                                     <small class="text-danger" id="error-tovessel"></small>
                                                 </div>
                                             </div>
@@ -308,16 +312,38 @@ var saveVesselTransfer = function() {
 
   /* Validar si algún campo está vacío */
   for (let [key, value] of formData.entries()) {
-    if (!value.trim()) {
-      const errorElement = document.getElementById('error-' + key);
+    const inputElement = form.querySelector(`[name="${key}"]`);
+    const errorElement = document.getElementById('error-' + key);
+    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
+    const isEmpty = value.trim() === '' || value === '-';
 
+    if (isEmpty) {
       if (errorElement) {
         errorElement.innerText = 'Este campo es obligatorio.';
-        const inputElement = form.querySelector(`[name="${key}"]`);
+      }
+
+      if (isSelect2) {
+        // Para select2: agrega borde rojo al contenedor visible
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .addClass('border border-danger');
+      } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
 
       hasError = true;
+    } else {
+      if (errorElement) {
+        errorElement.innerText = '';
+      }
+
+      if (isSelect2) {
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .removeClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.remove('is-invalid');
+      }
     }
   }
 
@@ -373,7 +399,6 @@ $(document).ready(function() {
   actualizarReloj(); /* Primera llamada */
 
   $('#fromvessel, #tovessel').select2({
-    placeholder: 'Seleccione una motonave...',
     allowClear: true,
     tags: false,
     width: '95%',

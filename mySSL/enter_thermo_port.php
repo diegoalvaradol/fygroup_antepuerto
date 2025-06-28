@@ -83,7 +83,9 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                  <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
+                                                  <select class="form-control select2 form-control-user" id="vessel" name="vessel">
+                                                    <option value="-">Seleccione una motonave...</option>
+                                                  </select>
                                                   <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
                                                   <small class="text-danger" id="error-vessel"></small>
                                                 </div>
@@ -95,7 +97,9 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <select class="form-control select2 form-control-user" id="carplate" name="carplate"></select>
+                                                    <select class="form-control select2 form-control-user" id="carplate" name="carplate">
+                                                        <option value="-">Seleccione una patente...</option>
+                                                    </select>
                                                     <small class="text-danger" id="error-carplate"></small>
                                                 </div>
 
@@ -107,7 +111,9 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <select class="form-control select2 form-control-user" id="exporter" name="exporter"></select>
+                                                    <select class="form-control select2 form-control-user" id="exporter" name="exporter">
+                                                        <option value="-">Seleccione un exportador...</option>
+                                                    </select>
                                                     <small class="text-danger" id="error-exporter"></small>
                                                 </div>
 
@@ -138,7 +144,7 @@ $footer          = menu::footerSSL();
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <select class="form-control select2 form-control-user" id="comodity" name="comodity">
-                                                        <option selected>Seleccione una condición...</option>
+                                                        <option value="-" selected>Seleccione una condición...</option>
                                                         <option value="No Fumigado">No Fumigado</option>
                                                         <option value="USDA">USDA</option>
                                                         <option value="System Approach">System Approach</option>
@@ -420,16 +426,38 @@ var saveChanges = function() {
 
   /* Validar si algún campo está vacío */
   for (let [key, value] of formData.entries()) {
-    if (!value.trim()) {
-      const errorElement = document.getElementById('error-' + key);
+    const inputElement = form.querySelector(`[name="${key}"]`);
+    const errorElement = document.getElementById('error-' + key);
+    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
+    const isEmpty = value.trim() === '' || value === '-';
 
+    if (isEmpty) {
       if (errorElement) {
         errorElement.innerText = 'Este campo es obligatorio.';
-        const inputElement = form.querySelector(`[name="${key}"]`);
-        inputElement.classList.class('is-invalid');
+      }
+
+      if (isSelect2) {
+        // Para select2: agrega borde rojo al contenedor visible
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .addClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.add('is-invalid');
       }
 
       hasError = true;
+    } else {
+      if (errorElement) {
+        errorElement.innerText = '';
+      }
+
+      if (isSelect2) {
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .removeClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.remove('is-invalid');
+      }
     }
   }
 
@@ -475,16 +503,38 @@ var saveInTermo = function() {
 
   /* Validar si algún campo está vacío */
   for (let [key, value] of formData.entries()) {
-    if (!value.trim()) {
-      const errorElement = document.getElementById('error-' + key);
+    const inputElement = form.querySelector(`[name="${key}"]`);
+    const errorElement = document.getElementById('error-' + key);
+    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
+    const isEmpty = value.trim() === '' || value === '-';
 
+    if (isEmpty) {
       if (errorElement) {
         errorElement.innerText = 'Este campo es obligatorio.';
-        const inputElement = form.querySelector(`[name="${key}"]`);
+      }
+
+      if (isSelect2) {
+        // Para select2: agrega borde rojo al contenedor visible
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .addClass('border border-danger');
+      } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
 
       hasError = true;
+    } else {
+      if (errorElement) {
+        errorElement.innerText = '';
+      }
+
+      if (isSelect2) {
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .removeClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.remove('is-invalid');
+      }
     }
   }
 
@@ -633,7 +683,6 @@ $(document).ready(function() {
   actualizarReloj(); /* Primera llamada */
 
   $('#vessel').select2({
-    placeholder: 'Seleccione una motonave...',
     allowClear: true,
     tags: false,
     width: '95%',
@@ -658,7 +707,6 @@ $(document).ready(function() {
   });
 
   $('#carplate').select2({
-    placeholder: 'Seleccione una patente...',
     allowClear: true,
     tags: true,
     width: '100%',
@@ -682,7 +730,6 @@ $(document).ready(function() {
   });
 
   $('#exporter').select2({
-    placeholder: 'Seleccione una exportador...',
     allowClear: true,
     tags: true,
     width: '100%',
@@ -739,7 +786,6 @@ $(document).ready(function() {
   });
 
   $('#nave').select2({
-    placeholder: 'Seleccione una motonave...',
     allowClear: true,
     tags: false,
     width: '100%',
@@ -764,7 +810,6 @@ $(document).ready(function() {
   });
 
   $('#patente').select2({
-    placeholder: 'Seleccione una patente...',
     allowClear: true,
     tags: false,
     width: '100%',

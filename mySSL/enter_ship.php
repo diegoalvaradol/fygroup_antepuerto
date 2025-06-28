@@ -97,12 +97,16 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <select class="form-control select2 form-control-user" id="line" name="line"></select>
+                                                    <select class="form-control select2 form-control-user" id="line" name="line">
+                                                        <option value="-">Seleccione una línea...</option>
+                                                    </select>
                                                     <small class="text-danger" id="error-line"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <select class="form-control select2 form-control-user" id="pod" name="pod"></select>
+                                                    <select class="form-control select2 form-control-user" id="pod" name="pod">
+                                                        <option value="-">Seleccione un puerto...</option>
+                                                    </select>
                                                     <small class="text-danger" id="error-pod"></small>
                                                 </div>
                                             </div>
@@ -221,11 +225,15 @@ $footer          = menu::footerSSL();
         <div class="form-group row">
             <div class="col-sm-6">
                 <label>Naviera:</label>
-                <select class="form-control select2 form-control-user" id="shipLine" name="shipLine"></select>
+                <select class="form-control select2 form-control-user" id="shipLine" name="shipLine">
+                  <option value="-">Seleccione una linea...</option>
+                </select>
             </div>
             <div class="col-sm-6">
                 <label>Puerto de Destino:</label>
-                <select class="form-control select2 form-control-user" id="shipPOD" name="shipPOD"></select>
+                <select class="form-control select2 form-control-user" id="shipPOD" name="shipPOD">
+                  <option value="-">Seleccione un puerto...</option>
+                </select>
             </div>
         </div>
         <br>
@@ -493,16 +501,38 @@ var saveShip = function() {
 
   /* Validar si algún campo está vacío */
   for (let [key, value] of formData.entries()) {
-    if (!value.trim()) {
-      const errorElement = document.getElementById('error-' + key);
+    const inputElement = form.querySelector(`[name="${key}"]`);
+    const errorElement = document.getElementById('error-' + key);
+    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
+    const isEmpty = value.trim() === '' || value === '-';
 
+    if (isEmpty) {
       if (errorElement) {
         errorElement.innerText = 'Este campo es obligatorio.';
-        const inputElement = form.querySelector(`[name="${key}"]`);
+      }
+
+      if (isSelect2) {
+        // Para select2: agrega borde rojo al contenedor visible
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .addClass('border border-danger');
+      } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
 
       hasError = true;
+    } else {
+      if (errorElement) {
+        errorElement.innerText = '';
+      }
+
+      if (isSelect2) {
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .removeClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.remove('is-invalid');
+      }
     }
   }
 
@@ -547,7 +577,6 @@ $(document).ready(function() {
   actualizarReloj(); /* Primera llamada */
 
   $('#line').select2({
-    placeholder: 'Seleccione una linea...',
     allowClear: true,
     tags: false,
     width: '100%',
@@ -571,7 +600,6 @@ $(document).ready(function() {
   });
 
   $('#pod').select2({
-    placeholder: 'Seleccione un puerto...',
     allowClear: true,
     tags: false,
     width: '100%',
@@ -595,7 +623,6 @@ $(document).ready(function() {
   });
 
   $('#shipLine').select2({
-    placeholder: 'Seleccione una linea...',
     allowClear: true,
     tags: false,
     width: '100%',
@@ -619,7 +646,6 @@ $(document).ready(function() {
   });
 
   $('#shipPOD').select2({
-    placeholder: 'Seleccione un puerto...',
     allowClear: true,
     tags: false,
     width: '100%',

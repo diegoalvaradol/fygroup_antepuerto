@@ -11,7 +11,12 @@ $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$data = [];
+$data = [
+  [
+    "id"   => "-",
+    "text" => "Seleccione un contenedor..."
+  ]
+];
 
 foreach ($result as $info) {
   $data[] = [
