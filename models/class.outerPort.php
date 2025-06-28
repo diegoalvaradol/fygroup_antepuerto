@@ -320,11 +320,13 @@ class outerPort extends iQuery
 
   public function trucksPerDay($inicio, $fin)
   {
-    $query = "SELECT DATE(arrival_date) AS dia, COUNT(*) AS total FROM app_outer_port WHERE arrival_date BETWEEN :inicio AND :fin GROUP BY dia ORDER BY dia ASC";
+    $inicioCompleto = $inicio . ' 00:00:00';
+    $finCompleto    = $fin . ' 23:59:59';
 
-    $stmt = $this->conexion->prepare($query);
-    $stmt->bindParam(':inicio', $inicio . '00:00:00', PDO::PARAM_STR);
-    $stmt->bindParam(':fin', $fin . ' 23:59:59', PDO::PARAM_STR);
+    $query = "SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS total FROM $this->table WHERE $this->arrivaldate BETWEEN :inicio AND :fin GROUP BY dia ORDER BY dia ASC";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(':inicio', $inicioCompleto, PDO::PARAM_STR);
+    $stmt->bindParam(':fin', $finCompleto, PDO::PARAM_STR);
     $stmt->execute();
 
     $data = [];
