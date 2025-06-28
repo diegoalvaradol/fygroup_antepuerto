@@ -323,8 +323,8 @@ class outerPort extends iQuery
     $query = "SELECT DATE(arrival_date) AS dia, COUNT(*) AS total FROM app_outer_port WHERE arrival_date BETWEEN :inicio AND :fin GROUP BY dia ORDER BY dia ASC";
 
     $stmt = $this->conexion->prepare($query);
-    $stmt->bindParam(':inicio', $inicio);
-    $stmt->bindParam(':fin', $fin);
+    $stmt->bindParam(':inicio', $inicio . '00:00:00', PDO::PARAM_STR);
+    $stmt->bindParam(':fin', $fin . ' 23:59:59', PDO::PARAM_STR);
     $stmt->execute();
 
     $data = [];
