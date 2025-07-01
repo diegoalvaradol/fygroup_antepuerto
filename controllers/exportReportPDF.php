@@ -139,4 +139,4 @@ $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
-$dompdf->stream("Liquidacion_de_Nave_$nave.pdf", ["Attachment" => true]);
+$dompdf->stream('Liquidacion_de_Nave_' . $nave . '_Viaje_' . $viaje . '.pdf', ["Attachment" => true]);

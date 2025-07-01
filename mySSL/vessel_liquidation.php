@@ -94,7 +94,7 @@ $footer          = menu::footerSSL();
 
                                             <div class="col-sm-4">
                                                 <div class="form-inline mb-6">
-                                                    <label class="mr-2 text-gray-800 font-weight-bold">Descarga de Liquidación</label>
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Liquidación Motonave</label>
                                                 </div>
 
                                                 <div class="form-inline mb-6">
