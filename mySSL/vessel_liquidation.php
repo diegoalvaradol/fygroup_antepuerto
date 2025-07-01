@@ -294,7 +294,7 @@ $(document).ready(function() {
       data: function (params) {
         return {
           search: params.term, /* Lo que escribe el usuario */
-          all: 1 /* Muestra todas las naves del sistema */
+          finished: 1 /* Muestra todas las naves finalizadas */
         };
       },
       processResults: function (data) {

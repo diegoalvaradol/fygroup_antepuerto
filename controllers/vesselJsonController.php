@@ -5,15 +5,24 @@ $db         = (new Database())->getConnection();
 $searchForm = isset($_POST['search']) ? $_POST['search'] : '';
 $search     = "%{$searchForm}%";
 
+$query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search";
+
 /* Solo muestra aquellas naves que posean una ETD mayor al día en curso */
 if (isset($_POST['current']) && ($_POST['current'] == 1)) {
-  $query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search AND finished = 0 LIMIT 10";
+  $query .= " AND finished = 0 ";
 }
 
 /* Muestra todas las naves cargadas en el sistema */
 if (isset($_POST['all']) && ($_POST['all'] == 1)) {
-  $query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search LIMIT 10";
+  $query .= " AND (finished = 0 OR finished = 1) ";
 }
+
+/* Muestra todas las naves cargadas en el sistema */
+if (isset($_POST['finished']) && ($_POST['finished'] == 1)) {
+  $query .= " AND finished = 1 ";
+}
+
+$qwery .= "ORDER BY vessel_name ASC LIMIT 10";
 
 $stmt = $db->prepare($query);
 $stmt->bindParam(":search", $search, PDO::PARAM_STR);
