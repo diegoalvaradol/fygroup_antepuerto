@@ -63,62 +63,70 @@ $html = "
   th, td { border: 1px solid #666; padding: 6px; text-align: left; }
   th { background-color: #f0f0f0; }
   .logo { text-align: center; margin-bottom: 10px; }
+  @page { margin-bottom: 60px; }
+  .footer { position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 10px; color: #888; }
 </style>
 ";
 
 $html .= "<h1><strong>Liquidación de Nave</strong></h1>";
 
-$html .= "<h3>Información de Viaje</h3>
-<table style='margin-top: 10px;'>
-  <tr>
-    <th>Nave</th><td>" . htmlspecialchars($nave) . "</td>
-    <th>Viaje</th><td>" . htmlspecialchars($viaje) . "</td>
-    <th>Línea</th><td>" . htmlspecialchars($linea) . "</td>
-  </tr>
-  <tr>
-    <th>Destino</th><td>" . htmlspecialchars($destino) . "</td>
-    <th>ETA</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . "</td>
-    <th>ETD</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . "</td>
-  </tr>
-</table>
-";
+$html .= "<h3>Información de Viaje</h3>";
+$html .= "<table style='margin-top: 10px;'>";
+$html .= "<tr>";
+$html .= "<th>Nave</th><td>" . htmlspecialchars($nave) . "</td>";
+$html .= "<th>Viaje</th><td>" . htmlspecialchars($viaje) . "</td>";
+$html .= "<th>Línea</th><td>" . htmlspecialchars($linea) . "</td>";
+$html .= "</tr>";
+$html .= "<tr>";
+$html .= "<th>Destino</th><td>" . htmlspecialchars($destino) . "</td>";
+$html .= "<th>ETA</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . "</td>";
+$html .= "<th>ETD</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . "</td>";
+$html .= "</tr>";
+$html .= "</table>";
 
 $html .= "<h3>Detalle de Carga</h3>";
-$html .= "<table>
-  <thead>
-    <tr>
-      <th>Nave</th>
-      <th>Viaje</th>
-      <th>Exportador</th>
-      <th>N° Guía</th>
-      <th>Condición</th>
-      <th>Contenedor</th>
-      <th>Pallets</th>
-    </tr>
-  </thead>
-  <tbody>";
+$html .= "<table>";
+$html .= "<thead>";
+$html .= "<tr>";
+$html .= "<th>Nave</th>";
+$html .= "<th>Viaje</th>";
+$html .= "<th>Exportador</th>";
+$html .= "<th>N° Guía</th>";
+$html .= "<th>Condición</th>";
+$html .= "<th>Contenedor</th>";
+$html .= "<th>Pallets</th>";
+$html .= "</tr>";
+$html .= "</thead>";
+$html .= "<tbody>";
 
+$agrupado = [];
 foreach ($rows as $r) {
-  $html .= "<tr>
-    <td>" . htmlspecialchars($r['nave']) . "</td>
-    <td>" . htmlspecialchars($r['viaje']) . "</td>
-    <td>" . htmlspecialchars($r['exporter']) . "</td>
-    <td>" . htmlspecialchars($r['guide_number']) . "</td>
-    <td>" . htmlspecialchars($r['comodity']) . "</td>
-    <td>" . htmlspecialchars($r['container']) . "</td>
-    <td>" . htmlspecialchars($r['pallets_quantity']) . "</td>
-  </tr>";
+  $agrupado[$r['exporter']][] = $r;
 }
 
+foreach ($agrupado as $exportador => $items) {
+  $html .= "<tr><td colspan='7' style='background-color: #ddd; font-weight: bold;'>Exportador: " . htmlspecialchars($exportador) . "</td></tr>";
+  foreach ($items as $r) {
+    $html .= "<tr>";
+    $html .= "<td>" . htmlspecialchars($r['nave']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['viaje']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['exporter']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['guide_number']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['comodity']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['container']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['pallets_quantity']) . "</td>";
+    $html .= "</tr>";
+  }
+}
 $html .= "</tbody></table>";
 
 /* Resumen */
-$html .= "<h3>Resumen por Exportador</h3>
-<table>
-  <thead>
-    <tr><th>Exportador</th><th>Total Pallets</th></tr>
-  </thead>
-  <tbody>";
+$html .= "<h3>Resumen por Exportador</h3>";
+$html .= "<table>";
+$html .= "<thead>";
+$html .= "<tr><th>Exportador</th><th>Total Pallets</th></tr>";
+$html .= "</thead>";
+$html .= "<tbody>";
 
 $totalGeneral = 0;
 foreach ($resumen as $exp => $total) {
@@ -130,9 +138,9 @@ $html .= "<tr><td><strong>Total General</strong></td><td><strong>$totalGeneral</
 $html .= "</tbody></table>";
 
 /* Pie de página */
-$html .= "<div style='position: fixed; bottom: 20px; width: 100%; text-align: center; font-size: 10px; color: #888;'>
-  Generado por: " . htmlspecialchars($usuario) . " con fecha " . date("d/m/Y H:i") . "
-</div>";
+$html .= "<div class='footer'>";
+$html .= "Generado por: " . htmlspecialchars($usuario) . " con fecha " . date("d/m/Y H:i");
+$html .= "</div>";
 
 /* Render PDF */
 $dompdf = new Dompdf();
