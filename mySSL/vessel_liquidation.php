@@ -68,34 +68,41 @@ $footer          = menu::footerSSL();
                                 </div>
 
                                 <div class="card-body">
-                                    <form class="form-container" id="vesselTransferForm">
+                                    <form class="form-container" id="vesselReportForm">
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="form-inline mb-3">
-                                                    <label class="mr-2 text-gray-800 font-weight-bold">Nave</label>
+                                            <div class="col-sm-4">
+                                                <div class="form-inline mb-6">
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Motonave</label>
+                                                </div>
 
+																								<div class="form-inline mb-6">
                                                     <select class="form-control select2 form-control-user" id="vessel" name="vessel">
-                                                      <option value="-">Seleccione una motonave...</option>
+                                                        <option value="-">Seleccione una motonave...</option>
                                                     </select>
-                                                    <small class="text-danger" id="error-vessel"></small>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group row">
-                                            <div class="col-sm-6">
-                                                <div class="form-inline mb-3">
-                                                    <label class="mr-2 text-gray-800 font-weight-bold">Información de Nave</label>
+																						<div class="col-sm-4">
+                                                <div class="form-inline mb-6">
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Información de Motonave</label>
                                                 </div>
 
-                                                <div class="form-inline mb-3">
-                                                    <small class="text-black" id="info-vessel"></small>
+                                                <div class="form-inline mb-6">
+                                                    <small id="info-vessel"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-inline mb-6">
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Descarga de Liquidación</label>
+                                                </div>
+
+                                                <div class="form-inline mb-6">
+                                                    <div id="detalleLiquidacion"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-
-																		<div id="detalleLiquidacion" style="justify-items:center;"></div>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +285,7 @@ $(document).ready(function() {
   $('#vessel').select2({
     allowClear: true,
     tags: false,
-    width: '50%',
+    width: '100%',
     ajax: {
       url: '../controllers/vesselJsonController.php',
       method: 'POST',

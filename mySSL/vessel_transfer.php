@@ -72,7 +72,7 @@ $footer          = menu::footerSSL();
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="form-inline mb-3">
-                                                    <label class="mr-2 text-gray-800 font-weight-bold">Nave de Origen</label>
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Origen</label>
                                                     <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave del origen del roleo."></i>
 
                                                     <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel">
@@ -84,7 +84,7 @@ $footer          = menu::footerSSL();
 
                                             <div class="col-sm-6">
                                                 <div class="form-inline mb-3">
-                                                    <label class="mr-2 text-gray-800 font-weight-bold">Nave de Destino</label>
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Destino</label>
                                                     <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave de destino del roleo."></i>
 
                                                     <select class="form-control select2 form-control-user" id="tovessel" name="tovessel">
@@ -98,7 +98,7 @@ $footer          = menu::footerSSL();
                                         <div class="form-group row">
                                             <div class="col-sm-6">
                                                 <div class="form-inline mb-3">
-                                                    <label class="mr-2 text-gray-800 font-weight-bold">Información Nave de Origen</label>
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Origen</label>
                                                 </div>
 
                                                 <div class="form-inline mb-3">
@@ -108,7 +108,7 @@ $footer          = menu::footerSSL();
 
                                             <div class="col-sm-6">
                                                 <div class="form-inline mb-3">
-                                                    <label class="mr-2 text-gray-800 font-weight-bold">Información Nave de Destino</label>
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Destino</label>
                                                 </div>
 
                                                 <div class="form-inline mb-3">
