@@ -87,6 +87,7 @@ class menu
       $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
       $sideBar .= '<h6 class="collapse-header">Items:</h6>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('ship_report') . '>Reporte de Naves</a>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('report') . '>Liquidación de Naves</a>';
       $sideBar .= '</div>';
       $sideBar .= '</div>';
       $sideBar .= '</li>';

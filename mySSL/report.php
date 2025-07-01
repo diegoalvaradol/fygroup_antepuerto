@@ -1,14 +1,10 @@
 <?php
-header("Location: maintenance.php");
-exit;
-
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db       = (new Database())->getConnection();
-$cfg      = new cfg($db);
-$user     = new user($db);
-$tracking = new tracking($db);
+$db   = (new Database())->getConnection();
+$cfg  = new cfg($db);
+$user = new user($db);
 
 $infoCfg         = json_decode($cfg->getInfo(1), true);
 $admin           = $user->isAdmin($_SESSION["user"]["run"]);
@@ -30,7 +26,7 @@ $footer          = menu::footerSSL();
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Seguimiento de Carga</title>
+    <title>SSL | Liquidación de Nave</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -38,9 +34,6 @@ $footer          = menu::footerSSL();
 
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
-
-		<!-- Requiere FontAwesome para los íconos -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -49,8 +42,9 @@ $footer          = menu::footerSSL();
         <!-- Sidebar -->
         <?php echo $sideBarSSL; ?>
         <!-- End of Sidebar -->
-					<!-- Content Wrapper -->
-					<div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
@@ -60,43 +54,54 @@ $footer          = menu::footerSSL();
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Seguimiento de Carga</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Liquidación de Nave</h1>
+                    <p class="mb-4">Acá podras obtener la liquidación de carga por nave.</p>
 
                     <!-- Content Row -->
                     <div class="row">
                         <!-- First Column -->
-                        <div class="col-lg-12">
+                        <div class="col-lg">
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Formulario</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Formulario de Búsqueda</h6>
                                 </div>
 
                                 <div class="card-body">
-                                    <form class="form-container" method="POST">
+                                    <form class="form-container" id="vesselTransferForm">
                                         <div class="form-group row">
-                                            <div class="col-sm-3">
-                                                <select class="form-control select2 form-control-user" id="container" name="container">
-                                                    <option value="-">Seleccione un contenedor...</option>
-                                                </select>
-                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-inline mb-3">
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Nave</label>
 
-                                            <div class="col-sm-3">
-                                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-solid fa-search"></i> Buscar</button>
+                                                    <select class="form-control select2 form-control-user" id="vessel" name="vessel">
+                                                      <option value="-">Seleccione una motonave...</option>
+                                                    </select>
+                                                    <small class="text-danger" id="error-vessel"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <div class="form-inline mb-3">
+                                                    <label class="mr-2 text-gray-800 font-weight-bold">Información de Nave</label>
+                                                </div>
+
+                                                <div class="form-inline mb-3">
+                                                    <small class="text-black" id="info-vessel"></small>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
+
+																		<div id="detalleLiquidacion" style="justify-items:center;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Tabla de Tracking -->
-										<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['container'])) {?>
-                    <?php echo $tracking->getTableTracking($_POST['container']); ?>
-                    <?php }?>
                 </div>
-                <!-- container-fluid -->
+                <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
 
@@ -126,7 +131,7 @@ $footer          = menu::footerSSL();
                 <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="logout.php" onclick="finishCountDown()"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
+                    <a class="btn btn-danger" href="logout.php"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
                 </div>
             </div>
         </div>
@@ -163,26 +168,6 @@ $footer          = menu::footerSSL();
                 </div>
             </div>
         </div>
-    </div>
-
-		<!-- Modal Añadir hora de salida del camión termo -->
-    <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="addHourItemTracking" style="display:none; position:fixed; width:50%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-    <h4 id="h4-status-hour"></h4>
-    <form id="addHourStackingForm">
-        <div class="form-group row">
-            <div class="col-sm-12">
-              <label>Hora de Registro:</label>
-              <input type="datetime-local" class="form-control form-control-user" id="statusdate" name="statusdate">
-              <small class="text-danger" id="error-statusdate"></small>
-            </div>
-        </div>
-
-        <input type="hidden" id="chargueId" name="chargueId">
-        <input type="hidden" id="itemId" name="itemId">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
-        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
-    </form>
     </div>
 
     <!-- SweetAlert2 CDN -->
@@ -284,89 +269,25 @@ function actualizarReloj() {
   const fecha = ahora.toLocaleDateString('es-ES', opcionesFecha);
   const hora = ahora.toLocaleTimeString('es-ES');
   $('#relojFecha').html(`${fecha} - ${hora}`);
-};
-
-var registrarFecha = function(itemId, item, cntId) {
-	$('#chargueId').val(cntId);
-  $('#itemId').val(itemId);
-  $('#h4-status-hour').html('Item: '+item);
-
-  $('#modalOverlay').fadeIn(200);
-  $('#addHourItemTracking').fadeIn(200);
-}
-
-var closeModal = function() {
-  $('#addHourItemTracking').fadeOut(200);
-  $('#modalOverlay').fadeOut(200);
-}
-
-var saveChanges = function() {
-  const form = document.getElementById('addHourStackingForm');
-  const formData = new FormData(form);
-  let hasError = false;
-
-  document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
-  document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
-
-  /* Validar si algún campo está vacío */
-  for (let [key, value] of formData.entries()) {
-    if (!value.trim()) {
-      const errorElement = document.getElementById('error-' + key);
-
-      if (errorElement) {
-        errorElement.innerText = 'Este campo es obligatorio.';
-        const inputElement = form.querySelector(`[name="${key}"]`);
-        inputElement.classList.class('is-invalid');
-      }
-
-      hasError = true;
-    }
-  }
-
-  /* Hace envio de los datos a traves del formulario */
-  if(!hasError){
-    $.ajax({
-      url: '../controllers/trackingController.php',
-      data: $('#addHourStackingForm').serialize(),
-      type: 'POST',
-    }).done(function(x) {
-      if(x == 'OK'){
-        Swal.fire({
-          title: '¡Éxito!',
-          text: '¡Hora registrada con éxito!',
-          icon: 'success',
-          confirmButtonColor: '#4CAF50'
-        }).then((result) => {
-          window.location = '<?php echo generateMkey('tracking'); ?>';
-        });
-      } else {
-        Swal.fire({
-          title: 'Oops...',
-          text: 'Error al ingresar la hora.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        });
-      }
-    });
-  }
 }
 
 $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
   actualizarReloj(); /* Primera llamada */
 
-  $('#container').select2({
+  $('#vessel').select2({
     allowClear: true,
     tags: false,
-    width: '100%',
+    width: '50%',
     ajax: {
-      url: '../controllers/containerJsonController.php',
+      url: '../controllers/vesselJsonController.php',
       method: 'POST',
       dataType: 'json',
       delay: 250,
       data: function (params) {
         return {
-          search: params.term /* Lo que escribe el usuario */
+          search: params.term, /* Lo que escribe el usuario */
+          all: 1 /* Muestra todas las naves del sistema */
         };
       },
       processResults: function (data) {
@@ -375,6 +296,38 @@ $(document).ready(function() {
         };
       },
       cache: true
+    }
+  });
+
+  $('#vessel').on('change', function () {
+    const vessel = $(this).val();
+
+    if (vessel != '-') {
+      $.ajax({
+        url: '../controllers/vesselInfoController.php',
+        method: 'POST',
+        data: {id: vessel},
+        success: function (response) {
+          $('#info-vessel').html(response).css({'color': 'dodgerblue'});
+        },
+        error: function () {
+          $('#info-vessel').html('Error al obtener la información.');
+        }
+      });
+
+			$.ajax({
+        url: '../controllers/getLiquidacionController.php',
+        method: 'POST',
+        data: {id: vessel},
+        success: function (response) {
+          $('#detalleLiquidacion').html(response);
+        },
+        error: function () {
+          $('#detalleLiquidacion').html('No se ha encontrado una liquidación para la motonave consultada.');
+        }
+      });
+    }else{
+      $('#info-vessel').html('');
     }
   });
 });
