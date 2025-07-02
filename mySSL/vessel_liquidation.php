@@ -335,6 +335,7 @@ $(document).ready(function() {
       });
     }else{
       $('#info-vessel').html('');
+      $('#detalleLiquidacion').html('');
     }
   });
 });

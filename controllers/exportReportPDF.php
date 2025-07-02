@@ -27,7 +27,9 @@ $sql = "SELECT
           a.container,
           a.pallets_quantity,
           a.guide_number,
-          a.comodity
+          a.comodity,
+          a.seal_number,
+          a.booking
         FROM app_outer_port a
         JOIN app_ships v ON v.ship_id = a.vessel_id
         JOIN app_ports p ON p.port_id = v.port_discharge
@@ -68,32 +70,37 @@ $html = "
 </style>
 ";
 
-$html .= "<h1><strong>Liquidación de Nave</strong></h1>";
+$html .= '
+  <html>
+    <body>
+      <h1><strong>Liquidación de Nave</strong></h1>
+    </body>
+  </html>
+';
 
 $html .= "<h3>Información de Viaje</h3>";
 $html .= "<table style='margin-top: 10px;'>";
 $html .= "<tr>";
-$html .= "<th>Nave</th><td>" . htmlspecialchars($nave) . "</td>";
-$html .= "<th>Viaje</th><td>" . htmlspecialchars($viaje) . "</td>";
-$html .= "<th>Línea</th><td>" . htmlspecialchars($linea) . "</td>";
+$html .= "<th>Nave:</th><td>" . htmlspecialchars($nave) . "</td>";
+$html .= "<th>Viaje:</th><td>" . htmlspecialchars($viaje) . "</td>";
+$html .= "<th>Línea:</th><td>" . htmlspecialchars($linea) . "</td>";
 $html .= "</tr>";
 $html .= "<tr>";
-$html .= "<th>Destino</th><td>" . htmlspecialchars($destino) . "</td>";
-$html .= "<th>ETA</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . "</td>";
-$html .= "<th>ETD</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . "</td>";
+$html .= "<th>Destino:</th><td>" . htmlspecialchars($destino) . "</td>";
+$html .= "<th>ETA:</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . "</td>";
+$html .= "<th>ETD:</th><td>" . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . "</td>";
 $html .= "</tr>";
 $html .= "</table>";
 
-$html .= "<h3>Detalle de Carga</h3>";
+$html .= "<h3>Desgloce de Carga</h3>";
 $html .= "<table>";
 $html .= "<thead>";
 $html .= "<tr>";
-$html .= "<th>Nave</th>";
-$html .= "<th>Viaje</th>";
-$html .= "<th>Exportador</th>";
-$html .= "<th>N° Guía</th>";
+$html .= "<th>Guía(s)</th>";
 $html .= "<th>Condición</th>";
 $html .= "<th>Contenedor</th>";
+$html .= "<th>Sello</th>";
+$html .= "<th>Booking</th>";
 $html .= "<th>Pallets</th>";
 $html .= "</tr>";
 $html .= "</thead>";
@@ -105,15 +112,14 @@ foreach ($rows as $r) {
 }
 
 foreach ($agrupado as $exportador => $items) {
-  $html .= "<tr><td colspan='7' style='background-color: #ddd; font-weight: bold;'>Exportador: " . htmlspecialchars($exportador) . "</td></tr>";
+  $html .= "<tr><td colspan='6' style='background-color: #ddd; font-weight: bold;'>Exportador: " . htmlspecialchars($exportador) . "</td></tr>";
   foreach ($items as $r) {
     $html .= "<tr>";
-    $html .= "<td>" . htmlspecialchars($r['nave']) . "</td>";
-    $html .= "<td>" . htmlspecialchars($r['viaje']) . "</td>";
-    $html .= "<td>" . htmlspecialchars($r['exporter']) . "</td>";
     $html .= "<td>" . htmlspecialchars($r['guide_number']) . "</td>";
     $html .= "<td>" . htmlspecialchars($r['comodity']) . "</td>";
     $html .= "<td>" . htmlspecialchars($r['container']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['seal_number']) . "</td>";
+    $html .= "<td>" . htmlspecialchars($r['booking']) . "</td>";
     $html .= "<td>" . htmlspecialchars($r['pallets_quantity']) . "</td>";
     $html .= "</tr>";
   }
