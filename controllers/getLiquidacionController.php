@@ -1,12 +1,22 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-if (isset($_POST['id'])) {
-  $id = $_POST['id'];
+if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
+  exit("ID de motonave no válido.");
+}
 
-  $db = (new Database())->getConnection();
+$id       = intval($_POST['id']);
+$exporter = $_POST['exporter'] ?? null;
 
-  $sql = "SELECT
+// Si viene '-', se trata como null (sin filtro)
+if ($exporter === '-' || $exporter === '') {
+  $exporter = null;
+}
+
+$db = (new Database())->getConnection();
+
+// Consulta base
+$sql = "SELECT
           v.vessel_name AS nave,
           v.eta AS eta,
           v.etd AS etd,
@@ -23,31 +33,39 @@ if (isset($_POST['id'])) {
         JOIN app_ships v ON v.ship_id = a.vessel_id
         JOIN app_ports p ON p.port_id = v.port_discharge
         JOIN app_ship_lines l ON l.line_id = v.ship_line
-        WHERE a.vessel_id = :id AND a.origin = 1
-        ORDER BY a.exporter, a.container";
+        WHERE a.vessel_id = :id AND a.origin = 1";
 
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-  $stmt->execute();
-  $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if ($exporter !== null) {
+  $sql .= " AND a.exporter = :exporter";
+}
 
-  /* Si no encuentra una liquidación de la motonave solicitada */
-  if (!$rows) {
-    $html = '<div class="alert alert-warning d-flex justify-content-between align-items-center" role="alert">';
-    $html .= '<div>';
-    $html .= '<i class="fa-solid fa-triangle-exclamation me-2"></i>';
-    $html .= '<strong> Atención:</strong> No hay información disponible para generar la liquidación de esta nave.';
-    $html .= '</div>';
-    $html .= '</div>';
+$sql .= " ORDER BY a.exporter, a.container";
 
-    /* Si encuentra una liquidación de la motonave consultada */
-  } else {
-    $html = '<div style="text-align: center; margin-bottom: 1rem;">';
-    $html .= '<a href="../controllers/exportReportPDF.php?id=' . intval($id) . '" download class="btn btn-mn btn-success">';
-    $html .= '<i class="fa-solid fa-file-pdf"></i> Descargar PDF de Liquidación';
-    $html .= '</a>';
-    $html .= '</div>';
+$stmt = $db->prepare($sql);
+$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+if ($exporter !== null) {
+  $stmt->bindParam(":exporter", $exporter, PDO::PARAM_STR);
+}
+$stmt->execute();
+
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (!$rows) {
+  echo '<div class="alert alert-warning d-flex justify-content-between align-items-center" role="alert">
+          <div>
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <strong> Atención:</strong> No hay información disponible para generar la liquidación de esta nave.
+          </div>
+        </div>';
+} else {
+  $url = "../controllers/exportReportPDF.php?id=" . $id;
+  if ($exporter !== null) {
+    $url .= "&exporter=" . urlencode($exporter);
   }
 
-  echo $html;
+  echo '<div style="text-align: center; margin-bottom: 1rem;">
+          <a href="' . $url . '" download class="btn btn-mn btn-success">
+            <i class="fa-solid fa-file-pdf"></i> Descargar PDF de Liquidación
+          </a>
+        </div>';
 }

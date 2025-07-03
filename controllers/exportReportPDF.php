@@ -10,8 +10,10 @@ $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' 
 
 $id = $_GET['id'] ?? null;
 if (!$id || !is_numeric($id)) {
-  exit("ID no válido");
+  exit("Id no válido.");
 }
+
+$exporter = $_GET['exporter'] ?? null;
 
 $db = (new Database())->getConnection();
 
@@ -34,11 +36,22 @@ $sql = "SELECT
         JOIN app_ships v ON v.ship_id = a.vessel_id
         JOIN app_ports p ON p.port_id = v.port_discharge
         JOIN app_ship_lines l ON l.line_id = v.ship_line
-        WHERE a.vessel_id = :id AND a.origin = 1
-        ORDER BY a.exporter, a.container";
+        WHERE a.vessel_id = :id AND a.origin = 1";
+
+// Si exporter es válido, se agrega al filtro
+if (!empty($exporter) && $exporter !== '-') {
+  $sql .= " AND a.exporter = :exporter";
+}
+
+$sql .= " ORDER BY a.exporter, a.container";
 
 $stmt = $db->prepare($sql);
 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+if (!empty($exporter) && $exporter !== '-') {
+  $stmt->bindParam(":exporter", $exporter, PDO::PARAM_STR);
+}
+
 $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -70,14 +83,16 @@ $html = "
 </style>
 ";
 
-$html .= '
-  <html>
-    <body>
-      <h1><strong>Liquidación de Nave</strong></h1>
-    </body>
-  </html>
-';
+$html .= '<html>';
+$html .= '<body>';
+$html .= '<h1><strong>Liquidación de Nave</strong></h1>';
 
+if (!empty($exporter) && $exporter !== '-') {
+  $html .= '<h2 style="text-align: center; font-size: 14px;">Exportador: ' . htmlspecialchars($exporter) . '</h2>';
+}
+
+$html .= '</body>';
+$html .= '</html>';
 $html .= "<h3>Información de Viaje</h3>";
 $html .= "<table style='margin-top: 10px;'>";
 $html .= "<tr>";

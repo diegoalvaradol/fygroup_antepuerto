@@ -26,7 +26,7 @@ $footer          = menu::footerSSL();
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Liquidación de Nave</title>
+    <title>SSL | Itinerarios Cool Carriers</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -53,9 +53,10 @@ $footer          = menu::footerSSL();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Liquidación de Naves</h1>
-                    <p class="mb-4">Acá podras obtener la liquidación de carga por nave y exportador.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Itinerarios Cool Carriers</h1>
+                    <p class="mb-4">Acá puedes revisar los itinerarios de Cool Carriers.</p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -64,41 +65,16 @@ $footer          = menu::footerSSL();
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Formulario de Búsqueda</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Búsqueda de Itinerario</h6>
                                 </div>
 
-                                <div class="card-body">
-                                    <form class="form-container" id="vesselReportForm">
-                                        <div class="form-row">
-                                          <!-- Exportador -->
-                                          <div class="form-group col-md-4">
-                                            <label for="exporter" class="text-gray-800 font-weight-bold">Exportador <em>(Opcional)</em></label>
-                                            <select class="form-control select2" id="exporter" name="exporter">
-                                              <option value="-">Seleccione un exportador...</option>
-                                            </select>
-                                          </div>
+                                <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
+                                    <iframe src="https://scsdoc.coolcarriers.cl/prod/ReportVesselSchedules" width="1250" height="600" style="border: none;"></iframe>
+                                </div>
 
-                                          <!-- Motonave -->
-                                          <div class="form-group col-md-4">
-                                            <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
-                                            <select class="form-control select2" id="vessel" name="vessel">
-                                              <option value="-">Seleccione una motonave...</option>
-                                            </select>
-                                          </div>
-
-                                          <!-- Información Motonave -->
-                                          <div class="form-group col-md-4">
-                                            <label class="text-gray-800 font-weight-bold">Información de Motonave</label>
-                                            <small id="info-vessel" class="form-text text-muted"></small>
-                                          </div>
-
-                                          <!-- Liquidación -->
-                                          <div class="form-group">
-                                            <label class="text-gray-800 font-weight-bold">Liquidación Motonave</label>
-                                            <div id="detalleLiquidacion"></div>
-                                          </div>
-                                      </div>
-                                    </form>
+                                <div class="text-center">
+                                    <img src="../img/logo-cool-carriers.png" style="width:10%;">
+                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:cornflowerblue;">Powered by Cool Carriers.</h6>
                                 </div>
                             </div>
                         </div>
@@ -173,9 +149,6 @@ $footer          = menu::footerSSL();
         </div>
     </div>
 
-    <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <!-- Bootstrap core JavaScript-->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -185,28 +158,11 @@ $footer          = menu::footerSSL();
 
     <!-- Custom scripts for all pages-->
     <script src="../assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <!-- Bootstrap JS (necesario para popover) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
 <!-- JAVASCRIPT -->
 <script>
-/* Inicializa el popover */
-document.addEventListener('DOMContentLoaded', function () {
-  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-  popoverTriggerList.forEach(function (el) {
-    new bootstrap.Popover(el);
-  });
-});
-
 /* Conteo regresivo para cierre de sesion */
 let inactivityTime = function () {
   let time;
@@ -274,99 +230,6 @@ function actualizarReloj() {
   $('#relojFecha').html(`${fecha} - ${hora}`);
 }
 
-$(document).ready(function() {
-  setInterval(actualizarReloj, 1000);
-  actualizarReloj(); /* Primera llamada */
-
-  $('#vessel').select2({
-    allowClear: true,
-    tags: false,
-    width: '100%',
-    ajax: {
-      url: '../controllers/vesselJsonController.php',
-      method: 'POST',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        return {
-          search: params.term, /* Lo que escribe el usuario */
-          finished: 1 /* Muestra todas las naves finalizadas */
-        };
-      },
-      processResults: function (data) {
-        return {
-          results: data
-        };
-      },
-      cache: true
-    }
-  });
-
-  $('#exporter').select2({
-    allowClear: true,
-    tags: false,
-    width: '100%',
-    ajax: {
-      url: '../controllers/exporterJsonController.php',
-      method: 'POST',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        return {
-          search: params.term /* Lo que escribe el usuario */
-        };
-      },
-      processResults: function (data) {
-        return {
-          results: data
-        };
-      },
-      cache: true
-    }
-  });
-
-  $('#vessel').on('change', function () {
-    const vessel = $(this).val();
-    const exporter = $('#exporter').val();
-
-    if (vessel != '-') {
-      $.ajax({
-        url: '../controllers/vesselInfoController.php',
-        method: 'POST',
-        data: {id: vessel},
-        success: function (response) {
-          $('#info-vessel').html(response).css({'color': 'dodgerblue'});
-        },
-        error: function () {
-          $('#info-vessel').html('Error al obtener la información.');
-        }
-      });
-
-			$.ajax({
-        url: '../controllers/getLiquidacionController.php',
-        method: 'POST',
-        data: {
-          id: vessel,
-          exporter: exporter
-        },
-        success: function (response) {
-          $('#detalleLiquidacion').html(response);
-        },
-        error: function () {
-          $('#detalleLiquidacion').html('No se ha encontrado una liquidación para la motonave consultada.');
-        }
-      });
-    }else{
-      $('#info-vessel').html('');
-      $('#detalleLiquidacion').html('');
-    }
-  });
-});
-
-$(document).on('select2:open', function () {
-  let searchField = document.querySelector('.select2-container--open .select2-search__field');
-  if (searchField) {
-    searchField.focus();
-  }
-});
+setInterval(actualizarReloj, 1000);
+actualizarReloj(); /* Primera llamada */
 </script>
