@@ -68,6 +68,7 @@ class menu
     $sideBar .= '<h6 class="collapse-header">Items:</h6>';
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_tpc') . '>Planificación Naviera TPC</a>';
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_cool_carriers') . '>Itinerarios Cool Carriers</a>';
+    $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_global_reefers') . '>Itinerarios Global Reefers</a>';
 
     if ($admin) {
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_maersk') . '>Programación Maersk</a>';
