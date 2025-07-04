@@ -72,12 +72,14 @@ $footer          = menu::footerSSL();
                                         <form class="form-container" id="portForm">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="city" name="city" onblur="verifyPort(this.value)" placeholder="Ciudad">
+                                                    <label for='city' class='text-gray-800 font-weight-bold'>Ciudad</label>
+                                                    <input type="text" class="form-control form-control-user" id="city" name="city" onblur="verifyPort(this.value)" placeholder="Coquimbo">
                                                     <small class="text-danger" id="error-city"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="country" name="country" placeholder="País">
+                                                    <label for='country' class='text-gray-800 font-weight-bold'>País</label>
+                                                    <input type="text" class="form-control form-control-user" id="country" name="country" placeholder="Chile">
                                                     <small class="text-danger" id="error-country"></small>
                                                 </div>
                                             </div>

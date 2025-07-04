@@ -194,15 +194,21 @@ class ship extends iQuery
     $tbclose = "</tbody>";
 
     $table = "
-    <div class='container-fluid'>
-      <div class='table-responsive'>
-        <table class='table table-bordered table-hover' style='width:max-content;'>
-          <h6 class='h3 mb-1 text-gray-800'>Listado de Naves</h6>
-          <h6> Total de Registros: " . $count . "</h6>
-          " . $thead . $tr . $tbclose . "
-        </table>
+      <div class='row'>
+        <div class='col-lg-12'>
+          <div class='card shadow mb-4'>
+            <div class='card-header py-3'>
+              <h5 class='m-0 font-weight-bold text-primary'>Listado de Naves</h5>
+              <h6> Total de Registros: " . $count . "</h6>
+            </div>
+            <div class='table-responsive'>
+              <table class='table table-bordered table-hover' style='width:max-content;'>
+                " . $thead . $tr . $tbclose . "
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     ";
 
     return $table;

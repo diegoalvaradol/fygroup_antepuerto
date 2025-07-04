@@ -86,23 +86,26 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                  <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
-                                                  <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
-                                                  <small class="text-danger" id="error-vessel"></small>
+                                                    <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
+                                                    <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
+                                                    <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                  <small class="text-black" id="info-vessel"></small>
+                                                    <small class="text-black" id="info-vessel"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="carplate" class="text-gray-800 font-weight-bold">Patente</label>
                                                     <select class="form-control select2 form-control-user" id="carplate" name="carplate"></select>
                                                     <small class="text-danger" id="error-carplate"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="guidenumber" class="text-gray-800 font-weight-bold">N° de Guía</label>
                                                     <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía (Ej: 123 ó 123, 456)">
                                                     <small class="text-danger" id="error-guidenumber"></small>
                                                 </div>
@@ -110,11 +113,13 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="container" class="text-gray-800 font-weight-bold">Contenedor</label>
                                                     <input type="text" class="form-control form-control-user" id="container" name="container" minlength="11" maxlength="11" onblur="validarContenedor(this.value)" placeholder="Contenedor Ej:(UETU6168056)">
                                                     <small class="text-danger" id="error-container"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="sealnumber" class="text-gray-800 font-weight-bold">Sello de Naviera</label>
                                                     <input type="text" class="form-control form-control-user" id="sealnumber" name="sealnumber" placeholder="N° de Sello">
                                                     <small class="text-danger" id="error-sealnumber"></small>
                                                 </div>
@@ -122,11 +127,13 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                  <select class="form-control select2 form-control-user" id="exporter" name="exporter"></select>
-                                                  <small class="text-danger" id="error-exporter"></small>
+                                                    <label for="exporter" class="text-gray-800 font-weight-bold">Exportador</label>
+                                                    <select class="form-control select2 form-control-user" id="exporter" name="exporter"></select>
+                                                    <small class="text-danger" id="error-exporter"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="palletsquantity" class="text-gray-800 font-weight-bold">Pallets</label>
                                                     <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="30" step="1" oninput="validarMaximo(this)" placeholder="N° de Pallets">
                                                     <small class="text-danger" id="error-palletsquantity"></small>
                                                 </div>
@@ -134,11 +141,13 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="drivername" class="text-gray-800 font-weight-bold">Nombre de Conductor</label>
                                                     <input type="text" class="form-control form-control-user" id="drivername" name="drivername" placeholder="Nombre Conductor">
                                                     <small class="text-danger" id="error-drivername"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="cellphonedriver" class="text-gray-800 font-weight-bold">N° de Teléfono</label>
                                                     <div class="input-group">
                                                         <span class="input-group-text">
                                                             <img src="https://flagcdn.com/w20/ar.png" alt="Argentina" style="width: 15px; height: auto; margin-right: 5px;">+54

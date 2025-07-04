@@ -72,7 +72,8 @@ $footer          = menu::footerSSL();
                                     <form class="form-container" id="shipLineForm">
                                         <div class="form-group row">
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control form-control-user" id="shipline" name="shipline" onblur="verifyShipLine(this.value)" placeholder="Nombre de la Linea">
+                                                <label for='shipline' class='text-gray-800 font-weight-bold'>Nombre de Linea Naviera</label>
+                                                <input type="text" class="form-control form-control-user" id="shipline" name="shipline" onblur="verifyShipLine(this.value)" placeholder="Maersk, Hapag Lloyd, etc.">
                                                 <small class="text-danger" id="error-shipline"></small>
                                             </div>
                                         </div>

@@ -392,16 +392,19 @@ class outerPort extends iQuery
             <form method='POST' class='form-container' id='filterFormContainer'>
               <div class='form-group row'>
                 <div class='col-sm-4'>
+                  <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
                   <select class='form-control select2 form-control-user' id='nave' name='nave'>
                     <option value='-'>Seleccione una nave...</option>
                   </select>
                 </div>
                 <div class='col-sm-4'>
+                  <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
                   <select class='form-control select2 form-control-user' id='patente' name='patente'>
                     <option value='-'>Seleccione una patente...</option>
                   </select>
                 </div>
                 <div class='col-sm-4'>
+                  <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
                   <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
                 </div>
               </div>
@@ -523,18 +526,21 @@ class outerPort extends iQuery
     $tbclose = "</tbody>";
 
     $table = $form . "
-    <div class='container-fluid'>
-      <div class='sticky-form bg-white pr-3 pl-3 mb-3'>
-        <h6 class='h3 mb-1 text-gray-800'>Listado de Contenedores</h6>
-        <h6> Total de Registros: " . $count . "</h6>
+      <div class='row'>
+        <div class='col-lg-12'>
+          <div class='card shadow mb-4'>
+            <div class='card-header py-3'>
+              <h5 class='m-0 font-weight-bold text-primary'>Listado de Contenedores</h5>
+              <h6> Total de Registros: " . $count . "</h6>
+            </div>
+            <div class='table-responsive'>
+                <table class='table table-bordered table-hover' style='width:max-content;'>
+                " . $thead . $tr . $tbclose . "
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class='table-responsive'>
-        <table class='table table-bordered table-hover' style='width:max-content;'>
-        " . $thead . $tr . $tbclose . "
-        </table>
-      </div>
-    </div>
     ";
 
     return $table;
@@ -691,16 +697,19 @@ class outerPort extends iQuery
             <form method='POST' class='form-container' id='filterFormThermo'>
               <div class='form-group row'>
                 <div class='col-sm-4'>
+                  <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
                   <select class='form-control select2 form-control-user' id='nave' name='nave'>
                     <option value='-'>Seleccione una nave...</option>
                   </select>
                 </div>
                 <div class='col-sm-4'>
+                  <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
                   <select class='form-control select2 form-control-user' id='patente' name='patente'>
                     <option value='-'>Seleccione una patente...</option>
                   </select>
                 </div>
                 <div class='col-sm-4'>
+                  <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
                   <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
                 </div>
               </div>
@@ -816,18 +825,21 @@ class outerPort extends iQuery
     $tbclose = "</tbody>";
 
     $table = $form . "
-    <div class='container-fluid'>
-      <div class='sticky-form bg-white pr-3 pl-3 mb-3'>
-        <h6 class='h3 mb-1 text-gray-800'>Listado de Termos</h6>
-        <h6> Total de Registros: " . $count . "</h6>
+      <div class='row'>
+        <div class='col-lg-12'>
+          <div class='card shadow mb-4'>
+            <div class='card-header py-3'>
+              <h5 class='m-0 font-weight-bold text-primary'>Listado de Termos</h5>
+              <h6> Total de Registros: " . $count . "</h6>
+            </div>
+            <div class='table-responsive'>
+                <table class='table table-bordered table-hover' style='width:max-content;'>
+                " . $thead . $tr . $tbclose . "
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class='table-responsive'>
-        <table class='table table-bordered table-hover' style='width:max-content;'>
-        " . $thead . $tr . $tbclose . "
-        </table>
-      </div>
-    </div>
     ";
 
     return $table;
@@ -989,23 +1001,24 @@ class outerPort extends iQuery
             <form method='POST' class='form-container' id='filterFormShipReport'>
               <div class='form-group row'>
                 <div class='col-sm-3'>
+                  <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
                   <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
                 </div>
                 <div class='col-sm-3'>
+                  <label for='tipo' class='text-gray-800 font-weight-bold'>Tipo de Carga</label>
                   <select class='form-control select2 form-control-user' id='tipo' name='tipo'>
                     <option value='-' selected>Seleccione una tipo de carga...</option>
                     <option value='1'>Contenedores</option>
                     <option value='2'>Termos</option>
                   </select>
-                  <small class='text-grey'>Tipo de Carga</small>
                 </div>
                 <div class='col-sm-3'>
+                  <label for='desde' class='text-gray-800 font-weight-bold'>Desde</label>
                   <input type='date' class='form-control form-control-user' id='desde' name='desde'>
-                  <small class='text-grey'>Desde</small>
                 </div>
                 <div class='col-sm-3'>
+                  <label for='hasta' class='text-gray-800 font-weight-bold'>Hasta</label>
                   <input type='date' class='form-control form-control-user' id='hasta' name='hasta'>
-                  <small class='text-grey'>Hasta</small>
                 </div>
               </div>
 
@@ -1113,18 +1126,21 @@ class outerPort extends iQuery
     $tbclose = "</tbody>";
 
     $table = $form . "
-    <div class='container-fluid'>
-      <div class='sticky-form bg-white pr-3 pl-3 mb-3'>
-        <h6 class='h3 mb-1 text-gray-800'>Reporte</h6>
-        <h6> Total de Registros: " . $count . "</h6>
+      <div class='row'>
+        <div class='col-lg-12'>
+          <div class='card shadow mb-4'>
+            <div class='card-header py-3'>
+              <h5 class='m-0 font-weight-bold text-primary'>Listado de Cargas</h5>
+              <h6> Total de Registros: " . $count . "</h6>
+            </div>
+            <div class='table-responsive'>
+                <table class='table table-bordered table-hover' style='width:max-content;'>
+                " . $thead . $tr . $tbclose . "
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class='table-responsive'>
-        <table class='table table-bordered table-hover' style='width:max-content;'>
-        " . $thead . $tr . $tbclose . "
-        </table>
-      </div>
-    </div>
     ";
 
     return $table;

@@ -83,6 +83,7 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
                                                   <select class="form-control select2 form-control-user" id="vessel" name="vessel">
                                                     <option value="-">Seleccione una motonave...</option>
                                                   </select>
@@ -91,12 +92,15 @@ $footer          = menu::footerSSL();
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                  <label for='voyage' class='text-gray-800 font-weight-bold'>Información de Motonave</label>
+                                                  </br>
                                                   <small class="text-black" id="info-vessel"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="carplate" class="text-gray-800 font-weight-bold">Patente</label>
                                                     <select class="form-control select2 form-control-user" id="carplate" name="carplate">
                                                       <option value="-">Seleccione una patente...</option>
                                                     </select>
@@ -104,6 +108,7 @@ $footer          = menu::footerSSL();
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="guidenumber" class="text-gray-800 font-weight-bold">N° de Guía</label>
                                                     <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía (Ej: 123 ó 123, 456)">
                                                     <small class="text-danger" id="error-guidenumber"></small>
                                                 </div>
@@ -111,11 +116,13 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="container" class="text-gray-800 font-weight-bold">Contenedor</label>
                                                     <input type="text" class="form-control form-control-user" id="container" name="container" minlength="11" maxlength="11" onblur="validarContenedor(this.value)" placeholder="Contenedor Ej:(UETU6168056)">
                                                     <small class="text-danger" id="error-container"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="sealnumber" class="text-gray-800 font-weight-bold">Sello de Naviera</label>
                                                     <input type="text" class="form-control form-control-user" id="sealnumber" name="sealnumber" placeholder="N° de Sello">
                                                     <small class="text-danger" id="error-sealnumber"></small>
                                                 </div>
@@ -123,13 +130,15 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                  <select class="form-control select2 form-control-user" id="exporter" name="exporter" onchange="setAgency(this.value)">
-                                                    <option value="-">Seleccione un exportador...</option>
-                                                  </select>
-                                                  <small class="text-danger" id="error-exporter"></small>
+                                                    <label for="exporter" class="text-gray-800 font-weight-bold">Exportador</label>
+                                                    <select class="form-control select2 form-control-user" id="exporter" name="exporter" onchange="setAgency(this.value)">
+                                                        <option value="-">Seleccione un exportador...</option>
+                                                    </select>
+                                                    <small class="text-danger" id="error-exporter"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="agency" class="text-gray-800 font-weight-bold">Agencia</label>
                                                     <select class="form-control select2 form-control-user" id="agency" name="agency">
                                                       <option value="-">Seleccione una agencia...</option>
                                                     </select>
@@ -139,11 +148,13 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="palletsquantity" class="text-gray-800 font-weight-bold">Pallets</label>
                                                     <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="40" step="1" oninput="validarMaximo(this)" value="20" placeholder="N° de Pallets">
                                                     <small class="text-danger" id="error-palletsquantity"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="cellphonedriver" class="text-gray-800 font-weight-bold">N° de Teléfono</label>
                                                     <div class="input-group">
                                                         <span class="input-group-text">
                                                             <img src="https://flagcdn.com/w20/cl.png" alt="Chile" style="width: 15px; height: auto; margin-right: 5px;">+56
@@ -156,14 +167,15 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="exporter" class="text-gray-800 font-weight-bold">Fecha y Hora de Entrada</label>
                                                     <input type="datetime-local" class="form-control form-control-user" id="datein" name="datein">
-                                                    <small class="text-grey">Fecha y Hora de Entrada</small>
                                                     <small class="text-danger" id="error-datein"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="comodity" class="text-gray-800 font-weight-bold">Condición</label>
                                                     <select class="form-control select2 form-control-user" id="comodity" name="comodity">
                                                         <option value="-" selected>Seleccione una condición...</option>
                                                         <option value="No Fumigado">No Fumigado</option>
@@ -174,6 +186,7 @@ $footer          = menu::footerSSL();
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="booking" class="text-gray-800 font-weight-bold">Reserva (Booking)</label>
                                                     <input type="text" class="form-control form-control-user" id="booking" name="booking" placeholder="N° de Booking">
                                                     <small class="text-danger" id="error-booking"></small>
                                                 </div>
@@ -181,11 +194,13 @@ $footer          = menu::footerSSL();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for="stay" class="text-gray-800 font-weight-bold">Estadía</label>
                                                     <input type="text" class="form-control form-control-user" id="stay" name="stay" placeholder="Estadía">
                                                     <small class="text-danger" id="error-stay"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for="observations" class="text-gray-800 font-weight-bold">Observaciones</label>
                                                     <input type="text" class="form-control form-control-user" id="observations" name="observations" placeholder="Observaciones">
                                                     <small class="text-danger" id="error-observations"></small>
                                                 </div>

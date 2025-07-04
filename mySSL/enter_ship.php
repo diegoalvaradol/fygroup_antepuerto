@@ -71,32 +71,35 @@ $footer          = menu::footerSSL();
                                         <form class="form-container" id="shipForm">
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="vessel" name="vessel" placeholder="Nombre de la Nave">
+                                                    <label for='vessel' class='text-gray-800 font-weight-bold'>Motonave</label>
+                                                    <input type="text" class="form-control form-control-user" id="vessel" name="vessel" placeholder="Polar Argentina">
                                                     <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control form-control-user" id="voyage" name="voyage" placeholder="N° de Viaje">
+                                                    <label for='voyage' class='text-gray-800 font-weight-bold'>N° de Viaje</label>
+                                                    <input type="text" class="form-control form-control-user" id="voyage" name="voyage" placeholder="525N">
                                                     <small class="text-danger" id="error-voyage"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for='eta' class='text-gray-800 font-weight-bold'>Fecha y Hora de Arrivo</label>
                                                     <input type="datetime-local" class="form-control form-control-user" id="eta" name="eta">
-                                                    <small class="text-grey">Fecha y Hora de Arrivo</small>
                                                     <small class="text-danger" id="error-eta"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for='etd' class='text-gray-800 font-weight-bold'>Fecha y Hora de Zarpe</label>
                                                     <input type="datetime-local" class="form-control form-control-user" id="etd" name="etd">
-                                                    <small class="text-grey">Fecha y Hora de Zarpe</small>
                                                     <small class="text-danger" id="error-etd"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
+                                                    <label for='line' class='text-gray-800 font-weight-bold'>Linea Naviera</label>
                                                     <select class="form-control select2 form-control-user" id="line" name="line">
                                                         <option value="-">Seleccione una línea...</option>
                                                     </select>
@@ -104,6 +107,7 @@ $footer          = menu::footerSSL();
                                                 </div>
 
                                                 <div class="col-sm-6">
+                                                    <label for='pod' class='text-gray-800 font-weight-bold'>Puerto de Descarga</label>
                                                     <select class="form-control select2 form-control-user" id="pod" name="pod">
                                                         <option value="-">Seleccione un puerto...</option>
                                                     </select>
