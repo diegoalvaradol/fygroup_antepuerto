@@ -15,6 +15,8 @@ class menu
     $sideBar = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#293c74;">';
     $sideBar .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
     $sideBar .= '<img src="../img/ssl-logo-azul.png" style="width:100%;">';
+
+    /* Menú de Antepuerto */
     $sideBar .= '</a>';
     $sideBar .= '<div class="sidebar-heading">Sistema Antepuerto</div>';
     $sideBar .= '<li class="nav-item">';
@@ -30,6 +32,8 @@ class menu
     $sideBar .= '</div>';
     $sideBar .= '</div>';
     $sideBar .= '</li>';
+
+    /* Menú Internacional */
     $sideBar .= '<li class="nav-item">';
     $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInternational" aria-expanded="true" aria-controls="collapseInternational">';
     $sideBar .= '<i class="fa fa-fw fa-earth-americas"></i>';
@@ -43,6 +47,8 @@ class menu
     $sideBar .= '</div>';
     $sideBar .= '</div>';
     $sideBar .= '</li>';
+
+    /*cMenú de Puerto */
     $sideBar .= '<li class="nav-item">';
     $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePuerto" aria-expanded="true" aria-controls="collapsePuerto">';
     $sideBar .= '<i class="fas fa-fw fa-ship"></i>';
@@ -58,6 +64,8 @@ class menu
     $sideBar .= '</div>';
     $sideBar .= '</div>';
     $sideBar .= '</li>';
+
+    /* Menú de Planificación */
     $sideBar .= '<li class="nav-item">';
     $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProgramacion" aria-expanded="true" aria-controls="collapseProgramacion">';
     $sideBar .= '<i class="fas fa-fw fa-file-pdf"></i>';
@@ -79,6 +87,25 @@ class menu
     $sideBar .= '</div>';
     $sideBar .= '</li>';
 
+    /* Menú de Itinerarios Maersk */
+    if ($admin) {
+      $sideBar .= '<li class="nav-item">';
+      $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collpaseMaersk" aria-expanded="true" aria-controls="collpaseMaersk">';
+      $sideBar .= '<i class="fas fa-fw fa-calendar-days"></i>';
+      $sideBar .= '<span>Itinerario Maersk</span>';
+      $sideBar .= '</a>';
+      $sideBar .= '<div id="collpaseMaersk" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
+      $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
+      $sideBar .= '<h6 class="collapse-header">Items:</h6>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('point_schedule_maersk') . '>Punto a Punto</a>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('port_schedule_maersk') . '>Puerto</a>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('vessel_schedule_maersk') . '>Nave</a>';
+      $sideBar .= '</div>';
+      $sideBar .= '</div>';
+      $sideBar .= '</li>';
+    }
+
+    /* Menú de Reportes */
     if ($admin) {
       $sideBar .= '<li class="nav-item">';
       $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReporte" aria-expanded="true" aria-controls="collapseReporte">';
