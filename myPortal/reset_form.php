@@ -57,7 +57,7 @@
                                         <input type="hidden" name="token" value="<?=htmlspecialchars($_GET['token'])?>">
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user mb-3" id="password" name="password" placeholder="Nueva contraseña" required>
-                                            <input type="password" class="form-control form-control-user" id="password2" name="confirm_password" placeholder="Confirmar contraseña" required>
+                                            <input type="password" class="form-control form-control-user" id="password2" name="password2" placeholder="Confirmar contraseña" required>
                                         </div>
                                         <hr>
                                         <button type="button" id="resetpassword" class="btn btn-success btn-user btn-block" onclick="resetPassword()">
