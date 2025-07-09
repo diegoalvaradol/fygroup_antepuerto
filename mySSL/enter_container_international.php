@@ -1,6 +1,6 @@
 <?php
-header("Location: maintenance.php");
-exit;
+//header("Location: maintenance.php");
+//exit;
 
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';

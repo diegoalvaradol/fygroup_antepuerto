@@ -74,7 +74,7 @@ $footer          = menu::footerSSL();
 
                                 <div class="text-center">
                                     <img src="../img/logo-maersk.png" style="width:10%;">
-                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:dodgerblue;">Powered by Maersk.</h6>
+                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:#42b0d5;">Powered by Maersk.</h6>
                                 </div>
                             </div>
                         </div>

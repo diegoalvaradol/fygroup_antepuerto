@@ -79,7 +79,6 @@ class menu
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_global_reefers') . '>Itinerarios Global Reefers</a>';
 
     if ($admin) {
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_maersk') . '>Programación Maersk</a>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_msc') . '>Programación MSC</a>';
     }
 
@@ -100,13 +99,13 @@ class menu
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('point_schedule_maersk') . '>Punto a Punto</a>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('port_schedule_maersk') . '>Puerto</a>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('vessel_schedule_maersk') . '>Nave</a>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_maersk') . '>Programación</a>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('tracking_schedule_maersk') . '>Seguimiento de Carga</a>';
       $sideBar .= '</div>';
       $sideBar .= '</div>';
       $sideBar .= '</li>';
-    }
 
-    /* Menú de Reportes */
-    if ($admin) {
+      /* Menú de Reportes */
       $sideBar .= '<li class="nav-item">';
       $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReporte" aria-expanded="true" aria-controls="collapseReporte">';
       $sideBar .= '<i class="fas fa-fw fa-book"></i>';
@@ -117,6 +116,20 @@ class menu
       $sideBar .= '<h6 class="collapse-header">Items:</h6>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('ship_report') . '>Reporte de Naves</a>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('vessel_liquidation') . '>Liquidación de Naves</a>';
+      $sideBar .= '</div>';
+      $sideBar .= '</div>';
+      $sideBar .= '</li>';
+
+      /* Menú de Indicadores Financieros */
+      $sideBar .= '<li class="nav-item">';
+      $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrecio" aria-expanded="true" aria-controls="collapsePrecio">';
+      $sideBar .= '<i class="fas fa-fw fa-sack-dollar"></i>';
+      $sideBar .= '<span>Precios</span>';
+      $sideBar .= '</a>';
+      $sideBar .= '<div id="collapsePrecio" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
+      $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
+      $sideBar .= '<h6 class="collapse-header">Items:</h6>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('list_price_indicators') . '>Lista de Precios</a>';
       $sideBar .= '</div>';
       $sideBar .= '</div>';
       $sideBar .= '</li>';

@@ -67,10 +67,6 @@ $footer          = menu::footerSSL();
                                     <h6 class="m-0 font-weight-bold text-primary">Servicio Atacama - Maersk</h6>
                                 </div>
 
-                                <div style="display:flex;justify-content:center; padding-top:2%; padding-right:3%; padding-left:3%;">
-                                    <img src="https://eus-www.sway-cdn.com/s/U5rT4hqClDmMHjqE/images/cyxaVcQwKs5JwZ?quality=3840&allowAnimation=true" alt="Imagen de Sway" style="max-width:100%; height:auto;">
-                                </div>
-
                                 <div class="card-body" style="align-self:anchor-center;">
                                     <button type="button" class="btn btn-info btn-lg" onclick="window.open('https://sway.cloud.microsoft/U5rT4hqClDmMHjqE?ref=Link', '_blank')">
                                         <i class="fas fa-fw fa-ship"></i> Itinerarios Maersk
@@ -79,7 +75,7 @@ $footer          = menu::footerSSL();
 
                                 <div class="text-center">
                                     <img src="../img/logo-maersk.png" style="width:10%;">
-                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:dodgerblue;">Powered by Maersk.</h6>
+                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:#42b0d5;">Powered by Maersk.</h6>
                                 </div>
                             </div>
                         </div>
