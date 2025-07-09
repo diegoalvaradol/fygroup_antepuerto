@@ -34,11 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if ($userData && $user->setResetToken($email, $token, $expiration)) {
     $nombreUsuario = $userData['name'];
     $userDivision  = $userData['division'];
+    $url           = generateMkey('reset_form') . '&token=' . $token;
 
     if ($userDivision == 'ssl') {
-      $link = $localHost ? "http://localhost/ssl-chile/mySSL/reset_form.php?token=$token" : "https://myssl.ssl-lines.com/mySSL/reset_form.php?token=$token";
+      $link = $localHost ? "http://localhost/ssl-chile/mySSL/" . $url : "https://myssl.ssl-lines.com/mySSL/" . $url;
     } elseif ($userDivision == 'terminal' || $userDivision == 'exporter') {
-      $link = $localHost ? "http://localhost/ssl-chile/myPortal/reset_form.php?token=$token" : "https://myssl.ssl-lines.com/myPortal/reset_form.php?token=$token";
+      $link = $localHost ? "http://localhost/ssl-chile/myPortal/" . $url : "https://myssl.ssl-lines.com/myPortal/" . $url;
     }
 
     $mail = new PHPMailer(true);

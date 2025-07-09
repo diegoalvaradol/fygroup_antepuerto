@@ -122,13 +122,17 @@ class user extends iQuery
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-      $update = "UPDATE $this->table SET password = :password, reset_token = NULL, token_expiration = NULL WHERE user_id = :id";
+      $update = "UPDATE $this->table SET password = :password, reset_token = :token, token_expiration = :expiration WHERE user_id = :id";
       $stmt2  = $this->conexion->prepare($update);
 
       $this->password = password_hash($newPassword, PASSWORD_DEFAULT);
+      $token          = '';
+      $expiration     = '0000-00-00 00:00:00'; // Limpiar el token y la expiración después de restablecer la contraseña
 
-      $stmt2->bindParam(":id", $user['user_id']); // o $user[$this->id] si está bien definido
+      $stmt2->bindParam(":id", $user['user_id'], PDO::PARAM_STR); // o $user[$this->id] si está bien definido
       $stmt2->bindParam(":password", $this->password, PDO::PARAM_STR);
+      $stmt2->bindParam(":token", $token, PDO::PARAM_STR);
+      $stmt2->bindParam(":expiration", $expiration, PDO::PARAM_STR);
 
       return $stmt2->execute();
     }
