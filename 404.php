@@ -45,7 +45,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <div class="container-fluid">
                     <!-- 404 Error Text -->
                     <div class="text-center">
-                        <img src="../img/ssl-logo-azul.png">
+                        <img src="../images/ssl-logo-azul.png">
                         <div class="error mx-auto" data-text="404">404</div>
                         <br>
                         <p class="lead text-gray-800">Oops...</p>

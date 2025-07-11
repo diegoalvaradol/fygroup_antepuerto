@@ -14,7 +14,7 @@ class menu
 
     $sideBar = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#293c74;">';
     $sideBar .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
-    $sideBar .= '<img src="../img/ssl-logo-azul.png" style="width:100%;">';
+    $sideBar .= '<img src="../images/ssl-logo-azul.png" style="width:100%;">';
 
     /* Menú de Antepuerto */
     $sideBar .= '</a>';
@@ -169,7 +169,7 @@ class menu
     $tapBar .= '<li class="nav-item dropdown no-arrow">';
     $tapBar .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
     $tapBar .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBar .= '<img class="img-profile rounded-circle" src="../img/undraw_profile.svg">';
+    $tapBar .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
     $tapBar .= '</a>';
     $tapBar .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
     $tapBar .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#userModal" style="color: #0483cd;">';
@@ -213,7 +213,7 @@ class menu
     $tapBar .= '<li class="nav-item dropdown no-arrow">';
     $tapBar .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
     $tapBar .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBar .= '<img class="img-profile rounded-circle" src="../img/undraw_profile.svg">';
+    $tapBar .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
     $tapBar .= '</a>';
     $tapBar .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
     $tapBar .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">';
@@ -239,7 +239,7 @@ class menu
 
     $sideBarPortal = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#293c74;">';
     $sideBarPortal .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
-    $sideBarPortal .= '<img src="../img/ssl-logo-azul.png" style="width:100%;">';
+    $sideBarPortal .= '<img src="../images/ssl-logo-azul.png" style="width:100%;">';
     $sideBarPortal .= '</a>';
     $sideBarPortal .= '<div class="sidebar-heading">Sistema Antepuerto</div>';
     $sideBarPortal .= '<div class="sidebar-heading">(Portal Cliente)</div>';
@@ -289,7 +289,7 @@ class menu
     $tapBarPortal .= '<li class="nav-item dropdown no-arrow">';
     $tapBarPortal .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
     $tapBarPortal .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBarPortal .= '<img class="img-profile rounded-circle" src="../img/undraw_profile.svg">';
+    $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
     $tapBarPortal .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">';
@@ -323,7 +323,7 @@ class menu
     $tapBarPortal .= '<li class="nav-item dropdown no-arrow">';
     $tapBarPortal .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
     $tapBarPortal .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBarPortal .= '<img class="img-profile rounded-circle" src="../img/undraw_profile.svg">';
+    $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
     $tapBarPortal .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">';

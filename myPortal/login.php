@@ -32,7 +32,7 @@ if (isset($_SESSION['user'])) {
 
 <style>
     body {
-      background-image: url("../img/coquimbo_port_background.jpg");
+      background-image: url("../images/coquimbo_port_background_1.jpg");
       background-size: cover;
     }
 </style>
@@ -46,7 +46,7 @@ if (isset($_SESSION['user'])) {
             <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-12 text-center pt-4">
-                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
                 <div>
                   <small class="text-success" style="font-size:xx-large;">Sistema Integral SSL.</small><br>
                   <small class="text-success" style="font-size:x-large;">Portal Cliente.</small>

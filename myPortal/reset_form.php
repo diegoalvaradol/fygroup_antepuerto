@@ -23,7 +23,7 @@
 
     <style>
         body {
-          background-image: url("../img/coquimbo_port_background.jpg");
+          background-image: url("../images/coquimbo_port_background.jpg");
           background-size: cover;
           font-family: Arial, sans-serif;
           padding: 40px;
@@ -40,7 +40,7 @@
                         <div class="row">
                             <!-- Columna de imagen y textos -->
                             <div class="col-lg-5 d-none d-lg-flex flex-column align-items-center justify-content-center bg-light p-4 text-center">
-                                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                                <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
                                 <small class="text-success" style="font-size:x-large">Sistema Integral SSL.</small>
                                 <br>
                                 <small class="text-success" style="font-size:large;">Portal Cliente.</small>

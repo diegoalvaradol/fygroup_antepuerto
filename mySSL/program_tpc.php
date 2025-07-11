@@ -122,7 +122,7 @@ $footer          = menu::footerSSL();
                                     </form>
 
                                     <div class="text-center">
-                                        <img src="../img/logo-tpc-transparente.png" style="width:10%; padding-top:1%;">
+                                        <img src="../images/logo-tpc-transparente.png" style="width:10%; padding-top:1%;">
                                         <h6 class="m-0 font-weight-bold text-primary" style="text-align:center; font-size:small;">Powered by TPC.</h6>
                                     </div>
                                 </div>

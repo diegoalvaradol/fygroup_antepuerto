@@ -45,7 +45,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <div class="container-fluid">
                     <!-- 401 Error Server -->
                     <div class="text-center">
-                        <img src="../img/ssl-logo-azul.png">
+                        <img src="../images/ssl-logo-azul.png">
                         <div class="error mx-auto" data-text=⚠️>⚠️</div>
                         <p class="lead text-gray-800">Acceso Inválido.</p>
                         <br>

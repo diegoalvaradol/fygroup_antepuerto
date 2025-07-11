@@ -73,7 +73,7 @@ $footer          = menu::footerSSL();
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../img/logo-msc.png" style="width:5%;">
+                                    <img src="../images/logo-msc.png" style="width:5%;">
                                     <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:black;">Powered by MSC.</h6>
                                 </div>
                             </div>

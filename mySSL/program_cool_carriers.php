@@ -73,7 +73,7 @@ $footer          = menu::footerSSL();
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../img/logo-cool-carriers.png" style="width:10%;">
+                                    <img src="../images/logo-cool-carriers.png" style="width:10%;">
                                     <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:#2A5CAA;">Powered by Cool Carriers.</h6>
                                 </div>
                             </div>

@@ -30,8 +30,15 @@ if (isset($_SESSION['user'])) {
 </head>
 
 <style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
     body {
-      background-image: url("../img/coquimbo_port_background.jpg");
+      background-image: url("../images/coquimbo_port_background_3.jpg");
       background-size: cover;
     }
 </style>
@@ -40,12 +47,12 @@ if (isset($_SESSION['user'])) {
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="row justify-content-center w-100">
       <div class="col-xl-6 col-lg-8 col-md-10">
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card o-hidden border-0 shadow-lg my-5 glass-card">
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-12 text-center pt-4">
-                <img src="../img/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
+                <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="max-height:120px;">
                 <div>
                   <small class="text-primary" style="font-size:xx-large;">Sistema Integral SSL.</small><br>
                   <small class="text-primary" style="font-size:x-large;">Personal SSL.</small>
