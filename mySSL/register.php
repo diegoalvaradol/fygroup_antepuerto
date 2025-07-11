@@ -22,10 +22,17 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        .glass-card {
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+        }
         body {
             font-family: Arial, sans-serif;
             padding: 40px;
-            background-image: url("../images/coquimbo_port_background.jpg");
+            background-image: url("../images/coquimbo_port_background_3.jpg");
             background-size: cover;
         }
 
@@ -39,15 +46,15 @@
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="row w-100 justify-content-center">
       <div class="col-xl-10 col-lg-10 col-md-12">
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card o-hidden border-0 shadow-lg my-5 glass-card">
           <div class="card-body p-0">
             <div class="row">
               <!-- Lado izquierdo con imagen e info -->
-              <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center align-items-center bg-light text-center p-4">
-                <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
-                <small class="text-primary" style="font-size: xx-large;">Sistema Integral SSL.</small>
+              <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center align-items-center text-center p-4">
+                <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="max-height: 120px;">
+                <small class="text-primary" style="font-size:x-large;">Sistema Integral SSL.</small>
                 <br>
-                <small class="text-primary" style="font-size: x-large;">Personal SSL.</small>
+                <small class="text-primary" style="font-size:large;">Personal SSL.</small>
               </div>
 
               <!-- Lado derecho con formulario -->
