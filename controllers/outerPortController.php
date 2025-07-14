@@ -1,4 +1,9 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set('America/Santiago');
 
@@ -23,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->pallets         = $_POST["palletsquantity"];
   $port->cellphonedriver = isset($_POST["cellphonedriver"]) ? $_POST["cellphonedriver"] : '000000000';
   $port->arrivaldate     = $dateIn ? $dateIn->format('Y-m-d H:i:s') : null;
-  $port->departuredate   = null;
+  $port->departuredate   = $port->departuredate != '0000-00-00 00:00:00' ? $port->departuredate : '0000-00-00 00:00:00';
   $port->comodity        = strtoupper($_POST["comodity"]);
   $port->booking         = strtoupper($_POST["booking"]);
   $port->stay            = strtoupper($_POST["stay"]);

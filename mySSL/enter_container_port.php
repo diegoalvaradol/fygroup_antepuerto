@@ -596,6 +596,7 @@ var saveInContainer = function() {
   const btn = $('#loadBtn');
   const text = $('#loadBtnText');
   const spinner = $('#loadBtnSpinner');
+  var container = $('#container').val();
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
@@ -651,7 +652,7 @@ var saveInContainer = function() {
         if(x == 'OKUC'){
           Swal.fire({
             title: '¡Éxito!',
-            text: '¡Contenedor actualizado con éxito!',
+            html: '¡Contenedor <b>'+container+'</b> actualizado con éxito!',
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
@@ -660,7 +661,7 @@ var saveInContainer = function() {
         }else if(x == 'NOOKUC') {
           Swal.fire({
             title: 'Oops...',
-            text: 'Error al actualizar el contenedor.',
+            html: 'Error al actualizar el contenedor: <b>'+container+'</b>.',
             icon: 'error',
             cancelButtonColor: '#d33',
           }).then(() => {
@@ -673,7 +674,7 @@ var saveInContainer = function() {
         if(x == 'OKC'){
           Swal.fire({
             title: '¡Éxito!',
-            text: '¡Ingreso de contenedor registrado exitosamente!',
+            html: '¡Contenedor <b>'+container+'</b> ingresado con éxito!',
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
@@ -682,10 +683,10 @@ var saveInContainer = function() {
         }else if(x == 'NOOKC') {
           Swal.fire({
             title: 'Oops...',
-            text: 'Error al registrar el ingreso del contenedor.',
+            html: 'Error al ingresar el contenedor: <b>'+container+'</b>.',
             icon: 'error',
             cancelButtonColor: '#d33',
-            }).then(() => {
+          }).then(() => {
             text.removeClass('d-none');
             spinner.addClass('d-none');
             btn.prop('disabled', false);
@@ -894,6 +895,7 @@ $(document).ready(function() {
 
   $('#vessel').on('change', function () {
     const vessel = $(this).val();
+    const isUpdate = $('#isUpdate').val();
 
     if (vessel != '-') {
       $.ajax({
@@ -908,17 +910,19 @@ $(document).ready(function() {
         }
       });
 
-      $.ajax({
-        url: '../controllers/setCounterVesselController.php',
-        method: 'POST',
-        data: {id: vessel, origin: 1},
-        success: function (response) {
-          $('#countervessel').val(response);
-        },
-        error: function () {
-          $('#countervessel').val(0);
-        }
-      });
+      if (isUpdate == 0) {
+        $.ajax({
+          url: '../controllers/setCounterVesselController.php',
+          method: 'POST',
+          data: {id: vessel, origin: 1},
+          success: function (response) {
+            $('#countervessel').val(response);
+          },
+          error: function () {
+            $('#countervessel').val(0);
+          }
+        });
+      }
     }else{
       $('#info-vessel').html('');
       $('#countervessel').val(null);

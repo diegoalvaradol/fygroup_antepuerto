@@ -766,6 +766,7 @@ $(document).ready(function() {
 
   $('#vessel').on('change', function () {
     const vessel = $(this).val();
+    const isUpdate = $('#isUpdate').val();
 
     if (vessel != '-') {
       $.ajax({
@@ -780,17 +781,19 @@ $(document).ready(function() {
         }
       });
 
-      $.ajax({
-        url: '../controllers/setCounterVesselController.php',
-        method: 'POST',
-        data: {id: vessel, origin: 2},
-        success: function (response) {
-          $('#countervessel').val(response);
-        },
-        error: function () {
-          $('#countervessel').val(0);
-        }
-      });
+      if (isUpdate == 0) {
+        $.ajax({
+          url: '../controllers/setCounterVesselController.php',
+          method: 'POST',
+          data: {id: vessel, origin: 2},
+          success: function (response) {
+            $('#countervessel').val(response);
+          },
+          error: function () {
+            $('#countervessel').val(0);
+          }
+        });
+      }
     }else{
       $('#info-vessel').html('');
       $('#countervessel').val(null);
