@@ -91,11 +91,14 @@ if (isset($_SESSION['user'])) {
                   </form>
 
                   <hr>
-                  <div class="text-center">
-                    <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.php" style="font-size: medium;">¿No tienes una cuenta? ¡Crea una!</a>
+
+                  <div class="text-center mt-3">
+                    <a href="forgot_password.php" class="btn btn-outline-warning btn-sm m-1">
+                      ¿Olvidaste la contraseña?
+                    </a>
+                    <a href="register.php" class="btn btn-outline-success btn-sm m-1">
+                      ¿No tienes una cuenta? ¡Crea una!
+                    </a>
                   </div>
                 </div>
               </div>
