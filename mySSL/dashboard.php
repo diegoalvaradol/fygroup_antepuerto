@@ -45,6 +45,73 @@ $footer        = menu::footerSSL();
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+    <style>
+    .chat-box {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 250px;
+      max-width: 90vw;
+      background-color: #25d366;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      font-family: sans-serif;
+      color: white;
+      z-index: 9999;
+    }
+    .chat-header {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .chat-header img {
+      margin-right: 10px;
+    }
+    .chat-header span {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .chat-body {
+      display: none;
+      padding: 10px;
+      background: white;
+      color: black;
+      border-radius: 0 0 15px 15px;
+    }
+    .chat-body p {
+      margin: 0;
+      font-size: 14px;
+    }
+    .btn-chat {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: #25d366;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 480px) {
+      .chat-box {
+        left: 10px;
+        bottom: 10px;
+        width: 90vw;
+        font-size: 13px;
+      }
+      .chat-header span {
+        font-size: 13px;
+      }
+      .btn-chat {
+        font-size: 13px;
+        padding: 5px 10px;
+      }
+    }
+    </style>
 </head>
 
 <body id="page-top">
@@ -419,11 +486,29 @@ $footer        = menu::footerSSL();
 
     <!-- Bootstrap JS (necesario para popover) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chat flotante expandible estilo WhatsApp - Responsive -->
+    <div id="whatsapp-chat-box" class="chat-box">
+      <div class="chat-header" onclick="toggleChatBox()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30" />
+        <span>¿Necesitas ayuda?</span>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <p>Hola 👋<br>¿En qué podemos ayudarte?</p>
+        <a href="https://wa.me/56923816700?text=Hola%2C%20necesito%20ayuda" target="_blank" class="btn-chat">Iniciar chat</a>
+      </div>
+    </div>
 </body>
 </html>
 
 <!-- JAVASCRIPT -->
 <script>
+/* Chat de WhatsApp */
+function toggleChatBox() {
+  var chat = document.getElementById('chatBody');
+  chat.style.display = (chat.style.display === 'block') ? 'none' : 'block';
+}
+
 /* Inicializa el popover */
 document.addEventListener('DOMContentLoaded', function () {
   const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));

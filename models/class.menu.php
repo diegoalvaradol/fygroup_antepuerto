@@ -51,7 +51,7 @@ class menu
     /*cMenú de Puerto */
     $sideBar .= '<li class="nav-item">';
     $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePuerto" aria-expanded="true" aria-controls="collapsePuerto">';
-    $sideBar .= '<i class="fas fa-fw fa-ship"></i>';
+    $sideBar .= '<i class="fas fa-fw fa-anchor"></i>';
     $sideBar .= '<span>Puerto</span>';
     $sideBar .= '</a>';
     $sideBar .= '<div id="collapsePuerto" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
@@ -65,11 +65,11 @@ class menu
     $sideBar .= '</div>';
     $sideBar .= '</li>';
 
-    /* Menú de Planificación */
+    /* Menú de Itinerarios */
     $sideBar .= '<li class="nav-item">';
     $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProgramacion" aria-expanded="true" aria-controls="collapseProgramacion">';
-    $sideBar .= '<i class="fas fa-fw fa-file-pdf"></i>';
-    $sideBar .= '<span>Planificación</span>';
+    $sideBar .= '<i class="fas fa-fw fa-calendar-days"></i>';
+    $sideBar .= '<span>Itinerarios</span>';
     $sideBar .= '</a>';
     $sideBar .= '<div id="collapseProgramacion" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
     $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
@@ -77,21 +77,16 @@ class menu
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_tpc') . '>Planificación Naviera TPC</a>';
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_cool_carriers') . '>Itinerarios Cool Carriers</a>';
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_global_reefers') . '>Itinerarios Global Reefers</a>';
-
-    if ($admin) {
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_msc') . '>Programación MSC</a>';
-    }
-
     $sideBar .= '</div>';
     $sideBar .= '</div>';
     $sideBar .= '</li>';
 
-    /* Menú de Itinerarios Maersk */
     if ($admin) {
+      /* Menú de Maersk */
       $sideBar .= '<li class="nav-item">';
       $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collpaseMaersk" aria-expanded="true" aria-controls="collpaseMaersk">';
-      $sideBar .= '<i class="fas fa-fw fa-calendar-days"></i>';
-      $sideBar .= '<span>Itinerario Maersk</span>';
+      $sideBar .= '<i class="fas fa-fw fa-ship"></i>';
+      $sideBar .= '<span>Maersk</span>';
       $sideBar .= '</a>';
       $sideBar .= '<div id="collpaseMaersk" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
       $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
@@ -101,6 +96,22 @@ class menu
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('vessel_schedule_maersk') . '>Nave</a>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_maersk') . '>Programación</a>';
       $sideBar .= '<a class="collapse-item" href=' . generateMkey('tracking_schedule_maersk') . '>Seguimiento de Carga</a>';
+      $sideBar .= '</div>';
+      $sideBar .= '</div>';
+      $sideBar .= '</li>';
+
+      /* Menú de Medlog */
+      $sideBar .= '<li class="nav-item">';
+      $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collpaseMedlog" aria-expanded="true" aria-controls="collpaseMedlog">';
+      $sideBar .= '<i class="fas fa-fw fa-ship"></i>';
+      $sideBar .= '<span>Medlog (MSC)</span>';
+      $sideBar .= '</a>';
+      $sideBar .= '<div id="collpaseMedlog" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
+      $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
+      $sideBar .= '<h6 class="collapse-header">Items:</h6>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_msc') . '>Stacking MSC</a>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_import_msc') . '>Importación MSC</a>';
+      $sideBar .= '<a class="collapse-item" href=' . generateMkey('eir_msc') . '>EIR Medlog</a>';
       $sideBar .= '</div>';
       $sideBar .= '</div>';
       $sideBar .= '</li>';
