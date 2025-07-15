@@ -104,7 +104,7 @@ class menu
       $sideBar .= '<li class="nav-item">';
       $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collpaseMedlog" aria-expanded="true" aria-controls="collpaseMedlog">';
       $sideBar .= '<i class="fas fa-fw fa-ship"></i>';
-      $sideBar .= '<span>Medlog (MSC)</span>';
+      $sideBar .= '<span>MSC (Medlog)</span>';
       $sideBar .= '</a>';
       $sideBar .= '<div id="collpaseMedlog" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
       $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
