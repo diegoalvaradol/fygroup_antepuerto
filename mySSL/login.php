@@ -4,43 +4,44 @@ if (isset($_SESSION['user'])) {
   exit();
 }
 ?>
-
-<!-- HTML. -->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="Vista Inicio de Sesión" content="">
-    <meta name="Diego Alvarado L" content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Login</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SSL | Login</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+  <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+  <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  body {
+    background-image: url("../images/coquimbo_port_background_3.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+  @media (max-width: 576px) {
     .glass-card {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 1rem;
     }
-    body {
-      background-image: url("../images/coquimbo_port_background_3.jpg");
-      background-size: cover;
+    .text-primary {
+      font-size: medium !important;
     }
+  }
 </style>
 
 <body>
@@ -49,7 +50,6 @@ if (isset($_SESSION['user'])) {
       <div class="col-xl-6 col-lg-8 col-md-10">
         <div class="card o-hidden border-0 shadow-lg my-5 glass-card">
           <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-12 text-center pt-4">
                 <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="max-height:120px;">
@@ -66,24 +66,31 @@ if (isset($_SESSION['user'])) {
                   </div>
 
                   <form id="loginForm">
-                    <div class="form-group" style="display:flex;align-items:center;justify-content:center;gap:10px;">
-                      <input type="text" class="form-control form-control-user" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9" style="text-align:center;margin-left:5%;">
-                      <span id="info-run"></span>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" class="form-control text-center" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
+                        <div class="input-group-append">
+                          <span class="input-group-text bg-white border-left-0" id="info-run"></span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="form-group" style="display:flex;align-items:center;justify-content:center;gap:10px;">
-                      <input type="password" class="form-control form-control-user" id="password" name="password" oninput="validaPassword(this.value)" placeholder="Contraseña" style="text-align:center;margin-left:5%;">
-                      <span id="info-password"></span>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="password" class="form-control text-center" id="password" name="password" oninput="validaPassword(this.value)" placeholder="Contraseña">
+                        <div class="input-group-append">
+                          <span class="input-group-text bg-white border-left-0" id="info-password"></span>
+                        </div>
+                      </div>
                     </div>
 
                     <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="loadSession()">
-                      <span id="loadBtnText"><i class="fas fa-solid fa-right-to-bracket"></i> Iniciar Sesión</span>
+                      <span id="loadBtnText"><i class="fas fa-right-to-bracket"></i> Iniciar Sesión</span>
                       <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                     </button>
                   </form>
 
                   <hr>
-
                   <div class="text-center">
                     <a class="small" href="forgot_password.php" style="font-size: medium;">¿Olvidaste la contraseña?</a>
                   </div>
@@ -107,16 +114,11 @@ if (isset($_SESSION['user'])) {
 </body>
 </html>
 
-<!-- JAVASCRIPT -->
 <script>
   var formatearRut = function (inputRun) {
     let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
-
-    /* Separar cuerpo y DV */
     let cuerpo = rut.slice(0, -1);
     let dv = rut.slice(-1);
-
-    /* Agregar puntos cada 3 dígitos desde la derecha */
     let cuerpoFormateado = '';
     let i = 0;
     for (let j = cuerpo.length - 1; j >= 0; j--) {
@@ -126,52 +128,37 @@ if (isset($_SESSION['user'])) {
         cuerpoFormateado = '.' + cuerpoFormateado;
       }
     }
-
     inputRun.value = cuerpoFormateado + '-' + dv;
   }
 
   var validaPassword = function (password){
-    if(password !== ''){
-      $('#info-password').html('<i class="fas fa-solid fa-check-circle fa-lg" style="color: #63E6BE;"></i>');
-    }else{
-      $('#info-password').html('<i class="fa-solid fa-triangle-exclamation fa-lg" style="color: #FFD43B;"></i>');
-    }
+    $('#info-password').html(password !== ''
+      ? '<i class="fas fa-check-circle text-success"></i>'
+      : '<i class="fa-solid fa-triangle-exclamation text-warning"></i>');
   }
 
   var validaRut = function (rut) {
     rut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
-
     if (rut.length < 2) return false;
     const cuerpo = rut.slice(0, -1);
     const dvIngresado = rut.slice(-1);
-
-    let suma = 0;
-    let multiplo = 2;
-
-    /* Recorrer el cuerpo del RUT de derecha a izquierda */
+    let suma = 0, multiplo = 2;
     for (let i = cuerpo.length - 1; i >= 0; i--) {
       suma += parseInt(cuerpo[i]) * multiplo;
       multiplo = multiplo < 7 ? multiplo + 1 : 2;
     }
-
     const dvEsperado = 11 - (suma % 11);
-    let dvCalculado = '';
+    let dvCalculado = (dvEsperado === 11) ? '0' : (dvEsperado === 10 ? 'K' : dvEsperado.toString());
 
-    if (dvEsperado === 11) dvCalculado = '0';
-    else if (dvEsperado === 10) dvCalculado = 'K';
-    else dvCalculado = dvEsperado.toString();
-
-    if(dvCalculado === dvIngresado){
-      $('#info-run').html('<i class="fas fa-solid fa-check-circle fa-lg" style="color: #63E6BE;"></i>');
-    }else{
-      $('#info-run').html('<i class="fas fa-solid fa-circle-xmark fa-lg" style="color: #EA5353;"></i>');
-    }
+    $('#info-run').html(dvCalculado === dvIngresado
+      ? '<i class="fas fa-check-circle text-success"></i>'
+      : '<i class="fas fa-circle-xmark text-danger"></i>');
   }
 
   var loadSession = function () {
     const run = $('#run').val();
     const password = $('#password').val();
-    const division = 'ssl'; // División ssl
+    const division = 'ssl';
     const btn = $('#loadBtn');
     const text = $('#loadBtnText');
     const spinner = $('#loadBtnSpinner');
@@ -183,11 +170,9 @@ if (isset($_SESSION['user'])) {
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
-
       return;
     }
 
-    // Mostrar spinner, ocultar texto y desactivar botón
     text.addClass('d-none');
     spinner.removeClass('d-none');
     btn.prop('disabled', true);
@@ -197,7 +182,7 @@ if (isset($_SESSION['user'])) {
       data: $('#loginForm').serialize() + '&division=' + encodeURIComponent(division),
       type: "POST",
     }).done(function(x) {
-      if(x == 'OK'){
+      if (x == 'OK') {
         Swal.fire({
           title: '¡Bienvenido!',
           html: 'Estamos cargando las preferencias de tu cuenta 🚀 </br> Por favor se paciente.',
@@ -206,38 +191,12 @@ if (isset($_SESSION['user'])) {
           showConfirmButton: false,
           allowOutsideClick: false
         }).then(() => {
-          // Cuando termine el timer, redirige al dashboard
           window.location.href = "dashboard.php";
         });
-      }else if(x == 'NOOK'){
-        Swal.fire({
-          title: 'Oops...',
-          html: 'El run y/o contraseña ingresados son invalidos. </br> Por favor reintenta nuevamente.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then(() => {
-          text.removeClass('d-none');
-          spinner.addClass('d-none');
-          btn.prop('disabled', false);
-        });
-      }else if(x == 'NOOK2'){
-        Swal.fire({
-          title: 'Oops...',
-          html: 'Tu perfil no se encuentra asociado a SSL. </br> Por favor contacta al administrador.',
-          icon: 'info',
-          cancelButtonColor: '#d33',
-        }).then(() => {
-          text.removeClass('d-none');
-          spinner.addClass('d-none');
-          btn.prop('disabled', false);
-        });
-      }else{
-        Swal.fire({
-          title: 'Oops...',
-          text: x,
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then(() => {
+      } else {
+        let msg = (x == 'NOOK') ? 'El run y/o contraseña ingresados son inválidos.' :
+                  (x == 'NOOK2') ? 'Tu perfil no se encuentra asociado a SSL.' : x;
+        Swal.fire({ title: 'Oops...', html: msg, icon: 'error' }).then(() => {
           text.removeClass('d-none');
           spinner.addClass('d-none');
           btn.prop('disabled', false);

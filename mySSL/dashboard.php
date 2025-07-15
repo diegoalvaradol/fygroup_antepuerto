@@ -29,7 +29,7 @@ $footer        = menu::footerSSL();
     <meta name="Dasboard" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Dashboard | Sistema Antepuerto</title>
+    <title>SSL | Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -138,146 +138,159 @@ $footer        = menu::footerSSL();
 
                     <!-- Content Row -->
                     <div class="row">
-                        <!-- Resumen de Contenedores -->
+                        <!-- Contenedores -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="text-sm font-weight-bold text-primary text-uppercase mb-1" style="text-align:center;">Contenedores</div>
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-6">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Contenedores</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalContainer = $port->getTotalContainer(); ?>
-                                                <?php echo $totalContainer; ?>
-                                            </div>
-                                        </div>
-                                        <div class="col mr-6">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pallets</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalPallets = $port->getTotalContainerPallets(); ?>
-                                                <?php echo $totalPallets; ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                          <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                              <div class="text-center mb-3">
+                                <div class="text-sm font-weight-bold text-primary text-uppercase">Contenedores</div>
+                              </div>
+                              <div class="row align-items-center">
+                                <div class="col">
+                                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Contenedores</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?=$port->getTotalContainer();?>
+                                  </div>
                                 </div>
+                                <div class="col">
+                                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pallets</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?=$port->getTotalContainerPallets();?>
+                                  </div>
+                                </div>
+                                <div class="col-auto">
+                                  <i class="fas fa-box fa-2x text-primary"></i>
+                                </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
 
-                        <!-- Resumen de Termos -->
+                        <!-- Termos -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="text-sm font-weight-bold text-success text-uppercase mb-1" style="text-align:center;">Termos</div>
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-6">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Camiones</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalThermo = $port->getTotalThermo(); ?>
-                                                <?php echo $totalThermo; ?>
-                                            </div>
-                                        </div>
-                                        <div class="col mr-6">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pallets</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalPallets = $port->getTotalPallets(); ?>
-                                                <?php echo $totalPallets; ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-truck fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                          <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                              <div class="text-center mb-3">
+                                <div class="text-sm font-weight-bold text-success text-uppercase">Termos</div>
+                              </div>
+                              <div class="row align-items-center">
+                                <div class="col">
+                                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Camiones</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?=$port->getTotalThermo();?>
+                                  </div>
                                 </div>
+                                <div class="col">
+                                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pallets</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?=$port->getTotalPallets();?>
+                                  </div>
+                                </div>
+                                <div class="col-auto">
+                                  <i class="fas fa-snowflake fa-2x text-success"></i>
+                                </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
 
-                        <!-- Resumen de Arrivos -->
+                        <!-- Arrivos -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="text-sm font-weight-bold text-warning text-uppercase mb-1" style="text-align:center;">Arrivos</div>
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-12">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Arrivos</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalTrucks        = $port->getTotalTrucks(); ?>
-                                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto(); ?>
-
-                                                <?php echo $totalTrucks . ' camiones.'; ?>
-                                                <br>
-                                                <small class="h5 mb-0 font-weight-bold text-suceess-800" style="font-size:small;color: green;">Solicitados: <?php print_r($totalTrucks - $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que han arrivado a antepuerto y que ya han sido solicitados por terminal."></i>
-                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php print_r($trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que se encuentra en el antepuerto y que no han sido solicitados por terminal."></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-arrow-up fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                          <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                              <div class="text-center mb-3">
+                                <div class="text-sm font-weight-bold text-warning text-uppercase">Arrivos</div>
+                              </div>
+                              <div class="row align-items-center">
+                                <div class="col">
+                                  <?php
+$totalTrucks        = $port->getTotalTrucks();
+$trucksInAntepuerto = $port->getTotalTrucksInAnpuerto();
+?>
+                                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Arrivos</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800"><?=$totalTrucks?> camiones</div>
+                                  <div class="mt-2">
+                                    <small class="text-success font-weight-bold">
+                                      Solicitados: <?=$totalTrucks - $trucksInAntepuerto?>
+                                      <i class="fas fa-info-circle text-info" title="Solicitados" role="button"
+                                        data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
+                                        data-bs-content="Camiones arribados y ya solicitados por el terminal."></i>
+                                    </small><br>
+                                    <small class="text-danger font-weight-bold">
+                                      Pendientes: <?=$trucksInAntepuerto?>
+                                      <i class="fas fa-info-circle text-info" title="Pendientes" role="button"
+                                        data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
+                                        data-bs-content="Camiones que están en antepuerto y aún no son solicitados."></i>
+                                    </small>
+                                  </div>
                                 </div>
+                                <div class="col-auto">
+                                  <i class="fas fa-truck-moving fa-2x text-warning"></i>
+                                </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
 
-                        <!-- Resumen de Capacidad -->
+                        <!-- Capacidad -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="text-sm font-weight-bold text-info text-uppercase mb-1" style="text-align:center;">Capacidad</div>
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Ocupación Antepuerto</div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                        <?php $percentUsage = $port->getPercentUsage($infoCfg['goals']); ?>
-                                                        <?php print_r($percentUsage); ?>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress">
-                                                        <div id="myProgressBar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto(); ?>
-                                            <small style="color:black; font-size:smaller;"><?php echo $trucksInAntepuerto . ' camiones de un total de ' . $infoCfg['goals'] . '.'; ?> </small>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-circle-notch fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                          <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card-body">
+                              <div class="text-center mb-3">
+                                <div class="text-sm font-weight-bold text-info text-uppercase">Capacidad</div>
+                              </div>
+                              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Ocupación Antepuerto</div>
+                              <div class="row align-items-center">
+                                <div class="col-auto">
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?php
+$percentUsage = $port->getPercentUsage($infoCfg['goals']);
+echo $percentUsage . '%';
+?>
+                                  </div>
                                 </div>
+                                <div class="col">
+                                  <div class="progress">
+                                    <div id="myProgressBar" class="progress-bar bg-info" role="progressbar"
+                                        style="width: <?=$percentUsage?>%;" aria-valuenow="<?=$percentUsage?>" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <small class="d-block mt-1 text-muted">
+                                <?=$port->getTotalTrucksInAnpuerto()?> camiones de un total de <?=$infoCfg['goals']?>.
+                              </small>
                             </div>
+                          </div>
                         </div>
 
                         <!-- Gráfico de Camiones Por Día -->
                         <?php if ($admin): ?>
-                        <div class="col-xl-12 col-md-6 mb-4">
+                          <div class="col-xl-12 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
-                                <div class="text-sm font-weight-bold text-info text-uppercase mb-1" style="text-align:center;">Camiones por Día</div>
-                                <div class="card-body">
-                                  <div class="form-group row" style="place-content:center;">
-                                    <div class="col-sm-2">
-                                      <label for="fechaInicio">Fecha Inicio:</label>
-                                      <input type="date" class="form-control form-control-user" id="fechaInicio" style="width:auto;">
-                                    </div>
-
-                                    <div class="col-sm-2">
-                                      <label for="fechaFin">Fecha Fin:</label>
-                                      <input type="date" class="form-control form-control-user" id="fechaFin" style="width:auto;">
-                                    </div>
+                              <div class="card-body">
+                                <div class="text-center mb-3">
+                                  <div class="text-sm font-weight-bold text-info text-uppercase">Camiones por Día</div>
+                                </div>
+                                <div class="form-group row justify-content-center">
+                                  <div class="col-sm-2">
+                                    <label for="fechaInicio">Fecha Inicio:</label>
+                                    <input type="date" class="form-control form-control-user" id="fechaInicio">
                                   </div>
-
-                                  <div class="row no-gutters align-items-center">
-                                    <canvas id="graficoCamiones" width="800" height="400"></canvas>
+                                  <div class="col-sm-2">
+                                    <label for="fechaFin">Fecha Fin:</label>
+                                    <input type="date" class="form-control form-control-user" id="fechaFin">
                                   </div>
                                 </div>
+                                <div class="row align-items-center">
+                                  <canvas id="graficoCamiones" width="800" height="400"></canvas>
+                                </div>
+                              </div>
                             </div>
-                        </div>
+                          </div>
                         <?php endif; ?>
-                    </div>
+                      </div>
+
                 </div>
                 <!-- /.container-fluid -->
             </div>
