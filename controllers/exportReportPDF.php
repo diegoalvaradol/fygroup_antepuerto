@@ -55,11 +55,12 @@ if (!empty($exporter) && $exporter !== '-') {
 $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-/* Agrupar pallets por exportador */
+/* Agrupar pallets y contenedores por exportador */
 $resumen = [];
 foreach ($rows as $r) {
-  $exp           = $r['exporter'];
-  $resumen[$exp] = ($resumen[$exp] ?? 0) + (int) $r['pallets_quantity'];
+  $exp                                            = $r['exporter'];
+  $resumen[$exp]['pallets']                       = ($resumen[$exp]['pallets'] ?? 0) + (int) $r['pallets_quantity'];
+  $resumen[$exp]['contenedores'][$r['container']] = true; // evitar duplicados
 }
 
 $nave    = $rows[0]['nave'] ?? 'N/A';
@@ -91,8 +92,6 @@ if (!empty($exporter) && $exporter !== '-') {
   $html .= '<h2 style="text-align: center; font-size: 14px;">Exportador: ' . htmlspecialchars($exporter) . '</h2>';
 }
 
-$html .= '</body>';
-$html .= '</html>';
 $html .= "<h3>Información de Viaje</h3>";
 $html .= "<table style='margin-top: 10px;'>";
 $html .= "<tr>";
@@ -145,17 +144,24 @@ $html .= "</tbody></table>";
 $html .= "<h3>Resumen por Exportador</h3>";
 $html .= "<table>";
 $html .= "<thead>";
-$html .= "<tr><th>Exportador</th><th>Total Pallets</th></tr>";
+$html .= "<tr><th>Exportador</th><th>Total Pallets</th><th>Total Contenedores</th></tr>";
 $html .= "</thead>";
 $html .= "<tbody>";
 
-$totalGeneral = 0;
-foreach ($resumen as $exp => $total) {
-  $html .= "<tr><td>" . htmlspecialchars($exp) . "</td><td>$total</td></tr>";
-  $totalGeneral += $total;
+$totalGeneralPallets      = 0;
+$totalGeneralContenedores = 0;
+
+foreach ($resumen as $exp => $data) {
+  $totalPallets      = $data['pallets'];
+  $totalContenedores = count($data['contenedores']);
+
+  $html .= "<tr><td>" . htmlspecialchars($exp) . "</td><td>$totalPallets</td><td>$totalContenedores</td></tr>";
+
+  $totalGeneralPallets += $totalPallets;
+  $totalGeneralContenedores += $totalContenedores;
 }
 
-$html .= "<tr><td><strong>Total General</strong></td><td><strong>$totalGeneral</strong></td></tr>";
+$html .= "<tr><td><strong>Total General</strong></td><td><strong>$totalGeneralPallets</strong></td><td><strong>$totalGeneralContenedores</strong></td></tr>";
 $html .= "</tbody></table>";
 
 /* Pie de página */
