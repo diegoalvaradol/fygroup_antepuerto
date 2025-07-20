@@ -47,68 +47,57 @@ $footer        = menu::footerSSL();
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
     <style>
-    .chat-box {
+    #whatsapp-chat-box {
       position: fixed;
       bottom: 20px;
-      left: 20px;
-      width: 250px;
-      max-width: 90vw;
-      background-color: #25d366;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-family: sans-serif;
-      color: white;
+      left: 20px; /* alineado a la izquierda */
+      width: 280px;
+      max-width: 90%;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      font-family: Arial, sans-serif;
       z-index: 9999;
     }
+
     .chat-header {
       display: flex;
       align-items: center;
-      padding: 10px;
+      gap: 10px;
+      padding: 12px;
+      background-color: #25d366;
+      color: white;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
       cursor: pointer;
     }
-    .chat-header img {
-      margin-right: 10px;
-    }
-    .chat-header span {
-      font-size: 14px;
-      font-weight: bold;
-    }
+
     .chat-body {
+      padding: 15px;
       display: none;
-      padding: 10px;
-      background: white;
-      color: black;
-      border-radius: 0 0 15px 15px;
-    }
-    .chat-body p {
-      margin: 0;
-      font-size: 14px;
-    }
-    .btn-chat {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 6px 12px;
-      background: #25d366;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
       font-size: 14px;
     }
 
-    /* Responsive */
-    @media screen and (max-width: 480px) {
-      .chat-box {
-        left: 10px;
+    .btn-chat {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #25d366;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 480px) {
+      #whatsapp-chat-box {
         bottom: 10px;
-        width: 90vw;
-        font-size: 13px;
+        left: 10px;
+        width: 90%;
       }
-      .chat-header span {
+
+      .chat-body {
         font-size: 13px;
-      }
-      .btn-chat {
-        font-size: 13px;
-        padding: 5px 10px;
       }
     }
     </style>
@@ -507,7 +496,7 @@ echo $percentUsage . '%';
         <span>¿Necesitas ayuda?</span>
       </div>
       <div class="chat-body" id="chatBody">
-        <p>Hola 👋<br>¿En qué podemos ayudarte?</p>
+        <p>Hola <?php echo $_SESSION["user"]["name"] . '.'; ?> 👋<br>¿En qué podemos ayudarte?</p>
         <a href="https://wa.me/56923816700?text=Hola%2C%20necesito%20ayuda" target="_blank" class="btn-chat">Iniciar chat</a>
       </div>
     </div>
@@ -518,8 +507,8 @@ echo $percentUsage . '%';
 <script>
 /* Chat de WhatsApp */
 function toggleChatBox() {
-  var chat = document.getElementById('chatBody');
-  chat.style.display = (chat.style.display === 'block') ? 'none' : 'block';
+  const body = document.getElementById('chatBody');
+  body.style.display = body.style.display === 'block' ? 'none' : 'block';
 }
 
 /* Inicializa el popover */
