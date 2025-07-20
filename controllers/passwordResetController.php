@@ -44,21 +44,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $mail = new PHPMailer(true);
     try {
-      // Configurar SMTP con Gmail
+      // Configurar SMTP con Ferozo
       $mail->isSMTP();
-      $mail->Host       = 'smtp.gmail.com';
+      $mail->Host       = 'l0011525.ferozo.com';
       $mail->SMTPAuth   = true;
-      $mail->Username   = 'diego.alvaraado@gmail.com'; // <-- tu Gmail
-      $mail->Password   = 'ykbu atsv iyba fqib';       // <-- contraseña de aplicación
-      $mail->SMTPSecure = 'tls';
-      $mail->Port       = 587;
+      $mail->Username   = 'soporte@ssl-lines.com';
+      $mail->Password   = 'Ssl*2025sop';
+      $mail->SMTPSecure = 'ssl'; // usar 'ssl'
+      $mail->Port       = 465;
 
-      /* Configurar correo y codificación */
-      $mail->CharSet  = 'UTF-8';  // <-- ESTA LÍNEA habilita caracteres especiales
-      $mail->Encoding = 'base64'; // Opcional, para asegurar correcta codificación
+      // Configurar codificación
+      $mail->CharSet  = 'UTF-8';
+      $mail->Encoding = 'base64';
 
       // Datos del correo
-      $mail->setFrom('diego.alvaraado@gmail.com', 'Soporte SSL');
+      $mail->setFrom('soporte@ssl-lines.com', 'Soporte SSL');
       $mail->addAddress($email);
       $mail->isHTML(true);
       $mail->Priority = 1;
