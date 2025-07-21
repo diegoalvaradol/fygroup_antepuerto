@@ -26,7 +26,7 @@
     body {
       font-family: Arial, sans-serif;
       padding: 15px;
-      background-image: url("../images/coquimbo_port_background.jpg");
+      background-image: url("../images/coquimbo_port_background_3.jpg");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
