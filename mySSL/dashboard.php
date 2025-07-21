@@ -7,11 +7,10 @@ $port = new outerPort($db);
 $cfg  = new cfg($db);
 $user = new user($db);
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
-//$jsonData      = $port->trucksPerDay();
+$infoCfg       = json_decode($cfg->getInfo(1), true);
+$admin         = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime  = new DateTime($infoCfg['released_date']);
+$updateTime    = new DateTime($infoCfg['update_date']);
 $arrayDivision = get::getDivisionName();
 $sideBarSSL    = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
@@ -47,55 +46,215 @@ $footer        = menu::footerSSL();
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
     <style>
-    #whatsapp-chat-box {
-      position: fixed;
-      bottom: 20px;
-      left: 20px; /* alineado a la izquierda */
-      width: 280px;
-      max-width: 90%;
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      font-family: Arial, sans-serif;
-      z-index: 9999;
+    /* general-template.css */
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #f8f9fc;
+      color: #333;
+      margin: 0;
+      padding: 0;
     }
 
-    .chat-header {
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+      color: #4e73df;
+      margin-bottom: 1rem;
+    }
+
+    #page-top {
+      min-height: 100vh;
       display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      background-color: #25d366;
-      color: white;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      cursor: pointer;
+      flex-direction: column;
     }
 
-    .chat-body {
-      padding: 15px;
-      display: none;
-      font-size: 14px;
+    #wrapper {
+      display: flex;
+      min-height: 100vh;
+      flex-wrap: nowrap;
+    }
+
+    #sidebar {
+      background-color: #2e59d9;
+      width: 240px;
+      min-height: 100vh;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    #sidebar a {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      padding: 0.75rem 1.25rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #sidebar a:hover {
+      background-color: #224abe;
+    }
+
+    #content-wrapper {
+      flex: 1;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    #content {
+      flex-grow: 1;
+      max-width: 100%;
+      margin: auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .container-fluid {
+      padding: 0.5%;
+    }
+
+    .row.g-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.125rem 0.25rem rgb(58 59 69 / 0.15);
+      padding: 1rem 1.25rem;
+      transition: box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      box-shadow: 0 0.5rem 1rem rgb(78 115 223 / 0.3);
+    }
+
+    .card .card-title {
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      color: #4e73df;
+    }
+
+    .card .card-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .text-primary {
+      color: #4e73df !important;
+    }
+
+    .text-success {
+      color: #1cc88a !important;
+    }
+
+    .text-warning {
+      color: #f6c23e !important;
+    }
+
+    .text-info {
+      color: #36b9cc !important;
+    }
+
+    .progress {
+      height: 1.2rem;
+      border-radius: 0.5rem;
+      background-color: #e9ecef;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      transition: width 0.6s ease;
+    }
+
+    .bg-success {
+      background-color: #1cc88a !important;
+    }
+
+    .bg-warning {
+      background-color: #f6c23e !important;
+    }
+
+    .bg-danger {
+      background-color: #e74a3b !important;
+    }
+
+    @media (max-width: 576px) {
+      #sidebar {
+        width: 100%;
+        position: relative;
+      }
+      #wrapper {
+        flex-direction: column;
+      }
     }
 
     .btn-chat {
+      background-color: #25d366;
+      border-radius: 8px;
+      color: white !important;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-weight: 600;
       display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-chat:hover {
+      background-color: #1da851;
+      color: white !important;
+    }
+
+    .chat-box {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 300px;
+      max-width: 90%;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      border-radius: 12px;
+      background: #fff;
+      z-index: 10000;
+    }
+
+    .chat-header {
       background-color: #25d366;
       color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
+      padding: 15px 20px;
+      cursor: pointer;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .chat-header img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .chat-body {
+      padding: 15px 20px;
+      font-size: 14px;
+      display: none;
     }
 
     @media (max-width: 480px) {
-      #whatsapp-chat-box {
-        bottom: 10px;
-        left: 10px;
+      .chat-box {
         width: 90%;
+        bottom: 10px;
+        left: 5%;
       }
-
       .chat-body {
         font-size: 13px;
       }

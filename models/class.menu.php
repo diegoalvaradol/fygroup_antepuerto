@@ -12,7 +12,7 @@ class menu
     $infoCfg = json_decode($cfg->getInfo(1), true);
     $admin   = $user->isAdmin($_SESSION["user"]["run"]);
 
-    $sideBar = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#293c74;">';
+    $sideBar = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
     $sideBar .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
     $sideBar .= '<img src="../images/ssl-logo-azul.png" style="width:100%;">';
 
@@ -48,7 +48,7 @@ class menu
     $sideBar .= '</div>';
     $sideBar .= '</li>';
 
-    /*cMenú de Puerto */
+    /* Menú de Puerto */
     $sideBar .= '<li class="nav-item">';
     $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePuerto" aria-expanded="true" aria-controls="collapsePuerto">';
     $sideBar .= '<i class="fas fa-fw fa-anchor"></i>';
@@ -151,7 +151,7 @@ class menu
     $sideBar .= '<button class="rounded-circle border-0" id="sidebarToggle"></button>';
     $sideBar .= '</div>';
     $sideBar .= '<div class="d-flex flex-column h-100">';
-    $sideBar .= '<div class="text-center d-none d-md-inline mt-auto">';
+    $sideBar .= '<div class="text-center d-none d-md-inline mt-auto" style="color: white;">';
     $sideBar .= '<hr class="sidebar-divider">';
     $sideBar .= '<small>' . $infoCfg['name'] . '</small>';
     $sideBar .= '<br>';
@@ -169,7 +169,7 @@ class menu
     $user  = new user($db);
     $admin = $user->isAdmin($_SESSION["user"]["run"]);
 
-    $tapBar = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#293c74;">';
+    $tapBar = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
     $tapBar .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
     $tapBar .= '<i class="fa fa-bars"></i>';
     $tapBar .= '</button>';
@@ -200,8 +200,8 @@ class menu
     $tapBar .= '<i class="fas fa-copyright fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Licencia';
     $tapBar .= '</a>';
     $tapBar .= '<div class="dropdown-divider"></div>';
-    $tapBar .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">';
-    $tapBar .= '<i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión';
+    $tapBar .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
+    $tapBar .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
     $tapBar .= '</a>';
     $tapBar .= '</div>';
     $tapBar .= '</li>';
@@ -213,7 +213,7 @@ class menu
 
   public static function secondTapBarSSL()
   {
-    $tapBar = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#293c74;">';
+    $tapBar = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
     $tapBar .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
     $tapBar .= '<i class="fa fa-bars"></i>';
     $tapBar .= '</button>';
@@ -231,8 +231,8 @@ class menu
     $tapBar .= '<i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema';
     $tapBar .= '</a>';
     $tapBar .= '<div class="dropdown-divider"></div>';
-    $tapBar .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">';
-    $tapBar .= '<i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión';
+    $tapBar .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
+    $tapBar .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
     $tapBar .= '</a>';
     $tapBar .= '</div>';
     $tapBar .= '</li>';
@@ -248,7 +248,7 @@ class menu
     $cfg     = new cfg($db);
     $infoCfg = json_decode($cfg->getInfo(1), true);
 
-    $sideBarPortal = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#293c74;">';
+    $sideBarPortal = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
     $sideBarPortal .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
     $sideBarPortal .= '<img src="../images/ssl-logo-azul.png" style="width:100%;">';
     $sideBarPortal .= '</a>';
@@ -272,7 +272,7 @@ class menu
     $sideBarPortal .= '<button class="rounded-circle border-0" id="sidebarToggle"></button>';
     $sideBarPortal .= '</div>';
     $sideBarPortal .= '<div class="d-flex flex-column h-100">';
-    $sideBarPortal .= '<div class="text-center d-none d-md-inline mt-auto">';
+    $sideBarPortal .= '<div class="text-center d-none d-md-inline mt-auto" style="color: white;">';
     $sideBarPortal .= '<hr class="sidebar-divider">';
     $sideBarPortal .= '<small>' . $infoCfg['name'] . '</small>';
     $sideBarPortal .= '<br>';
@@ -286,7 +286,7 @@ class menu
 
   public static function mainTapBarPortal()
   {
-    $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#293c74;">';
+    $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
     $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
     $tapBarPortal .= '<i class="fa fa-bars"></i>';
     $tapBarPortal .= '</button>';
@@ -307,8 +307,8 @@ class menu
     $tapBarPortal .= '<i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '<div class="dropdown-divider"></div>';
-    $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">';
-    $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión';
+    $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
+    $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '</div>';
     $tapBarPortal .= '</li>';
@@ -320,7 +320,7 @@ class menu
 
   public static function secondTapBarPortal()
   {
-    $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#293c74;">';
+    $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
     $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
     $tapBarPortal .= '<i class="fa fa-bars"></i>';
     $tapBarPortal .= '</button>';
@@ -341,8 +341,8 @@ class menu
     $tapBarPortal .= '<i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '<div class="dropdown-divider"></div>';
-    $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">';
-    $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión';
+    $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
+    $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '</div>';
     $tapBarPortal .= '</li>';
@@ -361,7 +361,7 @@ class menu
     $footer = '<footer class="sticky-footer bg-white">';
     $footer .= '<div class="container my-auto">';
     $footer .= '<div class="copyright text-center my-auto">';
-    $footer .= '<span>Copyright &copy; ' . $infoCfg['mark'] . ' 2025</span>';
+    $footer .= '<span style="color:dimgrey;">Copyright &copy; ' . $infoCfg['mark'] . ' 2025</span>';
     $footer .= '</div>';
     $footer .= '</div>';
     $footer .= '</footer>';
