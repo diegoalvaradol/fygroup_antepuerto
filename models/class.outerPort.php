@@ -150,7 +150,9 @@ class outerPort extends iQuery
 
     if ($admin) {
       $query = "SELECT COUNT(*) as totalContainer FROM $this->table WHERE $this->origin = 1";
-    } else {
+    }
+
+    if (!$admin && $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as totalContainer FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0";
     }
 
@@ -172,7 +174,9 @@ class outerPort extends iQuery
 
     if ($admin) {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 1";
-    } else {
+    }
+
+    if (!$admin && $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0";
     }
 
@@ -194,7 +198,9 @@ class outerPort extends iQuery
 
     if ($admin) {
       $query = "SELECT COUNT(*) as totalThermo FROM $this->table WHERE $this->origin = 2";
-    } else {
+    }
+
+    if (!$admin && $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as totalThermo FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0";
     }
 
@@ -216,7 +222,9 @@ class outerPort extends iQuery
 
     if ($admin) {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 2";
-    } else {
+    }
+
+    if (!$admin && $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0";
     }
 
@@ -238,7 +246,9 @@ class outerPort extends iQuery
 
     if ($admin) {
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE 1";
-    } else {
+    }
+
+    if (!$admin && $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0";
     }
 
@@ -260,7 +270,9 @@ class outerPort extends iQuery
 
     if ($admin) {
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
-    } else {
+    }
+
+    if (!$admin && $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
     }
 
@@ -281,7 +293,9 @@ class outerPort extends iQuery
 
     if ($admin) {
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
-    } else {
+    }
+
+    if (!$admin && $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
     }
 
