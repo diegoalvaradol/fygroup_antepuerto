@@ -15,7 +15,7 @@ $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
 ?>
 
-<!-- JAVASCRIPT -->
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -26,7 +26,7 @@ $footer          = menu::footerSSL();
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Planificación TPC</title>
+    <title>SSL | Planificación EPCO</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,26 +34,6 @@ $footer          = menu::footerSSL();
 
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
-
-    <style>
-        iframe {
-            width: 100%;
-            height: 90vh;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .errorLabel {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body id="page-top">
@@ -73,57 +53,54 @@ $footer          = menu::footerSSL();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Planificación Naviera Terminal Puerto Coquimbo (TPC)</h1>
-                    <p class="mb-4">Acá podrás consultar la planificación naviera actual y fechas pasadas del terminal.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Planificación Naviera EPCO</h1>
+                    <p class="mb-4">Acá puedes revisar las naves anunciadas para el Puerto de Coquimbo</p>
 
                     <!-- Content Row -->
                     <div class="row">
                         <!-- First Column -->
-                        <div class="col-lg-12">
+                        <div class="col-lg">
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">Formulario de Consulta</h6>
                                 </div>
 
-                                <div class="card-body">
-                                    <form class="form-container" id="programForm">
+																<div class="card-body">
+																		<form class="form-container" id="epcoForm">
 																				<div class="form-group d-flex flex-wrap align-items-end" style="place-content:center;">
-                                            <div class="col-12 col-md-auto me-md-4 mb-3">
-																								<input type="date" class="form-control form-control-user mt-2" id="datePicker" name="datePicker">
+																						<div class="col-12 col-md-auto me-md-4 mb-3">
+																								<label for="dateFrom" class="text-gray-800 font-weight-bold">Desde</label>
+																								<input type="date" class="form-control form-control-user mt-2" id="dateFrom" name="dateFrom">
+																								<small class="text-danger" id="error-dateFrom"></small>
+																						</div>
+
+																						<div class="col-12 col-md-auto me-md-4 mb-3">
+																								<label for="dateTo" class="text-gray-800 font-weight-bold">Hasta</label>
+																								<input type="date" class="form-control form-control-user mt-2" id="dateTo" name="dateTo">
+																								<small class="text-danger" id="error-dateTo"></small>
 																						</div>
 
 																						<div class="col-12 col-md-auto mb-3">
-																								<button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadPDF()">
+																								<button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadEpcoProgram()">
 																										<i class="fas fa-solid fa-search"></i> Buscar
 																								</button>
 																						</div>
 																				</div>
 																		</form>
 
-                                    <div class="card-body" id="divFrame">
-                                        <!-- Div de contenido Dinamico -->
-                                        <h6 class="m-0 font-weight-bold text-primary" id="tituloPlanificacion" style="text-align:center;"></h6>
-                                        <hr>
+																		<div class="card-body" id="divFrame">
+																				<!-- Frame del PDF -->
+																				<iframe id="framePdf" frameborder="0"></iframe>
+																		</div>
 
-                                        <!-- Frame del PDF -->
-                                        <iframe id="framePdf" src="" frameborder="0"></iframe>
-
-                                        <!-- Mensaje de Error -->
-                                        <div id="errorMessage" class="errorLabel" style="display:none;">
-                                            🚫 No se encontró la planificación naviera para la fecha seleccionada. <br>
-                                            Por favor, intenta con otra fecha o vuelve más tarde.
-                                        </div>
-                                    </div>
-
-                                    <div class="text-center">
-                                        <img src="../images/logo-tpc-transparente.png" style="width:10%;">
-                                        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center; font-size:small;">Powered by TPC.</h6>
-                                    </div>
-                                </div>
-
-
+																		<div class="text-center">
+																				<img src="../images/logo-epco.png" style="width:7%;">
+																				<h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:black;">Powered by EPCO.</h6>
+																		</div>
+																</div>
                             </div>
                         </div>
                     </div>
@@ -197,7 +174,7 @@ $footer          = menu::footerSSL();
         </div>
     </div>
 
-    <!-- SweetAlert2 CDN -->
+		<!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Bootstrap core JavaScript-->
@@ -209,12 +186,6 @@ $footer          = menu::footerSSL();
 
     <!-- Custom scripts for all pages-->
     <script src="../assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 </html>
 
@@ -279,88 +250,57 @@ window.onload = function () {
   inactivityTime();
 };
 
-/* Condiciona a que solo pueda mostrar la fecha de hoy como maximo */
-const today = new Date().toLocaleString("en-CA", { timeZone: "America/Santiago", year: "numeric", month: "2-digit", day: "2-digit" });
-document.getElementById('datePicker').setAttribute('max', today);
+function loadEpcoProgram() {
+  const dateFrom = $('#dateFrom').val();
+  const dateTo = $('#dateTo').val();
 
-function formatDateFromInput(dateString) {
-  const [year, month, day] = dateString.split("-");
-  return `${day}-${month}-${year}`;
-}
-
-function formatDateUrl(dateString) {
-  const [year, month] = dateString.split("-");
-  return `${year}/${month}`;
-}
-
-function loadPDF() {
-  var dateString = $('#datePicker').val();
-
-  if(dateString == ''){
+  if (!dateFrom || !dateTo) {
     Swal.fire({
       title: '¡Atención!',
-      text: 'Debes ingresar una fecha para consultar la planificación naviera.',
+      text: 'Debes ingresar ambas fechas para consultar la planificación naviera.',
       icon: 'info',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#3085d6'
     });
-  }else{
-    /* Separar los componentes */
-    const [day, month, year] = dateString.split('-').map(Number);
-
-    /* Crear la fecha como local, no UTC */
-    const date = new Date(day, month - 1, year); /* mes va de 0 a 11 */
-
-    /* Obtener día de la semana en español */
-    const dateName = date.toLocaleDateString('es-CL', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Santiago'});
-
-    const formattedDate = formatDateFromInput(dateString);
-    const formattedDateUrl = formatDateUrl(dateString);
-    const framePdf = document.getElementById('framePdf');
-    const pdfUrl = `https://tpc.cl/wp-content/uploads/${formattedDateUrl}/Planificacion-Naviera-${formattedDate}.pdf`;
-
-    $.ajax({
-      url: '../controllers/programTPCVerify.php',
-      method: 'GET',
-      data: {
-        url: pdfUrl
-      },
-      beforeSend: function() {
-        $('#btnBuscar').prop('disabled', true).html('<i class="fas fa-solid fa-spinner fa-spin"></i> Cargando...');
-      },
-      success: function(response) {
-        const res = JSON.parse(response);
-
-        if (res.exists) {
-          $('#divFrame').fadeIn(); /* Muestra el div del framec con animación */
-          $('#divFrame').slideDown(); /* Muestra el div del framec con animación hacia abajo */
-          document.getElementById('framePdf').src = pdfUrl; /* Carga el frame */
-          framePdf.style.display = 'block'; /* Muestra el frame en la vista */
-          document.getElementById('tituloPlanificacion').innerHTML = `Planificación Naviera: ${dateName}`;
-        } else {
-          Swal.fire({
-            title: 'Oops...',
-            text: 'No se encontró una planificación naviera para la fecha: '+formattedDate+'.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          });
-        }
-      },
-      error: function() {
-        alert('Error verificando el PDF.');
-      },
-      complete: function() {
-        $('#btnBuscar').prop('disabled', false).html('<i class="fas fa-solid fa-search"></i> Buscar');
-      }
-    });
+    return;
   }
-}
 
-/* Escuchar el submit del formulario */
-document.getElementById('programForm').addEventListener('submit', function(e) {
-  e.preventDefault(); // No recargar página
-  const selectedDateStr = document.getElementById('datePicker').value;
-  loadPDF(selectedDateStr);
-});
+  $.ajax({
+    url: '../controllers/programEpco.php',
+    method: 'POST',
+    data: {
+      from: dateFrom,
+      to: dateTo
+    },
+    beforeSend: function() {
+      $('#btnBuscar').prop('disabled', true).html('<i class="fas fa-solid fa-spinner fa-spin"></i> Cargando...');
+    },
+    success: function(response) {
+      if (response.trim() !== '') {
+        $('#divFrame').html(response).fadeIn();
+      } else {
+        Swal.fire({
+          title: 'Sin resultados',
+          text: 'No se encontró una planificación naviera para el rango de fechas.',
+          icon: 'warning',
+          confirmButtonColor: '#3085d6'
+        });
+        $('#divFrame').hide().empty();
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error('AJAX Error:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Ocurrió un error al consultar la planificación.',
+        icon: 'error',
+        confirmButtonColor: '#d33'
+      });
+    },
+    complete: function() {
+      $('#btnBuscar').prop('disabled', false).html('<i class="fas fa-solid fa-search"></i> Buscar');
+    }
+  });
+}
 
 function actualizarReloj() {
   const ahora = new Date();

@@ -75,6 +75,7 @@ class menu
     $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
     $sideBar .= '<h6 class="collapse-header">Items:</h6>';
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_tpc') . '>Planificación Naviera TPC</a>';
+    $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_epco') . '>Planificación Naviera EPCO</a>';
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_cool_carriers') . '>Itinerarios Cool Carriers</a>';
     $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_global_reefers') . '>Itinerarios Global Reefers</a>';
     $sideBar .= '</div>';
