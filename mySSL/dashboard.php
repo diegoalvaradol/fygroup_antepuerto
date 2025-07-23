@@ -261,12 +261,12 @@ echo $percentUsage . '%';
                                   <div class="text-sm font-weight-bold text-info text-uppercase">Camiones por Día</div>
                                 </div>
                                 <div class="form-group row justify-content-center">
-                                  <div class="col-sm-2">
-                                    <label for="fechaInicio">Fecha Inicio:</label>
+                                  <div class="col-12 col-md-auto me-md-4 mb-3">
+                                    <label for="fechaInicio" class="text-gray-800 font-weight-bold">Desde</label>
                                     <input type="date" class="form-control form-control-user" id="fechaInicio">
                                   </div>
-                                  <div class="col-sm-2">
-                                    <label for="fechaFin">Fecha Fin:</label>
+                                  <div class="col-12 col-md-auto me-md-4 mb-3">
+                                    <label for="fechaFin" class="text-gray-800 font-weight-bold">Hasta</label>
                                     <input type="date" class="form-control form-control-user" id="fechaFin">
                                   </div>
                                 </div>
@@ -278,7 +278,6 @@ echo $percentUsage . '%';
                           </div>
                         <?php endif; ?>
                       </div>
-
                 </div>
                 <!-- /.container-fluid -->
             </div>
