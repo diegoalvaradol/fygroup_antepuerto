@@ -395,6 +395,7 @@ $footer        = menu::footerSSL();
                         </div>
 
                         <input type="hidden" id="run" name="run" value="<?php echo $_SESSION["user"]["run"]; ?>">
+                        <input type="hidden" id="division" name="division" value="<?php echo $_SESSION["user"]["division"]; ?>">
                         <button type="button" name="saveinfouser" class="btn btn-success btn-user btn-sm" onclick="saveInfoUser()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
                     </form>
                 </div>
