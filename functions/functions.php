@@ -1,4 +1,8 @@
 <?php
+require '../vendor/autoload.php';
+date_default_timezone_set("America/Santiago");
+
+use PHPMailer\PHPMailer\PHPMailer;
 /**
  * Method generateMkey //Genera un token de seguridad para acceder a un módulo específico.
  *
@@ -67,13 +71,65 @@ function formatDate($date, $format = 'Y-m-d H:i:s')
   }
 }
 
-/**
- * Method mostrarAccesoDenegado //Muestra un mensaje de acceso denegado para quien no cuneta con los permisos necesarios de administrador.
+ /**
+ * Method mostrarAccesoDenegado
  *
+ * @param  $usuario [usuario que intenta acceder]
+ * @param  $pagina  [página  a la que intentó acceder]
  * @return void
  */
-function mostrarAccesoDenegado()
+function mostrarAccesoDenegado($usuario = 'Desconocido', $pagina = 'desconocida')
 {
+  /* Enviar correo */
+  $mail = new PHPMailer(true);
+
+  try {
+    /* Configuración SMTP */
+    $mail->isSMTP();
+    $mail->Host       = 'l0011525.ferozo.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'soporte@ssl-lines.com';
+    $mail->Password   = 'Ssl*2025sop';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port       = 465;
+
+    /* Codificación */
+    $mail->CharSet  = 'UTF-8';
+    $mail->Encoding = 'base64';
+
+    /* Dirección del remitente y destinatario */
+    $mail->setFrom('soporte@ssl-lines.com', 'Soporte SSL');
+    $mail->addAddress('diego.alvaraado@gmail.com'); // Ajusta si hay más destinatarios
+    $mail->isHTML(true);
+    $mail->Priority = 1;
+
+    /* Asunto */
+    $mail->Subject = '⚠️ Intento de acceso denegado en el sistema';
+
+    /* Cuerpo HTML */
+    $mail->Body = '
+      <div style="font-family: Arial, sans-serif; background-color: #f2f2f2; padding: 30px; text-align: center;">
+        <div style="background-color: #fff; padding: 24px 32px; border-radius: 8px; max-width: 540px; margin: auto; border-left: 6px solid #dc3545;">
+          <h2 style="color: #dc3545;">🚫 Alerta de Acceso Denegado</h2>
+          <p style="color: #333;">Un usuario no autorizado ha intentado acceder a una página protegida.</p>
+          <table style="margin: 20px auto; font-size: 14px; color: #555;">
+            <tr><td><strong>Usuario:</strong></td><td>' . htmlspecialchars($usuario) . '</td></tr>
+            <tr><td><strong>Página:</strong></td><td>' . htmlspecialchars($pagina) . '</td></tr>
+            <tr><td><strong>Fecha:</strong></td><td>' . date('d-m-Y H:i:s') . '</td></tr>
+            <tr><td><strong>IP:</strong></td><td>' . $_SERVER['REMOTE_ADDR'] . '</td></tr>
+          </table>
+          <p style="color: #888; font-size: 12px; margin-top: 30px;">Este es un mensaje automático del Sistema Integral SSL.</p>
+        </div>
+      </div>
+    ';
+
+    $mail->send();
+  } catch (Exception $e) {
+    /* Puedes loguear el error si quieres */
+    error_log("Error al enviar correo de acceso denegado: " . $mail->ErrorInfo);
+  }
+
+  /* Mostrar mensaje de error */
   echo '
   <style>
     .access-denied {

@@ -9,7 +9,9 @@ $admin = $user->isAdmin($_SESSION["user"]["run"]);
 
 /* Validar superadmin */
 if (!$admin) {
-  mostrarAccesoDenegado();
+  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"];
+  $pag     = basename($_SERVER['PHP_SELF']);
+  mostrarAccesoDenegado($usuario, $pag);
 }
 
 /* Función que ejecuta la consulta en el servidor */
