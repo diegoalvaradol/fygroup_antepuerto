@@ -226,7 +226,7 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
             <tr><td><strong>IP:</strong></td><td>' . $_SERVER['REMOTE_ADDR'] . '</td></tr>
           </table>
           <hr style="margin: 30px 20px;">
-					<footer style="font-size: 12px; color: #aaa;">
+					<footer style="font-size: 12px; color: #aaa; text-align: center;">
 							© ' . date('Y') . ' Sistema Integral SSL. Todos los derechos reservados.<br>
 							Este es un correo automático, por favor no respondas.
 					</footer>
