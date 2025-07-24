@@ -95,7 +95,7 @@ $resultado = ejecutarQuery($db);
 							<div class="container-fluid">
 									<!-- Contenido -->
 									<div class="text-center">
-											<img src="../images/ssl-logo-azul.png">
+											<img src="../images/ssl-logo-azul.png" style="width: 20%;">
 											<div class="container">
 													<h3>Ejecutar Consulta SQL</h3>
 													<?=$resultado?>
