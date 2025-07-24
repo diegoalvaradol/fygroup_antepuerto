@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </p>
                         <p style="color: #888;">Si no solicitaste este cambio, puedes ignorar este correo.</p>
                         <hr style="margin: 30px 20px;">
-                        <footer style="font-size: 12px; color: #aaa;">
+                        <footer style="font-size: 12px; color: #aaa; text-align: center;">
                             © ' . date('Y') . ' Sistema Integral SSL. Todos los derechos reservados.<br>
                             Este es un correo automático, por favor no respondas.
                         </footer>
