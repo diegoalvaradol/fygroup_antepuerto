@@ -90,11 +90,19 @@ class menu
           ]
         ],
         [
-          'title' => 'Precios',
+          'title' => 'Tarifario',
           'icon'  => 'fa-sack-dollar',
           'id'    => 'collapsePrecio',
           'items' => [
-            ['label' => 'Lista de Precios', 'link' => generateMkey('list_price_indicators')]
+            ['label' => 'Lista de Tarifas', 'link' => generateMkey('list_price_indicators')]
+          ]
+        ],
+        [
+          'title' => 'SQL',
+          'icon'  => 'fa-server',
+          'id'    => 'collapseSQL',
+          'items' => [
+            ['label' => 'Consola SQL', 'link' => generateMkey('sql_console')]
           ]
         ]
       ]);

@@ -14,6 +14,11 @@ $updateTime      = new DateTime($infoCfg['update_date']);
 $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
+
+/* Validar superadmin */
+if (!$admin) {
+  mostrarAccesoDenegado();
+}
 ?>
 
 <!-- HTML -->

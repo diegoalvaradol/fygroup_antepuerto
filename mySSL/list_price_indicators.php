@@ -17,6 +17,11 @@ $footer          = menu::footerSSL();
 $tablePriceMSC   = $price->listPriceMSC();
 $tablePriceMSK   = $price->listPriceMaersk();
 $tablePriceCC    = $price->listPriceCC();
+
+/* Validar superadmin */
+if (!$admin) {
+  mostrarAccesoDenegado();
+}
 ?>
 
 <!-- HTML -->
