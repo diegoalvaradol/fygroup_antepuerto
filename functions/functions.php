@@ -213,7 +213,7 @@ function mostrarAccesoDenegado($usuario, $pagina)
     $mail->Encoding = 'base64';
 
     $mail->setFrom('soporte@ssl-lines.com', 'Soporte SSL');
-    $mail->addAddress('diego.alvaraado@gmail.com');
+    $mail->addAddress('diego.alvaraado@gmail.com', 'Diego Alvarado');
     $mail->isHTML(true);
     $mail->Priority = 1;
 
