@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-develop',
-        'version' => 'dev-develop',
-        'reference' => 'a21983808d96cc3c165f58193a4b01670e2c61e6',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'e8d5e875d8fa29e8fc1ea604d65312785dd139e2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-develop',
-            'version' => 'dev-develop',
-            'reference' => 'a21983808d96cc3c165f58193a4b01670e2c61e6',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'e8d5e875d8fa29e8fc1ea604d65312785dd139e2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -179,9 +179,9 @@
             'dev_requirement' => false,
         ),
         'sabberworm/php-css-parser' => array(
-            'pretty_version' => 'v8.8.0',
-            'version' => '8.8.0.0',
-            'reference' => '3de493bdddfd1f051249af725c7e0d2c38fed740',
+            'pretty_version' => 'v8.9.0',
+            'version' => '8.9.0.0',
+            'reference' => 'd8e916507b88e389e26d4ab03c904a082aa66bb9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
             'aliases' => array(),
