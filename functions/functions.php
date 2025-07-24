@@ -77,51 +77,92 @@ function mostrarAccesoDenegado()
   echo '
   <style>
     .access-denied {
-      max-width: 450px;
+      max-width: 460px;
       margin: 80px auto;
-      padding: 18px 24px;
+      padding: 24px 30px;
       border: 2px solid #dc3545;
-      border-radius: 8px;
+      border-radius: 10px;
       background: #fff5f5;
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: #b02a37;
       text-align: center;
-      box-shadow: 0 0 8px rgba(220,53,69,.4);
+      box-shadow: 0 0 12px rgba(220,53,69,0.4);
+      user-select: none;
     }
-    .access-denied svg {
-      width: 48px;
-      height: 48px;
+    .access-denied svg.icon-large {
+      width: 56px;
+      height: 56px;
       fill: #dc3545;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      stroke: #dc3545;
+      stroke-width: 3;
     }
     .access-denied h1 {
-      font-size: 1.4rem;
-      margin: 0 0 8px;
+      font-size: 1.5rem;
+      margin: 0 0 14px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-weight: 700;
+      color: #a8222f;
+    }
+    .access-denied h1 svg.icon-warning {
+      width: 22px;
+      height: 22px;
+      fill: #dc3545;
+      stroke: none;
     }
     .access-denied p {
-      font-size: 1rem;
-      margin: 0;
+      font-size: 1.1rem;
+      margin: 0 0 20px;
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+    }
+    .access-denied p svg.icon-lock {
+      width: 20px;
+      height: 20px;
+      fill: #dc3545;
+      flex-shrink: 0;
+    }
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
       gap: 6px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      background-color: #dc3545;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      margin: 0 auto;
+    }
+    .btn-return:hover,
+    .btn-return:focus {
+      background-color: #a8222f;
+      outline: none;
+    }
+    .btn-return i {
+      font-size: 1.1rem;
     }
   </style>
 
   <div class="access-denied" role="alert" aria-live="assertive" aria-atomic="true" tabindex="0">
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 64 64" role="img" xmlns="http://www.w3.org/2000/svg" aria-label="Error icon">
-      <circle cx="32" cy="32" r="30" stroke="#dc3545" stroke-width="4" fill="none"/>
-      <line x1="20" y1="20" x2="44" y2="44" stroke="#dc3545" stroke-width="4" stroke-linecap="round"/>
-      <line x1="44" y1="20" x2="20" y2="44" stroke="#dc3545" stroke-width="4" stroke-linecap="round"/>
+    <svg class="icon-large" aria-hidden="true" focusable="false" viewBox="0 0 64 64" role="img" xmlns="http://www.w3.org/2000/svg" aria-label="Error icon">
+      <circle cx="32" cy="32" r="30" />
+      <line x1="20" y1="20" x2="44" y2="44" stroke-linecap="round"/>
+      <line x1="44" y1="20" x2="20" y2="44" stroke-linecap="round"/>
     </svg>
 
     <h1>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="#dc3545" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <svg class="icon-warning" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 21h22L12 2 1 21z"/>
         <path d="M13 18h-2v-2h2v2zm0-4h-2v-4h2v4z" fill="#fff"/>
       </svg>
@@ -129,12 +170,16 @@ function mostrarAccesoDenegado()
     </h1>
 
     <p>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="#dc3545" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <svg class="icon-lock" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M6 9V7a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h1zm2-2v2h8V7a4 4 0 0 0-8 0z"/>
       </svg>
       No tienes permisos necesarios para ver esta página.
     </p>
+
+    <button type="button" class="btn-return" onclick="location.href=\'dashboard.php\'" aria-label="Volver al inicio">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </button>
   </div>
   ';
 
