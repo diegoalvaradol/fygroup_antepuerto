@@ -191,13 +191,11 @@ function mostrarAccesoDenegado($usuario, $pagina)
 
   /* Enviar correo */
   try {
-    require '../vendor/autoload.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
     require_once __DIR__ . '/../config/includes.php';
     date_default_timezone_set("America/Santiago");
 
-    $mail              = new PHPMailer(true);
-    $mail->SMTPDebug   = 3; // o 3 para más detalles
-    $mail->Debugoutput = 'error_log';
+    $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host       = 'l0011525.ferozo.com';
     $mail->SMTPAuth   = true;
@@ -225,7 +223,7 @@ function mostrarAccesoDenegado($usuario, $pagina)
             <tr><td><strong>Fecha:</strong></td><td>' . date('d-m-Y H:i:s') . '</td></tr>
             <tr><td><strong>IP:</strong></td><td>' . $_SERVER['REMOTE_ADDR'] . '</td></tr>
           </table>
-          <p style="color:#888; font-size:12px;">Mensaje automático del Sistema SSL.</p>
+          <p style="color:#888; font-size:12px;">Mensaje automático del Sistema Integral SSL.</p>
         </div>
       </div>';
 

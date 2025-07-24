@@ -21,7 +21,7 @@ $tablePriceCC    = $price->listPriceCC();
 /* Validar superadmin */
 if (!$admin) {
   $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"];
-  $pag     = basename($_SERVER['PHP_SELF']);
+  $pag     = basename(__FILE__);
   mostrarAccesoDenegado($usuario, $pag);
 }
 ?>
