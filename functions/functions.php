@@ -1,5 +1,4 @@
 <?php
-
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 /**
@@ -79,11 +78,6 @@ function formatDate($date, $format = 'Y-m-d H:i:s')
  */
 function mostrarAccesoDenegado($usuario, $pagina)
 {
-  // Evita cabeceras duplicadas si ya se envió salida antes
-  if (headers_sent() === false) {
-    header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
-  }
-
   /* Mostrar mensaje de error */
   echo '
   <style>
