@@ -1,6 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+
 /**
  * Method generateMkey //Genera un token de seguridad para acceder a un módulo específico.
  *
@@ -191,10 +192,11 @@ function mostrarAccesoDenegado($usuario, $pagina)
   /* Enviar correo */
   try {
     require '../vendor/autoload.php';
-    require_once __DIR__ . '/../config/includes.php';
     date_default_timezone_set("America/Santiago");
 
-    $mail = new PHPMailer(true);
+    $mail              = new PHPMailer(true);
+    $mail->SMTPDebug   = 3; // o 3 para más detalles
+    $mail->Debugoutput = 'error_log';
     $mail->isSMTP();
     $mail->Host       = 'l0011525.ferozo.com';
     $mail->SMTPAuth   = true;
@@ -228,9 +230,8 @@ function mostrarAccesoDenegado($usuario, $pagina)
 
     $mail->send();
   } catch (Exception $e) {
-    error_log("Correo acceso denegado falló: " . $mail->ErrorInfo);
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
   }
 
   exit;
-
 }
