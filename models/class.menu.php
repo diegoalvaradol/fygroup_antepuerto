@@ -12,233 +12,244 @@ class menu
     $infoCfg = json_decode($cfg->getInfo(1), true);
     $admin   = $user->isAdmin($_SESSION["user"]["run"]);
 
-    $sideBar = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
-    $sideBar .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
-    $sideBar .= '<img src="../images/ssl-logo-azul.png" style="width:100%;">';
-
-    /* Menú de Antepuerto */
-    $sideBar .= '</a>';
-    $sideBar .= '<div class="sidebar-heading">Sistema Antepuerto</div>';
-    $sideBar .= '<li class="nav-item">';
-    $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAntepuerto" aria-expanded="true" aria-controls="collapseAntepuerto">';
-    $sideBar .= '<i class="fas fa-fw fa-truck"></i>';
-    $sideBar .= '<span>Antepuerto</span>';
-    $sideBar .= '</a>';
-    $sideBar .= '<div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">';
-    $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-    $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('enter_container_port') . '>Ingreso Contenedores</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('enter_thermo_port') . '>Ingreso Termos</a>';
-    $sideBar .= '</div>';
-    $sideBar .= '</div>';
-    $sideBar .= '</li>';
-
-    /* Menú Internacional */
-    $sideBar .= '<li class="nav-item">';
-    $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInternational" aria-expanded="true" aria-controls="collapseInternational">';
-    $sideBar .= '<i class="fa fa-fw fa-earth-americas"></i>';
-    $sideBar .= '<span>Internacional</span>';
-    $sideBar .= '</a>';
-    $sideBar .= '<div id="collapseInternational" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">';
-    $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-    $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('enter_container_international') . '>Carga Internacional</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('tracking') . '>Seguimiento</a>';
-    $sideBar .= '</div>';
-    $sideBar .= '</div>';
-    $sideBar .= '</li>';
-
-    /* Menú de Puerto */
-    $sideBar .= '<li class="nav-item">';
-    $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePuerto" aria-expanded="true" aria-controls="collapsePuerto">';
-    $sideBar .= '<i class="fas fa-fw fa-anchor"></i>';
-    $sideBar .= '<span>Puerto</span>';
-    $sideBar .= '</a>';
-    $sideBar .= '<div id="collapsePuerto" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
-    $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-    $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('enter_ship') . '>Naves</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('enter_ship_line') . '>Lineas Navieras</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('enter_port') . '>Puertos</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('vessel_transfer') . '>Roleo de Carga</a>';
-    $sideBar .= '</div>';
-    $sideBar .= '</div>';
-    $sideBar .= '</li>';
-
-    /* Menú de Itinerarios */
-    $sideBar .= '<li class="nav-item">';
-    $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProgramacion" aria-expanded="true" aria-controls="collapseProgramacion">';
-    $sideBar .= '<i class="fas fa-fw fa-calendar-days"></i>';
-    $sideBar .= '<span>Itinerarios</span>';
-    $sideBar .= '</a>';
-    $sideBar .= '<div id="collapseProgramacion" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
-    $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-    $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_tpc') . '>Planificación Naviera TPC</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_epco') . '>Planificación Naviera EPCO</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_cool_carriers') . '>Itinerarios Cool Carriers</a>';
-    $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_global_reefers') . '>Itinerarios Global Reefers</a>';
-    $sideBar .= '</div>';
-    $sideBar .= '</div>';
-    $sideBar .= '</li>';
+    // Definición de menús
+    $menus = [
+      [
+        'title' => 'Sistema Antepuerto',
+        'icon'  => 'fa-truck',
+        'id'    => 'collapseAntepuerto',
+        'items' => [
+          ['label' => 'Ingreso Contenedores', 'link' => generateMkey('enter_container_port')],
+          ['label' => 'Ingreso Termos', 'link' => generateMkey('enter_thermo_port')]
+        ]
+      ],
+      [
+        'title' => 'Internacional',
+        'icon'  => 'fa-earth-americas',
+        'id'    => 'collapseInternational',
+        'items' => [
+          ['label' => 'Carga Internacional', 'link' => generateMkey('enter_container_international')],
+          ['label' => 'Seguimiento', 'link' => generateMkey('tracking')]
+        ]
+      ],
+      [
+        'title' => 'Puerto',
+        'icon'  => 'fa-anchor',
+        'id'    => 'collapsePuerto',
+        'items' => [
+          ['label' => 'Naves', 'link' => generateMkey('enter_ship')],
+          ['label' => 'Lineas Navieras', 'link' => generateMkey('enter_ship_line')],
+          ['label' => 'Puertos', 'link' => generateMkey('enter_port')],
+          ['label' => 'Roleo de Carga', 'link' => generateMkey('vessel_transfer')]
+        ]
+      ],
+      [
+        'title' => 'Itinerarios',
+        'icon'  => 'fa-calendar-days',
+        'id'    => 'collapseProgramacion',
+        'items' => [
+          ['label' => 'Planificación Naviera TPC', 'link' => generateMkey('program_tpc')],
+          ['label' => 'Planificación Naviera EPCO', 'link' => generateMkey('program_epco')],
+          ['label' => 'Itinerarios Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
+          ['label' => 'Itinerarios Global Reefers', 'link' => generateMkey('program_global_reefers')]
+        ]
+      ]
+    ];
 
     if ($admin) {
-      /* Menú de Maersk */
-      $sideBar .= '<li class="nav-item">';
-      $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collpaseMaersk" aria-expanded="true" aria-controls="collpaseMaersk">';
-      $sideBar .= '<i class="fas fa-fw fa-ship"></i>';
-      $sideBar .= '<span>Maersk</span>';
-      $sideBar .= '</a>';
-      $sideBar .= '<div id="collpaseMaersk" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
-      $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-      $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('point_schedule_maersk') . '>Punto a Punto</a>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('port_schedule_maersk') . '>Puerto</a>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('vessel_schedule_maersk') . '>Nave</a>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_maersk') . '>Programación</a>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('tracking_schedule_maersk') . '>Seguimiento de Carga</a>';
-      $sideBar .= '</div>';
-      $sideBar .= '</div>';
-      $sideBar .= '</li>';
-
-      /* Menú de Medlog */
-      $sideBar .= '<li class="nav-item">';
-      $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collpaseMedlog" aria-expanded="true" aria-controls="collpaseMedlog">';
-      $sideBar .= '<i class="fas fa-fw fa-ship"></i>';
-      $sideBar .= '<span>MSC (Medlog)</span>';
-      $sideBar .= '</a>';
-      $sideBar .= '<div id="collpaseMedlog" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
-      $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-      $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_msc') . '>Stacking MSC</a>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('program_import_msc') . '>Importación MSC</a>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('eir_msc') . '>EIR Medlog</a>';
-      $sideBar .= '</div>';
-      $sideBar .= '</div>';
-      $sideBar .= '</li>';
-
-      /* Menú de Reportes */
-      $sideBar .= '<li class="nav-item">';
-      $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReporte" aria-expanded="true" aria-controls="collapseReporte">';
-      $sideBar .= '<i class="fas fa-fw fa-book"></i>';
-      $sideBar .= '<span>Reportes</span>';
-      $sideBar .= '</a>';
-      $sideBar .= '<div id="collapseReporte" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
-      $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-      $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('ship_report') . '>Reporte de Naves</a>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('vessel_liquidation') . '>Liquidación de Naves</a>';
-      $sideBar .= '</div>';
-      $sideBar .= '</div>';
-      $sideBar .= '</li>';
-
-      /* Menú de Indicadores Financieros */
-      $sideBar .= '<li class="nav-item">';
-      $sideBar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePrecio" aria-expanded="true" aria-controls="collapsePrecio">';
-      $sideBar .= '<i class="fas fa-fw fa-sack-dollar"></i>';
-      $sideBar .= '<span>Precios</span>';
-      $sideBar .= '</a>';
-      $sideBar .= '<div id="collapsePrecio" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">';
-      $sideBar .= '<div class="bg-white py-2 collapse-inner rounded">';
-      $sideBar .= '<h6 class="collapse-header">Items:</h6>';
-      $sideBar .= '<a class="collapse-item" href=' . generateMkey('list_price_indicators') . '>Lista de Precios</a>';
-      $sideBar .= '</div>';
-      $sideBar .= '</div>';
-      $sideBar .= '</li>';
+      $menus = array_merge($menus, [
+        [
+          'title' => 'Maersk',
+          'icon'  => 'fa-ship',
+          'id'    => 'collapseMaersk',
+          'items' => [
+            ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
+            ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
+            ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
+            ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
+            ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')]
+          ]
+        ],
+        [
+          'title' => 'MSC (Medlog)',
+          'icon'  => 'fa-ship',
+          'id'    => 'collapseMedlog',
+          'items' => [
+            ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
+            ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
+            ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')]
+          ]
+        ],
+        [
+          'title' => 'Reportes',
+          'icon'  => 'fa-book',
+          'id'    => 'collapseReporte',
+          'items' => [
+            ['label' => 'Reporte de Naves', 'link' => generateMkey('ship_report')],
+            ['label' => 'Liquidación de Naves', 'link' => generateMkey('vessel_liquidation')]
+          ]
+        ],
+        [
+          'title' => 'Precios',
+          'icon'  => 'fa-sack-dollar',
+          'id'    => 'collapsePrecio',
+          'items' => [
+            ['label' => 'Lista de Precios', 'link' => generateMkey('list_price_indicators')]
+          ]
+        ]
+      ]);
     }
 
-    $sideBar .= '<hr class="sidebar-divider d-none d-md-block">';
-    $sideBar .= '<div class="text-center d-none d-md-inline">';
-    $sideBar .= '<button class="rounded-circle border-0" id="sidebarToggle"></button>';
-    $sideBar .= '</div>';
-    $sideBar .= '<div class="d-flex flex-column h-100">';
-    $sideBar .= '<div class="text-center d-none d-md-inline mt-auto" style="color: white;">';
-    $sideBar .= '<hr class="sidebar-divider">';
-    $sideBar .= '<small>' . $infoCfg['name'] . '</small>';
-    $sideBar .= '<br>';
-    $sideBar .= '<small><b>Versión: </b>' . $infoCfg['version'] . '</small>';
-    $sideBar .= '</div>';
-    $sideBar .= '</div>';
-    $sideBar .= '</ul>';
+    $sidebar = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
+    $sidebar .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
+    $sidebar .= '<img src="../images/ssl-logo-azul.png" alt="Logo SSL" style="width:100%;">';
+    $sidebar .= '</a>';
 
-    return $sideBar;
+    foreach ($menus as $menu) {
+      $sidebar .= '<div class="sidebar-heading text-white mt-3">' . htmlspecialchars($menu['title']) . '</div>';
+      $sidebar .= '<li class="nav-item">';
+      $sidebar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false" aria-controls="' . $menu['id'] . '">';
+      $sidebar .= '<i class="fas fa-fw ' . htmlspecialchars($menu['icon']) . '"></i>';
+      $sidebar .= '<span>' . htmlspecialchars($menu['title']) . '</span>';
+      $sidebar .= '</a>';
+
+      $sidebar .= '<div id="' . $menu['id'] . '" class="collapse" aria-labelledby="heading" data-parent="#accordionSidebar">';
+      $sidebar .= '<div class="bg-white py-2 collapse-inner rounded">';
+      $sidebar .= '<h6 class="collapse-header">Items:</h6>';
+
+      foreach ($menu['items'] as $item) {
+        $sidebar .= '<a class="collapse-item" href="' . htmlspecialchars($item['link']) . '">' . htmlspecialchars($item['label']) . '</a>';
+      }
+
+      $sidebar .= '</div></div></li>';
+    }
+
+    $sidebar .= '<hr class="sidebar-divider d-none d-md-block">';
+    $sidebar .= '<div class="text-center d-none d-md-inline">';
+    $sidebar .= '<button class="rounded-circle border-0" id="sidebarToggle"></button>';
+    $sidebar .= '</div>';
+    $sidebar .= '<div class="d-flex flex-column h-100">';
+    $sidebar .= '<div class="text-center d-none d-md-inline mt-auto text-white small">';
+    $sidebar .= '<hr class="sidebar-divider">';
+    $sidebar .= '<div>' . htmlspecialchars($infoCfg['name']) . '</div>';
+    $sidebar .= '<div><b>Versión:</b> ' . htmlspecialchars($infoCfg['version']) . '</div>';
+    $sidebar .= '</div></div>';
+
+    $sidebar .= '</ul>';
+
+    return $sidebar;
   }
 
   public static function mainTapBarSSL()
   {
-    $db    = (new Database())->getConnection();
-    $user  = new user($db);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
+    $db       = (new Database())->getConnection();
+    $user     = new user($db);
+    $admin    = $user->isAdmin($_SESSION["user"]["run"]);
+    $userName = htmlspecialchars($_SESSION["user"]["name"]);
 
-    $tapBar = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
-    $tapBar .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
-    $tapBar .= '<i class="fa fa-bars"></i>';
-    $tapBar .= '</button>';
-    $tapBar .= '<ul class="navbar-nav ml-auto">';
-    $tapBar .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-    $tapBar .= '<label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>';
-    $tapBar .= '<div class="topbar-divider d-none d-sm-block"></div>';
-    $tapBar .= '<li class="nav-item dropdown no-arrow">';
-    $tapBar .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-    $tapBar .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBar .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
-    $tapBar .= '</a>';
-    $tapBar .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
-    $tapBar .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#userModal" style="color: #0483cd;">';
-    $tapBar .= '<i class="fas fa-user fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Perfil';
-    $tapBar .= '</a>';
+    $tapBar = '
+<nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow" style="background-color: #1e293b;">
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle me-3" aria-label="Toggle sidebar">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <ul class="navbar-nav d-flex justify-content-end align-items-center w-100">
+    <li class="nav-item d-flex align-items-center text-white me-3">
+      <i class="fas fa-clock me-1"></i>
+      <span id="relojFecha"></span>
+    </li>
+
+    <div class="topbar-divider d-none d-sm-block me-3"></div>
+
+    <li class="nav-item dropdown no-arrow">
+      <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="d-none d-lg-inline text-white fw-semibold me-2">Bienvenido, ' . $userName . '!</span>
+        <img class="img-profile rounded-circle" src="../images/undraw_profile.svg" alt="Perfil usuario" width="36" height="36">
+      </a>
+
+      <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
+        <li>
+          <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#userModal">
+            <i class="fas fa-user fa-sm fa-fw me-2"></i>Perfil
+          </a>
+        </li>';
 
     if ($admin) {
-      $tapBar .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#goalModal" style="color: #0483cd;">';
-      $tapBar .= '<i class="fas fa-cogs fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Ajustar Capacidad';
-      $tapBar .= '</a>';
+      $tapBar .= '
+        <li>
+          <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#goalModal">
+            <i class="fas fa-cogs fa-sm fa-fw me-2"></i>Ajustar Capacidad
+          </a>
+        </li>';
     }
 
-    $tapBar .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">';
-    $tapBar .= '<i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema';
-    $tapBar .= '</a>';
-    $tapBar .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#licenceModal" style="color: #0483cd;">';
-    $tapBar .= '<i class="fas fa-copyright fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Licencia';
-    $tapBar .= '</a>';
-    $tapBar .= '<div class="dropdown-divider"></div>';
-    $tapBar .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
-    $tapBar .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
-    $tapBar .= '</a>';
-    $tapBar .= '</div>';
-    $tapBar .= '</li>';
-    $tapBar .= '</ul>';
-    $tapBar .= '</nav>';
+    $tapBar .= '
+        <li>
+          <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#infoModal">
+            <i class="fas fa-circle-info fa-sm fa-fw me-2"></i>Acerca del Sistema
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#licenceModal">
+            <i class="fas fa-copyright fa-sm fa-fw me-2"></i>Licencia
+          </a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+          <a class="dropdown-item text-danger" href="logout.php" data-bs-toggle="modal" data-bs-target="#logoutModal">
+            <i class="fas fa-right-from-bracket me-2"></i> Cerrar Sesión
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>';
 
     return $tapBar;
   }
 
   public static function secondTapBarSSL()
   {
-    $tapBar = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
-    $tapBar .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
-    $tapBar .= '<i class="fa fa-bars"></i>';
-    $tapBar .= '</button>';
-    $tapBar .= '<ul class="navbar-nav ml-auto">';
-    $tapBar .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-    $tapBar .= '<label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>';
-    $tapBar .= '<div class="topbar-divider d-none d-sm-block"></div>';
-    $tapBar .= '<li class="nav-item dropdown no-arrow">';
-    $tapBar .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-    $tapBar .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBar .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
-    $tapBar .= '</a>';
-    $tapBar .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
-    $tapBar .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">';
-    $tapBar .= '<i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema';
-    $tapBar .= '</a>';
-    $tapBar .= '<div class="dropdown-divider"></div>';
-    $tapBar .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
-    $tapBar .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
-    $tapBar .= '</a>';
-    $tapBar .= '</div>';
-    $tapBar .= '</li>';
-    $tapBar .= '</ul>';
-    $tapBar .= '</nav>';
+    $userName = htmlspecialchars($_SESSION["user"]["name"]);
+
+    $tapBar = '
+<nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow" style="background-color: #1e293b;">
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle me-3" aria-label="Toggle sidebar">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <ul class="navbar-nav d-flex justify-content-end align-items-center w-100">
+    <li class="nav-item d-flex align-items-center text-white me-3">
+      <i class="fas fa-clock me-1"></i>
+      <span id="relojFecha"></span>
+    </li>
+
+    <div class="topbar-divider d-none d-sm-block me-3"></div>
+
+    <li class="nav-item dropdown no-arrow">
+      <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="d-none d-lg-inline text-white fw-semibold me-2">Bienvenido, ' . $userName . '!</span>
+        <img class="img-profile rounded-circle" src="../images/undraw_profile.svg" alt="Perfil usuario" width="36" height="36">
+      </a>
+
+      <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
+        <li>
+          <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#infoModal">
+            <i class="fas fa-circle-info fa-sm fa-fw me-2"></i>Acerca del Sistema
+          </a>
+        </li>
+
+        <li><hr class="dropdown-divider"></li>
+
+        <li>
+          <a class="dropdown-item text-danger" href="logout.php" data-bs-toggle="modal" data-bs-target="#logoutModal">
+            <i class="fas fa-right-from-bracket me-2"></i> Cerrar Sesión
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>';
 
     return $tapBar;
   }
@@ -359,13 +370,14 @@ class menu
     $cfg     = new cfg($db);
     $infoCfg = json_decode($cfg->getInfo(1), true);
 
-    $footer = '<footer class="sticky-footer bg-white">';
-    $footer .= '<div class="container my-auto">';
-    $footer .= '<div class="copyright text-center my-auto">';
-    $footer .= '<span style="color:dimgrey;">Copyright &copy; ' . $infoCfg['mark'] . ' 2025</span>';
-    $footer .= '</div>';
-    $footer .= '</div>';
-    $footer .= '</footer>';
+    $footer = '
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="text-center my-auto text-muted small">
+      &copy; ' . htmlspecialchars($infoCfg['mark']) . ' 2025
+    </div>
+  </div>
+</footer>';
 
     return $footer;
   }

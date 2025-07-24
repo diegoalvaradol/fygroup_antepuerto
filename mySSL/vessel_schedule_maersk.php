@@ -56,7 +56,7 @@ $footer          = menu::footerSSL();
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Itinerarios Naves Maersk</h1>
-                    <p class="mb-4">Acá puedes revisar los itinerarios motonavesde Maersk.</p>
+                    <p class="mb-4">Acá puedes revisar los itinerarios motonaves de Maersk.</p>
 
                     <!-- Content Row -->
                     <div class="row">
