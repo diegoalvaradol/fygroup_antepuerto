@@ -225,7 +225,11 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
             <tr><td><strong>Fecha:</strong></td><td>' . date('d-m-Y H:i:s') . '</td></tr>
             <tr><td><strong>IP:</strong></td><td>' . $_SERVER['REMOTE_ADDR'] . '</td></tr>
           </table>
-          <p style="color:#888; font-size:12px;">Mensaje automático del Sistema Integral SSL.</p>
+          <hr style="margin: 30px 20px;">
+					<footer style="font-size: 12px; color: #aaa;">
+							© ' . date('Y') . ' Sistema Integral SSL. Todos los derechos reservados.<br>
+							Este es un correo automático, por favor no respondas.
+					</footer>
         </div>
       </div>';
 
