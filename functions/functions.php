@@ -192,6 +192,7 @@ function mostrarAccesoDenegado($usuario, $pagina)
   /* Enviar correo */
   try {
     require '../vendor/autoload.php';
+    require_once __DIR__ . '/../config/includes.php';
     date_default_timezone_set("America/Santiago");
 
     $mail              = new PHPMailer(true);
