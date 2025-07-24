@@ -75,9 +75,10 @@ function formatDate($date, $format = 'Y-m-d H:i:s')
  *
  * @param  $usuario [usuario que intenta acceder]
  * @param  $pagina  [página  a la que intentó acceder]
+ * @param  $url     [URL     de la página]
  * @return String
  */
-function mostrarAccesoDenegado($usuario, $pagina)
+function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
   /* Mostrar mensaje de error */
   echo '
@@ -220,6 +221,7 @@ function mostrarAccesoDenegado($usuario, $pagina)
           <table style="font-size:14px; color:#555;">
             <tr><td><strong>Usuario:</strong></td><td>' . htmlspecialchars($usuario) . '</td></tr>
             <tr><td><strong>Página:</strong></td><td>' . htmlspecialchars($pagina) . '</td></tr>
+            <tr><td><strong>URL:</strong></td><td>' . htmlspecialchars($url) . '</td></tr>
             <tr><td><strong>Fecha:</strong></td><td>' . date('d-m-Y H:i:s') . '</td></tr>
             <tr><td><strong>IP:</strong></td><td>' . $_SERVER['REMOTE_ADDR'] . '</td></tr>
           </table>
