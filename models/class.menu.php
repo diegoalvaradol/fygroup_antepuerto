@@ -379,18 +379,16 @@ class menu
     $infoCfg = json_decode($cfg->getInfo(1), true);
 
     $footer = '
-    <footer class="sticky-footer bg-white" style="
-        position: fixed;
+    <footer class="footer bg-light text-center text-muted" style="
         bottom: 0;
         width: 100%;
-        height: 40px;
-        line-height: 40px;
-        background-color: white;
-        box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
-        z-index: 1030;
-    ">
-        <div class="container text-center">
-            <span style="color:dimgrey;">Copyright &copy; ' . $infoCfg['mark'] . ' 2025</span>
+        height: 45px;
+        line-height: 45px;
+        font-size: 14px;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+        ">
+        <div class="container">
+            <span>&copy; ' . date('Y') . ' ' . htmlspecialchars($infoCfg['mark']) . '. Todos los derechos reservados.</span>
         </div>
     </footer>';
 
