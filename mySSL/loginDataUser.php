@@ -11,7 +11,8 @@ if (!isset($_SESSION['user'])) {
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="refresh" content="5;url=dashboard.php">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Redirigiendo...</title>
 
   <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
@@ -20,55 +21,43 @@ if (!isset($_SESSION['user'])) {
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f2f5;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #eef2f7, #d6e0eb);
       display: flex;
-      justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      text-align: center;
-      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
     }
-
-    .contenedor {
-      max-width: 90%;
-      padding: 30px;
+    .container {
       background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
-
-    .mensaje {
-      font-size: 1.3rem;
-      color: #888;
+    h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    p {
+      color: #555;
+      font-size: 1rem;
+      margin: 0.5rem 0;
       opacity: 0;
-      transition: opacity 0.5s ease-in-out, color 0.3s, transform 0.3s;
-      margin: 15px 0;
-      font-weight: 500;
+      transition: opacity 0.5s ease-in;
     }
-
-    .visible {
+    p.visible {
       opacity: 1;
-      transform: translateY(0);
     }
-
-    .mensaje-actual {
-      color: #111;
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-
-    .spinner {
-      margin: 30px auto 0;
+    .loader {
+      margin: 1.5rem auto 0;
+      border: 4px solid #ddd;
+      border-top: 4px solid #2563eb;
+      border-radius: 50%;
       width: 40px;
       height: 40px;
-      border: 4px solid #ddd;
-      border-top: 4px solid #000;
-      border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -76,35 +65,36 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body>
-  <div class="contenedor">
+  <div class="container">
     <h2>Bienvenido, <?=htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"])?> 👋</h2>
-    <div id="msg1" class="mensaje">Verificando sesión...</div>
-    <div id="msg2" class="mensaje">Cargando configuración...</div>
-    <div id="msg3" class="mensaje">Redirigiendo al panel...</div>
-    <div id="spinner" class="spinner"></div>
+
+    <p id="msg1">Validando sesión...</p>
+    <p id="msg2">Cargando datos...</p>
+    <p id="msg3">Redirigiendo al panel...</p>
+
+    <div class="loader"></div>
   </div>
 
   <script>
-    function mostrarSiguiente() {
-      if (actual >= 0) {
-        const anterior = document.getElementById(mensajes[actual]);
-        anterior.classList.remove("mensaje-actual");
-        anterior.style.color = "#888";
-      }
+		const mensajes = ["msg1", "msg2", "msg3"];
+		let actual = -1;
 
-      actual++;
-      if (actual < mensajes.length) {
-        const el = document.getElementById(mensajes[actual]);
-        el.classList.add("visible", "mensaje-actual");
-        setTimeout(mostrarSiguiente, 1500);
-      } else {
-        setTimeout(() => {
-          window.location.href = "dashboard.php";
-        }, 1000);
-      }
-    }
+		function mostrarSiguiente() {
+			if (actual >= 0) {
+				const anterior = document.getElementById(mensajes[actual]);
+				anterior.style.color = "#888";  // gris para mensajes anteriores
+			}
 
-    mostrarSiguiente();
-  </script>
+			actual++;
+			if (actual < mensajes.length) {
+				const actualMsg = document.getElementById(mensajes[actual]);
+				actualMsg.classList.add("visible");
+				actualMsg.style.color = "#000"; // negro para el mensaje actual
+				setTimeout(mostrarSiguiente, 1500);
+			}
+		}
+
+		mostrarSiguiente();
+	</script>
 </body>
 </html>
