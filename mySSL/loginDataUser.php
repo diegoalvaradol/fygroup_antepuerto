@@ -103,6 +103,8 @@ if (!isset($_SESSION['user'])) {
         }, 1000);
       }
     }
+
+    mostrarSiguiente();
   </script>
 </body>
 </html>
