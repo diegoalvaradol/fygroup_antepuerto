@@ -1,9 +1,11 @@
 <?php
 if (isset($_SESSION['user'])) {
-  header("Location: dashboard.php");
+  header('Location: loginDataUser.php');
+
   exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -192,6 +194,7 @@ if (isset($_SESSION['user'])) {
       type: "POST",
     }).done(function(x) {
       if (x == 'OK') {
+        /*
         Swal.fire({
           title: '¡Bienvenido!',
           html: 'Estamos cargando las preferencias de tu cuenta 🚀 </br> Por favor se paciente.',
@@ -202,6 +205,9 @@ if (isset($_SESSION['user'])) {
         }).then(() => {
           window.location.href = "dashboard.php";
         });
+        */
+
+        window.location.href = "loginDataUser.php";
       } else {
         let msg = (x == 'NOOK') ? 'El run y/o contraseña ingresados son inválidos.' :
                   (x == 'NOOK2') ? 'Tu perfil no se encuentra asociado a SSL.' : x;

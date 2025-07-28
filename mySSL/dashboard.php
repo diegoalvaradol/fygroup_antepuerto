@@ -190,7 +190,7 @@ $footer        = menu::footerSSL();
                                     Solicitados: <?=$totalTrucks - $trucksInAntepuerto?>
                                     <i class="fas fa-info-circle text-info" title="Solicitados" role="button"
                                       data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
-                                      data-bs-content="Camiones arribados y ya solicitados por el terminal."></i>
+                                      data-bs-content="Camiones solicitados por terminal."></i>
                                   </small>
                                 </div>
                                 <div>
@@ -198,7 +198,7 @@ $footer        = menu::footerSSL();
                                     Pendientes: <?=$trucksInAntepuerto?>
                                     <i class="fas fa-info-circle text-info" title="Pendientes" role="button"
                                       data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
-                                      data-bs-content="Camiones que están en antepuerto y aún no son solicitados."></i>
+                                      data-bs-content="Camiones que se encuentran en antepuerto."></i>
                                   </small>
                                 </div>
                               </div>
@@ -257,6 +257,10 @@ $footer        = menu::footerSSL();
                                   <div class="col-12">
                                     <div style="position: relative; height: 400px; width: 100%;">
                                       <canvas id="graficoCamiones"></canvas>
+                                      <p id="mensajeSinDatos" style="display:none; color:#b00020; font-weight:600; text-align:center; margin-top:1rem;">
+                                        <i class="fas fa-exclamation-circle" style="margin-right:0.5rem;"></i>
+                                        No hay datos disponibles para las fechas seleccionadas. Por favor ajusta el rango e intenta nuevamente.
+                                      </p>
                                     </div>
                                   </div>
                                 </div>
@@ -612,6 +616,19 @@ async function cargarDatos(fechaInicio, fechaFin) {
 /* Dibujar el gráfico */
 async function filtrarYActualizar(fechaInicio, fechaFin) {
   const datos = await cargarDatos(fechaInicio, fechaFin);
+
+  const mensaje = document.getElementById('mensajeSinDatos');
+  const canvas = document.getElementById('graficoCamiones');
+
+  if (!datos.length) {
+    mensaje.style.display = 'block';
+    canvas.style.display = 'none';
+    if (chart) chart.destroy();
+    return;
+  }
+
+  mensaje.style.display = 'none';
+  canvas.style.display = 'block';
 
   const data = {
     datasets: [{
