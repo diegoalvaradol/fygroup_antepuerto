@@ -62,12 +62,10 @@ if (!isset($_SESSION['user'])) {
 <body>
   <div class="contenedor">
     <h2>Bienvenido, <?=htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"])?> 👋</h2>
-
-    <p id="msg1">Validando sesión...</p>
-    <p id="msg2">Cargando datos...</p>
-    <p id="msg3">Redirigiendo al panel...</p>
-
-    <div class="loader"></div>
+    <div id="msg1" class="mensaje">Verificando sesión...</div>
+    <div id="msg2" class="mensaje">Cargando configuración...</div>
+    <div id="msg3" class="mensaje">Redirigiendo al panel...</div>
+    <div id="spinner" class="spinner"></div>
   </div>
 
   <script>
@@ -86,6 +84,8 @@ if (!isset($_SESSION['user'])) {
         el.style.color = "#000";
         setTimeout(mostrarSiguiente, 1500);
       } else {
+        // Ocultar el spinner antes de redirigir
+        document.getElementById("spinner").style.display = "none";
         setTimeout(() => {
           window.location.href = "dashboard.php";
         }, 1000);
