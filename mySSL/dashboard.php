@@ -605,6 +605,16 @@ document.getElementById('fechaFin').setAttribute('max', today);
 
 /* Obtener datos desde PHP */
 async function cargarDatos(fechaInicio, fechaFin) {
+  if (fechaInicio > fechaFin) {
+    Swal.fire({
+      title: 'Error',
+      text: 'La fecha de inicio no puede ser posterior a la fecha de fin.',
+      icon: 'error',
+      confirmButtonColor: '#d33'
+    });
+    return [];
+  }
+
   const res = await fetch('../controllers/getTrucksPerDayController.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
