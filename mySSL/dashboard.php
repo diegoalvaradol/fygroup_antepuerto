@@ -644,6 +644,7 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
 
   mensaje.style.display = 'none';
   canvas.style.display = 'block';
+  divCanvas.style.height = '400px';
 
   const data = {
     datasets: [{
