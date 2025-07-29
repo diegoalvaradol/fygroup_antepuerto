@@ -255,12 +255,12 @@ $footer        = menu::footerSSL();
                                 </div>
                                 <div class="row justify-content-center">
                                   <div class="col-12">
-                                    <div id="divGraficoCamiones" style="position: relative; height: 400px; width: 100%;">
-                                      <canvas id="graficoCamiones"></canvas>
-                                      <p id="mensajeSinDatos" style="display:none; color:#b00020; font-weight:600; text-align:center; margin-top:1rem;">
+                                    <div id="divGraficoCamiones" style="position: relative;">
+                                      <p id="mensajeSinDatos" style="display: none; margin: 0;">
                                         <i class="fas fa-exclamation-circle" style="margin-right:0.5rem;"></i>
                                         No hay datos disponibles para las fechas seleccionadas. Por favor ajusta el rango e intenta nuevamente.
                                       </p>
+                                      <canvas id="graficoCamiones"></canvas>
                                     </div>
                                   </div>
                                 </div>
@@ -635,9 +635,15 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
   const divCanvas = document.getElementById('divGraficoCamiones');
 
   if (!datos.length) {
-    mensaje.style.display = 'block';
+    mensaje.style.display = 'flex';
+    mensaje.style.justifyContent = 'center';
+    mensaje.style.alignItems = 'center';
+    mensaje.style.height = '100%';
+    mensaje.style.color = '#b00020';
+    mensaje.style.fontSize = '1rem';
+
     canvas.style.display = 'none';
-    divCanvas.style.height = '25px';
+    divCanvas.style.height = '120px';
     if (chart) chart.destroy();
     return;
   }
