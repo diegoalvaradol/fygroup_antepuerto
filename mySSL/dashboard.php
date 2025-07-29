@@ -255,7 +255,7 @@ $footer        = menu::footerSSL();
                                 </div>
                                 <div class="row justify-content-center">
                                   <div class="col-12">
-                                    <div style="position: relative; height: 400px; width: 100%;">
+                                    <div id="divGraficoCamiones" style="position: relative; height: 400px; width: 100%;">
                                       <canvas id="graficoCamiones"></canvas>
                                       <p id="mensajeSinDatos" style="display:none; color:#b00020; font-weight:600; text-align:center; margin-top:1rem;">
                                         <i class="fas fa-exclamation-circle" style="margin-right:0.5rem;"></i>
@@ -287,23 +287,26 @@ $footer        = menu::footerSSL();
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Deseas cerrar sesión?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="logout.php"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
-                </div>
-            </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoutModalLabel">¿Deseas cerrar sesión?</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+          </div>
         </div>
+      </div>
     </div>
+
 
     <!-- Info System Modal-->
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -311,9 +314,9 @@ $footer        = menu::footerSSL();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Acerca del Sistema</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
                 <div class="modal-body">
                     <small><b>Nombre: </b><?php echo $infoCfg['name']; ?></small>
@@ -344,9 +347,9 @@ $footer        = menu::footerSSL();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -371,9 +374,9 @@ $footer        = menu::footerSSL();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . '.'; ?></h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION["user"]["division"]]; ?></h6>
@@ -413,9 +416,9 @@ $footer        = menu::footerSSL();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
 
                 <div class="modal-body">
@@ -629,10 +632,12 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
 
   const mensaje = document.getElementById('mensajeSinDatos');
   const canvas = document.getElementById('graficoCamiones');
+  const divCanvas = document.getElementById('divGraficoCamiones');
 
   if (!datos.length) {
     mensaje.style.display = 'block';
     canvas.style.display = 'none';
+    divCanvas.style.height = '25px';
     if (chart) chart.destroy();
     return;
   }

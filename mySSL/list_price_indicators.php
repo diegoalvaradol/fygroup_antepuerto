@@ -97,9 +97,9 @@ if (!$admin) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">¿Deseas cerrar sesión?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
                 <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">
@@ -116,9 +116,9 @@ if (!$admin) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Acerca del Sistema</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
                 <div class="modal-body">
                     <small><b>Nombre: </b><?php echo $infoCfg['name']; ?></small>

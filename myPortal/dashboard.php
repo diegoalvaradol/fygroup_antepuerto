@@ -250,9 +250,9 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">¿Deseas cerrar sesión?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
                 <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">
@@ -269,9 +269,9 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . '.'; ?></h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION["user"]["division"]]; ?></h6>
@@ -310,9 +310,9 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
                 </div>
 
                 <div class="modal-body">
