@@ -15,6 +15,8 @@ $arrayDivision = get::getDivisionName();
 $sideBarSSL    = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
 $footer        = menu::footerSSL();
+$top           = UIComponents::scrollToTopButton();
+$whatsAppBtn   = UIComponents::whatsappChatBox();
 ?>
 
 <!-- HTML -->
@@ -44,62 +46,6 @@ $footer        = menu::footerSSL();
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-
-    <style>
-    #whatsapp-chat-box {
-      position: fixed;
-      bottom: 20px;
-      left: 20px; /* alineado a la izquierda */
-      width: 280px;
-      max-width: 90%;
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      font-family: Arial, sans-serif;
-      z-index: 9999;
-    }
-
-    .chat-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      background-color: #25d366;
-      color: white;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      cursor: pointer;
-    }
-
-    .chat-body {
-      padding: 15px;
-      display: none;
-      font-size: 14px;
-    }
-
-    .btn-chat {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      background-color: #25d366;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    @media (max-width: 480px) {
-      #whatsapp-chat-box {
-        bottom: 10px;
-        left: 10px;
-        width: 90%;
-      }
-
-      .chat-body {
-        font-size: 13px;
-      }
-    }
-    </style>
 </head>
 
 <body id="page-top">
@@ -137,11 +83,11 @@ $footer        = menu::footerSSL();
                               <div class="d-flex justify-content-between px-3">
                                 <div class="text-center">
                                   <div class="text-muted small">Contenedores</div>
-                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalContainer();?></div>
+                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalContainer($admin);?></div>
                                 </div>
                                 <div class="text-center">
                                   <div class="text-muted small">Pallets</div>
-                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalContainerPallets();?></div>
+                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalContainerPallets($admin);?></div>
                                 </div>
                               </div>
                             </div>
@@ -159,11 +105,11 @@ $footer        = menu::footerSSL();
                               <div class="d-flex justify-content-between px-3">
                                 <div class="text-center">
                                   <div class="text-muted small">Camiones</div>
-                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalThermo();?></div>
+                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalThermo($admin);?></div>
                                 </div>
                                 <div class="text-center">
                                   <div class="text-muted small">Pallets</div>
-                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalPallets();?></div>
+                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalPallets($admin);?></div>
                                 </div>
                               </div>
                             </div>
@@ -180,8 +126,8 @@ $footer        = menu::footerSSL();
                                 <h6 class="text-warning text-uppercase mb-3">Arrivos</h6>
                               </div>
                               <div class="text-center">
-                                <?php $totalTrucks        = $port->getTotalTrucks(); ?>
-                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto(); ?>
+                                <?php $totalTrucks        = $port->getTotalTrucks($admin); ?>
+                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin); ?>
                                 <div class="text-muted small">Total Arrivados</div>
                                 <div class="h5 font-weight-bold text-dark mb-3"><?=$totalTrucks?> camiones</div>
 
@@ -217,7 +163,7 @@ $footer        = menu::footerSSL();
                               <div class="text-center mb-2">
                                 <div class="text-muted small">Ocupación Antepuerto</div>
                                 <div class="h5 font-weight-bold text-dark">
-                                  <?php $percentUsage = $port->getPercentUsage($infoCfg['goals']); ?>
+                                  <?php $percentUsage = $port->getPercentUsage($infoCfg['goals'], $admin); ?>
                                   <?php echo $percentUsage . '%'; ?>
                                 </div>
                               </div>
@@ -227,7 +173,7 @@ $footer        = menu::footerSSL();
                                 </div>
                               </div>
                               <small class="d-block text-muted text-center">
-                                <?=$port->getTotalTrucksInAnpuerto()?> camiones de un total de <?=$infoCfg['goals']?>.
+                                <?=$port->getTotalTrucksInAnpuerto($admin)?> camiones de un total de <?=$infoCfg['goals']?>.
                               </small>
                             </div>
                           </div>
@@ -282,9 +228,7 @@ $footer        = menu::footerSSL();
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
@@ -482,27 +426,12 @@ $footer        = menu::footerSSL();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Chat flotante expandible estilo WhatsApp - Responsive -->
-    <div id="whatsapp-chat-box" class="chat-box">
-      <div class="chat-header" onclick="toggleChatBox()">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30" />
-        <span>¿Necesitas ayuda?</span>
-      </div>
-      <div class="chat-body" id="chatBody">
-        <p>Hola <?php echo $_SESSION["user"]["name"] . '.'; ?> 👋<br>¿En qué podemos ayudarte?</p>
-        <a href="https://wa.me/56923816700?text=Hola%2C%20necesito%20ayuda" target="_blank" class="btn-chat">Iniciar chat</a>
-      </div>
-    </div>
+    <?php echo $whatsAppBtn; ?>
 </body>
 </html>
 
 <!-- JAVASCRIPT -->
 <script>
-/* Chat de WhatsApp */
-function toggleChatBox() {
-  const body = document.getElementById('chatBody');
-  body.style.display = body.style.display === 'block' ? 'none' : 'block';
-}
-
 /* Inicializa el popover */
 document.addEventListener('DOMContentLoaded', function () {
   const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));

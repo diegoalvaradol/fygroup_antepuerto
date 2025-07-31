@@ -381,7 +381,6 @@ class menu
     $footer = '
     <footer class="footer bg-light text-center text-muted" style="
         bottom: 0;
-        position: absolute;
         width: -webkit-fill-available;
         height: 45px;
         line-height: 45px;

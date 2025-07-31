@@ -8,6 +8,7 @@ $cfg           = new cfg($db);
 $sideBarPortal = menu::sideBarPortal();
 $tapBarPortal  = menu::secondTapBarPortal();
 $footer        = menu::footerSSL();
+$top           = UIComponents::scrollToTopButton();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 
@@ -79,9 +80,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

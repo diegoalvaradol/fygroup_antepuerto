@@ -12,6 +12,7 @@ $cfg = new cfg($db);
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $footer  = menu::footerSSL();
+$top     = UIComponents::scrollToTopButton();
 ?>
 
 <!DOCTYPE html>
@@ -79,9 +80,7 @@ $footer  = menu::footerSSL();
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Bootstrap core JavaScript-->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>

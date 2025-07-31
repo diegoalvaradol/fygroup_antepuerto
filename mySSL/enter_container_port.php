@@ -14,6 +14,7 @@ $updateTime      = new DateTime($infoCfg['update_date']);
 $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
+$top             = UIComponents::scrollToTopButton();
 ?>
 
 <!-- HTML -->
@@ -237,9 +238,7 @@ $footer          = menu::footerSSL();
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -752,7 +751,7 @@ var editContainer = function(id) {
       $('#isUpdate').val(1);
       $('#loadBtn').addClass('btn-info');
       $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Contenedor');
-      $('.scroll-to-top').trigger('click');
+      $('#scrollTopBtn').trigger('click');
     },
     error: function() {
       alert('Error al cargar los datos.');

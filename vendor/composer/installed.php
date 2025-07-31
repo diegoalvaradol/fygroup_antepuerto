@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'e8d5e875d8fa29e8fc1ea604d65312785dd139e2',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '36aecb469148ee45beeaf7d1c3675ea6738e0552',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'e8d5e875d8fa29e8fc1ea604d65312785dd139e2',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '36aecb469148ee45beeaf7d1c3675ea6738e0552',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -98,9 +98,9 @@
             'dev_requirement' => false,
         ),
         'masterminds/html5' => array(
-            'pretty_version' => '2.9.0',
-            'version' => '2.9.0.0',
-            'reference' => 'f5ac2c0b0a2eefca70b2ce32a5809992227e75a6',
+            'pretty_version' => '2.10.0',
+            'version' => '2.10.0.0',
+            'reference' => 'fcf91eb64359852f00d921887b219479b4f21251',
             'type' => 'library',
             'install_path' => __DIR__ . '/../masterminds/html5',
             'aliases' => array(),
@@ -134,9 +134,9 @@
             'dev_requirement' => false,
         ),
         'phpoffice/phpspreadsheet' => array(
-            'pretty_version' => '1.29.11',
-            'version' => '1.29.11.0',
-            'reference' => '05b6c4378ddf3e81b460ea645c42b46432c0db25',
+            'pretty_version' => '1.29.12',
+            'version' => '1.29.12.0',
+            'reference' => '7c06eed662cce7ecab88f6f9f7626b443f5285df',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpoffice/phpspreadsheet',
             'aliases' => array(),

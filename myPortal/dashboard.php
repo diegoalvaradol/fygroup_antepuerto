@@ -2,15 +2,19 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db            = (new Database())->getConnection();
-$port          = new outerPort($db);
-$cfg           = new cfg($db);
+$db   = (new Database())->getConnection();
+$port = new outerPort($db);
+$cfg  = new cfg($db);
+$user = new user($db);
+
 $arrayDivision = get::getDivisionName();
 $sideBarPortal = menu::sideBarPortal();
 $tapBarPortal  = menu::mainTapBarPortal();
 $footer        = menu::footerSSL();
+$top           = UIComponents::scrollToTopButton();
 
 $infoCfg      = json_decode($cfg->getInfo(1), true);
+$admin        = $user->isAdmin($_SESSION["user"]["run"]);
 $releasedTime = new DateTime($infoCfg['released_date']);
 $updateTime   = new DateTime($infoCfg['update_date']);
 
@@ -44,7 +48,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- SweetAlert<?php echo $sideBarPortal; ?>2 CDN -->
+    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -122,14 +126,14 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                         <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Contenedores</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalContainer = $port->getTotalContainer(); ?>
+                                                <?php $totalContainer = $port->getTotalContainer($admin); ?>
                                                 <?php echo $totalContainer; ?>
                                             </div>
                                         </div>
                                         <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pallets</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalPallets = $port->getTotalContainerPallets(); ?>
+                                                <?php $totalPallets = $port->getTotalContainerPallets($admin); ?>
                                                 <?php echo $totalPallets; ?>
                                             </div>
                                         </div>
@@ -150,14 +154,14 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                         <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Camiones</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalThermo = $port->getTotalThermo(); ?>
+                                                <?php $totalThermo = $port->getTotalThermo($admin); ?>
                                                 <?php echo $totalThermo; ?>
                                             </div>
                                         </div>
                                         <div class="col mr-6">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pallets</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalPallets = $port->getTotalPallets(); ?>
+                                                <?php $totalPallets = $port->getTotalPallets($admin); ?>
                                                 <?php echo $totalPallets; ?>
                                             </div>
                                         </div>
@@ -178,8 +182,8 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                         <div class="col mr-12">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Arrivos</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalTrucks        = $port->getTotalTrucks(); ?>
-                                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto(); ?>
+                                                <?php $totalTrucks        = $port->getTotalTrucks($admin); ?>
+                                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin); ?>
                                                 <?php echo $totalTrucks . ' camiones.'; ?>
 
                                                 <small class="h5 mb-0 font-weight-bold text-suceess-800" style="font-size:small;color: green;">Solicitados: <?php print_r($totalTrucks - $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que han arrivado a antepuerto y que ya han sido solicitados por terminal."></i>
@@ -205,7 +209,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                    <?php $percentUsage = $port->getPercentUsage($infoCfg['goals']); ?>
+                                                    <?php $percentUsage = $port->getPercentUsage($infoCfg['goals'], $admin); ?>
                                                     <?php print_r($percentUsage); ?>
                                                     </div>
                                                 </div>
@@ -215,7 +219,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto(); ?>
+                                            <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin); ?>
                                             <small style="color:black; font-size:smaller;"><?php echo $trucksInAntepuerto . ' camiones de un total de ' . $infoCfg['goals'] . '.'; ?> </small>
                                         </div>
                                         <div class="col-auto">
@@ -240,9 +244,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

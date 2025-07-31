@@ -13,6 +13,7 @@ $updateTime      = new DateTime($infoCfg['update_date']);
 $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
+$top             = UIComponents::scrollToTopButton();
 ?>
 
 <!-- HTML -->
@@ -55,7 +56,13 @@ $footer          = menu::footerSSL();
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Roleo de Carga</h1>
-                    <p class="mb-4">Acá podras realizar el roleo de carga entre naves.</p>
+                    <p class="mb-4">Acá podras realizar el roleo de carga entre naves del tipo containero y reefer.</p>
+
+                    <div class="col-sm-12">
+                      <div class="alert alert-warning" role="alert"><i class="fa-solid fa-triangle-exclamation"></i>
+                        <b>¡Atención! : </b> Considerar que la acción de roleo es un proceso irreversible.
+                      </div>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -140,9 +147,7 @@ $footer          = menu::footerSSL();
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -347,7 +352,40 @@ var saveVesselTransfer = function() {
     }
   }
 
-  if(fromVessel === toVessel){
+  if(fromVessel === '-'){
+    Swal.fire({
+      title: 'Oops...',
+      text: 'Debes seleccionar una nave de origen.',
+      icon: 'error',
+      cancelButtonColor: '#d33',
+    });
+
+    hasError = true;
+  }
+
+  if(toVessel === '-'){
+    Swal.fire({
+      title: 'Oops...',
+      text: 'Debes seleccionar una neve de destino.',
+      icon: 'error',
+      cancelButtonColor: '#d33',
+    });
+
+    hasError = true;
+  }
+
+  if(fromVessel === '-' && toVessel === '-'){
+    Swal.fire({
+      title: 'Oops...',
+      text: 'Debes seleccionar una nave de origen y destino para realizar el roleo.',
+      icon: 'error',
+      cancelButtonColor: '#d33',
+    });
+
+    hasError = true;
+  }
+
+  if((fromVessel !== '-' && toVessel !== '-') && fromVessel === toVessel){
     Swal.fire({
       title: 'Oops...',
       text: 'El roleo no se puede realizar a la misma nave.',
@@ -369,7 +407,7 @@ var saveVesselTransfer = function() {
       data: $('#vesselTransferForm').serialize(),
       type: 'POST',
     }).done(function(x) {
-        if(x == 'OK'){
+        if(x === 'OK'){
           Swal.fire({
             title: '¡Éxito!',
             text: 'Roleo realizado con éxito!',
@@ -378,10 +416,25 @@ var saveVesselTransfer = function() {
           }).then((result) => {
             window.location = '<?php echo generateMkey('vessel_transfer'); ?>';
           });
-        } else {
+        }
+
+        if(x === 'NOOK'){
           Swal.fire({
             title: 'Oops...',
             text: 'Error al realizar el roleo de carga entre naves.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          }).then(() => {
+            text.removeClass('d-none');
+            spinner.addClass('d-none');
+            btn.prop('disabled', false);
+          });
+        }
+
+        if(x === 'ERROR'){
+          Swal.fire({
+            title: 'Oops...',
+            html: 'Asegurate que el tipo de naves sea el mismo.'+'</br>'+'[Contenedor => Contnedor] ó [Reefer => Reefer]',
             icon: 'error',
             cancelButtonColor: '#d33',
           }).then(() => {

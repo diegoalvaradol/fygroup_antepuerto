@@ -14,9 +14,11 @@ $updateTime      = new DateTime($infoCfg['update_date']);
 $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
-$tablePriceMSC   = $price->listPriceMSC();
-$tablePriceMSK   = $price->listPriceMaersk();
-$tablePriceCC    = $price->listPriceCC();
+$top             = UIComponents::scrollToTopButton();
+
+$tablePriceMSC = $price->listPriceMSC();
+$tablePriceMSK = $price->listPriceMaersk();
+$tablePriceCC  = $price->listPriceCC();
 
 /* Validar superadmin */
 if (!$admin) {
@@ -87,9 +89,7 @@ if (!$admin) {
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

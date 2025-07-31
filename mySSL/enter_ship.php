@@ -14,6 +14,7 @@ $updateTime      = new DateTime($infoCfg['update_date']);
 $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
+$top             = UIComponents::scrollToTopButton();
 ?>
 
 <!-- HTML -->
@@ -143,9 +144,7 @@ $footer          = menu::footerSSL();
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <?php echo $top; ?>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -353,6 +352,7 @@ var editShip = function(id) {
       $('#shipLine').append($('<option>', {value: data.ship_line, text: data.name}));
       $('#shipPOD').empty();
       $('#shipPOD').append($('<option>', {value: data.port_discharge, text: data.city +' - '+ data.country}));
+      $('#scrollTopBtn').trigger('click');
 
       /* Mostrar overlay y modal */
       $('#modalOverlay').fadeIn(200);

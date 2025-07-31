@@ -143,11 +143,8 @@ class outerPort extends iQuery
     return $stmt->execute();
   }
 
-  public function getTotalContainer()
+  public function getTotalContainer($admin)
   {
-    $user  = new user($this->conexion);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
-
     if ($admin) {
       $query = "SELECT COUNT(*) as totalContainer FROM $this->table WHERE $this->origin = 1";
     }
@@ -167,11 +164,8 @@ class outerPort extends iQuery
     }
   }
 
-  public function getTotalContainerPallets()
+  public function getTotalContainerPallets($admin)
   {
-    $user  = new user($this->conexion);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
-
     if ($admin) {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 1";
     }
@@ -191,11 +185,8 @@ class outerPort extends iQuery
     }
   }
 
-  public function getTotalThermo()
+  public function getTotalThermo($admin)
   {
-    $user  = new user($this->conexion);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
-
     if ($admin) {
       $query = "SELECT COUNT(*) as totalThermo FROM $this->table WHERE $this->origin = 2";
     }
@@ -215,11 +206,8 @@ class outerPort extends iQuery
     }
   }
 
-  public function getTotalPallets()
+  public function getTotalPallets($admin)
   {
-    $user  = new user($this->conexion);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
-
     if ($admin) {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 2";
     }
@@ -239,11 +227,8 @@ class outerPort extends iQuery
     }
   }
 
-  public function getTotalTrucks()
+  public function getTotalTrucks($admin)
   {
-    $user  = new user($this->conexion);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
-
     if ($admin) {
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE 1";
     }
@@ -263,11 +248,8 @@ class outerPort extends iQuery
     }
   }
 
-  public function getPercentUsage($goals)
+  public function getPercentUsage($goals, $admin)
   {
-    $user  = new user($this->conexion);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
-
     if ($admin) {
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
     }
@@ -286,11 +268,8 @@ class outerPort extends iQuery
     return number_format($percent, 2, ',', '');
   }
 
-  public function getTotalTrucksInAnpuerto()
+  public function getTotalTrucksInAnpuerto($admin)
   {
-    $user  = new user($this->conexion);
-    $admin = $user->isAdmin($_SESSION["user"]["run"]);
-
     if ($admin) {
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
     }
@@ -533,7 +512,7 @@ class outerPort extends iQuery
       }
     } else {
       $tr .= "<tr>";
-      $tr .= "<td colspan='19' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= "<td colspan='20' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 

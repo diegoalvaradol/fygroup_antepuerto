@@ -5,7 +5,8 @@ require_once __DIR__ . '/../config/includes.php';
 $db   = (new Database())->getConnection();
 $user = new user($db);
 
-$admin = $user->isAdmin($_SESSION["user"]["run"]);
+$admin  = $user->isAdmin($_SESSION["user"]["run"]);
+$footer = menu::footerSSL();
 
 /* Validar superadmin */
 if (!$admin) {
@@ -116,6 +117,10 @@ $resultado = ejecutarQuery($db);
 							<!-- /.container-fluid -->
 					</div>
 					<!-- End of Main Content -->
+
+          <!-- Footer -->
+          <?php echo $footer; ?>
+          <!-- End of Footer -->
 			</div>
 			<!-- End of Content Wrapper -->
   </div>
