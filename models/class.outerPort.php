@@ -158,9 +158,9 @@ class outerPort extends iQuery
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result['totalContainer'] > 0) {
-      echo $result['totalContainer'];
+      return number_format($result['totalContainer'], 0, ',', '.');
     } else {
-      echo 0;
+      return 0;
     }
   }
 
@@ -179,9 +179,9 @@ class outerPort extends iQuery
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result['totalPallets'] > 0) {
-      echo $result['totalPallets'] * 20;
+      return number_format($result['totalPallets'] * 20, 0, ',', '.');
     } else {
-      echo 0;
+      return 0;
     }
   }
 
@@ -200,7 +200,7 @@ class outerPort extends iQuery
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result['totalThermo'] > 0) {
-      return $result['totalThermo'];
+      return number_format($result['totalThermo'], 0, ',', '.');
     } else {
       return 0;
     }
@@ -221,7 +221,7 @@ class outerPort extends iQuery
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result['totalPallets'] > 0) {
-      return $result['totalPallets'];
+      return number_format($result['totalPallets'] * 20, 0, ',', '.');
     } else {
       return 0;
     }
@@ -242,7 +242,7 @@ class outerPort extends iQuery
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result['total'] > 0) {
-      return $result['total'];
+      return number_format($result['total'], 0, ',', '.');
     } else {
       return 0;
     }
@@ -284,7 +284,7 @@ class outerPort extends iQuery
 
     $total = $result['total'];
 
-    return $total;
+    return number_format($total, 0, ',', '.');
   }
 
   public function findByUser($run)
