@@ -287,6 +287,39 @@ class outerPort extends iQuery
     return number_format($total, 0, ',', '.');
   }
 
+  public function getTotalArrivedTrucks($admin)
+  {
+    if ($admin) {
+      $queryTotal      = "SELECT COUNT(*) as total FROM $this->table WHERE 1";
+      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
+    }
+
+    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
+      $queryTotal      = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0";
+      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
+    }
+
+    /* Total de camiones arrivados */
+    $stmtTotal = $this->conexion->prepare($queryTotal);
+    $stmtTotal->execute();
+    $resultTotal   = $stmtTotal->fetch(PDO::FETCH_ASSOC);
+    $totalArrivado = $resultTotal['total'];
+
+    /* Total de camiones despachados */
+    $stmtAntepuerto = $this->conexion->prepare($queryAntepuerto);
+    $stmtAntepuerto->execute();
+    $resultAntepuerto = $stmtAntepuerto->fetch(PDO::FETCH_ASSOC);
+    $totalAntepuerto  = $resultAntepuerto['total'];
+
+    if ($totalArrivado > 0 && $totalAntepuerto > 0) {
+      $totalDespachado = $totalArrivado - $totalAntepuerto;
+
+      return number_format($totalDespachado, 0, ',', '.');
+    } else {
+      return 0;
+    }
+  }
+
   public function findByUser($run)
   {
     $query = "SELECT * FROM app_users WHERE run = :run";
