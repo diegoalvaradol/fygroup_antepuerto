@@ -90,13 +90,18 @@ if (!$admin) {
 					<?php if (empty($archivos)): ?>
 						<p class="text-muted text-center">No hay archivos cargados.</p>
 					<?php else: ?>
-						<ul class="list-group">
+						<ul class="list-group" id="fileList">
 							<?php foreach ($archivos as $archivo): ?>
-								<li class="list-group-item d-flex justify-content-between align-items-center">
+								<li class="list-group-item d-flex justify-content-between align-items-center" data-file="<?=htmlspecialchars($archivo)?>">
 									<?=htmlspecialchars($archivo)?>
-									<a href="../controllers/downloadFiles.php?file=<?=urlencode($archivo)?>" class="btn btn-sm btn-success">
-										<i class="fas fa-download"></i>
-									</a>
+									<div>
+										<a href="../controllers/downloadFiles.php?file=<?=urlencode($archivo)?>" class="btn btn-sm btn-success me-1" title="Descargar">
+											<i class="fas fa-download"></i>
+										</a>
+										<button class="btn btn-sm btn-danger btn-delete" title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>">
+											<i class="fas fa-trash"></i>
+										</button>
+									</div>
 								</li>
 							<?php endforeach; ?>
 						</ul>
@@ -172,4 +177,42 @@ if (!$admin) {
 			error: () => Swal.fire('Error', 'Ocurrió un error de red', 'error')
 		});
 	}
+
+	$(document).ready(function() {
+    $('.btn-delete').click(function() {
+      const file = $(this).data('file');
+      const listItem = $(this).closest('li');
+
+      Swal.fire({
+        title: '¿Eliminar archivo?',
+        text: "No podrás revertir esta acción.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '../controllers/deleteFiles.php',
+            method: 'POST',
+            data: { file: file },
+            success: function(response) {
+              if (response === 'OK') {
+                Swal.fire('Eliminado', 'El archivo fue eliminado.', 'success');
+                listItem.remove();
+                if ($('#fileList li').length === 0) {
+                  $('#fileList').html('<p class="text-muted text-center">No hay archivos cargados.</p>');
+                }
+              } else {
+                Swal.fire('Error', response, 'error');
+              }
+            },
+            error: function() {
+              Swal.fire('Error', 'Error en la comunicación con el servidor.', 'error');
+            }
+          });
+        }
+      });
+    });
+  });
 </script>
