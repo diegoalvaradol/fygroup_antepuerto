@@ -97,6 +97,18 @@ class outerPort extends iQuery
     return $stmt->execute();
   }
 
+  public function delete()
+  {
+    $query = "DELETE FROM $this->table WHERE row_id = :id";
+    $stmt  = $this->conexion->prepare($query);
+
+    $this->id = htmlspecialchars(strip_tags($this->id));
+
+    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+
+    return $stmt->execute();
+  }
+
   public function updateContainerThermo()
   {
     $query = "UPDATE $this->table SET counter_vessel = :countervessel, vessel_id = :vessel, car_plate = :carplate, guide_number = :guide, container = :container, seal_number = :seal, exporter = :exporter, agency = :agency, cellphone_driver = :cellphonedriver, arrival_date = :arrivaldate, comodity = :comodity, booking = :booking, stay = :stay, observations = :observations, pallets_quantity = :palletsquantity, created_by = :createdby WHERE row_id = :id AND origin = :origin";
@@ -515,8 +527,9 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnAddContainerHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
+        $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
+        $btnDelete           = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -538,7 +551,7 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $tr .= "<td>" . $btnAddContainerHour . ' ' . $btnEdit . "</td>";
+        $tr .= "<td>" . $btnAddContainerHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>";
         $tr .= "</tr>";
 
         $count++;
@@ -817,8 +830,9 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnAddThermoHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
+        $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
+        $btnDelete        = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -837,7 +851,7 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $tr .= "<td>" . $btnAddThermoHour . ' ' . $btnEdit . "</td>";
+        $tr .= "<td>" . $btnAddThermoHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>";
         $tr .= "</tr>";
 
         $count++;

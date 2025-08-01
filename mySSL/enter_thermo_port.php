@@ -609,6 +609,52 @@ var saveInTermo = function() {
   }
 }
 
+var deleteTruck = function(id) {
+  Swal.fire({
+    title: 'Eliminar Camión.',
+    text: '¿Estas seguro de eliminar este camión?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "¡Si, eliminar!",
+    cancelButtonText : 'Cancelar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: '../controllers/outerPortDeleteController.php',
+        type: 'POST',
+        data: { id: id },
+      }).done(function(x) {
+        if(x == 'OK'){
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Camión eliminado con éxito!',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50'
+          }).then((result) => {
+            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>';
+          });
+        } else if(x == 'NOOK'){
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Error al eliminar el camión.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }else if(x == 'NOOK2'){
+          Swal.fire({
+            title: 'Oops...',
+            text: 'El camión que tratas de eliminar tiene una hora de salida registrada.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
+      });
+    }
+  });
+}
+
 var exportExcel = function(nave, condicion, exportador) {
   const form = document.createElement('form');
   form.method = 'POST';
