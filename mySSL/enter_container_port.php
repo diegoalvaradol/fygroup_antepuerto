@@ -84,12 +84,12 @@ $top             = UIComponents::scrollToTopButton();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
-                                                  <select class="form-control select2 form-control-user" id="vessel" name="vessel">
-                                                    <option value="-">Seleccione una motonave...</option>
-                                                  </select>
-                                                  <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
-                                                  <small class="text-danger" id="error-vessel"></small>
+                                                  <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
+                                                    <select class="form-control select2 form-control-user" id="vessel" name="vessel">
+                                                      <option value="-">Seleccione una motonave...</option>
+                                                    </select>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
+                                                    <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">

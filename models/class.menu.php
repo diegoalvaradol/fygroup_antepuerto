@@ -98,11 +98,12 @@ class menu
           ]
         ],
         [
-          'title' => 'SQL',
+          'title' => 'Servidor',
           'icon'  => 'fa-server',
-          'id'    => 'collapseSQL',
+          'id'    => 'collapseServer',
           'items' => [
-            ['label' => 'Consola SQL', 'link' => generateMkey('sql_console')]
+            ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
+            ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')]
           ]
         ]
       ]);
