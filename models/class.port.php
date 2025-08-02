@@ -106,7 +106,7 @@ class port extends iQuery
 
     $count = 0;
 
-    $thead = "<thead style='background-color:#2653d4; color:white;'>";
+    $thead = "<thead style='background-color:#4e73df; color:white;'>";
     $thead .= "<tr>";
     $thead .= "<th>Id</th>";
     $thead .= "<th>Ciudad</th>";
@@ -149,10 +149,10 @@ class port extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header py-3'>
-              <h5 class='m-0 font-weight-bold text-primary'>Listado de Puertos</h5>
-              <h6> Total de Registros: " . $count . "</h6>
+            <div class='card-header bg-primary text-white'>
+              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Puertos <em>(Total de Registros: " . $count . ")</em></h6>
             </div>
+
             <div class='table-responsive'>
               <table class='table table-bordered table-hover' style='width:revert-layer;'>
                 " . $thead . $tr . $tbclose . "

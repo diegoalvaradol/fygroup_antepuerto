@@ -203,7 +203,7 @@ class internationalChargue extends iQuery
     </div>
     ";
 
-    $thead = "<thead style='background-color:#2653d4; color:white;'>";
+    $thead = "<thead style='background-color:#4e73df; color:white;'>";
     $thead .= "<tr>";
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
@@ -257,18 +257,21 @@ class internationalChargue extends iQuery
     $tbclose = "</tbody>";
 
     $table = $form . "
-    <div class='container-fluid'>
-      <div class='sticky-form bg-white pr-3 pl-3 mb-3'>
-        <h6 class='h3 mb-1 text-gray-800'>Listado de Contenedores</h6>
-        <h6> Total de Registros: " . $count . "</h6>
-      </div>
+    <div class='row'>
+        <div class='col-lg-12'>
+          <div class='card shadow mb-4'>
+            <div class='card-header bg-primary text-white'>
+              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Contenedores <em>(Total de Registros: " . $count . ")</em></h6>
+            </div>
 
-      <div class='table-responsive'>
-        <table class='table table-bordered table-hover' style='width:max-content;'>
-        " . $thead . $tr . $tbclose . "
-        </table>
+            <div class='table-responsive'>
+                <table class='table table-bordered table-hover' style='width:max-content;'>
+                " . $thead . $tr . $tbclose . "
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     ";
 
     return $table;

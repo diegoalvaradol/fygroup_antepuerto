@@ -459,7 +459,7 @@ class outerPort extends iQuery
     </div>
     ";
 
-    $thead = "<thead style='background-color:#2653d4; color:white;'>";
+    $thead = "<thead style='background-color:#4e73df; color:white;'>";
     $thead .= "<tr>";
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
@@ -527,7 +527,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnAddContainerHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
+        $btnAddContainerHour = $_SESSION["user"]["division"] == 'ssl' && $data[$this->departuredate] == '0000-00-00 00:00:00' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
         $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>" : null;
 
@@ -568,10 +568,10 @@ class outerPort extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header py-3'>
-              <h5 class='m-0 font-weight-bold text-primary'>Listado de Contenedores</h5>
-              <h6> Total de Registros: " . $count . "</h6>
+            <div class='card-header bg-primary text-white'>
+              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Contenedores <em>(Total de Registros: " . $count . ")</em></h6>
             </div>
+
             <div class='table-responsive'>
                 <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
@@ -765,7 +765,7 @@ class outerPort extends iQuery
     </div>
     ";
 
-    $thead = "<thead style='background-color:#2653d4; color:white;'>";
+    $thead = "<thead style='background-color:#4e73df; color:white;'>";
     $thead .= "<tr>";
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
@@ -830,7 +830,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnAddThermoHour = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
+        $btnAddThermoHour = $_SESSION["user"]["division"] == 'ssl' && $data[$this->departuredate] == '0000-00-00 00:00:00' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : null;
         $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = $_SESSION["user"]["division"] == 'ssl' ? "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>" : null;
 
@@ -868,10 +868,10 @@ class outerPort extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header py-3'>
-              <h5 class='m-0 font-weight-bold text-primary'>Listado de Termos</h5>
-              <h6> Total de Registros: " . $count . "</h6>
+            <div class='card-header bg-primary text-white'>
+              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Termos <em>(Total de Registros: " . $count . ")</em></h6>
             </div>
+
             <div class='table-responsive'>
                 <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
@@ -1074,7 +1074,7 @@ class outerPort extends iQuery
     </div>
     ";
 
-    $thead = "<thead style='background-color:#2653d4; color:white;'>";
+    $thead = "<thead style='background-color:#4e73df; color:white;'>";
     $thead .= "<tr>";
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
@@ -1169,10 +1169,10 @@ class outerPort extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header py-3'>
-              <h5 class='m-0 font-weight-bold text-primary'>Listado de Cargas</h5>
-              <h6> Total de Registros: " . $count . "</h6>
+            <div class='card-header bg-primary text-white'>
+              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Cargas <em>(Total de Registros: " . $count . ")</em></h6>
             </div>
+
             <div class='table-responsive'>
                 <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
