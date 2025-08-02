@@ -157,11 +157,12 @@ $top             = UIComponents::scrollToTopButton();
                                                 <div class="col-sm-6">
                                                     <label for="cellphonedriver" class="text-gray-800 font-weight-bold">N° de Teléfono</label>
                                                     <div class="input-group">
-                                                        <span class="input-group-text">
-                                                            <img src="https://flagcdn.com/w20/cl.png" alt="Chile" style="width: 15px; height: auto; margin-right: 5px;">+56
-                                                        </span>
-                                                        <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" maxlength="9" pattern="\d{9}" oninput="limitarTelefono(this)" placeholder="9 XXXX XXXX">
+                                                      <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="inputGroup-sizing-default"><img src="https://flagcdn.com/w20/cl.png" alt="Chile" style="width:20px; height:auto; margin-right:5px;">+56</span>
+                                                      </div>
+                                                      <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" maxlength="9" pattern="\d{9}" oninput="limitarTelefono(this)" placeholder="9 XXXX XXXX">
                                                     </div>
+
                                                     <small class="text-danger" id="error-cellphonedriver"></small>
                                                 </div>
                                             </div>
