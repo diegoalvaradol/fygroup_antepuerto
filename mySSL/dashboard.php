@@ -77,7 +77,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center">
-                                <i class="fas fa-box fa-2x text-primary mb-2"></i>
+                                <i class="fas fa-boxes-stacked fa-2x text-primary mb-2"></i>
                                 <h6 class="text-primary text-uppercase mb-3">Contenedores</h6>
                               </div>
                               <div class="d-flex justify-content-between px-3">
@@ -160,8 +160,8 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center mb-3">
-                                <i class="fas fa-chart-line fa-2x text-info mb-2"></i>
-                                <h6 class="text-info text-uppercase">Capacidad</h6>
+                                <i class="fas fa-chart-pie fa-2x text-info mb-2"></i>
+                                <h6 class="text-info text-uppercase">Ocupación</h6>
                               </div>
                               <div class="text-center mb-2">
                                 <div class="text-muted small">Ocupación Antepuerto</div>
@@ -189,8 +189,8 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                             <div class="card bg-light shadow-sm h-100">
                               <div class="card-body">
                                 <div class="text-center mb-3">
-                                  <i class="fas fa-chart-bar fa-2x text-info mb-2"></i>
-                                  <h6 class="text-info text-uppercase">Camiones por Día</h6>
+                                  <i class="fas fa-chart-column fa-2x text-info mb-2"></i>
+                                  <h6 class="text-info text-uppercase">Movimientos por Día</h6>
                                 </div>
                                 <div class="form-group row justify-content-center">
                                   <div class="col-12 col-md-auto me-md-4 mb-3">
