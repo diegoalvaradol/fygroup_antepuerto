@@ -129,15 +129,16 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                                 <?php $totalTrucks         = $port->getTotalTrucks($admin); ?>
                                 <?php $trucksInAntepuerto  = $port->getTotalTrucksInAnpuerto($admin); ?>
                                 <?php $trucksArrivedTrucks = $port->getTotalArrivedTrucks($admin); ?>
-                                <div class="text-muted small">Total Arrivados</div>
-                                <div class="h5 font-weight-bold text-dark mb-3"><?=$totalTrucks?> camiones</div>
+                                <div class="text-muted small">Total Camiones Arrivados</div>
+                                <div class="h5 font-weight-bold text-dark mb-3"><?=$totalTrucks?></div>
 
                                 <div class="mb-1">
                                   <small class="text-success font-weight-bold">
                                     Solicitados: <?=$trucksArrivedTrucks?>
                                     <i class="fas fa-info-circle text-info" title="Solicitados" role="button"
                                       data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
-                                      data-bs-content="Camiones solicitados por terminal."></i>
+                                      data-bs-content="Camiones solicitados por terminal.">
+                                    </i>
                                   </small>
                                 </div>
                                 <div>
@@ -145,7 +146,8 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                                     Pendientes: <?=$trucksInAntepuerto?>
                                     <i class="fas fa-info-circle text-info" title="Pendientes" role="button"
                                       data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
-                                      data-bs-content="Camiones que se encuentran en antepuerto."></i>
+                                      data-bs-content="Camiones que se encuentran en antepuerto.">
+                                    </i>
                                   </small>
                                 </div>
                               </div>

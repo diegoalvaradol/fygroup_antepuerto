@@ -180,14 +180,16 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-12">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Arrivos</div>
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Camiones Arrivados</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalTrucks        = $port->getTotalTrucks($admin); ?>
-                                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin); ?>
-                                                <?php echo $totalTrucks . ' camiones.'; ?>
+                                                <?php $totalTrucks         = $port->getTotalTrucks($admin); ?>
+                                                <?php $trucksInAntepuerto  = $port->getTotalTrucksInAnpuerto($admin); ?>
+                                                <?php $trucksArrivedTrucks = $port->getTotalArrivedTrucks($admin); ?>
 
-                                                <small class="h5 mb-0 font-weight-bold text-suceess-800" style="font-size:small;color: green;">Solicitados: <?php print_r($totalTrucks - $trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que han arrivado a antepuerto y que ya han sido solicitados por terminal."></i>
-                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php print_r($trucksInAntepuerto); ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Muestra el total de camiones que se encuentra en el antepuerto y que no han sido solicitados por terminal."></i>
+                                                <?php echo $totalTrucks; ?>
+                                                </br>
+                                                <small class="h5 mb-0 font-weight-bold text-success-800" style="font-size:small;color: green;">Solicitados: <?php echo $trucksArrivedTrucks; ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Camiones solicitados por terminal."></i>
+                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php echo $trucksInAntepuerto; ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Camiones que se encuentran en antepuerto."></i>
                                             </div>
                                         </div>
                                         <div class="col-auto">
