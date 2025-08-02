@@ -9,10 +9,12 @@ class listPrice extends iQuery
 		<table class="table table-bordered table-hover" style="width: 100%; border-collapse: collapse;">
 			<thead style="background-color:#eed484; color:black;">
 				<tr>
-					<th colspan="3" style="text-align: center;">Mediterranean Shipping Company (Medlog)</th>
+					<div class="card-header" style="background-color:#eed484; color:black;">
+						<h6 class="mb-0" style="text-align:center;"><i class="fas fa-building"></i> Mediterranean Shipping Company (Medlog)</h6>
+					</div>
 				</tr>
 				<tr style="text-align: center;">
-					<th>Tipo</th>
+					<th>Tipo Contenedor</th>
 					<th>Gate In ($)</th>
 					<th>Gate Out ($)</th>
 				</tr>
@@ -40,10 +42,12 @@ class listPrice extends iQuery
 		<table class="table table-bordered table-hover" style="width: 100%; border-collapse: collapse;">
 			<thead style="background-color:#42b0d5; color:white;">
 				<tr>
-					<th colspan="3" style="text-align: center;">Maersk Line (Ex Contopsa)</th>
+					<div class="card-header" style="background-color:#42b0d5; color:white;">
+						<h6 class="mb-0" style="text-align:center;"><i class="fas fa-building"></i> Maersk Line (Ex Contopsa)</h6>
+					</div>
 				</tr>
 				<tr style="text-align: center;">
-					<th>Tipo</th>
+					<th>Tipo Contenedor</th>
 					<th>Gate In ($)</th>
 					<th>Gate Out ($)</th>
 				</tr>
@@ -72,7 +76,9 @@ class listPrice extends iQuery
 			<table class="table table-bordered table-hover" style="width: 100%; border-collapse: collapse; min-width: 300px;">
 				<thead style="background-color:#2A5CAA; color:white;">
 					<tr>
-						<th colspan="3" style="text-align: center;">Cool Carriers</th>
+						<div class="card-header" style="background-color:#2A5CAA; color:white;">
+							<h6 class="mb-0" style="text-align:center;"><i class="fas fa-building"></i> Cool Carriers</h6>
+						</div>
 					</tr>
 				</thead>
 				<tbody style="text-align: center;">
