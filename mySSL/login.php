@@ -44,6 +44,14 @@ if (isset($_SESSION['user'])) {
       font-size: medium !important;
     }
   }
+
+  .input-group {
+    width: 100%;
+  }
+  .input-group-text {
+    min-width: 42px; /* Asegura ancho fijo en los íconos */
+    justify-content: center;
+  }
 </style>
 
 <body>
@@ -69,25 +77,25 @@ if (isset($_SESSION['user'])) {
 
                   <form id="loginForm">
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-append" style="width: 40px;">
-                          <span class="input-group-text bg-white border-left-0"><i class="faw fa-solid fa-id-card-clip"></i></span>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="faw fa-solid fa-user"></i></span>
                         </div>
                         <input type="text" class="form-control text-center" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
                         <div class="input-group-append">
-                          <span class="input-group-text bg-white border-left-0" id="info-run"></span>
+                          <span class="input-group-text"><i id="info-run"></i></span>
                         </div>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-append">
-                          <span class="input-group-text bg-white border-left-0"><i class="faw fa-solid fa-key"></i></span>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="faw fa-solid fa-key"></i></span>
                         </div>
                         <input type="password" class="form-control text-center" id="password" name="password" oninput="validaPassword(this.value)" placeholder="Contraseña">
                         <div class="input-group-append">
-                          <span class="input-group-text bg-white border-left-0" id="info-password"></span>
+                          <span class="input-group-text"><i id="info-password"></i></span>
                         </div>
                       </div>
                     </div>
@@ -143,9 +151,9 @@ if (isset($_SESSION['user'])) {
   }
 
   var validaPassword = function (password){
-    $('#info-password').html(password !== ''
-      ? '<i class="fas fa-check-circle text-success"></i>'
-      : '<i class="fa-solid fa-triangle-exclamation text-warning"></i>');
+    $('#info-password').attr('class', password !== ''
+      ? 'fas fa-check-circle text-success'
+      : 'fa-solid fa-triangle-exclamation text-warning');
   }
 
   var validaRut = function (rut) {
@@ -161,9 +169,9 @@ if (isset($_SESSION['user'])) {
     const dvEsperado = 11 - (suma % 11);
     let dvCalculado = (dvEsperado === 11) ? '0' : (dvEsperado === 10 ? 'K' : dvEsperado.toString());
 
-    $('#info-run').html(dvCalculado === dvIngresado
-      ? '<i class="fas fa-check-circle text-success"></i>'
-      : '<i class="fas fa-circle-xmark text-danger"></i>');
+    $('#info-run').attr('class', dvCalculado === dvIngresado
+      ? 'fas fa-check-circle text-success'
+      : 'fas fa-circle-xmark text-danger');
   }
 
   var loadSession = function () {
