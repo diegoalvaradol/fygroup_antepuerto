@@ -528,7 +528,7 @@ class outerPort extends iQuery
         }
 
         $btnAddContainerHour = $data[$this->departuredate] == '0000-00-00 00:00:00' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
-        $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' disabled><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 
         $tr .= "<tr " . $attr . ">";
@@ -831,7 +831,7 @@ class outerPort extends iQuery
         }
 
         $btnAddThermoHour = $data[$this->departuredate] == '0000-00-00 00:00:00' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
-        $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' disabled><i class='fas fa-solid fa-pencil'></i> Editar</button>";
+        $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 
         $tr .= "<tr " . $attr . ">";
