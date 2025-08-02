@@ -949,10 +949,20 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-vessel').html(response).css({'color': 'dodgerblue'});
+          $('#info-vessel').html(`<div class="card shadow-sm border-0 mb-3">
+              <div class="card-body text-primary">
+                ${response}
+              </div>
+            </div>
+          `);
         },
         error: function () {
-          $('#info-vessel').html('Error al obtener la información.').css({'color': 'red'});
+          $('#info-vessel').html(`<div class="card shadow-sm border-0 mb-3">
+              <div class="card-body text-danger">
+                Error al obtener la información.
+              </div>
+            </div>
+          `);
         }
       });
 
