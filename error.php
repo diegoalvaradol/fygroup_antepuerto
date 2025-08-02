@@ -3,9 +3,10 @@ http_response_code(403);
 require_once __DIR__ . '/config/auth.php';
 require_once __DIR__ . '/config/includes.php';
 
-$db  = (new Database())->getConnection();
-$cfg = new cfg($db);
-
+$db      = (new Database())->getConnection();
+$cfg     = new cfg($db);
+$footer  = menu::footerSSL();
+$top     = UIComponents::scrollToTopButton();
 $infoCfg = json_decode($cfg->getInfo(1), true);
 ?>
 
@@ -33,7 +34,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column min-vh-100">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->

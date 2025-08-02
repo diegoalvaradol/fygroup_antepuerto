@@ -7,12 +7,11 @@ http_response_code(503);
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db  = (new Database())->getConnection();
-$cfg = new cfg($db);
-
-$infoCfg = json_decode($cfg->getInfo(1), true);
+$db      = (new Database())->getConnection();
+$cfg     = new cfg($db);
 $footer  = menu::footerSSL();
 $top     = UIComponents::scrollToTopButton();
+$infoCfg = json_decode($cfg->getInfo(1), true);
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +39,7 @@ $top     = UIComponents::scrollToTopButton();
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" class="d-flex flex-column min-vh-100">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
@@ -53,11 +52,11 @@ $top     = UIComponents::scrollToTopButton();
                     <div class="text-center">
                         <img src="../images/ssl-logo-azul.png" style="width:25%;">
                         <p class="lead text-gray-800" style="font-size:400%;">¡Página en Mantención!</p>
-                        <img src="../images/img-maintenance.jpg" style="width:55%;">
+                        <img src="../images/img-maintenance.jpg" style="width:30%;">
                         <br>
-                        <p class="lead text-gray-800">Sentimos las molestias.</p>
+                        <p class="lead text-gray-800">Lamentamos las molestias.</p>
                         <p class="lead text-gray-800">Volveremos a estar disponible tan pronto sea posible.</p>
-                        <p class="lead text-gray-800">Gracias por la comprensión.</p>
+                        <p class="lead text-gray-800">Por favor contacta a soporte si tienes alguna consulta.</p>
 
                         <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
                             <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
@@ -72,10 +71,8 @@ $top     = UIComponents::scrollToTopButton();
             <!-- Footer -->
             <?php echo $footer; ?>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 
