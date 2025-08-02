@@ -484,10 +484,20 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-fromvessel').html(response).css({'color': 'dodgerblue'});
+          $('#info-fromvessel').html(`<div class="card shadow-sm border-0 mb-3">
+              <div class="card-body text-primary">
+                ${response}
+              </div>
+            </div>
+          `);
         },
         error: function () {
-          $('#info-fromvessel').html('Error al obtener la información.');
+          $('#info-fromvessel').html(`<div class="card shadow-sm border-0 mb-3">
+              <div class="card-body text-danger">
+                Error al obtener la información.
+              </div>
+            </div>
+          `);
         }
       });
     }else{
@@ -504,10 +514,20 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-tovessel').html(response).css({'color': 'dodgerblue'});
+          $('#info-tovessel').html(`<div class="card shadow-sm border-0 mb-3">
+              <div class="card-body text-primary">
+                ${response}
+              </div>
+            </div>
+          `);
         },
         error: function () {
-          $('#info-tovessel').html('Error al obtener la información.');
+          $('#info-tovessel').html(`<div class="card shadow-sm border-0 mb-3">
+              <div class="card-body text-danger">
+                Error al obtener la información.
+              </div>
+            </div>
+          `);
         }
       });
     }else{
