@@ -584,19 +584,26 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
   canvas.style.display = 'block';
   divCanvas.style.height = '400px';
 
+  const labels = datos.map(d => d.Fecha);
+
   const data = {
-    datasets: [{
-      label: 'Camiones por día',
-      data: datos,
-      backgroundColor: 'rgba(173, 216, 230, 0.7)',
-      borderColor: 'rgba(173, 216, 230, 1)',
-      barPercentage: 0.4,
-      categoryPercentage: 0.8,
-      parsing: {
-        xAxisKey: 'Fecha',
-        yAxisKey: 'Total'
+    labels: labels,
+    datasets: [
+      {
+        label: 'Ingresados',
+        data: datos.map(d => d.Ingresos),
+        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      },
+      {
+        label: 'Despachados',
+        data: datos.map(d => d.Egresos),
+        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
       }
-    }]
+    ]
   };
 
   const config = {
@@ -614,24 +621,18 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
         },
         tooltip: {
           callbacks: {
-            title: ctx => ctx[0].raw.Fecha,
-            label: ctx => ctx.raw.Total
+            title: ctx => ctx[0].label,
+            label: ctx => `${ctx.dataset.label}: ${ctx.raw}`
           }
         }
       },
       scales: {
         x: {
-          type: 'category',
-          title: { display: true, text: 'Fecha de Ingreso' },
-          ticks: {
-            callback: function(value) {
-              return this.getLabelForValue(value);
-            }
-          }
+          title: { display: true, text: 'Fecha' }
         },
         y: {
           beginAtZero: true,
-          title: { display: true, text: 'Total de Camiones' },
+          title: { display: true, text: 'Cantidad de Camiones' },
           ticks: { stepSize: 1, precision: 0 }
         }
       }

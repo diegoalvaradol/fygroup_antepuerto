@@ -7,4 +7,4 @@ $inicio = $input['fechaInicio'];
 $fin    = $input['fechaFin'];
 
 $port = new outerPort($db); // usa tu clase real si tiene otro nombre
-echo $port->trucksPerDay($inicio, $fin);
+echo $port->trucksInOutPerDay($inicio, $fin);

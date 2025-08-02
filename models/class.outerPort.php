@@ -356,23 +356,44 @@ class outerPort extends iQuery
     return $stmt->execute();
   }
 
-  public function trucksPerDay($inicio, $fin)
+  public function trucksInOutPerDay($inicio, $fin)
   {
     $inicioCompleto = $inicio . ' 00:00:00';
     $finCompleto    = $fin . ' 23:59:59';
 
-    $query = "SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS total FROM $this->table WHERE $this->arrivaldate BETWEEN :inicio AND :fin GROUP BY dia ORDER BY dia ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $query = "
+    SELECT dia,
+           SUM(ingresos) AS total_ingresos,
+           SUM(egresos) AS total_egresos
+    FROM (
+      SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS ingresos, 0 AS egresos
+      FROM $this->table
+      WHERE $this->arrivaldate BETWEEN :inicio AND :fin
+      GROUP BY dia
+
+      UNION ALL
+
+      SELECT DATE($this->departuredate) AS dia, 0 AS ingresos, COUNT(*) AS egresos
+      FROM $this->table
+      WHERE $this->departuredate BETWEEN :inicio AND :fin
+      GROUP BY dia
+    ) AS movimientos
+    GROUP BY dia
+    ORDER BY dia ASC
+  ";
+
+    $stmt = $this->conexion->prepare($query);
     $stmt->bindParam(':inicio', $inicioCompleto, PDO::PARAM_STR);
     $stmt->bindParam(':fin', $finCompleto, PDO::PARAM_STR);
     $stmt->execute();
 
     $data = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      if ((int) $row['total'] > 0) {
+      if ($row['total_ingresos'] > 0 && $row['total_egresos'] > 0) {
         $data[] = [
-          'Fecha' => date('d-m-y', strtotime($row['dia'])),
-          'Total' => (int) $row['total']
+          'Fecha'    => date('d-m-y', strtotime($row['dia'])),
+          'Ingresos' => (int) $row['total_ingresos'],
+          'Egresos'  => (int) $row['total_egresos']
         ];
       }
     }
