@@ -265,7 +265,7 @@ class internationalChargue extends iQuery
             </div>
 
             <div class='table-responsive'>
-                <table class='table table-bordered table-hover' style='width:max-content;'>
+              <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
               </table>
             </div>

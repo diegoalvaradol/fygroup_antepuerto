@@ -519,9 +519,9 @@ class outerPort extends iQuery
         $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-          $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
+          $comodity = "<i class='fas fa-solid fa-exclamation-triangle text-danger'> " . $data[$this->comodity] . "</i>";
         } else {
-          $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
+          $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
         }
 
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
@@ -594,7 +594,7 @@ class outerPort extends iQuery
             </div>
 
             <div class='table-responsive'>
-                <table class='table table-bordered table-hover' style='width:max-content;'>
+              <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
               </table>
             </div>
@@ -822,9 +822,9 @@ class outerPort extends iQuery
         $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-          $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
+          $comodity = "<i class='fas fa-solid fa-exclamation-triangle text-danger'> " . $data[$this->comodity] . "</i>";
         } else {
-          $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
+          $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
         }
 
         if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
@@ -894,7 +894,7 @@ class outerPort extends iQuery
             </div>
 
             <div class='table-responsive'>
-                <table class='table table-bordered table-hover' style='width:max-content;'>
+              <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
               </table>
             </div>
