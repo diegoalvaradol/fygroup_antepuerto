@@ -323,13 +323,9 @@ class outerPort extends iQuery
     $resultAntepuerto = $stmtAntepuerto->fetch(PDO::FETCH_ASSOC);
     $totalAntepuerto  = $resultAntepuerto['total'];
 
-    if ($totalArrivado > 0 && $totalAntepuerto > 0) {
-      $totalDespachado = $totalArrivado - $totalAntepuerto;
+    $totalDespachado = $totalArrivado - $totalAntepuerto;
 
-      return number_format($totalDespachado, 0, ',', '.');
-    } else {
-      return 0;
-    }
+    return number_format($totalDespachado, 0, ',', '.');
   }
 
   public function findByUser($run)
