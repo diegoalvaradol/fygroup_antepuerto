@@ -60,7 +60,7 @@ $top             = UIComponents::scrollToTopButton();
 
                     <div class="col-sm-12">
                       <div class="alert alert-info" role="alert"><i class="fa-solid fa-circle-info"></i>
-                        <b>¡Atención! : </b> Todos aquellos camiones que superen un (1) día de estadía en antepuerto serán destacados de color rojo.
+                        <b>¡Atención! : </b> Todos aquellos camiones que superen un día (1) de estadía en antepuerto serán destacados de color rojo.
                       </div>
                     </div>
 

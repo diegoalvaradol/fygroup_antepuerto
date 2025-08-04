@@ -1,5 +1,5 @@
 <?php
-class iRquest
+class iRequest
 {
   public function __get($key)
   {
