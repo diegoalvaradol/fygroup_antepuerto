@@ -2,6 +2,10 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $db   = (new Database())->getConnection();
 $port = new outerPort($db);
 $cfg  = new cfg($db);
@@ -73,7 +77,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                     <!-- Content Row -->
                     <div class="row">
                         <!-- Contenedores -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center">
@@ -95,7 +99,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                         </div>
 
                         <!-- Termos -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center">
@@ -116,7 +120,6 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                           </div>
                         </div>
 
-
                         <!-- Arrivos -->
                         <div class="col-xl-3 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
@@ -135,7 +138,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                                 <div class="mb-1">
                                   <small class="text-success font-weight-bold">
                                     Solicitados: <?=$trucksArrivedTrucks?>
-                                    <i class="fas fa-info-circle text-info" title="Solicitados" role="button"
+                                    <i class="fas fa-info-circle text-info" role="button"
                                       data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
                                       data-bs-content="Camiones solicitados por terminal.">
                                     </i>
@@ -144,7 +147,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                                 <div>
                                   <small class="text-danger font-weight-bold">
                                     Pendientes: <?=$trucksInAntepuerto?>
-                                    <i class="fas fa-info-circle text-info" title="Pendientes" role="button"
+                                    <i class="fas fa-info-circle text-info" role="button"
                                       data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
                                       data-bs-content="Camiones que se encuentran en antepuerto.">
                                     </i>
@@ -156,7 +159,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                         </div>
 
                         <!-- Capacidad -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center mb-3">
@@ -182,6 +185,20 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                           </div>
                         </div>
 
+                        <!-- Capacidad -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                          <div class="card bg-light shadow-sm h-100">
+                            <div class="card-body">
+                              <div class="text-center mb-3">
+                                <i class="fas fa-anchor-circle-check fa-2x text-danger mb-2"></i>
+                                <h6 class="text-danger text-uppercase">Últimos Camiones Enviados</h6>
+                              </div>
+                              <small class="d-block text-muted text-center">
+                                <?=$port->getLastSentTrucks();?>
+                              </small>
+                            </div>
+                          </div>
+                        </div>
 
                         <!-- Gráfico de Camiones Por Día -->
                         <?php if ($admin): ?>

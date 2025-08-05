@@ -1305,4 +1305,23 @@ class outerPort extends iQuery
 
     exit;
   }
+
+  public function getLastSentTrucks()
+  {
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE departure_date != '0000-00-00 00:00:00' ORDER BY departure_date DESC LIMIT 5";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->execute();
+    $result     = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $infoVessel = null;
+
+    foreach ($result as $info) {
+      $position = $info[$this->countervessel];
+      $carplate = $info[$this->carplate];
+      $vessel   = $info['vessel_name'];
+
+      $infoVessel .= '#' . htmlspecialchars($position) . ' / ' . '<b> Patente: </b>' . htmlspecialchars($carplate) . ' / ' . '<b>Nave: </b>' . htmlspecialchars($vessel) . '<br>';
+    }
+
+    return $infoVessel;
+  }
 }
