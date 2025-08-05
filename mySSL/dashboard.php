@@ -133,7 +133,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                                 <?php $trucksInAntepuerto  = $port->getTotalTrucksInAnpuerto($admin); ?>
                                 <?php $trucksArrivedTrucks = $port->getTotalArrivedTrucks($admin); ?>
                                 <div class="text-muted small">Total Camiones Arrivados</div>
-                                <div class="h5 font-weight-bold text-dark mb-3"><?=$totalTrucks?></div>
+                                <div class="h5 font-weight-bold text-dark"><?=$totalTrucks?></div>
 
                                 <div class="mb-1">
                                   <small class="text-success font-weight-bold">
