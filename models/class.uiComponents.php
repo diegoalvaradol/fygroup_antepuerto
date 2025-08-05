@@ -43,7 +43,7 @@ class UIComponents
 			</style>
 
 			<button id="scrollTopBtn" onclick="window.scrollTo({ top: 0, behavior: \'smooth\' });">
-				<i class="fas fa-angle-up"></i> Ir al inicio
+				<i class="fas fa-circle-arrow-up"></i> Ir al inicio
 			</button>
 
 			<script>

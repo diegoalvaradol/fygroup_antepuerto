@@ -9,25 +9,19 @@ class menu
     $cfg  = new cfg($db);
     $user = new user($db);
 
-    $infoCfg = json_decode($cfg->getInfo(1), true);
-    $admin   = $user->isAdmin($_SESSION["user"]["run"]);
+    $infoCfg    = json_decode($cfg->getInfo(1), true);
+    $updateTime = new DateTime($infoCfg['update_date']);
+    $admin      = $user->isAdmin($_SESSION["user"]["run"]);
 
     /* Definición de menús */
     $menus = [
       [
-        'title' => 'Antepuerto',
+        'title' => 'Operaciones',
         'icon'  => 'fa-truck',
-        'id'    => 'collapseAntepuerto',
+        'id'    => 'collapseOperaciones',
         'items' => [
           ['label' => 'Ingreso Contenedores', 'link' => generateMkey('enter_container_port')],
-          ['label' => 'Ingreso Termos', 'link' => generateMkey('enter_thermo_port')]
-        ]
-      ],
-      [
-        'title' => 'Internacional',
-        'icon'  => 'fa-earth-americas',
-        'id'    => 'collapseInternational',
-        'items' => [
+          ['label' => 'Ingreso Termos', 'link' => generateMkey('enter_thermo_port')],
           ['label' => 'Carga Internacional', 'link' => generateMkey('enter_container_international')],
           ['label' => 'Seguimiento', 'link' => generateMkey('tracking')]
         ]
@@ -113,9 +107,10 @@ class menu
     $sidebar .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
     $sidebar .= '<img src="../images/ssl-logo-azul.png" alt="Logo SSL" style="width:100%;">';
     $sidebar .= '</a>';
+    $sidebar .= '<div class="sidebar-heading text-white mt-3">Sistema Antepuerto</div>';
 
     foreach ($menus as $menu) {
-      $sidebar .= '<div class="sidebar-heading text-white mt-3">' . htmlspecialchars($menu['title']) . '</div>';
+      /*$sidebar .= '<div class="sidebar-heading text-white mt-3">' . htmlspecialchars($menu['title']) . '</div>';*/
       $sidebar .= '<li class="nav-item">';
       $sidebar .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false" aria-controls="' . $menu['id'] . '">';
       $sidebar .= '<i class="fas fa-fw ' . htmlspecialchars($menu['icon']) . '"></i>';
@@ -130,19 +125,23 @@ class menu
         $sidebar .= '<a class="collapse-item" href="' . htmlspecialchars($item['link']) . '">' . htmlspecialchars($item['label']) . '</a>';
       }
 
-      $sidebar .= '</div></div></li>';
+      $sidebar .= '</div>';
+      $sidebar .= '</div>';
+      $sidebar .= '</li>';
     }
 
-    $sidebar .= '<hr class="sidebar-divider d-none d-md-block">';
+    $sidebar .= '<div class="d-flex flex-column h-100">';
+    $sidebar .= '<div class="text-center d-none d-md-inline text-white small">';
+    $sidebar .= '<hr class="sidebar-divider">';
+    $sidebar .= '<div><i class="fas fa-copyright"></i>  ' . htmlspecialchars($infoCfg['name']) . '</div>';
+    $sidebar .= '<div><i class="fas fa-file-arrow-up"></i> ' . htmlspecialchars($infoCfg['version']) . '</div>';
+    $sidebar .= '<div><i class="fas fa-cloud-arrow-up"></i> ' . $updateTime->format('d-m-Y H:i') . '</div>';
+    $sidebar .= '</div>';
+    $sidebar .= '</br>';
     $sidebar .= '<div class="text-center d-none d-md-inline">';
     $sidebar .= '<button class="rounded-circle border-0" id="sidebarToggle"></button>';
     $sidebar .= '</div>';
-    $sidebar .= '<div class="d-flex flex-column h-100">';
-    $sidebar .= '<div class="text-center d-none d-md-inline mt-auto text-white small">';
-    $sidebar .= '<hr class="sidebar-divider">';
-    $sidebar .= '<div>' . htmlspecialchars($infoCfg['name']) . '</div>';
-    $sidebar .= '<div><b>Versión:</b> ' . htmlspecialchars($infoCfg['version']) . '</div>';
-    $sidebar .= '</div></div>';
+    $sidebar .= '</div>';
 
     $sidebar .= '</ul>';
 
@@ -389,7 +388,7 @@ class menu
         box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
         ">
         <div class="container">
-            <span>&copy; ' . date('Y') . ' ' . htmlspecialchars($infoCfg['mark']) . '. Todos los derechos reservados.</span>
+            <span><i class="fas fa-copyright"></i> ' . date('Y') . ' ' . htmlspecialchars($infoCfg['mark']) . '. Todos los derechos reservados.</span>
         </div>
     </footer>';
 
