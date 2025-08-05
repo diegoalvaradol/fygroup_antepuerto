@@ -185,7 +185,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
                           </div>
                         </div>
 
-                        <!-- Capacidad -->
+                        <!-- Camiones Enviados -->
                         <div class="col-xl-3 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">

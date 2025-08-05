@@ -1308,7 +1308,7 @@ class outerPort extends iQuery
 
   public function getLastSentTrucks()
   {
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE departure_date != '0000-00-00 00:00:00' ORDER BY departure_date DESC LIMIT 5";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE departure_date != '0000-00-00 00:00:00' ORDER BY row_id DESC LIMIT 5";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute();
     $result     = $stmt->fetchAll(PDO::FETCH_ASSOC);
