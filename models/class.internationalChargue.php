@@ -163,9 +163,33 @@ class internationalChargue extends iQuery
     }
 
     $whereClause = implode(' AND ', $conditions);
+    /*
     $query       = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt        = $this->conexion->prepare($query);
     $stmt->execute($params);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+     */
+
+    /* Contador de registros */
+    $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0";
+    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt->execute($params);
+    $totalRegistros = $countStmt->fetchColumn();
+
+    /* Construccion total de la página y query */
+    $porPagina = 25; /* Número de registros por página */
+    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $inicio    = ($pagina - 1) * $porPagina;
+    $urlBase   = generateMkey('enter_container_international') . '&page=';
+
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
+    $stmt  = $this->conexion->prepare($query);
+    foreach ($params as $key => $value) {
+      $stmt->bindValue($key, $value);
+    }
+    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
+    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
+    $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     /* Formulario de filtros */
@@ -268,6 +292,7 @@ class internationalChargue extends iQuery
               <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
               </table>
+              " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
             </div>
           </div>
         </div>

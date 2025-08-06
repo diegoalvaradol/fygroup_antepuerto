@@ -60,4 +60,38 @@ abstract class iQuery
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+
+  public function paginate($totalRegistros, $porPagina, $paginaActual, $urlBase = '?page=')
+  {
+    $totalPaginas = ceil($totalRegistros / $porPagina);
+
+    $html = '<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
+
+    /* Página anterior */
+    $prevClass = ($paginaActual <= 1) ? 'disabled' : '';
+    $html .= '<li class="page-item ' . $prevClass . '">';
+    $html .= '<a class="page-link" href="' . ($paginaActual > 1 ? $urlBase . ($paginaActual - 1) : '#') . '">Anterior</a>';
+    $html .= '</li>';
+
+    /* Números */
+    for ($i = 1; $i <= $totalPaginas; $i++) {
+      $active = ($paginaActual == $i) ? 'active' : '';
+
+      $html .= '<li class="page-item ' . $active . '">';
+      $html .= '<a class="page-link" href="' . $urlBase . $i . '">' . $i . '</a>';
+      $html .= '</li>';
+    }
+
+    /* Siguiente */
+    $nextClass = ($paginaActual >= $totalPaginas) ? 'disabled' : '';
+    $html .= '<li class="page-item ' . $nextClass . '">';
+    $html .= '<a class="page-link" href="' . ($paginaActual < $totalPaginas ? $urlBase . ($paginaActual + 1) : '#') . '">Siguiente</a>';
+    $html .= '</li>';
+
+    $html .= '</ul>';
+    $html .= '</nav>';
+
+    return $html;
+  }
+
 }
