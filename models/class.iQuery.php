@@ -61,7 +61,7 @@ abstract class iQuery
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function paginate($totalRegistros, $porPagina, $paginaActual, $urlBase = '?pagina=')
+  public function paginate($totalRegistros, $porPagina, $paginaActual, $urlBase = '?page=')
   {
     $totalPaginas = ceil($totalRegistros / $porPagina);
 
