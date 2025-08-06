@@ -72,17 +72,18 @@ $top             = UIComponents::scrollToTopButton();
                                 <div class="card-body">
                                     <form class="form-container" id="shipLineForm">
                                         <div class="form-group row">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <label for='shipline' class='text-gray-800 font-weight-bold'>Nombre de Linea Naviera</label>
                                                 <input type="text" class="form-control form-control-user" id="shipline" name="shipline" onblur="verifyShipLine(this.value)" placeholder="Maersk, Hapag Lloyd, etc.">
                                                 <small class="text-danger" id="error-shipline"></small>
                                             </div>
                                         </div>
 
-                                        <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveShipLine()">
-                                          <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Registrar Naviera</span>
+                                        <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveShipLine()">
+                                          <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                           <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                         </button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
                                     </form>
                                 </div>
                             </div>

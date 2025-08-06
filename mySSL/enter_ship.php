@@ -116,10 +116,11 @@ $top             = UIComponents::scrollToTopButton();
                                                 </div>
                                             </div>
 
-                                            <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveShip()">
-                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Registrar Nave</span>
+                                            <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveShip()">
+                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
+                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
                                         </form>
                                 </div>
 

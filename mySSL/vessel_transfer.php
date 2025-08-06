@@ -77,7 +77,7 @@ $top             = UIComponents::scrollToTopButton();
                                 <div class="card-body">
                                     <form class="form-container" id="vesselTransferForm">
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <div class="form-inline mb-3">
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Origen</label>
                                                     <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave del origen del roleo."></i>
@@ -89,7 +89,7 @@ $top             = UIComponents::scrollToTopButton();
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <div class="form-inline mb-3">
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Destino</label>
                                                     <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave de destino del roleo."></i>
@@ -103,7 +103,7 @@ $top             = UIComponents::scrollToTopButton();
                                         </div>
 
                                         <div class="form-group row">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <div class="form-inline mb-3">
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Origen</label>
                                                 </div>
@@ -113,7 +113,7 @@ $top             = UIComponents::scrollToTopButton();
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-3">
                                                 <div class="form-inline mb-3">
                                                     <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Destino</label>
                                                 </div>
@@ -124,10 +124,11 @@ $top             = UIComponents::scrollToTopButton();
                                             </div>
                                         </div>
 
-                                        <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveVesselTransfer()">
+                                        <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveVesselTransfer()">
                                             <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Realizar Roleo</span>
                                             <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                         </button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
                                     </form>
                                 </div>
                             </div>

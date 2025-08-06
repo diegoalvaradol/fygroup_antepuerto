@@ -22,7 +22,7 @@ if (isset($_POST['finished']) && ($_POST['finished'] == 1)) {
   $query .= " AND finished = 1 ";
 }
 
-$qwery .= "ORDER BY vessel_name ASC LIMIT 10";
+$query .= "ORDER BY vessel_name ASC LIMIT 10";
 
 $stmt = $db->prepare($query);
 $stmt->bindParam(":search", $search, PDO::PARAM_STR);

@@ -188,10 +188,11 @@ $top             = UIComponents::scrollToTopButton();
                                             <input type="hidden" id="cntId" name="cntId" value="0">
                                             <input type="hidden" id="isUpdate" name="isUpdate" value="0">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
-                                            <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="saveInTermo()">
-                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Ingresar Termo</span>
+                                            <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTermo()">
+                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
+                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
                                         </form>
                                 </div>
                             </div>
