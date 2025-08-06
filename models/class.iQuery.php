@@ -65,7 +65,7 @@ abstract class iQuery
   {
     $totalPaginas = ceil($totalRegistros / $porPagina);
 
-    $html = '<nav aria-label="Page navigation example"><ul class="pagination">';
+    $html = '<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
 
     /* Anterior */
     $prevClass = ($paginaActual <= 1) ? 'disabled' : '';
