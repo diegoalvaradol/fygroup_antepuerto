@@ -447,8 +447,7 @@ class outerPort extends iQuery
 
     if ($_SESSION["user"]["division"] === 'ssl') {
       $urlBase = generateMkey('enter_container_port', 'mySSL') . '&page=';
-    }
-    if ($_SESSION["user"]["division"] === 'terminal' || $_SESSION["user"]["division"] === 'exporter') {
+    } else {
       $urlBase = generateMkey('enter_container_port', 'myPortal') . '&page=';
     }
 
@@ -778,8 +777,7 @@ class outerPort extends iQuery
 
     if ($_SESSION["user"]["division"] === 'ssl') {
       $urlBase = generateMkey('enter_thermo_port', 'mySSL') . '&page=';
-    }
-    if ($_SESSION["user"]["division"] === 'terminal' || $_SESSION["user"]["division"] === 'exporter') {
+    } else {
       $urlBase = generateMkey('enter_thermo_port', 'myPortal') . '&page=';
     }
 
