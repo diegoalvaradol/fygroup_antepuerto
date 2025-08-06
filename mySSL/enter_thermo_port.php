@@ -709,7 +709,7 @@ var editThermo = function(id) {
       $('#observations').val(data.observations);
       $('#isUpdate').val(1);
       $('#loadBtn').addClass('btn-info');
-      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Termo');
+      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar');
       $('#scrollTopBtn').trigger('click');
     },
     error: function() {
