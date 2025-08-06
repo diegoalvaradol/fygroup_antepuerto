@@ -126,8 +126,22 @@ class ship extends iQuery
     $shipLine = new shipLine($this->conexion);
     $count    = 0;
 
-    $query = "SELECT * FROM $this->table WHERE 1 ORDER BY ship_id ASC";
+    /* Contador de registros */
+    $countQuery = "SELECT COUNT(*) FROM $this->table WHERE 1";
+    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt->execute();
+    $totalRegistros = $countStmt->fetchColumn();
+
+    /* Construccion total de la página y query */
+    $porPagina = 25; /* Número de registros por página */
+    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $inicio    = ($pagina - 1) * $porPagina;
+    $urlBase   = generateMkey('enter_ship') . '&page=';
+
+    $query = "SELECT * FROM $this->table WHERE 1 ORDER BY ship_id ASC LIMIT :inicio, :porPagina";
     $stmt  = $this->conexion->prepare($query);
+    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
+    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -207,6 +221,7 @@ class ship extends iQuery
               </table>
             </div>
           </div>
+          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
     ";

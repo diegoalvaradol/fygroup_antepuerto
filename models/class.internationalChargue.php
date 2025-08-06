@@ -292,9 +292,9 @@ class internationalChargue extends iQuery
               <table class='table table-bordered table-hover' style='width:max-content;'>
                 " . $thead . $tr . $tbclose . "
               </table>
-              " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
             </div>
           </div>
+          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
     ";
