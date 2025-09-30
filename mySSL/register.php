@@ -1,3 +1,8 @@
+<?php
+header("Location: maintenance.php");
+exit;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -122,17 +127,6 @@
                       <i class="fas fa-solid fa-check-circle"></i> Registrar
                     </button>
                   </form>
-
-                  <hr/>
-
-                  <div class="text-center mt-3">
-                    <a href="forgot_password.php" class="btn btn-outline-warning btn-sm m-1">
-                      ¿Olvidaste la contraseña?
-                    </a>
-                    <a href="login.php" class="btn btn-outline-info btn-sm m-1">
-                      ¿Tienes cuenta? Inicia Sesión!
-                    </a>
-                  </div>
                 </div>
                 <!-- End p-5 -->
               </div>

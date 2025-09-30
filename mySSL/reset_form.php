@@ -1,3 +1,8 @@
+<?php
+header("Location: maintenance.php");
+exit;
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 

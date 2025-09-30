@@ -105,17 +105,6 @@ if (isset($_SESSION['user'])) {
                       <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                     </button>
                   </form>
-
-                  <hr>
-
-                  <div class="text-center mt-3">
-                    <a href="forgot_password.php" class="btn btn-outline-warning btn-sm m-1">
-                      ¿Olvidaste la contraseña?
-                    </a>
-                    <a href="register.php" class="btn btn-outline-success btn-sm m-1">
-                      ¿No tienes una cuenta? ¡Crea una!
-                    </a>
-                  </div>
                 </div>
               </div>
             </div> <!-- End row -->
