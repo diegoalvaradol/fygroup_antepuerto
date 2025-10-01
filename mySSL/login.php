@@ -173,11 +173,12 @@ if (isset($_SESSION['user'])) {
 
     if (!run || !password) {
       Swal.fire({
-        title: 'Campos incompletos',
-        text: 'Por favor, ingresa un RUN y una contraseña.',
+        title: '¡Atención!',
+        html: 'Campos incompletos. </br> Por favor ingresa tu RUN y/o contraseña para continuar con el proceso de logueo.',
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
+
       return;
     }
 

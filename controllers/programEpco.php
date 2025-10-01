@@ -19,10 +19,11 @@ if (empty($data['Entries']['Entry'])) {
 
 $fechaInicio = (new DateTime($_POST['from']))->format('d-m-Y');
 $fechaFin    = (new DateTime($_POST['to']))->format('d-m-Y');
+$count       = 0;
 
 $table = '<div class="container" style="max-width:-webkit-fill-available;">';
 $table .= '<div class="table-responsive" style="font-size:13px;">';
-$table .= "<h6 class='m-0 font-weight-bold text-primary' style='text-align:center;'>Rango Consultado: $fechaInicio al $fechaFin</h6>";
+$table .= "<h6 class='m-0 font-weight-bold text-primary' style='text-align:center;'>Rango Consultado: $fechaInicio al $fechaFin.</h6>";
 $table .= '<hr>';
 $table .= '<table class="table table-bordered table-hover" table-striped align-middle">';
 $table .= '<thead style="background-color:#2653d4; color:white;">';
@@ -74,7 +75,14 @@ foreach ($data['Entries']['Entry'] as $fila) {
   $table .= '<td>' . htmlspecialchars($obs) . '</td>';
   $table .= '<td ' . $estado . '> <b>' . htmlspecialchars($fila["estado"]) . '</b></td>';
   $table .= '</tr>';
+
+  $count++;
 }
+
+$table .= "<p class='m-1 font-weight-bold text-grey'>Total de registros: $count</p>";
+$table .= "<button type='button' class='btn btn-sm btn-success btn-user' onclick='window.print()'>";
+$table .= "<i class='fas fa-solid fa-print'></i> Imrpimir";
+$table .= "</button>";
 
 $table .= '</tbody>';
 $table .= '</table>';
