@@ -70,7 +70,7 @@ $top             = UIComponents::scrollToTopButton();
                                 </div>
 
                                 <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
-                                    <iframe src="https://globalreefers.app/GRonline/itinerarios/Liner" width="1250" height="600" style="border: none;"></iframe>
+                                    <iframe src="https://globalreefers.app/GRonline/itinerarios/Maritimo" width="1250" height="600" style="border: none;"></iframe>
                                 </div>
 
                                 <div class="text-center">
