@@ -14,14 +14,6 @@ $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
 $top             = UIComponents::scrollToTopButton();
-
-/* Validar superadmin */
-if (!$admin) {
-  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
-  $pag     = basename(__FILE__);
-  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-  mostrarAccesoDenegado($usuario, $pag, $url);
-}
 ?>
 
 <!-- HTML -->
@@ -35,7 +27,7 @@ if (!$admin) {
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Itinerarios Puerto Maersk</title>
+    <title>SSL | Itinerarios FY Group</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -64,8 +56,8 @@ if (!$admin) {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Itinerarios Puerto Maersk</h1>
-                    <p class="mb-4">Acá puedes revisar los itinerarios por puerto de Maersk.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Itinerarios FY Group</h1>
+                    <p class="mb-4">Acá puedes revisar los itinerarios de FY Group.</p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -74,16 +66,16 @@ if (!$admin) {
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Búsqueda de Itinerario</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Visulaizador de Itineario</h6>
                                 </div>
 
                                 <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
-                                    <iframe src="https://www.maersk.com/schedules/portCalls" width="1250" height="600" style="border: none;"></iframe>
+                                    <iframe src="../controllers/viewShippingPlanningController.php" width="1250" height="600" style="border: none;"></iframe>
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../images/logo-maersk.png" style="width:10%;">
-                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:#42b0d5;">Powered by Maersk.</h6>
+                                    <img src="../images/ssl-logo-azul.png" style="width:13%;">
+                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:royalblue;">Powered by SSL.</h6>
                                 </div>
                             </div>
                         </div>

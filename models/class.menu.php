@@ -42,6 +42,7 @@ class menu
         'icon'  => 'fa-calendar-days',
         'id'    => 'collapseProgramacion',
         'items' => [
+          ['label' => 'Planificación Naviera FY', 'link' => generateMkey('program_fygroup')],
           ['label' => 'Planificación Naviera TPC', 'link' => generateMkey('program_tpc')],
           ['label' => 'Planificación Naviera EPCO', 'link' => generateMkey('program_epco')],
           ['label' => 'Itinerarios Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
@@ -97,7 +98,9 @@ class menu
           'id'    => 'collapseServer',
           'items' => [
             ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
-            ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')]
+            ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')],
+            ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')]
+
           ]
         ]
       ]);

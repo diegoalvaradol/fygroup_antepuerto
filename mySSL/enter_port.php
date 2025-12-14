@@ -155,16 +155,7 @@ $top             = UIComponents::scrollToTopButton();
                     <br>
                     <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
                     <br>
-                    <small><b>Autor: </b><?php echo $infoCfg['author']; ?></small>
-                    <br>
-                    <small><b>Programador: </b><?php echo $infoCfg['author']; ?></small>
-                    <br>
-                     <small><b>UI/UX: </b><?php echo $infoCfg['author']; ?></small>
-                    <br>
-                    <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
-                    <br>
-                    <small><b> Correo: </b><a href="mailto:diego.alvaraado@gmail.com" target="_blank"><b><i class="fas fa-solid fa-envelope" style="color: #1768a6;"></i> diego.alvaraado@gmail.com </b></a></small>
-                </div>
+                    <small>
             </div>
         </div>
     </div>
