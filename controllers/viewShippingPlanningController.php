@@ -3,41 +3,48 @@ $dir      = __DIR__ . "/../shipping_planning";
 $archivos = glob($dir . '/*.pdf');
 
 if (!$archivos) {
-  header('Content-Type: text/html; charset=utf-8');
-  echo '<p style="text-align:center;margin-top:50px;">No existen una planificación naviera para mostrar..</p>';
+  echo '<p style="text-align:center;margin-top:50px;">No existen archivos para mostrar.</p>';
   exit;
 }
 
-// último PDF por fecha de modificación
 usort($archivos, fn($a, $b) => filemtime($b) <=> filemtime($a));
 $ultimo = basename($archivos[0]);
-$ruta   = "../shipping_planning/" . $ultimo;
-
-header('Content-Type: text/html; charset=utf-8');
+$pdf    = "../shipping_planning/$ultimo";
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-html,body{
-    margin:0;
-    height:100%;
-}
-iframe{
-    width:100%;
-    height:100vh;
-    border:0;
-}
+body{margin:0}
+canvas{width:100%}
 </style>
 </head>
 <body>
 
-<iframe src="<?=htmlspecialchars($ruta)?>#toolbar=0&navpanes=0&scrollbar=0"></iframe>
+<canvas id="pdf"></canvas>
+
+<script src="../pdfjs/pdf.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = '../pdfjs/pdf.worker.js';
+
+pdfjsLib.getDocument('<?=$pdf?>').promise.then(pdf => {
+    pdf.getPage(1).then(page => {
+        const scale = window.innerWidth / page.getViewport({ scale: 1 }).width;
+        const viewport = page.getViewport({ scale });
+
+        const canvas = document.getElementById('pdf');
+        const ctx = canvas.getContext('2d');
+
+        canvas.height = viewport.height;
+        canvas.width  = viewport.width;
+
+        page.render({ canvasContext: ctx, viewport });
+    });
+});
+</script>
 
 </body>
 </html>
-<?php
-
-exit;
