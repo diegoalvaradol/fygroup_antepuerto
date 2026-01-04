@@ -64,7 +64,7 @@ if (isset($_SESSION['user'])) {
                       <select class="form-control select2" id="division" name="division" style="margin-left:15%;margin-right:15%;">
                         <option value="-" selected>Seleccione una División...</option>
                         <option value="terminal">Terminal</option>
-                        <option value="exporter">Exportador</option>
+                        <option value="shipper">Naviera</option>
                       </select>
                     </div>
 
@@ -173,7 +173,18 @@ if (isset($_SESSION['user'])) {
     if (!run || !password) {
       Swal.fire({
         title: 'Campos incompletos',
-        text: 'Por favor, ingresa un RUN y una contraseña.',
+        text: 'Por favor, ingresa un RUN y/o una contraseña.',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
+
+      return;
+    }
+
+    if (division == '-') {
+      Swal.fire({
+        title: 'Campos incompletos',
+        text: 'Por favor, debes seleccionar una división.',
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });

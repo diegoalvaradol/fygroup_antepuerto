@@ -49,7 +49,7 @@ class get
     $types = [
       'ssl'      => 'Personal SSL',
       'terminal' => 'Terminal',
-      'exporter' => 'Exportador'
+      'shipper'  => 'Naviera'
     ];
 
     return $types;

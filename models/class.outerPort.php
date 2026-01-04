@@ -165,8 +165,14 @@ class outerPort extends iQuery
       $query = "SELECT COUNT(*) as totalContainer FROM $this->table WHERE $this->origin = 1";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as totalContainer FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $query = "SELECT COUNT(*) as totalContainer FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -186,8 +192,14 @@ class outerPort extends iQuery
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 1";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -207,8 +219,14 @@ class outerPort extends iQuery
       $query = "SELECT COUNT(*) as totalThermo FROM $this->table WHERE $this->origin = 2";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as totalThermo FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $query = "SELECT COUNT(*) as totalThermo FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -228,8 +246,14 @@ class outerPort extends iQuery
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 2";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -249,8 +273,14 @@ class outerPort extends iQuery
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE 1";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -270,8 +300,14 @@ class outerPort extends iQuery
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -290,8 +326,14 @@ class outerPort extends iQuery
       $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -310,9 +352,16 @@ class outerPort extends iQuery
       $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
     }
 
+    /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $queryTotal      = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0";
       $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
+      $queryTotal      = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0 AND sh.ship_line = 2";
+      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     /* Total de camiones arrivados */
@@ -430,6 +479,11 @@ class outerPort extends iQuery
     if ($filterGuia !== '') {
       $conditions[]    = "$this->guide LIKE :guia";
       $params[':guia'] = "%$filterGuia%";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
+      $conditions[] = "sh.ship_line = 2";
     }
 
     $whereClause = implode(' AND ', $conditions);
@@ -652,6 +706,11 @@ class outerPort extends iQuery
       $filtros[] = "%$guia%";
     }
 
+    /* División Naviera para Marval (Cool Carriers) */
+    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
+      $where .= " AND sh.ship_line = 2";
+    }
+
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
@@ -760,6 +819,11 @@ class outerPort extends iQuery
     if ($filterGuia !== '') {
       $conditions[]    = "$this->guide LIKE :guia";
       $params[':guia'] = "%$filterGuia%";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
+      $conditions[] = "sh.ship_line = 2";
     }
 
     $whereClause = implode(' AND ', $conditions);
@@ -974,6 +1038,11 @@ class outerPort extends iQuery
     if (!empty($guia)) {
       $where .= " AND $this->guide LIKE ?";
       $filtros[] = "%$guia%";
+    }
+
+    /* División Naviera para Marval (Cool Carriers) */
+    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
+      $where .= " AND sh.ship_line = 2";
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
