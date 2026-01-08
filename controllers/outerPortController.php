@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $port->pallets         = $_POST["palletsquantity"];
   $port->cellphonedriver = isset($_POST["cellphonedriver"]) ? $_POST["cellphonedriver"] : '000000000';
   $port->arrivaldate     = $dateIn ? $dateIn->format('Y-m-d H:i:s') : null;
-  $port->departuredate   = $port->departuredate != '0000-00-00 00:00:00' ? $port->departuredate : '0000-00-00 00:00:00';
+  $port->departuredate   = null;
   $port->comodity        = $_POST["comodity"];
   $port->booking         = strtoupper($_POST["booking"]);
   $port->stay            = strtoupper($_POST["stay"]);

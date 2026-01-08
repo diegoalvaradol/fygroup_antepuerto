@@ -40,8 +40,8 @@ class outerPort extends iQuery
 
   public function save()
   {
-    $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate, guide_number, container, seal_number, exporter, agency, cellphone_driver, arrival_date, comodity, booking, stay, observations, pallets_quantity, origin, created, created_by)";
-    $query .= " VALUES (:countervessel, :vessel, :carplate, :guide, :container, :seal, :exporter, :agency, :cellphonedriver, :arrivaldate, :comodity, :booking, :stay, :observations, :palletsquantity, :origin, :created, :createdby)";
+    $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate, guide_number, container, seal_number, exporter, agency, cellphone_driver, arrival_date, departure_date, comodity, booking, stay, observations, pallets_quantity, origin, created, created_by)";
+    $query .= " VALUES (:countervessel, :vessel, :carplate, :guide, :container, :seal, :exporter, :agency, :cellphonedriver, :arrivaldate, :departuredate, :comodity, :booking, :stay, :observations, :palletsquantity, :origin, :created, :createdby)";
 
     $stmt = $this->conexion->prepare($query);
 
@@ -55,6 +55,7 @@ class outerPort extends iQuery
     $this->agency          = htmlspecialchars(strip_tags($this->agency ?? ''));
     $this->cellphonedriver = htmlspecialchars(strip_tags($this->cellphonedriver ?? ''));
     $this->arrivaldate     = $this->arrivaldate;
+    $this->departuredate   = null;
     $this->comodity        = htmlspecialchars(strip_tags($this->comodity));
     $this->booking         = htmlspecialchars(strip_tags($this->booking));
     $this->stay            = htmlspecialchars(strip_tags($this->stay ?? ''));
@@ -74,6 +75,7 @@ class outerPort extends iQuery
     $stmt->bindParam(":agency", $this->agency, PDO::PARAM_STR);
     $stmt->bindParam(":cellphonedriver", $this->cellphonedriver, PDO::PARAM_STR);
     $stmt->bindParam(":arrivaldate", $this->arrivaldate, PDO::PARAM_STR);
+    $stmt->bindValue(":departuredate", null, PDO::PARAM_NULL);
     $stmt->bindParam(":comodity", $this->comodity, PDO::PARAM_STR);
     $stmt->bindParam(":booking", $this->booking, PDO::PARAM_STR);
     $stmt->bindParam(":stay", $this->stay, PDO::PARAM_STR);
@@ -601,13 +603,13 @@ class outerPort extends iQuery
           $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
         }
 
-        if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
+        if ($data[$this->departuredate] != null) {
           $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
           $departure = '<em>Sin hora de salida.</em>';
         }
 
-        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
           $arrivalDate   = new DateTime($data[$this->arrivaldate]);
           $departureDate = new DateTime($data[$this->departuredate]);
 
@@ -625,7 +627,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnAddContainerHour = $data[$this->departuredate] == '0000-00-00 00:00:00' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
+        $btnAddContainerHour = $data[$this->departuredate] == null ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 
@@ -938,13 +940,13 @@ class outerPort extends iQuery
           $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
         }
 
-        if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
+        if ($data[$this->departuredate] != null) {
           $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
           $departure = '<em>Sin hora de salida.</em>';
         }
 
-        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
           $arrivalDate   = new DateTime($data[$this->arrivaldate]);
           $departureDate = new DateTime($data[$this->departuredate]);
 
@@ -958,11 +960,11 @@ class outerPort extends iQuery
           if ($days >= 1) {
             $attr = "style='background-color:red; color:white;'";
           }
-        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
           $stayTime = 'No disponible.';
         }
 
-        $btnAddThermoHour = $data[$this->departuredate] == '0000-00-00 00:00:00' ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
+        $btnAddThermoHour = $data[$this->departuredate] == null ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 

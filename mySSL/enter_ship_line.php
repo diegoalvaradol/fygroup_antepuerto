@@ -72,7 +72,7 @@ $top             = UIComponents::scrollToTopButton();
                                 <div class="card-body">
                                     <form class="form-container" id="shipLineForm">
                                         <div class="form-group row">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <label for='shipline' class='text-gray-800 font-weight-bold'>Nombre de Linea Naviera</label>
                                                 <input type="text" class="form-control form-control-user" id="shipline" name="shipline" onblur="verifyShipLine(this.value)" placeholder="Maersk, Hapag Lloyd, etc.">
                                                 <small class="text-danger" id="error-shipline"></small>
@@ -149,7 +149,16 @@ $top             = UIComponents::scrollToTopButton();
                     <br>
                     <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
                     <br>
-                    <small>
+                    <small><b>Autor: </b><?php echo $infoCfg['author']; ?></small>
+                    <br>
+                    <small><b>Programador: </b><?php echo $infoCfg['author']; ?></small>
+                    <br>
+                     <small><b>UI/UX: </b><?php echo $infoCfg['author']; ?></small>
+                    <br>
+                    <small><b> Contactar al Whatsapp: </b><a href="https://wa.me/56923816700?text=Hola%2C%20quiero%20más%20información%20sobre%20el%20producto" target="_blank"><i class="fas fa-brands fa-whatsapp" style="color: #63E6BE;"></i><b>+56923816700</b></a></small>
+                    <br>
+                    <small><b> Correo: </b><a href="mailto:diego.alvaraado@gmail.com" target="_blank"><b><i class="fas fa-solid fa-envelope" style="color: #1768a6;"></i> diego.alvaraado@gmail.com </b></a></small>
+                </div>
             </div>
         </div>
     </div>
