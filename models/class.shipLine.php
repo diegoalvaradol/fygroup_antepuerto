@@ -9,6 +9,7 @@ class shipLine extends iQuery
 
   public $id         = "line_id";
   public $name       = "name";
+  public $rut        = "rut";
   public $created    = "created";
   public $lastupdate = "last_update";
 
@@ -19,14 +20,16 @@ class shipLine extends iQuery
 
   public function save()
   {
-    $query = "INSERT INTO $this->table (name, created, last_update) VALUES (:name, :created, :lastupdate)";
+    $query = "INSERT INTO $this->table (name, rut, created, last_update) VALUES (:name, :rut, :created, :lastupdate)";
     $stmt  = $this->conexion->prepare($query);
 
     $this->name       = htmlspecialchars(strip_tags($this->name));
+    $this->rut        = htmlspecialchars(strip_tags($this->rut));
     $this->created    = $this->created;
     $this->lastupdate = $this->lastupdate;
 
     $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
+    $stmt->bindParam(":rut", $this->rut, PDO::PARAM_STR);
     $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
     $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
@@ -35,15 +38,17 @@ class shipLine extends iQuery
 
   public function update()
   {
-    $query = "UPDATE $this->table SET name = :name, last_update = :lastupdate WHERE line_id = :id";
+    $query = "UPDATE $this->table SET name = :name, rut = :rut, last_update = :lastupdate WHERE line_id = :id";
     $stmt  = $this->conexion->prepare($query);
 
     $this->id         = htmlspecialchars(strip_tags($this->id));
     $this->name       = htmlspecialchars(strip_tags($this->name));
+    $this->rut        = htmlspecialchars(strip_tags($this->rut));
     $this->lastupdate = $this->lastupdate;
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
     $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
+    $stmt->bindParam(":rut", $this->rut, PDO::PARAM_STR);
     $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();
@@ -88,6 +93,7 @@ class shipLine extends iQuery
     $thead .= "<tr>";
     $thead .= "<th>Id</th>";
     $thead .= "<th>Nombre</th>";
+    $thead .= "<th>R.U.T</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Actualizado</th>";
     $thead .= "<th>Acciones</th>";
@@ -110,6 +116,7 @@ class shipLine extends iQuery
       $tr .= "<tr>";
       $tr .= "<td >" . $data[$this->id] . "</td>";
       $tr .= "<td >" . $data[$this->name] . "</td>";
+      $tr .= "<td >" . $data[$this->rut] . "</td>";
       $tr .= "<td >" . $created . "</td>";
       $tr .= "<td >" . $lastupdate . "</td>";
       $tr .= "<td >" . $btnEdit . ' ' . $btnDelete . "</td>";

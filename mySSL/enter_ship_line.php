@@ -72,7 +72,13 @@ $top             = UIComponents::scrollToTopButton();
                                 <div class="card-body">
                                     <form class="form-container" id="shipLineForm">
                                         <div class="form-group row">
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-3">
+                                                <label for='rutShipLine' class='text-gray-800 font-weight-bold'>R.U.T</label>
+                                                <input type="text" class="form-control form-control-user" id="rutShipLine" name="rutShipLine" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="11.222.333-0">
+                                                <small class="text-danger" id="error-rutShipLine"></small>
+                                            </div>
+
+                                            <div class="col-sm-3">
                                                 <label for='shipline' class='text-gray-800 font-weight-bold'>Nombre de Linea Naviera</label>
                                                 <input type="text" class="form-control form-control-user" id="shipline" name="shipline" onblur="verifyShipLine(this.value)" placeholder="Maersk, Hapag Lloyd, etc.">
                                                 <small class="text-danger" id="error-shipline"></small>
@@ -165,11 +171,15 @@ $top             = UIComponents::scrollToTopButton();
 
     <!-- Modal Editar Linea-->
     <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="editLineModal" style="display:none; position:fixed; width:20%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+    <div id="editLineModal" style="display:none; position:fixed; width:35%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
     <h4>Editar Línea</h4>
     <form id="editLineForm">
         <div class="form-group row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+              <label>R.U.T:</label>
+              <input type="text" class="form-control form-control-user" id="rutLine" name="rutLine">
+            </div>
+            <div class="col-sm-6">
               <label>Linea Naviera:</label>
               <input type="text" class="form-control form-control-user" id="lineName" name="lineName">
             </div>
@@ -271,6 +281,69 @@ function actualizarReloj() {
   $('#relojFecha').html(`${fecha} - ${hora}`);
 }
 
+var formatearRut = function (inputRun) {
+  let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
+
+  /* Separar cuerpo y DV */
+  let cuerpo = rut.slice(0, -1);
+  let dv = rut.slice(-1);
+
+  /* Agregar puntos cada 3 dígitos desde la derecha */
+  let cuerpoFormateado = '';
+  let i = 0;
+  for (let j = cuerpo.length - 1; j >= 0; j--) {
+    cuerpoFormateado = cuerpo[j] + cuerpoFormateado;
+    i++;
+    if (i % 3 === 0 && j !== 0) {
+      cuerpoFormateado = '.' + cuerpoFormateado;
+    }
+  }
+
+  inputRun.value = cuerpoFormateado + '-' + dv;
+}
+
+var validaRut = function(rut) {
+  rut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+
+  if (rut.length < 2) return false;
+  const cuerpo = rut.slice(0, -1);
+  const dvIngresado = rut.slice(-1);
+
+  let suma = 0;
+  let multiplo = 2;
+
+  /* Recorrer el cuerpo del RUT de derecha a izquierda */
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo[i]) * multiplo;
+    multiplo = multiplo < 7 ? multiplo + 1 : 2;
+  }
+
+  const dvEsperado = 11 - (suma % 11);
+  let dvCalculado = '';
+
+  if (dvEsperado === 11) dvCalculado = '0';
+  else if (dvEsperado === 10) dvCalculado = 'K';
+  else dvCalculado = dvEsperado.toString();
+
+  if(dvCalculado === dvIngresado){
+    Swal.fire({
+      title: '¡Éxito!',
+      text: '¡El R.U.T ingresado es válido!',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
+  }else{
+    Swal.fire({
+      title: 'Error!',
+      text: '¡El R.U.T ingresado no es válido!',
+      icon: 'warning',
+      cancelButtonColor: 'Aceptar'
+    }).then(() => {
+      $('#rutShipLine').focus();
+    });
+  }
+}
+
 var verifyShipLine = function(name) {
   $.ajax({
     url: '../controllers/shipLineVerifyController.php',
@@ -301,6 +374,7 @@ var editShipLine = function(id) {
      success: function(data) {
       $('#lineId').val(data.line_id);
       $('#lineName').val(data.name);
+      $('#rutLine').val(data.rut);
 
       /* Mostrar overlay y modal */
       $('#modalOverlay').fadeIn(200);

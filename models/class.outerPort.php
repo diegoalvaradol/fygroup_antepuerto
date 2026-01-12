@@ -460,9 +460,11 @@ class outerPort extends iQuery
     $count     = 0;
 
     /* Filtros */
-    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '-';
-    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '-';
-    $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
+    $filterNave     = isset($_POST['nave']) ? $_POST['nave'] : '-';
+    $filterPatente  = isset($_POST['patente']) ? $_POST['patente'] : '-';
+    $filterGuia     = isset($_POST['guia']) ? trim($_POST['guia']) : '';
+    $filterDivision = isset($_POST['division']) ? $_POST['division'] : '';
+    $filterCliente  = isset($_POST['cliente']) ? $_POST['cliente'] : '';
 
     /* Construir cláusulas WHERE dinámicamente */
     $conditions = ["$this->origin = 1"];
@@ -484,14 +486,15 @@ class outerPort extends iQuery
     }
 
     /* División Naviera para Marval (Cool Carriers) */
-    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
-      $conditions[] = "sh.ship_line = 2";
+    if ($filterDivision === 'shipper' && $filterCliente === '96.591.730-6') {
+      $conditions[]   = "sl.rut = :rut";
+      $params[':rut'] = $filterCliente;
     }
 
     $whereClause = implode(' AND ', $conditions);
 
     /* Contador de registros */
-    $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0";
+    $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
     $countStmt  = $this->conexion->prepare($countQuery);
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
@@ -507,7 +510,7 @@ class outerPort extends iQuery
       $urlBase = generateMkey('enter_container_port', 'myPortal') . '&page=';
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
     $stmt  = $this->conexion->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
@@ -623,7 +626,7 @@ class outerPort extends iQuery
           if ($days >= 1) {
             $attr = "style='background-color:red; color:white;'";
           }
-        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
           $stayTime = 'No disponible.';
         }
 
@@ -686,7 +689,7 @@ class outerPort extends iQuery
     return $table;
   }
 
-  public function downloadTableContainerExcel($nave = '', $patente = '', $guia = '')
+  public function downloadTableContainerExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
   {
     $ship = new ship($this->conexion);
 
@@ -709,11 +712,12 @@ class outerPort extends iQuery
     }
 
     /* División Naviera para Marval (Cool Carriers) */
-    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
-      $where .= " AND sh.ship_line = 2";
+    if ($division === 'shipper' && $cliente === '96.591.730-6') {
+      $where .= " AND sl.rut = ?";
+      $filtros[] = "$cliente";
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -739,9 +743,9 @@ class outerPort extends iQuery
 
       $created   = $createdTime->format('d-m-Y H:i');
       $arrival   = $arrivalTime->format('d-m-Y H:i');
-      $departure = $data[$this->departuredate] != '0000-00-00 00:00:00' ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+      $departure = $data[$this->departuredate] != null ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
         $arrivalDate   = new DateTime($data[$this->arrivaldate]);
         $departureDate = new DateTime($data[$this->departuredate]);
 
@@ -751,7 +755,7 @@ class outerPort extends iQuery
         $minutes  = $interval->format('%i');
 
         $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
-      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
         $stayTime = 'No disponible.';
       }
 
@@ -800,9 +804,11 @@ class outerPort extends iQuery
     $count     = 0;
 
     /* Filtros */
-    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '-';
-    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '-';
-    $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
+    $filterNave     = isset($_POST['nave']) ? $_POST['nave'] : '-';
+    $filterPatente  = isset($_POST['patente']) ? $_POST['patente'] : '-';
+    $filterGuia     = isset($_POST['guia']) ? trim($_POST['guia']) : '';
+    $filterDivision = isset($_POST['division']) ? $_POST['division'] : '';
+    $filterCliente  = isset($_POST['cliente']) ? $_POST['cliente'] : '';
 
     /* Construir cláusulas WHERE dinámicamente */
     $conditions = ["$this->origin = 2"];
@@ -824,14 +830,15 @@ class outerPort extends iQuery
     }
 
     /* División Naviera para Marval (Cool Carriers) */
-    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
-      $conditions[] = "sh.ship_line = 2";
+    if ($filterDivision === 'shipper' && $filterCliente === '96.591.730-6') {
+      $conditions[]   = "sl.rut = :rut";
+      $params[':rut'] = $filterCliente;
     }
 
     $whereClause = implode(' AND ', $conditions);
 
     /* Contador de registros */
-    $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0";
+    $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
     $countStmt  = $this->conexion->prepare($countQuery);
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
@@ -847,7 +854,7 @@ class outerPort extends iQuery
       $urlBase = generateMkey('enter_thermo_port', 'myPortal') . '&page=';
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
     $stmt  = $this->conexion->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
@@ -1020,7 +1027,7 @@ class outerPort extends iQuery
     return $table;
   }
 
-  public function downloadTableThermoExcel($nave = '', $patente = '', $guia = '')
+  public function downloadTableThermoExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
   {
     $ship = new ship($this->conexion);
 
@@ -1043,11 +1050,12 @@ class outerPort extends iQuery
     }
 
     /* División Naviera para Marval (Cool Carriers) */
-    if ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') {
-      $where .= " AND sh.ship_line = 2";
+    if ($division === 'shipper' && $cliente === '96.591.730-6') {
+      $where .= " AND sl.rut = ?";
+      $filtros[] = $cliente;
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -1073,9 +1081,9 @@ class outerPort extends iQuery
       $created = $createdTime->format('d-m-Y H:i');
       $arrival = $arrivalTime->format('d-m-Y H:i');
 
-      $departure = $data[$this->departuredate] != '0000-00-00 00:00:00' ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+      $departure = $data[$this->departuredate] != null ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
         $arrivalDate   = new DateTime($data[$this->arrivaldate]);
         $departureDate = new DateTime($data[$this->departuredate]);
 
@@ -1086,7 +1094,7 @@ class outerPort extends iQuery
 
         $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
 
-      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
         $stayTime = 'No disponible.';
       }
 

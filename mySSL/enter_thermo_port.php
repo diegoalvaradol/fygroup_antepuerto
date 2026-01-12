@@ -659,7 +659,9 @@ var deleteTruck = function(id) {
   });
 }
 
-var exportExcel = function(nave, condicion, exportador) {
+var exportExcel = function(nave, condicion, exportador, division, cliente) {
+  var division = '<?php echo $_SESSION["user"]["division"]; ?>';
+  var cliente = '<?php echo $_SESSION["user"]["run"]; ?>';
   const form = document.createElement('form');
   form.method = 'POST';
   form.action = '../controllers/thermoDownloadExcelController.php';
@@ -668,7 +670,9 @@ var exportExcel = function(nave, condicion, exportador) {
   const fields = {
     nave: nave,
     condicion: condicion,
-    exportador: exportador
+    exportador: exportador,
+    division: division,
+    cliente: cliente
   };
 
   for (const key in fields) {
