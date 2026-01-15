@@ -207,7 +207,7 @@ var exportExcel = function(nave, condicion, exportador, division, cliente) {
   var cliente = '<?php echo $_SESSION["user"]["run"]; ?>';
   const form = document.createElement('form');
   form.method = 'POST';
-  form.action = '../controllers/containerDownloadExcelController.php';
+  form.action = '../controllers/thermoDownloadExcelController.php';
   form.style.display = 'none';
 
   const fields = {

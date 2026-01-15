@@ -33,7 +33,7 @@ $sql = "SELECT
         JOIN app_ships v ON v.ship_id = a.vessel_id
         JOIN app_ports p ON p.port_id = v.port_discharge
         JOIN app_ship_lines l ON l.line_id = v.ship_line
-        WHERE a.vessel_id = :id AND a.origin = 1";
+        WHERE a.vessel_id = :id";
 
 if ($exporter !== null) {
   $sql .= " AND a.exporter = :exporter";
