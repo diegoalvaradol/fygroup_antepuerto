@@ -38,17 +38,17 @@ class shipLine extends iQuery
 
   public function update()
   {
-    $query = "UPDATE $this->table SET name = :name, rut = :rut, last_update = :lastupdate WHERE line_id = :id";
+    $query = "UPDATE $this->table SET name = :name, /*rut = :rut,*/ last_update = :lastupdate WHERE line_id = :id";
     $stmt  = $this->conexion->prepare($query);
 
-    $this->id         = htmlspecialchars(strip_tags($this->id));
-    $this->name       = htmlspecialchars(strip_tags($this->name));
-    $this->rut        = htmlspecialchars(strip_tags($this->rut));
+    $this->id   = htmlspecialchars(strip_tags($this->id));
+    $this->name = htmlspecialchars(strip_tags($this->name));
+    //$this->rut        = htmlspecialchars(strip_tags($this->rut));
     $this->lastupdate = $this->lastupdate;
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
     $stmt->bindParam(":name", $this->name, PDO::PARAM_STR);
-    $stmt->bindParam(":rut", $this->rut, PDO::PARAM_STR);
+    //$stmt->bindParam(":rut", $this->rut, PDO::PARAM_STR);
     $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     return $stmt->execute();

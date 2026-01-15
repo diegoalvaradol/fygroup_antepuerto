@@ -177,7 +177,7 @@ $top             = UIComponents::scrollToTopButton();
         <div class="form-group row">
             <div class="col-sm-6">
               <label>R.U.T:</label>
-              <input type="text" class="form-control form-control-user" id="rutLine" name="rutLine">
+              <input type="text" class="form-control form-control-user" id="rutLine" name="rutLine" disabled>
             </div>
             <div class="col-sm-6">
               <label>Linea Naviera:</label>
