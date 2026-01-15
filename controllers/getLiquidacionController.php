@@ -21,8 +21,8 @@ $sql = "SELECT
           v.eta AS eta,
           v.etd AS etd,
           v.voyage AS viaje,
-          p.city AS ciudad,
-          p.country AS pais,
+          pod.city AS ciudad,
+          pod.country AS pais,
           l.name AS linea,
           a.exporter,
           a.container,
@@ -31,7 +31,8 @@ $sql = "SELECT
           a.comodity
         FROM app_outer_port a
         JOIN app_ships v ON v.ship_id = a.vessel_id
-        JOIN app_ports p ON p.port_id = v.port_discharge
+        JOIN app_ports pol ON pol.port_id = v.pol
+        JOIN app_ports pod ON pod.port_id = v.pod
         JOIN app_ship_lines l ON l.line_id = v.ship_line
         WHERE a.vessel_id = :id";
 
