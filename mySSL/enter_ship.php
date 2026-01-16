@@ -76,6 +76,16 @@ $top             = UIComponents::scrollToTopButton();
                                                     <input type="text" class="form-control form-control-user" id="vessel" name="vessel" placeholder="Polar Argentina">
                                                     <small class="text-danger" id="error-vessel"></small>
                                                 </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label for='line' class='text-gray-800 font-weight-bold'>Linea Naviera</label>
+                                                    <select class="form-control select2 form-control-user" id="line" name="line">
+                                                        <option value="-">Seleccione una línea...</option>
+                                                    </select>
+                                                    <small class="text-danger" id="error-line"></small>
+                                                </div>
 
                                                 <div class="col-sm-6">
                                                     <label for='voyage' class='text-gray-800 font-weight-bold'>N° de Viaje</label>
@@ -100,11 +110,11 @@ $top             = UIComponents::scrollToTopButton();
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label for='line' class='text-gray-800 font-weight-bold'>Linea Naviera</label>
-                                                    <select class="form-control select2 form-control-user" id="line" name="line">
-                                                        <option value="-">Seleccione una línea...</option>
+                                                    <label for='pol' class='text-gray-800 font-weight-bold'>Puerto de Carga</label>
+                                                    <select class="form-control select2 form-control-user" id="pol" name="pol">
+                                                        <option value="-">Seleccione un puerto...</option>
                                                     </select>
-                                                    <small class="text-danger" id="error-line"></small>
+                                                    <small class="text-danger" id="error-pol"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
@@ -354,7 +364,7 @@ var editShip = function(id) {
       $('#shipLine').empty();
       $('#shipLine').append($('<option>', {value: data.ship_line, text: data.name}));
       $('#shipPOD').empty();
-      $('#shipPOD').append($('<option>', {value: data.port_discharge, text: data.city +' - '+ data.country}));
+      $('#shipPOD').append($('<option>', {value: data.pod, text: data.city +' - '+ data.country}));
       $('#scrollTopBtn').trigger('click');
 
       /* Mostrar overlay y modal */
@@ -606,7 +616,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#pod').select2({
+  $('#pol, #pod').select2({
     allowClear: true,
     tags: false,
     width: '100%',

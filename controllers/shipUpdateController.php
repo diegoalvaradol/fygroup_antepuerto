@@ -16,7 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $ship->vessel     = strtoupper($_POST["shipName"]);
   $ship->voyage     = strtoupper($_POST["shipVoyage"]);
   $ship->line       = $_POST["shipLine"];
-  $ship->port       = $_POST["shipPOD"];
+  $ship->pol        = $_POST["shipPOL"];
+  $ship->pod        = $_POST["shipPOD"];
   $ship->eta        = $eta ? $eta->format('Y-m-d H:i:s') : null;
   $ship->etd        = $etd ? $etd->format('Y-m-d H:i:s') : null;
   $ship->lastupdate = date('Y-m-d H:i:s');

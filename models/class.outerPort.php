@@ -299,17 +299,17 @@ class outerPort extends iQuery
   public function getPercentUsage($goals, $admin)
   {
     if ($admin) {
-      $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
+      $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date IS NULL";
     }
 
     /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
+      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0";
     }
 
     /* División Naviera para Marval (Cool Carriers) */
     if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0 AND sh.ship_line = 2";
+      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -325,17 +325,17 @@ class outerPort extends iQuery
   public function getTotalTrucksInAnpuerto($admin)
   {
     if ($admin) {
-      $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
+      $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date IS NULL";
     }
 
     /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
+      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0";
     }
 
     /* División Naviera para Marval (Cool Carriers) */
     if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0 AND sh.ship_line = 2";
+      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     $stmt = $this->conexion->prepare($query);
@@ -351,19 +351,19 @@ class outerPort extends iQuery
   {
     if ($admin) {
       $queryTotal      = "SELECT COUNT(*) as total FROM $this->table WHERE 1";
-      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date = '0000-00-00 00:00:00'";
+      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date IS NULL";
     }
 
     /* División Terminal para TPC */
     if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
       $queryTotal      = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0";
-      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0";
+      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0";
     }
 
     /* División Naviera para Marval (Cool Carriers) */
     if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
       $queryTotal      = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0 AND sh.ship_line = 2";
-      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date = '0000-00-00 00:00:00' AND sh.finished = 0 AND sh.ship_line = 2";
+      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0 AND sh.ship_line = 2";
     }
 
     /* Total de camiones arrivados */
@@ -1279,13 +1279,13 @@ class outerPort extends iQuery
           $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
         }
 
-        if ($data[$this->departuredate] != '0000-00-00 00:00:00') {
+        if ($data[$this->departuredate] != null) {
           $departure = (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i');
         } else {
           $departure = 'Sin hora de salida.';
         }
 
-        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+        if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
           $arrivalDate   = new DateTime($data[$this->arrivaldate]);
           $departureDate = new DateTime($data[$this->departuredate]);
 
@@ -1299,7 +1299,7 @@ class outerPort extends iQuery
           if ($days >= 1) {
             $attr = "style='background-color:red; color:white;'";
           }
-        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+        } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
           $stayTime = 'No disponible.';
         }
 
@@ -1406,9 +1406,9 @@ class outerPort extends iQuery
       $created = $createdTime->format('d-m-Y H:i');
       $arrival = $arrivalTime->format('d-m-Y H:i');
 
-      $departure = $data[$this->departuredate] != '0000-00-00 00:00:00' ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+      $departure = $data[$this->departuredate] != null ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != '0000-00-00 00:00:00') {
+      if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
         $arrivalDate   = new DateTime($data[$this->arrivaldate]);
         $departureDate = new DateTime($data[$this->departuredate]);
 
@@ -1419,7 +1419,7 @@ class outerPort extends iQuery
 
         $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
 
-      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == '0000-00-00 00:00:00') {
+      } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
         $stayTime = 'No disponible.';
       }
 
@@ -1458,7 +1458,7 @@ class outerPort extends iQuery
 
   public function getLastSentTrucks()
   {
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE departure_date != '0000-00-00 00:00:00' ORDER BY row_id DESC LIMIT 5";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE departure_date IS NOT NULL ORDER BY row_id DESC LIMIT 5";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute();
     $result     = $stmt->fetchAll(PDO::FETCH_ASSOC);

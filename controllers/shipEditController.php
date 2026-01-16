@@ -6,7 +6,8 @@ $id = $_POST['id'];
 
 $query = "SELECT *
 FROM app_ships
-JOIN app_ports p ON app_ships.port_discharge = p.port_id
+JOIN app_ports pol ON app_ships.pol = pol.port_id
+JOIN app_ports pod ON app_ships.pod = pod.port_id
 JOIN app_ship_lines sl ON app_ships.ship_line = sl.line_id
 WHERE ship_id = :id
 LIMIT 1";

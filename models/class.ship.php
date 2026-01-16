@@ -9,7 +9,8 @@ class ship extends iQuery
   public $id           = "ship_id";
   public $vessel       = "vessel_name";
   public $voyage       = "voyage";
-  public $port         = "port_discharge";
+  public $pol          = "pol";
+  public $pod          = "pod";
   public $line         = "ship_line";
   public $finished     = "finished"; /* Indica si el emabrque de la motonave finalizo [0 => No, 1 => Si] */
   public $finisheddate = "finished_date"; /* Fecha de finalizacion del embarque */
@@ -25,24 +26,28 @@ class ship extends iQuery
 
   public function save()
   {
-    $query = "INSERT INTO  $this->table (vessel_name, ship_line, voyage, port_discharge, eta, etd, created, last_update) VALUES (:vessel, :shipline, :voyage, :portdischarge, :eta, :etd, :created, :lastupdate)";
+    $query = "INSERT INTO  $this->table (vessel_name, ship_line, voyage, pol, pod, eta, etd, finished, created, last_update) VALUES (:vessel, :shipline, :voyage, :pol, :pod, :eta, :etd, :finished, :created, :lastupdate)";
     $stmt  = $this->conexion->prepare($query);
 
     $this->vessel     = htmlspecialchars(strip_tags($this->vessel));
     $this->line       = htmlspecialchars(strip_tags($this->line));
     $this->voyage     = htmlspecialchars(strip_tags($this->voyage));
-    $this->port       = htmlspecialchars(strip_tags($this->port));
+    $this->pol        = htmlspecialchars(strip_tags($this->pol));
+    $this->pod        = htmlspecialchars(strip_tags($this->pod));
     $this->eta        = $this->eta;
     $this->etd        = $this->etd;
+    $this->finished   = $this->finished;
     $this->created    = $this->created;
     $this->lastupdate = $this->lastupdate;
 
     $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_STR);
     $stmt->bindParam(":shipline", $this->line, PDO::PARAM_INT);
     $stmt->bindParam(":voyage", $this->voyage, PDO::PARAM_STR);
-    $stmt->bindParam(":portdischarge", $this->port, PDO::PARAM_INT);
+    $stmt->bindParam(":pol", $this->pol, PDO::PARAM_INT);
+    $stmt->bindParam(":pod", $this->pod, PDO::PARAM_INT);
     $stmt->bindParam(":eta", $this->eta, PDO::PARAM_STR);
     $stmt->bindParam(":etd", $this->etd, PDO::PARAM_STR);
+    $stmt->bindParam(":finished", $this->finished, PDO::PARAM_INT);
     $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
     $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
@@ -51,14 +56,15 @@ class ship extends iQuery
 
   public function update()
   {
-    $query = "UPDATE $this->table SET vessel_name = :vessel, ship_line = :shipline, voyage = :voyage, port_discharge = :portdischarge, eta = :eta, etd = :etd, last_update = :lastupdate WHERE ship_id = :id";
+    $query = "UPDATE $this->table SET vessel_name = :vessel, ship_line = :shipline, voyage = :voyage, pol = :pol, pod = :pod, eta = :eta, etd = :etd, last_update = :lastupdate WHERE ship_id = :id";
     $stmt  = $this->conexion->prepare($query);
 
     $this->id         = htmlspecialchars(strip_tags($this->id));
     $this->vessel     = htmlspecialchars(strip_tags($this->vessel));
     $this->line       = htmlspecialchars(strip_tags($this->line));
     $this->voyage     = htmlspecialchars(strip_tags($this->voyage));
-    $this->port       = htmlspecialchars(strip_tags($this->port));
+    $this->pol        = htmlspecialchars(strip_tags($this->pol));
+    $this->pod        = htmlspecialchars(strip_tags($this->pod));
     $this->eta        = $this->eta;
     $this->etd        = $this->etd;
     $this->lastupdate = $this->lastupdate;
@@ -67,7 +73,8 @@ class ship extends iQuery
     $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_STR);
     $stmt->bindParam(":shipline", $this->line, PDO::PARAM_INT);
     $stmt->bindParam(":voyage", $this->voyage, PDO::PARAM_STR);
-    $stmt->bindParam(":portdischarge", $this->port, PDO::PARAM_INT);
+    $stmt->bindParam(":pol", $this->pol, PDO::PARAM_INT);
+    $stmt->bindParam(":pod", $this->pod, PDO::PARAM_INT);
     $stmt->bindParam(":eta", $this->eta, PDO::PARAM_STR);
     $stmt->bindParam(":etd", $this->etd, PDO::PARAM_STR);
     $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
@@ -151,8 +158,8 @@ class ship extends iQuery
     $thead .= "<th>Nave</th>";
     $thead .= "<th>Linea</th>";
     $thead .= "<th>Viaje</th>";
-    $thead .= "<th>Puerto de Destino</th>";
-    $thead .= "<th>Bandera</th>";
+    $thead .= "<th>Puerto de Carga</th>";
+    $thead .= "<th>Puerto de Descarga</th>";
     $thead .= "<th>Arrivo</th>";
     $thead .= "<th>Zarpe</th>";
     $thead .= "<th>Creado</th>";
@@ -175,7 +182,7 @@ class ship extends iQuery
       $eta        = $etaTime->format('d-m-Y H:i');
       $etd        = $etdTime->format('d-m-Y H:i');
 
-      if ($data[$this->finisheddate] != '0000-00-00 00:00:00') {
+      if ($data[$this->finisheddate] != null) {
         $finishDateTime = new DateTime($data[$this->finisheddate]);
         $finish         = $finishDateTime->format('d-m-Y H:i');
       } else {
@@ -192,8 +199,8 @@ class ship extends iQuery
       $tr .= "<td >" . $data[$this->vessel] . "</td>";
       $tr .= "<td >" . $shipLine->getLineName($data[$this->line]) . "</td>";
       $tr .= "<td >" . $data[$this->voyage] . "</td>";
-      $tr .= "<td >" . $port->getPortName($data[$this->port]) . "</td>";
-      $tr .= "<td >" . $port->getflagImage($port->getCountryName($data[$this->port])) . "</td>";
+      $tr .= "<td >" . $port->getflagImage($port->getCountryName($data[$this->pol])) . ' ' . $port->getPortName($data[$this->pol]) . "</td>";
+      $tr .= "<td >" . $port->getflagImage($port->getCountryName($data[$this->pod])) . ' ' . $port->getPortName($data[$this->pod]) . "</td>";
       $tr .= "<td >" . $eta . "</td>";
       $tr .= "<td >" . $etd . "</td>";
       $tr .= "<td >" . $created . "</td>";

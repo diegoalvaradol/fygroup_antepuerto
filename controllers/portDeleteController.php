@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $db = (new Database())->getConnection();
 
   /* Verifica si el puerto se encuentra asociado a una motonave registrada */
-  $query = "SELECT * FROM app_ships WHERE port_discharge = " . $_POST["id"] . "";
+  $query = "SELECT * FROM app_ships WHERE pol = " . $_POST["id"] . " OR pod = " . $_POST["id"] . "";
   $stmt  = $db->prepare($query);
   $stmt->execute();
   $result = $stmt->fetch(PDO::FETCH_ASSOC);

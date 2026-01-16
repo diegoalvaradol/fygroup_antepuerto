@@ -17,24 +17,28 @@ $db = (new Database())->getConnection();
 
 // Consulta base
 $sql = "SELECT
-          v.vessel_name AS nave,
-          v.eta AS eta,
-          v.etd AS etd,
-          v.voyage AS viaje,
-          pod.city AS ciudad,
-          pod.country AS pais,
-          l.name AS linea,
-          a.exporter,
-          a.container,
-          a.pallets_quantity,
-          a.guide_number,
-          a.comodity
-        FROM app_outer_port a
-        JOIN app_ships v ON v.ship_id = a.vessel_id
-        JOIN app_ports pol ON pol.port_id = v.pol
-        JOIN app_ports pod ON pod.port_id = v.pod
-        JOIN app_ship_lines l ON l.line_id = v.ship_line
-        WHERE a.vessel_id = :id";
+  v.vessel_name AS nave,
+  v.eta AS eta,
+  v.etd AS etd,
+  v.voyage AS viaje,
+  pol.city AS ciudadPOL,
+  pol.country AS paisPOL,
+  pod.city AS ciudadPOD,
+  pod.country AS paisPOD,
+  l.name AS linea,
+  a.exporter,
+  a.container,
+  a.seal_number,
+  a.booking,
+  a.pallets_quantity,
+  a.guide_number,
+  a.comodity
+FROM app_outer_port a
+JOIN app_ships v ON v.ship_id = a.vessel_id
+JOIN app_ports pol ON pol.port_id = v.pol
+JOIN app_ports pod ON pod.port_id = v.pod
+JOIN app_ship_lines l ON l.line_id = v.ship_line
+WHERE a.vessel_id = :id";
 
 if ($exporter !== null) {
   $sql .= " AND a.exporter = :exporter";
