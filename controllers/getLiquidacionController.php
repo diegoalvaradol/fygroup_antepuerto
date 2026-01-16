@@ -18,8 +18,8 @@ $db = (new Database())->getConnection();
 // Consulta base
 $sql = "SELECT
   v.vessel_name AS nave,
-  v.eta AS eta,
-  v.etd AS etd,
+  v.eta,
+  v.etd,
   v.voyage AS viaje,
   pol.city AS ciudadPOL,
   pol.country AS paisPOL,
@@ -32,7 +32,9 @@ $sql = "SELECT
   a.booking,
   a.pallets_quantity,
   a.guide_number,
-  a.comodity
+  a.comodity,
+  a.arrival_date,
+  a.departure_date
 FROM app_outer_port a
 JOIN app_ships v ON v.ship_id = a.vessel_id
 JOIN app_ports pol ON pol.port_id = v.pol
@@ -56,12 +58,13 @@ $stmt->execute();
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (!$rows) {
-  echo '<div class="alert alert-warning d-flex justify-content-between align-items-center" role="alert">
-          <div>
-            <i class="fa-solid fa-triangle-exclamation me-2"></i>
-            <strong> Atención:</strong> No hay información disponible para generar la liquidación de esta nave.
-          </div>
-        </div>';
+  echo '
+  <div class="alert alert-warning d-flex align-items-center py-2 px-3 large" role="alert" style="max-width:545px;margin:0 auto;">
+    <div>
+      <i class="fa-solid fa-triangle-exclamation me-2"></i>
+      <strong>Atención:</strong> </br> No hay información disponible para generar la liquidación de esta nave.
+    </div>
+  </div>';
 } else {
   $url = "../controllers/exportReportPDF.php?id=" . $id;
   if ($exporter !== null) {
@@ -69,8 +72,8 @@ if (!$rows) {
   }
 
   echo '<div style="text-align: center; margin-bottom: 1rem;">
-          <a href="' . $url . '" download class="btn btn-mn btn-success">
-            <i class="fa-solid fa-file-pdf"></i> Descargar PDF de Liquidación
-          </a>
-        </div>';
+    <a href="' . $url . '" download class="btn btn-mn btn-success">
+      <i class="fa-solid fa-file-pdf"></i> Descargar PDF de Liquidación
+    </a>
+  </div>';
 }

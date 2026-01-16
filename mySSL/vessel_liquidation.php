@@ -102,9 +102,13 @@ if (!$admin) {
                                           </div>
 
                                           <!-- Liquidación -->
-                                          <div class="form-group">
-                                            <label class="text-gray-800 font-weight-bold">Liquidación Motonave</label>
-                                            <div id="detalleLiquidacion"></div>
+                                          <div class="form-group col-md-12">
+                                            <div class="col-12 text-center">
+                                              <label class="text-gray-800 font-weight-bold d-block">
+                                                Liquidación Motonave
+                                              </label>
+                                              <div id="detalleLiquidacion"></div>
+                                            </div>
                                           </div>
                                       </div>
                                     </form>
@@ -360,10 +364,10 @@ $(document).ready(function() {
           exporter: exporter
         },
         success: function (response) {
-          $('#detalleLiquidacion').html(response);
+          $('#detalleLiquidacion').html(response).css('margin: 0 auto ;display: inline-block;');
         },
         error: function () {
-          $('#detalleLiquidacion').html('No se ha encontrado una liquidación para la motonave consultada.');
+          $('#detalleLiquidacion').html('No se ha encontrado una liquidación para la motonave consultada.').css('margin: 0 auto ;display: inline-block;');
         }
       });
     }else{
