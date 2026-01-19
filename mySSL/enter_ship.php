@@ -218,14 +218,25 @@ $top             = UIComponents::scrollToTopButton();
     <form id="editShipForm">
         <div class="form-group row">
             <div class="col-sm-6">
-                <label>Nombre:</label>
+                <label>Motonave:</label>
                 <input type="text" class="form-control form-control-user" id="shipName" name="shipName">
             </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-6">
+                <label>Naviera:</label>
+                <select class="form-control select2 form-control-user" id="shipLine" name="shipLine">
+                  <option value="-">Seleccione una linea...</option>
+                </select>
+            </div>
+
             <div class="col-sm-6">
                 <label>N° Viaje:</label>
                 <input type="text" class="form-control form-control-user" id="shipVoyage" name="shipVoyage">
             </div>
         </div>
+
 
         <div class="form-group row">
             <div class="col-sm-6">
@@ -240,13 +251,13 @@ $top             = UIComponents::scrollToTopButton();
 
         <div class="form-group row">
             <div class="col-sm-6">
-                <label>Naviera:</label>
-                <select class="form-control select2 form-control-user" id="shipLine" name="shipLine">
-                  <option value="-">Seleccione una linea...</option>
+                <label>Puerto de Carga:</label>
+                <select class="form-control select2 form-control-user" id="shipPOL" name="shipPOL">
+                  <option value="-">Seleccione un puerto...</option>
                 </select>
             </div>
             <div class="col-sm-6">
-                <label>Puerto de Destino:</label>
+                <label>Puerto de Descarga:</label>
                 <select class="form-control select2 form-control-user" id="shipPOD" name="shipPOD">
                   <option value="-">Seleccione un puerto...</option>
                 </select>
@@ -356,15 +367,17 @@ var editShip = function(id) {
      data: { id: id },
      dataType: 'json',
      success: function(data) {
-      $('#shipId').val(data.ship_id);
-      $('#shipName').val(data.vessel_name);
+      $('#shipId').val(data.id);
+      $('#shipName').val(data.vesselName);
       $('#shipVoyage').val(data.voyage);
       $('#shipEta').val(data.eta);
       $('#shipEtd').val(data.etd);
       $('#shipLine').empty();
-      $('#shipLine').append($('<option>', {value: data.ship_line, text: data.name}));
+      $('#shipLine').append($('<option>', {value: data.shipLine, text: data.nameLine}));
+      $('#shipPOL').empty();
+      $('#shipPOL').append($('<option>', {value: data.pol, text: data.polCity +' - '+ data.polCountry}));
       $('#shipPOD').empty();
-      $('#shipPOD').append($('<option>', {value: data.pod, text: data.city +' - '+ data.country}));
+      $('#shipPOD').append($('<option>', {value: data.pod, text: data.podCity +' - '+ data.podCountry}));
       $('#scrollTopBtn').trigger('click');
 
       /* Mostrar overlay y modal */
@@ -662,7 +675,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#shipPOD').select2({
+  $('#shipPOL, #shipPOD').select2({
     allowClear: true,
     tags: false,
     width: '100%',
