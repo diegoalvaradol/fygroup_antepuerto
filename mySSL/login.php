@@ -164,57 +164,67 @@ if (isset($_SESSION['user'])) {
   }
 
   var loadSession = function () {
-    const run = $('#run').val();
+    const run      = $('#run').val().trim();
     const password = $('#password').val();
     const division = 'ssl';
-    const btn = $('#loadBtn');
-    const text = $('#loadBtnText');
-    const spinner = $('#loadBtnSpinner');
+
+    const $btn     = $('#loadBtn');
+    const $text    = $('#loadBtnText');
+    const $spinner = $('#loadBtnSpinner');
+
+    const toggleLoading = (on) => {
+      $btn.prop('disabled', on);
+      $text.toggleClass('d-none', on);
+      $spinner.toggleClass('d-none', !on);
+    };
+
+    const showError = (html, icon = 'error') =>
+      Swal.fire({ title: 'Oops...', html, icon }).then(() => toggleLoading(false));
 
     if (!run || !password) {
       Swal.fire({
         title: '¡Atención!',
-        html: 'Campos incompletos. </br> Por favor ingresa tu RUN y/o contraseña para continuar con el proceso de logueo.',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar'
+        html: 'Debes ingresar RUN y contraseña.',
+        icon: 'warning'
       });
-
       return;
     }
 
-    text.addClass('d-none');
-    spinner.removeClass('d-none');
-    btn.prop('disabled', true);
+    toggleLoading(true);
 
-    $.ajax({
-      url: '../controllers/loginController.php',
-      data: $('#loginForm').serialize() + '&division=' + encodeURIComponent(division),
-      type: "POST",
-    }).done(function(x) {
-      if (x == 'OK') {
-        /*
-        Swal.fire({
-          title: '¡Bienvenido!',
-          html: 'Estamos cargando las preferencias de tu cuenta 🚀 </br> Por favor se paciente.',
-          icon: 'info',
-          timer: 3000,
-          showConfirmButton: false,
-          allowOutsideClick: false
-        }).then(() => {
-          window.location.href = "dashboard.php";
-        });
-        */
+    $.post('../controllers/loginController.php',
+      $('#loginForm').serialize() + '&division=' + encodeURIComponent(division)
+    )
+    .done((res) => {
+      res = res.trim();
 
-        window.location.href = "loginDataUser.php";
-      } else {
-        let msg = (x == 'NOOK') ? 'El run y/o contraseña ingresados son inválidos.' :
-                  (x == 'NOOK2') ? 'Tu perfil no se encuentra asociado a SSL.' : x;
-        Swal.fire({ title: 'Oops...', html: msg, icon: 'error' }).then(() => {
-          text.removeClass('d-none');
-          spinner.addClass('d-none');
-          btn.prop('disabled', false);
-        });
+      switch (res) {
+        case 'OK':
+          window.location.href = 'loginDataUser.php';
+          break;
+
+        case 'NOOK3':
+          showError(
+            'Tu usuario se encuentra <b>inhabilitada</b>.<br>Contacta al administrador.',
+            'info'
+          );
+          break;
+
+        case 'NOOK2':
+          showError('Tu perfil no se encuentra asociado a SSL.');
+          break;
+
+        case 'NOOK':
+          showError('RUN y/o contraseña inválidos.');
+          break;
+
+        default:
+          showError(res);
       }
+    })
+    .fail(() => {
+      showError('No fue posible conectar con el servidor.');
     });
-  }
+  };
+
 </script>

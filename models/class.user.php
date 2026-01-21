@@ -15,6 +15,9 @@ class user extends iQuery
   public $email           = "email";
   public $password        = "password";
   public $division        = "division"; /* Indica si el usuario pertenece a SSL o Portal clientes */
+  public $isadmin         = "is_admin"; /* Indica si el usuario es un usuario administrador */
+  public $isadminedit     = "is_admin_edit"; /* Indica si el usuario es un usuario administrador editor */
+  public $isactive        = "is_active"; /* Indica si el usuario se encuentra habilitado */
   public $lastsession     = "last_session"; /* Indica la hora del inicion de sesion (SOLO APLICA PARA USUARIOS PORTAL DE CLIENTE) */
   public $token           = "reset_token"; /* Token temporal al reestablecer contraseña */
   public $tokenexpiration = "token_expiration"; /* Duración del token proporcionado (duración: 1 hora) */
@@ -78,7 +81,7 @@ class user extends iQuery
 
   public function login()
   {
-    $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division LIMIT 1";
+    $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division AND is_active = 1 LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
     $stmt->bindParam(":run", $this->run, PDO::PARAM_STR);
     $stmt->bindParam(":division", $this->division);
@@ -142,32 +145,26 @@ class user extends iQuery
 
   public function isAdmin($run)
   {
-    $query = "SELECT * FROM $this->table WHERE run = :run AND division = 'SSL' LIMIT 1";
+    $query = "SELECT is_admin FROM {$this->table} WHERE run = :run AND division = 'SSL' LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":run", $run, PDO::PARAM_STR);
+    $stmt->bindParam(':run', $run, PDO::PARAM_STR);
     $stmt->execute();
+
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result && in_array($result['run'], ['18.923.079-6', '15.798.016-5'])) {
-      return true;
-    } else {
-      return false;
-    }
+    return $result && (int) $result['is_admin'] === 1;
   }
 
   public function isAdminEdit($run)
   {
-    $query = "SELECT * FROM $this->table WHERE run = :run AND division = 'SSL' LIMIT 1";
+    $query = "SELECT is_admin_edit FROM {$this->table} WHERE run = :run AND division = 'SSL' LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":run", $run, PDO::PARAM_STR);
+    $stmt->bindParam(':run', $run, PDO::PARAM_STR);
     $stmt->execute();
+
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result && isset($result['run']) && in_array($result['run'], ['18.923.079-6', '15.798.016-5', '21.394.463-0'])) {
-      return true;
-    } else {
-      return false;
-    }
+    return $result && (int) $result['is_admin_edit'] === 1;
   }
 
 }

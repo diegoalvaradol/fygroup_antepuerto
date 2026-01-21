@@ -162,92 +162,102 @@ if (isset($_SESSION['user'])) {
     }
   }
 
-  var loadSession = function() {
-    const division = $('#division').val();
-    const run = $('#run').val();
+  var loadSession = function () {
+    const run      = $('#run').val().trim();
     const password = $('#password').val();
-    const btn = $('#loadBtn');
-    const text = $('#loadBtnText');
-    const spinner = $('#loadBtnSpinner');
+    const division = $('#division').val();
+
+    const $btn     = $('#loadBtn');
+    const $text    = $('#loadBtnText');
+    const $spinner = $('#loadBtnSpinner');
+
+    const toggleLoading = (on) => {
+      $btn.prop('disabled', on);
+      $text.toggleClass('d-none', on);
+      $spinner.toggleClass('d-none', !on);
+    };
+
+    const showMsg = (opts) =>
+      Swal.fire(opts).then(() => toggleLoading(false));
 
     if (!run || !password) {
       Swal.fire({
         title: 'Campos incompletos',
-        text: 'Por favor, ingresa un RUN y/o una contraseña.',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar'
+        text: 'Debes ingresar RUN y contraseña.',
+        icon: 'warning'
       });
-
       return;
     }
 
-    if (division == '-') {
+    if (division === '-') {
       Swal.fire({
         title: 'Campos incompletos',
-        text: 'Por favor, debes seleccionar una división.',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar'
+        text: 'Debes seleccionar una división.',
+        icon: 'warning'
       });
-
       return;
     }
 
-    // Mostrar spinner, ocultar texto y desactivar botón
-    text . addClass('d-none');
-    spinner . removeClass('d-none');
-    btn . prop('disabled', true);
+    toggleLoading(true);
 
-    $.ajax({
-      url: '../controllers/loginController.php',
-      data: $('#loginForm').serialize() + '&division=' + encodeURIComponent(division),
-      type: "POST",
-    }).done(function(x) {
-      if(x == 'OK'){
-        Swal.fire({
-          title: '¡Bienvenido!',
-          html: 'Estamos cargando las preferencias de tu cuenta 🚀 </br> Por favor se paciente.',
-          icon: 'info',
-          timer: 3000,
-          showConfirmButton: false,
-          allowOutsideClick: false
-        }).then(() => {
-          // Cuando termine el timer, redirige al dashboard
-          window.location.href = "dashboard.php";
-        });
-      }else if(x == 'NOOK'){
-        Swal.fire({
-          title: 'Oops...',
-          html: 'El run y/o contraseña ingresados son invalidos. </br> Por favor reintenta nuevamente.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then(() => {
-          text.removeClass('d-none');
-          spinner.addClass('d-none');
-          btn.prop('disabled', false);
-        });
-      }else if(x == 'NOOK2'){
-        Swal.fire({
-          title: 'Oops...',
-          html: 'Tu perfil no se encuentra asociado a Portal Cliente. </br> Por favor contacta al administrador.',
-          icon: 'info',
-          cancelButtonColor: '#d33',
-        }).then(() => {
-          text.removeClass('d-none');
-          spinner.addClass('d-none');
-          btn.prop('disabled', false);
-        });
-      }else{
-        Swal.fire({
-          title: 'Oops...',
-          text: x,
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then(() => {
-          text.removeClass('d-none');
-          spinner.addClass('d-none');
-          btn.prop('disabled', false);
-        });
+    $.post(
+      '../controllers/loginController.php',
+      $('#loginForm').serialize() + '&division=' + encodeURIComponent(division)
+    )
+    .done((res) => {
+      res = res.trim();
+
+      switch (res) {
+        case 'OK':
+          Swal.fire({
+            title: '¡Bienvenido!',
+            html: 'Cargando preferencias 🚀',
+            icon: 'info',
+            timer: 3000,
+            showConfirmButton: false,
+            allowOutsideClick: false
+          }).then(() => location.href = 'dashboard.php');
+          break;
+
+        case 'NOOK3':
+          showMsg({
+            title: 'Oops...',
+            html: 'Tu usuario se encuentra <b>inhabilitada</b>.<br>Contacta al administrador.',
+            icon: 'info'
+          });
+          break;
+
+        case 'NOOK2':
+          showMsg({
+            title: 'Oops...',
+            html: 'Tu perfil no se encuentra asociado a Portal Cliente.',
+            icon: 'info'
+          });
+          break;
+
+        case 'NOOK':
+          showMsg({
+            title: 'Oops...',
+            html: 'RUN y/o contraseña inválidos.',
+            icon: 'error'
+          });
+          break;
+
+        default:
+          showMsg({
+            title: 'Error',
+            text: res,
+            icon: 'error'
+          });
       }
+    })
+    .fail(() => {
+      showMsg({
+        title: 'Error',
+        text: 'No fue posible conectar con el servidor.',
+        icon: 'error'
+      });
     });
-  }
+  };
+
 </script>
