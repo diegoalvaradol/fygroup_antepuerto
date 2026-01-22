@@ -163,220 +163,369 @@ class outerPort extends iQuery
 
   public function getTotalContainer($admin)
   {
+    $query  = " SELECT COUNT(*) AS totalContainer FROM $this->table AS p";
+    $params = [];
+
     if ($admin) {
-      $query = "SELECT COUNT(*) as totalContainer FROM $this->table WHERE $this->origin = 1";
-    }
+      $query .= " WHERE p.origin = 1";
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        WHERE p.origin = 1 AND sh.finished = 0
+      ";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(*) as totalContainer FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0";
-    }
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(*) as totalContainer FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0 AND sh.ship_line = 2";
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
     $stmt = $this->conexion->prepare($query);
+
+    foreach ($params as $k => $v) {
+      $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
+
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result['totalContainer'] > 0) {
-      return number_format($result['totalContainer'], 0, ',', '.');
-    } else {
-      return 0;
-    }
+    return $result['totalContainer'] > 0 ? number_format($result['totalContainer'], 0, ',', '.') : 0;
   }
 
   public function getTotalContainerPallets($admin)
   {
+    $query  = "SELECT COUNT(p.pallets_quantity) AS totalPallets FROM $this->table AS p";
+    $params = [];
+
     if ($admin) {
-      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 1";
-    }
+      $query .= " WHERE p.origin = 1";
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        WHERE p.origin = 1
+          AND sh.finished = 0
+      ";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0";
-    }
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 1 AND sh.finished = 0 AND sh.ship_line = 2";
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
     $stmt = $this->conexion->prepare($query);
+    foreach ($params as $k => $v) {
+      $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result['totalPallets'] > 0) {
-      return number_format($result['totalPallets'] * 20, 0, ',', '.');
-    } else {
-      return 0;
-    }
+    return ($result['totalPallets'] > 0) ? number_format($result['totalPallets'] * 20, 0, ',', '.') : 0;
   }
 
   public function getTotalThermo($admin)
   {
+    $query  = "SELECT COUNT(*) AS totalThermo FROM $this->table AS p";
+    $params = [];
+
     if ($admin) {
-      $query = "SELECT COUNT(*) as totalThermo FROM $this->table WHERE $this->origin = 2";
-    }
+      $query .= " WHERE p.origin = 2";
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        WHERE p.origin = 2
+          AND sh.finished = 0
+      ";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 2
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(*) as totalThermo FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0";
-    }
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(*) as totalThermo FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0 AND sh.ship_line = 2";
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
     $stmt = $this->conexion->prepare($query);
+    foreach ($params as $k => $v) {
+      $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result['totalThermo'] > 0) {
-      return number_format($result['totalThermo'], 0, ',', '.');
-    } else {
-      return 0;
-    }
+    return ($result['totalThermo'] > 0) ? number_format($result['totalThermo'], 0, ',', '.') : 0;
   }
 
   public function getTotalPallets($admin)
   {
+    $query  = "SELECT COUNT(p.pallets_quantity) AS totalPallets FROM $this->table AS p";
+    $params = [];
+
     if ($admin) {
-      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table WHERE $this->origin = 2";
-    }
+      $query .= " WHERE p.origin = 2";
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        WHERE p.origin = 2
+          AND sh.finished = 0
+      ";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 2
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0";
-    }
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.origin = 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(pallets_quantity) as totalPallets FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.origin = 2 AND sh.finished = 0 AND sh.ship_line = 2";
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
     $stmt = $this->conexion->prepare($query);
+    foreach ($params as $k => $v) {
+      $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result['totalPallets'] > 0) {
-      return number_format($result['totalPallets'] * 20, 0, ',', '.');
-    } else {
-      return 0;
-    }
+    return ($result['totalPallets'] > 0) ? number_format($result['totalPallets'] * 20, 0, ',', '.') : 0;
   }
 
   public function getTotalTrucks($admin)
   {
+    $query  = "SELECT COUNT(*) as total FROM $this->table AS p";
+    $params = [];
+
     if ($admin) {
-      $query = "SELECT COUNT(*) as total FROM $this->table WHERE 1";
-    }
+      $query .= " WHERE 1";
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $query .= "
+         JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+         WHERE 1
+          AND sh.finished = 0
+      ";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0";
-    }
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE 1
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0 AND sh.ship_line = 2";
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
     $stmt = $this->conexion->prepare($query);
+    foreach ($params as $k => $v) {
+      $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result['total'] > 0) {
-      return number_format($result['total'], 0, ',', '.');
-    } else {
-      return 0;
-    }
+    return ($result['total'] > 0) ? number_format($result['total'] * 20, 0, ',', '.') : 0;
   }
 
   public function getPercentUsage($goals, $admin)
   {
+    $query  = "SELECT COUNT(*) AS total FROM $this->table AS p";
+    $params = [];
+
     if ($admin) {
-      $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date IS NULL";
-    }
+      $query .= " WHERE p.departure_date IS NULL";
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        WHERE p.departure_date IS NULL
+          AND sh.finished = 0
+      ";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.departure_date IS NULL
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0";
-    }
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.departure_date IS NULL
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0 AND sh.ship_line = 2";
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
     $stmt = $this->conexion->prepare($query);
+    foreach ($params as $k => $v) {
+      $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $total   = $result['total'];
-    $percent = (($total * 100) / $goals);
+    $total   = (int) $result['total'];
+    $percent = $goals > 0 ? ($total * 100) / $goals : 0;
 
     return number_format($percent, 2, ',', '');
   }
 
   public function getTotalTrucksInAnpuerto($admin)
   {
+    $query  = "SELECT COUNT(*) AS total FROM $this->table AS p";
+    $params = [];
+
     if ($admin) {
-      $query = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date IS NULL";
-    }
+      $query .= " WHERE p.departure_date IS NULL";
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        WHERE p.departure_date IS NULL
+          AND sh.finished = 0
+      ";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.departure_date IS NULL
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0";
-    }
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $query .= "
+        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+        WHERE p.departure_date IS NULL
+          AND sh.finished = 0
+          AND sl.rut = :rut
+      ";
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $query = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0 AND sh.ship_line = 2";
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
     $stmt = $this->conexion->prepare($query);
+    foreach ($params as $k => $v) {
+      $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $total = $result['total'];
-
-    return number_format($total, 0, ',', '.');
+    return number_format((int) $result['total'], 0, ',', '.');
   }
 
   public function getTotalArrivedTrucks($admin)
   {
+    $baseFrom = " FROM $this->table AS p";
+    $joinShip = "";
+    $whereAll = " WHERE 1";
+    $whereAP  = " WHERE p.departure_date IS NULL";
+    $params   = [];
+
     if ($admin) {
-      $queryTotal      = "SELECT COUNT(*) as total FROM $this->table WHERE 1";
-      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table WHERE departure_date IS NULL";
+      // sin joins extra
+    } elseif ($_SESSION["user"]["division"] === 'terminal') {
+      $joinShip = " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id";
+      $whereAll .= " AND sh.finished = 0";
+      $whereAP .= " AND sh.finished = 0";
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
+      $joinShip = " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line";
+      $whereAll .= " AND sh.finished = 0 AND sl.rut = :rut";
+      $whereAP .= " AND sh.finished = 0 AND sl.rut = :rut";
+
+      $params[':rut'] = $_SESSION["user"]["run"];
+    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
+      $joinShip = " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line";
+      $whereAll .= " AND sh.finished = 0 AND sl.rut = :rut";
+      $whereAP .= " AND sh.finished = 0 AND sl.rut = :rut";
+
+      $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    /* División Terminal para TPC */
-    if (!$admin || $_SESSION["user"]["division"] === 'terminal') {
-      $queryTotal      = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0";
-      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0";
-    }
+    $queryTotal      = "SELECT COUNT(*) AS total" . $baseFrom . $joinShip . $whereAll;
+    $queryAntepuerto = "SELECT COUNT(*) AS total" . $baseFrom . $joinShip . $whereAP;
 
-    /* División Naviera para Marval (Cool Carriers) */
-    if (!$admin || ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6')) {
-      $queryTotal      = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE 1 AND sh.finished = 0 AND sh.ship_line = 2";
-      $queryAntepuerto = "SELECT COUNT(*) as total FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE p.departure_date IS NULL AND sh.finished = 0 AND sh.ship_line = 2";
-    }
-
-    /* Total de camiones arrivados */
+    /* Total arribados */
     $stmtTotal = $this->conexion->prepare($queryTotal);
+    foreach ($params as $k => $v) {
+      $stmtTotal->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmtTotal->execute();
-    $resultTotal   = $stmtTotal->fetch(PDO::FETCH_ASSOC);
-    $totalArrivado = $resultTotal['total'];
+    $totalArrivado = (int) $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
 
-    /* Total de camiones despachados */
+    /* Total antepuerto */
     $stmtAntepuerto = $this->conexion->prepare($queryAntepuerto);
+    foreach ($params as $k => $v) {
+      $stmtAntepuerto->bindValue($k, $v, PDO::PARAM_STR);
+    }
     $stmtAntepuerto->execute();
-    $resultAntepuerto = $stmtAntepuerto->fetch(PDO::FETCH_ASSOC);
-    $totalAntepuerto  = $resultAntepuerto['total'];
+    $totalAntepuerto = (int) $stmtAntepuerto->fetch(PDO::FETCH_ASSOC)['total'];
 
     $totalDespachado = $totalArrivado - $totalAntepuerto;
 
@@ -487,6 +636,12 @@ class outerPort extends iQuery
 
     /* División Naviera para Marval (Cool Carriers) */
     if ($filterDivision === 'shipper' && $filterCliente === '96.591.730-6') {
+      $conditions[]   = "sl.rut = :rut";
+      $params[':rut'] = $filterCliente;
+    }
+
+    /* División Naviera para Seatrade */
+    if ($filterDivision === 'shipper' && $filterCliente === '77.897.180-1') {
       $conditions[]   = "sl.rut = :rut";
       $params[':rut'] = $filterCliente;
     }
@@ -717,6 +872,12 @@ class outerPort extends iQuery
       $filtros[] = "$cliente";
     }
 
+    /* División Naviera para Seatrade */
+    if ($division === 'shipper' && $cliente === '77.897.180-1') {
+      $where .= " AND sl.rut = ?";
+      $filtros[] = "$cliente";
+    }
+
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->conexion->prepare($query);
     $stmt->execute($filtros);
@@ -831,6 +992,12 @@ class outerPort extends iQuery
 
     /* División Naviera para Marval (Cool Carriers) */
     if ($filterDivision === 'shipper' && $filterCliente === '96.591.730-6') {
+      $conditions[]   = "sl.rut = :rut";
+      $params[':rut'] = $filterCliente;
+    }
+
+    /* División Naviera para Seatrade */
+    if ($filterDivision === 'shipper' && $filterCliente === '77.897.180-1') {
       $conditions[]   = "sl.rut = :rut";
       $params[':rut'] = $filterCliente;
     }
@@ -1051,6 +1218,12 @@ class outerPort extends iQuery
 
     /* División Naviera para Marval (Cool Carriers) */
     if ($division === 'shipper' && $cliente === '96.591.730-6') {
+      $where .= " AND sl.rut = ?";
+      $filtros[] = $cliente;
+    }
+
+    /* División Naviera para Seatrade */
+    if ($division === 'shipper' && $cliente === '77.897.180-1') {
       $where .= " AND sl.rut = ?";
       $filtros[] = $cliente;
     }
