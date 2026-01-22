@@ -23,6 +23,9 @@ if (isset($_POST['id'])) {
   $stmt->execute();
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+  $infoVessel = null;
+  $primary    = '#2563eb';
+
   foreach ($result as $info) {
     $eta    = $info['eta'];
     $etd    = $info['etd'];
@@ -31,11 +34,34 @@ if (isset($_POST['id'])) {
     $voyage = $info['voyage'];
     $line   = $info['name'];
 
-    $infoVessel = '<b>ETA: </b>' . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . ' / ' . '<b>ETD: </b>' . htmlspecialchars(date("d-m-Y H:i", strtotime($etd)));
-    $infoVessel .= '</br>';
-    $infoVessel .= '<b>POL: </b>' . htmlspecialchars($pol) . ' / ' . '<b>POD: </b>' . htmlspecialchars($pod);
-    $infoVessel .= '</br>';
-    $infoVessel .= '<b>Viaje: </b>' . htmlspecialchars($voyage) . ' / ' . '<b>Linea: </b>' . htmlspecialchars($line);
+    $infoVessel = '
+    <div style="
+      border:1px solid #e5e7eb;
+      border-left:4px solid ' . $primary . ';
+      border-radius:8px;
+      padding:12px 16px;
+      background:#f9fafb;
+      font-family:Arial, sans-serif;
+      font-size:14px;
+    ">
+      <div style="margin-bottom:6px;">
+        <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . '
+        <span style="margin:0 6px; color:#9ca3af;">|</span>
+        <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . '
+      </div>
+
+      <div style="margin-bottom:6px;">
+        <b style="color:' . $primary . ';">POL:</b> ' . htmlspecialchars($pol) . '
+        <span style="margin:0 6px; color:#9ca3af;">|</span>
+        <b style="color:' . $primary . ';">POD:</b> ' . htmlspecialchars($pod) . '
+      </div>
+
+      <div>
+        <b style="color:' . $primary . ';">Viaje:</b> ' . htmlspecialchars($voyage) . '
+        <span style="margin:0 6px; color:#9ca3af;">|</span>
+        <b style="color:' . $primary . ';">Línea:</b> ' . htmlspecialchars($line) . '
+      </div>
+    </div>';
   }
 
   if ($id != null) {
@@ -63,6 +89,6 @@ if (isset($_POST['id'])) {
       echo "Información no encontrada.";
     }
   } else {
-    echo "No se ha seleccionado ninguna nave.";
+    echo "No se ha seleccionado una nave.";
   }
 }

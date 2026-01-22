@@ -478,12 +478,7 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-fromvessel').html(`<div class="card shadow-sm border-0 mb-3">
-              <div class="card-body text-primary">
-                ${response}
-              </div>
-            </div>
-          `);
+          $('#info-fromvessel').html(`${response}`);
         },
         error: function () {
           $('#info-fromvessel').html(`<div class="card shadow-sm border-0 mb-3">
@@ -508,12 +503,7 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-tovessel').html(`<div class="card shadow-sm border-0 mb-3">
-              <div class="card-body text-primary">
-                ${response}
-              </div>
-            </div>
-          `);
+          $('#info-tovessel').html(`${response}`);
         },
         error: function () {
           $('#info-tovessel').html(`<div class="card shadow-sm border-0 mb-3">

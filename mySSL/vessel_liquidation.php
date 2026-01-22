@@ -339,12 +339,7 @@ $(document).ready(function() {
         method: 'POST',
         data: {id: vessel},
         success: function (response) {
-          $('#info-vessel').html(`<div class="card shadow-sm border-0 mb-3">
-              <div class="card-body text-primary">
-                ${response}
-              </div>
-            </div>
-          `);
+          $('#info-vessel').html(`${response}`);
         },
         error: function () {
           $('#info-vessel').html(`<div class="card shadow-sm border-0 mb-3">
