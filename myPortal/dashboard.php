@@ -9,7 +9,7 @@ $user = new user($db);
 
 $arrayDivision = get::getDivisionName();
 $sideBarPortal = menu::sideBarPortal();
-$tapBarPortal  = menu::mainTapBarPortal();
+$tapBarPortal  = menu::secondTapBarPortal();
 $footer        = menu::footerSSL();
 $top           = UIComponents::scrollToTopButton();
 
@@ -64,44 +64,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#293c74;">
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
-                        <label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>
-                        <label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, <?php echo $_SESSION["user"]["name"]; ?>!</span>
-                                <img class="img-profile rounded-circle" src="../images/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#userModal" style="color: #0483cd;">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Perfil
-                                </a>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#licenceModal" style="color: #0483cd;">
-                                    <i class="fas fa-copyright fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Licencia
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #cd1804;">
-                                    <i class="fa-solid fa-right-from-bracket" style="color: #cd1804;"></i> Cerrar Sesión
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
+                <?php echo $tapBarPortal; ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
