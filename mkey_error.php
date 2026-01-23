@@ -1,89 +1,69 @@
 <?php
 http_response_code(401);
-require_once __DIR__ . '/config/auth.php';
-require_once __DIR__ . '/config/includes.php';
-
-$db      = (new Database())->getConnection();
-$cfg     = new cfg($db);
-$footer  = menu::footerSSL();
-$top     = UIComponents::scrollToTopButton();
-$infoCfg = json_decode($cfg->getInfo(1), true);
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
-    <meta name="Diego Alvarado López." content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Acceso Inválido</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
-</head>
-
-<body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column min-vh-100">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#293c74;">
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- 401 Error Server -->
-                    <div class="text-center">
-                        <img src="../images/ssl-logo-azul.png">
-                        <div class="error mx-auto" data-text=⚠️>⚠️</div>
-                        <p class="lead text-gray-800">Acceso Inválido.</p>
-                        <br>
-                        <p class="lead text-gray-800">La URL consultada no cuenta con la clave de acceso obligatoria requerida.</p>
-                        <p class="lead text-gray-800">Por favor contacta a soporte.</p>
-
-                        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='dashboard.php'">
-                            <i class="fas fa-arrow-left me-1"></i> Volver al Inicio
-                        </button>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <?php echo $footer; ?>
-            <!-- End of Footer -->
-
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Área Inválida.</title>
+    <meta http-equiv="refresh" content="5;url=dashboard.php">
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1f2933, #111827);
+        color: #fff;
+      }
+      .card {
+        background: #1f2937;
+        padding: 2.5rem 3rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,.4);
+        max-width: 420px;
+      }
+      .card h1 {
+        font-size: 3rem;
+        margin-bottom: .5rem;
+      }
+      .card p {
+        opacity: .85;
+        margin-bottom: 1.5rem;
+      }
+      .card small {
+        display: block;
+        opacity: .6;
+        margin-bottom: 2rem;
+      }
+      .card a {
+        display: inline-block;
+        padding: .75rem 1.5rem;
+        border-radius: 8px;
+        background: #2563eb;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .card a:hover {
+        background: #1d4ed8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+        <div style="justify-self: center;">
+            <img src="../images/ssl-logo-azul.png" style="height: 50%; width: 100%;">
         </div>
-        <!-- End of Content Wrapper -->
-
+        <h1>Área Inválida.</h1>
+        <p>La URL consultada no cuenta con la clave de acceso obligatoria requerida.</p>
+        <p>Por favor contacta a soporte.</p>
+        <small>Serás redirigido en 5 segundos…</small>
+        <a class="btn btn-sm btn-primary" onclick="location.href='dashboard.php'">Ir ahora</a>
     </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <?php echo $top; ?>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
-</body>
-</html>
+  </body>
+  </html>
