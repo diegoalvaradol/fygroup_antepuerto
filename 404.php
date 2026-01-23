@@ -59,6 +59,7 @@ http_response_code(404);
         <div style="justify-self: center;">
             <img src="../images/ssl-logo-azul.png" style="height: 50%; width: 100%;">
         </div>
+
         <h1>404</h1>
         <p>Página No Encontrada.</p>
         <small>Serás redirigido en 5 segundos…</small>

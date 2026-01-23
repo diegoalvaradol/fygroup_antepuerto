@@ -59,6 +59,7 @@ http_response_code(403);
         <div style="justify-self: center;">
             <img src="../images/ssl-logo-azul.png" style="height: 50%; width: 100%;">
         </div>
+
         <h1>Área Inválida.</h1>
         <p>Estas tratando de acceder en un directorio no autorizado.</p>
         <p>Por favor contacta a soporte.</p>

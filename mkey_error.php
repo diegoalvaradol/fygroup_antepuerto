@@ -59,6 +59,7 @@ http_response_code(401);
         <div style="justify-self: center;">
             <img src="../images/ssl-logo-azul.png" style="height: 50%; width: 100%;">
         </div>
+
         <h1>Área Inválida.</h1>
         <p>La URL consultada no cuenta con la clave de acceso obligatoria requerida.</p>
         <p>Por favor contacta a soporte.</p>
