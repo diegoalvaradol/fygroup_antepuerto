@@ -279,7 +279,7 @@ class outerPort extends iQuery
       $query .= "
         JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
         JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 1
+        WHERE p.origin = 2
           AND sh.finished = 0
           AND sl.rut = :rut
       ";
@@ -324,7 +324,7 @@ class outerPort extends iQuery
       $query .= "
         JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
         JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 1
+        WHERE p.origin = 2
           AND sh.finished = 0
           AND sl.rut = :rut
       ";
@@ -384,7 +384,7 @@ class outerPort extends iQuery
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return ($result['total'] > 0) ? number_format($result['total'] * 20, 0, ',', '.') : 0;
+    return ($result['total'] > 0) ? number_format($result['total'], 0, ',', '.') : 0;
   }
 
   public function getPercentUsage($goals, $admin)
@@ -612,8 +612,8 @@ class outerPort extends iQuery
     $filterNave     = isset($_POST['nave']) ? $_POST['nave'] : '-';
     $filterPatente  = isset($_POST['patente']) ? $_POST['patente'] : '-';
     $filterGuia     = isset($_POST['guia']) ? trim($_POST['guia']) : '';
-    $filterDivision = isset($_POST['division']) ? $_POST['division'] : '';
-    $filterCliente  = isset($_POST['cliente']) ? $_POST['cliente'] : '';
+    $filterDivision = $_SESSION['user']['division'];
+    $filterCliente  = $_SESSION['user']['run'];
 
     /* Construir cláusulas WHERE dinámicamente */
     $conditions = ["$this->origin = 1"];
@@ -648,6 +648,7 @@ class outerPort extends iQuery
 
     $whereClause = implode(' AND ', $conditions);
 
+    print_r($filterDivision);
     /* Contador de registros */
     $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
     $countStmt  = $this->conexion->prepare($countQuery);
@@ -693,15 +694,17 @@ class outerPort extends iQuery
                     <option value='-'>Seleccione una nave...</option>
                   </select>
                 </div>
+
                 <div class='col-sm-4'>
                   <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
                   <select class='form-control select2 form-control-user' id='patente' name='patente'>
                     <option value='-'>Seleccione una patente...</option>
                   </select>
                 </div>
+
                 <div class='col-sm-4'>
                   <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                  <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                  <input type='text' id='guia' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
                 </div>
               </div>
 
@@ -785,7 +788,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnAddContainerHour = $data[$this->departuredate] == null ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
+        $btnAddContainerHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 
@@ -968,8 +971,8 @@ class outerPort extends iQuery
     $filterNave     = isset($_POST['nave']) ? $_POST['nave'] : '-';
     $filterPatente  = isset($_POST['patente']) ? $_POST['patente'] : '-';
     $filterGuia     = isset($_POST['guia']) ? trim($_POST['guia']) : '';
-    $filterDivision = isset($_POST['division']) ? $_POST['division'] : '';
-    $filterCliente  = isset($_POST['cliente']) ? $_POST['cliente'] : '';
+    $filterDivision = $_SESSION['user']['division'];
+    $filterCliente  = $_SESSION['user']['run'];
 
     /* Construir cláusulas WHERE dinámicamente */
     $conditions = ["$this->origin = 2"];
@@ -1049,12 +1052,14 @@ class outerPort extends iQuery
                     <option value='-'>Seleccione una nave...</option>
                   </select>
                 </div>
+
                 <div class='col-sm-4'>
                   <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
                   <select class='form-control select2 form-control-user' id='patente' name='patente'>
                     <option value='-'>Seleccione una patente...</option>
                   </select>
                 </div>
+
                 <div class='col-sm-4'>
                   <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
                   <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
@@ -1138,7 +1143,7 @@ class outerPort extends iQuery
           $stayTime = 'No disponible.';
         }
 
-        $btnAddThermoHour = $data[$this->departuredate] == null ? "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>" : "<button type='button' class='btn btn-success btn-user btn-sm' disabled><i class='fas fa-solid fa-clock'></i> Salida</button>";
+        $btnAddThermoHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 

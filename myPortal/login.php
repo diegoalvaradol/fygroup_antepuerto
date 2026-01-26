@@ -32,8 +32,16 @@ if (isset($_SESSION['user'])) {
 
 <style>
     body {
-      background-image: url("../images/coquimbo_port_background_1.jpg");
+      background-image: url("../images/coquimbo_port_background_4.jpg");
       background-size: cover;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 </style>
 
@@ -41,15 +49,15 @@ if (isset($_SESSION['user'])) {
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="row justify-content-center w-100">
       <div class="col-xl-6 col-lg-8 col-md-10">
-        <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card glass-card o-hidden border-0 shadow-lg my-5">
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
               <div class="col-12 text-center pt-4">
                 <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid mb-3" style="max-height: 120px;">
                 <div>
-                  <small class="text-success" style="font-size:xx-large;">Sistema Integral SSL.</small><br>
-                  <small class="text-success" style="font-size:x-large;">Portal Cliente.</small>
+                  <small style="font-size:xx-large;color:forestgreen;">Sistema Integral SSL.</small><br>
+                  <small style="font-size:x-large;color:forestgreen;">Portal Cliente.</small>
                 </div>
               </div>
 
@@ -61,7 +69,7 @@ if (isset($_SESSION['user'])) {
 
                   <form id="loginForm">
                     <div class="form-group" style="display:flex;align-items:center;gap:10px;">
-                      <select class="form-control select2" id="division" name="division" style="margin-left:15%;margin-right:15%;">
+                      <select class="form-control select2" id="division" name="division" style="margin-left:25%;margin-right:25%;">
                         <option value="-" selected>Seleccione una División...</option>
                         <option value="terminal">Terminal</option>
                         <option value="shipper">Naviera</option>
@@ -259,5 +267,4 @@ if (isset($_SESSION['user'])) {
       });
     });
   };
-
 </script>
