@@ -217,14 +217,7 @@ if (isset($_SESSION['user'])) {
 
       switch (res) {
         case 'OK':
-          Swal.fire({
-            title: '¡Bienvenido!',
-            html: 'Cargando preferencias 🚀',
-            icon: 'info',
-            timer: 3000,
-            showConfirmButton: false,
-            allowOutsideClick: false
-          }).then(() => location.href = 'dashboard.php');
+          window.location.href = 'loginDataUser.php';
           break;
 
         case 'NOOK3':

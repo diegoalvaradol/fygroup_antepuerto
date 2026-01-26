@@ -648,7 +648,6 @@ class outerPort extends iQuery
 
     $whereClause = implode(' AND ', $conditions);
 
-    print_r($filterDivision);
     /* Contador de registros */
     $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
     $countStmt  = $this->conexion->prepare($countQuery);
