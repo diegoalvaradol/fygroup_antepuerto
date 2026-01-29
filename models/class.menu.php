@@ -66,7 +66,7 @@ class menu
           ]
         ],
         [
-          'title' => 'MSC (Medlog)',
+          'title' => 'MSC',
           'icon'  => 'fa-ship',
           'id'    => 'collapseMedlog',
           'items' => [

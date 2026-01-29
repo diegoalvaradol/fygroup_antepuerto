@@ -66,7 +66,9 @@ if (!isset($_SESSION['user'])) {
 
 <body>
   <div class="container">
-    <h2>Bienvenido, <?=htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"])?> 👋</h2>
+    <h1>Bienvenido</h1>
+    <br>
+    <h2><?=htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"])?> 👋</h2>
 
     <p id="msg1">Validando sesión...</p>
     <p id="msg2">Cargando datos...</p>
