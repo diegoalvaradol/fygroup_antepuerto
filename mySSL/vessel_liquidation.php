@@ -329,47 +329,57 @@ $(document).ready(function() {
     }
   });
 
-  $('#vessel').on('change', function () {
-    const vessel = $(this).val();
+  $('#vessel').on('change', cargarLiquidacion);
+  $('#exporter').on('change', cargarLiquidacion);
+
+  function cargarLiquidacion() {
+    const vessel   = $('#vessel').val();
     const exporter = $('#exporter').val();
 
-    if (vessel != '-') {
-      $.ajax({
-        url: '../controllers/vesselInfoController.php',
-        method: 'POST',
-        data: {id: vessel},
-        success: function (response) {
-          $('#info-vessel').html(`${response}`);
-        },
-        error: function () {
-          $('#info-vessel').html(`<div class="card shadow-sm border-0 mb-3">
-              <div class="card-body text-danger">
-                Error al obtener la información.
-              </div>
-            </div>
-          `);
-        }
-      });
-
-			$.ajax({
-        url: '../controllers/getLiquidacionController.php',
-        method: 'POST',
-        data: {
-          id: vessel,
-          exporter: exporter
-        },
-        success: function (response) {
-          $('#detalleLiquidacion').html(response).css('margin: 0 auto ;display: inline-block;');
-        },
-        error: function () {
-          $('#detalleLiquidacion').html('No se ha encontrado una liquidación para la motonave consultada.').css('margin: 0 auto ;display: inline-block;');
-        }
-      });
-    }else{
+    if (!vessel || vessel === '-') {
       $('#info-vessel').html('');
       $('#detalleLiquidacion').html('');
+      return;
     }
-  });
+
+    /* Info motonave */
+    $.ajax({
+      url: '../controllers/vesselInfoController.php',
+      method: 'POST',
+      data: { id: vessel },
+      success: function (response) {
+        $('#info-vessel').html(response);
+      },
+      error: function () {
+        $('#info-vessel').html(`
+          <div class="text-danger">Error al obtener la información.</div>
+        `);
+      }
+    });
+
+    /* Liquidación */
+    $.ajax({
+      url: '../controllers/getLiquidacionController.php',
+      method: 'POST',
+      data: {
+        id: vessel,
+        exporter: exporter
+      },
+      success: function (response) {
+        $('#detalleLiquidacion')
+          .html(response)
+          .css('margin', '0 auto')
+          .css('display', 'inline-block');
+      },
+      error: function () {
+        $('#detalleLiquidacion').html(`
+          <div class="alert alert-warning">
+            No se pudo generar la liquidación.
+          </div>
+        `);
+      }
+    });
+  }
 });
 
 $(document).on('select2:open', function () {
