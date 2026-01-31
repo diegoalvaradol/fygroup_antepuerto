@@ -1,37 +1,42 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $db   = (new Database())->getConnection();
-  $port = new outerPort($db);
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+  exit;
+}
 
-  $fromVessel = $_POST["fromvessel"];
-  $toVessel   = $_POST["tovessel"];
+$db   = (new Database())->getConnection();
+$port = new outerPort($db);
 
-  /* Nave de origen */
-  $stmt = $db->prepare("SELECT origin FROM app_outer_port WHERE vessel_id = :fromVessel");
-  $stmt->bindParam(":fromVessel", $fromVessel, PDO::PARAM_INT);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+$fromVessel = (int) ($_POST['fromvessel'] ?? 0);
+$toVessel   = (int) ($_POST['tovessel'] ?? 0);
+$rowId      = $_POST['rowId'] ?? [];
 
-  $originFromVessel = $result['origin'];
+if (!$fromVessel || !$toVessel || empty($rowId)) {
+  echo "ERROR";
 
-  /* Nave de destino */
-  $stmt1 = $db->prepare("SELECT origin FROM app_outer_port WHERE vessel_id = :toVessel");
-  $stmt1->bindParam(":toVessel", $toVessel, PDO::PARAM_INT);
-  $stmt1->execute();
-  $result1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+  exit;
+}
 
-  $origintoVessel = $result1['origin'];
+/* Origen nave */
+$stmt = $db->prepare("SELECT origin FROM app_outer_port WHERE vessel_id = :vessel LIMIT 1");
+$stmt->bindParam(":vessel", $fromVessel, PDO::PARAM_INT);
+$stmt->execute();
+$originFrom = $stmt->fetchColumn();
 
-  if ($originFromVessel !== $origintoVessel) {
-    echo "ERROR";
-    exit;
-  }
+/* Origen nave destino */
+$stmt->bindParam(":vessel", $toVessel, PDO::PARAM_INT);
+$stmt->execute();
+$originTo = $stmt->fetchColumn();
 
-  if ($port->vesselTransfer($fromVessel, $toVessel)) {
-    echo "OK";
-  } else {
-    echo "NOOK";
-  }
+if (!$originFrom || !$originTo || $originFrom !== $originTo) {
+  echo "ERROR";
+
+  exit;
+}
+
+if ($port->vesselTransfer($fromVessel, $toVessel, $rowId)) {
+  echo "OK";
+} else {
+  echo "NOOK";
 }

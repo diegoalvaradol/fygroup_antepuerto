@@ -23,7 +23,8 @@ class menu
           ['label' => 'Ingreso Contenedores', 'link' => generateMkey('enter_container_port')],
           ['label' => 'Ingreso Termos', 'link' => generateMkey('enter_thermo_port')],
           ['label' => 'Carga Internacional', 'link' => generateMkey('enter_container_international')],
-          ['label' => 'Seguimiento', 'link' => generateMkey('tracking')]
+          ['label' => 'Seguimiento', 'link' => generateMkey('tracking')],
+          ['label' => 'Roleo de Carga', 'link' => generateMkey('vessel_transfer')]
         ]
       ],
       [
@@ -33,8 +34,7 @@ class menu
         'items' => [
           ['label' => 'Naves', 'link' => generateMkey('enter_ship')],
           ['label' => 'Lineas Navieras', 'link' => generateMkey('enter_ship_line')],
-          ['label' => 'Puertos', 'link' => generateMkey('enter_port')],
-          ['label' => 'Roleo de Carga', 'link' => generateMkey('vessel_transfer')]
+          ['label' => 'Puertos', 'link' => generateMkey('enter_port')]
         ]
       ],
       [

@@ -545,13 +545,22 @@ class outerPort extends iQuery
     return $name;
   }
 
-  public function vesselTransfer($fromVessel, $toVessel)
+  public function vesselTransfer($fromVessel, $toVessel, $rowId)
   {
-    $query = "UPDATE $this->table SET vessel_id = :tovessel WHERE vessel_id = :fromvessel";
+    $id = null;
+
+    foreach ($rowId as $k => $v) {
+      $id .= $v . ',';
+    }
+
+    $rows = rtrim($id, ',');
+
+    $query = "UPDATE $this->table SET vessel_id = :tovessel WHERE vessel_id = :fromvessel AND row_id IN(:rows)";
     $stmt  = $this->conexion->prepare($query);
 
     $stmt->bindParam(":fromvessel", $fromVessel, PDO::PARAM_STR);
     $stmt->bindParam(":tovessel", $toVessel, PDO::PARAM_STR);
+    $stmt->bindParam(":rows", $rows, PDO::PARAM_STR);
 
     return $stmt->execute();
   }
@@ -1650,5 +1659,68 @@ class outerPort extends iQuery
     }
 
     return $infoVessel;
+  }
+
+  public function getTableVesselTransfer($id)
+  {
+    $ship  = new ship($this->conexion);
+    $count = 0;
+
+    $query = "SELECT * FROM $this->table WHERE $this->vessel  = :id";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $thead = "<thead style='background-color:#4e73df; color:white;'>";
+    $thead .= "<tr>";
+    $thead .= "<th>Selecionar</th>";
+    $thead .= "<th>Posición</th>";
+    $thead .= "<th>Nave</th>";
+    $thead .= "<th>Patente</th>";
+    $thead .= "<th>Guía</th>";
+    $thead .= "<th>Exportador</th>";
+    $thead .= "</tr>";
+    $thead .= "</thead>";
+    $thead .= "<tbody>";
+
+    $tr = null;
+
+    if ($result !== []) {
+      foreach ($result as $data) {
+        $tr .= "<td style='text-align:center;'><input class='form-check-input' type='checkbox' id='" . $data[$this->id] . "' name='" . $data[$this->id] . "'></td>";
+        $tr .= "<td>" . $data[$this->countervessel] . "</td>";
+        $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
+        $tr .= "<td>" . $data[$this->carplate] . "</td>";
+        $tr .= "<td>" . $data[$this->guide] . "</td>";
+        $tr .= "<td>" . $data[$this->exporter] . "</td>";
+        $tr .= "</tr>";
+
+        $count++;
+      }
+    }
+
+    $tbclose = "</tbody>";
+
+    $table = "
+      <div class='row'>
+        <div class='col-lg-12'>
+          <div class='card shadow mb-4'>
+            <div class='card-header bg-primary text-white'>
+              <h6 class='mb-0'><i class='fas fa-list'></i> Camiones Disponibles <em>(Total de Registros: " . $count . ")</em></h6>
+            </div>
+
+            <div class='table-responsive'>
+              <table class='table table-bordered table-hover' style='width:max-content;'>
+                " . $thead . $tr . $tbclose . "
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    ";
+
+    return $table;
+
   }
 }

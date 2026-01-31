@@ -1,46 +1,92 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-$db         = (new Database())->getConnection();
-$searchForm = isset($_POST['search']) ? $_POST['search'] : '';
-$search     = "%{$searchForm}%";
+$db = (new Database())->getConnection();
 
-$query = "SELECT * FROM app_ships WHERE vessel_name LIKE :search";
-
-/* Solo muestra aquellas naves que posean una ETD mayor al día en curso */
-if (isset($_POST['current']) && ($_POST['current'] == 1)) {
-  $query .= " AND finished = 0 ";
+/* Helpers */
+function post($key, $default = null)
+{
+  return $_POST[$key] ?? $default;
 }
 
-/* Muestra todas las naves cargadas en el sistema */
-if (isset($_POST['all']) && ($_POST['all'] == 1)) {
-  $query .= " AND (finished = 0 OR finished = 1) ";
-}
+$searchForm       = trim(post('search', ''));
+$vesselId         = (int) post('vessel', 0);
+$fieldsId         = trim(post('field', ''));
+$searchLikeVessel = "%{$searchForm}%";
+$searchLikeField  = "%{$fieldsId}%";
 
-/* Muestra todas las naves cargadas en el sistema */
-if (isset($_POST['finished']) && ($_POST['finished'] == 1)) {
-  $query .= " AND finished = 1 ";
-}
+/* CARGA DE NAVES */
+if (!post('trucks')) {
+  $conditions = [];
+  $params     = [':search' => $searchLikeVessel];
 
-$query .= "ORDER BY vessel_name ASC LIMIT 10";
+  $conditions[] = "vessel_name LIKE :search";
 
-$stmt = $db->prepare($query);
-$stmt->bindParam(":search", $search, PDO::PARAM_STR);
-$stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if (post('current') == 1) {
+    $conditions[] = "finished = 0";
+  }
 
-$data = [
-  [
-    "id"   => "-",
-    "text" => "Seleccione una motonave..."
-  ]
-];
+  if (post('finished') == 1) {
+    $conditions[] = "finished = 1";
+  }
 
-foreach ($result as $info) {
-  $data[] = [
-    "id"   => $info['ship_id'],
-    "text" => $info['vessel_name'] . ' (Viaje: ' . $info['voyage'] . ')'
-  ];
+  if (post('all') == 1) {
+    $conditions[] = "(finished = 0 OR finished = 1)";
+  }
+
+  $where = implode(' AND ', $conditions);
+
+  $sql = "
+    SELECT ship_id, vessel_name, voyage
+    FROM app_ships
+    WHERE $where
+    ORDER BY vessel_name ASC
+    LIMIT 10
+  ";
+
+  $stmt = $db->prepare($sql);
+  $stmt->execute($params);
+
+  $data = [[
+    'id'   => '-',
+    'text' => 'Seleccione una motonave...'
+  ]];
+
+  foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+    $data[] = [
+      'id'   => $row['ship_id'],
+      'text' => "{$row['vessel_name']} (Viaje: {$row['voyage']})"
+    ];
+  }
+
+/* CARGA DE CAMIONES */
+} else {
+  $sql = "
+    SELECT row_id, car_plate, container
+    FROM app_outer_port
+    WHERE vessel_id = :vessel AND (row_id LIKE :field OR car_plate LIKE :field)
+    ORDER BY row_id ASC
+    LIMIT 10
+  ";
+
+  $stmt = $db->prepare($sql);
+  $stmt->bindValue(':vessel', $vesselId, PDO::PARAM_INT);
+  $stmt->bindValue(':field', $searchLikeField, PDO::PARAM_STR);
+  $stmt->execute();
+
+  $data = [[
+    'id'   => '-',
+    'text' => 'Seleccione un camión...'
+  ]];
+
+  foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+    $container = $row['container'] != 'N/A' ? $row['container'] : 'N/A';
+
+    $data[] = [
+      'id'   => $row['row_id'],
+      'text' => "Posición: {$row['row_id']} | Patente: {$row['car_plate']} | Contenedor: {$container}"
+    ];
+  }
 }
 
 header('Content-Type: application/json');
