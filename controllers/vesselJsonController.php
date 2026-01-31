@@ -85,7 +85,7 @@ if (!post('trucks')) {
 
     $data[] = [
       'id'   => $row['row_id'],
-      'text' => "Posición: {$row['counter_vessel']}-{$origin} | Patente: {$row['car_plate']}| Contenedor: {$container}"
+      'text' => "Posición: {$row['counter_vessel']}-{$origin} | Patente: {$row['car_plate']} | Contenedor: {$container}"
     ];
   }
 }
