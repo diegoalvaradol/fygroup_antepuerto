@@ -104,6 +104,7 @@ $top             = UIComponents::scrollToTopButton();
                             <div class="form-inline mb-3">
                               <label class="mr-2 text-gray-800 font-weight-bold">Camiones Disponibles</label>
                               <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica los camiones disponibles para el roleo."></i>
+                              <i class="fas fa-info-circle text-warning" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Simbología: -T: Termo / -C: Contenedores"></i>
                               <select class="form-control select2 form-control-user" id="rowId" name="rowId[]" multiple>
                                 <option value="-">Seleccione uno o más camiones...</option>
                               </select>

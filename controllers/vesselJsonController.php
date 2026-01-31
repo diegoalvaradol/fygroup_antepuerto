@@ -62,7 +62,7 @@ if (!post('trucks')) {
 /* CARGA DE CAMIONES */
 } else {
   $sql = "
-    SELECT row_id, car_plate, container
+    SELECT row_id, car_plate, container, counter_vessel, origin
     FROM app_outer_port
     WHERE vessel_id = :vessel AND (row_id LIKE :field OR car_plate LIKE :field)
     ORDER BY row_id ASC
@@ -81,10 +81,11 @@ if (!post('trucks')) {
 
   foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
     $container = $row['container'] != 'N/A' ? $row['container'] : 'N/A';
+    $origin    = $row['origin'] == 1 ? 'C' : 'T';
 
     $data[] = [
       'id'   => $row['row_id'],
-      'text' => "Posición: {$row['row_id']} | Patente: {$row['car_plate']} | Contenedor: {$container}"
+      'text' => "Posición: {$row['counter_vessel']}-{$origin} | Patente: {$row['car_plate']}| Contenedor: {$container}"
     ];
   }
 }
