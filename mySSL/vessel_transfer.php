@@ -411,42 +411,59 @@ var saveVesselTransfer = function() {
       data: $('#vesselTransferForm').serialize(),
       type: 'POST',
     }).done(function(x) {
-      if(x === 'OK'){
-        Swal.fire({
-          title: '¡Éxito!',
-          text: 'Roleo realizado con éxito!',
-          icon: 'success',
-          confirmButtonColor: '#4CAF50'
-        }).then((result) => {
-          window.location = '<?php echo generateMkey('vessel_transfer'); ?>';
-        });
-      }
+      Swal.fire({
+        title: "¿Estás seguo de realizar el roleo?",
+        text: "EL roleo consta de un total de ("+rowId.length+") camiones.",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#4CAF50",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, rolear",
+        cancelButtonText: "No, cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if(x === 'OK'){
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Roleo realizado con éxito!',
+              icon: 'success',
+              confirmButtonColor: '#4CAF50'
+            }).then((result) => {
+              window.location = '<?php echo generateMkey('vessel_transfer'); ?>';
+            });
+          }
 
-      if(x === 'NOOK'){
-        Swal.fire({
-          title: 'Oops...',
-          text: 'Error al realizar el roleo de carga entre naves.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then(() => {
+          if(x === 'NOOK'){
+            Swal.fire({
+              title: 'Oops...',
+              text: 'Error al realizar el roleo de carga entre naves.',
+              icon: 'error',
+              cancelButtonColor: '#d33',
+            }).then(() => {
+              text.removeClass('d-none');
+              spinner.addClass('d-none');
+              btn.prop('disabled', false);
+            });
+          }
+
+          if(x === 'ERROR'){
+            Swal.fire({
+              title: 'Oops...',
+              html: 'Asegurate que el tipo de naves sea el mismo.'+'</br>'+'[Liner => Liner] ó [Charter => Charter]',
+              icon: 'error',
+              cancelButtonColor: '#d33',
+            }).then(() => {
+              text.removeClass('d-none');
+              spinner.addClass('d-none');
+              btn.prop('disabled', false);
+            });
+          }
+        }else if(result.dismiss){
           text.removeClass('d-none');
           spinner.addClass('d-none');
           btn.prop('disabled', false);
-        });
-      }
-
-      if(x === 'ERROR'){
-        Swal.fire({
-          title: 'Oops...',
-          html: 'Asegurate que el tipo de naves sea el mismo.'+'</br>'+'[Liner => Liner] ó [Charter => Charter]',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then(() => {
-          text.removeClass('d-none');
-          spinner.addClass('d-none');
-          btn.prop('disabled', false);
-        });
-      }
+        }
+      });
     });
   }
 }
@@ -496,6 +513,19 @@ $(document).ready(function() {
         };
       },
       processResults: function (data) {
+        /* Valida que el campo contenga datos de camiones disponibles para el roleo */
+        if(data.length == 1){
+          Swal.fire({
+            title: 'Oops...',
+            html: 'No existen camiones disponibles para rolear.',
+            icon: 'warning'
+          });
+
+          return {
+            results: []
+          };
+        }
+
         return {
           results: data
         };

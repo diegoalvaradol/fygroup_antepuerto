@@ -74,10 +74,7 @@ if (!post('trucks')) {
   $stmt->bindValue(':field', $searchLikeField, PDO::PARAM_STR);
   $stmt->execute();
 
-  $data = [[
-    'id'   => '-',
-    'text' => 'Seleccione un camión...'
-  ]];
+  $data = [[]];
 
   foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
     $container = $row['container'] != 'N/A' ? $row['container'] : 'N/A';
