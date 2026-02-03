@@ -799,6 +799,7 @@ class outerPort extends iQuery
         $btnAddContainerHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
+        $btnCellphone        = "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>";
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -810,7 +811,7 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->exporter] . "</td>";
         $tr .= "<td>" . $data[$this->agency] . "</td>";
         $tr .= "<td>" . $data[$this->pallets] . "</td>";
-        $tr .= "<td>" . $data[$this->cellphonedriver] . "</td>";
+        $tr .= "<td>" . $btnCellphone . ' ' . $data[$this->cellphonedriver] . "</td>";
         $tr .= "<td>" . $arrival . "</td>";
         $tr .= "<td>" . $departure . "</td>";
         $tr .= "<td>" . $stayTime . "</td>";
@@ -1154,6 +1155,7 @@ class outerPort extends iQuery
         $btnAddThermoHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
+        $btnCellphone     = "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>";
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -1162,7 +1164,7 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->guide] . "</td>";
         $tr .= "<td>" . $data[$this->exporter] . "</td>";
         $tr .= "<td>" . $data[$this->pallets] . "</td>";
-        $tr .= "<td>" . $data[$this->cellphonedriver] . "</td>";
+        $tr .= "<td>" . $btnCellphone . ' ' . $data[$this->cellphonedriver] . "</td>";
         $tr .= "<td>" . $arrival . "</td>";
         $tr .= "<td>" . $departure . "</td>";
         $tr .= "<td style='width:350px;'>" . $stayTime . "</td>";
