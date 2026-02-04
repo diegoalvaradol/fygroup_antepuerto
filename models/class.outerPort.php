@@ -1702,9 +1702,9 @@ class outerPort extends iQuery
     $thead .= "<th>Turnos</th>";
     $thead .= "<th>Días</th>";
     $thead .= "<th>Finalizado</th>";
-    $thead .= "<th>Total Camiones</th>";
-    $thead .= "<th>Total Contenedores</th>";
-    $thead .= "<th>Total Pallets</th>";
+    $thead .= "<th>Camiones</th>";
+    $thead .= "<th>Contenedores</th>";
+    $thead .= "<th>Pallets</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
