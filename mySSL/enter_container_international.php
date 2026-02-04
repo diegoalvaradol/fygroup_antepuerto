@@ -173,8 +173,7 @@ $top             = UIComponents::scrollToTopButton();
                     </div>
 
                     <!-- Tabla de Contenedores Internacional -->
-                    <?php $tableContainerInternational = $port->getTableContainerInternational(); ?>
-                    <?php echo $tableContainerInternational; ?>
+                    <?php echo $port->getTableContainerInternational(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>

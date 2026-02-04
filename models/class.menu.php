@@ -85,6 +85,14 @@ class menu
           ]
         ],
         [
+          'title' => 'Estadística',
+          'icon'  => 'fa-chart-simple',
+          'id'    => 'collapseEstaditica',
+          'items' => [
+            ['label' => 'Estadística Naves', 'link' => generateMkey('stadistics_by_vessel')]
+          ]
+        ],
+        [
           'title' => 'Tarifario',
           'icon'  => 'fa-sack-dollar',
           'id'    => 'collapsePrecio',
@@ -100,7 +108,6 @@ class menu
             ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
             ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')],
             ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')]
-
           ]
         ]
       ]);

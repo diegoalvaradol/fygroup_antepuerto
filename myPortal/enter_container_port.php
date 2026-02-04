@@ -64,8 +64,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                     <h1 class="h3 mb-1 text-gray-800">Reporte de Contenedores</h1>
 
                     <!-- Tabla de Contenedores -->
-                    <?php $tableContainer = $port->getTableContainer(); ?>
-                    <?php echo $tableContainer; ?>
+                    <?php echo $port->getTableContainer(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>

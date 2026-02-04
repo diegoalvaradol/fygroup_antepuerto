@@ -64,8 +64,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                     <h1 class="h3 mb-1 text-gray-800">Reporte de Termos</h1>
 
                     <!-- Tabla de Contenedores -->
-                    <?php $tableThermos = $port->getTableThermo(); ?>
-                    <?php echo $tableThermos; ?>
+                    <?php echo $port->getTableThermo(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>

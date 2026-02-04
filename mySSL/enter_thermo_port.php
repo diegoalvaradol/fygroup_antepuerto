@@ -200,8 +200,7 @@ $top             = UIComponents::scrollToTopButton();
                     </div>
 
                     <!-- Listado de Termos -->
-                    <?php $tableThermos = $port->getTableThermo(); ?>
-                    <?php echo $tableThermos; ?>
+                    <?php echo $port->getTableThermo(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>

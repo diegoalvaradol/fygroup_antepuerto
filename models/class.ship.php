@@ -114,17 +114,24 @@ class ship extends iQuery
 
   public function getVesselName($vesselId)
   {
-    $query = "SELECT * FROM  $this->table WHERE $this->id = :id LIMIT 1";
+    $query = "SELECT * FROM $this->table WHERE $this->id = :id LIMIT 1";
     $stmt  = $this->conexion->prepare($query);
     $stmt->bindParam(":id", $vesselId, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result > 0) {
-      return $result[$this->vessel];
-    } else {
-      return '-';
-    }
+    return $result > 0 ? $result[$this->vessel] : '-';
+  }
+
+  public function getShipLineName($shipLineId)
+  {
+    $query = "SELECT * FROM `app_ship_lines` WHERE line_id = :id";
+    $stmt  = $this->conexion->prepare($query);
+    $stmt->bindParam(":id", $shipLineId, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result > 0 ? $result['name'] : '-';
   }
 
   public function getTableShip()

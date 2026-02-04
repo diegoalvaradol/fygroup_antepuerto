@@ -799,7 +799,7 @@ class outerPort extends iQuery
         $btnAddContainerHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-        $btnCellphone        = "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>";
+        $btnCellphone        = $_SESSION["user"]["division"] === 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -1155,7 +1155,7 @@ class outerPort extends iQuery
         $btnAddThermoHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-        $btnCellphone     = "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>";
+        $btnCellphone     = $_SESSION["user"]["division"] === 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -1663,43 +1663,96 @@ class outerPort extends iQuery
     return $infoVessel;
   }
 
-  public function getTableVesselTransfer($id)
+  public function getTableStadisticsByShips()
   {
-    $ship  = new ship($this->conexion);
-    $count = 0;
+    $ship = new ship($this->conexion);
+    $port = new port($this->conexion);
 
-    $query = "SELECT * FROM $this->table WHERE $this->vessel  = :id";
-    $stmt  = $this->conexion->prepare($query);
-    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+    $query = "
+      SELECT
+        op.vessel_id,
+        sh.pol,
+        sh.pod,
+        sh.eta,
+        sh.etd,
+        sh.ship_line,
+        sh.finished_date,
+        SUM(CASE WHEN op.origin = 1 THEN 1 ELSE 0 END) AS total_containers,
+        SUM(CASE WHEN op.origin = 2 THEN op.pallets_quantity ELSE 0 END) AS total_pallets,
+        COUNT(op.row_id) AS total_camiones
+      FROM $this->table op
+      JOIN app_ships sh ON op.vessel_id = sh.ship_id
+      WHERE sh.finished = 1
+      GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line
+    ";
+
+    $stmt = $this->conexion->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $thead = "<thead style='background-color:#4e73df; color:white;'>";
     $thead .= "<tr>";
-    $thead .= "<th>Selecionar</th>";
-    $thead .= "<th>Posición</th>";
+    $thead .= "<th>#</th>";
     $thead .= "<th>Nave</th>";
-    $thead .= "<th>Patente</th>";
-    $thead .= "<th>Guía</th>";
-    $thead .= "<th>Exportador</th>";
+    $thead .= "<th>Naviera</th>";
+    $thead .= "<th>POL</th>";
+    $thead .= "<th>POD</th>";
+    $thead .= "<th>ETA</th>";
+    $thead .= "<th>ETD</th>";
+    $thead .= "<th>Turnos</th>";
+    $thead .= "<th>Días</th>";
+    $thead .= "<th>Finalizado</th>";
+    $thead .= "<th>Total Camiones</th>";
+    $thead .= "<th>Total Contenedores</th>";
+    $thead .= "<th>Total Pallets</th>";
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
 
-    $tr = null;
+    $tr    = null;
+    $count = 0;
 
     if ($result !== []) {
       foreach ($result as $data) {
-        $tr .= "<td style='text-align:center;'><input class='form-check-input' type='checkbox' id='" . $data[$this->id] . "' name='" . $data[$this->id] . "'></td>";
-        $tr .= "<td>" . $data[$this->countervessel] . "</td>";
-        $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
-        $tr .= "<td>" . $data[$this->carplate] . "</td>";
-        $tr .= "<td>" . $data[$this->guide] . "</td>";
-        $tr .= "<td>" . $data[$this->exporter] . "</td>";
-        $tr .= "</tr>";
-
         $count++;
+
+        $etaTime      = new DateTime($data['eta']);
+        $etdTime      = new DateTime($data['etd']);
+        $finishedTime = new DateTime($data['finished_date']);
+
+        $eta          = $etaTime->format('d-m-Y H:i');
+        $etd          = $etdTime->format('d-m-Y H:i');
+        $finishedDate = $finishedTime->format('d-m-Y H:i');
+
+        $diff            = $etaTime->diff($etdTime);
+        $diasPermanencia = $diff->days; /* Días totales */
+        $horasTotales    = ($diff->days * 24) + $diff->h;
+        $turnos          = (int) ceil($horasTotales / 8); /* Cantidad de turnos */
+
+        $totalCnts     = number_format($data['total_containers'], 0, ',', '.');
+        $totalPlts     = number_format($data['total_pallets'], 0, ',', '.');
+        $totalCamiones = number_format($data['total_camiones'], 0, ',', '.');
+
+        $tr .= "<tr>";
+        $tr .= "<td>{$count}</td>";
+        $tr .= "<td>{$ship->getVesselName($data['vessel_id'])}</td>";
+        $tr .= "<td>{$ship->getShipLineName($data['ship_line'])}</td>";
+        $tr .= "<td>{$port->getflagImage($port->getCountryName($data['pol']))} {$port->getPortName($data['pol'])}</td>";
+        $tr .= "<td>{$port->getflagImage($port->getCountryName($data['pod']))} {$port->getPortName($data['pod'])}</td>";
+        $tr .= "<td>{$eta}</td>";
+        $tr .= "<td>{$etd}</td>";
+        $tr .= "<td style='color:green;'><b>{$turnos}<b></td>";
+        $tr .= "<td>{$diasPermanencia}</td>";
+        $tr .= "<td><b>{$finishedDate}</b></td>";
+        $tr .= "<td style='color:green;'><b>{$totalCamiones}</b></td>";
+        $tr .= "<td style='color:green;'><b>{$totalCnts}</b></td>";
+        $tr .= "<td style='color:green;'><b>{$totalPlts}</b></td>";
+        $tr .= "</tr>";
       }
+    } else {
+      $tr .= "<tr>";
+      $tr .= "<td colspan='6' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= "</tr>";
     }
 
     $tbclose = "</tbody>";
@@ -1709,7 +1762,7 @@ class outerPort extends iQuery
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
             <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Camiones Disponibles <em>(Total de Registros: " . $count . ")</em></h6>
+              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Naves <em>(Total de Registros: " . $count . ")</em></h6>
             </div>
 
             <div class='table-responsive'>
@@ -1723,6 +1776,5 @@ class outerPort extends iQuery
     ";
 
     return $table;
-
   }
 }

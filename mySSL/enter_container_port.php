@@ -224,8 +224,7 @@ $top             = UIComponents::scrollToTopButton();
                     </div>
 
                     <!-- Tabla de Contenedores -->
-                    <?php $tableContainer = $port->getTableContainer(); ?>
-                    <?php echo $tableContainer; ?>
+                    <?php echo $port->getTableContainer(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>
