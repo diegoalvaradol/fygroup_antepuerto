@@ -63,9 +63,18 @@ abstract class iQuery
 
   public function paginate($totalRegistros, $porPagina, $paginaActual, $urlBase = '?page=')
   {
+    if ($totalRegistros <= 0 || $porPagina <= 0) {
+      return '';
+    }
+
     $totalPaginas = ceil($totalRegistros / $porPagina);
 
-    $html = '<nav aria-label="Page navigation example"><ul class="pagination justify-content-center">';
+    if ($totalPaginas <= 1) {
+      return '';
+    }
+
+    $html = '<nav aria-label="Page navigation example">';
+    $html .= '<ul class="pagination justify-content-center">';
 
     /* Anterior */
     $prevClass = ($paginaActual <= 1) ? 'disabled' : '';
@@ -77,29 +86,26 @@ abstract class iQuery
 
     for ($i = 1; $i <= $totalPaginas; $i++) {
       if (
-        $i == 1 ||                        // siempre mostrar primera
-        $i == $totalPaginas ||            // siempre mostrar última
-        abs($i - $paginaActual) <= $rango // rango alrededor de la actual
+        $i == 1 ||
+        $i == $totalPaginas ||
+        abs($i - $paginaActual) <= $rango
       ) {
         $active = ($paginaActual == $i) ? 'active' : '';
         $html .= '<li class="page-item ' . $active . '">';
         $html .= '<a class="page-link" href="' . $urlBase . $i . '">' . $i . '</a>';
         $html .= '</li>';
-      } elseif (
-        abs($i - $paginaActual) == $rango + 1
-      ) {
+      } elseif (abs($i - $paginaActual) == $rango + 1) {
         $html .= '<li class="page-item disabled"><span class="page-link">...</span></li>';
       }
     }
 
-    // Siguiente
+    /* Siguiente */
     $nextClass = ($paginaActual >= $totalPaginas) ? 'disabled' : '';
     $html .= '<li class="page-item ' . $nextClass . '">';
     $html .= '<a class="page-link" href="' . ($paginaActual < $totalPaginas ? $urlBase . ($paginaActual + 1) : '#') . '">Siguiente</a>';
     $html .= '</li>';
 
-    $html .= '</ul>';
-    $html .= '</nav>';
+    $html .= '</ul></nav>';
 
     return $html;
   }

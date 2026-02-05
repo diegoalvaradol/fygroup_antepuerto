@@ -139,8 +139,7 @@ $top             = UIComponents::scrollToTopButton();
                     </div>
 
                     <!-- Listado de Naves -->
-                    <?php $tableships = $ship->getTableShip(); ?>
-                    <?php echo $tableships; ?>
+                    <?php echo $ship->getTableShip(); ?>
                 </div>
                 <!-- /.container-fluid -->
             </div>

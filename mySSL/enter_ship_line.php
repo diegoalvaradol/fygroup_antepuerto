@@ -97,8 +97,7 @@ $top             = UIComponents::scrollToTopButton();
                     </div>
 
                     <!-- Listado de Lineas Navieras -->
-                    <?php $tableshipLines = $line->getTableShipLine(); ?>
-                    <?php echo $tableshipLines; ?>
+                    <?php echo $line->getTableShipLine(); ?>
                 </div>
                 <!-- /.container-fluid -->
             </div>

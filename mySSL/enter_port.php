@@ -97,8 +97,7 @@ $top             = UIComponents::scrollToTopButton();
                     </div>
 
                     <!-- Listado de Puertos -->
-                    <?php $tablePorts = $port->getTablePort(); ?>
-                    <?php echo $tablePorts; ?>
+                    <?php echo $port->getTablePort(); ?>
                 </div>
                 <!-- /.container-fluid -->
             </div>

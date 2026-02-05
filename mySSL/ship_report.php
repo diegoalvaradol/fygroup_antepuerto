@@ -67,8 +67,7 @@ if (!$admin) {
                     <h1 class="h3 mb-1 text-gray-800">Reporte de Naves</h1>
 
                     <!-- Tabla de Naves -->
-                    <?php $tableshipReport = $port->shipReport(); ?>
-                    <?php echo $tableshipReport; ?>
+                    <?php echo $port->shipReport(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>

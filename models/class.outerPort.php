@@ -1668,6 +1668,18 @@ class outerPort extends iQuery
     $ship = new ship($this->conexion);
     $port = new port($this->conexion);
 
+    /* Contador de registros */
+    $countQuery = "SELECT COUNT(*) FROM app_ships WHERE finished = 1";
+    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt->execute();
+    $totalRegistros = $countStmt->fetchColumn();
+
+    /* Construccion total de la página y query */
+    $porPagina = 25; /* Número de registros por página */
+    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $inicio    = ($pagina - 1) * $porPagina;
+    $urlBase   = generateMkey('stadistics_by_vessel') . '&page=';
+
     $query = "
       SELECT
         op.vessel_id,
@@ -1684,9 +1696,12 @@ class outerPort extends iQuery
       JOIN app_ships sh ON op.vessel_id = sh.ship_id
       WHERE sh.finished = 1
       GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line
+      ORDER BY sh.ship_id ASC LIMIT :inicio, :porPagina
     ";
 
     $stmt = $this->conexion->prepare($query);
+    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
+    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -1725,13 +1740,14 @@ class outerPort extends iQuery
         $finishedDate = $finishedTime->format('d-m-Y H:i');
 
         $diff            = $etaTime->diff($etdTime);
-        $diasPermanencia = $diff->days; /* Días totales */
         $horasTotales    = ($diff->days * 24) + $diff->h;
         $turnos          = (int) ceil($horasTotales / 8); /* Cantidad de turnos */
+        $diasPermanencia = $turnos / 3; /* Días totales */
 
         $totalCnts     = number_format($data['total_containers'], 0, ',', '.');
         $totalPlts     = number_format($data['total_pallets'], 0, ',', '.');
         $totalCamiones = number_format($data['total_camiones'], 0, ',', '.');
+        $totalDias     = number_format($diasPermanencia, 0, ',', '.');
 
         $tr .= "<tr>";
         $tr .= "<td>{$count}</td>";
@@ -1742,7 +1758,7 @@ class outerPort extends iQuery
         $tr .= "<td>{$eta}</td>";
         $tr .= "<td>{$etd}</td>";
         $tr .= "<td style='color:green;'><b>{$turnos}<b></td>";
-        $tr .= "<td>{$diasPermanencia}</td>";
+        $tr .= "<td>{$totalDias}</td>";
         $tr .= "<td><b>{$finishedDate}</b></td>";
         $tr .= "<td style='color:green;'><b>{$totalCamiones}</b></td>";
         $tr .= "<td style='color:green;'><b>{$totalCnts}</b></td>";
@@ -1771,6 +1787,7 @@ class outerPort extends iQuery
               </table>
             </div>
           </div>
+          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
     ";
