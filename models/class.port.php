@@ -169,7 +169,7 @@ class port extends iQuery
   public function getflagImage($countryName)
   {
     $countryToIso = [
-      'Afganistan'     => 'af',
+      'Afganistán'     => 'af',
       'Albania'        => 'al',
       'Argelia'        => 'dz',
       'Andorra'        => 'ad',
@@ -177,10 +177,10 @@ class port extends iQuery
       'Argentina'      => 'ar',
       'Australia'      => 'au',
       'Austria'        => 'at',
-      'Belgica'        => 'be',
+      'Bélgica'        => 'be',
       'Bolivia'        => 'bo',
       'Brasil'         => 'br',
-      'Canada'         => 'ca',
+      'Canadá'         => 'ca',
       'Chile'          => 'cl',
       'China'          => 'cn',
       'Colombia'       => 'co',
@@ -195,23 +195,23 @@ class port extends iQuery
       'Indonesia'      => 'id',
       'Irlanda'        => 'ie',
       'Italia'         => 'it',
-      'Japon'          => 'jp',
+      'Japón'          => 'jp',
       'México'         => 'mx',
       'Países Bajos'   => 'nl',
       'Nueva Zelanda'  => 'nz',
       'Noruega'        => 'no',
-      'Panama'         => 'pa',
+      'Panamá'         => 'pa',
       'Paraguay'       => 'py',
-      'Peru'           => 'pe',
+      'Perú'           => 'pe',
       'Polonia'        => 'pl',
       'Portugal'       => 'pt',
       'Rusia'          => 'ru',
-      'Sudafrica'      => 'za',
+      'Sudáfrica'      => 'za',
       'Corea del Sur'  => 'kr',
       'España'         => 'es',
       'Suecia'         => 'se',
       'Suiza'          => 'ch',
-      'Turquia'        => 'tr',
+      'Turquía'        => 'tr',
       'Ucrania'        => 'ua',
       'Reino Unido'    => 'gb',
       'Estados Unidos' => 'us',
@@ -226,17 +226,12 @@ class port extends iQuery
     }
 
     $code = $countryToIso[$countryName];
-    $path = "../flag-icons/flags/4x3/{$code}.svg"; // Ruta a tus imágenes de banderas
+    $path = "../flag-icons/flags/4x3/{$code}.svg"; // Ruta a imágenes de banderas
 
     return "<img
       src='$path'
       width='30'
-      style='
-        vertical-align:middle;
-        margin-right:5px;
-        border-radius:6px;
-        box-shadow:0 0 2px rgba(0,0,0,.4);
-      '
+      style='vertical-align:middle; margin-right:5px; border-radius:6px; box-shadow:0 0 2px rgba(0,0,0,.4);'
     >";
 
   }
