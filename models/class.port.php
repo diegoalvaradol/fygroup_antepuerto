@@ -228,12 +228,7 @@ class port extends iQuery
     $code = $countryToIso[$countryName];
     $path = "../flag-icons/flags/4x3/{$code}.svg"; // Ruta a imágenes de banderas
 
-    return "<img
-      src='$path'
-      width='30'
-      style='vertical-align:middle; margin-right:5px; border-radius:6px; box-shadow:0 0 2px rgba(0,0,0,.4);'
-    >";
-
+    return "<img src='$path' width='30' style='vertical-align:middle; margin-right:5px; border-radius:6px; box-shadow:0 0 2px rgba(0,0,0,.4);'>";
   }
 
 }

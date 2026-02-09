@@ -614,6 +614,7 @@ async function cargarDatos(fechaInicio, fechaFin) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fechaInicio, fechaFin })
   });
+
   return await res.json();
 }
 

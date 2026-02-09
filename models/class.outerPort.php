@@ -571,33 +571,36 @@ class outerPort extends iQuery
     $finCompleto    = $fin . ' 23:59:59';
 
     $query = "
-    SELECT dia,
-           SUM(ingresos) AS total_ingresos,
-           SUM(egresos) AS total_egresos
-    FROM (
-      SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS ingresos, 0 AS egresos
-      FROM $this->table
-      WHERE $this->arrivaldate BETWEEN :inicio AND :fin
-      GROUP BY dia
+      SELECT dia,
+            SUM(ingresos) AS total_ingresos,
+            SUM(egresos) AS total_egresos
+      FROM (
+        SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS ingresos, 0 AS egresos
+        FROM $this->table
+        WHERE $this->arrivaldate BETWEEN :inicio1 AND :fin1
+        GROUP BY dia
 
-      UNION ALL
+        UNION ALL
 
-      SELECT DATE($this->departuredate) AS dia, 0 AS ingresos, COUNT(*) AS egresos
-      FROM $this->table
-      WHERE $this->departuredate BETWEEN :inicio AND :fin
+        SELECT DATE($this->departuredate) AS dia, 0 AS ingresos, COUNT(*) AS egresos
+        FROM $this->table
+        WHERE $this->departuredate BETWEEN :inicio2 AND :fin2
+        GROUP BY dia
+      ) AS movimientos
       GROUP BY dia
-    ) AS movimientos
-    GROUP BY dia
-    ORDER BY dia ASC
-  ";
+      ORDER BY dia ASC
+    ";
 
     $stmt = $this->conexion->prepare($query);
-    $stmt->bindParam(':inicio', $inicioCompleto, PDO::PARAM_STR);
-    $stmt->bindParam(':fin', $finCompleto, PDO::PARAM_STR);
+    $stmt->bindParam(':inicio1', $inicioCompleto);
+    $stmt->bindParam(':fin1', $finCompleto);
+    $stmt->bindParam(':inicio2', $inicioCompleto);
+    $stmt->bindParam(':fin2', $finCompleto);
     $stmt->execute();
 
     $data = [];
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($rows as $row) {
       if ($row['total_ingresos'] > 0 && $row['total_egresos'] > 0) {
         $data[] = [
           'Fecha'    => date('d-m-y', strtotime($row['dia'])),
@@ -1663,19 +1666,85 @@ class outerPort extends iQuery
     return $infoVessel;
   }
 
+  public function getDetailByVessel($vesselId)
+  {
+    $query = "
+      SELECT
+        op.row_id,
+        op.car_plate,
+        op.container,
+        op.pallets_quantity,
+        op.origin,
+        op.exporter,
+        op.agency,
+        op.guide_number
+      FROM $this->table op
+      WHERE op.vessel_id = :vessel_id
+      ORDER BY op.row_id ASC
+    ";
+
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bindValue(':vessel_id', $vesselId, PDO::PARAM_INT);
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($rows === []) {
+      return "<em class='text-muted'>Sin detalle para esta nave</em>";
+    }
+
+    $html = "
+    <table class='table table-sm table-bordered mb-0'>
+      <thead class='bg-light'>
+        <tr>
+          <th>#</th>
+          <th>Camión</th>
+          <th>Exportador</th>
+          <th>Agencia</th>
+          <th>N° Guía</th>
+          <th>Contenedor</th>
+          <th>Pallets</th>
+          <th>Origen</th>
+        </tr>
+      </thead>
+      <tbody>
+    ";
+
+    $i = 1;
+
+    foreach ($rows as $r) {
+      $origen = ($r['origin'] == 1) ? 'Contenedor' : 'Pallets';
+
+      $html .= "
+        <tr>
+          <td>{$i}</td>
+          <td>{$r['car_plate']}</td>
+          <td>{$r['exporter']}</td>
+          <td>{$r['agency']}</td>
+          <td>{$r['guide_number']}</td>
+          <td>{$r['container']}</td>
+          <td>{$r['pallets_quantity']}</td>
+          <td>{$origen}</td>
+        </tr>
+      ";
+
+      $i++;
+    }
+
+    $html .= "</tbody></table>";
+
+    return $html;
+  }
+
   public function getTableStadisticsByShips()
   {
     $ship = new ship($this->conexion);
     $port = new port($this->conexion);
 
-    /* Contador de registros */
-    $countQuery = "SELECT COUNT(*) FROM app_ships WHERE finished = 1";
-    $countStmt  = $this->conexion->prepare($countQuery);
-    $countStmt->execute();
+    /* Paginación */
+    $countStmt      = $this->conexion->query("SELECT COUNT(*) FROM app_ships WHERE finished = 1");
     $totalRegistros = $countStmt->fetchColumn();
 
-    /* Construccion total de la página y query */
-    $porPagina = 25; /* Número de registros por página */
+    $porPagina = 25;
     $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $inicio    = ($pagina - 1) * $porPagina;
     $urlBase   = generateMkey('stadistics_by_vessel') . '&page=';
@@ -1689,6 +1758,7 @@ class outerPort extends iQuery
         sh.etd,
         sh.ship_line,
         sh.finished_date,
+        sh.voyage,
         SUM(CASE WHEN op.origin = 1 THEN 1 ELSE 0 END) AS total_containers,
         SUM(CASE WHEN op.origin = 2 THEN op.pallets_quantity ELSE 0 END) AS total_pallets,
         COUNT(op.row_id) AS total_camiones
@@ -1696,7 +1766,8 @@ class outerPort extends iQuery
       JOIN app_ships sh ON op.vessel_id = sh.ship_id
       WHERE sh.finished = 1
       GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line
-      ORDER BY sh.ship_id ASC LIMIT :inicio, :porPagina
+      ORDER BY sh.ship_id ASC
+      LIMIT :inicio, :porPagina
     ";
 
     $stmt = $this->conexion->prepare($query);
@@ -1705,93 +1776,98 @@ class outerPort extends iQuery
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $thead = "<thead style='background-color:#4e73df; color:white;'>";
-    $thead .= "<tr>";
-    $thead .= "<th>#</th>";
-    $thead .= "<th>Nave</th>";
-    $thead .= "<th>Naviera</th>";
-    $thead .= "<th>POL</th>";
-    $thead .= "<th>POD</th>";
-    $thead .= "<th>ETA</th>";
-    $thead .= "<th>ETD</th>";
-    $thead .= "<th>Turnos</th>";
-    $thead .= "<th>Días</th>";
-    $thead .= "<th>Finalizado</th>";
-    $thead .= "<th>Camiones</th>";
-    $thead .= "<th>Contenedores</th>";
-    $thead .= "<th>Pallets</th>";
-    $thead .= "</tr>";
-    $thead .= "</thead>";
-    $thead .= "<tbody>";
+    $rows      = '';
+    $detailsJs = [];
+    $i         = 0;
 
-    $tr    = null;
-    $count = 0;
+    foreach ($result as $data) {
+      $i++;
+      $vid = (int) $data['vessel_id'];
 
-    if ($result !== []) {
-      foreach ($result as $data) {
-        $count++;
+      $eta = (new DateTime($data['eta']))->format('d-m-Y H:i');
+      $etd = (new DateTime($data['etd']))->format('d-m-Y H:i');
+      $fin = (new DateTime($data['finished_date']))->format('d-m-Y H:i');
 
-        $etaTime      = new DateTime($data['eta']);
-        $etdTime      = new DateTime($data['etd']);
-        $finishedTime = new DateTime($data['finished_date']);
+      $diff   = (new DateTime($data['eta']))->diff(new DateTime($data['etd']));
+      $turnos = ceil((($diff->days * 24) + $diff->h) / 8);
+      $dias   = $turnos / 3;
 
-        $eta          = $etaTime->format('d-m-Y H:i');
-        $etd          = $etdTime->format('d-m-Y H:i');
-        $finishedDate = $finishedTime->format('d-m-Y H:i');
+      $rows .= "
+        <tr>
+          <td>$i</td>
+          <td>{$ship->getVesselName($vid)}</td>
+          <td>{$ship->getShipLineName($data['ship_line'])}</td>
+          <td>{$port->getflagImage($port->getCountryName($data['pol']))} {$port->getPortName($data['pol'])}</td>
+          <td>{$port->getflagImage($port->getCountryName($data['pod']))} {$port->getPortName($data['pod'])}</td>
+          <td>$eta</td>
+          <td>$etd</td>
+          <td><b class='text-success'>$turnos</b></td>
+          <td>" . number_format($dias, 0, ',', '.') . "</td>
+          <td><b>$fin</b></td>
+          <td class='text-success'><b>" . number_format($data['total_camiones']) . "</b></td>
+          <td class='text-success'><b>" . number_format($data['total_containers']) . "</b></td>
+          <td class='text-success'><b>" . number_format($data['total_pallets']) . "</b></td>
+          <td class='text-center'>
+            <button class='btn btn-sm btn-success' data-bs-toggle='modal' data-bs-target='#detailModal' onclick='loadDetail($vid)'><i class='fas fa-solid fa-eye'></i> Detalles</button>
+          </td>
+        </tr>
+      ";
 
-        $diff            = $etaTime->diff($etdTime);
-        $horasTotales    = ($diff->days * 24) + $diff->h;
-        $turnos          = (int) ceil($horasTotales / 8); /* Cantidad de turnos */
-        $diasPermanencia = $turnos / 3; /* Días totales */
-
-        $totalCnts     = number_format($data['total_containers'], 0, ',', '.');
-        $totalPlts     = number_format($data['total_pallets'], 0, ',', '.');
-        $totalCamiones = number_format($data['total_camiones'], 0, ',', '.');
-        $totalDias     = number_format($diasPermanencia, 0, ',', '.');
-
-        $tr .= "<tr>";
-        $tr .= "<td>{$count}</td>";
-        $tr .= "<td>{$ship->getVesselName($data['vessel_id'])}</td>";
-        $tr .= "<td>{$ship->getShipLineName($data['ship_line'])}</td>";
-        $tr .= "<td>{$port->getflagImage($port->getCountryName($data['pol']))} {$port->getPortName($data['pol'])}</td>";
-        $tr .= "<td>{$port->getflagImage($port->getCountryName($data['pod']))} {$port->getPortName($data['pod'])}</td>";
-        $tr .= "<td>{$eta}</td>";
-        $tr .= "<td>{$etd}</td>";
-        $tr .= "<td style='color:green;'><b>{$turnos}<b></td>";
-        $tr .= "<td>{$totalDias}</td>";
-        $tr .= "<td><b>{$finishedDate}</b></td>";
-        $tr .= "<td style='color:green;'><b>{$totalCamiones}</b></td>";
-        $tr .= "<td style='color:green;'><b>{$totalCnts}</b></td>";
-        $tr .= "<td style='color:green;'><b>{$totalPlts}</b></td>";
-        $tr .= "</tr>";
-      }
-    } else {
-      $tr .= "<tr>";
-      $tr .= "<td colspan='6' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
-      $tr .= "</tr>";
+      $detailsJs[$vid] = addslashes($this->getDetailByVessel($vid));
     }
 
-    $tbclose = "</tbody>";
-
-    $table = "
-      <div class='row'>
-        <div class='col-lg-12'>
-          <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Naves <em>(Total de Registros: " . $count . ")</em></h6>
-            </div>
-
-            <div class='table-responsive'>
-              <table class='table table-bordered table-hover' style='width:max-content;'>
-                " . $thead . $tr . $tbclose . "
-              </table>
-            </div>
-          </div>
-          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
+    return "
+      <div class='card shadow'>
+        <div class='table-responsive'>
+          <table class='table table-bordered table-hover' style='width:max-content'>
+            <thead style='background:#4e73df;color:white'>
+              <tr>
+                <th>#</th>
+                <th>Nave</th>
+                <th>Naviera</th>
+                <th>POL</th>
+                <th>POD</th>
+                <th>ETA</th>
+                <th>ETD</th>
+                <th>Turnos</th>
+                <th>Días</th>
+                <th>Finalizado</th>
+                <th>Camiones</th>
+                <th>Contenedores</th>
+                <th>Pallets</th>
+                <th>Desglose</th>
+              </tr>
+            </thead>
+            <tbody>$rows</tbody>
+          </table>
         </div>
       </div>
-    ";
 
-    return $table;
+      {$this->paginate($totalRegistros, $porPagina, $pagina, $urlBase)}
+
+      <!-- Modal -->
+      <div class='modal fade' id='detailModal' tabindex='-1'>
+        <div class='modal-dialog modal-xl modal-dialog-scrollable'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class='modal-title'>Desglose de Carga </br>
+                Nave: {$ship->getVesselName($vid)} | Viaje: {$data['voyage']}
+              </h5>
+              <button type='button' class='close' data-bs-dismiss='modal' aria-label='Cerrar'>
+              <span>×</span>
+            </div>
+            <div class='modal-body' id='modalDetailBody'></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const vesselDetails = " . json_encode($detailsJs) . ";
+        function loadDetail(id){
+          document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
+        }
+      </script>
+    ";
   }
+
 }
