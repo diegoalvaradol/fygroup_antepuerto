@@ -320,42 +320,13 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
       </div>
     </div>
 
-
-    <!-- Info System Modal-->
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Acerca del Sistema</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
-                </div>
-                <div class="modal-body">
-                    <small><b>Nombre: </b><?php echo $infoCfg['name']; ?></small>
-                    <br>
-                    <small><b>Versión: </b><?php echo $infoCfg['version']; ?></small>
-                    <br>
-                    <small><b>Compilación: </b><?php echo $infoCfg['compilation']; ?></small>
-                    <br>
-                    <small><b>Lanzamiento: </b><?php echo $releasedTime->format('d-m-Y H:i'); ?></small>
-                    <br>
-                    <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
-                    <br>
-                    <small>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal de ajustes-->
     <div class="modal fade" id="goalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -380,9 +351,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . '.'; ?></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION["user"]["division"]]; ?></h6>
@@ -422,18 +391,18 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
 
                 <div class="modal-body">
                     <div class="container mt-4 p-3 border rounded" style="background-color: #f9f9f9;">
                         <h3 class="text-center">Licencia de Uso de Software</h3>
                         <p><strong>Nombre del Software: </strong><?php echo $infoCfg['name']; ?></p>
+                        <p><strong>Compilación: </strong><?php echo $infoCfg['compilation']; ?></p>
                         <p><strong>Versión: </strong><?php echo $infoCfg['version']; ?></p>
                         <p><strong>Titular de los derechos: </strong><?php echo $infoCfg['author']; ?></p>
                         <p><strong>Fecha de Lanzamiento: </strong><?php echo $releasedTime->format('d-m-Y H:i'); ?></p>
+                        <p><strong>Últ. Actualización: </strong><?php echo $updateTime->format('d-m-Y H:i'); ?></p>
 
                         <h5>1. OBJETO DE LA LICENCIA</h5>
                         <p>Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos.</p>
@@ -474,6 +443,9 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
         </div>
     </div>
 
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -486,6 +458,12 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
 
     <!-- Bootstrap JS (necesario para popover) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- Chat flotante expandible estilo WhatsApp - Responsive -->
     <?php echo $whatsAppBtn; ?>

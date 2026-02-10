@@ -188,7 +188,7 @@ class menu
           <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
             <li>
               <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#userModal">
-                <i class="fas fa-user fa-sm fa-fw me-2"></i>Perfil
+                <i class="fas fa-user fa-sm fa-fw me-2"></i> Perfil
               </a>
             </li>';
 
@@ -196,23 +196,20 @@ class menu
       $tapBar .= '
             <li>
               <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#goalModal">
-                <i class="fas fa-cogs fa-sm fa-fw me-2"></i>Ajustar Capacidad
+                <i class="fas fa-cogs fa-sm fa-fw me-2"></i> Ajustar Capacidad
               </a>
             </li>';
     }
 
     $tapBar .= '
             <li>
-              <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#infoModal">
-                <i class="fas fa-circle-info fa-sm fa-fw me-2"></i>Acerca del Sistema
-              </a>
-            </li>
-            <li>
               <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#licenceModal">
-                <i class="fas fa-copyright fa-sm fa-fw me-2"></i>Licencia
+                <i class="fas fa-copyright fa-sm fa-fw me-2"></i> Licencia
               </a>
             </li>
+
             <li><hr class="dropdown-divider"></li>
+
             <li>
               <a class="dropdown-item text-danger" href="logout.php" data-bs-toggle="modal" data-bs-target="#logoutModal">
                 <i class="fas fa-right-from-bracket me-2"></i> Cerrar Sesión
