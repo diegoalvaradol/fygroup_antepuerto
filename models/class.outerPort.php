@@ -1788,27 +1788,41 @@ class outerPort extends iQuery
       $etd = (new DateTime($data['etd']))->format('d-m-Y H:i');
       $fin = (new DateTime($data['finished_date']))->format('d-m-Y H:i');
 
-      $diff   = (new DateTime($data['eta']))->diff(new DateTime($data['etd']));
-      $turnos = ceil((($diff->days * 24) + $diff->h) / 8);
-      $dias   = $turnos / 3;
+      $diff      = (new DateTime($data['eta']))->diff(new DateTime($data['etd']));
+      $turnos    = ceil((($diff->days * 24) + $diff->h) / 8);
+      $dias      = $turnos / 3;
+      $totalCnts = number_format($data['total_containers']);
+      $totalPlts = number_format($data['total_pallets']);
+
+      $cntClass = ($data['total_containers'] > 0) ? 'text-success' : 'text-danger';
+      $pltClass = ($data['total_pallets'] > 0) ? 'text-success' : 'text-danger';
+
+      $vessel   = $ship->getVesselName($vid);
+      $shipLine = $ship->getShipLineName($data['ship_line']);
+
+      $polFlag = $port->getflagImage($port->getCountryName($data['pol']));
+      $polName = $port->getPortName($data['pol']);
+
+      $podFlag = $port->getflagImage($port->getCountryName($data['pod']));
+      $podName = $port->getPortName($data['pod']);
 
       $rows .= "
         <tr>
-          <td>$i</td>
-          <td>{$ship->getVesselName($vid)}</td>
-          <td>{$ship->getShipLineName($data['ship_line'])}</td>
-          <td>{$port->getflagImage($port->getCountryName($data['pol']))} {$port->getPortName($data['pol'])}</td>
-          <td>{$port->getflagImage($port->getCountryName($data['pod']))} {$port->getPortName($data['pod'])}</td>
-          <td>$eta</td>
-          <td>$etd</td>
-          <td><b class='text-success'>$turnos</b></td>
+          <td>{$i}</td>
+          <td>{$vessel}</td>
+          <td>{$shipLine}</td>
+          <td>{$polFlag} {$polName}</td>
+          <td>{$podFlag} {$podName}</td>
+          <td>{$eta}</td>
+          <td>{$etd}</td>
+          <td><b class='text-success'>{$turnos}</b></td>
           <td>" . number_format($dias, 0, ',', '.') . "</td>
-          <td><b>$fin</b></td>
-          <td class='text-success'><b>" . number_format($data['total_camiones']) . "</b></td>
-          <td class='text-success'><b>" . number_format($data['total_containers']) . "</b></td>
-          <td class='text-success'><b>" . number_format($data['total_pallets']) . "</b></td>
+          <td><b>{$fin}</b></td>
+          <td><b>" . number_format($data['total_camiones']) . "</b></td>
+          <td class='{$cntClass}'><b>{$totalCnts}</b></td>
+          <td class='{$pltClass}'><b>{$totalPlts}</b></td>
           <td class='text-center'>
-            <button class='btn btn-sm btn-success' data-bs-toggle='modal' data-bs-target='#detailModal' onclick='loadDetail($vid)'><i class='fas fa-solid fa-eye'></i> Detalles</button>
+            <button class='btn btn-sm btn-success' data-bs-toggle='modal' data-bs-target='#detailModal' onclick='loadDetail({$vid})'><i class='fas fa-eye'></i> Detalles</button>
           </td>
         </tr>
       ";
