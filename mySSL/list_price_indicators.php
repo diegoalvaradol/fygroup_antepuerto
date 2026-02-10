@@ -116,9 +116,7 @@ if (!$admin) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Acerca del Sistema</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="modal-body">
                     <small><b>Nombre: </b><?php echo $infoCfg['name']; ?></small>
@@ -130,8 +128,7 @@ if (!$admin) {
                     <small><b>Lanzamiento: </b><?php echo $releasedTime->format('d-m-Y H:i'); ?></small>
                     <br>
                     <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
-                    <br>
-                    <small>
+                </div>
             </div>
         </div>
     </div>

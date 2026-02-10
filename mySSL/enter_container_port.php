@@ -280,8 +280,7 @@ $top             = UIComponents::scrollToTopButton();
                     <small><b>Lanzamiento: </b><?php echo $releasedTime->format('d-m-Y H:i'); ?></small>
                     <br>
                     <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
-                    <br>
-                    <small>
+                </div>
             </div>
         </div>
     </div>
