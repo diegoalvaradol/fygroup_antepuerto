@@ -330,10 +330,6 @@ class menu
     $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
-    $tapBarPortal .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">';
-    $tapBarPortal .= '<i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema';
-    $tapBarPortal .= '</a>';
-    $tapBarPortal .= '<div class="dropdown-divider"></div>';
     $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
     $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
     $tapBarPortal .= '</a>';
@@ -364,10 +360,6 @@ class menu
     $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
     $tapBarPortal .= '</a>';
     $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
-    $tapBarPortal .= '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#infoModal" style="color: #0483cd;">';
-    $tapBarPortal .= '<i class="fas fa-circle-info fa-sm fa-fw mr-2" style="color: #0483cd;"></i>Acerca del Sistema';
-    $tapBarPortal .= '</a>';
-    $tapBarPortal .= '<div class="dropdown-divider"></div>';
     $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
     $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
     $tapBarPortal .= '</a>';
