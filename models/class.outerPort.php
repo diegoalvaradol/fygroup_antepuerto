@@ -1748,7 +1748,7 @@ class outerPort extends iQuery
       <tfoot class='table-light'>
         <tr>
           <th colspan='6' class='text-end' style='text-align:end;'>Total:</th>
-          <th class='text-end'>{$total}</th>
+          <th class='text-end'>" . number_format($total, 0, ',', '.') . "</th>
           <th></th>
         </tr>
       </tfoot>
