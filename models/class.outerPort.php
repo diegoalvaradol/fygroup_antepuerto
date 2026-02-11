@@ -1666,71 +1666,95 @@ class outerPort extends iQuery
     return $infoVessel;
   }
 
-  public function getDetailByVessel($vesselId)
+  public function getDetailByVessel(int $vesselId): string
   {
-    $query = "
+    $sql = "
       SELECT
-        op.row_id,
-        op.car_plate,
-        op.container,
-        op.pallets_quantity,
-        op.origin,
-        op.exporter,
-        op.agency,
-        op.guide_number
-      FROM $this->table op
-      WHERE op.vessel_id = :vessel_id
-      ORDER BY op.row_id ASC
+        row_id,
+        car_plate,
+        container,
+        pallets_quantity,
+        origin,
+        exporter,
+        agency,
+        guide_number
+      FROM {$this->table}
+      WHERE vessel_id = :vessel_id
+      ORDER BY row_id ASC
     ";
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->conexion->prepare($sql);
     $stmt->bindValue(':vessel_id', $vesselId, PDO::PARAM_INT);
     $stmt->execute();
+
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($rows === []) {
-      return "<em class='text-muted'>Sin detalle para esta nave</em>";
+    if (!$rows) {
+      return "<div class='text-center text-muted py-3'>Sin detalle para esta nave</div>";
     }
 
-    $html = "
-    <table class='table table-sm table-bordered mb-0'>
-      <thead class='bg-light'>
+    $html = "<div class='table-responsive'>";
+    $html .= "<table class='table table-bordered table-hover'>";
+    $html .= "
+      <thead style='background:#4e73df;color:white'>
         <tr>
-          <th>#</th>
+          <th style='width:40px'>#</th>
           <th>Camión</th>
           <th>Exportador</th>
           <th>Agencia</th>
           <th>N° Guía</th>
           <th>Contenedor</th>
-          <th>Pallets</th>
+          <th class='text-end'>Pallets</th>
           <th>Origen</th>
         </tr>
       </thead>
       <tbody>
     ";
 
-    $i = 1;
+    $i     = 1;
+    $total = 0;
 
     foreach ($rows as $r) {
-      $origen = ($r['origin'] == 1) ? 'Contenedor' : 'Pallets';
+      $carPlate  = htmlspecialchars($r['car_plate'] ?? '');
+      $exporter  = htmlspecialchars($r['exporter'] ?? '');
+      $agency    = htmlspecialchars($r['agency'] ?? '');
+      $guide     = htmlspecialchars($r['guide_number'] ?? '');
+      $container = htmlspecialchars($r['container'] ?? '');
+      $pallets   = (int) ($r['pallets_quantity'] ?? 0);
+      $origin    = (int) ($r['origin'] ?? 0);
+
+      $total += $pallets;
+
+      $originText = $origin === 1 ? 'Contenedor' : 'Pallets';
 
       $html .= "
         <tr>
-          <td>{$i}</td>
-          <td>{$r['car_plate']}</td>
-          <td>{$r['exporter']}</td>
-          <td>{$r['agency']}</td>
-          <td>{$r['guide_number']}</td>
-          <td>{$r['container']}</td>
-          <td>{$r['pallets_quantity']}</td>
-          <td>{$origen}</td>
+          <td class='text-center'>{$i}</td>
+          <td style='max-width:120px;word-break:break-word;'>{$carPlate}</td>
+          <td style='max-width:180px;word-break:break-word;'>{$exporter}</td>
+          <td style='max-width:160px;word-break:break-word;'>{$agency}</td>
+          <td style='max-width:120px;word-break:break-word;'>{$guide}</td>
+          <td style='max-width:160px;word-break:break-word;'>{$container}</td>
+          <td class='text-end'>{$pallets}</td>
+          <td style='max-width:120px;word-break:break-word;'>{$originText}</td>
         </tr>
       ";
 
       $i++;
     }
 
-    $html .= "</tbody></table>";
+    $html .= "
+      </tbody>
+      <tfoot class='table-light'>
+        <tr>
+          <th colspan='6' class='text-end' style='text-align:end;'>Total:</th>
+          <th class='text-end'>{$total}</th>
+          <th></th>
+        </tr>
+      </tfoot>
+    ";
+
+    $html .= "</table></div>";
 
     return $html;
   }
@@ -1827,7 +1851,7 @@ class outerPort extends iQuery
         </tr>
       ";
 
-      $detailsJs[$vid] = addslashes($this->getDetailByVessel($vid));
+      $detailsJs[$vid] = $this->getDetailByVessel($vid);
     }
 
     return "
@@ -1849,7 +1873,7 @@ class outerPort extends iQuery
                 <th>Camiones</th>
                 <th>Contenedores</th>
                 <th>Pallets</th>
-                <th>Desglose</th>
+                <th>Detalle</th>
               </tr>
             </thead>
             <tbody>$rows</tbody>
@@ -1864,7 +1888,7 @@ class outerPort extends iQuery
         <div class='modal-dialog modal-xl modal-dialog-scrollable'>
           <div class='modal-content'>
             <div class='modal-header'>
-              <h5 class='modal-title'>Desglose de Carga </br>
+              <h5 class='modal-title'>Detalle de Carga </br>
                 Nave: {$ship->getVesselName($vid)} | Viaje: {$data['voyage']}
               </h5>
               <button type='button' class='close' data-bs-dismiss='modal' aria-label='Cerrar'>
