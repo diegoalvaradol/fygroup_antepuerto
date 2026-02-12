@@ -2,9 +2,8 @@
 require_once __DIR__ . '/../config/includes.php';
 class ship extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_ships";
-  protected $primaryKey = 'ship_id';
+  protected string $table      = "app_ships";
+  protected string $primaryKey = 'ship_id';
 
   public $id           = "ship_id";
   public $vessel       = "vessel_name";
@@ -19,15 +18,15 @@ class ship extends iQuery
   public $created      = "created";
   public $lastupdate   = "last_update";
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
   {
     $query = "INSERT INTO  $this->table (vessel_name, ship_line, voyage, pol, pod, eta, etd, finished, created, last_update) VALUES (:vessel, :shipline, :voyage, :pol, :pod, :eta, :etd, :finished, :created, :lastupdate)";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->vessel     = htmlspecialchars(strip_tags($this->vessel));
     $this->line       = htmlspecialchars(strip_tags($this->line));
@@ -57,7 +56,7 @@ class ship extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET vessel_name = :vessel, ship_line = :shipline, voyage = :voyage, pol = :pol, pod = :pod, eta = :eta, etd = :etd, last_update = :lastupdate WHERE ship_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id         = htmlspecialchars(strip_tags($this->id));
     $this->vessel     = htmlspecialchars(strip_tags($this->vessel));
@@ -85,7 +84,7 @@ class ship extends iQuery
   public function delete()
   {
     $query = "DELETE FROM $this->table WHERE ship_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id = htmlspecialchars(strip_tags($this->id));
 
@@ -97,7 +96,7 @@ class ship extends iQuery
   public function endStacking()
   {
     $query = "UPDATE $this->table SET finished = :finished, finished_date = :finisheddate, last_update = :lastupdate WHERE ship_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id           = htmlspecialchars(strip_tags($this->id));
     $this->finished     = htmlspecialchars(strip_tags($this->finished));
@@ -115,7 +114,7 @@ class ship extends iQuery
   public function getVesselName($vesselId)
   {
     $query = "SELECT * FROM $this->table WHERE $this->id = :id LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":id", $vesselId, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -126,7 +125,7 @@ class ship extends iQuery
   public function getShipLineName($shipLineId)
   {
     $query = "SELECT * FROM `app_ship_lines` WHERE line_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":id", $shipLineId, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -136,13 +135,13 @@ class ship extends iQuery
 
   public function getTableShip()
   {
-    $port     = new port($this->conexion);
-    $shipLine = new shipLine($this->conexion);
+    $port     = new port();
+    $shipLine = new shipLine();
     $count    = 0;
 
     /* Contador de registros */
     $countQuery = "SELECT COUNT(*) FROM $this->table WHERE 1";
-    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt  = $this->db->prepare($countQuery);
     $countStmt->execute();
     $totalRegistros = $countStmt->fetchColumn();
 
@@ -153,7 +152,7 @@ class ship extends iQuery
     $urlBase   = generateMkey('enter_ship') . '&page=';
 
     $query = "SELECT * FROM $this->table WHERE 1 ORDER BY ship_id ASC LIMIT :inicio, :porPagina";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
     $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();

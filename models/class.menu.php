@@ -1,13 +1,18 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-class menu
+class menu extends iQuery
 {
+  public function __construct()
+  {
+    parent::__construct(); // usa Database::get() desde iQuery
+  }
+
   public static function sideBarSSL()
   {
-    $db   = (new Database())->getConnection();
-    $cfg  = new cfg($db);
-    $user = new user($db);
+
+    $cfg  = new cfg();
+    $user = new user();
 
     $infoCfg    = json_decode($cfg->getInfo(1), true);
     $updateTime = new DateTime($infoCfg['update_date']);
@@ -160,8 +165,7 @@ class menu
 
   public static function mainTapBarSSL()
   {
-    $db       = (new Database())->getConnection();
-    $user     = new user($db);
+    $user     = new user();
     $admin    = $user->isAdmin($_SESSION["user"]["run"]);
     $userName = htmlspecialchars($_SESSION["user"]["name"]);
 
@@ -271,8 +275,7 @@ class menu
 
   public static function sideBarPortal()
   {
-    $db      = (new Database())->getConnection();
-    $cfg     = new cfg($db);
+    $cfg     = new cfg();
     $infoCfg = json_decode($cfg->getInfo(1), true);
 
     $sideBarPortal = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
@@ -373,8 +376,7 @@ class menu
 
   public static function footerSSL()
   {
-    $db      = (new Database())->getConnection();
-    $cfg     = new cfg($db);
+    $cfg     = new cfg();
     $infoCfg = json_decode($cfg->getInfo(1), true);
 
     $footer = '

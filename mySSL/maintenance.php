@@ -7,8 +7,7 @@ http_response_code(503);
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db      = (new Database())->getConnection();
-$cfg     = new cfg($db);
+$cfg     = new cfg();
 $footer  = menu::footerSSL();
 $top     = UIComponents::scrollToTopButton();
 $infoCfg = json_decode($cfg->getInfo(1), true);

@@ -2,12 +2,7 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-$db     = (new Database())->getConnection();
-$user   = new user($db);
+$user   = new user();
 $admin  = $user->isAdmin($_SESSION["user"]["run"]);
 $footer = menu::footerSSL();
 

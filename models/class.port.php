@@ -4,9 +4,8 @@ date_default_timezone_set('America/Santiago');
 
 class port extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_ports";
-  protected $primaryKey = 'port_id';
+  protected string $table      = "app_ports";
+  protected string $primaryKey = 'port_id';
 
   public $id         = "port_id";
   public $city       = "city";
@@ -14,15 +13,15 @@ class port extends iQuery
   public $created    = "created";
   public $lastupdate = "last_update";
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
   {
     $query = "INSERT INTO $this->table (city, country, created, last_update) VALUES (:city, :country, :created, :lastupdate)";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->city       = htmlspecialchars(strip_tags($this->city));
     $this->country    = htmlspecialchars(strip_tags($this->country));
@@ -40,7 +39,7 @@ class port extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET city = :city, country = :country, last_update = :lastupdate WHERE port_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id         = htmlspecialchars(strip_tags($this->id));
     $this->city       = htmlspecialchars(strip_tags($this->city));
@@ -58,7 +57,7 @@ class port extends iQuery
   public function delete()
   {
     $query = "DELETE FROM $this->table WHERE port_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id = htmlspecialchars(strip_tags($this->id));
 
@@ -70,7 +69,7 @@ class port extends iQuery
   public function getPortName($portId)
   {
     $query = "SELECT * FROM  $this->table WHERE $this->id = :id LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":id", $portId, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -85,7 +84,7 @@ class port extends iQuery
   public function getCountryName($portId)
   {
     $query = "SELECT * FROM  $this->table WHERE $this->id = :id LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":id", $portId, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -100,7 +99,7 @@ class port extends iQuery
   public function getTablePort()
   {
     $query = "SELECT * FROM $this->table WHERE 1 ORDER BY port_id ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

@@ -2,10 +2,9 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db   = (new Database())->getConnection();
-$port = new outerPort($db);
-$cfg  = new cfg($db);
-$user = new user($db);
+$port = new outerPort();
+$cfg  = new cfg();
+$user = new user();
 
 $arrayDivision = get::getDivisionName();
 $sideBarPortal = menu::sideBarPortal();

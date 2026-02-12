@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-$db           = (new Database())->getConnection();
-$contenedores = new outerPort($db);
+$contenedores = new outerPort();
 
 $nave     = $_POST['nave'] ?? '';
 $patente  = $_POST['patente'] ?? '';

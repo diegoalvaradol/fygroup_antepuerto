@@ -3,13 +3,18 @@ require_once __DIR__ . '/../config/database.php';
 
 abstract class iQuery
 {
-  protected $db;
-  protected $table;
-  protected $primaryKey = 'id'; /* Id por defecto */
+  protected PDO $db;
+  protected string $table;
+  protected string $primaryKey = 'id';
 
-  public function __construct($conexion)
+  public function __construct()
   {
-    $this->db = $conexion;
+    $this->db = Database::get();
+  }
+
+  public function getDb(): PDO
+  {
+    return $this->db;
   }
 
   public function length(): bool

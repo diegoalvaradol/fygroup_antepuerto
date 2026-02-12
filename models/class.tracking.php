@@ -4,9 +4,8 @@ date_default_timezone_set('America/Santiago');
 
 class tracking extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_tracking";
-  protected $primaryKey = 'id';
+  protected string $table      = "app_tracking";
+  protected string $primaryKey = 'id';
 
   public $id         = "id";
   public $chargueid  = 'id_chargue';
@@ -14,15 +13,15 @@ class tracking extends iQuery
   public $statusdate = 'status_date';
   public $created    = 'created';
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
   {
     $query = "INSERT INTO $this->table (id_chargue, status, status_date, created) VALUES (:chargueid, :status, :statusdate, :created)";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->chargueid  = htmlspecialchars(strip_tags($this->chargueid));
     $this->status     = htmlspecialchars(strip_tags($this->status));
@@ -40,7 +39,7 @@ class tracking extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET id_chargue = :idchargue, status = :status, status_date = :statusdate WHERE id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id         = htmlspecialchars(strip_tags($this->id));
     $this->chargueid  = htmlspecialchars(strip_tags($this->chargueid));
@@ -58,7 +57,7 @@ class tracking extends iQuery
   public function delete()
   {
     $query = "DELETE FROM $this->table WHERE id_chargue = :idchargue AND status = 0";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->chargueid = htmlspecialchars(strip_tags($this->chargueid));
 
@@ -70,7 +69,7 @@ class tracking extends iQuery
   public function getTableTracking($id)
   {
     $query = "SELECT * FROM $this->table AS t JOIN app_international_chargue AS ic ON t.id_chargue = ic.row_id JOIN app_ships AS sh ON sh.ship_id = ic.vessel_id WHERE t.id_chargue = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

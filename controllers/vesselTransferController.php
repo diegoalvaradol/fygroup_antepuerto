@@ -5,8 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
   exit;
 }
 
-$db   = (new Database())->getConnection();
-$port = new outerPort($db);
+$outerPort = new outerPort();
 
 $fromVessel = (int) ($_POST['fromvessel'] ?? 0);
 $toVessel   = (int) ($_POST['tovessel'] ?? 0);
@@ -19,7 +18,7 @@ if (!$fromVessel || !$toVessel || empty($rowId)) {
 }
 
 /* Origen nave */
-$stmt = $db->prepare("SELECT origin FROM app_outer_port WHERE vessel_id = :vessel LIMIT 1");
+$stmt = $outerPort->getDb()->prepare("SELECT origin FROM app_outer_port WHERE vessel_id = :vessel LIMIT 1");
 $stmt->bindParam(":vessel", $fromVessel, PDO::PARAM_INT);
 $stmt->execute();
 $originFrom = $stmt->fetchColumn();
@@ -35,7 +34,7 @@ if (!$originFrom || !$originTo || $originFrom !== $originTo) {
   exit;
 }
 
-if ($port->vesselTransfer($fromVessel, $toVessel, $rowId)) {
+if ($outerPort->vesselTransfer($fromVessel, $toVessel, $rowId)) {
   echo "OK";
 } else {
   echo "NOOK";

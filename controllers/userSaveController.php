@@ -3,12 +3,12 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $db   = (new Database())->getConnection();
-  $user = new user($db);
+  $user = new user();
+  $run  = $_POST["run"];
 
   $query = "SELECT * FROM app_users WHERE run = :run LIMIT 1";
-  $stmt  = $db->prepare($query);
-  $stmt->bindParam(":run", $_POST["run"]);
+  $stmt  = $user->getDb()->prepare($query);
+  $stmt->bindParam(":run", $run, PDO::PARAM_STR);
   $stmt->execute();
   $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
   }
 
-  $user->run        = $_POST["run"];
+  $user->run        = $run;
   $user->name       = $_POST["name"];
   $user->lastname   = $_POST["lastname"];
   $user->email      = $_POST["email"];

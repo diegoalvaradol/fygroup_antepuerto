@@ -3,9 +3,8 @@ require_once __DIR__ . '/../config/includes.php';
 
 class shipLine extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_ship_lines";
-  protected $primaryKey = 'line_id';
+  protected string $table      = "app_ship_lines";
+  protected string $primaryKey = 'line_id';
 
   public $id         = "line_id";
   public $name       = "name";
@@ -13,15 +12,15 @@ class shipLine extends iQuery
   public $created    = "created";
   public $lastupdate = "last_update";
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
   {
     $query = "INSERT INTO $this->table (name, rut, created, last_update) VALUES (:name, :rut, :created, :lastupdate)";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->name       = htmlspecialchars(strip_tags($this->name));
     $this->rut        = htmlspecialchars(strip_tags($this->rut));
@@ -39,7 +38,7 @@ class shipLine extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET name = :name, /*rut = :rut,*/ last_update = :lastupdate WHERE line_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id   = htmlspecialchars(strip_tags($this->id));
     $this->name = htmlspecialchars(strip_tags($this->name));
@@ -57,7 +56,7 @@ class shipLine extends iQuery
   public function delete()
   {
     $query = "DELETE FROM $this->table WHERE line_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id = htmlspecialchars(strip_tags($this->id));
 
@@ -69,7 +68,7 @@ class shipLine extends iQuery
   public function getLineName($lineId)
   {
     $query = "SELECT * FROM  $this->table WHERE $this->id = :lineId LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":lineId", $lineId, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -84,7 +83,7 @@ class shipLine extends iQuery
   public function getTableShipLine()
   {
     $query = "SELECT * FROM $this->table WHERE 1 ORDER BY line_id ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $count  = 0;

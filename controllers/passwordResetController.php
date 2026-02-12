@@ -20,14 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $token      = bin2hex(random_bytes(16));
   $expiration = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
-  $db   = (new Database())->getConnection();
-  $user = new User($db);
+  $user = new user();
 
   /* Buscar el nombre del usuario */
   $query = "SELECT * FROM app_users WHERE email = :email AND division = :division LIMIT 1";
-  $stmt  = $db->prepare($query);
-  $stmt->bindParam(":email", $email);
-  $stmt->bindParam(":division", $division);
+  $stmt  = $user->getDb()->prepare($query);
+  $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+  $stmt->bindParam(":division", $division, PDO::PARAM_STR);
   $stmt->execute();
   $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 

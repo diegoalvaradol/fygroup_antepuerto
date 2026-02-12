@@ -5,9 +5,8 @@ date_default_timezone_set('America/Santiago');
 
 class internationalChargue extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_international_chargue";
-  protected $primaryKey = 'row_id';
+  protected string $table      = "app_international_chargue";
+  protected string $primaryKey = 'row_id';
 
   public $id              = "row_id";
   public $countervessel   = "counter_vessel";
@@ -24,16 +23,16 @@ class internationalChargue extends iQuery
   public $created         = "created";
   public $lastupdate      = "last_update";
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
   {
     $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate, container, seal_number, guide_number, exporter, pallets_quantity, name_driver, cellphone_driver, digited_by, created, last_update)";
     $query .= " VALUES (:countervessel, :vessel, :carplate, :container, :seal, :guide, :exporter, :pallets, :namedriver, :cellphonedriver, :digitedby, :created, :lastupdate)";
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
 
     $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
     $this->vessel          = htmlspecialchars(strip_tags($this->vessel));
@@ -64,7 +63,7 @@ class internationalChargue extends iQuery
     $stmt->bindParam(":lastupdate", $this->lastupdate, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
-      $this->id = $this->conexion->lastInsertId();
+      $this->id = $this->db->lastInsertId();
 
       return true;
     }
@@ -75,7 +74,7 @@ class internationalChargue extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET counter_vessel = :countervessel, vessel_id = :vessel, car_plate = :carplate, container = :container, seal_number = :seal, guide_number = :guide, exporter = :exporter, pallets_quantity = :pallets, name_driver = :namedriver, cellphone_driver = :cellphonedriver, digited_by = :digitedby, last_update = :lastupdate WHERE row_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id              = htmlspecialchars(strip_tags($this->id));
     $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
@@ -111,7 +110,7 @@ class internationalChargue extends iQuery
   public function delete()
   {
     $query = "DELETE FROM $this->table WHERE row_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
 
@@ -121,7 +120,7 @@ class internationalChargue extends iQuery
   public function findByUser($run)
   {
     $query = "SELECT * FROM app_users WHERE run = :run";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":run", $run, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -133,8 +132,8 @@ class internationalChargue extends iQuery
 
   public function getTableContainerInternational()
   {
-    $ship      = new ship($this->conexion);
-    $user      = new user($this->conexion);
+    $ship      = new ship();
+    $user      = new user();
     $adminEdit = $user->isAdminEdit($_SESSION["user"]["run"]);
     $count     = 0;
 
@@ -172,7 +171,7 @@ class internationalChargue extends iQuery
 
     /* Contador de registros */
     $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0";
-    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt  = $this->db->prepare($countQuery);
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
 
@@ -183,7 +182,7 @@ class internationalChargue extends iQuery
     $urlBase   = generateMkey('enter_container_international') . '&page=';
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
     }
@@ -304,7 +303,7 @@ class internationalChargue extends iQuery
 
   public function downloadTableInternationalChargueExcel($nave = '', $patente = '', $guia = '')
   {
-    $ship = new ship($this->conexion);
+    $ship = new ship();
 
     $filtros = [];
     $where   = "WHERE 1";
@@ -325,7 +324,7 @@ class internationalChargue extends iQuery
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

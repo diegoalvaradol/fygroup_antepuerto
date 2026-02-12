@@ -9,7 +9,7 @@ if (!$id) {
 $exporter = trim($_POST['exporter'] ?? '');
 $exporter = ($exporter === '' || $exporter === '-') ? null : $exporter;
 
-$db = (new Database())->getConnection();
+$outer = new outerPort();
 
 $sql = "
 SELECT
@@ -48,7 +48,7 @@ if ($exporter !== null) {
 
 $sql .= " ORDER BY a.exporter, a.container";
 
-$stmt = $db->prepare($sql);
+$stmt = $outer->getDb()->prepare($sql);
 $stmt->execute($params);
 
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);

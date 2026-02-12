@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-$db = (new Database())->getConnection();
+$ship      = new ship();
+$outerPort = new outerPort();
 
 /* Helpers */
 function post($key, $default = null)
@@ -44,7 +45,7 @@ if (!post('trucks')) {
     LIMIT 10
   ";
 
-  $stmt = $db->prepare($sql);
+  $stmt = $ship->getDb()->prepare($sql);
   $stmt->execute($params);
 
   $data = [[
@@ -69,7 +70,7 @@ if (!post('trucks')) {
     LIMIT 10
   ";
 
-  $stmt = $db->prepare($sql);
+  $stmt = $outerPort->getDb()->prepare($sql);
   $stmt->bindValue(':vessel', $vesselId, PDO::PARAM_INT);
   $stmt->bindValue(':field', $searchLikeField, PDO::PARAM_STR);
   $stmt->execute();

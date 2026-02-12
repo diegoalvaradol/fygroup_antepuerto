@@ -1,13 +1,12 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-$db         = (new Database())->getConnection();
+$outer      = new outerPort();
 $searchForm = isset($_POST['search']) ? $_POST['search'] : '';
-
-$search = "%{$searchForm}%";
+$search     = "%{$searchForm}%";
 
 $query = "SELECT * FROM app_outer_port WHERE exporter LIKE :search GROUP BY exporter LIMIT 10";
-$stmt  = $db->prepare($query);
+$stmt  = $outer->getDb()->prepare($query);
 $stmt->bindParam(":search", $search, PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

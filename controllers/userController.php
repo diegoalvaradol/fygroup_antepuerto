@@ -3,9 +3,7 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $db   = (new Database())->getConnection();
-  $user = new user($db);
-
+  $user             = new user();
   $user->run        = $_POST["run"];
   $user->name       = $_POST["name"];
   $user->lastname   = $_POST["lastname"];

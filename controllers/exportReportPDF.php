@@ -29,7 +29,7 @@ $exporter = trim($_GET['exporter'] ?? '');
 $exporter = ($exporter === '' || $exporter === '-') ? null : $exporter;
 
 /* ========= DB ========= */
-$db = (new Database())->getConnection();
+$port = new outerPort();
 
 /* ========= CONSULTA ========= */
 $sql = "
@@ -67,7 +67,7 @@ if ($exporter !== null) {
   $params[':exporter'] = $exporter;
 }
 
-$stmt = $db->prepare($sql);
+$stmt = $outer->getDb()->prepare($sql);
 $stmt->execute($params);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

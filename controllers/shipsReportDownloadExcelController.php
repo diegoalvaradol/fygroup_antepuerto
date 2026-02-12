@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-$db         = (new Database())->getConnection();
-$shipReport = new outerPort($db);
+$shipReport = new outerPort();
 
 $nave  = $_POST['nave'] ?? '';
 $tipo  = $_POST['tipo'] ?? '';

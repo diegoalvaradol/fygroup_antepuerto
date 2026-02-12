@@ -3,9 +3,8 @@ require_once __DIR__ . '/../config/includes.php';
 
 class cfg extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_config";
-  protected $primaryKey = 'id';
+  protected string $table      = "app_config";
+  protected string $primaryKey = 'id';
 
   public $id          = "id";
   public $mark        = "mark";
@@ -19,15 +18,15 @@ class cfg extends iQuery
   public $created     = "created";
   public $lastupdate  = "last_update";
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
   {
     $query = "INSERT INTO $this->table (mark, name, version, compilation, author, released_date, update_date, goals, created, last_update) VALUES (:mark, :name, :version, :compilation, :author, :released, :update, :goals, :created, :lastupdate)";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->mark        = htmlspecialchars(strip_tags($this->mark));
     $this->name        = htmlspecialchars(strip_tags($this->name));
@@ -57,7 +56,7 @@ class cfg extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET mark = :mark, name = :name, version = :version, compilation = :compilation, author = :author, released_date = :released, update_date = :update, goals = :goals, last_update = :lastupdate WHERE id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id          = htmlspecialchars(strip_tags($this->id));
     $this->mark        = htmlspecialchars(strip_tags($this->mark));
@@ -87,7 +86,7 @@ class cfg extends iQuery
   public function updateGoals()
   {
     $query = "UPDATE $this->table SET goals = :goals,last_update = :lastupdate WHERE id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->goals      = htmlspecialchars(strip_tags($this->goals));
     $this->lastupdate = $this->lastupdate;
@@ -102,7 +101,7 @@ class cfg extends iQuery
   public function getInfo($id)
   {
     $query = "SELECT * FROM $this->table WHERE $this->id = :id LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);

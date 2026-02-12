@@ -8,9 +8,8 @@ error_reporting(E_ALL);
 
 class outerPort extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_outer_port";
-  protected $primaryKey = 'row_id';
+  protected string $table      = "app_outer_port";
+  protected string $primaryKey = 'row_id';
 
   public $id              = "row_id";
   public $countervessel   = "counter_vessel";
@@ -33,9 +32,9 @@ class outerPort extends iQuery
   public $created         = "created";
   public $createdby       = "created_by";
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
@@ -43,7 +42,7 @@ class outerPort extends iQuery
     $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate, guide_number, container, seal_number, exporter, agency, cellphone_driver, arrival_date, departure_date, comodity, booking, stay, observations, pallets_quantity, origin, created, created_by)";
     $query .= " VALUES (:countervessel, :vessel, :carplate, :guide, :container, :seal, :exporter, :agency, :cellphonedriver, :arrivaldate, :departuredate, :comodity, :booking, :stay, :observations, :palletsquantity, :origin, :created, :createdby)";
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
 
     $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
     $this->vessel          = htmlspecialchars(strip_tags($this->vessel));
@@ -91,7 +90,7 @@ class outerPort extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET departure_date = :departuredate WHERE row_id = :id AND origin = :origin";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id            = htmlspecialchars(strip_tags($this->id));
     $this->departuredate = $this->departuredate;
@@ -106,7 +105,7 @@ class outerPort extends iQuery
   public function delete()
   {
     $query = "DELETE FROM $this->table WHERE row_id = :id";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id = htmlspecialchars(strip_tags($this->id));
 
@@ -118,7 +117,7 @@ class outerPort extends iQuery
   public function updateContainerThermo()
   {
     $query = "UPDATE $this->table SET counter_vessel = :countervessel, vessel_id = :vessel, car_plate = :carplate, guide_number = :guide, container = :container, seal_number = :seal, exporter = :exporter, agency = :agency, cellphone_driver = :cellphonedriver, arrival_date = :arrivaldate, comodity = :comodity, booking = :booking, stay = :stay, observations = :observations, pallets_quantity = :palletsquantity, created_by = :createdby WHERE row_id = :id AND origin = :origin";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->id              = htmlspecialchars(strip_tags($this->id));
     $this->countervessel   = htmlspecialchars(strip_tags($this->countervessel));
@@ -195,7 +194,7 @@ class outerPort extends iQuery
       $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
 
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
@@ -242,7 +241,7 @@ class outerPort extends iQuery
       $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -287,7 +286,7 @@ class outerPort extends iQuery
       $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -332,7 +331,7 @@ class outerPort extends iQuery
       $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -377,7 +376,7 @@ class outerPort extends iQuery
       $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -422,7 +421,7 @@ class outerPort extends iQuery
       $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -470,7 +469,7 @@ class outerPort extends iQuery
       $params[':rut'] = $_SESSION["user"]["run"];
     }
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -512,7 +511,7 @@ class outerPort extends iQuery
     $queryAntepuerto = "SELECT COUNT(*) AS total" . $baseFrom . $joinShip . $whereAP;
 
     /* Total arribados */
-    $stmtTotal = $this->conexion->prepare($queryTotal);
+    $stmtTotal = $this->db->prepare($queryTotal);
     foreach ($params as $k => $v) {
       $stmtTotal->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -520,7 +519,7 @@ class outerPort extends iQuery
     $totalArrivado = (int) $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
 
     /* Total antepuerto */
-    $stmtAntepuerto = $this->conexion->prepare($queryAntepuerto);
+    $stmtAntepuerto = $this->db->prepare($queryAntepuerto);
     foreach ($params as $k => $v) {
       $stmtAntepuerto->bindValue($k, $v, PDO::PARAM_STR);
     }
@@ -535,7 +534,7 @@ class outerPort extends iQuery
   public function findByUser($run)
   {
     $query = "SELECT * FROM app_users WHERE run = :run";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":run", $run, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -556,7 +555,7 @@ class outerPort extends iQuery
     $rows = rtrim($id, ',');
 
     $query = "UPDATE $this->table SET vessel_id = :tovessel WHERE vessel_id = :fromvessel AND row_id IN(:rows)";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $stmt->bindParam(":fromvessel", $fromVessel, PDO::PARAM_STR);
     $stmt->bindParam(":tovessel", $toVessel, PDO::PARAM_STR);
@@ -591,7 +590,7 @@ class outerPort extends iQuery
       ORDER BY dia ASC
     ";
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     $stmt->bindParam(':inicio1', $inicioCompleto);
     $stmt->bindParam(':fin1', $finCompleto);
     $stmt->bindParam(':inicio2', $inicioCompleto);
@@ -615,8 +614,8 @@ class outerPort extends iQuery
 
   public function getTableContainer()
   {
-    $ship      = new ship($this->conexion);
-    $user      = new user($this->conexion);
+    $ship      = new ship();
+    $user      = new user();
     $adminEdit = $user->isAdminEdit($_SESSION["user"]["run"]);
     $count     = 0;
 
@@ -662,7 +661,7 @@ class outerPort extends iQuery
 
     /* Contador de registros */
     $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
-    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt  = $this->db->prepare($countQuery);
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
 
@@ -678,7 +677,7 @@ class outerPort extends iQuery
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
     }
@@ -861,7 +860,7 @@ class outerPort extends iQuery
 
   public function downloadTableContainerExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
   {
-    $ship = new ship($this->conexion);
+    $ship = new ship();
 
     $filtros = [];
     $where   = "WHERE $this->origin = 1";
@@ -894,7 +893,7 @@ class outerPort extends iQuery
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -974,8 +973,8 @@ class outerPort extends iQuery
 
   public function getTableThermo()
   {
-    $ship      = new ship($this->conexion);
-    $user      = new user($this->conexion);
+    $ship      = new ship();
+    $user      = new user();
     $adminEdit = $user->isAdminEdit($_SESSION["user"]["run"]);
     $count     = 0;
 
@@ -1021,7 +1020,7 @@ class outerPort extends iQuery
 
     /* Contador de registros */
     $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
-    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt  = $this->db->prepare($countQuery);
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
 
@@ -1037,7 +1036,7 @@ class outerPort extends iQuery
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
     }
@@ -1214,7 +1213,7 @@ class outerPort extends iQuery
 
   public function downloadTableThermoExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
   {
-    $ship = new ship($this->conexion);
+    $ship = new ship();
 
     $filtros = [];
     $where   = "WHERE $this->origin = 2";
@@ -1247,7 +1246,7 @@ class outerPort extends iQuery
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -1325,7 +1324,7 @@ class outerPort extends iQuery
 
   public function shipReport()
   {
-    $ship  = new ship($this->conexion);
+    $ship  = new ship();
     $count = 0;
 
     /* Filtros */
@@ -1365,7 +1364,7 @@ class outerPort extends iQuery
 
     /* Contador de registros */
     $countQuery = "SELECT COUNT(*) FROM $this->table as p JOIN app_ships as sh ON sh.ship_id = p.vessel_id WHERE $whereClause";
-    $countStmt  = $this->conexion->prepare($countQuery);
+    $countStmt  = $this->db->prepare($countQuery);
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
 
@@ -1376,7 +1375,7 @@ class outerPort extends iQuery
     $urlBase   = generateMkey('ship_report') . '&page=';
 
     $query = "SELECT * FROM $this->table as p JOIN app_ships as sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
     }
@@ -1546,7 +1545,7 @@ class outerPort extends iQuery
 
   public function downloadTableShipReport($nave = '', $tipo = '', $desde = '', $hasta = '')
   {
-    $ship = new ship($this->conexion);
+    $ship = new ship();
 
     $filtros = [];
     $where   = "WHERE 1";
@@ -1572,7 +1571,7 @@ class outerPort extends iQuery
     }
 
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->execute($filtros);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -1650,7 +1649,7 @@ class outerPort extends iQuery
   public function getLastSentTrucks()
   {
     $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE departure_date IS NOT NULL ORDER BY row_id DESC LIMIT 5";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->execute();
     $result     = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $infoVessel = null;
@@ -1683,7 +1682,7 @@ class outerPort extends iQuery
       ORDER BY row_id ASC
     ";
 
-    $stmt = $this->conexion->prepare($sql);
+    $stmt = $this->db->prepare($sql);
     $stmt->bindValue(':vessel_id', $vesselId, PDO::PARAM_INT);
     $stmt->execute();
 
@@ -1761,11 +1760,11 @@ class outerPort extends iQuery
 
   public function getTableStadisticsByShips()
   {
-    $ship = new ship($this->conexion);
-    $port = new port($this->conexion);
+    $ship = new ship();
+    $port = new port();
 
     /* Paginación */
-    $countStmt      = $this->conexion->query("SELECT COUNT(*) FROM app_ships WHERE finished = 1");
+    $countStmt      = $this->db->query("SELECT COUNT(*) FROM app_ships WHERE finished = 1");
     $totalRegistros = $countStmt->fetchColumn();
 
     $porPagina = 25;
@@ -1794,7 +1793,7 @@ class outerPort extends iQuery
       LIMIT :inicio, :porPagina
     ";
 
-    $stmt = $this->conexion->prepare($query);
+    $stmt = $this->db->prepare($query);
     $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
     $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();

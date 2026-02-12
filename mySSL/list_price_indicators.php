@@ -2,10 +2,9 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db    = (new Database())->getConnection();
-$cfg   = new cfg($db);
-$user  = new user($db);
-$price = new listPrice($db);
+$cfg   = new cfg();
+$user  = new user();
+$price = new listPrice();
 
 $infoCfg         = json_decode($cfg->getInfo(1), true);
 $admin           = $user->isAdmin($_SESSION["user"]["run"]);

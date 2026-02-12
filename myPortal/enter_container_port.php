@@ -2,9 +2,8 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db            = (new Database())->getConnection();
-$port          = new outerPort($db);
-$cfg           = new cfg($db);
+$port          = new outerPort();
+$cfg           = new cfg();
 $sideBarPortal = menu::sideBarPortal();
 $tapBarPortal  = menu::secondTapBarPortal();
 $footer        = menu::footerSSL();

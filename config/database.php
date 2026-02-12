@@ -1,45 +1,40 @@
 <?php
 require_once __DIR__ . '/../functions/functions.php';
+
 class Database
 {
-  private $host;
-  private $db_name;
-  private $username;
-  private $password;
-  public $conexion;
+  private static ?PDO $conn = null;
 
-  public function __construct()
+  private function __construct()
+  {}
+
+  public static function get(): PDO
   {
-    if (esLocalhost()) {
-      /* Localhost */
-      $this->host     = "localhost";
-      $this->db_name  = "ssl_chile";
-      $this->username = "ssl_chile";
-      $this->password = "seatrade1313";
-    } else {
-      /* Server Ferozo */
-      $this->host     = "localhost";
-      $this->db_name  = "l0011525_myssl";
-      $this->username = "l0011525_myssl";
-      $this->password = "nodisu47VA";
-    }
-  }
+    if (self::$conn === null) {
 
-  public function getConnection()
-  {
-    $this->conexion = null;
+      if (esLocalhost()) {
+        $host = "localhost";
+        $db   = "ssl_chile";
+        $user = "ssl_chile";
+        $pass = "seatrade1313";
+      } else {
+        $host = "localhost";
+        $db   = "l0011525_myssl";
+        $user = "l0011525_myssl";
+        $pass = "nodisu47VA";
+      }
 
-    try {
-      $this->conexion = new PDO(
-        "mysql:host={$this->host};dbname={$this->db_name}",
-        $this->username,
-        $this->password
+      self::$conn = new PDO(
+        "mysql:host={$host};dbname={$db};charset=utf8mb4",
+        $user,
+        $pass,
+        [
+          PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+        ]
       );
-      $this->conexion->exec("set names utf8");
-    } catch (PDOException $exception) {
-      echo "Error de conexión: " . $exception->getMessage();
     }
 
-    return $this->conexion;
+    return self::$conn;
   }
 }

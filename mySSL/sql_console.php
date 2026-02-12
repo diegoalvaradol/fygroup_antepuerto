@@ -2,8 +2,7 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$db     = (new Database())->getConnection();
-$user   = new user($db);
+$user   = new user();
 $admin  = $user->isAdmin($_SESSION["user"]["run"]);
 $footer = menu::footerSSL();
 
@@ -14,7 +13,7 @@ if (!$admin) {
   mostrarAccesoDenegado($usuario, $pag, $url);
 }
 
-function ejecutarQuery($db)
+function ejecutarQuery($user)
 {
   $resultado = '';
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['sql_query'])) {
@@ -25,7 +24,7 @@ function ejecutarQuery($db)
     }
 
     try {
-      $stmt = $db->prepare($sql);
+      $stmt = $user->getDb()->prepare($sql);
       $stmt->execute();
 
       if (stripos($sql, 'SELECT') === 0) {

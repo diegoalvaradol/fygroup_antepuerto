@@ -4,9 +4,8 @@ date_default_timezone_set("America/Santiago");
 
 class user extends iQuery
 {
-  private $conexion;
-  protected $table      = "app_users";
-  protected $primaryKey = 'user_id';
+  protected string $table      = "app_users";
+  protected string $primaryKey = 'user_id';
 
   public $id              = "user_id";
   public $run             = "run";
@@ -24,15 +23,15 @@ class user extends iQuery
   public $created         = "created";
   public $lastupdate      = "last_update";
 
-  public function __construct($db)
+  public function __construct()
   {
-    $this->conexion = $db;
+    parent::__construct(); // usa Database::get() desde iQuery
   }
 
   public function save()
   {
     $query = "INSERT INTO $this->table (run, name, last_name, email, password, division, created, last_update) VALUES (:run, :name, :lastname, :email, :password, :division, :created, :lastupdate)";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->run        = htmlspecialchars(strip_tags($this->run));
     $this->name       = htmlspecialchars(strip_tags($this->name));
@@ -58,7 +57,7 @@ class user extends iQuery
   public function update()
   {
     $query = "UPDATE $this->table SET name = :name, last_name = :lastname, email = :email, password = :password, division = :division, last_update = :lastupdate WHERE run = :run";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $this->run        = htmlspecialchars(strip_tags($this->run));
     $this->name       = htmlspecialchars(strip_tags($this->name));
@@ -82,7 +81,7 @@ class user extends iQuery
   public function login()
   {
     $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division AND is_active = 1 LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":run", $this->run, PDO::PARAM_STR);
     $stmt->bindParam(":division", $this->division);
     $stmt->execute();
@@ -94,7 +93,7 @@ class user extends iQuery
       $_SESSION["last_session"] = time();
 
       $updateQuery = "UPDATE app_users SET last_session = NOW() WHERE run = :run";
-      $updateStmt  = $this->conexion->prepare($updateQuery);
+      $updateStmt  = $this->db->prepare($updateQuery);
       $updateStmt->bindParam(":run", $this->run, PDO::PARAM_STR);
       $updateStmt->execute();
 
@@ -107,7 +106,7 @@ class user extends iQuery
   public function setResetToken($email, $token, $expiration)
   {
     $query = "UPDATE $this->table SET reset_token = :token, token_expiration = :expiration WHERE email = :email";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
 
     $stmt->bindParam(":token", $token, PDO::PARAM_STR);
     $stmt->bindParam(":expiration", $expiration, PDO::PARAM_STR);
@@ -119,14 +118,14 @@ class user extends iQuery
   public function resetPassword($token, $newPassword)
   {
     $query = "SELECT * FROM $this->table WHERE reset_token = :token AND token_expiration > NOW() LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(":token", $token, PDO::PARAM_STR);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
       $update = "UPDATE $this->table SET password = :password, reset_token = :token, token_expiration = :expiration WHERE user_id = :id";
-      $stmt2  = $this->conexion->prepare($update);
+      $stmt2  = $this->db->prepare($update);
 
       $this->password = password_hash($newPassword, PASSWORD_DEFAULT);
       $token          = '';
@@ -146,7 +145,7 @@ class user extends iQuery
   public function isAdmin($run)
   {
     $query = "SELECT is_admin FROM {$this->table} WHERE run = :run AND division = 'SSL' LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(':run', $run, PDO::PARAM_STR);
     $stmt->execute();
 
@@ -158,7 +157,7 @@ class user extends iQuery
   public function isAdminEdit($run)
   {
     $query = "SELECT is_admin_edit FROM {$this->table} WHERE run = :run AND division = 'SSL' LIMIT 1";
-    $stmt  = $this->conexion->prepare($query);
+    $stmt  = $this->db->prepare($query);
     $stmt->bindParam(':run', $run, PDO::PARAM_STR);
     $stmt->execute();
 

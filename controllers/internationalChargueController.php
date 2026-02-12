@@ -3,9 +3,8 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $db = (new Database())->getConnection();
 
-  $chargue                  = new internationalChargue($db);
+  $chargue                  = new internationalChargue();
   $chargue->countervessel   = $_POST["countervessel"];
   $chargue->vessel          = $_POST["vessel"];
   $chargue->carplate        = strtoupper($_POST["carplate"]);
@@ -21,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $chargue->lastupdate      = date('Y-m-d H:i:s');
 
   if ($chargue->save()) {
-    $tracking             = new tracking($db);
+    $tracking             = new tracking();
     $tracking->chargueid  = $chargue->id; /* Asigna el id de la carga internacional */
     $tracking->status     = 0; /* Inicializa el estado en 0 */
     $tracking->statusdate = date('Y-m-d H:i:s');

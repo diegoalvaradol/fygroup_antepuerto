@@ -10,8 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     die("Las contraseñas no coinciden.");
   }
 
-  $db   = (new Database())->getConnection();
-  $user = new User($db);
+  $user = new User();
 
   if ($user->resetPassword($token, $pass)) {
     echo "OK";
