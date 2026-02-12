@@ -5,11 +5,8 @@ $shipLine   = new shipLine();
 $searchForm = isset($_POST['search']) ? $_POST['search'] : '';
 $search     = "%{$searchForm}%";
 
-$query = "SELECT * FROM app_ship_lines WHERE name LIKE :search LIMIT 10";
-$stmt  = $shipLine->getDb()->prepare($query);
-$stmt->bindParam(":search", $search, PDO::PARAM_STR);
-$stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$sql  = "SELECT * FROM app_ship_lines WHERE name LIKE :search LIMIT 10";
+$list = $shipLine->findAllStatic($sql, ['search' => $search]);
 
 $data = [
   [
@@ -18,7 +15,7 @@ $data = [
   ]
 ];
 
-foreach ($result as $info) {
+foreach ($list->getCollection() as $info) {
   $data[] = [
     "id"   => $info['line_id'],
     "text" => $info['name']

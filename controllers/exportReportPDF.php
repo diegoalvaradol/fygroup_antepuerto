@@ -29,35 +29,34 @@ $exporter = trim($_GET['exporter'] ?? '');
 $exporter = ($exporter === '' || $exporter === '-') ? null : $exporter;
 
 /* ========= DB ========= */
-$port = new outerPort();
+$outer = new outerPort();
 
 /* ========= CONSULTA ========= */
-$sql = "
-SELECT
-  v.vessel_name AS nave,
-  v.eta,
-  v.etd,
-  v.voyage AS viaje,
-  pol.city AS ciudadPOL,
-  pol.country AS paisPOL,
-  pod.city AS ciudadPOD,
-  pod.country AS paisPOD,
-  l.name AS linea,
-  a.exporter,
-  a.container,
-  a.seal_number,
-  a.booking,
-  a.pallets_quantity,
-  a.guide_number,
-  a.comodity,
-  a.arrival_date,
-  a.departure_date
-FROM app_outer_port a
-INNER JOIN app_ships v       ON v.ship_id   = a.vessel_id
-INNER JOIN app_ports pol     ON pol.port_id = v.pol
-INNER JOIN app_ports pod     ON pod.port_id = v.pod
-INNER JOIN app_ship_lines l  ON l.line_id   = v.ship_line
-WHERE a.vessel_id = :id
+$sql = "SELECT
+    v.vessel_name AS nave,
+    v.eta,
+    v.etd,
+    v.voyage AS viaje,
+    pol.city AS ciudadPOL,
+    pol.country AS paisPOL,
+    pod.city AS ciudadPOD,
+    pod.country AS paisPOD,
+    l.name AS linea,
+    a.exporter,
+    a.container,
+    a.seal_number,
+    a.booking,
+    a.pallets_quantity,
+    a.guide_number,
+    a.comodity,
+    a.arrival_date,
+    a.departure_date
+  FROM app_outer_port a
+  INNER JOIN app_ships v       ON v.ship_id   = a.vessel_id
+  INNER JOIN app_ports pol     ON pol.port_id = v.pol
+  INNER JOIN app_ports pod     ON pod.port_id = v.pod
+  INNER JOIN app_ship_lines l  ON l.line_id   = v.ship_line
+  WHERE a.vessel_id = :id
 ";
 
 $params = [':id' => $id];

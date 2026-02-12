@@ -6,14 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $user = new user();
   $run  = $_POST["run"];
 
-  $query = "SELECT * FROM app_users WHERE run = :run LIMIT 1";
-  $stmt  = $user->getDb()->prepare($query);
-  $stmt->bindParam(":run", $run, PDO::PARAM_STR);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $sql  = "SELECT * FROM app_users WHERE run = :run LIMIT 1";
+  $list = $user->getFirstMember($sql, ['run' => $run]);
 
-  if (password_verify($_POST["password"], $result['password'])) {
-    $pass = $result['password'];
+  if (password_verify($_POST["password"], $list['password'])) {
+    $pass = $list['password'];
   } else {
     $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
   }

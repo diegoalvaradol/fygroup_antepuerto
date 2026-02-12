@@ -5,13 +5,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $port = new port();
   $city = $_POST['city'];
 
-  $query = "SELECT * FROM app_ports WHERE city = :city";
-  $stmt  = $port->getDb()->prepare($query);
-  $stmt->bindParam(":city", $city, PDO::PARAM_STR);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $sql  = "SELECT * FROM app_ports WHERE city = :city";
+  $list = $port->getFirstMember($sql, ['city' => $city]);
 
-  if ($result > 0) {
+  if ($list > 0) {
     echo "NOOK";
   }
 }

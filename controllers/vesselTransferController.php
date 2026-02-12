@@ -18,15 +18,9 @@ if (!$fromVessel || !$toVessel || empty($rowId)) {
 }
 
 /* Origen nave */
-$stmt = $outerPort->getDb()->prepare("SELECT origin FROM app_outer_port WHERE vessel_id = :vessel LIMIT 1");
-$stmt->bindParam(":vessel", $fromVessel, PDO::PARAM_INT);
-$stmt->execute();
-$originFrom = $stmt->fetchColumn();
-
-/* Origen nave destino */
-$stmt->bindParam(":vessel", $toVessel, PDO::PARAM_INT);
-$stmt->execute();
-$originTo = $stmt->fetchColumn();
+$sql        = "SELECT origin FROM app_outer_port WHERE vessel_id = :vessel LIMIT 1";
+$originFrom = $outerPort->getFirstMember($sql, ['vessel' => $fromVessel]);
+$originTo   = $outerPort->getFirstMember($sql, ['vessel' => $toVessel]);
 
 if (!$originFrom || !$originTo || $originFrom !== $originTo) {
   echo "ERROR";

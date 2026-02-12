@@ -6,13 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $id        = $_POST["id"];
 
   /* Verifica si la motonave se encuentra asociado a un ingreso de contenedor o termo */
-  $query = "SELECT * FROM app_outer_port WHERE vessel_id = :id";
-  $stmt  = $outerPort->getDb()->prepare($query);
-  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $sql  = "SELECT * FROM app_outer_port WHERE vessel_id = :id";
+  $list = $outerPort->getFirstMember($sql, ['id' => $id]);
 
-  if ($result > 0) {
+  if ($list > 0) {
     echo "NOOK2";
   } else {
     $ship     = new ship();

@@ -6,14 +6,9 @@ if (isset($_POST['id'], $_POST['origin'])) {
   $id        = $_POST['id'];
   $origin    = $_POST['origin'];
 
-  $query = "SELECT * FROM app_outer_port WHERE vessel_id = :id AND origin = :origin ORDER BY row_id DESC LIMIT 1";
-  $stmt  = $outerPort->getDb()->prepare($query);
-  $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-  $stmt->bindParam(":origin", $origin, PDO::PARAM_INT);
-  $stmt->execute();
-
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
-  $count  = $result['counter_vessel'] ?? 0;
+  $sql   = "SELECT * FROM app_outer_port WHERE vessel_id = :id AND origin = :origin ORDER BY row_id DESC LIMIT 1";
+  $list  = $outerPort->getFirstMember($sql, ['id' => $id, 'origin' => $origin]);
+  $count = $list['counter_vessel'] ?? 0;
 
   $counter = htmlspecialchars($count + 1);
 

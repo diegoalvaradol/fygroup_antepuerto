@@ -6,13 +6,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $id        = $_POST["id"];
 
   /* Verifica si el camión tiene una hora de salida registrada */
-  $query = "SELECT * FROM app_outer_port WHERE row_id = :id AND departure_date != '0000-00-00 00:00:00'";
-  $stmt  = $outerPort->getDb()->prepare($query);
-  $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-  $stmt->execute();
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $sql  = "SELECT * FROM app_outer_port WHERE row_id = :id AND departure_date != '0000-00-00 00:00:00'";
+  $list = $outerPort->getFirstMember($sql, ['id' => $id]);
 
-  if ($result > 0) {
+  if ($list > 0) {
     echo "NOOK2";
   } else {
     $outerPort     = new outerPort();

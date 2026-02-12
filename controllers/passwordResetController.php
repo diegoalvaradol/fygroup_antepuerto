@@ -23,16 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $user = new user();
 
   /* Buscar el nombre del usuario */
-  $query = "SELECT * FROM app_users WHERE email = :email AND division = :division LIMIT 1";
-  $stmt  = $user->getDb()->prepare($query);
-  $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-  $stmt->bindParam(":division", $division, PDO::PARAM_STR);
-  $stmt->execute();
-  $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+  $sql  = "SELECT * FROM app_users WHERE email = :email AND division = :division LIMIT 1";
+  $list = $user->getFirstMember($sql, ['email' => $email, 'division' => $division]);
 
-  if ($userData && $user->setResetToken($email, $token, $expiration)) {
-    $nombreUsuario = $userData['name'];
-    $userDivision  = $userData['division'];
+  if ($list && $user->setResetToken($email, $token, $expiration)) {
+    $nombreUsuario = $list['name'];
+    $userDivision  = $list['division'];
     $url           = generateMkey('reset_form') . '&token=' . $token;
 
     if ($userDivision == 'ssl') {

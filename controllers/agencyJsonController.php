@@ -5,11 +5,8 @@ $outerPort  = new outerPort();
 $searchForm = $_POST['search'] ?? '';
 $search     = "%{$searchForm}%";
 
-$query = "SELECT * FROM app_outer_port WHERE agency LIKE :search AND agency != 'N/A' GROUP BY agency LIMIT 10";
-$stmt  = $outerPort->getDb()->prepare($query);
-$stmt->bindParam(":search", $search, PDO::PARAM_STR);
-$stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$sql  = "SELECT * FROM app_outer_port WHERE agency LIKE :search AND agency != 'N/A' GROUP BY agency LIMIT 10";
+$list = $outerPort->findAllStatic($sql, ['search' => $search]);
 
 $data = [
   [
@@ -18,7 +15,7 @@ $data = [
   ]
 ];
 
-foreach ($result as $info) {
+foreach ($list->getCollection() as $info) {
   $data[] = [
     "id"   => $info['agency'],
     "text" => $info['agency']

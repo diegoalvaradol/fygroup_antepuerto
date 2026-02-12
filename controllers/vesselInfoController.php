@@ -5,28 +5,26 @@ if (isset($_POST['id'])) {
   $ship = new ship();
   $id   = $_POST['id'];
 
-  $query = "SELECT
-    app_ships.*,
-    sl.*,
-    pol.city    AS pol_city,
-    pol.country AS pol_country,
-    pod.city    AS pod_city,
-    pod.country AS pod_country
-  FROM app_ships
-  JOIN app_ports AS pol ON app_ships.pol = pol.port_id
-  JOIN app_ports AS pod ON app_ships.pod = pod.port_id
-  JOIN app_ship_lines AS sl ON app_ships.ship_line = sl.line_id
-  WHERE ship_id = :id LIMIT 1";
+  $sql = "SELECT
+      app_ships.*,
+      sl.*,
+      pol.city    AS pol_city,
+      pol.country AS pol_country,
+      pod.city    AS pod_city,
+      pod.country AS pod_country
+    FROM app_ships
+    JOIN app_ports AS pol ON app_ships.pol = pol.port_id
+    JOIN app_ports AS pod ON app_ships.pod = pod.port_id
+    JOIN app_ship_lines AS sl ON app_ships.ship_line = sl.line_id
+    WHERE ship_id = :id LIMIT 1
+  ";
 
-  $stmt = $ship->getDb()->prepare($query);
-  $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-  $stmt->execute();
-  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $list = $ship->findAllStatic($sql, ['id' => $id]);
 
   $infoVessel = null;
   $primary    = '#2563eb';
 
-  foreach ($result as $info) {
+  foreach ($list->getCollection() as $info) {
     $eta    = $info['eta'];
     $etd    = $info['etd'];
     $pol    = $info['pol_city'] . ' - ' . $info['pol_country'];
@@ -35,33 +33,35 @@ if (isset($_POST['id'])) {
     $line   = $info['name'];
 
     $infoVessel = '
-    <div style="
-      border:1px solid #e5e7eb;
-      border-left:4px solid ' . $primary . ';
-      border-radius:8px;
-      padding:12px 16px;
-      background:#f9fafb;
-      font-family:Arial, sans-serif;
-      font-size:14px;
-    ">
-      <div style="margin-bottom:6px;">
-        <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . '
-        <span style="margin:0 6px; color:#9ca3af;">|</span>
-        <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . '
-      </div>
+      <div style="
+        border:1px solid #e5e7eb;
+        border-left:4px solid ' . $primary . ';
+        border-radius:8px;
+        padding:12px 16px;
+        background:#f9fafb;
+        font-family:Arial, sans-serif;
+        font-size:14px;
+      ">
 
-      <div style="margin-bottom:6px;">
-        <b style="color:' . $primary . ';">POL:</b> ' . htmlspecialchars($pol) . '
-        <span style="margin:0 6px; color:#9ca3af;">|</span>
-        <b style="color:' . $primary . ';">POD:</b> ' . htmlspecialchars($pod) . '
-      </div>
+        <div style="margin-bottom:6px;">
+          <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . '
+          <span style="margin:0 6px; color:#9ca3af;">|</span>
+          <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . '
+        </div>
 
-      <div>
-        <b style="color:' . $primary . ';">Viaje:</b> ' . htmlspecialchars($voyage) . '
-        <span style="margin:0 6px; color:#9ca3af;">|</span>
-        <b style="color:' . $primary . ';">Línea:</b> ' . htmlspecialchars($line) . '
+        <div style="margin-bottom:6px;">
+          <b style="color:' . $primary . ';">POL:</b> ' . htmlspecialchars($pol) . '
+          <span style="margin:0 6px; color:#9ca3af;">|</span>
+          <b style="color:' . $primary . ';">POD:</b> ' . htmlspecialchars($pod) . '
+        </div>
+
+        <div>
+          <b style="color:' . $primary . ';">Viaje:</b> ' . htmlspecialchars($voyage) . '
+          <span style="margin:0 6px; color:#9ca3af;">|</span>
+          <b style="color:' . $primary . ';">Línea:</b> ' . htmlspecialchars($line) . '
+        </div>
       </div>
-    </div>';
+    ';
   }
 
   if ($id != null) {

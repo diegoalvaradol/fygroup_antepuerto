@@ -3,15 +3,10 @@ require_once __DIR__ . '/../config/includes.php';
 
 $port       = new port();
 $searchForm = isset($_POST['search']) ? $_POST['search'] : '';
+$search     = "%{$searchForm}%";
 
-$search = "%{$searchForm}%";
-
-$query = "SELECT * FROM app_ports WHERE city LIKE :search GROUP BY city LIMIT 20";
-$stmt  = $port->getDb()->prepare($query);
-$stmt->bindParam(":search", $search, PDO::PARAM_STR);
-$stmt->execute();
-
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$sql  = "SELECT * FROM app_ports WHERE city LIKE :search GROUP BY city LIMIT 20";
+$list = $port->findAllStatic($sql, ['search' => $search]);
 
 $data = [
   [
@@ -20,7 +15,7 @@ $data = [
   ]
 ];
 
-foreach ($result as $info) {
+foreach ($list->getCollection() as $info) {
   $data[] = [
     "id"   => $info['port_id'],
     "text" => $info['city'] . ' - ' . $info['country']
