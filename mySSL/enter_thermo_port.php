@@ -784,7 +784,7 @@ $(document).ready(function() {
 
   $('#exporter').select2({
     allowClear: true,
-    tags: true,
+    tags: false,
     width: '100%',
     ajax: {
       url: '../controllers/exporterJsonController.php',

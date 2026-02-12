@@ -889,7 +889,7 @@ $(document).ready(function() {
 
   $('#exporter').select2({
     allowClear: true,
-    tags: true,
+    tags: false,
     width: '100%',
     ajax: {
       url: '../controllers/exporterJsonController.php',
@@ -912,7 +912,7 @@ $(document).ready(function() {
 
   $('#agency').select2({
     allowClear: true,
-    tags: true,
+    tags: false,
     width: '100%',
     ajax: {
       url: '../controllers/agencyJsonController.php',
