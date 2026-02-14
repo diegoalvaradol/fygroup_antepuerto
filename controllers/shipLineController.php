@@ -3,9 +3,9 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set("America/Santiago");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $line       = new shipLine();
-  $line->name = strtoupper($_POST["shipline"]);
-  //$line->rut        = $_POST["rutShipLine"];
+  $line             = new shipLine();
+  $line->name       = strtoupper($_POST["shipline"]);
+  $line->rut        = $_POST["rutShipLine"];
   $line->created    = date('Y-m-d H:i:s');
   $line->lastupdate = date('Y-m-d H:i:s');
 

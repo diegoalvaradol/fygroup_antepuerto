@@ -55,4 +55,19 @@ class get
     return $types;
   }
 
+  /**
+   * Method arrayTypeOuterPort //Array Si /No
+   *
+   * @return void
+   */
+  public static function arrayYesNo()
+  {
+    $arrayYesNo = [
+      1 => 'Si',
+      0 => 'No'
+    ];
+
+    return $arrayYesNo;
+  }
+
 }

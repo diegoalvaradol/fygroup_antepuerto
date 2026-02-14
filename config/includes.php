@@ -12,6 +12,7 @@ require_once __DIR__ . '/../models/class.tracking.php';
 require_once __DIR__ . '/../models/class.user.php';
 require_once __DIR__ . '/../models/class.get.php';
 require_once __DIR__ . '/../models/class.menu.php';
+require_once __DIR__ . '/../models/class.company.php';
 require_once __DIR__ . '/../models/class.listPrice.php';
 require_once __DIR__ . '/../models/class.uiComponents.php';
 require_once __DIR__ . '/../config/database.php';

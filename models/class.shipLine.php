@@ -82,7 +82,7 @@ class shipLine extends iQuery
 
   public function getTableShipLine()
   {
-    $query = "SELECT * FROM $this->table WHERE 1 ORDER BY line_id ASC";
+    $query = "SELECT * FROM $this->table WHERE 1 ORDER BY $this->id ASC";
     $stmt  = $this->db->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

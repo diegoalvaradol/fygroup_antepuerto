@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . '/../config/includes.php';
 
-$outerPort  = new outerPort();
+$company    = new company();
 $searchForm = $_POST['search'] ?? '';
 $search     = "%{$searchForm}%";
 
-$sql  = "SELECT * FROM app_outer_port WHERE agency LIKE :search AND agency != 'N/A' GROUP BY agency LIMIT 10";
-$list = $outerPort->findAllStatic($sql, ['search' => $search]);
+$sql  = "SELECT name FROM app_company WHERE name LIKE :search AND agency = 1";
+$list = $company->findAllStatic($sql, ['search' => $search]);
 
 $data = [
   [
@@ -17,8 +17,8 @@ $data = [
 
 foreach ($list->getCollection() as $info) {
   $data[] = [
-    "id"   => $info['agency'],
-    "text" => $info['agency']
+    "id"   => $info['name'],
+    "text" => $info['name']
   ];
 }
 

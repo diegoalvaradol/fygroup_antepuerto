@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$port = new port();
+$corp = new company();
 $cfg  = new cfg();
 $user = new user();
 
@@ -27,7 +27,7 @@ $top             = UIComponents::scrollToTopButton();
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Puertos</title>
+    <title>SSL | Empresas</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -56,7 +56,7 @@ $top             = UIComponents::scrollToTopButton();
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Puertos</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Empresas</h1>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -69,34 +69,48 @@ $top             = UIComponents::scrollToTopButton();
                                 </div>
 
                                 <div class="card-body">
-                                        <form class="form-container" id="portForm">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3">
-                                                    <label for='city' class='text-gray-800 font-weight-bold'>Ciudad</label>
-                                                    <input type="text" class="form-control form-control-user" id="city" name="city" onblur="verifyPort(this.value)" placeholder="Coquimbo">
-                                                    <small class="text-danger" id="error-city"></small>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label for='country' class='text-gray-800 font-weight-bold'>País</label>
-                                                    <input type="text" class="form-control form-control-user" id="country" name="country" placeholder="Chile">
-                                                    <small class="text-danger" id="error-country"></small>
-                                                </div>
+                                    <form class="form-container" id="companyForm">
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label for='company' class='text-gray-800 font-weight-bold'>Nombre de Empresa</label>
+                                                <input type="text" class="form-control form-control-user" id="company" name="company" onblur="verifyCompany(this.value)" placeholder="Exportadora Unifrutti">
+                                                <small class="text-danger" id="error-company"></small>
                                             </div>
 
-                                            <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="savePort()">
-                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
-                                              <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                            </button>
-                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
-                                        </form>
+                                            <div class="col-sm-3">
+                                                <label for='exporter' class='text-gray-800 font-weight-bold'>Exportadora</label>
+                                                <select class="form-control select2 form-control-user" id="exporter" name="exporter">
+                                                    <option value="-">Seleccione..</option>
+                                                    <option value="1">Si</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                                <small class="text-danger" id="error-exporter"></small>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <label for='agency' class='text-gray-800 font-weight-bold'>Agencia</label>
+                                                <select class="form-control select2 form-control-user" id="agency" name="agency">
+                                                    <option value="-">Seleccione..</option>
+                                                    <option value="1">Si</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                                <small class="text-danger" id="error-agency"></small>
+                                            </div>
+                                        </div>
+
+                                        <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveCompany()">
+                                          <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
+                                          <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                        </button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Listado de Puertos -->
-                    <?php echo $port->getTablePort(); ?>
+                    <!-- Listado de Lineas Navieras -->
+                    <?php echo $corp->getTableCompany(); ?>
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -155,23 +169,35 @@ $top             = UIComponents::scrollToTopButton();
         </div>
     </div>
 
-    <!-- Modal Editar Puerto-->
+    <!-- Modal Editar Empresa-->
     <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="editPortModal" style="display:none; position:fixed; width:30%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-    <h4>Editar Puerto</h4>
-    <form id="editPortForm">
+    <div id="editCompanyModal" style="display:none; position:fixed; width:35%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+    <h4>Editar Empresa</h4>
+    <form id="editCompanyForm">
         <div class="form-group row">
-            <div class="col-sm-6">
-              <label>Ciudad:</label>
-              <input type="text" class="form-control form-control-user" id="portCity" name="portCity">
+            <div class="col-sm-12">
+              <label>Nombre:</label>
+              <input type="text" class="form-control form-control-user" id="companyName" name="companyName" disabled>
             </div>
-            <div class="col-sm-6">
-              <label>País:</label>
-              <input type="text" class="form-control form-control-user" id="portCountry" name="portCountry">
+            <div class="col-sm-3">
+              <label>Exportador:</label>
+              <select class="form-control select2 form-control-user" id="isExporter" name="isExporter">
+                <option value="-">Seleccione..</option>
+                <option value="1">Si</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <label>Agencia:</label>
+              <select class="form-control select2 form-control-user" id="isAgency" name="isAgency">
+                <option value="-">Seleccione..</option>
+                <option value="1">Si</option>
+                <option value="0">No</option>
+              </select>
             </div>
         </div>
 
-        <input type="hidden" id="portId" name="portId">
+        <input type="hidden" id="companyId" name="companyId">
         <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
         <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
     </form>
@@ -270,43 +296,46 @@ function actualizarReloj() {
   $('#relojFecha').html(`${fecha} - ${hora}`);
 }
 
-var verifyPort = function(city) {
-  if(city !== ''){
+var verifyCompany = function(name) {
+  if(name !== ''){
     $.ajax({
-      url: '../controllers/portVerifyController.php',
+      url: '../controllers/companyVerifyController.php',
       data: {
-        city: city
+        name: name
       },
       type: "POST",
     }).done(function(x) {
-      if(x == 'NOOK'){
-        Swal.fire({
-          title: 'Oops...',
-          text: 'El Puerto '+city+' ya se encuentra registrado.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        }).then((result) => {
-          $('#city').val('').focus();
-        });
+
+        if(x == 'NOOK'){
+          Swal.fire({
+            title: 'Oops...',
+            text: 'La Empresa '+name+' ya se encuentra registrado.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          }).then((result) => {
+            $('#company').val('').focus();
+          });
         }
+
     });
   }
 }
 
-var editPort = function(id) {
+var editCompany = function(id) {
   $.ajax({
-    url: '../controllers/portEditController.php',
+    url: '../controllers/companyEditController.php',
      type: 'POST',
      data: { id: id },
      dataType: 'json',
      success: function(data) {
-      $('#portId').val(data.port_id);
-      $('#portCity').val(data.city);
-      $('#portCountry').val(data.country);
+      $('#companyId').val(data.id);
+      $('#companyName').val(data.name);
+      $('#isExporter').val(data.exporter);
+      $('#isAgency').val(data.agency);
 
       /* Mostrar overlay y modal */
       $('#modalOverlay').fadeIn(200);
-      $('#editPortModal').fadeIn(200);
+      $('#editCompanyModal').fadeIn(200);
     },
     error: function() {
       alert('Error al cargar los datos.');
@@ -315,29 +344,29 @@ var editPort = function(id) {
 }
 
 var closeModal = function() {
-  $('#editPortModal').fadeOut(200);
+  $('#editCompanyModal').fadeOut(200);
   $('#modalOverlay').fadeOut(200);
 }
 
-function saveChanges() {
+var saveChanges = function() {
   $.ajax({
-    url: '../controllers/portSaveController.php',
-    data: $('#editPortForm').serialize(),
+    url: '../controllers/companyUpdateController.php',
+    data: $('#editCompanyForm').serialize(),
     type: 'POST',
   }).done(function(x) {
     if(x == 'OK'){
       Swal.fire({
         title: '¡Éxito!',
-        text: '¡Puerto actualizado con éxito!',
+        text: '¡Empresa actualizada con éxito!',
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_port'); ?>';
+        window.location = '<?php echo generateMkey('enter_company'); ?>';
       });
     } else {
       Swal.fire({
         title: 'Oops...',
-        text: 'Error al actualizar el puerto.',
+        text: 'Error al actualizar la empresa.',
         icon: 'error',
         cancelButtonColor: '#d33',
       });
@@ -345,10 +374,11 @@ function saveChanges() {
   });
 }
 
-var deletePort = function(id) {
+var deleteCompany = function(id, name, exporter, agency) {
   Swal.fire({
-    title: 'Eliminar Puerto.',
-    text: '¿Estas seguro de eliminar este puerto?',
+    title: 'Eliminar Empresa.',
+    html: name,
+    text: '¿Estas seguro de eliminar esta empresa?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -358,30 +388,35 @@ var deletePort = function(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
-        url: '../controllers/portDeleteController.php',
+        url: '../controllers/companyDeleteController.php',
         type: 'POST',
-        data: { id: id },
+        data: {
+          id: id,
+          name: name,
+          exporter: exporter,
+          agency: agency
+        },
       }).done(function(x) {
         if(x == 'OK'){
           Swal.fire({
             title: '¡Éxito!',
-            text: '¡Puerto eliminada con éxito!',
+            text: '¡Empresa eliminada con éxito!',
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_port'); ?>';
+            window.location = '<?php echo generateMkey('enter_company'); ?>';
           });
-        } else if(x == 'NOOK') {
+        } else if(x == 'NOOK'){
           Swal.fire({
             title: 'Oops...',
-            text: 'Error al eliminar el puerto.',
+            text: 'Error al eliminar la empresa.',
             icon: 'error',
             cancelButtonColor: '#d33',
           });
-        }else if(x == 'NOOK2') {
+        }else if(x == 'NOOK2'){
           Swal.fire({
             title: 'Oops...',
-            text: 'El puerto que tratas de eliminar se encuentra asociado a una motonave registrada, favor revisa e intenta nuevamente.',
+            html: 'La empresa </br><b>'+name+'</b></br> no se puede eliminar porque se encuentra asociada a un camión que ya fue visado en el sistema, favor revisa e intenta nuevamente.',
             icon: 'error',
             cancelButtonColor: '#d33',
           });
@@ -391,8 +426,8 @@ var deletePort = function(id) {
   });
 }
 
-var savePort = function() {
-  const form = document.getElementById('portForm');
+var saveCompany = function() {
+  const form = document.getElementById('companyForm');
   const formData = new FormData(form);
   let hasError = false;
   const btn = $('#loadBtn');
@@ -424,23 +459,23 @@ var savePort = function() {
     btn.prop('disabled', true);
 
     $.ajax({
-      url: '../controllers/portController.php',
-      data: $('#portForm').serialize(),
+      url: '../controllers/companyController.php',
+      data: $('#companyForm').serialize(),
       type: 'POST',
     }).done(function(x) {
       if(x == 'OK'){
         Swal.fire({
           title: '¡Éxito!',
-          text: '¡Puerto registrado con éxito!',
+          text: '¡Empresa registrada con éxito!',
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_port'); ?>';
+          window.location = 'enter_company.php';
         });
       } else {
         Swal.fire({
           title: 'Oops...',
-          text: 'Error al registrar el puerto.',
+          text: 'Error al registrar la empresa.',
           icon: 'error',
           cancelButtonColor: '#d33',
         }).then(() => {
@@ -455,6 +490,6 @@ var savePort = function() {
 
 $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
-  actualizarReloj(); /* Primera llamada */
+  actualizarReloj();
 });
 </script>

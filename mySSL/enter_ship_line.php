@@ -334,12 +334,13 @@ var validaRut = function(rut) {
 }
 
 var verifyShipLine = function(name) {
-  $.ajax({
-    url: '../controllers/shipLineVerifyController.php',
-    data: {
-      name: name
-    },
-    type: "POST",
+  if(name !== ''){
+    $.ajax({
+      url: '../controllers/shipLineVerifyController.php',
+      data: {
+        name: name
+      },
+      type: "POST",
     }).done(function(x) {
       if(x == 'NOOK'){
         Swal.fire({
@@ -352,6 +353,7 @@ var verifyShipLine = function(name) {
         });
       }
     });
+  }
 }
 
 var editShipLine = function(id) {

@@ -43,6 +43,14 @@ class menu extends iQuery
         ]
       ],
       [
+        'title' => 'Empresas',
+        'icon'  => 'fa-building',
+        'id'    => 'collapseEmpresas',
+        'items' => [
+          ['label' => 'Empresa', 'link' => generateMkey('enter_company')]
+        ]
+      ],
+      [
         'title' => 'Itinerarios',
         'icon'  => 'fa-calendar-days',
         'id'    => 'collapseProgramacion',
