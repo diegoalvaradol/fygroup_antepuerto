@@ -14,6 +14,7 @@ $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
 $top             = UIComponents::scrollToTopButton();
+$paginaActual    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 ?>
 
 <!-- HTML -->
@@ -98,6 +99,7 @@ $top             = UIComponents::scrollToTopButton();
                                             </div>
                                         </div>
 
+                                        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
                                         <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveCompany()">
                                           <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                           <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
@@ -198,6 +200,7 @@ $top             = UIComponents::scrollToTopButton();
         </div>
 
         <input type="hidden" id="companyId" name="companyId">
+        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
         <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
         <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
     </form>
@@ -349,19 +352,21 @@ var closeModal = function() {
 }
 
 var saveChanges = function() {
+  var paginaActual = $('input[name="page"]').val();
+
   $.ajax({
     url: '../controllers/companyUpdateController.php',
     data: $('#editCompanyForm').serialize(),
     type: 'POST',
   }).done(function(x) {
-    if(x == 'OK'){
+    if (x === 'OK') {
       Swal.fire({
         title: '¡Éxito!',
         text: '¡Empresa actualizada con éxito!',
         icon: 'success',
         confirmButtonColor: '#4CAF50'
-      }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_company'); ?>';
+      }).then(() => {
+        window.location = '<?php echo generateMkey("enter_company"); ?>&page='+ paginaActual;
       });
     } else {
       Swal.fire({
@@ -375,6 +380,8 @@ var saveChanges = function() {
 }
 
 var deleteCompany = function(id, name, exporter, agency) {
+  var paginaActual = $('input[name="page"]').val();
+
   Swal.fire({
     title: 'Eliminar Empresa.',
     html: name,
@@ -404,7 +411,7 @@ var deleteCompany = function(id, name, exporter, agency) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_company'); ?>';
+            window.location = '<?php echo generateMkey('enter_company'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK'){
           Swal.fire({
@@ -433,6 +440,7 @@ var saveCompany = function() {
   const btn = $('#loadBtn');
   const text = $('#loadBtnText');
   const spinner = $('#loadBtnSpinner');
+  var paginaActual = $('input[name="page"]').val();
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
@@ -470,7 +478,7 @@ var saveCompany = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = 'enter_company.php';
+          window.location = '<?php echo generateMkey('enter_company'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({

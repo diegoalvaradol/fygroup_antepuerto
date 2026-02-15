@@ -14,6 +14,7 @@ $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
 $top             = UIComponents::scrollToTopButton();
+$paginaActual    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 ?>
 
 <!-- HTML -->
@@ -125,6 +126,7 @@ $top             = UIComponents::scrollToTopButton();
                                                 </div>
                                             </div>
 
+                                            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveShip()">
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
@@ -251,6 +253,7 @@ $top             = UIComponents::scrollToTopButton();
         </div>
         <br>
         <input type="hidden" id="shipId" name="shipId">
+        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
         <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
         <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
     </form>
@@ -385,6 +388,8 @@ var closeModal = function() {
 }
 
 var saveChanges = function() {
+  var paginaActual = $('input[name="page"]').val();
+
   $.ajax({
     url: '../controllers/shipUpdateController.php',
     data: $('#editShipForm').serialize(),
@@ -397,7 +402,7 @@ var saveChanges = function() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_ship'); ?>';
+        window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
       });
     } else {
       Swal.fire({
@@ -411,6 +416,8 @@ var saveChanges = function() {
 }
 
 var deleteShip = function(id) {
+  var paginaActual = $('input[name="page"]').val();
+
   Swal.fire({
     title: 'Eliminar Motonave.',
     text: '¿Estas seguro de eliminar esta motonave?',
@@ -434,7 +441,7 @@ var deleteShip = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_ship'); ?>';
+            window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK') {
           Swal.fire({
@@ -458,6 +465,8 @@ var deleteShip = function(id) {
 
 var stackingShip = function(id, name, voyage, status) {
   var statusLabel = statusMsg = null;
+  var paginaActual = $('input[name="page"]').val();
+
   if(status == 1){
     statusLabel = 'Cerrar';
     statusMsg = 'cerrado';
@@ -492,7 +501,7 @@ var stackingShip = function(id, name, voyage, status) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_ship'); ?>';
+            window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
           });
         } else  {
           Swal.fire({
@@ -514,6 +523,7 @@ var saveShip = function() {
   const btn = $('#loadBtn');
   const text = $('#loadBtnText');
   const spinner = $('#loadBtnSpinner');
+  var paginaActual = $('input[name="page"]').val();
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
@@ -573,7 +583,7 @@ var saveShip = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_ship'); ?>';
+          window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({

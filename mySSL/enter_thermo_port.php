@@ -14,6 +14,7 @@ $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
 $top             = UIComponents::scrollToTopButton();
+$paginaActual    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 ?>
 
 <!-- HTML -->
@@ -187,6 +188,7 @@ $top             = UIComponents::scrollToTopButton();
                                             <input type="hidden" id="cntId" name="cntId" value="0">
                                             <input type="hidden" id="isUpdate" name="isUpdate" value="0">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
+                                            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTermo()">
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
@@ -277,6 +279,7 @@ $top             = UIComponents::scrollToTopButton();
 
         <input type="hidden" id="rowId" name="rowId">
         <input type="hidden" id="originId" name="originId">
+        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
         <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
         <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
     </form>
@@ -423,6 +426,7 @@ var saveChanges = function() {
   const form = document.getElementById('addHourTermoForm');
   const formData = new FormData(form);
   let hasError = false;
+  var paginaActual = $('input[name="page"]').val();
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
@@ -478,7 +482,7 @@ var saveChanges = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_thermo_port'); ?>';
+          window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({
@@ -500,6 +504,7 @@ var saveInTermo = function() {
   const btn = $('#loadBtn');
   const text = $('#loadBtnText');
   const spinner = $('#loadBtnSpinner');
+  var paginaActual = $('input[name="page"]').val();
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
@@ -560,7 +565,7 @@ var saveInTermo = function() {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = 'enter_thermo_port.php';
+            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
           });
         }else if(x == 'NOOKUT') {
           Swal.fire({
@@ -582,7 +587,7 @@ var saveInTermo = function() {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = 'enter_thermo_port.php';
+            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
           });
         }else if(x == 'NOOKT') {
           Swal.fire({
@@ -602,6 +607,8 @@ var saveInTermo = function() {
 }
 
 var deleteTruck = function(id) {
+  var paginaActual = $('input[name="page"]').val();
+
   Swal.fire({
     title: 'Eliminar Camión.',
     text: '¿Estas seguro de eliminar este camión?',
@@ -625,7 +632,7 @@ var deleteTruck = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>';
+            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK'){
           Swal.fire({

@@ -14,6 +14,7 @@ $sideBarSSL      = menu::sideBarSSL();
 $secondTapBarSSL = menu::secondTapBarSSL();
 $footer          = menu::footerSSL();
 $top             = UIComponents::scrollToTopButton();
+$paginaActual    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 ?>
 
 <!-- HTML -->
@@ -84,6 +85,7 @@ $top             = UIComponents::scrollToTopButton();
                                                 </div>
                                             </div>
 
+                                            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="savePort()">
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
@@ -172,6 +174,7 @@ $top             = UIComponents::scrollToTopButton();
         </div>
 
         <input type="hidden" id="portId" name="portId">
+        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
         <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
         <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
     </form>
@@ -319,7 +322,9 @@ var closeModal = function() {
   $('#modalOverlay').fadeOut(200);
 }
 
-function saveChanges() {
+var saveChanges = function() {
+  var paginaActual = $('input[name="page"]').val();
+
   $.ajax({
     url: '../controllers/portSaveController.php',
     data: $('#editPortForm').serialize(),
@@ -332,7 +337,7 @@ function saveChanges() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_port'); ?>';
+        window.location = '<?php echo generateMkey('enter_port'); ?>&page=' + paginaActual;
       });
     } else {
       Swal.fire({
@@ -346,6 +351,8 @@ function saveChanges() {
 }
 
 var deletePort = function(id) {
+  var paginaActual = $('input[name="page"]').val();
+
   Swal.fire({
     title: 'Eliminar Puerto.',
     text: '¿Estas seguro de eliminar este puerto?',
@@ -369,7 +376,7 @@ var deletePort = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_port'); ?>';
+            window.location = '<?php echo generateMkey('enter_port'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK') {
           Swal.fire({
@@ -398,6 +405,7 @@ var savePort = function() {
   const btn = $('#loadBtn');
   const text = $('#loadBtnText');
   const spinner = $('#loadBtnSpinner');
+  var paginaActual = $('input[name="page"]').val();
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
@@ -435,7 +443,7 @@ var savePort = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_port'); ?>';
+          window.location = '<?php echo generateMkey('enter_port'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({
