@@ -7,8 +7,12 @@ $admin  = $user->isAdmin($_SESSION["user"]["run"]);
 $footer = menu::footerSSL();
 
 if (!$admin) {
-  mostrarAccesoDenegado($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"], basename(__FILE__), $_SERVER['REQUEST_URI']);
+  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
+  $pag     = basename(__FILE__);
+  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+  mostrarAccesoDenegado($usuario, $pag, $url);
 }
+
 ?>
 
 <!DOCTYPE html>

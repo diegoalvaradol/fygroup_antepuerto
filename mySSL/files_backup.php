@@ -6,14 +6,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$db     = (new Database())->getConnection();
-$user   = new user($db);
+$user   = new user();
 $admin  = $user->isAdmin($_SESSION["user"]["run"]);
 $footer = menu::footerSSL();
 
 if (!$admin) {
-  mostrarAccesoDenegado($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"], basename(__FILE__), $_SERVER['REQUEST_URI']);
+  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
+  $pag     = basename(__FILE__);
+  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+  mostrarAccesoDenegado($usuario, $pag, $url);
 }
+
 ?>
 
 <!DOCTYPE html>

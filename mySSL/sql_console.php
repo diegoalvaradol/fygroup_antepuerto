@@ -57,7 +57,7 @@ function ejecutarQuery($user)
   return $resultado;
 }
 
-$resultado = ejecutarQuery($db);
+$resultado = ejecutarQuery($user);
 ?>
 
 <!DOCTYPE html>
