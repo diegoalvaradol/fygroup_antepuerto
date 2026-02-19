@@ -23,96 +23,98 @@ if (isset($_SESSION['user'])) {
 </head>
 
 <style>
-  .glass-card {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
   body {
-    background-image: url("../images/coquimbo_port_background_3.jpg");
+    background: url("../images/coquimbo_port_background_3.jpg") no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
-  }
-  @media (max-width: 576px) {
-    .glass-card {
-      margin: 1rem;
-    }
-    .text-primary {
-      font-size: medium !important;
-    }
+    position: relative;
   }
 
-  .input-group {
-    width: 100%;
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
   }
-  .input-group-text {
-    min-width: 42px; /* Asegura ancho fijo en los íconos */
-    justify-content: center;
+
+  .login-wrapper {
+    position: relative;
+    z-index: 2;
+  }
+
+  .login-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,.25);
+  }
+
+  .login-card input {
+    border-radius: 12px;
+    height: 48px;
+  }
+
+  .login-card .input-group-text {
+    background: #f8f9fc;
+    border-radius: 12px 0 0 12px;
+  }
+
+  .btn-login {
+    height: 48px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+
+  .logo-img {
+    max-height: 90px;
+  }
+
+  @media (max-width: 576px) {
+    .login-card {
+      margin: 1rem;
+      padding: 1rem;
+    }
   }
 </style>
 
 <body>
-  <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="row justify-content-center w-100">
-      <div class="col-xl-6 col-lg-8 col-md-10">
-        <div class="card o-hidden border-0 shadow-lg my-5 glass-card">
-          <div class="card-body p-0">
-            <div class="row">
-              <div class="col-12 text-center pt-4">
-                <img src="../images/ssl-logo-azul.png" alt="SSL Chile" class="img-fluid" style="max-height:120px;">
-                <div>
-                  <small class="text-primary" style="font-size:xx-large;">Sistema Integral SSL.</small><br>
-                  <small class="text-primary" style="font-size:x-large;">Personal SSL.</small>
-                </div>
+  <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-xl-4 col-lg-5 col-md-7">
+      <div class="card login-card p-4">
+        <div class="text-center mb-4">
+          <img src="../images/ssl-logo-azul.png" class="logo-img mb-3">
+          <h4 class="font-weight-bold text-dark mb-1">Sistema Integral SSL</h4>
+          <small class="text-muted">Acceso Personal</small>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group mb-3">
+            <label class="small text-muted">RUN</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
+              <input type="text" class="form-control text-center" id="run" name="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
+            </div>
+          </div>
 
-              <div class="col-12">
-                <div class="px-4 pb-5 pt-3">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">¡Bienvenido!</h1>
-                  </div>
-
-                  <form id="loginForm">
-                    <div class="form-group">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="faw fa-solid fa-user"></i></span>
-                        </div>
-                        <input type="text" class="form-control text-center" id="run" name="run" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="12.345.678-9">
-                        <div class="input-group-append">
-                          <span class="input-group-text"><i id="info-run"></i></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="faw fa-solid fa-key"></i></span>
-                        </div>
-                        <input type="password" class="form-control text-center" id="password" name="password" oninput="validaPassword(this.value)" placeholder="Contraseña">
-                        <div class="input-group-append">
-                          <span class="input-group-text"><i id="info-password"></i></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button id="loadBtn" type="button" class="btn btn-primary btn-user btn-block" onclick="loadSession()">
-                      <span id="loadBtnText"><i class="fas fa-right-to-bracket"></i> Iniciar Sesión</span>
-                      <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                    </button>
-                  </form>
-                </div>
+          <div class="form-group mb-4">
+            <label class="small text-muted">Contraseña</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
               </div>
-            </div> <!-- End row -->
-          </div> <!-- End card-body -->
-        </div> <!-- End card -->
-      </div> <!-- End col -->
-    </div> <!-- End row -->
-  </div> <!-- End container -->
+              <input type="password" class="form-control text-center" id="password" name="password" placeholder="••••••••"">
+            </div>
+          </div>
+
+          <button id="loadBtn" type="button" onclick="loadSession()"class="btn btn-primary btn-login btn-block">
+            <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
+            <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="../assets/vendor/jquery/jquery.min.js"></script>
@@ -129,6 +131,7 @@ if (isset($_SESSION['user'])) {
     let dv = rut.slice(-1);
     let cuerpoFormateado = '';
     let i = 0;
+
     for (let j = cuerpo.length - 1; j >= 0; j--) {
       cuerpoFormateado = cuerpo[j] + cuerpoFormateado;
       i++;
@@ -139,28 +142,16 @@ if (isset($_SESSION['user'])) {
     inputRun.value = cuerpoFormateado + '-' + dv;
   }
 
-  var validaPassword = function (password){
-    $('#info-password').attr('class', password !== ''
-      ? 'fas fa-check-circle text-success'
-      : 'fa-solid fa-triangle-exclamation text-warning');
-  }
-
   var validaRut = function (rut) {
     rut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
     if (rut.length < 2) return false;
     const cuerpo = rut.slice(0, -1);
-    const dvIngresado = rut.slice(-1);
     let suma = 0, multiplo = 2;
+
     for (let i = cuerpo.length - 1; i >= 0; i--) {
       suma += parseInt(cuerpo[i]) * multiplo;
       multiplo = multiplo < 7 ? multiplo + 1 : 2;
     }
-    const dvEsperado = 11 - (suma % 11);
-    let dvCalculado = (dvEsperado === 11) ? '0' : (dvEsperado === 10 ? 'K' : dvEsperado.toString());
-
-    $('#info-run').attr('class', dvCalculado === dvIngresado
-      ? 'fas fa-check-circle text-success'
-      : 'fas fa-circle-xmark text-danger');
   }
 
   var loadSession = function () {
@@ -226,5 +217,4 @@ if (isset($_SESSION['user'])) {
       showError('No fue posible conectar con el servidor.');
     });
   };
-
 </script>
