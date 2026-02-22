@@ -31,12 +31,12 @@ class get
    */
   public static function arrayTypeOuterPort()
   {
-    $types = [
+    $typeCharge = [
       1 => 'Contenedor',
       2 => 'Termo'
     ];
 
-    return $types;
+    return $typeCharge;
   }
 
   /**
@@ -46,17 +46,17 @@ class get
    */
   public static function getDivisionName()
   {
-    $types = [
+    $typesDivision = [
       'ssl'      => 'Personal SSL',
       'terminal' => 'Terminal',
       'shipper'  => 'Naviera'
     ];
 
-    return $types;
+    return $typesDivision;
   }
 
   /**
-   * Method arrayTypeOuterPort //Array Si /No
+   * Method arrayYesNo //Array Si/No
    *
    * @return void
    */
@@ -68,6 +68,37 @@ class get
     ];
 
     return $arrayYesNo;
+  }
+
+  /**
+   * Method arrayShifts //Array de turnos portuarios
+   *
+   * @return void
+   */
+  public static function arrayShifts()
+  {
+    $arrayShifts = [
+      '08:00 - 15:30' => '1° Turno',
+      '15:30 - 23:00' => '2° Turno',
+      '23:00 - 08:00' => '3° Turno'
+    ];
+
+    return $arrayShifts;
+  }
+
+  /**
+   * Method arrayTypeSchedule //Array de turnos portuarios
+   *
+   * @return void
+   */
+  public static function arrayTypeSchedule()
+  {
+    $arrayTypeSchedule = [
+      'ARR' => 'Arrivados',
+      'DEP' => 'Despachados'
+    ];
+
+    return $arrayTypeSchedule;
   }
 
 }

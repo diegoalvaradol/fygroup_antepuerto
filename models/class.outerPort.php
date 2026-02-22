@@ -1799,7 +1799,7 @@ class outerPort extends iQuery
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $rows      = '';
+    $rows      = $style      = '';
     $detailsJs = [];
     $i         = 0;
 
@@ -1851,12 +1851,13 @@ class outerPort extends iQuery
       ";
 
       $detailsJs[$vid] = $this->getDetailByVessel($vid);
+      $style           = "style='width:max-content'";
     }
 
     return "
       <div class='card shadow'>
         <div class='table-responsive'>
-          <table class='table table-bordered table-hover' style='width:max-content'>
+          <table class='table table-bordered table-hover' $style>
             <thead style='background:#4e73df;color:white'>
               <tr>
                 <th>#</th>
@@ -1904,6 +1905,115 @@ class outerPort extends iQuery
           document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
         }
       </script>
+    ";
+  }
+
+  public function shiftsReport($shifts, $dateStart, $dateEnd)
+  {
+    $ship = new ship();
+    $port = new port();
+
+    list($inicio, $fin) = array_map('trim', explode(' - ', $shifts));
+    $inicioDatetime     = $dateStart . ' ' . $inicio . ':00';
+    $finDatetime        = $dateEnd . ' ' . $fin . ':00';
+    $rows               = $style               = '';
+
+    $sql = "SELECT
+      op.counter_vessel,
+      op.car_plate,
+      op.guide_number,
+      op.container,
+      op.seal_number,
+      op.exporter,
+      op.agency,
+      op.pallets_quantity,
+      op.arrival_date,
+      op.departure_date,
+      sh.ship_id,
+      sh.pol,
+      sh.pod,
+      sh.eta,
+      sh.etd,
+      sh.ship_line,
+      sh.voyage
+    FROM $this->table op
+    JOIN app_ships sh ON op.vessel_id = sh.ship_id
+    WHERE op.created BETWEEN :inicio AND :fin
+    ORDER BY $this->countervessel ASC";
+
+    $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime, 'fin' => $finDatetime]);
+    if ($list->length()) {
+      foreach ($list->getCollection() as $data) {
+        $vessel   = $ship->getVesselName($data['ship_id']);
+        $shipLine = $ship->getShipLineName($data['ship_line']);
+
+        $polFlag = $port->getflagImage($port->getCountryName($data['pol']));
+        $polName = $port->getPortName($data['pol']);
+
+        $podFlag = $port->getflagImage($port->getCountryName($data['pod']));
+        $podName = $port->getPortName($data['pod']);
+
+        if ($data['arrival_date'] != '0000-00-00 00:00:00' && $data['departure_date'] == '0000-00-00 00:00:00') {
+          $status = "<i class='fas fa-arrow-up text-success'> Ingreso</i>";
+        }
+
+        if ($data['arrival_date'] != '0000-00-00 00:00:00' && $data['departure_date'] != '0000-00-00 00:00:00') {
+          $status = "<i class='fas fa-arrow-down text-danger'> Egreso</i>";
+        }
+
+        $rows .= "
+          <tr>
+            <td>{$data['counter_vessel']}</td>
+            <td>{$status}</td>
+            <td>{$data['car_plate']}</td>
+            <td>{$data['guide_number']}</td>
+            <td>{$data['container']}</td>
+            <td>{$data['seal_number']}</td>
+            <td>{$data['exporter']}</td>
+            <td>{$data['agency']}</td>
+            <td>{$data['pallets_quantity']}</td>
+            <td>{$vessel}</td>
+            <td>{$shipLine}</td>
+            <td>{$polFlag} {$polName}</td>
+            <td>{$podFlag} {$podName}</td>
+          </tr>
+        ";
+
+        $style = "style='width:max-content'";
+      }
+    } else {
+      $rows .= "
+        <tr>
+          <td colspan='13' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
+        </tr>
+      ";
+    }
+
+    return "
+      <div class='card shadow'>
+        <div class='table-responsive'>
+          <table class='table table-bordered table-hover' $style>
+            <thead style='background:#4e73df;color:white'>
+              <tr>
+                <th>#</th>
+                <th>Estado</th>
+                <th>Patente</th>
+                <th>N° Guia</th>
+                <th>Contenedor</th>
+                <th>Sello</th>
+                <th>Exportador</th>
+                <th>Agencia</th>
+                <th>Pallets</th>
+                <th>Nave</th>
+                <th>Linea</th>
+                <th>POL</th>
+                <th>POD</th>
+              </tr>
+            </thead>
+            <tbody>$rows</tbody>
+          </table>
+        </div>
+      </div>
     ";
   }
 

@@ -70,20 +70,20 @@ $top             = UIComponents::scrollToTopButton();
 
 																<div class="card-body">
 																		<form class="form-container" id="epcoForm">
-																				<div class="form-group d-flex flex-wrap align-items-end" style="place-content:center;">
+																				<div class="form-group d-flex flex-wrap align-items-end justify-content-center">
 																						<div class="col-12 col-md-auto me-md-4 mb-3">
 																								<label for="dateFrom" class="text-gray-800 font-weight-bold">Desde</label>
-																								<input type="date" class="form-control form-control-user mt-2" id="dateFrom" name="dateFrom">
+																								<input type="date" class="form-control form-control-user" id="dateFrom" name="dateFrom">
 																								<small class="text-danger" id="error-dateFrom"></small>
 																						</div>
 
 																						<div class="col-12 col-md-auto me-md-4 mb-3">
 																								<label for="dateTo" class="text-gray-800 font-weight-bold">Hasta</label>
-																								<input type="date" class="form-control form-control-user mt-2" id="dateTo" name="dateTo">
+																								<input type="date" class="form-control form-control-user" id="dateTo" name="dateTo">
 																								<small class="text-danger" id="error-dateTo"></small>
 																						</div>
 
-																						<div class="col-12 col-md-auto mb-3">
+																						<div class="col-12 col-md-auto me-md-4 mb-3">
 																								<button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadEpcoProgram()">
 																										<i class="fas fa-solid fa-search"></i> Buscar
 																								</button>

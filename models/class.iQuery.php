@@ -17,11 +17,9 @@ abstract class iQuery
     return $this->db;
   }
 
-  public function length(): bool
+  public function length(): int
   {
-    $sql = "SELECT 1 FROM {$this->table} LIMIT 1";
-
-    return (bool) $this->db->query($sql)->fetch();
+    return $this->stmtCollection->rowCount();
   }
 
   public function find(int $id): array

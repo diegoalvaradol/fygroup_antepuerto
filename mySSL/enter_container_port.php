@@ -139,7 +139,11 @@ $paginaActual    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for="agency" class="text-gray-800 font-weight-bold">Agencia</label>
+                                                    <div class="d-flex align-items-center">
+                                                        <label for="agency" class="text-gray-800 font-weight-bold">Agencia</label>
+                                                        &nbsp;
+                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalAddAgency"><i class="fas fa-solid fa-plus"></i></button>
+                                                    </div>
                                                     <select class="form-control select2 form-control-user" id="agency" name="agency">
                                                       <option value="-">Seleccione una agencia...</option>
                                                     </select>
@@ -307,6 +311,57 @@ $paginaActual    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
         <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
     </form>
+    </div>
+
+    <!-- Modal Nueva Agencia-->
+     <div class="modal fade" id="modalAddAgency" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Nueva Agencia</h5>
+            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="form-group">
+              <form id="editCompanyForm">
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <label>Nombre:</label>
+                    <input type="text" class="form-control form-control-user" id="companyName" name="companyName">
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Exportador:</label>
+                    <select class="form-control select2 form-control-user" id="isExporter" name="isExporter">
+                      <option value="-">Seleccione..</option>
+                      <option value="1">Si</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Agencia:</label>
+                    <select class="form-control select2 form-control-user" id="isAgency" name="isAgency">
+                      <option value="-">Seleccione..</option>
+                      <option value="1">Si</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                </div>
+
+                <input type="hidden" id="agency" name="agency" value="1">
+              </form>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+            <button type="button" class="btn btn-danger btn-user btn-sm" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- SweetAlert2 CDN -->

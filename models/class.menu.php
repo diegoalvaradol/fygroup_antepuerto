@@ -94,7 +94,8 @@ class menu extends iQuery
           'id'    => 'collapseReporte',
           'items' => [
             ['label' => 'Reporte de Naves', 'link' => generateMkey('ship_report')],
-            ['label' => 'Liquidación de Naves', 'link' => generateMkey('vessel_liquidation')]
+            ['label' => 'Liquidación de Naves', 'link' => generateMkey('vessel_liquidation')],
+            ['label' => 'Reporte de Turnos', 'link' => generateMkey('shifts_report')]
           ]
         ],
         [

@@ -101,7 +101,7 @@ class company extends iQuery
     $inicio    = ($pagina - 1) * $porPagina;
     $urlBase   = generateMkey('enter_company', 'mySSL') . '&page=';
 
-    $query = "SELECT * FROM $this->table WHERE 1 ORDER BY $this->id ASC LIMIT :inicio, :porPagina";
+    $query = "SELECT * FROM $this->table WHERE name != 'N/A' ORDER BY $this->id ASC LIMIT :inicio, :porPagina";
     $stmt  = $this->db->prepare($query);
     $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
     $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
