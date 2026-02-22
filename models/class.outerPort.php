@@ -1916,7 +1916,8 @@ class outerPort extends iQuery
     list($inicio, $fin) = array_map('trim', explode(' - ', $shifts));
     $inicioDatetime     = $dateStart . ' ' . $inicio . ':00';
     $finDatetime        = $dateEnd . ' ' . $fin . ':00';
-    $rows               = $style               = '';
+    $rows               = $style               = $stayTime               = $status               = '';
+    $totalPallets       = $totalCamiones       = 0;
 
     $sql = "SELECT
       op.counter_vessel,
@@ -1929,6 +1930,9 @@ class outerPort extends iQuery
       op.pallets_quantity,
       op.arrival_date,
       op.departure_date,
+      op.created,
+      op.created_by,
+      op.origin,
       sh.ship_id,
       sh.pol,
       sh.pod,
@@ -1953,11 +1957,38 @@ class outerPort extends iQuery
         $podFlag = $port->getflagImage($port->getCountryName($data['pod']));
         $podName = $port->getPortName($data['pod']);
 
-        if ($data['arrival_date'] != '0000-00-00 00:00:00' && $data['departure_date'] == '0000-00-00 00:00:00') {
-          $status = "<i class='fas fa-arrow-up text-success'> Ingreso</i>";
+        $origin     = (int) ($data['origin'] ?? 0);
+        $originText = $origin === 1 ? 'Contenedor' : 'Pallets';
+
+        $createdTime = new DateTime($data['created']);
+        $arrivalTime = new DateTime($data['arrival_date']);
+
+        $created = $createdTime->format('d-m-Y H:i');
+        $arrival = $arrivalTime->format('d-m-Y H:i');
+
+        if ($data['departure_date'] != null) {
+          $departure = (new DateTime($data['departure_date']))->format('d-m-Y H:i');
+        } else {
+          $departure = '<em>Sin hora de salida.</em>';
         }
 
-        if ($data['arrival_date'] != '0000-00-00 00:00:00' && $data['departure_date'] != '0000-00-00 00:00:00') {
+        if ($data['arrival_date'] != '0000-00-00 00:00:00' && $data['departure_date'] != null) {
+          $arrivalDate   = new DateTime($data['arrival_date']);
+          $departureDate = new DateTime($data['departure_date']);
+
+          $interval = $arrivalDate->diff($departureDate);
+          $days     = $interval->format('%d');
+          $hours    = $interval->format('%h');
+          $minutes  = $interval->format('%i');
+
+          $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
+        } elseif ($data['arrival_date'] != '0000-00-00 00:00:00' && $data['departure_date'] == null) {
+          $stayTime = 'No disponible.';
+        }
+
+        if ($data['arrival_date'] !== '0000-00-00 00:00:00' && $data['departure_date'] === null) {
+          $status = "<i class='fas fa-arrow-up text-success'> Ingreso</i>";
+        } elseif ($data['arrival_date'] !== '0000-00-00 00:00:00' && $data['departure_date'] !== null) {
           $status = "<i class='fas fa-arrow-down text-danger'> Egreso</i>";
         }
 
@@ -1965,6 +1996,7 @@ class outerPort extends iQuery
           <tr>
             <td>{$data['counter_vessel']}</td>
             <td>{$status}</td>
+            <td>{$originText}</td>
             <td>{$data['car_plate']}</td>
             <td>{$data['guide_number']}</td>
             <td>{$data['container']}</td>
@@ -1976,15 +2008,29 @@ class outerPort extends iQuery
             <td>{$shipLine}</td>
             <td>{$polFlag} {$polName}</td>
             <td>{$podFlag} {$podName}</td>
+            <td>{$arrival}</td>
+            <td>{$departure}</td>
+            <td>{$stayTime}</td>
+            <td>{$this->findByUser($data['created_by'])}</td>
           </tr>
         ";
 
         $style = "style='width:max-content'";
+        $totalPallets += (int) $data['pallets_quantity'];
+        $totalCamiones++;
       }
+
+      $rows .= "
+        <tr style='font-weight:bold;background:#f8f9fc'>
+          <td colspan='12' class='text-right'>Totales</td>
+          <td>" . number_format($totalPallets, 0, ',', '.') . "</td>
+          <td colspan='5'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . "</td>
+        </tr>
+      ";
     } else {
       $rows .= "
         <tr>
-          <td colspan='13' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
+          <td colspan='18' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
         </tr>
       ";
     }
@@ -1997,6 +2043,7 @@ class outerPort extends iQuery
               <tr>
                 <th>#</th>
                 <th>Estado</th>
+                <th>Origen</th>
                 <th>Patente</th>
                 <th>N° Guia</th>
                 <th>Contenedor</th>
@@ -2008,6 +2055,10 @@ class outerPort extends iQuery
                 <th>Linea</th>
                 <th>POL</th>
                 <th>POD</th>
+                <th>Entrada</th>
+                <th>Salida</th>
+                <th>Estadía</th>
+                <th>Ingresado Por</th>
               </tr>
             </thead>
             <tbody>$rows</tbody>

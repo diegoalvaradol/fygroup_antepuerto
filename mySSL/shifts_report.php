@@ -64,8 +64,8 @@ if (!$admin) {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Rrporte de Turnos</h1>
-                    <p class="mb-4">Acá puedes visualizar la carga por cada turno.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Reporte de Turnos</h1>
+                    <p class="mb-4">Acá puedes visualizar la carga movilizada por cada turno.</p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -74,7 +74,7 @@ if (!$admin) {
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Rrporte de Turnos</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Reporte de Turnos</h6>
                                 </div>
 
                                 <div class="card-body">
