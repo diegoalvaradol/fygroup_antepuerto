@@ -1942,7 +1942,7 @@ class outerPort extends iQuery
       sh.voyage
     FROM $this->table op
     JOIN app_ships sh ON op.vessel_id = sh.ship_id
-    WHERE op.created BETWEEN :inicio AND :fin
+    WHERE op.arrival_date BETWEEN :inicio AND :fin
     ORDER BY $this->countervessel ASC";
 
     $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime, 'fin' => $finDatetime]);
@@ -2022,9 +2022,9 @@ class outerPort extends iQuery
 
       $rows .= "
         <tr style='font-weight:bold;background:#f8f9fc'>
-          <td colspan='12' class='text-right'>Totales</td>
-          <td>" . number_format($totalPallets, 0, ',', '.') . "</td>
-          <td colspan='5'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . "</td>
+          <td colspan='9' class='text-right'>Totales</td>
+          <td>Pallets: " . number_format($totalPallets, 0, ',', '.') . "</td>
+          <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . "</td>
         </tr>
       ";
     } else {
