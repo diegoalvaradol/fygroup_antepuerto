@@ -106,6 +106,10 @@ if (!$admin) {
 																								<button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReport()">
 																										<i class="fas fa-solid fa-search"></i> Buscar
 																								</button>
+
+																								<button type="button" class="btn btn-success btn-user" id="btnPrintShiftsReport" onclick="printShiftsReport()" disabled>
+																										<i class="fas fa-solid fa-print"></i> Imprimir
+																								</button>
 																						</div>
 																				</div>
 																		</form>
@@ -316,9 +320,12 @@ function loadShiftsReport() {
 
 				$('#shiftTextMini').html(`Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css("font-size", "smaller");
 				$('#shiftCardMini').fadeIn(150);
+				$('#btnPrintShiftsReport').prop('disabled', false);
       } else {
         $div.hide().empty();
 				$('#shiftCardMini').fadeOut(150);
+				$('#btnPrintShiftsReport').prop('disabled', true);
+
         Swal.fire({
           title: 'Sin resultados',
           text: 'No se encontró planificación para los filtros seleccionados.',
@@ -329,6 +336,7 @@ function loadShiftsReport() {
 
     error(xhr) {
       console.error(xhr.responseText);
+			$('#btnPrintShiftsReport').prop('disabled', true);
       Swal.fire({
         title: 'Error',
         text: 'Error al consultar la información.',
@@ -376,6 +384,16 @@ function loadDatePicker() {
 }
 
 document.addEventListener("DOMContentLoaded", loadDatePicker);
+
+var printShiftsReport = function () {
+  const contenido = document.getElementById('shiftsDiv').innerHTML;
+  if (!contenido.trim()) return;
+  const ventana = window.open('', '', 'width=1200,height=800');
+  ventana.document.write(contenido);
+  ventana.document.close();
+  ventana.focus();
+  ventana.print();
+}
 
 function actualizarReloj() {
   const ahora = new Date();

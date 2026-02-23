@@ -87,13 +87,17 @@ $top             = UIComponents::scrollToTopButton();
 																								<button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadEpcoProgram()">
 																										<i class="fas fa-solid fa-search"></i> Buscar
 																								</button>
+
+                                                <button type="button" class="btn btn-success btn-user" id="btnPrintEpcoProgram" onclick="printEpcoProgram()" disabled>
+																										<i class="fas fa-solid fa-print"></i> Imprimir
+																								</button>
 																						</div>
 																				</div>
 																		</form>
 
 																		<div class="card-body" id="divFrame">
 																				<!-- Frame del PDF -->
-																				<iframe id="framePdf" frameborder="0"></iframe>
+																				<iframe id="framePdf" name="framePdf" frameborder="0"></iframe>
 																		</div>
 
 																		<div class="text-center">
@@ -274,6 +278,7 @@ function loadEpcoProgram() {
     success: function(response) {
       if (response.trim() !== '') {
         $('#divFrame').html(response).fadeIn();
+        $('#btnPrintEpcoProgram').prop('disabled', false);
       } else {
         Swal.fire({
           title: 'Sin resultados',
@@ -282,10 +287,12 @@ function loadEpcoProgram() {
           confirmButtonColor: '#3085d6'
         });
         $('#divFrame').hide().empty();
+        $('#btnPrintEpcoProgram').prop('disabled', true);
       }
     },
     error: function(xhr, status, error) {
       console.error('AJAX Error:', error);
+      $('#btnPrintEpcoProgram').prop('disabled', true);
       Swal.fire({
         title: 'Error',
         text: 'Ocurrió un error al consultar la planificación.',
@@ -297,6 +304,16 @@ function loadEpcoProgram() {
       $('#btnBuscar').prop('disabled', false).html('<i class="fas fa-solid fa-search"></i> Buscar');
     }
   });
+}
+
+var printEpcoProgram = function () {
+  const contenido = document.getElementById('divFrame').innerHTML;
+  if (!contenido.trim()) return;
+  const ventana = window.open('', '', 'width=1200,height=800');
+  ventana.document.write(contenido);
+  ventana.document.close();
+  ventana.focus();
+  ventana.print();
 }
 
 function actualizarReloj() {

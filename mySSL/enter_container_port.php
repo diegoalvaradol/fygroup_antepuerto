@@ -141,8 +141,6 @@ $paginaActual    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                 <div class="col-sm-6">
                                                     <div class="d-flex align-items-center">
                                                         <label for="agency" class="text-gray-800 font-weight-bold">Agencia</label>
-                                                        &nbsp;
-                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalAddAgency"><i class="fas fa-solid fa-plus"></i></button>
                                                     </div>
                                                     <select class="form-control select2 form-control-user" id="agency" name="agency">
                                                       <option value="-">Seleccione una agencia...</option>

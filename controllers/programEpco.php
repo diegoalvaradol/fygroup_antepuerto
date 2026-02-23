@@ -80,10 +80,6 @@ foreach ($data['Entries']['Entry'] as $fila) {
 }
 
 $table .= "<p class='m-1 font-weight-bold text-grey'>Total de registros: $count</p>";
-$table .= "<button type='button' class='btn btn-sm btn-success btn-user' onclick='window.print()'>";
-$table .= "<i class='fas fa-solid fa-print'></i> Imrpimir";
-$table .= "</button>";
-
 $table .= '</tbody>';
 $table .= '</table>';
 $table .= '</div>';
