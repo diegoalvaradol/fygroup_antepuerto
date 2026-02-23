@@ -43,6 +43,11 @@ if (!$admin) {
 
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+		<!-- Flatpickr para controlar input de fecha-->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 </head>
 
 <body id="page-top">
@@ -82,7 +87,7 @@ if (!$admin) {
 																				<div class="form-group d-flex flex-wrap align-items-end justify-content-center">
 																						<div class="col-12 col-md-auto me-md-4 mb-3">
 																								<label for="dateForm" class="text-gray-800 font-weight-bold">Fecha</label>
-																								<input type="date" class="form-control form-control-user" id="dateForm" name="dateForm">
+																								<input type="text" class="form-control form-control-user" id="dateForm" name="dateForm">
 																								<small class="text-danger" id="error-dateForm"></small>
 																						</div>
 
@@ -202,6 +207,8 @@ if (!$admin) {
 
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 </body>
 </html>
 
@@ -334,6 +341,41 @@ function loadShiftsReport() {
     }
   });
 }
+
+let fpInstance = null;
+
+function loadDatePicker() {
+	fetch('../controllers/dateWithMovs.php').then(res => res.json()).then(data => {
+		const fechasValidas = Array.isArray(data) ? data : [];
+
+		if (fpInstance) {
+			fpInstance.destroy();
+		}
+
+		fpInstance = flatpickr("#dateForm", {
+			dateFormat: "Y-m-d",
+			enable: fechasValidas,
+
+			locale: {
+				...flatpickr.l10ns.es,
+				firstDayOfWeek: 1
+			},
+
+			onDayCreate: function (dObj, dStr, fp, dayElem) {
+				const fecha = dayElem.dateObj.toLocaleDateString('en-CA');
+
+				if (fechasValidas.includes(fecha)) {
+					dayElem.style.background = "#28a745";
+					dayElem.style.color = "#fff";
+					dayElem.style.borderRadius = "50%";
+				}
+			}
+		});
+	})
+	.catch(err => console.error(err));
+}
+
+document.addEventListener("DOMContentLoaded", loadDatePicker);
 
 function actualizarReloj() {
   const ahora = new Date();
