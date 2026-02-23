@@ -78,8 +78,15 @@ if (!$admin) {
                                 </div>
 
                                 <div class="card-body">
+                                    <div class="col-12 col-md-auto me-md-4 mb-3">
+                                        <button type="button" class="btn btn-success btn-user" id="btnPrintStadisticVessel" onclick="printStadisticVessel()">
+                                            <i class="fas fa-solid fa-print"></i> Imprimir
+                                        </button>
+                                    </div>
 																		<!-- Tabla Estadítica por Naves -->
-                                    <?php echo $port->getTableStadisticsByShips(); ?>
+                                    <div id="stadisticVesselDiv">
+                                        <?php echo $port->getTableStadisticsByShips(); ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -226,6 +233,16 @@ let inactivityTime = function () {
 window.onload = function () {
   inactivityTime();
 };
+
+var printStadisticVessel = function () {
+  const contenido = document.getElementById('stadisticVesselDiv').innerHTML;
+  if (!contenido.trim()) return;
+  const ventana = window.open('', '', 'width=1200,height=800');
+  ventana.document.write(contenido);
+  ventana.document.close();
+  ventana.focus();
+  ventana.print();
+}
 
 function actualizarReloj() {
   const ahora = new Date();
