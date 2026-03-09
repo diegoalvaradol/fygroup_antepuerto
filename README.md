@@ -1,5 +1,7 @@
 # Sistema SSL | Antepuerto Panul
 
+![Sistema SSL](../images/ssl-logo-azul.png)
+
 Sistema web para la gestión del **Antepuerto Panul**, enfocado en el **control de ingreso de camiones** y en la generación de **reportes operacionales del flujo logístico**.
 
 La plataforma centraliza información relevante de la operación del antepuerto, permitiendo registrar movimientos, monitorear la actividad y obtener reportes que apoyen la gestión y la toma de decisiones.
