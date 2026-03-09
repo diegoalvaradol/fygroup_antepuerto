@@ -1,6 +1,5 @@
 <div align="center">
-
-# Sistema SSL | Antepuerto Panul
+<h1>Sistema SSL | Antepuerto Panul</h1>
 
 <img src="images/ssl-logo-azul.png" alt="Sistema SSL" width="200">
 </div>
