@@ -2,7 +2,7 @@
 	<img src="images/ssl-logo-azul.png" alt="Sistema SSL" width="200">
 </div>
 
-## Sistema SSL | Antepuerto Panul
+# Sistema SSL | Antepuerto Panul
 
 Sistema web para la gestión del **Antepuerto Panul**, enfocado en el **control de ingreso de camiones** y en la generación de **reportes operacionales del flujo logístico**.
 
