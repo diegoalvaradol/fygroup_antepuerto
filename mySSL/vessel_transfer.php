@@ -76,7 +76,7 @@ $top             = UIComponents::scrollToTopButton();
 
                     <div class="card-body">
                       <div class="col-sm-12">
-                        <div class="alert alert-info" role="alert" style="width: 25%; place-self: center;"><i class="fa-solid fa-info-circle"></i>
+                        <div class="alert alert-info" role="alert"><i class="fa-solid fa-info-circle"></i>
                           <b>Simbología </b> '-T': Termo | '-C': Contenedores.
                         </div>
                       </div>
