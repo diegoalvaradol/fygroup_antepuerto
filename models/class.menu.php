@@ -61,6 +61,14 @@ class menu extends iQuery
           ['label' => 'Itinerarios Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
           ['label' => 'Itinerarios Global Reefers', 'link' => generateMkey('program_global_reefers')]
         ]
+      ],
+      [
+        'title' => 'Live Position',
+        'icon'  => 'fa-satellite',
+        'id'    => 'collapseLivePosition',
+        'items' => [
+          ['label' => 'Live Position', 'link' => generateMkey('marinetraffic_live_map')]
+        ]
       ]
     ];
 
