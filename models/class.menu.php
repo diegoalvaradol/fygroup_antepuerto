@@ -179,113 +179,122 @@ class menu extends iQuery
 
     return $sidebar;
   }
-
   public static function mainTapBarSSL()
   {
-    $user     = new user();
+    $user          = new user();
+    $arrayDivision = get::getDivisionName();
+
     $admin    = $user->isAdmin($_SESSION["user"]["run"]);
-    $userName = htmlspecialchars($_SESSION["user"]["name"]);
+    $name     = htmlspecialchars($_SESSION["user"]["name"]);
+    $fullName = htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"]);
+    $division = $_SESSION["user"]["division"];
 
     $tapBar = '
-    <nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow" style="background-color: #1e293b;">
-      <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle me-3" aria-label="Toggle sidebar">
-        <i class="fas fa-bars"></i>
-      </button>
+    <style>
+      #userDropdown .arrow{
+        transition: transform 0.25s ease;
+        font-size:12px;
+        margin-left:6px;
+      }
+      #userDropdown.show .arrow{
+        transform: rotate(180deg);
+      }
+    </style>
 
-      <ul class="navbar-nav d-flex justify-content-end align-items-center w-100">
-        <li class="nav-item d-flex align-items-center text-white me-3">
-          <i class="fas fa-clock me-1"></i>
-          <span id="relojFecha"></span>
-        </li>
+    <nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow" style="background-color:#1e293b;">
+      <div class="container-fluid d-flex align-items-center">
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle me-3">
+          <i class="fas fa-bars"></i>
+        </button>
 
-        <div class="topbar-divider d-none d-sm-block me-3"></div>
+        <div class="mx-auto text-white d-flex align-items-center">
+          <i class="fas fa-clock fa-xs me-2"></i>
+          &nbsp
+          <div id="relojFecha"></div>
+        </div>
 
-        <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="d-none d-lg-inline text-white fw-semibold me-2">Bienvenido, ' . $userName . '!</span>
-            <img class="img-profile rounded-circle" src="../images/undraw_profile.svg" alt="Perfil usuario" width="36" height="36">
-          </a>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle d-flex align-items-center px-3"
+              href="#"
+              id="userDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
 
-          <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
-            <li>
-              <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#userModal">
-                <i class="fas fa-user fa-sm fa-fw me-2"></i> Perfil
-              </a>
-            </li>';
+              <span class="text-white fw-semibold me-2">Bienvenido, ' . $name . '</span>
+              &nbsp
+
+              <img class="img-profile rounded-circle me-2"
+                  src="../images/undraw_profile.svg"
+                  width="36"
+                  height="36">
+              <i class="fas fa-chevron-down arrow text-white"></i>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow"
+                aria-labelledby="userDropdown"
+                style="min-width:240px; padding:0;">
+
+              <li class="px-3 py-3 border-bottom text-center">
+                <img src="../images/undraw_profile.svg"
+                    class="rounded-circle mb-2"
+                    width="60"
+                    height="60">
+                <div class="fw-semibold">' . $fullName . '</div>
+                <small class="text-muted">' . $arrayDivision[$division] . '</small>
+              </li>
+
+              <li>
+                <a class="dropdown-item py-2 px-3 text-primary" href="#" data-bs-toggle="modal" data-bs-target="#userModal">
+                  <i class="fas fa-user me-2"></i> Perfil
+                </a>
+              </li>';
 
     if ($admin) {
       $tapBar .= '
-            <li>
-              <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#goalModal">
-                <i class="fas fa-cogs fa-sm fa-fw me-2"></i> Ajustar Capacidad
-              </a>
-            </li>';
+              <li>
+                <a class="dropdown-item py-2 px-3 text-primary" href="#" data-bs-toggle="modal" data-bs-target="#goalModal">
+                  <i class="fas fa-cogs me-2"></i> Ajustar Capacidad
+                </a>
+              </li>';
     }
 
     $tapBar .= '
-            <li>
-              <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#licenceModal">
-                <i class="fas fa-copyright fa-sm fa-fw me-2"></i> Licencia
-              </a>
-            </li>
+              <li>
+                <a class="dropdown-item py-2 px-3 text-primary" href="#" data-bs-toggle="modal" data-bs-target="#licenceModal">
+                  <i class="fas fa-copyright me-2"></i> Licencia
+                </a>
+              </li>
 
-            <li><hr class="dropdown-divider"></li>
+              <li><hr class="dropdown-divider"></li>
 
-            <li>
-              <a class="dropdown-item text-danger" href="logout.php" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                <i class="fas fa-right-from-bracket me-2"></i> Cerrar Sesión
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>';
+              <li>
+                <a class="dropdown-item py-2 px-3 text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                  <i class="fas fa-right-from-bracket me-2"></i> Cerrar Sesión
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    return $tapBar;
-  }
+    <script>
+      document.addEventListener("DOMContentLoaded", function(){
 
-  public static function secondTapBarSSL()
-  {
-    $userName = htmlspecialchars($_SESSION["user"]["name"]);
+        var dropdown = document.getElementById("userDropdown");
 
-    $tapBar = '
-    <nav class="navbar navbar-expand navbar-dark topbar mb-4 static-top shadow" style="background-color: #1e293b;">
-      <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle me-3" aria-label="Toggle sidebar">
-        <i class="fas fa-bars"></i>
-      </button>
+        dropdown.addEventListener("show.bs.dropdown", function(){
+          dropdown.classList.add("show");
+        });
 
-      <ul class="navbar-nav d-flex justify-content-end align-items-center w-100">
-        <li class="nav-item d-flex align-items-center text-white me-3">
-          <i class="fas fa-clock me-1"></i>
-          <span id="relojFecha"></span>
-        </li>
+        dropdown.addEventListener("hide.bs.dropdown", function(){
+          dropdown.classList.remove("show");
+        });
 
-        <div class="topbar-divider d-none d-sm-block me-3"></div>
-
-        <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="d-none d-lg-inline text-white fw-semibold me-2">Bienvenido, ' . $userName . '!</span>
-            <img class="img-profile rounded-circle" src="../images/undraw_profile.svg" alt="Perfil usuario" width="36" height="36">
-          </a>
-
-          <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
-            <li>
-              <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#infoModal">
-                <i class="fas fa-circle-info fa-sm fa-fw me-2"></i>Acerca del Sistema
-              </a>
-            </li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <li>
-              <a class="dropdown-item text-danger" href="logout.php" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                <i class="fas fa-right-from-bracket me-2"></i> Cerrar Sesión
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>';
+      });
+    </script>';
 
     return $tapBar;
   }

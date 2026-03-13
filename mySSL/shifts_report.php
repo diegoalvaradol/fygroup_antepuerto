@@ -6,14 +6,14 @@ $cfg  = new cfg();
 $user = new user();
 $port = new outerPort();
 
-$infoCfg         = json_decode($cfg->getInfo(1), true);
-$admin           = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime    = new DateTime($infoCfg['released_date']);
-$updateTime      = new DateTime($infoCfg['update_date']);
-$sideBarSSL      = menu::sideBarSSL();
-$secondTapBarSSL = menu::secondTapBarSSL();
-$footer          = menu::footerSSL();
-$top             = UIComponents::scrollToTopButton();
+$infoCfg       = json_decode($cfg->getInfo(1), true);
+$admin         = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime  = new DateTime($infoCfg['released_date']);
+$updateTime    = new DateTime($infoCfg['update_date']);
+$sideBarSSL    = menu::sideBarSSL();
+$mainTapBarSSL = menu::mainTapBarSSL();
+$footer        = menu::footerSSL();
+$top           = UIComponents::scrollToTopButton();
 
 /* Validar superadmin */
 if (!$admin) {
@@ -62,7 +62,7 @@ if (!$admin) {
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                <?php echo $secondTapBarSSL; ?>
+                <?php echo $mainTapBarSSL; ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -397,12 +397,34 @@ var printShiftsReport = function () {
 
 function actualizarReloj() {
   const ahora = new Date();
-  const opcionesFecha = { year: 'numeric', month: 'long', day: 'numeric' };
-  const fecha = ahora.toLocaleDateString('es-ES', opcionesFecha);
-  const hora = ahora.toLocaleTimeString('es-ES');
-  $('#relojFecha').html(`${fecha} - ${hora}`);
-}
 
+  const hora = ahora.toLocaleTimeString("es-CL", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+
+  const diaSemana = ahora.toLocaleDateString("es-CL", { weekday: "long" });
+  const fecha = ahora.toLocaleDateString("es-CL", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  document.getElementById("relojFecha").innerHTML = `
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div style="font-size:20px; font-weight:bold;">
+        ${hora}
+      </div>
+      |
+      <div style="line-height:1.2;">
+        <div>${diaSemana}</div>
+        <div style="font-size:12px;">${fecha}</div>
+      </div>
+    </div>
+  `;
+}
 setInterval(actualizarReloj, 1000);
 actualizarReloj(); /* Primera llamada */
 </script>

@@ -6,6 +6,41 @@ if (!isset($_SESSION['user'])) {
 
   exit();
 }
+
+/* tiempo máximo de inactividad (30 min) */
+$timeout = 1800;
+
+if (isset($_SESSION['last_session'])) {
+  if (time() - $_SESSION['last_session'] > $timeout) {
+    session_unset();
+    session_destroy();
+    header("Location: login.php");
+    exit();
+  }
+}
+
+/* validar IP */
+if (!isset($_SESSION['ip'])) {
+  $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+} elseif ($_SESSION['ip'] !== $_SERVER['REMOTE_ADDR']) {
+  session_unset();
+  session_destroy();
+  header("Location: login.php");
+  exit();
+}
+
+/* validar navegador */
+if (!isset($_SESSION['user_agent'])) {
+  $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+} elseif ($_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+  session_unset();
+  session_destroy();
+  header("Location: login.php");
+  exit();
+}
+
+/* actualizar actividad */
+$_SESSION['last_session'] = time();
 ?>
 
 <!DOCTYPE html>
@@ -66,38 +101,38 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body>
-  <div class="container">
-    <h1>Bienvenido</h1>
-    <br>
-    <h2><?=htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"])?> 👋</h2>
+<div class="container">
+  <h1>Bienvenido</h1>
+  <br>
+  <h2><?= htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"]) ?> 👋</h2>
 
-    <p id="msg1">Validando sesión...</p>
-    <p id="msg2">Cargando datos...</p>
-    <p id="msg3">Redirigiendo al panel...</p>
+  <p id="msg1">Validando sesión...</p>
+  <p id="msg2">Cargando datos...</p>
+  <p id="msg3">Redirigiendo al dashboard...</p>
 
-    <div class="loader"></div>
-  </div>
-
-  <script>
-		const mensajes = ["msg1", "msg2", "msg3"];
-		let actual = -1;
-
-		function mostrarSiguiente() {
-			if (actual >= 0) {
-				const anterior = document.getElementById(mensajes[actual]);
-				anterior.style.color = "#888";  // gris para mensajes anteriores
-			}
-
-			actual++;
-			if (actual < mensajes.length) {
-				const actualMsg = document.getElementById(mensajes[actual]);
-				actualMsg.classList.add("visible");
-				actualMsg.style.color = "#000"; // negro para el mensaje actual
-				setTimeout(mostrarSiguiente, 1500);
-			}
-		}
-
-		mostrarSiguiente();
-	</script>
+  <div class="loader"></div>
+</div>
 </body>
+
+<script>
+  const mensajes = ["msg1", "msg2", "msg3"];
+  let actual = -1;
+
+  function mostrarSiguiente() {
+    if (actual >= 0) {
+      const anterior = document.getElementById(mensajes[actual]);
+      anterior.style.color = "#888";
+    }
+
+    actual++;
+    if (actual < mensajes.length) {
+      const actualMsg = document.getElementById(mensajes[actual]);
+      actualMsg.classList.add("visible");
+      actualMsg.style.color = "#000";
+      setTimeout(mostrarSiguiente, 1500);
+    }
+  }
+
+  mostrarSiguiente();
+</script>
 </html>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 if (isset($_SESSION['user'])) {
   header('Location: loginDataUser.php');
 
@@ -103,7 +105,7 @@ if (isset($_SESSION['user'])) {
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
               </div>
-              <input type="password" class="form-control text-center" id="password" name="password" placeholder="••••••••"">
+              <input type="password" class="form-control text-center" id="password" name="password" placeholder="••••••••">
             </div>
           </div>
 

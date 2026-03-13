@@ -80,8 +80,13 @@ class user extends iQuery
 
   public function login()
   {
-    $query = "SELECT * FROM $this->table WHERE run = :run AND division = :division AND is_active = 1 LIMIT 1";
-    $stmt  = $this->db->prepare($query);
+    if (!$this->run || !$this->password) {
+      return false;
+    }
+
+    $query = "SELECT run, name, last_name, password, division, is_active FROM $this->table WHERE run = :run AND division = :division AND is_active = 1 LIMIT 1";
+
+    $stmt = $this->db->prepare($query);
     $stmt->bindParam(":run", $this->run, PDO::PARAM_STR);
     $stmt->bindParam(":division", $this->division);
     $stmt->execute();
@@ -89,6 +94,10 @@ class user extends iQuery
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($this->password, $user['password'])) {
+      session_regenerate_id(true);
+
+      unset($user['password']);
+
       $_SESSION["user"]         = $user;
       $_SESSION["last_session"] = time();
 

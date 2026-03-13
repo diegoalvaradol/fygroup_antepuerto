@@ -343,12 +343,34 @@ function setProgress(value) {
 
 function actualizarReloj() {
   const ahora = new Date();
-  const opcionesFecha = { year: 'numeric', month: 'long', day: 'numeric' };
-  const fecha = ahora.toLocaleDateString('es-ES', opcionesFecha);
-  const hora = ahora.toLocaleTimeString('es-ES');
-  $('#relojFecha').html(`${fecha} - ${hora}`);
-}
 
+  const hora = ahora.toLocaleTimeString("es-CL", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+
+  const diaSemana = ahora.toLocaleDateString("es-CL", { weekday: "long" });
+  const fecha = ahora.toLocaleDateString("es-CL", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  document.getElementById("relojFecha").innerHTML = `
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div style="font-size:20px; font-weight:bold;">
+        ${hora}
+      </div>
+      |
+      <div style="line-height:1.2;">
+        <div>${diaSemana}</div>
+        <div style="font-size:12px;">${fecha}</div>
+      </div>
+    </div>
+  `;
+}
 var saveInfoUser = function() {
   const password = $('#password').val();
   var division = 'portal'; /* Division portal cliente */
