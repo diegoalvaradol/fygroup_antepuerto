@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $id        = $_POST["id"];
 
   /* Verifica si el camión tiene una hora de salida registrada */
-  $sql  = "SELECT * FROM app_outer_port WHERE row_id = :id AND departure_date != '0000-00-00 00:00:00'";
+  $sql  = "SELECT * FROM app_outer_port WHERE row_id = :id AND departure_date IS NOT NULL";
   $list = $outerPort->getFirstMember($sql, ['id' => $id]);
 
   if ($list > 0) {

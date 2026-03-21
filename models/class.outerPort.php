@@ -87,7 +87,7 @@ class outerPort extends iQuery
     return $stmt->execute();
   }
 
-  public function update()
+  public function updateDepartureDate()
   {
     $query = "UPDATE $this->table SET departure_date = :departuredate WHERE row_id = :id AND origin = :origin";
     $stmt  = $this->db->prepare($query);
@@ -391,40 +391,37 @@ class outerPort extends iQuery
     $query  = "SELECT COUNT(*) AS total FROM $this->table AS p";
     $params = [];
 
-    if ($admin) {
-      $query .= " WHERE p.departure_date IS NULL";
-    } elseif ($_SESSION["user"]["division"] === 'terminal') {
-      $query .= "
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        WHERE p.departure_date IS NULL
-          AND sh.finished = 0
-      ";
-    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
-      $query .= "
+    $where = ["p.departure_date IS NULL"];
+    $joins = "";
+
+    if (!$admin) {
+      $division = $_SESSION["user"]["division"];
+      $run      = $_SESSION["user"]["run"];
+
+      if ($division === 'terminal') {
+        $joins .= " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id";
+        $where[] = "sh.finished = 0";
+      }
+
+      if ($division === 'shipper' && in_array($run, ['96.591.730-6', '77.897.180-1'])) {
+        $joins .= "
         JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
         JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.departure_date IS NULL
-          AND sh.finished = 0
-          AND sl.rut = :rut
       ";
-
-      $params[':rut'] = $_SESSION["user"]["run"];
-    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
-      $query .= "
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.departure_date IS NULL
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ";
-
-      $params[':rut'] = $_SESSION["user"]["run"];
+        $where[]        = "sh.finished = 0";
+        $where[]        = "sl.rut = :rut";
+        $params[':rut'] = $run;
+      }
     }
 
+    $query .= $joins . " WHERE " . implode(" AND ", $where);
+
     $stmt = $this->db->prepare($query);
+
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
+
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -439,40 +436,37 @@ class outerPort extends iQuery
     $query  = "SELECT COUNT(*) AS total FROM $this->table AS p";
     $params = [];
 
-    if ($admin) {
-      $query .= " WHERE p.departure_date IS NULL";
-    } elseif ($_SESSION["user"]["division"] === 'terminal') {
-      $query .= "
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        WHERE p.departure_date IS NULL
-          AND sh.finished = 0
-      ";
-    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
-      $query .= "
+    $where = ["p.departure_date IS NULL"];
+    $joins = "";
+
+    if (!$admin) {
+      $division = $_SESSION["user"]["division"];
+      $run      = $_SESSION["user"]["run"];
+
+      if ($division === 'terminal') {
+        $joins .= " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id";
+        $where[] = "sh.finished = 0";
+      }
+
+      if ($division === 'shipper' && in_array($run, ['96.591.730-6', '77.897.180-1'])) {
+        $joins .= "
         JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
         JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.departure_date IS NULL
-          AND sh.finished = 0
-          AND sl.rut = :rut
       ";
-
-      $params[':rut'] = $_SESSION["user"]["run"];
-    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
-      $query .= "
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.departure_date IS NULL
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ";
-
-      $params[':rut'] = $_SESSION["user"]["run"];
+        $where[]        = "sh.finished = 0";
+        $where[]        = "sl.rut = :rut";
+        $params[':rut'] = $run;
+      }
     }
 
+    $query .= $joins . " WHERE " . implode(" AND ", $where);
+
     $stmt = $this->db->prepare($query);
+
     foreach ($params as $k => $v) {
       $stmt->bindValue($k, $v, PDO::PARAM_STR);
     }
+
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -481,54 +475,51 @@ class outerPort extends iQuery
 
   public function getTotalArrivedTrucks($admin)
   {
-    $baseFrom = " FROM $this->table AS p";
-    $joinShip = "";
-    $whereAll = " WHERE 1";
-    $whereAP  = " WHERE p.departure_date IS NULL";
-    $params   = [];
+    $from   = " FROM $this->table AS p";
+    $joins  = "";
+    $where  = ["1=1"];
+    $params = [];
 
-    if ($admin) {
-      // sin joins extra
-    } elseif ($_SESSION["user"]["division"] === 'terminal') {
-      $joinShip = " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id";
-      $whereAll .= " AND sh.finished = 0";
-      $whereAP .= " AND sh.finished = 0";
-    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '96.591.730-6') { /* Cliente: Cool Carriers */
-      $joinShip = " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line";
-      $whereAll .= " AND sh.finished = 0 AND sl.rut = :rut";
-      $whereAP .= " AND sh.finished = 0 AND sl.rut = :rut";
+    if (!$admin) {
 
-      $params[':rut'] = $_SESSION["user"]["run"];
-    } elseif ($_SESSION["user"]["division"] === 'shipper' && $_SESSION["user"]["run"] === '77.897.180-1') { /* Cliente: Seatrade */
-      $joinShip = " JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line";
-      $whereAll .= " AND sh.finished = 0 AND sl.rut = :rut";
-      $whereAP .= " AND sh.finished = 0 AND sl.rut = :rut";
+      if ($_SESSION["user"]["division"] === 'terminal') {
+        $joins .= " JOIN app_ships sh ON sh.ship_id = p.vessel_id";
+        $where[] = "sh.finished = 0";
+      }
 
-      $params[':rut'] = $_SESSION["user"]["run"];
+      if ($_SESSION["user"]["division"] === 'shipper') {
+        $joins .= " JOIN app_ships sh ON sh.ship_id = p.vessel_id
+                  JOIN app_ship_lines sl ON sl.line_id = sh.ship_line";
+
+        $where[]        = "sh.finished = 0";
+        $where[]        = "sl.rut = :rut";
+        $params[':rut'] = $_SESSION["user"]["run"];
+      }
     }
 
-    $queryTotal      = "SELECT COUNT(*) AS total" . $baseFrom . $joinShip . $whereAll;
-    $queryAntepuerto = "SELECT COUNT(*) AS total" . $baseFrom . $joinShip . $whereAP;
+    $whereAll = " WHERE " . implode(' AND ', $where);
 
     /* Total arribados */
-    $stmtTotal = $this->db->prepare($queryTotal);
+    $sqlTotal = "SELECT COUNT(*) AS total" . $from . $joins . $whereAll;
+
+    /* Antepuerto (sin salida) */
+    $sqlAntepuerto = $sqlTotal . " AND p.departure_date IS NULL";
+
+    $stmt = $this->db->prepare($sqlTotal);
     foreach ($params as $k => $v) {
-      $stmtTotal->bindValue($k, $v, PDO::PARAM_STR);
+      $stmt->bindValue($k, $v);
     }
-    $stmtTotal->execute();
-    $totalArrivado = (int) $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
+    $stmt->execute();
+    $totalArrivado = (int) $stmt->fetchColumn();
 
-    /* Total antepuerto */
-    $stmtAntepuerto = $this->db->prepare($queryAntepuerto);
+    $stmt = $this->db->prepare($sqlAntepuerto);
     foreach ($params as $k => $v) {
-      $stmtAntepuerto->bindValue($k, $v, PDO::PARAM_STR);
+      $stmt->bindValue($k, $v);
     }
-    $stmtAntepuerto->execute();
-    $totalAntepuerto = (int) $stmtAntepuerto->fetch(PDO::FETCH_ASSOC)['total'];
+    $stmt->execute();
+    $totalAntepuerto = (int) $stmt->fetchColumn();
 
-    $totalDespachado = $totalArrivado - $totalAntepuerto;
-
-    return number_format($totalDespachado, 0, ',', '.');
+    return number_format($totalArrivado - $totalAntepuerto, 0, ',', '.');
   }
 
   public function findByUser($run)
@@ -735,7 +726,7 @@ class outerPort extends iQuery
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
     $thead .= "<th>Patente</th>";
-    $thead .= "<th>Guía</th>";
+    $thead .= "<th>Guía(s)</th>";
     $thead .= "<th>Contenedor</th>";
     $thead .= "<th>Sello</th>";
     $thead .= "<th>Exportador</th>";
@@ -1094,7 +1085,7 @@ class outerPort extends iQuery
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
     $thead .= "<th>Patente</th>";
-    $thead .= "<th>Guía</th>";
+    $thead .= "<th>Guía(s)</th>";
     $thead .= "<th>Exportador</th>";
     $thead .= "<th>Pallets</th>";
     $thead .= "<th>Teléfono</th>";
@@ -1435,7 +1426,7 @@ class outerPort extends iQuery
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
     $thead .= "<th>Patente</th>";
-    $thead .= "<th>Guía</th>";
+    $thead .= "<th>Guía(s)</th>";
     $thead .= "<th>Exportador</th>";
     $thead .= "<th>Pallets</th>";
     $thead .= "<th>Entrada</th>";

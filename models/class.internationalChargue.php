@@ -231,7 +231,7 @@ class internationalChargue extends iQuery
     $thead .= "<th>Posición</th>";
     $thead .= "<th>Nave</th>";
     $thead .= "<th>Patente</th>";
-    $thead .= "<th>Guía</th>";
+    $thead .= "<th>Guía(s)</th>";
     $thead .= "<th>Contenedor</th>";
     $thead .= "<th>Sello</th>";
     $thead .= "<th>Exportador</th>";

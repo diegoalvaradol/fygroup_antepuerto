@@ -9,6 +9,7 @@ $infoCfg       = json_decode($cfg->getInfo(1), true);
 $admin         = $user->isAdmin($_SESSION["user"]["run"]);
 $releasedTime  = new DateTime($infoCfg['released_date']);
 $updateTime    = new DateTime($infoCfg['update_date']);
+$arrayDivision = get::getDivisionName();
 $sideBarSSL    = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
 $footer        = menu::footerSSL();
@@ -96,42 +97,144 @@ $top           = UIComponents::scrollToTopButton();
     <?php echo $top; ?>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="logoutModalLabel">¿Deseas cerrar sesión?</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+              <span>×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de ajustes-->
+    <div class="modal fade" id="goalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Deseas cerrar sesión?</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
-                <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" href="logout.php"><i class='fas fa-solid fa-sign-out-alt'></i> Cerrar sesión</a>
+                <div class="modal-body">
+                    <form id="addGoalForm">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                            <label id="label-stay" style="color:darkorange;"></label>
+                            <label>Capacidad:</label>
+                            <input type="text" class="form-control form-control-user" id="goals" name="goals" value="<?php echo $infoCfg['goals']; ?>">
+                            </div>
+                        </div>
+
+                        <button type="button" name="savenewgoals" class="btn btn-success btn-user btn-sm" onclick="saveNewGoals()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Info System Modal-->
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal del perfil de usuario-->
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Acerca del Sistema</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . '.'; ?></h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
+                <div class="row justify-content-center">
+                    <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION["user"]["division"]]; ?></h6>
+                </div>
                 <div class="modal-body">
-                    <small><b>Nombre: </b><?php echo $infoCfg['name']; ?></small>
-                    <br>
-                    <small><b>Versión: </b><?php echo $infoCfg['version']; ?></small>
-                    <br>
-                    <small><b>Compilación: </b><?php echo $infoCfg['compilation']; ?></small>
-                    <br>
-                    <small><b>Lanzamiento: </b><?php echo $releasedTime->format('d-m-Y H:i'); ?></small>
-                    <br>
-                    <small><b>Últ. Actualización: </b><?php echo $updateTime->format('d-m-Y H:i'); ?></small>
+                    <form id="editUserInfoForm">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-info" role="alert" style="font-size:85%;"> <i class="fa-solid fa-circle-info"></i> ¡Para guardar los cambios deberás ingresar tu contraseña actual!</div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label>RUN:</label>
+                                <input type="text" class="form-control form-control-user" disabled value="<?php echo $_SESSION["user"]["run"]; ?>">
+                                <label>Nombre:</label>
+                                <input type="text" class="form-control form-control-user" id="name" name="name" value="<?php echo $_SESSION["user"]["name"]; ?>">
+                                <label>Apellido:</label>
+                                <input type="text" class="form-control form-control-user" id="lastname" name="lastname" value="<?php echo $_SESSION["user"]["last_name"]; ?>">
+                                <label>Correo:</label>
+                                <input type="email" class="form-control form-control-user" id="email" name="email" value="<?php echo $_SESSION["user"]["email"]; ?>">
+                                <label>Contraseña:</label>
+                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual">
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="run" name="run" value="<?php echo $_SESSION["user"]["run"]; ?>">
+                        <input type="hidden" id="division" name="division" value="<?php echo $_SESSION["user"]["division"]; ?>">
+                        <button type="button" name="saveinfouser" class="btn btn-success btn-user btn-sm" onclick="saveInfoUser()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal licencia del software-->
+    <div class="modal fade" id="licenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container mt-4 p-3 border rounded" style="background-color: #f9f9f9;">
+                        <h3 class="text-center">Licencia de Uso de Software</h3>
+                        <p><strong>Nombre del Software: </strong><?php echo $infoCfg['name']; ?></p>
+                        <p><strong>Compilación: </strong><?php echo $infoCfg['compilation']; ?></p>
+                        <p><strong>Versión: </strong><?php echo $infoCfg['version']; ?></p>
+                        <p><strong>Titular de los derechos: </strong><?php echo $infoCfg['author']; ?></p>
+                        <p><strong>Fecha de Lanzamiento: </strong><?php echo $releasedTime->format('d-m-Y H:i'); ?></p>
+                        <p><strong>Últ. Actualización: </strong><?php echo $updateTime->format('d-m-Y H:i'); ?></p>
+
+                        <h5>1. OBJETO DE LA LICENCIA</h5>
+                        <p>Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos.</p>
+
+                        <h5>2. CONCESIÓN DE LICENCIA</h5>
+                        <p>El titular concede al usuario una licencia de uso no exclusiva, intransferible y revocable, para ejecutar, probar y operar el software con fines internos. El software no puede ser redistribuido ni modificado sin autorización expresa por escrito del titular.</p>
+
+                        <h5>3. DERECHOS RESERVADOS</h5>
+                        <p>Todos los derechos no expresamente concedidos en esta licencia son reservados por el titular. El código fuente, diseño y estructura de base de datos son propiedad intelectual protegida.</p>
+
+                        <h5>4. RESTRICCIONES</h5>
+                        El usuario se compromete a:
+                        <ul>
+                            <li>No copiar, modificar ni distribuir el software.</li>
+                            <li>No revender ni sublicenciar el software.</li>
+                            <li>No modificar o crear obras derivadas del software.</li>
+                            <li>No usar el software en productos o servicios comerciales sin licencia extendida.</li>
+                            <li>No realizar ingeniería inversa sobre el código fuente o la base de datos.</li>
+                            <li>No usarlo en servicios que compitan con el titular.</li>
+                        </ul>
+
+                        <h5>5. PROPIEDAD INTELECTUAL</h5>
+                        <p>Todo el contenido del software es propiedad exclusiva de <?php echo $infoCfg['author']; ?> y está protegido por las leyes de propiedad intelectual.</p>
+
+                        <h5>6. LIMITACIÓN DE GARANTÍA</h5>
+                        <p>El software se entrega "tal cual", sin garantías. El titular no se responsabiliza por daños derivados de su uso.</p>
+
+                        <h5>7. TERMINACIÓN</h5>
+                        <p>El incumplimiento de cualquiera de los términos de esta licencia resultará en su terminación inmediata, debiendo el usuario cesar el uso del software y eliminar todas sus copias.</p>
+
+                        <h5>8. LEGISLACIÓN APLICABLE</h5>
+                        <p>Esta licencia se regirá por las leyes de Chile. Cualquier conflicto será sometido a los tribunales competentes del país.</p>
+
+                        <p class="mt-4"><strong>Firmado: </strong><br><?php echo $infoCfg['author']; ?></p>
+                    </div>
                 </div>
             </div>
         </div>

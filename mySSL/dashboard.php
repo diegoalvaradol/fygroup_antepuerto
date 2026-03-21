@@ -381,7 +381,7 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
     </div>
 
     <!-- Modal licencia del software-->
-    <div class="modal fade" id="licenceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="licenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

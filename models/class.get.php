@@ -87,6 +87,21 @@ class get
   }
 
   /**
+   * Method arrayShifts //Array de turnos portuarios
+   *
+   * @return void
+   */
+  public static function arrayShiftsFamesa()
+  {
+    $arrayShifts = [
+      '08:00 - 20:00' => '1° Turno',
+      '20:00 - 08:00' => '2° Turno'
+    ];
+
+    return $arrayShifts;
+  }
+
+  /**
    * Method arrayTypeSchedule //Array de turnos portuarios
    *
    * @return void

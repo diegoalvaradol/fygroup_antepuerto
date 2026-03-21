@@ -84,7 +84,7 @@ class user extends iQuery
       return false;
     }
 
-    $query = "SELECT run, name, last_name, password, division, is_active FROM $this->table WHERE run = :run AND division = :division AND is_active = 1 LIMIT 1";
+    $query = "SELECT run, name, last_name, email, password, division, is_active FROM $this->table WHERE run = :run AND division = :division AND is_active = 1 LIMIT 1";
 
     $stmt = $this->db->prepare($query);
     $stmt->bindParam(":run", $this->run, PDO::PARAM_STR);
@@ -173,6 +173,35 @@ class user extends iQuery
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return $result && (int) $result['is_admin_edit'] === 1;
+  }
+
+  public function avatarIniciales($nombre, $size = 40)
+  {
+    $partes    = explode(" ", trim($nombre));
+    $iniciales = "";
+
+    foreach ($partes as $p) {
+      $iniciales .= strtoupper(substr($p, 0, 1));
+      if (strlen($iniciales) == 2) {
+        break;
+      }
+    }
+
+    /* Color según nombre */
+    $hash = md5($nombre);
+    $r    = hexdec(substr($hash, 0, 2));
+    $g    = hexdec(substr($hash, 2, 2));
+    $b    = hexdec(substr($hash, 4, 2));
+
+    $color = "rgb($r,$g,$b)";
+
+    $img = '
+    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-semibold me-2"
+      style="width:' . $size . 'px; height:' . $size . 'px; background:' . $color . '; font-size:' . ($size * 0.45) . 'px;">
+      ' . $iniciales . '
+    </div>';
+
+    return $img;
   }
 
 }

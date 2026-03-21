@@ -4,6 +4,7 @@ require_once __DIR__ . '/../config/includes.php';
 
 $cfg  = new cfg();
 $user = new user();
+$port = new outerPort();
 
 $infoCfg       = json_decode($cfg->getInfo(1), true);
 $admin         = $user->isAdmin($_SESSION["user"]["run"]);
@@ -14,9 +15,17 @@ $sideBarSSL    = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
 $footer        = menu::footerSSL();
 $top           = UIComponents::scrollToTopButton();
+
+/* Validar superadmin */
+if (!$admin) {
+  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
+  $pag     = basename(__FILE__);
+  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+  mostrarAccesoDenegado($usuario, $pag, $url);
+}
 ?>
 
-<!-- JAVASCRIPT -->
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -27,7 +36,7 @@ $top           = UIComponents::scrollToTopButton();
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Planificación TPC</title>
+    <title>SSL | Reporte de Turnos</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,25 +45,10 @@ $top           = UIComponents::scrollToTopButton();
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <style>
-        iframe {
-            width: 100%;
-            height: 90vh;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            display: none;
-        }
-
-        .errorLabel {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
-    </style>
+		<!-- Flatpickr para controlar input de fecha-->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 </head>
 
 <body id="page-top">
@@ -74,58 +68,68 @@ $top           = UIComponents::scrollToTopButton();
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Planificación Naviera Terminal Puerto Coquimbo (TPC)</h1>
-                    <p class="mb-4">Acá podrás consultar la planificación naviera actual y fechas pasadas del terminal.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Reporte Turnos Famesa</h1>
+                    <p class="mb-4">Acá puedes visualizar la carga movilizada por cada turno.</p>
 
                     <!-- Content Row -->
                     <div class="row">
                         <!-- First Column -->
-                        <div class="col-lg-12">
+                        <div class="col-lg">
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Formulario de Consulta</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Reporte Turnos Famesa</h6>
                                 </div>
 
                                 <div class="card-body">
-                                    <form class="form-container" id="programForm">
+																		<form class="form-container" id="shiftsReportForm">
 																				<div class="form-group d-flex flex-wrap align-items-end justify-content-center">
-                                            <div class="col-12 col-md-auto me-md-4 mb-3">
-																								<label for="dateFrom" class="text-gray-800 font-weight-bold">Fecha</label>
-																								<input type="date" class="form-control form-control-user" id="datePicker" name="datePicker">
+																						<div class="col-12 col-md-auto me-md-4 mb-3">
+																								<label for="dateForm" class="text-gray-800 font-weight-bold">Fecha</label>
+																								<input type="text" class="form-control form-control-user" id="dateForm" name="dateForm">
+																								<small class="text-danger" id="error-dateForm"></small>
 																						</div>
 
-																						<div class="col-12 col-md-auto mb-3">
-																								<button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadPDF()">
+																						<div class="col-12 col-md-auto me-md-4 mb-3">
+																								<label for="shifts" class="text-gray-800 font-weight-bold">Turno</label>
+																								<select class="form-control select2 form-control-user" id="shifts" name="shifts">
+																										<option value="-">Seleccione un turno...</option>
+																										<?php foreach ((object) get::arrayShiftsFamesa() as $k => $v): ?>
+																												<option value="<?= $k ?>"><?= $v ?></option>
+																										<?php endforeach; ?>
+																								</select>
+																								<small class="text-danger" id="error-shifts"></small>
+																						</div>
+
+																						<div class="col-12 col-md-auto me-md-4 mb-3">
+																								<button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReportFamesa()">
 																										<i class="fas fa-solid fa-search"></i> Buscar
+																								</button>
+
+																								<button type="button" class="btn btn-success btn-user" id="btnPrintShiftsReportFamesa" onclick="printShiftsReportFamesa()" disabled>
+																										<i class="fas fa-solid fa-print"></i> Imprimir
 																								</button>
 																						</div>
 																				</div>
 																		</form>
 
-                                    <div class="card-body" id="divFrame">
-                                        <!-- Div de contenido Dinamico -->
-                                        <h6 class="m-0 font-weight-bold text-primary" id="tituloPlanificacion" style="text-align:center;"></h6>
-                                        <hr>
+																		<!-- Div de contenido Dinamico -->
+																		<div class="d-flex justify-content-center mt-3">
+																				<div class="card border-left-primary shadow-sm" style="max-width:300px; display:none;" id="shiftCardMini">
+																						<div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
+																								<span class="small"><b>Información:</b></span>
+																								&nbsp;
+																								<span class="badge badge-primary" id="shiftTextMini"></span>
+																						</div>
+																				</div>
+																		</div>
+																		</br>
 
-                                        <!-- Frame del PDF -->
-                                        <iframe id="framePdf" src="" frameborder="0"></iframe>
-
-                                        <!-- Mensaje de Error -->
-                                        <div id="errorMessage" class="errorLabel" style="display:none;">
-                                            🚫 No se encontró la planificación naviera para la fecha seleccionada. <br>
-                                            Por favor, intenta con otra fecha o vuelve más tarde.
-                                        </div>
-                                    </div>
-
-                                    <div class="text-center">
-                                        <img src="../images/logo-tpc-transparente.png" style="width:10%;">
-                                        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center; font-size:small;">Powered by TPC.</h6>
-                                    </div>
+																		<!-- Tabla Reporte de Turnos -->
+																		<div id="shiftsDiv"></div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -310,6 +314,8 @@ $top           = UIComponents::scrollToTopButton();
 
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 </body>
 </html>
 
@@ -374,88 +380,123 @@ window.onload = function () {
   inactivityTime();
 };
 
-/* Condiciona a que solo pueda mostrar la fecha de hoy como maximo */
-const today = new Date().toLocaleString("en-CA", { timeZone: "America/Santiago", year: "numeric", month: "2-digit", day: "2-digit" });
-document.getElementById('datePicker').setAttribute('max', today);
+function loadShiftsReportFamesa() {
+  const $btn = $('#btnBuscar');
+  const $div = $('#shiftsDiv');
+  const date = $('#dateForm').val();
+  const shifts = $('#shifts').val();
+	const textShifts = $('#shifts option:selected').text();
 
-function formatDateFromInput(dateString) {
-  const [year, month, day] = dateString.split("-");
-  return `${day}-${month}-${year}`;
-}
+	/* Separar los componentes */
+	const [day, month, year] = date.split('-').map(Number);
 
-function formatDateUrl(dateString) {
-  const [year, month] = dateString.split("-");
-  return `${year}/${month}`;
-}
+	/* Crear la fecha como local, no UTC */
+	const dateTitle = new Date(day, month - 1, year); /* mes va de 0 a 11 */
 
-function loadPDF() {
-  var dateString = $('#datePicker').val();
+	/* Obtener día de la semana en español */
+	const dateName = dateTitle.toLocaleDateString('es-CL', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Santiago'});
 
-  if(dateString == ''){
+  if (!date || shifts === '-' || !shifts) {
     Swal.fire({
-      title: '¡Atención!',
-      text: 'Debes ingresar una fecha para consultar la planificación naviera.',
-      icon: 'info',
-      cancelButtonColor: '#d33',
+      title: 'Datos incompletos',
+      text: 'Debe seleccionar fecha y turno.',
+      icon: 'warning'
     });
-  }else{
-    /* Separar los componentes */
-    const [day, month, year] = dateString.split('-').map(Number);
-
-    /* Crear la fecha como local, no UTC */
-    const date = new Date(day, month - 1, year); /* mes va de 0 a 11 */
-
-    /* Obtener día de la semana en español */
-    const dateName = date.toLocaleDateString('es-CL', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Santiago'});
-
-    const formattedDate = formatDateFromInput(dateString);
-    const formattedDateUrl = formatDateUrl(dateString);
-    const framePdf = document.getElementById('framePdf');
-    const pdfUrl = `https://tpc.cl/wp-content/uploads/${formattedDateUrl}/Planificacion-Naviera-${formattedDate}.pdf`;
-
-    $.ajax({
-      url: '../controllers/programTPCVerify.php',
-      method: 'GET',
-      data: {
-        url: pdfUrl
-      },
-      beforeSend: function() {
-        $('#btnBuscar').prop('disabled', true).html('<i class="fas fa-solid fa-spinner fa-spin"></i> Cargando...');
-      },
-      success: function(response) {
-        const res = JSON.parse(response);
-
-        if (res.exists) {
-          $('#divFrame').fadeIn(); /* Muestra el div del framec con animación */
-          $('#divFrame').slideDown(); /* Muestra el div del framec con animación hacia abajo */
-          document.getElementById('framePdf').src = pdfUrl; /* Carga el frame */
-          framePdf.style.display = 'block'; /* Muestra el frame en la vista */
-          document.getElementById('tituloPlanificacion').innerHTML = `Planificación Naviera: ${dateName}`;
-        } else {
-          Swal.fire({
-            title: 'Oops...',
-            text: 'No se encontró una planificación naviera para la fecha: '+formattedDate+'.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          });
-        }
-      },
-      error: function() {
-        alert('Error verificando el PDF.');
-      },
-      complete: function() {
-        $('#btnBuscar').prop('disabled', false).html('<i class="fas fa-solid fa-search"></i> Buscar');
-      }
-    });
+    return;
   }
+
+  $.ajax({
+    url: '../controllers/famesaShiftsReportController.php',
+    type: 'POST',
+    dataType: 'html',
+    data: { date, shifts },
+
+    beforeSend() {
+      $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+    },
+
+    success(response) {
+      const clean = response.trim();
+
+      if (clean.length > 0) {
+        $div.html(clean).fadeIn();
+
+				$('#shiftTextMini').html(`Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css("font-size", "smaller");
+				$('#shiftCardMini').fadeIn(150);
+				$('#btnPrintShiftsReportFamesa').prop('disabled', false);
+      } else {
+        $div.hide().empty();
+				$('#shiftCardMini').fadeOut(150);
+				$('#btnPrintShiftsReportFamesa').prop('disabled', true);
+
+        Swal.fire({
+          title: 'Sin resultados',
+          text: 'No se encontró planificación para los filtros seleccionados.',
+          icon: 'info'
+        });
+      }
+    },
+
+    error(xhr) {
+      console.error(xhr.responseText);
+			$('#btnPrintShiftsReportFamesa').prop('disabled', true);
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al consultar la información.',
+        icon: 'error'
+      });
+    },
+
+    complete() {
+      $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
+    }
+  });
 }
 
-/* Escuchar el submit del formulario */
-document.getElementById('programForm').addEventListener('submit', function(e) {
-  e.preventDefault(); // No recargar página
-  const selectedDateStr = document.getElementById('datePicker').value;
-  loadPDF(selectedDateStr);
-});
+let fpInstance = null;
+
+function loadDatePicker() {
+	fetch('../controllers/famesaDateWhithMovs.php').then(res => res.json()).then(data => {
+		const fechasValidas = Array.isArray(data) ? data : [];
+
+		if (fpInstance) {
+			fpInstance.destroy();
+		}
+
+		fpInstance = flatpickr("#dateForm", {
+			dateFormat: "Y-m-d",
+			enable: fechasValidas,
+
+			locale: {
+				...flatpickr.l10ns.es,
+				firstDayOfWeek: 1
+			},
+
+			onDayCreate: function (dObj, dStr, fp, dayElem) {
+				const fecha = dayElem.dateObj.toLocaleDateString('en-CA');
+
+				if (fechasValidas.includes(fecha)) {
+					dayElem.style.background = "#28a745";
+					dayElem.style.color = "#fff";
+					dayElem.style.borderRadius = "50%";
+				}
+			}
+		});
+	})
+	.catch(err => console.error(err));
+}
+
+document.addEventListener("DOMContentLoaded", loadDatePicker);
+
+var printShiftsReportFamesa = function () {
+  const contenido = document.getElementById('shiftsDiv').innerHTML;
+  if (!contenido.trim()) return;
+  const ventana = window.open('', '', 'width=1200,height=800');
+  ventana.document.write(contenido);
+  ventana.document.close();
+  ventana.focus();
+  ventana.print();
+}
 
 function actualizarReloj() {
   const ahora = new Date();
@@ -489,5 +530,4 @@ function actualizarReloj() {
 }
 setInterval(actualizarReloj, 1000);
 actualizarReloj(); /* Primera llamada */
-$('#divFrame').hide(); /* Oculta el div del frame al carga la pagina */
 </script>

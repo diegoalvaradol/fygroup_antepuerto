@@ -25,7 +25,7 @@ class ship extends iQuery
 
   public function save()
   {
-    $query = "INSERT INTO  $this->table (vessel_name, ship_line, voyage, pol, pod, eta, etd, finished, created, last_update) VALUES (:vessel, :shipline, :voyage, :pol, :pod, :eta, :etd, :finished, :created, :lastupdate)";
+    $query = "INSERT INTO $this->table (vessel_name, ship_line, voyage, pol, pod, eta, etd, finished, created, last_update) VALUES (:vessel, :shipline, :voyage, :pol, :pod, :eta, :etd, :finished, :created, :lastupdate)";
     $stmt  = $this->db->prepare($query);
 
     $this->vessel     = htmlspecialchars(strip_tags($this->vessel));

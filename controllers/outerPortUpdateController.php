@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $outerPort->origin        = $_POST["originId"];
   $outerPort->departuredate = $dateOut ? $dateOut->format('Y-m-d H:i:s') : null;
 
-  if ($outerPort->update()) {
+  if ($outerPort->updateDepartureDate()) {
     echo "OK";
   } else {
     echo "NOOK";

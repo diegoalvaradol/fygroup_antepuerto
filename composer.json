@@ -1,7 +1,7 @@
 {
     "require": {
       "php": "^7.4",
-      "phpoffice/phpspreadsheet": "^1.21",
+      "phpoffice/phpspreadsheet": "^1.30",
       "php-webdriver/webdriver": "^1.11",
       "symfony/process": "^5.4",
       "psr/simple-cache": "^1.0",

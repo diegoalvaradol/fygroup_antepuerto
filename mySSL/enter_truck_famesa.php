@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
-$port = new outerPort();
-$cfg  = new cfg();
-$user = new user();
+$famesa = new famesa();
+$cfg    = new cfg();
+$user   = new user();
 
 $infoCfg       = json_decode($cfg->getInfo(1), true);
 $admin         = $user->isAdmin($_SESSION["user"]["run"]);
@@ -57,7 +57,7 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Termos</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Ingreso Camiones Famesa</h1>
 
                     <div class="col-sm-12">
                       <div class="alert alert-info" role="alert"><i class="fa-solid fa-circle-info"></i>
@@ -76,7 +76,7 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                 </div>
 
                                 <div class="card-body">
-                                        <form class="form-container" id="inTermoForm">
+                                        <form class="form-container" id="inTruckForm">
                                             <div class="form-inline mb-3">
                                                 <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
                                                 <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
@@ -102,82 +102,62 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label for="carplate" class="text-gray-800 font-weight-bold">Patente</label>
-                                                    <select class="form-control select2 form-control-user" id="carplate" name="carplate">
+                                                    <label for="carplatetruck" class="text-gray-800 font-weight-bold">Patente Camión</label>
+                                                    <select class="form-control select2 form-control-user" id="carplatetruck" name="carplatetruck">
                                                         <option value="-">Seleccione una patente...</option>
                                                     </select>
-                                                    <small class="text-danger" id="error-carplate"></small>
+                                                    <small class="text-danger" id="error-carplatetruck"></small>
                                                 </div>
 
+
+                                                <div class="col-sm-6">
+                                                    <label for="carplateramp" class="text-gray-800 font-weight-bold">Patente Rampla</label>
+                                                    <select class="form-control select2 form-control-user" id="carplateramp" name="carplateramp">
+                                                        <option value="-">Seleccione una patente...</option>
+                                                    </select>
+                                                    <small class="text-danger" id="error-carplateramp"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <label for="guidenumber" class="text-gray-800 font-weight-bold">N° de Guía</label>
                                                     <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía (Ej: 123 ó 123, 456)">
                                                     <small class="text-danger" id="error-guidenumber"></small>
                                                 </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label for="exporter" class="text-gray-800 font-weight-bold">Exportador</label>
-                                                    <select class="form-control select2 form-control-user" id="exporter" name="exporter">
-                                                        <option value="-">Seleccione un exportador...</option>
-                                                    </select>
-                                                    <small class="text-danger" id="error-exporter"></small>
-                                                </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for="palletsquantity" class="text-gray-800 font-weight-bold">Pallets</label>
-                                                    <input type="number" class="form-control form-control-user" id="palletsquantity" name="palletsquantity" min="0" max="30" step="1" oninput="validarMaximo(this)" value="20" placeholder="N° de Pallets">
-                                                    <small class="text-danger" id="error-palletsquantity"></small>
+                                                    <label for="maxibagsquantity" class="text-gray-800 font-weight-bold">MaxiBags</label>
+                                                    <input type="number" class="form-control form-control-user" id="maxibagsquantity" name="maxibagsquantity" min="0" max="40" step="1" oninput="validarMaximo(this)" value="20" placeholder="N° de MaxiBags">
+                                                    <small class="text-danger" id="error-maxibagsquantity"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label for="cellphonedriver" class="text-gray-800 font-weight-bold">N° de Teléfono</label>
-                                                    <div class="input-group">
-                                                      <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="inputGroup-sizing-default"><img src="https://flagcdn.com/w20/cl.png" alt="Chile" style="width:20px; height:auto; margin-right:5px;">+56</span>
-                                                      </div>
-                                                      <input type="tel" class="form-control form-control-user" id="cellphonedriver" name="cellphonedriver" maxlength="9" pattern="\d{9}" oninput="limitarTelefono(this)" placeholder="9 XXXX XXXX">
+                                                    <label class="text-gray-800 font-weight-bold">Categoría</label>
+
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="category" id="cat1" value="1">
+                                                        <label class="form-check-label" for="cat1">Cat. 1</label>
                                                     </div>
 
-                                                    <small class="text-danger" id="error-cellphonedriver"></small>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="category" id="cat2" value="2">
+                                                        <label class="form-check-label" for="cat2">Cat. 2</label>
+                                                    </div>
+
+                                                    <small class="text-danger" id="error-category"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for="datein" class="text-gray-800 font-weight-bold">Fecha y Hora de Entrada</label>
-                                                    <input type="datetime-local" class="form-control form-control-user" id="datein" name="datein">
-                                                    <small class="text-danger" id="error-datein"></small>
+                                                    <label for="dateinport" class="text-gray-800 font-weight-bold">Fecha y Hora de Entrada Puerto</label>
+                                                    <input type="datetime-local" class="form-control form-control-user" id="dateinport" name="dateinport">
+                                                    <small class="text-danger" id="error-dateinport"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label for="comodity" class="text-gray-800 font-weight-bold">Condicíon</label>
-                                                    <select class="form-control select2 form-control-user" id="comodity" name="comodity">
-                                                        <option value="-" selected>Seleccione una condición...</option>
-                                                        <option value="No Fumigado">No Fumigado</option>
-                                                        <option value="USDA">USDA</option>
-                                                        <option value="System Approach">System Approach</option>
-                                                    </select>
-                                                    <small class="text-danger" id="error-comodity"></small>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <label for="booking" class="text-gray-800 font-weight-bold">Reserva (Booking)</label>
-                                                    <input type="text" class="form-control form-control-user" id="booking" name="booking" placeholder="N° de Booking">
-                                                    <small class="text-danger" id="error-booking"></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label for="stay" class="text-gray-800 font-weight-bold">Estadía</label>
-                                                    <input type="text" class="form-control form-control-user" id="stay" name="stay" placeholder="Estadía">
-                                                    <small class="text-danger" id="error-stay"></small>
-                                                </div>
-
                                                 <div class="col-sm-6">
                                                    <label for="observations" class="text-gray-800 font-weight-bold">Observaciones</label>
                                                     <input type="text" class="form-control form-control-user" id="observations" name="observations" placeholder="Observaciones">
@@ -185,12 +165,11 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                 </div>
                                             </div>
 
-                                            <input type="hidden" id="origin" name="origin" value="2">
-                                            <input type="hidden" id="cntId" name="cntId" value="0">
+                                            <input type="hidden" id="truckId" name="truckId" value="0">
                                             <input type="hidden" id="isUpdate" name="isUpdate" value="0">
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION["user"]["run"]; ?>">
                                             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-                                            <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTermo()">
+                                            <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTruck()">
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
@@ -202,7 +181,7 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     </div>
 
                     <!-- Listado de Termos -->
-                    <?php echo $port->getTableThermo(); ?>
+                    <?php echo $famesa->getTableTrucksFamesa(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>
@@ -363,27 +342,73 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         </div>
     </div>
 
-    <!-- Modal Añadir hora de salida del camión termo -->
-    <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="addHourTermoModal" style="display:none; position:fixed; width:30%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-        <h4 id="h4-departure-hour"></h4>
-        <form id="addHourTermoForm">
-            <div class="form-group row">
-                <div class="col-sm-12">
-                  <label id="label-stay" style="color:darkorange;"></label>
-                  </br>
-                  <label>Hora de salida:</label>
-                  <input type="datetime-local" class="form-control form-control-user" id="dateout" name="dateout">
-                  <small class="text-danger" id="error-dateout"></small>
-                </div>
-            </div>
+    <!-- SALIDA PUERTO -->
+    <div id="modalAddHourDeparturePort" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
+    <div id="addHourDeparturePort" class="modal-box" style="display:none; position:fixed; width:30%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+      <h4 id="h4-departure-hour-port"></h4>
+      <h6 id="h6-carplates-departure-port"></h6>
 
-            <input type="hidden" id="rowId" name="rowId">
-            <input type="hidden" id="originId" name="originId">
-            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
-            <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
-        </form>
+      <form id="formDeparturePort">
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label id="label-stay-departure-port"></label><br>
+            <label>Hora salida:</label>
+            <input type="datetime-local" name="departure_date_port" class="form-control">
+            <small class="text-danger" id="error-departure_date_port"></small>
+          </div>
+        </div>
+
+        <input type="hidden" name="id">
+        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formDeparturePort')"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
+      </form>
+    </div>
+
+    <!-- ENTRADA DEPÓSITO -->
+    <div id="modalAddHourArrivalDeposit" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
+    <div id="addHourArrivalDeposit" class="modal-box" style="display:none; position:fixed; width:30%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+      <h4 id="h4-arrival-hour-deposit"></h4>
+      <h6 id="h6-carplates-arrival-deposit"></h6>
+
+      <form id="formArrivalDepot">
+         <div class="form-group row">
+            <div class="col-sm-12">
+              <label id="label-stay-arrival-deposit"></label><br>
+              <label>Hora entrada:</label>
+              <input type="datetime-local" name="arrival_date_deposit" class="form-control">
+              <small class="text-danger" id="error-arrival_date_deposit"></small>
+            </div>
+        </div>
+
+        <input type="hidden" name="id">
+        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formArrivalDepot')"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
+      </form>
+    </div>
+
+    <!-- SALIDA DEPÓSITO -->
+    <div id="modalAddHourDepartureDeposit" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
+    <div id="addHourDepartureDeposit" class="modal-box" style="display:none; position:fixed; width:30%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+      <h4 id="h4-departure-hour-deposit"></h4>
+      <h6 id="h6-carplates-departure-deposit"></h6>
+
+      <form id="formDepartureDepot">
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label id="label-stay-departure-deposit"></label><br>
+            <label>Hora salida:</label>
+            <input type="datetime-local" name="departure_date_deposit" class="form-control">
+            <small class="text-danger" id="error-departure_date_deposit"></small>
+          </div>
+        </div>
+
+        <input type="hidden" name="id">
+        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formDepartureDepot')"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
+      </form>
     </div>
 
     <!-- SweetAlert2 CDN -->
@@ -509,56 +534,80 @@ function actualizarReloj() {
     </div>
   `;
 }
-var editTermoHour = function(id) {
-  $.ajax({
-    url: '../controllers/outerPortEditController.php',
-     type: 'POST',
-     data: { id: id },
-     dataType: 'json',
-     success: function(data) {
-      const fechaIngreso = new Date(data.arrival_date); /* Reemplaza con la fecha y hora reales */
-      const ahora = new Date();
-      const msDiff = ahora - fechaIngreso;
-      const totalMinutos = Math.floor(msDiff / (1000 * 60));
-      const dias = Math.floor(totalMinutos / (60 * 24));
-      const horas = Math.floor((totalMinutos % (60 * 24)) / 60);
-      const minutos = totalMinutos % 60;
 
-      $('#rowId').val(data.row_id);
-      $('#originId').val(data.origin);
-      $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate);
-      $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`);
-      $('#dateout').val(data.departure_date ? data.departure_date : '');
+function openModalHour(id, type) {
+  $.post('../controllers/famesaTruckEditController.php', { id }, function(data) {
+    let config = {
+      departure_port: {
+        modal: '#modalAddHourDeparturePort',
+        box: '#addHourDeparturePort',
+        title: '#h4-departure-hour-port',
+        plates: '#h6-carplates-departure-port',
+        label: '#label-stay-departure-port',
+        input: '[name="departure_port"]',
+        fecha: data.arrival_date_port,
+        text: 'Registrar Salida Puerto.'
+      },
+      arrival_depot: {
+        modal: '#modalAddHourArrivalDeposit',
+        box: '#addHourArrivalDeposit',
+        title: '#h4-arrival-hour-deposit',
+        plates: '#h6-carplates-arrival-deposit',
+        label: '#label-stay-arrival-deposit',
+        input: '[name="arrival_depot"]',
+        fecha: data.departure_date_port,
+        text: 'Registrar Ingreso Depósito.'
+      },
+      departure_depot: {
+        modal: '#modalAddHourDepartureDeposit',
+        box: '#addHourDepartureDeposit',
+        title: '#h4-departure-hour-deposit',
+        plates: '#h6-carplates-departure-deposit',
+        label: '#label-stay-departure-deposit',
+        input: '[name="departure_depot"]',
+        fecha: data.arrival_date_deposit,
+        text: 'Registrar Salida Depósito.'
+      }
+    };
 
-      /* Mostrar overlay y modal */
-      $('#modalOverlay').fadeIn(200);
-      $('#addHourTermoModal').fadeIn(200);
-    },
-    error: function() {
-      alert('Error al cargar los datos.');
-    }
-  });
+    let c = config[type];
+    if (!c) return;
+
+    // estadía
+    const inicio = new Date(c.fecha);
+    const ahora = new Date();
+    const diff = ahora - inicio;
+    const min = Math.floor(diff / 60000);
+    const d = Math.floor(min / 1440);
+    const h = Math.floor((min % 1440) / 60);
+    const m = min % 60;
+
+    $('[name="id"]').val(data.row_id);
+    $(c.title).text(c.text);
+    $(c.plates).text(`Patentes: ${data.car_plate_truck} | ${data.car_plate_ramp}`);
+    $(c.label).text(`Estadía: ${d}d con ${h}h y ${m}m`);
+    $(c.input).val(c.fecha || '');
+
+    $(c.modal).fadeIn(200);
+    $(c.box).fadeIn(200);
+
+  }, 'json');
 }
 
-var closeModal = function() {
-  $('#addHourTermoModal').fadeOut(200);
-  $('#modalOverlay').fadeOut(200);
-}
-
-var saveChanges = function() {
-  const form = document.getElementById('addHourTermoForm');
+function saveChanges(formId) {
+  const form = document.querySelector(formId);
   const formData = new FormData(form);
   let hasError = false;
-  var paginaActual = $('input[name="page"]').val();
+  let paginaActual = $(form).find('input[name="page"]').val();
 
-  document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
-  document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
+  // limpiar errores
+  $(form).find('small.text-danger').text('');
+  $(form).find('.form-control-user').removeClass('is-invalid');
 
-  /* Validar si algún campo está vacío */
+  // validar campos
   for (let [key, value] of formData.entries()) {
     const inputElement = form.querySelector(`[name="${key}"]`);
     const errorElement = form.querySelector(`#error-${key}`);
-    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
     const isEmpty = value.trim() === '' || value === '-';
 
     if (isEmpty) {
@@ -572,36 +621,43 @@ var saveChanges = function() {
     }
   }
 
-  /* Hace envio de los datos a traves del formulario */
-  if(!hasError){
+  // enviar
+  if (!hasError) {
     $.ajax({
-      url: '../controllers/outerPortUpdateController.php',
-      data: $('#addHourTermoForm').serialize(),
+      url: '../controllers/famesaUpdateHourTruckController.php',
       type: 'POST',
-    }).done(function(x) {
-      if(x == 'OK'){
+      data: $(form).serialize()
+    }).done(function(res) {
+      let r = {};
+      try { r = JSON.parse(res); } catch(e) {}
+
+      if (r.status === 'ok') {
         Swal.fire({
           title: '¡Éxito!',
-          text: '¡Hora de salida ingresada con éxito!',
+          text: 'Hora guardada correctamente.',
           icon: 'success',
           confirmButtonColor: '#4CAF50'
-        }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+        }).then(() => {
+          window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({
-          title: 'Oops...',
-          text: 'Error al ingresar la hora de salida.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
+          title: 'Error',
+          text: 'No se pudo guardar.',
+          icon: 'error'
         });
       }
     });
   }
 }
 
-var saveInTermo = function() {
-  const form = document.getElementById('inTermoForm');
+function closeModal() {
+  $('.modal-overlay').fadeOut(200);
+  $('.modal-box').fadeOut(200);
+}
+
+var saveInTruck = function() {
+  const form = document.getElementById('inTruckForm');
   const formData = new FormData(form);
   const isUpdate = $('#isUpdate').val();
   let hasError = false;
@@ -657,24 +713,24 @@ var saveInTermo = function() {
     btn.prop('disabled', true);
 
     $.ajax({
-      url: '../controllers/outerPortController.php',
-      data: $('#inTermoForm').serialize(),
+      url: '../controllers/famesaTruckController.php',
+      data: $('#inTruckForm').serialize(),
       type: 'POST',
     }).done(function(x) {
       if(isUpdate == 1){
-        if(x == 'OKUT'){
+        if(x == 'OKU'){
           Swal.fire({
             title: '¡Éxito!',
-            text: '¡Termo actualizado con éxito!',
+            text: '¡Camíon actualizado con éxito!',
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>&page=' + paginaActual;
           });
-        }else if(x == 'NOOKUT') {
+        }else if(x == 'NOOKU') {
           Swal.fire({
             title: 'Oops...',
-            text: 'Error al actualizar el termo.',
+            text: 'Error al actualizar el camión.',
             icon: 'error',
             cancelButtonColor: '#d33',
           }).then(() => {
@@ -684,19 +740,19 @@ var saveInTermo = function() {
           });
         }
       } else {
-        if(x == 'OKT'){
+        if(x == 'OK'){
           Swal.fire({
             title: '¡Éxito!',
-            text: '¡Ingreso de termo registrado exitosamente!',
+            text: '¡Ingreso de camión registrado exitosamente!',
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>&page=' + paginaActual;
           });
-        }else if(x == 'NOOKT') {
+        }else if(x == 'NOOK') {
           Swal.fire({
             title: 'Oops...',
-            text: 'Error al registrar el ingreso del termo.',
+            text: 'Error al registrar el ingreso del camión.',
             icon: 'error',
             cancelButtonColor: '#d33',
           }).then(() => {
@@ -725,7 +781,7 @@ var deleteTruck = function(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
-        url: '../controllers/outerPortDeleteController.php',
+        url: '../controllers/famesaTruckDeleteController.php',
         type: 'POST',
         data: { id: id },
       }).done(function(x) {
@@ -736,7 +792,7 @@ var deleteTruck = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK'){
           Swal.fire({
@@ -748,7 +804,7 @@ var deleteTruck = function(id) {
         }else if(x == 'NOOK2'){
           Swal.fire({
             title: 'Oops...',
-            text: 'El camión que tratas de eliminar tiene una hora de salida registrada.',
+            text: 'El camión que tratas de eliminar tiene una hora de ingreso y/o salida de puerto y/o depósito registrada.',
             icon: 'error',
             cancelButtonColor: '#d33',
           });
@@ -758,20 +814,16 @@ var deleteTruck = function(id) {
   });
 }
 
-var exportExcel = function(nave, condicion, exportador, division, cliente) {
-  var division = '<?php echo $_SESSION["user"]["division"]; ?>';
-  var cliente = '<?php echo $_SESSION["user"]["run"]; ?>';
+var exportExcel = function(nave, patente, guia) {
   const form = document.createElement('form');
   form.method = 'POST';
-  form.action = '../controllers/thermoDownloadExcelController.php';
+  form.action = '../controllers/famesaTruckDownloadExcelController.php';
   form.style.display = 'none';
 
   const fields = {
     nave: nave,
-    condicion: condicion,
-    exportador: exportador,
-    division: division,
-    cliente: cliente
+    patente: patente,
+    guia: guia
   };
 
   for (const key in fields) {
@@ -786,33 +838,30 @@ var exportExcel = function(nave, condicion, exportador, division, cliente) {
   form.submit();
 }
 
-var editThermo = function(id) {
+var editTruck = function(id) {
   $.ajax({
-    url: '../controllers/thermoEditController.php',
+    url: '../controllers/famesaTruckEditController.php',
      type: 'POST',
      data: { id: id },
      dataType: 'json',
      success: function(data) {
       $('#isUpdate').val(1);
-      $('#cntId').val(id);
+      $('#truckId').val(id);
       $('#countervessel').val(data.counter_vessel);
       $('#vessel').empty();
       $('#vessel').append($('<option>', {value: data.vessel_id, text: data.vessel_name + ' (Viaje: ' + data.voyage + ')'}));
       $('#vessel').trigger('change');
-      $('#carplate').empty();
-      $('#carplate').append($('<option>', {value: data.car_plate, text: data.car_plate}));
+      $('#carplatetruck').empty();
+      $('#carplatetruck').append($('<option>', {value: data.car_plate_truck, text: data.car_plate_truck}));
+      $('#carplateramp').empty();
+      $('#carplateramp').append($('<option>', {value: data.car_plate_ramp, text: data.car_plate_ramp}));
       $('#guidenumber').val(data.guide_number);
-      $('#exporter').empty();
-      $('#exporter').append($('<option>', {value: data.exporter, text: data.exporter}));
-      $('#palletsquantity').val(data.pallets_quantity);
-      $('#cellphonedriver').val(data.cellphone_driver);
-      $('#datein').val(data.arrival_date);
-      $('#comodity').val(data.comodity);
-      $('#booking').val(data.booking);
-      $('#stay').val(data.stay);
+      $('#maxibagsquantity').val(data.maxibags_quantity);
+      $('input[name="category"][value="' + data.category + '"]').prop('checked', true);
+      $('#dateinport').val(data.arrival_date_port);
       $('#observations').val(data.observations);
       $('#loadBtn').addClass('btn-info');
-      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Termo');
+      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Camión');
       $('#scrollTopBtn').trigger('click');
     },
     error: function() {
@@ -870,12 +919,12 @@ $(document).ready(function() {
     }
   });
 
-  $('#carplate').select2({
+  $('#carplatetruck').select2({
     allowClear: true,
     tags: true,
     width: '100%',
     ajax: {
-      url: '../controllers/carPlateJsonController.php',
+      url: '../controllers/carPlateTruckJsonController.php',
       method: 'POST',
       dataType: 'json',
       delay: 250,
@@ -893,12 +942,12 @@ $(document).ready(function() {
     }
   });
 
-  $('#exporter').select2({
+  $('#carplateramp').select2({
     allowClear: true,
-    tags: false,
+    tags: true,
     width: '100%',
     ajax: {
-      url: '../controllers/exporterJsonController.php',
+      url: '../controllers/carPlateRampJsonController.php',
       method: 'POST',
       dataType: 'json',
       delay: 250,
@@ -940,9 +989,9 @@ $(document).ready(function() {
 
       if (isUpdate == 0) {
         $.ajax({
-          url: '../controllers/setCounterVesselController.php',
+          url: '../controllers/setCounterVesselFamesaController.php',
           method: 'POST',
-          data: {id: vessel, origin: 2},
+          data: {id: vessel},
           success: function (response) {
             $('#countervessel').val(response);
           },
@@ -986,7 +1035,7 @@ $(document).ready(function() {
     tags: false,
     width: '100%',
     ajax: {
-      url: '../controllers/carPlateJsonController.php',
+      url: '../controllers/carPlateTruckJsonController.php',
       method: 'POST',
       dataType: 'json',
       delay: 250,
