@@ -77,33 +77,33 @@ class menu extends iQuery
         'items' => [
           ['label' => 'Live Position', 'link' => generateMkey('marinetraffic_live_map')]
         ]
-      ],
-      [
-        'title' => 'Maersk',
-        'icon'  => 'fa-ship',
-        'id'    => 'collapseMaersk',
-        'items' => [
-          ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
-          ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
-          ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
-          ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
-          ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')]
-        ]
-      ],
-      [
-        'title' => 'MSC',
-        'icon'  => 'fa-ship',
-        'id'    => 'collapseMedlog',
-        'items' => [
-          ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
-          ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
-          ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')]
-        ]
       ]
     ];
 
     if ($admin) {
       $menus = array_merge($menus, [
+        [
+          'title' => 'Maersk',
+          'icon'  => 'fa-ship',
+          'id'    => 'collapseMaersk',
+          'items' => [
+            ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
+            ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
+            ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
+            ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
+            ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')]
+          ]
+        ],
+        [
+          'title' => 'MSC',
+          'icon'  => 'fa-ship',
+          'id'    => 'collapseMedlog',
+          'items' => [
+            ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
+            ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
+            ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')]
+          ]
+        ],
 
         [
           'title' => 'Reportes',

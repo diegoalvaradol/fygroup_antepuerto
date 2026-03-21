@@ -6,7 +6,6 @@ $cfg  = new cfg();
 $user = new user();
 
 $infoCfg       = json_decode($cfg->getInfo(1), true);
-$admin         = $user->isAdmin($_SESSION["user"]["run"]);
 $releasedTime  = new DateTime($infoCfg['released_date']);
 $updateTime    = new DateTime($infoCfg['update_date']);
 $arrayDivision = get::getDivisionName();
@@ -14,14 +13,6 @@ $sideBarSSL    = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
 $footer        = menu::footerSSL();
 $top           = UIComponents::scrollToTopButton();
-
-/* Validar superadmin */
-if (!$admin) {
-  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
-  $pag     = basename(__FILE__);
-  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-  mostrarAccesoDenegado($usuario, $pag, $url);
-}
 ?>
 
 <!-- HTML -->
