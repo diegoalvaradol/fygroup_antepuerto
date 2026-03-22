@@ -66,8 +66,8 @@ class menu extends iQuery
           ['label' => 'Itinerarios FY', 'link' => generateMkey('program_fygroup')],
           ['label' => 'Itinerarios TPC', 'link' => generateMkey('program_tpc')],
           ['label' => 'Itinerarios EPCO', 'link' => generateMkey('program_epco')],
-          ['label' => 'Itinerarios Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
-          ['label' => 'Itinerarios Global Reefers', 'link' => generateMkey('program_global_reefers')]
+          ['label' => 'Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
+          ['label' => 'Global Reefers', 'link' => generateMkey('program_global_reefers')]
         ]
       ],
       [
@@ -231,6 +231,11 @@ class menu extends iQuery
           width:14px;
           text-align:center;
           margin-right:5px;
+        }
+
+        .sidebar.toggled {
+          overflow: visible;
+          width: 9.5rem!important;
         }
 
         /* formularios, card y tablas */
