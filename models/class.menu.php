@@ -400,7 +400,7 @@ class menu extends iQuery
                 <i class="fas fa-chevron-down arrow text-white"></i>
               </a>
 
-              <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width:200px; padding:0; transform: translateX(-40px);">
+              <ul class="dropdown-menu dropdown-menu-end shadow">
                 <li class="px-3 py-3 text-center border-bottom">
                   <img src="../favicon/apple-touch-icon.png" class="rounded-circle mb-2" width="60">
                   <br>
