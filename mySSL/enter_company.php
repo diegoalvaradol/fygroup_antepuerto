@@ -282,7 +282,7 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         <div class="form-group row">
             <div class="col-sm-12">
               <label>Nombre:</label>
-              <input type="text" class="form-control form-control-user" id="companyName" name="companyName" disabled>
+              <input type="text" class="form-control form-control-user" id="companyName" name="companyName">
             </div>
             <div class="col-sm-3">
               <label>Exportador:</label>

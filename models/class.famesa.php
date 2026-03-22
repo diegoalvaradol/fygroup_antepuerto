@@ -362,19 +362,53 @@ class famesa extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Camiones <em>(Total de Registros: " . $count . ")</em></h6>
+            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+              <h6 class='mb-0'>
+                <i class='fas fa-list'></i> Listado de Cámiones
+                <em>(Total: " . $count . ")</em>
+              </h6>
+
+              <div style='position:relative; max-width:250px; width:100%;'>
+                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                <input type='text' id='searchFamesaTruckTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+              </div>
             </div>
 
-            <div class='table-responsive'>
-              <table class='table table-bordered table-hover' style='width:max-content;'>
-                " . $thead . $tr . $tbclose . "
+            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+              <table id='famesaTruckTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", "", $thead) . "
+                  " . $tr . $tbclose . "
               </table>
             </div>
           </div>
-          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
+
+      <script>
+        document.getElementById('searchFamesaTruckTable').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase().trim();
+          let rows = document.querySelectorAll('#famesaTruckTable tbody tr');
+
+          rows.forEach(row => {
+            let text = (
+              (row.cells[1]?.innerText || '') + ' ' +
+              (row.cells[2]?.innerText || '') + ' ' +
+              (row.cells[3]?.innerText || '') + ' ' +
+              (row.cells[4]?.innerText || '')
+            ).toLowerCase();
+
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              let words = filter.split(' ');
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      </script>
     ";
 
     return $table;

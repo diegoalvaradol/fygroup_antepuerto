@@ -86,9 +86,10 @@ class shipLine extends iQuery
     $stmt  = $this->db->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $count  = 0;
 
-    $thead = "<thead style='background-color:#4e73df; color:white;'>";
+    $count = 0;
+
+    $thead = "<thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>";
     $thead .= "<tr>";
     $thead .= "<th>Id</th>";
     $thead .= "<th>Nombre</th>";
@@ -97,54 +98,76 @@ class shipLine extends iQuery
     $thead .= "<th>Actualizado</th>";
     $thead .= "<th>Acciones</th>";
     $thead .= "</tr>";
-    $thead .= "</thead>";
-    $thead .= "<tbody>";
+    $thead .= "</thead><tbody>";
 
-    $tr = null;
+    $tr = "";
 
     foreach ($result as $data) {
-      $createdTime = new DateTime($data[$this->created]);
-      $updateTime  = new DateTime($data[$this->lastupdate]);
+      $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
+      $updated = (new DateTime($data[$this->lastupdate]))->format('d-m-Y H:i');
 
-      $created    = $createdTime->format('d-m-Y H:i');
-      $lastupdate = $updateTime->format('d-m-Y H:i');
-
-      $btnEdit   = "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editShipLine(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pen'></i> Editar</button>";
-      $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteShipLine(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
+      $btnEdit   = "<button class='btn btn-warning btn-sm' onclick='editShipLine(" . $data[$this->id] . ")'><i class='fas fa-pen'></i> Editar</button>";
+      $btnDelete = "<button class='btn btn-danger btn-sm' onclick='deleteShipLine(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
 
       $tr .= "<tr>";
-      $tr .= "<td >" . $data[$this->id] . "</td>";
-      $tr .= "<td >" . $data[$this->name] . "</td>";
-      $tr .= "<td >" . $data[$this->rut] . "</td>";
-      $tr .= "<td >" . $created . "</td>";
-      $tr .= "<td >" . $lastupdate . "</td>";
-      $tr .= "<td >" . $btnEdit . ' ' . $btnDelete . "</td>";
+      $tr .= "<td>{$data[$this->id]}</td>";
+      $tr .= "<td>{$data[$this->name]}</td>";
+      $tr .= "<td>{$data[$this->rut]}</td>";
+      $tr .= "<td>{$created}</td>";
+      $tr .= "<td>{$updated}</td>";
+      $tr .= "<td>{$btnEdit} {$btnDelete}</td>";
       $tr .= "</tr>";
 
       $count++;
     }
 
-    $tbclose = "</tbody>";
-
     $table = "
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Lineas Navieras <em>(Total de Registros: " . $count . ")</em></h6>
+            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+              <h6 class='mb-0'>
+                <i class='fas fa-ship'></i> Listado de Líneas Navieras
+                <em>(Total: $count)</em>
+              </h6>
+
+              <div style='position:relative; max-width:250px; width:100%;'>
+                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                <input type='text' id='searchTableShipLine' placeholder='Buscar por nombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+              </div>
             </div>
 
-            <div class='table-responsive'>
-              <table class='table table-bordered table-hover' style='width:revert-layer;'>
-                " . $thead . $tr . $tbclose . "
+            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+              <table id='shipLineTable' class='table table-hover mb-0' style='min-width:700px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                $thead
+                $tr
               </table>
             </div>
           </div>
         </div>
       </div>
+
+      <script>
+        document.getElementById('searchTableShipLine').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase().trim();
+          let rows = document.querySelectorAll('#shipLineTable tbody tr');
+
+          rows.forEach(row => {
+            let cell = row.cells[1];
+            let text = cell ? cell.innerText.toLowerCase() : '';
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              let words = filter.split(' ');
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      </script>
     ";
 
     return $table;
   }
-
 }
