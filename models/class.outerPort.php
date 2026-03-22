@@ -1951,8 +1951,7 @@ class outerPort extends iQuery
           <div class='modal-content'>
             <div class='modal-header' style='flex-direction:column; align-items:flex-start;'>
               <h5 class='modal-title'>Desgloce de Carga</h5>
-              <h6 class='modal-title'>Nave: {$vessel} | Viaje: {$data['voyage']}</h6>
-
+              <h6 id='modalTitleDetail' class='modal-title'></h6>
               <button type='button' class='close' data-bs-dismiss='modal' aria-label='Cerrar' style='position:absolute; right:15px; top:15px;'>
                 <span>×</span>
               </button>
