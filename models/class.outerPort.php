@@ -1756,17 +1756,17 @@ class outerPort extends iQuery
     }
 
     $html = "<div class='table-responsive'>";
-    $html .= "<table class='table table-bordered table-hover'>";
+    $html .= "<table id='detailTable' class='table table-hover'>";
     $html .= "
       <thead style='background:#4e73df;color:white'>
         <tr>
-          <th style='width:40px'>#</th>
+          <th>#</th>
           <th>Camión</th>
           <th>Exportador</th>
           <th>Agencia</th>
-          <th>N° Guía</th>
+          <th>Guía(s)</th>
           <th>Contenedor</th>
-          <th class='text-end'>Pallets</th>
+          <th>Pallets</th>
           <th>Origen</th>
         </tr>
       </thead>
@@ -1786,19 +1786,18 @@ class outerPort extends iQuery
       $origin    = (int) ($r['origin'] ?? 0);
 
       $total += $pallets;
-
       $originText = $origin === 1 ? 'Contenedor' : 'Pallets';
 
       $html .= "
         <tr>
-          <td class='text-center'>{$i}</td>
-          <td style='max-width:120px;word-break:break-word;'>{$carPlate}</td>
-          <td style='max-width:180px;word-break:break-word;'>{$exporter}</td>
-          <td style='max-width:160px;word-break:break-word;'>{$agency}</td>
-          <td style='max-width:120px;word-break:break-word;'>{$guide}</td>
-          <td style='max-width:160px;word-break:break-word;'>{$container}</td>
-          <td class='text-end'>{$pallets}</td>
-          <td style='max-width:120px;word-break:break-word;'>{$originText}</td>
+          <td>{$i}</td>
+          <td>{$carPlate}</td>
+          <td>{$exporter}</td>
+          <td>{$agency}</td>
+          <td>{$guide}</td>
+          <td>{$container}</td>
+          <td>{$pallets}</td>
+          <td>{$originText}</td>
         </tr>
       ";
 
@@ -1807,10 +1806,10 @@ class outerPort extends iQuery
 
     $html .= "
       </tbody>
-      <tfoot class='table-light'>
+      <tfoot>
         <tr>
-          <th colspan='6' class='text-end' style='text-align:end;'>Total:</th>
-          <th class='text-end'>" . number_format($total, 0, ',', '.') . "</th>
+          <th colspan='6'>Total</th>
+          <th>" . number_format($total, 0, ',', '.') . "</th>
           <th></th>
         </tr>
       </tfoot>
@@ -1834,6 +1833,7 @@ class outerPort extends iQuery
         sh.eta,
         sh.etd,
         sh.ship_line,
+        sh.voyage,
         sh.finished_date,
         sh.voyage,
         SUM(CASE WHEN op.origin = 1 THEN 1 ELSE 0 END) AS total_containers,
@@ -1884,6 +1884,7 @@ class outerPort extends iQuery
         <tr>
           <td>{$i}</td>
           <td>{$vessel}</td>
+          <td>{$data['voyage']}</td>
           <td>{$shipLine}</td>
           <td>{$polFlag} {$polName}</td>
           <td>{$podFlag} {$podName}</td>
@@ -1924,6 +1925,7 @@ class outerPort extends iQuery
               <tr>
                 <th>#</th>
                 <th>Nave</th>
+                <th>Viaje</th>
                 <th>Naviera</th>
                 <th>POL</th>
                 <th>POD</th>
@@ -1947,9 +1949,13 @@ class outerPort extends iQuery
       <div class='modal fade' id='detailModal' tabindex='-1'>
         <div class='modal-dialog modal-xl modal-dialog-scrollable'>
           <div class='modal-content'>
-            <div class='modal-header'>
-              <h5 class='modal-title'>Detalle de Carga</h5>
-              <button type='button' class='btn-close' data-bs-dismiss='modal'></button>
+            <div class='modal-header' style='flex-direction:column; align-items:flex-start;'>
+              <h5 class='modal-title'>Desgloce de Carga</h5>
+              <h6 class='modal-title'>Nave: {$vessel} | Viaje: {$data['voyage']}</h6>
+
+              <button type='button' class='close' data-bs-dismiss='modal' aria-label='Cerrar' style='position:absolute; right:15px; top:15px;'>
+                <span>×</span>
+              </button>
             </div>
             <div class='modal-body' id='modalDetailBody'></div>
           </div>
@@ -1957,6 +1963,11 @@ class outerPort extends iQuery
       </div>
 
       <script>
+        const vesselDetails = " . json_encode($detailsJs) . ";
+        function loadDetail(id){
+          document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
+        }
+
         document.getElementById('searchStadisticsByShipTable').addEventListener('keyup', function() {
           const filter = this.value.toLowerCase().trim();
           const rows   = document.querySelectorAll('#stadisticsByShipTable tbody tr');
