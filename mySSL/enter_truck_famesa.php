@@ -151,9 +151,9 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for="dateinport" class="text-gray-800 font-weight-bold">Fecha y Hora de Entrada Puerto</label>
-                                                    <input type="datetime-local" class="form-control form-control-user" id="dateinport" name="dateinport">
-                                                    <small class="text-danger" id="error-dateinport"></small>
+                                                    <label for="arrivaldateport" class="text-gray-800 font-weight-bold">Fecha y Hora de Entrada Puerto</label>
+                                                    <input type="datetime-local" class="form-control form-control-user" id="arrivaldateport" name="arrivaldateport">
+                                                    <small class="text-danger" id="error-arrivaldateport"></small>
                                                 </div>
                                             </div>
 
@@ -164,6 +164,10 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     <small class="text-danger" id="error-observations"></small>
                                                 </div>
                                             </div>
+
+                                            <input type="hidden" id="departuredateport" name="departuredateport" value="0">
+                                            <input type="hidden" id="arrivaldatedeposit" name="arrivaldatedeposit" value="0">
+                                            <input type="hidden" id="departuredatedeposit" name="departuredatedeposit" value="0">
 
                                             <input type="hidden" id="truckId" name="truckId" value="0">
                                             <input type="hidden" id="isUpdate" name="isUpdate" value="0">
@@ -666,48 +670,40 @@ var saveInTruck = function() {
   const spinner = $('#loadBtnSpinner');
   var paginaActual = $('input[name="page"]').val();
 
+  // Limpiar errores anteriores
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
+  $('.select2-selection').removeClass('border border-danger');
 
-  /* Validar si algún campo está vacío */
-  for (let [key, value] of formData.entries()) {
-    const inputElement = form.querySelector(`[name="${key}"]`);
-    const errorElement = document.getElementById('error-' + key);
+  // Campos que son obligatorios
+  const requiredFields = [
+    'countervessel',
+    'vessel',
+    'carplatetruck',
+    'guidenumber',
+    'maxibagsquantity',
+    'category',
+    'arrivaldateport'
+  ];
+
+  for (let field of requiredFields) {
+    const inputElement = form.querySelector(`[name="${field}"]`);
+    const errorElement = document.getElementById('error-' + field);
     const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
-    const isEmpty = value.trim() === '' || value === '-';
+    const value = formData.get(field)?.trim() ?? '';
 
-    if (isEmpty) {
-      if (errorElement) {
-        errorElement.innerText = 'Este campo es obligatorio.';
-      }
-
+    if (value === '' || value === '-') {
+      hasError = true;
+      if (errorElement) errorElement.innerText = 'Este campo es obligatorio.';
       if (isSelect2) {
-        // Para select2: agrega borde rojo al contenedor visible
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .addClass('border border-danger');
+        $(inputElement).next('.select2-container').find('.select2-selection').addClass('border border-danger');
       } else if (inputElement) {
         inputElement.classList.add('is-invalid');
-      }
-
-      hasError = true;
-    } else {
-      if (errorElement) {
-        errorElement.innerText = '';
-      }
-
-      if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .removeClass('border border-danger');
-      } else if (inputElement) {
-        inputElement.classList.remove('is-invalid');
       }
     }
   }
 
-  /* Hace envio de los datos a traves del formulario */
-  if(!hasError){
+  if (!hasError) {
     text.addClass('d-none');
     spinner.removeClass('d-none');
     btn.prop('disabled', true);
@@ -717,54 +713,35 @@ var saveInTruck = function() {
       data: $('#inTruckForm').serialize(),
       type: 'POST',
     }).done(function(x) {
-      if(isUpdate == 1){
-        if(x == 'OKU'){
-          Swal.fire({
-            title: '¡Éxito!',
-            text: '¡Camíon actualizado con éxito!',
-            icon: 'success',
-            confirmButtonColor: '#4CAF50'
-          }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>&page=' + paginaActual;
-          });
-        }else if(x == 'NOOKU') {
-          Swal.fire({
-            title: 'Oops...',
-            text: 'Error al actualizar el camión.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          }).then(() => {
-            text.removeClass('d-none');
-            spinner.addClass('d-none');
-            btn.prop('disabled', false);
-          });
-        }
-      } else {
-        if(x == 'OK'){
-          Swal.fire({
-            title: '¡Éxito!',
-            text: '¡Ingreso de camión registrado exitosamente!',
-            icon: 'success',
-            confirmButtonColor: '#4CAF50'
-          }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>&page=' + paginaActual;
-          });
-        }else if(x == 'NOOK') {
-          Swal.fire({
-            title: 'Oops...',
-            text: 'Error al registrar el ingreso del camión.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          }).then(() => {
-            text.removeClass('d-none');
-            spinner.addClass('d-none');
-            btn.prop('disabled', false);
-          });
-        }
+      let successMsg = isUpdate == 1 ? '¡Camión actualizado con éxito!' : '¡Ingreso de camión registrado exitosamente!';
+      let errorMsg   = isUpdate == 1 ? 'Error al actualizar el camión.' : 'Error al registrar el ingreso del camión.';
+      let successCode = isUpdate == 1 ? 'OKU' : 'OK';
+      let failCode    = isUpdate == 1 ? 'NOOKU' : 'NOOK';
+
+      if (x == successCode) {
+        Swal.fire({
+          title: '¡Éxito!',
+          text: successMsg,
+          icon: 'success',
+          confirmButtonColor: '#4CAF50'
+        }).then(() => {
+          window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>&page=' + paginaActual;
+        });
+      } else if (x == failCode) {
+        Swal.fire({
+          title: 'Oops...',
+          text: errorMsg,
+          icon: 'error',
+          cancelButtonColor: '#d33',
+        }).then(() => {
+          text.removeClass('d-none');
+          spinner.addClass('d-none');
+          btn.prop('disabled', false);
+        });
       }
     });
   }
-}
+};
 
 var deleteTruck = function(id) {
   var paginaActual = $('input[name="page"]').val();
@@ -841,34 +818,50 @@ var exportExcel = function(nave, patente, guia) {
 var editTruck = function(id) {
   $.ajax({
     url: '../controllers/famesaTruckEditController.php',
-     type: 'POST',
-     data: { id: id },
-     dataType: 'json',
-     success: function(data) {
+    type: 'POST',
+    data: { id: id },
+    dataType: 'json',
+    success: function(data) {
       $('#isUpdate').val(1);
       $('#truckId').val(id);
       $('#countervessel').val(data.counter_vessel);
-      $('#vessel').empty();
-      $('#vessel').append($('<option>', {value: data.vessel_id, text: data.vessel_name + ' (Viaje: ' + data.voyage + ')'}));
-      $('#vessel').trigger('change');
+
+      // Vessel select
+      $('#vessel').empty().append(
+        $('<option>', {
+          value: data.vessel_id,
+          text: data.vessel_name + ' (Viaje: ' + data.voyage + ')'
+        })
+      ).trigger('change');
+
+      // Truck & ramp plates
       $('#carplatetruck').empty();
       $('#carplatetruck').append($('<option>', {value: data.car_plate_truck, text: data.car_plate_truck}));
+
       $('#carplateramp').empty();
       $('#carplateramp').append($('<option>', {value: data.car_plate_ramp, text: data.car_plate_ramp}));
+
+      // Otros campos
       $('#guidenumber').val(data.guide_number);
       $('#maxibagsquantity').val(data.maxibags_quantity);
       $('input[name="category"][value="' + data.category + '"]').prop('checked', true);
-      $('#dateinport').val(data.arrival_date_port);
-      $('#observations').val(data.observations);
+
+      // Fechas: si son null, poner ''
+      $('#arrivaldateport').val(data.arrival_date_port ?? '');
+      $('#departuredateport').val(data.departure_date_port ?? '');
+      $('#arrivaldatedeposit').val(data.arrival_date_deposit ?? '');
+      $('#departuredatedeposit').val(data.departure_date_deposit ?? '');
+
+      $('#observations').val(data.observations ?? '');
       $('#loadBtn').addClass('btn-info');
-      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Camión');
+      $('#loadBtnText').html('<i class="fas fa-check-circle"></i> Actualizar Camión');
       $('#scrollTopBtn').trigger('click');
     },
     error: function() {
       alert('Error al cargar los datos.');
     }
   });
-}
+};
 
 /* Valida maxima cantidad de pallets */
 function validarMaximo(input) {

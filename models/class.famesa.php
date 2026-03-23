@@ -67,23 +67,37 @@ class famesa extends iQuery
 
   public function update()
   {
-    $query = "UPDATE $this->table SET ";
-    $query .= " WHERE row_id = :id";
+    $query = "UPDATE $this->table SET
+        counter_vessel = :countervessel,
+        vessel_id = :vessel,
+        car_plate_truck = :carplatetruck,
+        car_plate_ramp = :carplateramp,
+        guide_number = :guide,
+        maxibags_quantity = :maxibags,
+        category = :category,
+        arrival_date_port = :arrivaldateport,
+        departure_date_port = :departuredateport,
+        arrival_date_deposit = :arrivaldatedeposit,
+        departure_date_deposit = :departuredatedeposit,
+        observations = :observations
+        WHERE row_id = :id";
+
     $stmt = $this->db->prepare($query);
 
-    $this->id                   = htmlspecialchars(strip_tags($this->id));
-    $this->countervessel        = htmlspecialchars(strip_tags($this->countervessel));
-    $this->vessel               = htmlspecialchars(strip_tags($this->vessel));
+    // Sanitización
+    $this->id                   = (int) $this->id;
+    $this->countervessel        = (int) $this->countervessel;
+    $this->vessel               = (int) $this->vessel;
     $this->carplatetruck        = htmlspecialchars(strip_tags($this->carplatetruck));
     $this->carplateramp         = htmlspecialchars(strip_tags($this->carplateramp ?? ''));
     $this->guide                = htmlspecialchars(strip_tags($this->guide));
-    $this->maxibags             = htmlspecialchars(strip_tags($this->maxibags));
-    $this->category             = htmlspecialchars(strip_tags($this->category));
-    $this->arrivaldateport      = $this->arrivaldateport;
-    $this->departuredateport    = $this->departuredateport;
-    $this->arrivaldatedeposit   = $this->arrivaldatedeposit;
-    $this->departuredatedeposit = $this->departuredatedeposit;
-    $this->observations         = $this->observations;
+    $this->maxibags             = (int) $this->maxibags;
+    $this->category             = (int) $this->category;
+    $this->arrivaldateport      = $this->arrivaldateport ?: null;
+    $this->departuredateport    = $this->departuredateport ?: null;
+    $this->arrivaldatedeposit   = $this->arrivaldatedeposit ?: null;
+    $this->departuredatedeposit = $this->departuredatedeposit ?: null;
+    $this->observations         = htmlspecialchars(strip_tags($this->observations));
 
     $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
     $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
@@ -93,10 +107,13 @@ class famesa extends iQuery
     $stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
     $stmt->bindParam(":maxibags", $this->maxibags, PDO::PARAM_INT);
     $stmt->bindParam(":category", $this->category, PDO::PARAM_INT);
-    $stmt->bindParam(":arrivaldateport", $this->arrivaldateport, PDO::PARAM_STR);
-    $stmt->bindParam(":departuredateport", $this->departuredateport, PDO::PARAM_STR);
-    $stmt->bindParam(":arrivaldatedeposit", $this->arrivaldatedeposit, PDO::PARAM_STR);
-    $stmt->bindParam(":departuredatedeposit", $this->departuredatedeposit, PDO::PARAM_STR);
+
+    // Fechas: bindValue con PDO::PARAM_NULL si son null
+    $stmt->bindValue(":arrivaldateport", $this->arrivaldateport ?? null, $this->arrivaldateport ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stmt->bindValue(":departuredateport", $this->departuredateport ?? null, $this->departuredateport ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stmt->bindValue(":arrivaldatedeposit", $this->arrivaldatedeposit ?? null, $this->arrivaldatedeposit ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    $stmt->bindValue(":departuredatedeposit", $this->departuredatedeposit ?? null, $this->departuredatedeposit ? PDO::PARAM_STR : PDO::PARAM_NULL);
+
     $stmt->bindParam(":observations", $this->observations, PDO::PARAM_STR);
 
     return $stmt->execute();

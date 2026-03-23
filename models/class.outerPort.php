@@ -748,9 +748,9 @@ class outerPort extends iQuery
         $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-          $comodity = "<i class='fas fa-solid fa-exclamation-triangle text-danger'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
         } else {
-          $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
         }
 
         if ($data[$this->departuredate] != null) {
@@ -1127,9 +1127,9 @@ class outerPort extends iQuery
         $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-          $comodity = "<i class='fas fa-solid fa-exclamation-triangle text-danger'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
         } else {
-          $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
         }
 
         if ($data[$this->departuredate] != null) {
