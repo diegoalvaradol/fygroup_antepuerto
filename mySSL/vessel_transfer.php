@@ -262,47 +262,85 @@ $top           = UIComponents::scrollToTopButton();
 
                 <div class="modal-body">
                     <div class="container mt-4 p-3 border rounded" style="background-color: #f9f9f9;">
-                        <h3 class="text-center">Licencia de Uso de Software</h3>
-                        <p><strong>Nombre del Software: </strong><?php echo $infoCfg['name']; ?></p>
-                        <p><strong>Compilación: </strong><?php echo $infoCfg['compilation']; ?></p>
-                        <p><strong>Versión: </strong><?php echo $infoCfg['version']; ?></p>
-                        <p><strong>Titular de los derechos: </strong><?php echo $infoCfg['author']; ?></p>
-                        <p><strong>Fecha de Lanzamiento: </strong><?php echo $releasedTime->format('d-m-Y H:i'); ?></p>
-                        <p><strong>Últ. Actualización: </strong><?php echo $updateTime->format('d-m-Y H:i'); ?></p>
+                        <h4 class="text-center mb-3">Licencia de Uso</h4>
 
-                        <h5>1. OBJETO DE LA LICENCIA</h5>
-                        <p>Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos.</p>
+                        <p><strong>Software:</strong> <?php echo $infoCfg['name']; ?></p>
+                        <p><strong>Compilación:</strong> <?php echo $infoCfg['compilation']; ?></p>
+                        <p><strong>Versión:</strong> <?php echo $infoCfg['version']; ?></p>
+                        <p><strong>Titular:</strong> <?php echo $infoCfg['author']; ?></p>
+                        <p><strong>Lanzamiento:</strong> <?php echo $releasedTime->format('d-m-Y H:i'); ?></p>
+                        <p><strong>Últ. actualización:</strong> <?php echo $updateTime->format('d-m-Y H:i'); ?></p>
 
-                        <h5>2. CONCESIÓN DE LICENCIA</h5>
-                        <p>El titular concede al usuario una licencia de uso no exclusiva, intransferible y revocable, para ejecutar, probar y operar el software con fines internos. El software no puede ser redistribuido ni modificado sin autorización expresa por escrito del titular.</p>
+                        <hr>
 
-                        <h5>3. DERECHOS RESERVADOS</h5>
-                        <p>Todos los derechos no expresamente concedidos en esta licencia son reservados por el titular. El código fuente, diseño y estructura de base de datos son propiedad intelectual protegida.</p>
+                        <h6>1. Objeto</h6>
+                        <p>
+                          Esta licencia regula el uso del sistema desarrollado en PHP, JavaScript y MySQL,
+                          destinado a la gestión operativa del cliente.
+                        </p>
 
-                        <h5>4. RESTRICCIONES</h5>
-                        El usuario se compromete a:
+                        <h6>2. Licencia</h6>
+                        <p>
+                          Se concede una licencia <strong>no exclusiva, intransferible y revocable</strong>,
+                          únicamente para uso interno. Cualquier otro uso requiere autorización escrita.
+                        </p>
+
+                        <h6>3. Derechos</h6>
+                        <p>
+                          El código fuente, estructura y diseño son propiedad de
+                          <strong><?php echo $infoCfg['author']; ?></strong>.
+                        </p>
+
+                        <h6>4. Restricciones</h6>
                         <ul>
-                            <li>No copiar, modificar ni distribuir el software.</li>
-                            <li>No revender ni sublicenciar el software.</li>
-                            <li>No modificar o crear obras derivadas del software.</li>
-                            <li>No usar el software en productos o servicios comerciales sin licencia extendida.</li>
-                            <li>No realizar ingeniería inversa sobre el código fuente o la base de datos.</li>
-                            <li>No usarlo en servicios que compitan con el titular.</li>
+                          <li>No copiar, modificar ni distribuir el software.</li>
+                          <li>No revender ni sublicenciar.</li>
+                          <li>No realizar ingeniería inversa.</li>
+                          <li>No usar en servicios que compitan directamente.</li>
                         </ul>
 
-                        <h5>5. PROPIEDAD INTELECTUAL</h5>
-                        <p>Todo el contenido del software es propiedad exclusiva de <?php echo $infoCfg['author']; ?> y está protegido por las leyes de propiedad intelectual.</p>
+                        <h6>5. Condiciones de Pago y Soporte</h6>
+                        <p>
+                          Todo desarrollo, modificación o soporte solicitado deberá ser pagado
+                          según lo acordado previamente entre las partes.
+                          El acceso a nuevas versiones y soporte depende del cumplimiento de pagos.
+                        </p>
 
-                        <h5>6. LIMITACIÓN DE GARANTÍA</h5>
-                        <p>El software se entrega "tal cual", sin garantías. El titular no se responsabiliza por daños derivados de su uso.</p>
+                        <h6>6. Bloqueo por Incumplimiento de Pago</h6>
+                        <p>
+                          En caso de <strong>mora o incumplimiento en el pago</strong> de desarrollos,
+                          modificaciones o servicios asociados:
+                        </p>
+                        <ul>
+                          <li>El titular podrá <strong>suspender total o parcialmente el sistema</strong>.</li>
+                          <li>Se podrá limitar acceso a funcionalidades críticas.</li>
+                          <li>Se podrá bloquear el acceso hasta regularizar la deuda.</li>
+                          <li>No se garantiza continuidad operativa durante el periodo de incumplimiento.</li>
+                        </ul>
+                        <p>
+                          La reactivación del sistema estará sujeta al pago total de la deuda pendiente.
+                        </p>
 
-                        <h5>7. TERMINACIÓN</h5>
-                        <p>El incumplimiento de cualquiera de los términos de esta licencia resultará en su terminación inmediata, debiendo el usuario cesar el uso del software y eliminar todas sus copias.</p>
+                        <h6>7. Garantía</h6>
+                        <p>
+                          El software se entrega "tal cual", sin garantías de funcionamiento continuo.
+                        </p>
 
-                        <h5>8. LEGISLACIÓN APLICABLE</h5>
-                        <p>Esta licencia se regirá por las leyes de Chile. Cualquier conflicto será sometido a los tribunales competentes del país.</p>
+                        <h6>8. Terminación</h6>
+                        <p>
+                          El incumplimiento de esta licencia implica su término inmediato y la obligación
+                          de dejar de usar el sistema.
+                        </p>
 
-                        <p class="mt-4"><strong>Firmado: </strong><br><?php echo $infoCfg['author']; ?></p>
+                        <h6>9. Legislación</h6>
+                        <p>
+                          Regido por las leyes de Chile.
+                        </p>
+
+                        <p class="mt-4">
+                          <strong>Firmado:</strong><br>
+                          <?php echo $infoCfg['author']; ?>
+                        </p>
                     </div>
                 </div>
             </div>

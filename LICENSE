@@ -6,34 +6,47 @@ Titular de los Derechos: Diego Alvarado López
 Fecha de Emisión: 01 de mayo de 2025
 País: Chile
 
-1. OBJETO DE LA LICENCIA
-Esta licencia regula el uso del software denominado "Sistema Integral SSL", desarrollado en lenguaje PHP (backend), JavaScript y HTML (frontend), y utilizando MySQL como sistema de gestión de base de datos. Esta versión está en fase Beta (versión 1.36.b).
+1. Objeto
+Esta licencia regula el uso del sistema desarrollado en PHP, JavaScript y MySQL,
+destinado a la gestión operativa del cliente.
 
-2. CONCESIÓN DE LICENCIA
-El titular concede al usuario una licencia de uso no exclusiva, intransferible y revocable, para ejecutar, probar y operar el software con fines internos. El software no puede ser redistribuido ni modificado sin autorización expresa por escrito del titular.
+2. Licencia
+Se concede una licencia no exclusiva, intransferible y revocable,
+únicamente para uso interno. Cualquier otro uso requiere autorización escrita.
 
-3. DERECHOS RESERVADOS
-Todos los derechos no expresamente concedidos en esta licencia son reservados por el titular. El código fuente, diseño y estructura de base de datos son propiedad intelectual protegida.
+3. Derechos
+El código fuente, estructura y diseño son propiedad de Diego Alvarado López
 
-4. RESTRICCIONES
-El usuario se compromete a:
-- No copiar, modificar ni distribuir el software.
-- No revender ni sublicenciar el software.
-- No modificar o crear obras derivadas del software.
-- No usar el software en productos o servicios comerciales sin licencia extendida.
-- No realizar ingeniería inversa sobre el código fuente o la base de datos.
-- No usarlo en servicios que compitan con el titular.
+4. Restricciones
+No copiar, modificar ni distribuir el software.
+No revender ni sublicenciar.
+No realizar ingeniería inversa.
+No usar en servicios que compitan directamente.
 
-5. PROPIEDAD INTELECTUAL
-Todo el contenido del software es propiedad exclusiva de Diego Alvarado López y está protegido por las leyes de propiedad intelectual.
+5. Condiciones de Pago y Soporte
+Todo desarrollo, modificación o soporte solicitado deberá ser pagado
+según lo acordado previamente entre las partes.
+El acceso a nuevas versiones y soporte depende del cumplimiento de pagos.
 
-6. LIMITACIÓN DE GARANTÍA
-El software se entrega "tal cual", sin garantías. El titular no se responsabiliza por daños derivados de su uso.
+6. Bloqueo por Incumplimiento de Pago
+En caso de mora o incumplimiento en el pago de desarrollos,
+modificaciones o servicios asociados:
 
-7. TERMINACIÓN
-El incumplimiento de cualquiera de los términos de esta licencia resultará en su terminación inmediata, debiendo el usuario cesar el uso del software y eliminar todas sus copias.
+El titular podrá suspender total o parcialmente el sistema.
+Se podrá limitar acceso a funcionalidades críticas.
+Se podrá bloquear el acceso hasta regularizar la deuda.
+No se garantiza continuidad operativa durante el periodo de incumplimiento.
 
-8. LEGISLACIÓN APLICABLE
-Esta licencia se regirá por las leyes de Chile. Cualquier conflicto será sometido a los tribunales competentes del país.
+La reactivación del sistema estará sujeta al pago total de la deuda pendiente.
+
+7. Garantía
+El software se entrega "tal cual", sin garantías de funcionamiento continuo.
+
+8. Terminación
+El incumplimiento de esta licencia implica su término inmediato y la obligación
+de dejar de usar el sistema.
+
+9. Legislación
+Regido por las leyes de Chile.
 
 Firmado: Diego Alvarado López
