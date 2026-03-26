@@ -730,7 +730,7 @@ class outerPort extends iQuery
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Digitado Por</th>";
-    $thead .= $_SESSION["user"]["division"] == 'ssl' ? "<th>Acciones</th>" : null;
+    $thead .= $_SESSION["user"]["division"] == 'fy' ? "<th>Acciones</th>" : null;
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -780,7 +780,7 @@ class outerPort extends iQuery
         $btnAddContainerHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-        $btnCellphone        = $_SESSION["user"]["division"] === 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
+        $btnCellphone        = $_SESSION["user"]["division"] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -802,14 +802,14 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td>" . $btnAddContainerHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
+        $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td>" . $btnAddContainerHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;
       }
     } else {
       $tr .= "<tr>";
-      $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td colspan='20' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='19' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td colspan='20' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='19' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 
@@ -1109,7 +1109,7 @@ class outerPort extends iQuery
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Digitado Por</th>";
-    $thead .= $_SESSION["user"]["division"] == 'ssl' ? "<th>Acciones</th>" : null;
+    $thead .= $_SESSION["user"]["division"] == 'fy' ? "<th>Acciones</th>" : null;
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -1159,7 +1159,7 @@ class outerPort extends iQuery
         $btnAddThermoHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-        $btnCellphone     = $_SESSION["user"]["division"] === 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
+        $btnCellphone     = $_SESSION["user"]["division"] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -1178,14 +1178,14 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td>" . $btnAddThermoHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
+        $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td>" . $btnAddThermoHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;
       }
     } else {
       $tr .= "<tr>";
-      $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td colspan='17' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='16' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td colspan='17' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='16' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 

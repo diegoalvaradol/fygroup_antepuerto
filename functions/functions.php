@@ -9,7 +9,7 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @param  $area   [area]
  * @return void
  */
-function generateMkey($module, $area = 'mySSL')
+function generateMkey($module, $area = 'myFY')
 {
   $secretKey = "SSL-CHILE-DIEGO_2025_0517";
   $time      = time();
@@ -81,7 +81,7 @@ function formatDate($date, $format = 'Y-m-d H:i:s')
 function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
   $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
-  $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://myssl.ssl-lines.com/';
+  $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://myfy.fygroup.cl/';
   $logo    = $baseUrl . 'images/ssl-logo-azul.png';
 
   echo '
@@ -92,8 +92,8 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Diego Alvarado López." content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Acceso Denegado</title>
+    <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+    <title>FYGroup | Acceso Denegado</title>
     <meta http-equiv="refresh" content="5;url=dashboard.php">
 
     <!-- FontAwesome -->
@@ -246,13 +246,13 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
 
           <!-- BLOQUE FINAL -->
           <div style="margin-top:30px;padding:15px;background:#020617;border-radius:8px;font-size:14px;text-align:center;opacity:.8;">
-            Este evento fue registrado automáticamente por el sistema SSL.
+            Este evento fue registrado automáticamente por el sistema FYGroup.
           </div>
         </div>
 
         <!-- FOOTER -->
         <div style="text-align:center;padding:20px;font-size:12px;background:#020617;opacity:.6;">
-          © ' . date('Y') . ' Southland Shipping Lines (SSL).
+          © ' . date('Y') . ' FYGroup.
         </div>
       </div>
     </div>';

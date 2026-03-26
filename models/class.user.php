@@ -13,7 +13,7 @@ class user extends iQuery
   public $lastname        = "last_name";
   public $email           = "email";
   public $password        = "password";
-  public $division        = "division"; /* Indica si el usuario pertenece a SSL o Portal clientes */
+  public $division        = "division"; /* Indica si el usuario pertenece a FYGroup o Portal clientes */
   public $isadmin         = "is_admin"; /* Indica si el usuario es un usuario administrador */
   public $isadminedit     = "is_admin_edit"; /* Indica si el usuario es un usuario administrador editor */
   public $isactive        = "is_active"; /* Indica si el usuario se encuentra habilitado */
@@ -153,7 +153,7 @@ class user extends iQuery
 
   public function isAdmin($run)
   {
-    $query = "SELECT is_admin FROM {$this->table} WHERE run = :run AND division = 'SSL' LIMIT 1";
+    $query = "SELECT is_admin FROM {$this->table} WHERE run = :run AND division = 'FY' LIMIT 1";
     $stmt  = $this->db->prepare($query);
     $stmt->bindParam(':run', $run, PDO::PARAM_STR);
     $stmt->execute();
@@ -165,7 +165,7 @@ class user extends iQuery
 
   public function isAdminEdit($run)
   {
-    $query = "SELECT is_admin_edit FROM {$this->table} WHERE run = :run AND division = 'SSL' LIMIT 1";
+    $query = "SELECT is_admin_edit FROM {$this->table} WHERE run = :run AND division = 'FY' LIMIT 1";
     $stmt  = $this->db->prepare($query);
     $stmt->bindParam(':run', $run, PDO::PARAM_STR);
     $stmt->execute();

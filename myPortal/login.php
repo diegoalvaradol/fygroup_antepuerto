@@ -12,9 +12,9 @@ if (isset($_SESSION['user'])) {
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Portal SSL | Login</title>
+  <title>Portal FYGroup | Login</title>
 
-  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
   <link href="../assets/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
   <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -73,8 +73,8 @@ if (isset($_SESSION['user'])) {
     <div class="col-xl-4 col-lg-5 col-md-7">
       <div class="card login-card p-4">
         <div class="text-center mb-4">
-          <img src="../images/ssl-logo-azul.png" class="logo-img mb-3">
-          <h4 class="font-weight-bold text-dark mb-1">Sistema Integral SSL</h4>
+          <img src="../images/logo-fygroup-v1_bg_removed.png" class="logo-img mb-3">
+          <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
           <small class="text-muted">Portal Cliente</small>
         </div>
 

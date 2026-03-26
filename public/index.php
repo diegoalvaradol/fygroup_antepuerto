@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
 	<meta name="Diego Alvarado López." content="">
-	<link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-  <title>Sistema SSL | Antepuerto Panul</title>
+	<link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+  <title>Sistema FYGroup | Antepuerto Panul</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -51,10 +51,10 @@
 <!-- HERO -->
 <div class="hero">
   <div class="logo">
-		 <img src="../images/ssl-logo-azul.png" style="max-width:280px; width:100%; height:auto;">
+		 <img src="../images/logo-fygroup-v1_bg_removed.png" style="max-width:280px; width:100%; height:auto;">
 	</div>
   <h2>Antepuerto Panul</h2>
-  <h4>Sistema SSL</h4>
+  <h4>Sistema FYGroup</h4>
 </div>
 
 <div class="container mt-4">

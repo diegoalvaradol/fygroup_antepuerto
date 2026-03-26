@@ -31,8 +31,8 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>Portal - SSL | Listado de Contenedores</title>
+    <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+    <title>Portal - FYGroup | Listado de Contenedores</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">

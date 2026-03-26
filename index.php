@@ -7,7 +7,7 @@
 require_once __DIR__ . '/config/includes.php';
 
 $pag  = $_GET['pag'] ?? '/';
-$area = $_GET['area'] ?? 'mySSL';
+$area = $_GET['area'] ?? 'myFY';
 $mkey = $_GET['mkey'] ?? '';
 
 /* Carpeta accedida desde la URL */
@@ -35,7 +35,7 @@ if ($pag === '/') {
 }
 
 /* Solo permitir estas carpetas */
-$allowedAreas = ['mySSL', 'myPortal'];
+$allowedAreas = ['myFY', 'myPortal'];
 
 if (!in_array($area, $allowedAreas)) {
   http_response_code(404);

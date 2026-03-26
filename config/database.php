@@ -11,7 +11,6 @@ class Database
   public static function get(): PDO
   {
     if (self::$conn === null) {
-
       if (esLocalhost()) {
         $host = "localhost";
         $db   = "ssl_chile";
@@ -19,9 +18,9 @@ class Database
         $pass = "seatrade1313";
       } else {
         $host = "localhost";
-        $db   = "l0011525_myssl";
-        $user = "l0011525_myssl";
-        $pass = "nodisu47VA";
+        $db   = "fygroupc_myfy";
+        $user = "fygroupc_adminfy";
+        $pass = "Seatrade1313_";
       }
 
       self::$conn = new PDO(

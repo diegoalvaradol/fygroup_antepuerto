@@ -9,8 +9,8 @@ http_response_code(403);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Diego Alvarado López." content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>SSL | Área Inválida.</title>
+    <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+    <title>FYGroup | Área Inválida.</title>
     <meta http-equiv="refresh" content="5;url=dashboard.php">
     <style>
       body {
@@ -61,7 +61,7 @@ http_response_code(403);
   <body>
     <div class="card">
         <div style="justify-self: center;">
-            <img src="../images/ssl-logo-azul.png" style="height: 50%; width: 100%;">
+            <img src="../images/logo-fygroup-v1.png" style="height: 50%; width: 75%;">
         </div>
 
         <h1>Área Inválida.</h1>

@@ -146,9 +146,26 @@ class menu extends iQuery
 
     $sidebar = '
       <style>
+        .sidebar-brand {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 12px;
+          margin: 10px;
+          background: rgba(255,255,255,0.25);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 10px;
+        }
+
+        .sidebar-brand img {
+          max-width: 150px;
+          width: 100%;
+          height: auto;
+        }
+
         #accordionSidebar{
           font-size:13px;
-          background:#1e293b;
+          background:#3787ba;
         }
 
         #accordionSidebar .sidebar-brand{
@@ -163,7 +180,7 @@ class menu extends iQuery
         #accordionSidebar .nav-link{
           padding:10px 14px;
           border-radius:10px;
-          color:#cbd5e1;
+          color:#fff;
           display:flex;
           align-items:center;
           gap:10px;
@@ -223,7 +240,7 @@ class menu extends iQuery
         #accordionSidebar .sidebar-footer{
           padding:14px;
           font-size:11px;
-          color:#94a3b8;
+          color:#fff;
           border-top:1px solid rgba(255,255,255,.05);
         }
 
@@ -295,8 +312,8 @@ class menu extends iQuery
       </style>
 
       <ul class="navbar-nav sidebar accordion d-flex flex-column" id="accordionSidebar">
-        <a class="sidebar-brand d-flex justify-content-center align-items-center py-3" href="dashboard.php">
-          <img src="../images/ssl-logo-azul.png" style="max-width:180px; width:100%; height:auto;">
+        <a class="sidebar-brand" href="dashboard.php">
+          <img src="../images/logo-fygroup-v1_bg_removed.png" alt="logo">
         </a>
 
         <div class="sidebar-heading text-white">
@@ -370,7 +387,7 @@ class menu extends iQuery
         }
 
         .topbar{
-          background:#1e293b;
+          background:#3787ba;
           border-bottom:1px solid rgba(255,255,255,.05);
         }
       </style>
@@ -402,7 +419,7 @@ class menu extends iQuery
 
               <ul class="dropdown-menu dropdown-menu-end shadow">
                 <li class="px-3 py-3 text-center border-bottom">
-                  <img src="../favicon/apple-touch-icon.png" class="rounded-circle mb-2" width="60">
+                  <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
                   <br>
                   <small class="text-muted">' . $arrayDivision[$division] . '</small>
                 </li>
@@ -461,7 +478,7 @@ class menu extends iQuery
 
     $sideBarPortal = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
     $sideBarPortal .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
-    $sideBarPortal .= '<img src="../images/ssl-logo-azul.png" style="width:100%;">';
+    $sideBarPortal .= '<img src="../images/logo-fygroup-v1_bg_removed.png" style="width:100%;">';
     $sideBarPortal .= '</a>';
     $sideBarPortal .= '<div class="sidebar-heading">Sistema Antepuerto</div>';
     $sideBarPortal .= '<div class="sidebar-heading">(Portal Cliente)</div>';

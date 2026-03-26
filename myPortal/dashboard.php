@@ -37,7 +37,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="Dasboard" content="">
     <meta name="Diego Alvarado López." content="">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
     <title>Dashboard | Sistema Antepuerto</title>
 
     <!-- Custom fonts for this template-->

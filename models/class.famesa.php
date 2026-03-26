@@ -247,8 +247,8 @@ class famesa extends iQuery
     $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $inicio    = ($pagina - 1) * $porPagina;
 
-    if ($_SESSION["user"]["division"] === 'ssl') {
-      $urlBase = generateMkey('enter_thermo_port', 'mySSL') . '&page=';
+    if ($_SESSION["user"]["division"] === 'fy') {
+      $urlBase = generateMkey('enter_thermo_port', 'myFY') . '&page=';
     } else {
       $urlBase = generateMkey('enter_thermo_port', 'myPortal') . '&page=';
     }
