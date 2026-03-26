@@ -51,7 +51,7 @@
 <!-- HERO -->
 <div class="hero">
   <div class="logo">
-		 <img src="../images/logo-fygroup-v1_bg_removed.png" style="max-width:280px; width:100%; height:auto;">
+		 <img src="../images/logo-fygroup-v1_bg_removed.png" style="max-width:280px; width:75%; height:auto;">
 	</div>
   <h2>Antepuerto Panul</h2>
   <h4>Sistema FYGroup</h4>
