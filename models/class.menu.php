@@ -32,15 +32,6 @@ class menu extends iQuery
         ]
       ],
       [
-        'title' => 'Famesa',
-        'icon'  => 'fa-burst',
-        'id'    => 'collapseFamesa',
-        'items' => [
-          ['label' => 'Ingreso Camiones', 'link' => generateMkey('enter_truck_famesa')],
-          ['label' => 'Reporte Turno', 'link' => generateMkey('shifts_report_famesa')]
-        ]
-      ],
-      [
         'title' => 'Puerto',
         'icon'  => 'fa-anchor',
         'id'    => 'collapsePuerto',
