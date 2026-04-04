@@ -656,24 +656,12 @@ class outerPort extends iQuery
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
 
-    /* Construccion total de la página y query */
-    $porPagina = 25; /* Número de registros por página */
-    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $inicio    = ($pagina - 1) * $porPagina;
-
-    if ($_SESSION["user"]["division"] === 'ssl') {
-      $urlBase = generateMkey('enter_container_port', 'mySSL') . '&page=';
-    } else {
-      $urlBase = generateMkey('enter_container_port', 'myPortal') . '&page=';
-    }
-
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->db->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
     }
-    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
-    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
+
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -742,7 +730,7 @@ class outerPort extends iQuery
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Digitado Por</th>";
-    $thead .= $_SESSION["user"]["division"] == 'ssl' ? "<th>Acciones</th>" : null;
+    $thead .= $_SESSION["user"]["division"] == 'fy' ? "<th>Acciones</th>" : null;
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -760,9 +748,9 @@ class outerPort extends iQuery
         $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-          $comodity = "<i class='fas fa-solid fa-exclamation-triangle text-danger'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
         } else {
-          $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
         }
 
         if ($data[$this->departuredate] != null) {
@@ -792,7 +780,7 @@ class outerPort extends iQuery
         $btnAddContainerHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit             = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete           = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-        $btnCellphone        = $_SESSION["user"]["division"] === 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
+        $btnCellphone        = $_SESSION["user"]["division"] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -814,14 +802,14 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td>" . $btnAddContainerHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
+        $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td>" . $btnAddContainerHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;
       }
     } else {
       $tr .= "<tr>";
-      $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td colspan='20' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='19' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td colspan='20' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='19' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 
@@ -831,19 +819,55 @@ class outerPort extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Contenedores <em>(Total de Registros: " . $count . ")</em></h6>
+            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+              <h6 class='mb-0'>
+                <i class='fas fa-list'></i> Listado de Contenedores
+                <em>(Total: " . $count . ")</em>
+              </h6>
+
+              <div style='position:relative; max-width:250px; width:100%;'>
+                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                <input type='text' id='searchContainerTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+              </div>
             </div>
 
-            <div class='table-responsive'>
-              <table class='table table-bordered table-hover' style='width:max-content;'>
-                " . $thead . $tr . $tbclose . "
+            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+              <table id='containerTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", "", $thead) . "
+                  " . $tr . $tbclose . "
               </table>
             </div>
           </div>
-          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
+
+      <script>
+        document.getElementById('searchContainerTable').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase().trim();
+          let rows = document.querySelectorAll('#containerTable tbody tr');
+
+          rows.forEach(row => {
+            let text = (
+              (row.cells[1]?.innerText || '') + ' ' +
+              (row.cells[2]?.innerText || '') + ' ' +
+              (row.cells[3]?.innerText || '') + ' ' +
+              (row.cells[4]?.innerText || '') + ' ' +
+              (row.cells[6]?.innerText || '') + ' ' +
+              (row.cells[7]?.innerText || '')
+            ).toLowerCase();
+
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              let words = filter.split(' ');
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      </script>
     ";
 
     return $table;
@@ -1015,24 +1039,11 @@ class outerPort extends iQuery
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
 
-    /* Construccion total de la página y query */
-    $porPagina = 25; /* Número de registros por página */
-    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $inicio    = ($pagina - 1) * $porPagina;
-
-    if ($_SESSION["user"]["division"] === 'ssl') {
-      $urlBase = generateMkey('enter_thermo_port', 'mySSL') . '&page=';
-    } else {
-      $urlBase = generateMkey('enter_thermo_port', 'myPortal') . '&page=';
-    }
-
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
+    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->db->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
     }
-    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
-    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -1098,7 +1109,7 @@ class outerPort extends iQuery
     $thead .= "<th>Obersvaciones</th>";
     $thead .= "<th>Creado</th>";
     $thead .= "<th>Digitado Por</th>";
-    $thead .= $_SESSION["user"]["division"] == 'ssl' ? "<th>Acciones</th>" : null;
+    $thead .= $_SESSION["user"]["division"] == 'fy' ? "<th>Acciones</th>" : null;
     $thead .= "</tr>";
     $thead .= "</thead>";
     $thead .= "<tbody>";
@@ -1116,9 +1127,9 @@ class outerPort extends iQuery
         $arrival = $arrivalTime->format('d-m-Y H:i');
 
         if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-          $comodity = "<i class='fas fa-solid fa-exclamation-triangle text-danger'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . "</button>";
         } else {
-          $comodity = "<i class='fas fa-solid fa-check text-success'> " . $data[$this->comodity] . "</i>";
+          $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . "</button>";
         }
 
         if ($data[$this->departuredate] != null) {
@@ -1148,7 +1159,7 @@ class outerPort extends iQuery
         $btnAddThermoHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
         $btnEdit          = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
         $btnDelete        = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-        $btnCellphone     = $_SESSION["user"]["division"] === 'ssl' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
+        $btnCellphone     = $_SESSION["user"]["division"] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
 
         $tr .= "<tr " . $attr . ">";
         $tr .= "<td>" . $data[$this->countervessel] . "</td>";
@@ -1167,14 +1178,14 @@ class outerPort extends iQuery
         $tr .= "<td>" . $data[$this->observations] . "</td>";
         $tr .= "<td>" . $created . "</td>";
         $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td>" . $btnAddThermoHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
+        $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td>" . $btnAddThermoHour . ' ' . $btnEdit . ' ' . $btnDelete . "</td>" : null;
         $tr .= "</tr>";
 
         $count++;
       }
     } else {
       $tr .= "<tr>";
-      $tr .= $_SESSION["user"]["division"] == 'ssl' ? "<td colspan='17' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='16' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+      $tr .= $_SESSION["user"]["division"] == 'fy' ? "<td colspan='17' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>" : "<td colspan='16' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
       $tr .= "</tr>";
     }
 
@@ -1184,19 +1195,53 @@ class outerPort extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Termos <em>(Total de Registros: " . $count . ")</em></h6>
+            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+              <h6 class='mb-0'>
+                <i class='fas fa-list'></i> Listado de Termos
+                <em>(Total: " . $count . ")</em>
+              </h6>
+
+              <div style='position:relative; max-width:250px; width:100%;'>
+                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                <input type='text' id='searchThermoTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+              </div>
             </div>
 
-            <div class='table-responsive'>
-              <table class='table table-bordered table-hover' style='width:max-content;'>
-                " . $thead . $tr . $tbclose . "
+            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+              <table id='thermoTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", "", $thead) . "
+                  " . $tr . $tbclose . "
               </table>
             </div>
           </div>
-          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
+
+      <script>
+        document.getElementById('searchThermoTable').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase().trim();
+          let rows = document.querySelectorAll('#thermoTable tbody tr');
+
+          rows.forEach(row => {
+            let text = (
+              (row.cells[1]?.innerText || '') + ' ' +
+              (row.cells[2]?.innerText || '') + ' ' +
+              (row.cells[3]?.innerText || '') + ' ' +
+              (row.cells[4]?.innerText || '')
+            ).toLowerCase();
+
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              let words = filter.split(' ');
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      </script>
     ";
 
     return $table;
@@ -1359,19 +1404,11 @@ class outerPort extends iQuery
     $countStmt->execute($params);
     $totalRegistros = $countStmt->fetchColumn();
 
-    /* Construccion total de la página y query */
-    $porPagina = 35; /* Número de registros por página */
-    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $inicio    = ($pagina - 1) * $porPagina;
-    $urlBase   = generateMkey('ship_report') . '&page=';
-
-    $query = "SELECT * FROM $this->table as p JOIN app_ships as sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
+    $query = "SELECT * FROM $this->table as p JOIN app_ships as sh ON sh.ship_id = p.vessel_id WHERE $whereClause ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
     $stmt  = $this->db->prepare($query);
     foreach ($params as $key => $value) {
       $stmt->bindValue($key, $value);
     }
-    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
-    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -1516,19 +1553,54 @@ class outerPort extends iQuery
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Cargas <em>(Total de Registros: " . $count . ")</em></h6>
+            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+              <h6 class='mb-0'>
+                <i class='fas fa-list'></i> Listado
+                <em>(Total: " . $count . ")</em>
+              </h6>
+
+              <div style='position:relative; max-width:250px; width:100%;'>
+                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                <input type='text' id='searchShipReportTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+              </div>
             </div>
 
-            <div class='table-responsive'>
-                <table class='table table-bordered table-hover' style='width:max-content;'>
-                " . $thead . $tr . $tbclose . "
+            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+              <table id='shipReportTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+
+                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", "", $thead) . "
+                  " . $tr . $tbclose . "
               </table>
             </div>
           </div>
-          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
+
+      <script>
+        document.getElementById('searchShipReportTable').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase().trim();
+          let rows = document.querySelectorAll('#shipReportTable tbody tr');
+
+          rows.forEach(row => {
+            let text = (
+              (row.cells[1]?.innerText || '') + ' ' +
+              (row.cells[2]?.innerText || '') + ' ' +
+              (row.cells[3]?.innerText || '') + ' ' +
+              (row.cells[4]?.innerText || '')
+            ).toLowerCase();
+
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              let words = filter.split(' ');
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      </script>
     ";
 
     return $table;
@@ -1684,17 +1756,17 @@ class outerPort extends iQuery
     }
 
     $html = "<div class='table-responsive'>";
-    $html .= "<table class='table table-bordered table-hover'>";
+    $html .= "<table id='detailTable' class='table table-hover'>";
     $html .= "
       <thead style='background:#4e73df;color:white'>
         <tr>
-          <th style='width:40px'>#</th>
+          <th>#</th>
           <th>Camión</th>
           <th>Exportador</th>
           <th>Agencia</th>
-          <th>N° Guía</th>
+          <th>Guía(s)</th>
           <th>Contenedor</th>
-          <th class='text-end'>Pallets</th>
+          <th>Pallets</th>
           <th>Origen</th>
         </tr>
       </thead>
@@ -1714,19 +1786,18 @@ class outerPort extends iQuery
       $origin    = (int) ($r['origin'] ?? 0);
 
       $total += $pallets;
-
       $originText = $origin === 1 ? 'Contenedor' : 'Pallets';
 
       $html .= "
         <tr>
-          <td class='text-center'>{$i}</td>
-          <td style='max-width:120px;word-break:break-word;'>{$carPlate}</td>
-          <td style='max-width:180px;word-break:break-word;'>{$exporter}</td>
-          <td style='max-width:160px;word-break:break-word;'>{$agency}</td>
-          <td style='max-width:120px;word-break:break-word;'>{$guide}</td>
-          <td style='max-width:160px;word-break:break-word;'>{$container}</td>
-          <td class='text-end'>{$pallets}</td>
-          <td style='max-width:120px;word-break:break-word;'>{$originText}</td>
+          <td>{$i}</td>
+          <td>{$carPlate}</td>
+          <td>{$exporter}</td>
+          <td>{$agency}</td>
+          <td>{$guide}</td>
+          <td>{$container}</td>
+          <td>{$pallets}</td>
+          <td>{$originText}</td>
         </tr>
       ";
 
@@ -1735,10 +1806,10 @@ class outerPort extends iQuery
 
     $html .= "
       </tbody>
-      <tfoot class='table-light'>
+      <tfoot>
         <tr>
-          <th colspan='6' class='text-end' style='text-align:end;'>Total:</th>
-          <th class='text-end'>" . number_format($total, 0, ',', '.') . "</th>
+          <th colspan='6'>Total</th>
+          <th>" . number_format($total, 0, ',', '.') . "</th>
           <th></th>
         </tr>
       </tfoot>
@@ -1754,15 +1825,6 @@ class outerPort extends iQuery
     $ship = new ship();
     $port = new port();
 
-    /* Paginación */
-    $countStmt      = $this->db->query("SELECT COUNT(*) FROM app_ships WHERE finished = 1");
-    $totalRegistros = $countStmt->fetchColumn();
-
-    $porPagina = 25;
-    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $inicio    = ($pagina - 1) * $porPagina;
-    $urlBase   = generateMkey('stadistics_by_vessel') . '&page=';
-
     $query = "
       SELECT
         op.vessel_id,
@@ -1771,6 +1833,7 @@ class outerPort extends iQuery
         sh.eta,
         sh.etd,
         sh.ship_line,
+        sh.voyage,
         sh.finished_date,
         sh.voyage,
         SUM(CASE WHEN op.origin = 1 THEN 1 ELSE 0 END) AS total_containers,
@@ -1781,12 +1844,9 @@ class outerPort extends iQuery
       WHERE sh.finished = 1
       GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line
       ORDER BY sh.ship_id ASC
-      LIMIT :inicio, :porPagina
     ";
 
     $stmt = $this->db->prepare($query);
-    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
-    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -1824,6 +1884,7 @@ class outerPort extends iQuery
         <tr>
           <td>{$i}</td>
           <td>{$vessel}</td>
+          <td>{$data['voyage']}</td>
           <td>{$shipLine}</td>
           <td>{$polFlag} {$polName}</td>
           <td>{$podFlag} {$podName}</td>
@@ -1842,17 +1903,29 @@ class outerPort extends iQuery
       ";
 
       $detailsJs[$vid] = $this->getDetailByVessel($vid);
-      $style           = "style='width:max-content'";
     }
 
     return "
-      <div class='card shadow'>
-        <div class='table-responsive'>
-          <table class='table table-bordered table-hover' $style>
-            <thead style='background:#4e73df;color:white'>
+      <div class='card shadow mb-4'>
+        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap gap-2'>
+          <h6 class='mb-0'>
+            <i class='fas fa-chart-bar me-1'></i> Estadísticas por Nave
+            <small class='opacity-75'>(Total: {$i})</small>
+          </h6>
+
+          <div style='position:relative; max-width:250px; width:100%;'>
+            <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+            <input type='text' id='searchStadisticsByShipTable' placeholder='Buscar nave, naviera, puerto...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+          </div>
+        </div>
+
+        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+          <table id='stadisticsByShipTable' class='table table-hover mb-0 align-middle' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+            <thead style='background:#4e73df; color:white; position:sticky; top:0; z-index:2;'>
               <tr>
                 <th>#</th>
                 <th>Nave</th>
+                <th>Viaje</th>
                 <th>Naviera</th>
                 <th>POL</th>
                 <th>POD</th>
@@ -1864,7 +1937,7 @@ class outerPort extends iQuery
                 <th>Camiones</th>
                 <th>Contenedores</th>
                 <th>Pallets</th>
-                <th>Detalle</th>
+                <th class='text-center'>Detalle</th>
               </tr>
             </thead>
             <tbody>$rows</tbody>
@@ -1872,18 +1945,16 @@ class outerPort extends iQuery
         </div>
       </div>
 
-      {$this->paginate($totalRegistros, $porPagina, $pagina, $urlBase)}
-
       <!-- Modal -->
       <div class='modal fade' id='detailModal' tabindex='-1'>
         <div class='modal-dialog modal-xl modal-dialog-scrollable'>
           <div class='modal-content'>
-            <div class='modal-header'>
-              <h5 class='modal-title'>Detalle de Carga </br>
-                Nave: {$ship->getVesselName($vid)} | Viaje: {$data['voyage']}
-              </h5>
-              <button type='button' class='close' data-bs-dismiss='modal' aria-label='Cerrar'>
-              <span>×</span>
+            <div class='modal-header' style='flex-direction:column; align-items:flex-start;'>
+              <h5 class='modal-title'>Desgloce de Carga</h5>
+              <h6 id='modalTitleDetail' class='modal-title'></h6>
+              <button type='button' class='close' data-bs-dismiss='modal' aria-label='Cerrar' style='position:absolute; right:15px; top:15px;'>
+                <span>×</span>
+              </button>
             </div>
             <div class='modal-body' id='modalDetailBody'></div>
           </div>
@@ -1895,8 +1966,32 @@ class outerPort extends iQuery
         function loadDetail(id){
           document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
         }
+
+        document.getElementById('searchStadisticsByShipTable').addEventListener('keyup', function() {
+          const filter = this.value.toLowerCase().trim();
+          const rows   = document.querySelectorAll('#stadisticsByShipTable tbody tr');
+
+          rows.forEach(row => {
+            const text = (
+              (row.cells[1]?.innerText || '') + ' ' +
+              (row.cells[2]?.innerText || '') + ' ' +
+              (row.cells[3]?.innerText || '') + ' ' +
+              (row.cells[4]?.innerText || '')
+            ).toLowerCase();
+
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              const words = filter.split(' ').filter(Boolean);
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
       </script>
     ";
+
   }
 
   public function shiftsReport($shifts, $dateStart, $dateEnd)
@@ -2027,10 +2122,22 @@ class outerPort extends iQuery
     }
 
     return "
-      <div class='card shadow'>
-        <div class='table-responsive'>
-          <table class='table table-bordered table-hover' $style>
-            <thead style='background:#4e73df;color:white'>
+      <div class='card shadow mb-4'>
+        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+          <h6 class='mb-0'>
+            <i class='fas fa-clock'></i> Reporte de Turnos
+            <em>(Total camiones: " . number_format($totalCamiones, 0, ',', '.') . ")</em>
+          </h6>
+
+          <div style='position:relative; max-width:250px;'>
+            <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
+            <input type='text' id='seacrhShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+          </div>
+        </div>
+
+        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+          <table id='shiftsTable' class='table table-hover mb-0'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+            <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
               <tr>
                 <th>#</th>
                 <th>Estado</th>
@@ -2056,6 +2163,26 @@ class outerPort extends iQuery
           </table>
         </div>
       </div>
+
+      <script>
+        document.getElementById('seacrhShiftsTable').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase().trim();
+          let rows = document.querySelectorAll('#shiftsTable tbody tr');
+
+          rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              let words = filter.split(' ');
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      </script>
     ";
   }
 

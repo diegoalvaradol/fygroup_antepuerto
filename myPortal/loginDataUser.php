@@ -15,7 +15,7 @@ if (!isset($_SESSION['user'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Cargando...</title>
 
-  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>

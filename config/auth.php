@@ -5,7 +5,7 @@ session_start();
 Base path automático
 =============================== */
 $basePath = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
-$basePath = str_replace(['/myPortal', '/mySSL'], '', $basePath);
+$basePath = str_replace(['/myPortal', '/myFY'], '', $basePath);
 
 /* ===============================
 Validar sesión
@@ -32,8 +32,8 @@ if (strpos($uri, '/myPortal') !== false && ($division !== 'terminal' && $divisio
   $forbidden = true;
 }
 
-if (strpos($uri, '/mySSL') !== false && $division !== 'ssl') {
-  $redirect  = "{$basePath}/mySSL/login.php";
+if (strpos($uri, '/myFY') !== false && $division !== 'fy') {
+  $redirect  = "{$basePath}/myFY/login.php";
   $forbidden = true;
 }
 
@@ -99,7 +99,7 @@ if ($forbidden) {
   <body>
     <div class="card">
       <div style="justify-self: center;">
-        <img src="../images/ssl-logo-azul.png" style="height: 50%; width: 100%;">
+        <img src="../images/logo-fygroup-v1.png" style="height: 50%; width: 75%;">
       </div>
 
       <h1>403</h1>

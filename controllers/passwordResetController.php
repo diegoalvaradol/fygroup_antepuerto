@@ -31,10 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $userDivision  = $list['division'];
     $url           = generateMkey('reset_form') . '&token=' . $token;
 
-    if ($userDivision == 'ssl') {
-      $link = $localHost ? "http://localhost/ssl-chile/mySSL/" . $url : "https://myssl.ssl-lines.com/mySSL/" . $url;
+    if ($userDivision == 'fy') {
+      $link = $localHost ? "http://localhost/ssl-chile/myFY/" . $url : "https://myfy.fygroup.cl/myFY/" . $url;
     } elseif ($userDivision == 'terminal' || $userDivision == 'exporter') {
-      $link = $localHost ? "http://localhost/ssl-chile/myPortal/" . $url : "https://myssl.ssl-lines.com/myPortal/" . $url;
+      $link = $localHost ? "http://localhost/ssl-chile/myPortal/" . $url : "https://myfy.fygroup.cl/myPortal/" . $url;
     }
 
     $mail = new PHPMailer(true);
@@ -53,11 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       $mail->Encoding = 'base64';
 
       // Datos del correo
-      $mail->setFrom('soporte@ssl-lines.com', 'Soporte SSL');
+      $mail->setFrom('soporte@ssl-lines.com', 'Soporte FYGroup');
       $mail->addAddress($email);
       $mail->isHTML(true);
       $mail->Priority = 1;
-      $mail->Subject  = 'Reestablecer tu contraseña en Sistema Integral SSL.';
+      $mail->Subject  = 'Reestablecer tu contraseña en Sistema Integral FYGroup.';
       $mail->Body     = '
                 <div style="font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 30px; text-align: center;">
                     <div style="background-color: #fff; padding: 30px; border-radius: 8px; display: inline-block; max-width: 500px;">
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <p style="color: #888;">Si no solicitaste este cambio, puedes ignorar este correo.</p>
                         <hr style="margin: 30px 20px;">
                         <footer style="font-size: 12px; color: #aaa; text-align: center;">
-                            © ' . date('Y') . ' Sistema Integral SSL. Todos los derechos reservados.<br>
+                            © ' . date('Y') . ' Sistema Integral FYGroup. Todos los derechos reservados.<br>
                             Este es un correo automático, por favor no respondas.
                         </footer>
                     </div>

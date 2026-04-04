@@ -1,6 +1,6 @@
-# Sistema SSL | Antepuerto Panul
+# Sistema FYGroup | Antepuerto Panul
 
-![Sistema SSL](images/ssl-logo-azul.png)
+![Sistema FYGroup](images/logo-fygroup-v1.png)
 
 Sistema web para la gestión del **Antepuerto Panul**, enfocado en el **control de ingreso de camiones** y en la generación de **reportes operacionales del flujo logístico**.
 

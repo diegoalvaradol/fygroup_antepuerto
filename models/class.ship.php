@@ -139,26 +139,12 @@ class ship extends iQuery
     $shipLine = new shipLine();
     $count    = 0;
 
-    /* Contador de registros */
-    $countQuery = "SELECT COUNT(*) FROM $this->table WHERE 1";
-    $countStmt  = $this->db->prepare($countQuery);
-    $countStmt->execute();
-    $totalRegistros = $countStmt->fetchColumn();
-
-    /* Construccion total de la página y query */
-    $porPagina = 25; /* Número de registros por página */
-    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $inicio    = ($pagina - 1) * $porPagina;
-    $urlBase   = generateMkey('enter_ship') . '&page=';
-
-    $query = "SELECT * FROM $this->table WHERE 1 ORDER BY ship_id ASC LIMIT :inicio, :porPagina";
+    $query = "SELECT * FROM $this->table WHERE 1 ORDER BY ship_id ASC";
     $stmt  = $this->db->prepare($query);
-    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
-    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $thead = "<thead style='background-color:#4e73df; color:white;'>";
+    $thead = "<thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>";
     $thead .= "<tr>";
     $thead .= "<th>Id</th>";
     $thead .= "<th>Nave</th>";
@@ -173,73 +159,92 @@ class ship extends iQuery
     $thead .= "<th>Embarque</th>";
     $thead .= "<th>Acciones</th>";
     $thead .= "</tr>";
-    $thead .= "</thead>";
-    $thead .= "<tbody>";
+    $thead .= "</thead><tbody>";
 
-    $tr = null;
+    $tr = "";
+
     foreach ($result as $data) {
-      $createdTime = new DateTime($data[$this->created]);
-      $updateTime  = new DateTime($data[$this->lastupdate]);
-      $etaTime     = new DateTime($data[$this->eta]);
-      $etdTime     = new DateTime($data[$this->etd]);
+      $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
+      $updated = (new DateTime($data[$this->lastupdate]))->format('d-m-Y H:i');
+      $eta     = (new DateTime($data[$this->eta]))->format('d-m-Y H:i');
+      $etd     = (new DateTime($data[$this->etd]))->format('d-m-Y H:i');
 
-      $created    = $createdTime->format('d-m-Y H:i');
-      $lastupdate = $updateTime->format('d-m-Y H:i');
-      $eta        = $etaTime->format('d-m-Y H:i');
-      $etd        = $etdTime->format('d-m-Y H:i');
+      $finish = ($data[$this->finisheddate]) ? (new DateTime($data[$this->finisheddate]))->format('d-m-Y H:i') : 'Por estimar.';
 
-      if ($data[$this->finisheddate] != null) {
-        $finishDateTime = new DateTime($data[$this->finisheddate]);
-        $finish         = $finishDateTime->format('d-m-Y H:i');
-      } else {
-        $finish = 'Por estimar.';
-      }
+      $btnFinishedDate = '<i class="fas fa-info-circle text-info" title="Fecha de Cierre: ' . $finish . '" data-bs-toggle="popover"></i>';
 
-      $btnFinishedDate = '<i class="fas fa-info-circle text-info" title="Fecha de Cierre: ' . $finish . '" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"></i>';
-      $btnEndStacking  = $data[$this->finished] == 0 ? "<button type='button' class='btn btn-danger btn-sm' onclick='stackingShip(" . $data[$this->id] . ", \"" . $data[$this->vessel] . "\", \"" . $data[$this->voyage] . "\", 1)'><i class='fas fa-solid fa-lock'></i> Cerrar</button>" : "<button type='button' class='btn btn-success btn-sm' onclick='stackingShip(" . $data[$this->id] . ", \"" . $data[$this->vessel] . "\", \"" . $data[$this->voyage] . "\", 0)'><i class='fas fa-solid fa-lock-open'></i> Abrir</button>";
-      $btnEdit         = "<button type='button' class='btn btn-warning btn-user btn-sm' onclick='editShip(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pen'></i> Editar</button>";
-      $btnDelete       = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteShip(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
+      $btnEndStacking = $data[$this->finished] == 0
+      ? "<button class='btn btn-danger btn-sm' onclick='stackingShip(" . $data[$this->id] . ",\"" . $data[$this->vessel] . "\",\"" . $data[$this->voyage] . "\",1)'><i class='fas fa-lock'></i> Cerrar</button>"
+      : "<button class='btn btn-success btn-sm' onclick='stackingShip(" . $data[$this->id] . ",\"" . $data[$this->vessel] . "\",\"" . $data[$this->voyage] . "\",0)'><i class='fas fa-lock-open'></i> Abrir</button>";
+
+      $btnEdit   = "<button class='btn btn-warning btn-sm' onclick='editShip(" . $data[$this->id] . ")'><i class='fas fa-pen'></i> Editar</button>";
+      $btnDelete = "<button class='btn btn-danger btn-sm' onclick='deleteShip(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
 
       $tr .= "<tr>";
-      $tr .= "<td >" . $data[$this->id] . "</td>";
-      $tr .= "<td >" . $data[$this->vessel] . "</td>";
-      $tr .= "<td >" . $shipLine->getLineName($data[$this->line]) . "</td>";
-      $tr .= "<td >" . $data[$this->voyage] . "</td>";
-      $tr .= "<td >" . $port->getflagImage($port->getCountryName($data[$this->pol])) . ' ' . $port->getPortName($data[$this->pol]) . "</td>";
-      $tr .= "<td >" . $port->getflagImage($port->getCountryName($data[$this->pod])) . ' ' . $port->getPortName($data[$this->pod]) . "</td>";
-      $tr .= "<td >" . $eta . "</td>";
-      $tr .= "<td >" . $etd . "</td>";
-      $tr .= "<td >" . $created . "</td>";
-      $tr .= "<td >" . $lastupdate . "</td>";
-      $tr .= "<td >" . $btnEndStacking . ' ' . $btnFinishedDate . "</td>";
-      $tr .= "<td >" . $btnEdit . ' ' . $btnDelete . "</td>";
+      $tr .= "<td>{$data[$this->id]}</td>";
+      $tr .= "<td>{$data[$this->vessel]}</td>";
+      $tr .= "<td>" . $shipLine->getLineName($data[$this->line]) . "</td>";
+      $tr .= "<td>{$data[$this->voyage]}</td>";
+      $tr .= "<td>" . $port->getflagImage($port->getCountryName($data[$this->pol])) . " " . $port->getPortName($data[$this->pol]) . "</td>";
+      $tr .= "<td>" . $port->getflagImage($port->getCountryName($data[$this->pod])) . " " . $port->getPortName($data[$this->pod]) . "</td>";
+      $tr .= "<td>{$eta}</td>";
+      $tr .= "<td>{$etd}</td>";
+      $tr .= "<td>{$created}</td>";
+      $tr .= "<td>{$updated}</td>";
+      $tr .= "<td>{$btnEndStacking} {$btnFinishedDate}</td>";
+      $tr .= "<td>{$btnEdit} {$btnDelete}</td>";
       $tr .= "</tr>";
 
       $count++;
     }
 
-    $tbclose = "</tbody>";
-
     $table = "
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Naves <em>(Total de Registros: " . $count . ")</em></h6>
+            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+              <h6 class='mb-0'>
+                <i class='fas fa-ship'></i> Listado de Naves
+                <em>(Total: $count)</em>
+              </h6>
+
+              <div style='position:relative; max-width:250px; width:100%;'>
+                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                <input type='text' id='searchTableShip' placeholder='Buscar por nave' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+              </div>
             </div>
 
-            <div class='table-responsive'>
-              <table class='table table-bordered table-hover' style='width:max-content;'>
-                " . $thead . $tr . $tbclose . "
+            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+              <table id='shipTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                $thead
+                $tr
               </table>
             </div>
           </div>
-          " . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . "
         </div>
       </div>
+
+      <script>
+        document.getElementById('searchTableShip').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase().trim();
+          let rows = document.querySelectorAll('#shipTable tbody tr');
+
+          rows.forEach(row => {
+            let cell = row.cells[1];
+            let text = cell ? cell.innerText.toLowerCase() : '';
+            let match = text.includes(filter);
+
+            if (filter.includes(' ')) {
+              let words = filter.split(' ');
+              match = words.every(w => text.includes(w));
+            }
+
+            row.style.display = match ? '' : 'none';
+          });
+        });
+      </script>
     ";
 
     return $table;
   }
-
 }

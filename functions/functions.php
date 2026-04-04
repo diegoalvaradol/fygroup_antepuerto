@@ -9,7 +9,7 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @param  $area   [area]
  * @return void
  */
-function generateMkey($module, $area = 'mySSL')
+function generateMkey($module, $area = 'myFY')
 {
   $secretKey = "SSL-CHILE-DIEGO_2025_0517";
   $time      = time();
@@ -80,117 +80,108 @@ function formatDate($date, $format = 'Y-m-d H:i:s')
  */
 function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
-  /* Mostrar mensaje de error */
+  $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
+  $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://myfy.fygroup.cl/';
+  $logo    = $baseUrl . 'images/ssl-logo-azul.png';
+
   echo '
-  <style>
-    .access-denied {
-      max-width: 460px;
-      margin: 80px auto;
-      padding: 24px 30px;
-      border: 2px solid #dc3545;
-      border-radius: 10px;
-      background: #fff5f5;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: #b02a37;
-      text-align: center;
-      box-shadow: 0 0 12px rgba(220,53,69,0.4);
-      user-select: none;
-    }
-    .access-denied svg.icon-large {
-      width: 56px;
-      height: 56px;
-      fill: #dc3545;
-      margin-bottom: 14px;
-      stroke: #dc3545;
-      stroke-width: 3;
-    }
-    .access-denied h1 {
-      font-size: 1.5rem;
-      margin: 0 0 14px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      color: #a8222f;
-    }
-    .access-denied h1 svg.icon-warning {
-      width: 22px;
-      height: 22px;
-      fill: #dc3545;
-      stroke: none;
-    }
-    .access-denied p {
-      font-size: 1.1rem;
-      margin: 0 0 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      line-height: 1.3;
-    }
-    .access-denied p svg.icon-lock {
-      width: 20px;
-      height: 20px;
-      fill: #dc3545;
-      flex-shrink: 0;
-    }
-    .btn-return {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border-radius: 6px;
-      border: none;
-      background-color: #dc3545;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
-      margin: 0 auto;
-    }
-    .btn-return:hover,
-    .btn-return:focus {
-      background-color: #a8222f;
-      outline: none;
-    }
-    .btn-return i {
-      font-size: 1.1rem;
-    }
-  </style>
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="Diego Alvarado López." content="">
+    <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+    <title>FYGroup | Acceso Denegado</title>
+    <meta http-equiv="refresh" content="5;url=dashboard.php">
 
-  <div class="access-denied" role="alert" aria-live="assertive" aria-atomic="true" tabindex="0">
-    <svg class="icon-large" aria-hidden="true" focusable="false" viewBox="0 0 64 64" role="img" xmlns="http://www.w3.org/2000/svg" aria-label="Error icon">
-      <circle cx="32" cy="32" r="30" />
-      <line x1="20" y1="20" x2="44" y2="44" stroke-linecap="round"/>
-      <line x1="44" y1="20" x2="20" y2="44" stroke-linecap="round"/>
-    </svg>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <h1>
-      <svg class="icon-warning" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 21h22L12 2 1 21z"/>
-        <path d="M13 18h-2v-2h2v2zm0-4h-2v-4h2v4z" fill="#fff"/>
-      </svg>
-      Acceso Denegado
-    </h1>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1f2933, #111827);
+        color: #fff;
+      }
+      .card {
+        background: #1f2937;
+        padding: 2.5rem 3rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,.4);
+        max-width: 420px;
+      }
+      .card img {
+        width: 180px;
+        margin-bottom: 15px;
+      }
+      .icon {
+        font-size: 45px;
+        margin-bottom: 10px;
+        color: #ef4444;
+      }
+      .card h1 {
+        font-size: 2rem;
+        margin-bottom: .5rem;
+      }
+      .card p {
+        opacity: .85;
+        margin-bottom: 1rem;
+      }
+      .card small {
+        display: block;
+        opacity: .6;
+        margin-bottom: 1.5rem;
+        font-size: 12px;
+      }
+      .card a {
+        display: inline-block;
+        padding: .6rem 1.3rem;
+        border-radius: 8px;
+        background: #ef4444;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .card a:hover {
+        background: #dc2626;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+        <img src="' . $logo . '" alt="SSL Logo">
 
-    <p>
-      <svg class="icon-lock" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 9V7a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h1zm2-2v2h8V7a4 4 0 0 0-8 0z"/>
-      </svg>
-      No tienes permisos necesarios para ver esta página.
-    </p>
+        <div class="icon">
+          <i class="fa-solid fa-ban"></i>
+        </div>
 
-    <button type="button" class="btn-return" onclick="location.href=\'dashboard.php\'" aria-label="Volver al inicio">
-      <i class="fas fa-arrow-left"></i> Volver al Inicio
-    </button>
-  </div>
+        <h1>Acceso denegado</h1>
+        <p>No tienes permisos para acceder a esta sección.</p>
+
+        <small>
+          Usuario: ' . htmlspecialchars($usuario) . '<br>
+          Página: ' . htmlspecialchars($pagina) . '
+        </small>
+
+        <small>Redirección automática en 5 segundos…</small>
+
+        <a onclick="location.href=\'dashboard.php\'">Ir ahora</a>
+    </div>
+  </body>
+  </html>
   ';
 
-  /* Enviar correo */
+  /* CORREO */
   try {
     require_once __DIR__ . '/../vendor/autoload.php';
     require_once __DIR__ . '/../config/includes.php';
@@ -205,37 +196,70 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
     $mail->SMTPSecure = 'ssl';
     $mail->Port       = 465;
 
-    $mail->CharSet  = 'UTF-8';
-    $mail->Encoding = 'base64';
+    $mail->CharSet = 'UTF-8';
+    $mail->setFrom('soporte@ssl-lines.com', 'SSL Sistema');
+    $mail->addAddress('diego.alvaraado@gmail.com');
 
-    $mail->setFrom('soporte@ssl-lines.com', 'Soporte SSL');
-    $mail->addAddress('diego.alvaraado@gmail.com', 'Diego Alvarado');
     $mail->isHTML(true);
-    $mail->Priority = 1;
+    $mail->Subject = '🚫 Acceso Denegado Detectado';
 
-    $mail->Subject = '⚠️ Intento de acceso denegado en el sistema';
-    $mail->Body    = '
-      <div style="font-family: Arial; background:#f2f2f2; padding:30px;">
-        <div style="background:#fff; padding:24px 32px; border-radius:8px; border-left:6px solid #dc3545; max-width:540px; margin:auto;">
-          <h2 style="color:#dc3545;">🚫 Alerta de Acceso Denegado</h2>
-          <table style="font-size:14px; color:#555;">
-            <tr><td><strong>Usuario:</strong></td><td>' . htmlspecialchars($usuario) . '</td></tr>
-            <tr><td><strong>Página:</strong></td><td>' . htmlspecialchars($pagina) . '</td></tr>
-            <tr><td><strong>URL:</strong></td><td>' . htmlspecialchars($url) . '</td></tr>
-            <tr><td><strong>Fecha:</strong></td><td>' . date('d-m-Y H:i:s') . '</td></tr>
-            <tr><td><strong>IP:</strong></td><td>' . $_SERVER['REMOTE_ADDR'] . '</td></tr>
-          </table>
-          <hr style="margin: 30px 20px;">
-					<footer style="font-size: 12px; color: #aaa; text-align: center;">
-							© ' . date('Y') . ' Sistema Integral SSL. Todos los derechos reservados.<br>
-							Este es un correo automático, por favor no respondas.
-					</footer>
+    $mail->Body = '
+    <div style="margin:0;padding:40px 0;background:#0f172a;font-family:Arial,sans-serif;color:#fff;">
+      <div style="max-width:700px;margin:auto;background:#1e293b;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);">
+
+        <!-- HEADER -->
+        <div style="text-align:center;padding:30px 20px;background:#020617;">
+          <img src="' . $logo . '" style="width:180px;margin-bottom:15px;">
+          <h1 style="margin:0;font-size:28px;color:#ef4444;">🚫 ACCESO DENEGADO</h1>
+          <p style="margin:5px 0 0 0;font-size:14px;opacity:.7;">Alerta de seguridad del sistema</p>
         </div>
-      </div>';
+
+        <!-- ALERTA -->
+        <div style="padding:25px;">
+          <div style="background:#450a0a;padding:15px 20px;border-left:6px solid #ef4444;border-radius:8px;font-size:15px;margin-bottom:25px;">
+            Se detectó un intento de acceso no autorizado.
+          </div>
+
+          <!-- DATOS -->
+          <table style="width:100%;border-collapse:separate;border-spacing:0;font-size:15px;background:#020617;border-radius:10px;overflow:hidden;">
+            <tr>
+              <td style="padding:12px 15px;font-weight:bold;width:35%;color:#94a3b8;border-bottom:1px solid #1e293b;">👤 Usuario</td>
+              <td style="padding:12px 15px;border-bottom:1px solid #1e293b;">' . htmlspecialchars($usuario) . '</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 15px;font-weight:bold;color:#94a3b8;border-bottom:1px solid #1e293b;">📄 Página</td>
+              <td style="padding:12px 15px;border-bottom:1px solid #1e293b;">' . htmlspecialchars($pagina) . '</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 15px;font-weight:bold;color:#94a3b8;border-bottom:1px solid #1e293b;">🌐 URL</td>
+              <td style="padding:12px 15px;border-bottom:1px solid #1e293b;word-break:break-all;">' . htmlspecialchars($url) . '</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 15px;font-weight:bold;color:#94a3b8;border-bottom:1px solid #1e293b;">🕒 Fecha</td>
+              <td style="padding:12px 15px;border-bottom:1px solid #1e293b;">' . date('d-m-Y H:i:s') . '</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 15px;font-weight:bold;color:#94a3b8;">📡 IP</td>
+              <td style="padding:12px 15px;">' . $_SERVER['REMOTE_ADDR'] . '</td>
+            </tr>
+          </table>
+
+          <!-- BLOQUE FINAL -->
+          <div style="margin-top:30px;padding:15px;background:#020617;border-radius:8px;font-size:14px;text-align:center;opacity:.8;">
+            Este evento fue registrado automáticamente por el sistema FYGroup.
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div style="text-align:center;padding:20px;font-size:12px;background:#020617;opacity:.6;">
+          © ' . date('Y') . ' FYGroup.
+        </div>
+      </div>
+    </div>';
 
     $mail->send();
   } catch (Exception $e) {
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
+    // opcional log
   }
 
   exit;
