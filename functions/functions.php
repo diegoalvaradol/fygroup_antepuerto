@@ -82,7 +82,7 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
   $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
   $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://myfy.fygroup.cl/';
-  $logo    = $baseUrl . 'images/ssl-logo-azul.png';
+  $logo    = $baseUrl . 'imageslogo-fygroup-v1_bg_removed.png.png';
 
   echo '
   <!DOCTYPE html>
