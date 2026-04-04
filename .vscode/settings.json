@@ -11,6 +11,15 @@
     "[php]": {
         "editor.defaultFormatter": "kokororin.vscode-phpfmt"
     },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "phpfmt.indent_with_space": 2,
     "phpfmt.passes": [
         "PSR2KeywordsLowerCase",
@@ -97,9 +106,6 @@
     "git.autofetch": true,
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "terminal.integrated.ignoreBracketedPasteMode": true,
-    "[json]": {
-        "editor.defaultFormatter": "lonefy.vscode-JS-CSS-HTML-formatter"
-    },
     "php.validate.executablePath": "/opt/homebrew/bin/php",
     "phpfmt.php_bin": "/opt/homebrew/bin/php"
 }
