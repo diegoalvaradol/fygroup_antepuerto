@@ -1,107 +1,112 @@
 {
-  "intelephense.format.enable": false,
-  "intelephense.files.maxSize": 1000000,
-  "files.eol": "\n",
-  "editor.tabSize": 2,
-  "editor.insertSpaces": false,
-  "editor.formatOnPaste": true,
-  "editor.formatOnType": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveTimeout": 15000,
+    "intelephense.format.enable": false,
+    "intelephense.files.maxSize": 1000000,
+    "files.eol": "\n",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveTimeout": 15000,
+    "[php]": {
+      "editor.defaultFormatter": "kokororin.vscode-phpfmt"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "phpfmt.indent_with_space": 2,
+    "phpfmt.passes": [
+        "PSR2KeywordsLowerCase",
+        "PSR2LnAfterNamespace",
+        "PSR2CurlyOpenNextLine",
+        "PSR2ModifierVisibilityStaticOrder",
+        "PSR2SingleEmptyLineAndStripClosingTag",
+        "PSR2KeywordsLowerCase",
+        "PSR2LnAfterNamespace",
+        "PSR2CurlyOpenNextLine",
+        "PSR2ModifierVisibilityStaticOrder",
+        "PSR2SingleEmptyLineAndStripClosingTag",
+        "ReindentSwitchBlocks",
+        "AlignConstVisibilityEquals",
+        "AlignDoubleArrow",
+        "AlignDoubleSlashComments",
+        "AlignEquals",
+        "AlignGroupDoubleArrow",
+        "AlignTypehint",
+        "AutoSemicolon",
+        "NewLineBeforeReturn",
+        "OnlyOrderUseClauses",
+        "PrettyPrintDocBlocks",
+        "RemoveSemicolonAfterCurly",
+        "ReplaceBooleanAndOr",
+        "ShortArray",
+        "StripExtraCommaInArray",
+        "TrimSpaceBeforeSemicolon",
+        "AlignPHPCode",
+    ],
+    "phpfmt.exclude": [
+        "ReindentComments",
+        "StripNewlineWithinClassBody"
+    ],
+    "phpfmt.psr2": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
 
-  "[php]": {
-    "editor.defaultFormatter": "kokororin.vscode-phpfmt"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+    "liveServer.settings.donotVerifyTags": true,
+    "liveServer.settings.donotShowInfoMsg": true,
 
-  "phpfmt.indent_with_space": 2,
-  "phpfmt.passes": [
-    "PSR2KeywordsLowerCase",
-    "PSR2LnAfterNamespace",
-    "PSR2CurlyOpenNextLine",
-    "PSR2ModifierVisibilityStaticOrder",
-    "PSR2SingleEmptyLineAndStripClosingTag",
-    "ReindentSwitchBlocks",
-    "AlignConstVisibilityEquals",
-    "AlignDoubleArrow",
-    "AlignDoubleSlashComments",
-    "AlignEquals",
-    "AutoSemicolon",
-    "NewLineBeforeReturn",
-    "PrettyPrintDocBlocks",
-    "RemoveSemicolonAfterCurly",
-    "ReplaceBooleanAndOr",
-    "ShortArray",
-    "StripExtraCommaInArray",
-    "TrimSpaceBeforeSemicolon"
-  ],
-  "phpfmt.exclude": [
-    "ReindentComments",
-    "StripNewlineWithinClassBody"
-  ],
-  "phpfmt.psr2": true,
+    "workbench.editorAssociations": {
+      ".ipynb": "jupyter-notebook"
+    },
+    "security.workspace.trust.untrustedFiles": "open",
 
-  "diffEditor.ignoreTrimWhitespace": false,
-  "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false,
+    "tabnine.experimentalAutoImports": true,
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.advanced": {},
 
-  "liveServer.settings.donotVerifyTags": true,
-  "liveServer.settings.donotShowInfoMsg": true,
+    "workbench.sideBar.location": "right",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.productIconTheme": "macos-modern",
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "Hack The Box",
 
-  "workbench.editorAssociations": {
-    ".ipynb": "jupyter-notebook"
-  },
-  "security.workspace.trust.untrustedFiles": "open",
+    "editor.minimap.size": "fill",
+    "editor.fontFamily": "JetBrains Mono, Consolas, monospace",
+    "editor.fontSize": 12,
+    "editor.fontWeight": "300",
+    "editor.lineHeight": 20,
+    "editor.letterSpacing": 0.5,
+    "editor.fontLigatures": true,
+    "editor.cursorBlinking": "smooth",
 
-  "tabnine.experimentalAutoImports": true,
-  "editor.inlineSuggest.enabled": true,
-  "github.copilot.advanced": {},
+    "material-icon-theme.folders.color": "#6e7b8c",
 
-  "workbench.sideBar.location": "right",
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.productIconTheme": "macos-modern",
-  "workbench.startupEditor": "none",
-  "workbench.colorTheme": "Hack The Box",
+    "yaml.schemas": {
+      "file:///c%3A/Users/diego/.vscode/extensions/atlassian.atlascode-3.6.6/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    },
 
-  "editor.minimap.size": "fill",
-  "editor.fontFamily": "JetBrains Mono, Consolas, monospace",
-  "editor.fontSize": 12,
-  "editor.fontWeight": "300",
-  "editor.lineHeight": 20,
-  "editor.letterSpacing": 0.5,
-  "editor.fontLigatures": true,
-  "editor.cursorBlinking": "smooth",
+    "atlascode.bitbucket.enabled": false,
+    "atlascode.jira.lastCreateSiteAndProject": {
+      "siteId": "",
+      "projectKey": ""
+    },
 
-  "material-icon-theme.folders.color": "#6e7b8c",
+    "extensions.autoUpdate": "onlyEnabledExtensions",
+    "files.autoSave": "afterDelay",
+    "editor.largeFileOptimizations": false,
 
-  "yaml.schemas": {
-    "file:///c%3A/Users/diego/.vscode/extensions/atlassian.atlascode-3.6.6/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-  },
+    "git.autofetch": true,
 
-  "atlascode.bitbucket.enabled": false,
-  "atlascode.jira.lastCreateSiteAndProject": {
-    "siteId": "",
-    "projectKey": ""
-  },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.ignoreBracketedPasteMode": true,
 
-  "extensions.autoUpdate": "onlyEnabledExtensions",
-  "files.autoSave": "afterDelay",
-  "editor.largeFileOptimizations": false,
-
-  "git.autofetch": true,
-
-  "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "terminal.integrated.ignoreBracketedPasteMode": true,
-
-  "php.validate.executablePath": "/opt/homebrew/bin/php",
-  "phpfmt.php_bin": "/opt/homebrew/bin/php",
-  "atlascode.rovodev.showEntitlementNotifications": false
+    "php.validate.executablePath": "/opt/homebrew/bin/php",
+    "phpfmt.php_bin": "/opt/homebrew/bin/php"
 }
