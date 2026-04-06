@@ -1,4 +1,4 @@
-image: composer:2.0
+image: atlassian/default-image:3
 
 pipelines:
   default:
@@ -6,18 +6,16 @@ pipelines:
         - step:
             name: Test
             script:
+              - apt-get update && apt-get install -y php composer
               - composer install
               - ./vendor/bin/phpunit test
-            caches:
-              - composer
 
         - step:
             name: Lint
             script:
+              - apt-get update && apt-get install -y php composer
               - composer install
               - ./vendor/bin/phplint . --exclude=vendor
-            caches:
-              - composer
 
   branches:
     master:
