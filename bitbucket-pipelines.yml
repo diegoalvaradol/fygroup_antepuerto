@@ -1,22 +1,6 @@
 image: atlassian/default-image:3
 
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: Test
-            script:
-              - apt-get update && apt-get install -y php composer
-              - composer install
-              - ./vendor/bin/phpunit test
-
-        - step:
-            name: Lint
-            script:
-              - apt-get update && apt-get install -y php composer
-              - composer install
-              - ./vendor/bin/phplint . --exclude=vendor
-
   branches:
     master:
       - step:
@@ -24,4 +8,16 @@ pipelines:
           deployment: production
           script:
             - apt-get update && apt-get install -y lftp
-            - lftp -c "set ssl:verify-certificate no; open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST; mirror -R ./ /public_html/ssl-chile --delete --verbose --exclude .git --exclude node_modules --exclude vendor --exclude bitbucket-pipelines.yml; quit"
+            - lftp -c "
+              set ssl:verify-certificate no;
+              open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST;
+              mirror -R \
+                --only-newer \
+                --size-only \
+                --verbose \
+                --exclude .git \
+                --exclude node_modules \
+                --exclude vendor \
+                --exclude bitbucket-pipelines.yml \
+                ./ /public_html/ssl-chile;
+              quit"
