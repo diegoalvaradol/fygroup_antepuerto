@@ -379,8 +379,6 @@ class menu extends iQuery
       <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
       <ul class="navbar-nav sidebar accordion d-flex flex-column" id="accordionSidebar">
-
-        <!-- HEADER -->
         <div class="sidebar-header">
           <a class="sidebar-brand" href="dashboard.php">
             <img src="../images/logo-fygroup-v1_bg_removed.png" alt="logo">
