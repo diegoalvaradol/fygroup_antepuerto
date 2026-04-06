@@ -300,12 +300,95 @@ class menu extends iQuery
           padding-bottom: 0px;
           margin-bottom: 10px;
         }
+
+        /* === MOBILE === */
+        @media (max-width: 768px) {
+          #accordionSidebar {
+            position: fixed;
+            top: 0;
+            left: -260px;
+            width: 260px;
+            height: 100%;
+            z-index: 9999;
+            transition: .3s;
+          }
+
+          #accordionSidebar.active {
+            left: 0;
+          }
+
+          .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.4);
+            z-index: 9998;
+            display: none;
+          }
+
+          .sidebar-overlay.active {
+            display: block;
+          }
+        }
+
+        /* botón hamburguesa */
+        .mobile-toggle {
+          position: fixed;
+          top: 10px;
+          left: 10px;
+          z-index: 10000;
+          border: none;
+          background: #3787ba;
+          color: #fff;
+          width: 42px;
+          height: 42px;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0,0,0,.2);
+        }
+
+        /* header sidebar */
+        .sidebar-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px;
+        }
+
+        /* botón cerrar */
+        .close-sidebar {
+          border: none;
+          background: transparent;
+          color: #fff;
+          font-size: 18px;
+        }
+
+        /* mejora logo */
+        .sidebar-brand img {
+          max-width: 130px;
+        }
       </style>
 
+      <!-- BOTON MOBILE -->
+      <button id="mobileSidebarToggle" class="mobile-toggle d-md-none">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- OVERLAY -->
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
       <ul class="navbar-nav sidebar accordion d-flex flex-column" id="accordionSidebar">
-        <a class="sidebar-brand" href="dashboard.php">
-          <img src="../images/logo-fygroup-v1_bg_removed.png" alt="logo">
-        </a>
+
+        <!-- HEADER -->
+        <div class="sidebar-header">
+          <a class="sidebar-brand" href="dashboard.php">
+            <img src="../images/logo-fygroup-v1_bg_removed.png" alt="logo">
+          </a>
+          <button id="closeSidebar" class="close-sidebar d-md-none">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
 
         <div class="sidebar-heading text-white">
           Sistema Antepuerto
@@ -314,15 +397,15 @@ class menu extends iQuery
 
     foreach ($menus as $menu) {
       $sidebar .= '
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false">
-          <i class="fas ' . $menu['icon'] . '"></i>
-          <span>' . $menu['title'] . '</span>
-          <i class="fas fa-chevron-down arrow"></i>
-        </a>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false">
+            <i class="fas ' . $menu['icon'] . '"></i>
+            <span>' . $menu['title'] . '</span>
+            <i class="fas fa-chevron-down arrow"></i>
+          </a>
 
-        <div id="' . $menu['id'] . '" class="collapse" data-parent="#accordionSidebar">
-          <div class="collapse-inner">
+          <div id="' . $menu['id'] . '" class="collapse" data-parent="#accordionSidebar">
+            <div class="collapse-inner">
       ';
 
       foreach ($menu['items'] as $item) {
@@ -334,22 +417,49 @@ class menu extends iQuery
       }
 
       $sidebar .= '
+            </div>
           </div>
-        </div>
-      </li>';
+        </li>
+      ';
     }
 
     $sidebar .= '
-      <div class="sidebar-footer mt-auto text-center">
-        <div><i class="fas fa-copyright"></i>' . $infoCfg['name'] . '</div>
-        <div><i class="fas fa-code-branch"></i>' . $infoCfg['version'] . '</div>
-        <div><i class="fas fa-rotate"></i>' . $updateTime->format('d-m-Y H:i') . '</div>
+        <div class="sidebar-footer mt-auto text-center">
+          <div><i class="fas fa-copyright"></i>' . $infoCfg['name'] . '</div>
+          <div><i class="fas fa-code-branch"></i>' . $infoCfg['version'] . '</div>
+          <div><i class="fas fa-rotate"></i>' . $updateTime->format('d-m-Y H:i') . '</div>
 
-        <div class="mt-2">
-          <button class="rounded-circle border-0" id="sidebarToggle"></button>
+          <div class="mt-2">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+          </div>
         </div>
-      </div>
-    </ul>';
+      </ul>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const sidebar = document.getElementById("accordionSidebar");
+          const toggle = document.getElementById("mobileSidebarToggle");
+          const overlay = document.getElementById("sidebarOverlay");
+
+          toggle.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+          });
+
+          overlay.addEventListener("click", () => {
+            sidebar.classList.remove("active");
+            overlay.classList.remove("active");
+          });
+        });
+
+        const closeBtn = document.getElementById("closeSidebar");
+
+        closeBtn.addEventListener("click", () => {
+          sidebar.classList.remove("active");
+          overlay.classList.remove("active");
+        });
+      </script>
+    ';
 
     return $sidebar;
   }
