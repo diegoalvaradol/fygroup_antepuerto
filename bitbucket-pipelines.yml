@@ -26,11 +26,4 @@ pipelines:
           deployment: production
           script:
             - apt-get update && apt-get install -y lftp
-            - lftp -u "$FTP_USER","$FTP_PASS" $FTP_HOST <<EOF
-              mirror -R ./ public_html/ssl-chile --delete --verbose \
-                --exclude .git \
-                --exclude node_modules \
-                --exclude vendor \
-                --exclude bitbucket-pipelines.yml
-              quit
-              EOF
+            - lftp -c "open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST; mirror -R ./ /public_html/ssl-chile --delete --verbose --exclude .git --exclude node_modules; quit"
