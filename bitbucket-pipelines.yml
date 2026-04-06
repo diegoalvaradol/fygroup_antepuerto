@@ -1,0 +1,15 @@
+image: atlassian/default-image:3
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Deploy FTP Sync
+          script:
+            - apt-get update && apt-get install -y lftp
+            - lftp -c "
+              open -u $FTP_USER,$FTP_PASSWORD $FTP_HOST;
+              mirror -R --delete --verbose \
+              --exclude .git \
+              --exclude node_modules \
+              ./ /public_html/"
