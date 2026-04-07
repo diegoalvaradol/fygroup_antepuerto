@@ -146,7 +146,7 @@ class port extends iQuery
             <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
               <h6 class='mb-0'>
                 <i class='fas fa-list'></i> Listado de Puertos
-                <em>(Total: $count)</em>
+                <em>(Total: <span id='totalPorts'>$count</span>)</em>
               </h6>
 
               <div style='position:relative; max-width:250px; width:100%;'>
@@ -169,6 +169,7 @@ class port extends iQuery
       document.getElementById('searchTablePort').addEventListener('keyup', function() {
         let filter = this.value.toLowerCase().trim();
         let rows = document.querySelectorAll('#portTable tbody tr');
+        let visibleCount = 0;
 
         rows.forEach(row => {
           let cell = row.cells[1];
@@ -181,7 +182,11 @@ class port extends iQuery
           }
 
           row.style.display = match ? '' : 'none';
+
+          if (match) visibleCount++;
         });
+
+        document.getElementById('totalPorts').innerText = visibleCount;
       });
       </script>
     ";

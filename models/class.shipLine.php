@@ -128,7 +128,7 @@ class shipLine extends iQuery
             <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
               <h6 class='mb-0'>
                 <i class='fas fa-ship'></i> Listado de Líneas Navieras
-                <em>(Total: $count)</em>
+                <em>(Total: <span id='totalShipLines'>$count</span>)</em>
               </h6>
 
               <div style='position:relative; max-width:250px; width:100%;'>
@@ -151,6 +151,7 @@ class shipLine extends iQuery
         document.getElementById('searchTableShipLine').addEventListener('keyup', function() {
           let filter = this.value.toLowerCase().trim();
           let rows = document.querySelectorAll('#shipLineTable tbody tr');
+          let visibleCount = 0;
 
           rows.forEach(row => {
             let cell = row.cells[1];
@@ -163,7 +164,11 @@ class shipLine extends iQuery
             }
 
             row.style.display = match ? '' : 'none';
+
+            if (match) visibleCount++;
           });
+
+          document.getElementById('totalShipLines').innerText = visibleCount;
         });
       </script>
     ";

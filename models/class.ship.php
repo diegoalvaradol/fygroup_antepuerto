@@ -205,7 +205,7 @@ class ship extends iQuery
             <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
               <h6 class='mb-0'>
                 <i class='fas fa-ship'></i> Listado de Naves
-                <em>(Total: $count)</em>
+                <em>(Total: <span id='totalShips'>$count</span>)</em>
               </h6>
 
               <div style='position:relative; max-width:250px; width:100%;'>
@@ -228,6 +228,7 @@ class ship extends iQuery
         document.getElementById('searchTableShip').addEventListener('keyup', function() {
           let filter = this.value.toLowerCase().trim();
           let rows = document.querySelectorAll('#shipTable tbody tr');
+          let visibleCount = 0;
 
           rows.forEach(row => {
             let cell = row.cells[1];
@@ -240,7 +241,11 @@ class ship extends iQuery
             }
 
             row.style.display = match ? '' : 'none';
+
+            if (match) visibleCount++;
           });
+
+          document.getElementById('totalShips').innerText = visibleCount;
         });
       </script>
     ";

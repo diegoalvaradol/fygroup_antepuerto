@@ -822,7 +822,7 @@ class outerPort extends iQuery
             <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
               <h6 class='mb-0'>
                 <i class='fas fa-list'></i> Listado de Contenedores
-                <em>(Total: " . $count . ")</em>
+                <em>(Total: <span id='totalCnts'>$count</span>)</em>
               </h6>
 
               <div style='position:relative; max-width:250px; width:100%;'>
@@ -846,6 +846,7 @@ class outerPort extends iQuery
         document.getElementById('searchContainerTable').addEventListener('keyup', function() {
           let filter = this.value.toLowerCase().trim();
           let rows = document.querySelectorAll('#containerTable tbody tr');
+          let visibleCount = 0;
 
           rows.forEach(row => {
             let text = (
@@ -865,7 +866,11 @@ class outerPort extends iQuery
             }
 
             row.style.display = match ? '' : 'none';
+
+            if (match) visibleCount++;
           });
+
+          document.getElementById('totalCnts').innerText = visibleCount;
         });
       </script>
     ";
@@ -1198,7 +1203,7 @@ class outerPort extends iQuery
             <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
               <h6 class='mb-0'>
                 <i class='fas fa-list'></i> Listado de Termos
-                <em>(Total: " . $count . ")</em>
+                <em>(Total: <span id='totalThermos'>$count</span>)</em>
               </h6>
 
               <div style='position:relative; max-width:250px; width:100%;'>
@@ -1222,6 +1227,7 @@ class outerPort extends iQuery
         document.getElementById('searchThermoTable').addEventListener('keyup', function() {
           let filter = this.value.toLowerCase().trim();
           let rows = document.querySelectorAll('#thermoTable tbody tr');
+          let visibleCount = 0;
 
           rows.forEach(row => {
             let text = (
@@ -1239,7 +1245,11 @@ class outerPort extends iQuery
             }
 
             row.style.display = match ? '' : 'none';
+
+            if (match) visibleCount++;
           });
+
+          document.getElementById('totalThermos').innerText = visibleCount;
         });
       </script>
     ";
@@ -1556,7 +1566,7 @@ class outerPort extends iQuery
             <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
               <h6 class='mb-0'>
                 <i class='fas fa-list'></i> Listado
-                <em>(Total: " . $count . ")</em>
+                <em>(Total: <span id='totalShips'>$count</span>)</em>
               </h6>
 
               <div style='position:relative; max-width:250px; width:100%;'>
@@ -1581,6 +1591,7 @@ class outerPort extends iQuery
         document.getElementById('searchShipReportTable').addEventListener('keyup', function() {
           let filter = this.value.toLowerCase().trim();
           let rows = document.querySelectorAll('#shipReportTable tbody tr');
+          let visibleCount = 0;
 
           rows.forEach(row => {
             let text = (
@@ -1598,7 +1609,11 @@ class outerPort extends iQuery
             }
 
             row.style.display = match ? '' : 'none';
+
+            if (match) visibleCount++;
           });
+
+          document.getElementById('totalShips').innerText = visibleCount;
         });
       </script>
     ";
@@ -1910,7 +1925,7 @@ class outerPort extends iQuery
         <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap gap-2'>
           <h6 class='mb-0'>
             <i class='fas fa-chart-bar me-1'></i> Estadísticas por Nave
-            <small class='opacity-75'>(Total: {$i})</small>
+            <em>(Total: <span id='totalShipStadistics'>{$i}</span>)</em>
           </h6>
 
           <div style='position:relative; max-width:250px; width:100%;'>
@@ -1970,6 +1985,7 @@ class outerPort extends iQuery
         document.getElementById('searchStadisticsByShipTable').addEventListener('keyup', function() {
           const filter = this.value.toLowerCase().trim();
           const rows   = document.querySelectorAll('#stadisticsByShipTable tbody tr');
+          let visibleCount = 0;
 
           rows.forEach(row => {
             const text = (
@@ -1987,7 +2003,11 @@ class outerPort extends iQuery
             }
 
             row.style.display = match ? '' : 'none';
+
+            if (match) visibleCount++;
           });
+
+          document.getElementById('totalShipStadistics').innerText = visibleCount;
         });
       </script>
     ";
@@ -2073,9 +2093,9 @@ class outerPort extends iQuery
         }
 
         if ($data['arrival_date'] !== '0000-00-00 00:00:00' && $data['departure_date'] === null) {
-          $status = "<i class='fas fa-arrow-up text-success'> Ingreso</i>";
+          $status = "<i class='fas fa-arrow-up text-success'></i> <b style='color:#1cc88a'>Ingreso</b>";
         } elseif ($data['arrival_date'] !== '0000-00-00 00:00:00' && $data['departure_date'] !== null) {
-          $status = "<i class='fas fa-arrow-down text-danger'> Egreso</i>";
+          $status = "<i class='fas fa-arrow-down text-danger'></i> <b style='color:#e74a3b'>Egreso</b>";
         }
 
         $rows .= "
@@ -2126,7 +2146,7 @@ class outerPort extends iQuery
         <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
           <h6 class='mb-0'>
             <i class='fas fa-clock'></i> Reporte de Turnos
-            <em>(Total camiones: " . number_format($totalCamiones, 0, ',', '.') . ")</em>
+            <em>(Total camiones: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
           </h6>
 
           <div style='position:relative; max-width:250px;'>
@@ -2168,6 +2188,7 @@ class outerPort extends iQuery
         document.getElementById('seacrhShiftsTable').addEventListener('keyup', function() {
           let filter = this.value.toLowerCase().trim();
           let rows = document.querySelectorAll('#shiftsTable tbody tr');
+          let visibleCount = 0;
 
           rows.forEach(row => {
             let text = row.innerText.toLowerCase();
@@ -2180,7 +2201,11 @@ class outerPort extends iQuery
             }
 
             row.style.display = match ? '' : 'none';
+
+            if (match) visibleCount++;
           });
+
+          document.getElementById('totalTrucks').innerText = visibleCount;
         });
       </script>
     ";
