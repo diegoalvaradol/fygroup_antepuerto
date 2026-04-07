@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /* Conteo regresivo para cierre de sesion */
 let inactivityTime = function () {
   let time;
-  let warningTimeout = 60 * 60 * 1000; /* Minutos a convenir */
+  let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
   let countdownTime = 30; /* 30 segundos para responder */
 
   function startTimer() {

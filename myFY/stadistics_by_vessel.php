@@ -1,28 +1,28 @@
 <?php
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/includes.php';
+  require_once __DIR__ . '/../config/auth.php';
+  require_once __DIR__ . '/../config/includes.php';
 
-$cfg  = new cfg();
-$user = new user();
-$port = new outerPort();
+  $cfg  = new cfg();
+  $user = new user();
+  $port = new outerPort();
 
-$infoCfg       = json_decode($cfg->getInfo(1), true);
-$admin         = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime  = new DateTime($infoCfg['released_date']);
-$updateTime    = new DateTime($infoCfg['update_date']);
-$arrayDivision = get::getDivisionName();
-$sideBarSSL    = menu::sideBarSSL();
-$mainTapBarSSL = menu::mainTapBarSSL();
-$footer        = menu::footerSSL();
-$top           = UIComponents::scrollToTopButton();
+  $infoCfg       = json_decode($cfg->getInfo(1), true);
+  $admin         = $user->isAdmin($_SESSION["user"]["run"]);
+  $releasedTime  = new DateTime($infoCfg['released_date']);
+  $updateTime    = new DateTime($infoCfg['update_date']);
+  $arrayDivision = get::getDivisionName();
+  $sideBarSSL    = menu::sideBarSSL();
+  $mainTapBarSSL = menu::mainTapBarSSL();
+  $footer        = menu::footerSSL();
+  $top           = UIComponents::scrollToTopButton();
 
-/* Validar superadmin */
-if (!$admin) {
+  /* Validar superadmin */
+  if (!$admin) {
   $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
   $pag     = basename(__FILE__);
   $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
   mostrarAccesoDenegado($usuario, $pag, $url);
-}
+  }
 ?>
 
 <!-- HTML -->
@@ -319,7 +319,7 @@ if (!$admin) {
 /* Conteo regresivo para cierre de sesion */
 let inactivityTime = function () {
   let time;
-  let warningTimeout = 60 * 60 * 1000; /* Minutos a convenir */
+  let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
   let countdownTime = 30; /* 30 segundos para responder */
 
   function startTimer() {

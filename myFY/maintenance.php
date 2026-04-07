@@ -1,16 +1,16 @@
 <?php
-/* Código para incluir la mantencíon en la pagina requerida */
-//header("Location: maintenance.php");
-//exit;
+  /* Código para incluir la mantencíon en la pagina requerida */
+  //header("Location: maintenance.php");
+  //exit;
 
-http_response_code(503);
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/includes.php';
+  http_response_code(503);
+  require_once __DIR__ . '/../config/auth.php';
+  require_once __DIR__ . '/../config/includes.php';
 
-$cfg     = new cfg();
-$footer  = menu::footerSSL();
-$top     = UIComponents::scrollToTopButton();
-$infoCfg = json_decode($cfg->getInfo(1), true);
+  $cfg     = new cfg();
+  $footer  = menu::footerSSL();
+  $top     = UIComponents::scrollToTopButton();
+  $infoCfg = json_decode($cfg->getInfo(1), true);
 ?>
 
 <!DOCTYPE html>
@@ -92,62 +92,62 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
 
 <!-- JAVASCRIPT -->
 <script>
-/* Conteo regresivo para cierre de sesion */
-let inactivityTime = function () {
-  let time;
-  let warningTimeout = 1 * 60 * 1000; /* Minutos a convenir */
-  let countdownTime = 30; /* 30 segundos para responder */
+  /* Conteo regresivo para cierre de sesion */
+  let inactivityTime = function () {
+    let time;
+    let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
+    let countdownTime = 30; /* 30 segundos para responder */
 
-  function startTimer() {
-    window.addEventListener('mousemove', resetTimer, false);
-    window.addEventListener('keypress', resetTimer, false);
-    window.addEventListener('click', resetTimer, false);
-    window.addEventListener('scroll', resetTimer, false);
-    resetTimer();
-  }
+    function startTimer() {
+      window.addEventListener('mousemove', resetTimer, false);
+      window.addEventListener('keypress', resetTimer, false);
+      window.addEventListener('click', resetTimer, false);
+      window.addEventListener('scroll', resetTimer, false);
+      resetTimer();
+    }
 
-  function logoutCountdown() {
-    let timerInterval;
-    Swal.fire({
-      title: "¿Sigues ahí?",
-      html: `Serás desconectado en <b></b> segundos por inactividad.`,
-      icon: "warning",
-      timer: countdownTime * 1000,
-      timerProgressBar: true,
-      showCancelButton: true,
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      confirmButtonColor: '#4e73df',
-      cancelButtonColor: '#d33',
-      confirmButtonText: "¡Sigo aquí!",
-      cancelButtonText: "Cerrar sesión",
-      didOpen: () => {
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-        }, 1000);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        resetTimer(); /* Usuario activo, reiniciar contador */
-      } else {
-        window.location = 'login.php?msg=sesion_expirada';
-      }
-    });
-  }
+    function logoutCountdown() {
+      let timerInterval;
+      Swal.fire({
+        title: "¿Sigues ahí?",
+        html: `Serás desconectado en <b></b> segundos por inactividad.`,
+        icon: "warning",
+        timer: countdownTime * 1000,
+        timerProgressBar: true,
+        showCancelButton: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonColor: '#4e73df',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "¡Sigo aquí!",
+        cancelButtonText: "Cerrar sesión",
+        didOpen: () => {
+          const b = Swal.getHtmlContainer().querySelector("b");
+          timerInterval = setInterval(() => {
+            b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+          }, 1000);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          resetTimer(); /* Usuario activo, reiniciar contador */
+        } else {
+          window.location = 'login.php?msg=sesion_expirada';
+        }
+      });
+    }
 
-  function resetTimer() {
-    clearTimeout(time);
-    time = setTimeout(logoutCountdown, warningTimeout);
-  }
+    function resetTimer() {
+      clearTimeout(time);
+      time = setTimeout(logoutCountdown, warningTimeout);
+    }
 
-  startTimer();
-};
+    startTimer();
+  };
 
-window.onload = function () {
-  inactivityTime();
-};
+  window.onload = function () {
+    inactivityTime();
+  };
 </script>

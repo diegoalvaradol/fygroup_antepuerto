@@ -21,17 +21,21 @@
     $sql = trim($_POST['sql_query']);
 
     if (!preg_match('/^\s*(SELECT|UPDATE|DELETE|DROP)\b/i', $sql)) {
-      return "<script>
-                    Swal.fire({icon:'error', title:'Instrucción no permitida', text:'Solo SELECT, UPDATE, DELETE y DROP son permitidas.', timer:4000, showConfirmButton:false});
-                </script>";
+      return "
+        <script>
+          Swal.fire({icon:'error', title:'Instrucción no permitida', text:'Solo SELECT, UPDATE, DELETE y DROP son permitidas.', timer:4000, showConfirmButton:false});
+        </script>
+      ";
     }
 
     // SweetAlert confirmación para DELETE y DROP
     if (preg_match('/^\s*(DELETE|DROP)\b/i', $sql)) {
-      echo "<script>
-                    let ejecutar = confirm('Esta operación puede modificar o eliminar datos. ¿Deseas continuar?');
-                    if(!ejecutar){ window.history.back(); }
-                </script>";
+      echo "
+        <script>
+          let ejecutar = confirm('Esta operación puede modificar o eliminar datos. ¿Deseas continuar?');
+          if(!ejecutar){ window.history.back(); }
+        </script>
+      ";
     }
 
     try {
@@ -181,35 +185,94 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-window.onload = () => {
-  const alert = document.querySelector('.alert');
-  if (alert) {
-    setTimeout(() => {
-      alert.style.transition='opacity 0.5s';
-      alert.style.opacity='0';
-      setTimeout(()=>alert.remove(),500);
-    }, 4000);
-  }
+  /* Conteo regresivo para cierre de sesion */
+  let inactivityTime = function () {
+    let time;
+    let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
+    let countdownTime = 30; /* 30 segundos para responder */
 
-  if (document.getElementById('sqlResults')) {
-    $('#sqlResults').DataTable({
-      paging: true,
-      searching: true,
-      scrollX: true,
-      pageLength: 10,
-      lengthChange: false,
-      info: true,
-      language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
-      dom: '<"d-flex justify-content-between mb-2"i f>rtp'
-    });
-  }
-};
+    function startTimer() {
+      window.addEventListener('mousemove', resetTimer, false);
+      window.addEventListener('keypress', resetTimer, false);
+      window.addEventListener('click', resetTimer, false);
+      window.addEventListener('scroll', resetTimer, false);
+      resetTimer();
+    }
 
-const textarea = document.getElementById('sql_query');
-textarea.addEventListener('input', () => {
-  textarea.style.height = 'auto';
-  textarea.style.height = (textarea.scrollHeight) + 'px';
-});
+    function logoutCountdown() {
+      let timerInterval;
+      Swal.fire({
+        title: "¿Sigues ahí?",
+        html: `Serás desconectado en <b></b> segundos por inactividad.`,
+        icon: "warning",
+        timer: countdownTime * 1000,
+        timerProgressBar: true,
+        showCancelButton: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonColor: '#4e73df',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "¡Sigo aquí!",
+        cancelButtonText: "Cerrar sesión",
+        didOpen: () => {
+          const b = Swal.getHtmlContainer().querySelector("b");
+          timerInterval = setInterval(() => {
+            b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+          }, 1000);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          resetTimer(); /* Usuario activo, reiniciar contador */
+        } else {
+          window.location = 'login.php?msg=sesion_expirada';
+        }
+      });
+    }
+
+    function resetTimer() {
+      clearTimeout(time);
+      time = setTimeout(logoutCountdown, warningTimeout);
+    }
+
+    startTimer();
+  };
+
+  window.onload = function () {
+    inactivityTime();
+  };
+
+  window.onload = () => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      setTimeout(() => {
+        alert.style.transition='opacity 0.5s';
+        alert.style.opacity='0';
+        setTimeout(()=>alert.remove(),500);
+      }, 4000);
+    }
+
+    if (document.getElementById('sqlResults')) {
+      $('#sqlResults').DataTable({
+        paging: true,
+        searching: true,
+        scrollX: true,
+        pageLength: 10,
+        lengthChange: false,
+        info: true,
+        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' },
+        dom: '<"d-flex justify-content-between mb-2"i f>rtp'
+      });
+    }
+  };
+
+  const textarea = document.getElementById('sql_query');
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = (textarea.scrollHeight) + 'px';
+  });
 </script>
 </body>
 </html>
