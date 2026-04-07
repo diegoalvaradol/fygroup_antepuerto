@@ -69,141 +69,168 @@ class UIComponents
 					position: fixed;
 					bottom: 20px;
 					left: 20px;
-					width: 280px;
-					max-width: 90%;
-					background-color: #fff;
-					border-radius: 12px;
-					box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-					font-family: Arial, sans-serif;
-					z-index: 9999;
+					width: 320px;
+					max-width: 92%;
+					background: #fff;
+					border-radius: 16px;
+					box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+					font-family: "Segoe UI", sans-serif;
+					z-index: 10000;
+					overflow: hidden;
+					transform: translateY(20px);
+					opacity: 0;
+					pointer-events: none;
+					transition: all 0.25s ease;
+				}
+
+				#whatsapp-chat-box.active {
+					transform: translateY(0);
+					opacity: 1;
+					pointer-events: auto;
 				}
 
 				.chat-header {
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
-					padding: 12px;
-					background-color: #25d366;
+					padding: 14px;
+					background: linear-gradient(135deg, #25d366, #1ebe5d);
 					color: white;
-					border-radius: 12px 12px 0 0;
 				}
 
 				.chat-title {
 					display: flex;
 					align-items: center;
 					gap: 10px;
-					cursor: pointer;
+				}
+
+				.chat-title img {
+					width: 28px;
 				}
 
 				.chat-close {
 					cursor: pointer;
-					font-weight: bold;
-					font-size: 16px;
+					font-size: 18px;
 				}
 
 				.chat-body {
-					padding: 15px;
+					padding: 16px;
 					display: none;
+					background: #ece5dd;
+				}
+
+				.msg {
+					background: #fff;
+					padding: 10px 14px;
+					border-radius: 12px;
 					font-size: 14px;
+					max-width: 85%;
+					margin-bottom: 10px;
 				}
 
 				.btn-chat {
-					display: inline-block;
-					margin-top: 10px;
-					padding: 10px 15px;
-					background-color: #25d366;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 8px;
+					margin-top: 12px;
+					padding: 12px;
+					background: #25d366;
 					color: white;
 					text-decoration: none;
-					border-radius: 8px;
-					font-weight: bold;
+					font-weight: 600;
+					border-radius: 10px;
 				}
 
-				/* Botón flotante */
+				.btn-chat img {
+					width: 18px;
+				}
+
+				/* flotante */
 				#whatsapp-float-btn {
-					display: none;
 					position: fixed;
 					bottom: 20px;
 					left: 20px;
-					width: 60px;
-					height: 60px;
-					background-color: #25d366;
+					width: 65px;
+					height: 65px;
+					background: linear-gradient(135deg, #25d366, #1ebe5d);
 					border-radius: 50%;
-					box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+					box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+					display: flex;
 					align-items: center;
 					justify-content: center;
-					z-index: 9999;
 					cursor: pointer;
+					z-index: 9999;
 				}
 
 				#whatsapp-float-btn img {
-					width: 30px;
+					width: 32px;
 				}
 
-				/* Móvil */
-				@media (max-width: 480px) {
-					#whatsapp-chat-box {
-						display: none;
-					}
+				#whatsapp-chat-box a {
+					pointer-events: none;
+				}
 
-					#whatsapp-chat-box.active {
-						display: block;
-					}
-
-					#whatsapp-float-btn {
-						display: flex;
-					}
-
-					#whatsapp-float-btn.hidden {
-						display: none;
-					}
+				#whatsapp-chat-box.active a.btn-chat {
+					pointer-events: auto;
+					color: white;
 				}
 			</style>
 
-			<!-- Botón flotante -->
-			<div id="whatsapp-float-btn" onclick="openChatBox()">
+			<!-- botón flotante -->
+			<div id="whatsapp-float-btn" onclick="toggleChatBox(event)">
 				<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
 			</div>
 
-			<!-- Chat -->
+			<!-- chat -->
 			<div id="whatsapp-chat-box">
 				<div class="chat-header">
-					<div class="chat-title" onclick="toggleChatBox()">
-						<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30" />
-						<span>¿Necesitas ayuda?</span>
+					<div class="chat-title">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" />
+						<span>Soporte FYGroup</span>
 					</div>
 					<span class="chat-close" onclick="closeChatBox()">✕</span>
 				</div>
 
 				<div class="chat-body" id="chatBody">
-					<p>Hola ' . $_SESSION["user"]["name"] . ' 👋<br>¿En qué podemos ayudarte?</p>
-					<a href="https://wa.me/56923816700?text=Hola%2C%20necesito%20ayuda" target="_blank" class="btn-chat">Iniciar chat</a>
+					<div class="msg">
+						Hola ' . $_SESSION["user"]["name"] . ' 👋<br>
+						¿En qué podemos ayudarte?
+					</div>
+
+					<a
+						href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn btn-sm btn-chat">
+						<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+						Escribir por WhatsApp
+					</a>
 				</div>
 			</div>
 
 			<script>
-				function toggleChatBox() {
-					const chatBody = document.getElementById("chatBody");
-					chatBody.style.display = chatBody.style.display === "block" ? "none" : "block";
-				}
+				function toggleChatBox(e) {
+					e.stopPropagation();
 
-				function openChatBox() {
 					const box = document.getElementById("whatsapp-chat-box");
-					const btn = document.getElementById("whatsapp-float-btn");
 					const body = document.getElementById("chatBody");
 
-					box.classList.add("active");
-					body.style.display = "block";
-					btn.classList.add("hidden");
+					if (box.classList.contains("active")) {
+						box.classList.remove("active");
+						body.style.display = "none";
+					} else {
+						box.classList.add("active");
+						body.style.display = "block";
+					}
 				}
 
 				function closeChatBox() {
 					const box = document.getElementById("whatsapp-chat-box");
-					const btn = document.getElementById("whatsapp-float-btn");
 					const body = document.getElementById("chatBody");
 
 					box.classList.remove("active");
 					body.style.display = "none";
-					btn.classList.remove("hidden");
 				}
 			</script>
   	';

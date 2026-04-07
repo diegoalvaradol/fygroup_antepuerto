@@ -1,21 +1,21 @@
 <?php
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/includes.php';
+  require_once __DIR__ . '/../config/auth.php';
+  require_once __DIR__ . '/../config/includes.php';
 
-$port = new outerPort();
-$cfg  = new cfg();
-$user = new user();
+  $port = new outerPort();
+  $cfg  = new cfg();
+  $user = new user();
 
-$infoCfg       = json_decode($cfg->getInfo(1), true);
-$admin         = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime  = new DateTime($infoCfg['released_date']);
-$updateTime    = new DateTime($infoCfg['update_date']);
-$arrayDivision = get::getDivisionName();
-$sideBarSSL    = menu::sideBarSSL();
-$mainTapBarSSL = menu::mainTapBarSSL();
-$footer        = menu::footerSSL();
-$top           = UIComponents::scrollToTopButton();
-$whatsAppBtn   = UIComponents::whatsappChatBox();
+  $infoCfg       = json_decode($cfg->getInfo(1), true);
+  $admin         = $user->isAdmin($_SESSION["user"]["run"]);
+  $releasedTime  = new DateTime($infoCfg['released_date']);
+  $updateTime    = new DateTime($infoCfg['update_date']);
+  $arrayDivision = get::getDivisionName();
+  $sideBarSSL    = menu::sideBarSSL();
+  $mainTapBarSSL = menu::mainTapBarSSL();
+  $footer        = menu::footerSSL();
+  $top           = UIComponents::scrollToTopButton();
+  $whatsAppBtn   = UIComponents::whatsappChatBox();
 ?>
 
 <!-- HTML -->
@@ -49,46 +49,6 @@ $whatsAppBtn   = UIComponents::whatsappChatBox();
     <style>
       body {
         background: #f7f9fc;
-      }
-
-      /* Tarjetas */
-      .card {
-        border: none;
-        border-radius: 1rem;
-        transition: transform .2s ease, box-shadow .2s ease;
-        background: #fff;
-      }
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-      }
-
-      /* Iconos grandes */
-      .card i {
-        padding: 12px;
-        border-radius: 50%;
-        background: rgba(0,0,0,0.05);
-      }
-
-      /* Progress bar animada */
-      .progress-bar {
-        background: linear-gradient(90deg, #36d1dc, #5b86e5);
-        transition: width 1s ease-in-out;
-      }
-
-      /* Botones */
-      .btn {
-        border-radius: 30px;
-        transition: all .3s ease;
-      }
-      .btn:hover {
-        transform: scale(1.05);
-      }
-
-      /* Modal más elegante */
-      .modal-content {
-        border-radius: 1rem;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
       }
     </style>
 </head>

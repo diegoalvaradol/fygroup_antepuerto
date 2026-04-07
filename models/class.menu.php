@@ -301,6 +301,40 @@ class menu extends iQuery
           margin-bottom: 10px;
         }
 
+        /* Tarjetas */
+        .card {
+          border: none;
+          border-radius: 1rem;
+          transition: transform .2s ease, box-shadow .2s ease;
+          background: #fff;
+        }
+
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+
+        /* Progress bar animada */
+        .progress-bar {
+          background: linear-gradient(90deg, #36d1dc, #5b86e5);
+          transition: width 1s ease-in-out;
+        }
+
+        /* Botones */
+        .btn {
+          border-radius: 30px;
+          transition: all .3s ease;
+        }
+        .btn:hover {
+          transform: scale(1.05);
+        }
+
+        /* Modal más elegante */
+        .modal-content {
+          border-radius: 1rem;
+          box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
         /* === MOBILE === */
         @media (max-width: 768px) {
           #accordionSidebar {
@@ -396,7 +430,7 @@ class menu extends iQuery
     foreach ($menus as $menu) {
       $sidebar .= '
         <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false">
+          <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false">
             <i class="fas ' . $menu['icon'] . '"></i>
             <span>' . $menu['title'] . '</span>
             <i class="fas fa-chevron-down arrow"></i>
@@ -438,6 +472,7 @@ class menu extends iQuery
           const sidebar = document.getElementById("accordionSidebar");
           const toggle = document.getElementById("mobileSidebarToggle");
           const overlay = document.getElementById("sidebarOverlay");
+          const closeBtn = document.getElementById("closeSidebar");
 
           toggle.addEventListener("click", () => {
             sidebar.classList.toggle("active");
@@ -448,13 +483,13 @@ class menu extends iQuery
             sidebar.classList.remove("active");
             overlay.classList.remove("active");
           });
-        });
 
-        const closeBtn = document.getElementById("closeSidebar");
-
-        closeBtn.addEventListener("click", () => {
-          sidebar.classList.remove("active");
-          overlay.classList.remove("active");
+          if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+              sidebar.classList.remove("active");
+              overlay.classList.remove("active");
+            });
+          }
         });
       </script>
     ';
