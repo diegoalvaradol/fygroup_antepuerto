@@ -1,23 +1,23 @@
 <?php
-//header("Location: maintenance.php");
-//exit;
+  //header("Location: maintenance.php");
+  //exit;
 
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/includes.php';
+  require_once __DIR__ . '/../config/auth.php';
+  require_once __DIR__ . '/../config/includes.php';
 
-$port = new internationalChargue();
-$cfg  = new cfg();
-$user = new user();
+  $port = new internationalChargue();
+  $cfg  = new cfg();
+  $user = new user();
 
-$infoCfg       = json_decode($cfg->getInfo(1), true);
-$admin         = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime  = new DateTime($infoCfg['released_date']);
-$updateTime    = new DateTime($infoCfg['update_date']);
-$arrayDivision = get::getDivisionName();
-$sideBarSSL    = menu::sideBarSSL();
-$mainTapBarSSL = menu::mainTapBarSSL();
-$footer        = menu::footerSSL();
-$top           = UIComponents::scrollToTopButton();
+  $infoCfg       = json_decode($cfg->getInfo(1), true);
+  $admin         = $user->isAdmin($_SESSION["user"]["run"]);
+  $releasedTime  = new DateTime($infoCfg['released_date']);
+  $updateTime    = new DateTime($infoCfg['update_date']);
+  $arrayDivision = get::getDivisionName();
+  $sideBarSSL    = menu::sideBarSSL();
+  $mainTapBarSSL = menu::mainTapBarSSL();
+  $footer        = menu::footerSSL();
+  $top           = UIComponents::scrollToTopButton();
 ?>
 
 <!-- HTML -->
@@ -61,9 +61,22 @@ $top           = UIComponents::scrollToTopButton();
                     <h1 class="h3 mb-1 text-gray-800">Carga Internacional</h1>
 
                     <div class="col-sm-12">
-                      <div class="alert alert-warning" role="alert"><i class="fa-solid fa-circle-info"></i>
-                        <b>¡Información! : </b> Formulario de carga y contenedores provenientes desde el exterior.
-                        <img src="https://flagcdn.com/w20/ar.png" alt="Argentina" style="width: 25px; height: auto; margin-right: 5px;">
+                      <div class="alert custom-alert-warning d-flex align-items-center justify-content-between" role="alert">
+                        <div class="d-flex align-items-center">
+                          <div class="icon me-2">
+                            <i class="fa-solid fa-circle-info"></i>
+                          </div>
+                          &nbsp;
+                          <div>
+                            <strong>Información:</strong>
+                            Formulario de carga y contenedores provenientes desde el exterior.
+                          </div>
+                        </div>
+
+                        <div class="flag-badge ms-3">
+                          <img src="https://flagcdn.com/w20/ar.png" alt="Argentina">
+                          <span>AR</span>
+                        </div>
                       </div>
                     </div>
 

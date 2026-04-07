@@ -1,20 +1,20 @@
 <?php
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/includes.php';
+  require_once __DIR__ . '/../config/auth.php';
+  require_once __DIR__ . '/../config/includes.php';
 
-$cfg  = new cfg();
-$user = new user();
-$port = new outerPort();
+  $cfg  = new cfg();
+  $user = new user();
+  $port = new outerPort();
 
-$infoCfg       = json_decode($cfg->getInfo(1), true);
-$admin         = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime  = new DateTime($infoCfg['released_date']);
-$updateTime    = new DateTime($infoCfg['update_date']);
-$arrayDivision = get::getDivisionName();
-$sideBarSSL    = menu::sideBarSSL();
-$mainTapBarSSL = menu::mainTapBarSSL();
-$footer        = menu::footerSSL();
-$top           = UIComponents::scrollToTopButton();
+  $infoCfg       = json_decode($cfg->getInfo(1), true);
+  $admin         = $user->isAdmin($_SESSION["user"]["run"]);
+  $releasedTime  = new DateTime($infoCfg['released_date']);
+  $updateTime    = new DateTime($infoCfg['update_date']);
+  $arrayDivision = get::getDivisionName();
+  $sideBarSSL    = menu::sideBarSSL();
+  $mainTapBarSSL = menu::mainTapBarSSL();
+  $footer        = menu::footerSSL();
+  $top           = UIComponents::scrollToTopButton();
 ?>
 
 <!-- HTML -->
@@ -59,9 +59,16 @@ $top           = UIComponents::scrollToTopButton();
               <h1 class="h3 mb-1 text-gray-800">Roleo de Carga</h1>
               <p class="mb-4">Acá podras realizar el roleo de carga entre naves del tipo liner y charter.</p>
 
-              <div class="col-sm-12">
-                <div class="alert alert-warning" role="alert"><i class="fa-solid fa-triangle-exclamation"></i>
-                  <b>¡Atención! : </b> Considerar que la acción de roleo es un proceso irreversible.
+              <div class="col-sm-6">
+                <div class="alert custom-alert-info d-flex align-items-center" role="alert">
+                  <div class="icon me-2">
+                    <i class="fa-solid fa-circle-info"></i>
+                  </div>
+                  &nbsp;
+                  <div>
+                    <strong>Atención:</strong>
+                    Considerar que la acción de roleo es un proceso irreversible.
+                  </div>
                 </div>
               </div>
 
@@ -76,9 +83,16 @@ $top           = UIComponents::scrollToTopButton();
                     </div>
 
                     <div class="card-body">
-                      <div class="col-sm-12">
-                        <div class="alert alert-info" role="alert"><i class="fa-solid fa-info-circle"></i>
-                          <b>Simbología </b> '-T': Termo | '-C': Contenedores.
+                      <div class="col-sm-6">
+                        <div class="alert custom-alert-info d-flex align-items-center" role="alert">
+                          <div class="icon me-2">
+                            <i class="fa-solid fa-circle-info"></i>
+                          </div>
+                          &nbsp;
+                          <div>
+                            <strong>Simbología:</strong>
+                            '-T': Termo | '-C': Contenedores.
+                          </div>
                         </div>
                       </div>
 

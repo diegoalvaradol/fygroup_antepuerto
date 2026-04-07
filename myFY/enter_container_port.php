@@ -1,21 +1,21 @@
 <?php
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/includes.php';
+  require_once __DIR__ . '/../config/auth.php';
+  require_once __DIR__ . '/../config/includes.php';
 
-$port = new outerPort();
-$cfg  = new cfg();
-$user = new user();
+  $port = new outerPort();
+  $cfg  = new cfg();
+  $user = new user();
 
-$infoCfg       = json_decode($cfg->getInfo(1), true);
-$admin         = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime  = new DateTime($infoCfg['released_date']);
-$updateTime    = new DateTime($infoCfg['update_date']);
-$arrayDivision = get::getDivisionName();
-$sideBarSSL    = menu::sideBarSSL();
-$mainTapBarSSL = menu::mainTapBarSSL();
-$footer        = menu::footerSSL();
-$top           = UIComponents::scrollToTopButton();
-$paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+  $infoCfg       = json_decode($cfg->getInfo(1), true);
+  $admin         = $user->isAdmin($_SESSION["user"]["run"]);
+  $releasedTime  = new DateTime($infoCfg['released_date']);
+  $updateTime    = new DateTime($infoCfg['update_date']);
+  $arrayDivision = get::getDivisionName();
+  $sideBarSSL    = menu::sideBarSSL();
+  $mainTapBarSSL = menu::mainTapBarSSL();
+  $footer        = menu::footerSSL();
+  $top           = UIComponents::scrollToTopButton();
+  $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 ?>
 
 <!-- HTML -->
@@ -59,9 +59,16 @@ $paginaActual  = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Contenedores</h1>
 
-                    <div class="col-sm-12">
-                      <div class="alert alert-info" role="alert"><i class="fa-solid fa-circle-info"></i>
-                        <b>¡Atención! : </b> Todos aquellos camiones que superen un día (1) de estadía en antepuerto serán destacados de color rojo.
+                    <div class="col-sm-6">
+                      <div class="alert custom-alert-info d-flex align-items-center" role="alert">
+                        <div class="icon me-2">
+                          <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        &nbsp;
+                        <div>
+                          <strong>Atención:</strong>
+                          Los camiones que superen 1 día de estadía en antepuerto serán resaltados en rojo.
+                        </div>
                       </div>
                     </div>
 

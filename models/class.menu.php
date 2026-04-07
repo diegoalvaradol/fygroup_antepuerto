@@ -306,6 +306,58 @@ class menu extends iQuery
         }
 
         /* Tarjetas */
+        .custom-alert-info {
+          background: linear-gradient(135deg, #e0f2ff, #f0f9ff);
+          border: 1px solid #b6e0fe;
+          border-left: 5px solid #0d6efd;
+          border-radius: 10px;
+          color: #0c5460;
+          padding: 12px 16px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .custom-alert-info .icon {
+          font-size: 20px;
+          color: #0d6efd;
+        }
+
+        .custom-alert-warning {
+          background: linear-gradient(135deg, #fff4e5, #fffaf0);
+          border: 1px solid #ffe0b2;
+          border-left: 5px solid #f59e0b;
+          border-radius: 12px;
+          color: #7c4a03;
+          padding: 14px 18px;
+          box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+        }
+
+        .custom-alert-warning .icon {
+          font-size: 20px;
+          color: #f59e0b;
+        }
+
+        /* badge */
+        .flag-badge {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          background: white;
+          padding: 4px 10px;
+          border-radius: 20px;
+          border: 1px solid #ffe0b2;
+          font-size: 12px;
+          font-weight: 600;
+          color: #7c4a03;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .flag-badge img {
+          width: 18px;
+          height: auto;
+          border-radius: 3px;
+        }
+
+        /* Tarjetas */
         .card {
           border: none;
           border-radius: 1rem;

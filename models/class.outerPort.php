@@ -771,7 +771,7 @@ class outerPort extends iQuery
           $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
 
           if ($days >= 1) {
-            $attr = "style='background-color:red; color:white;'";
+            $attr = "style='background-color:#e73b3bba; color:white;'";
           }
         } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
           $stayTime = 'No disponible.';
@@ -1155,7 +1155,7 @@ class outerPort extends iQuery
           $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
 
           if ($days >= 1) {
-            $attr = "style='background-color:red; color:white;'";
+            $attr = "style='background-color:#e73b3bba; color:white;'";
           }
         } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
           $stayTime = 'No disponible.';
