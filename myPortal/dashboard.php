@@ -1,30 +1,30 @@
 <?php
-require_once __DIR__ . '/../config/auth.php';
-require_once __DIR__ . '/../config/includes.php';
+  require_once __DIR__ . '/../config/auth.php';
+  require_once __DIR__ . '/../config/includes.php';
 
-$port = new outerPort();
-$cfg  = new cfg();
-$user = new user();
+  $port = new outerPort();
+  $cfg  = new cfg();
+  $user = new user();
 
-$arrayDivision = get::getDivisionName();
-$sideBarPortal = menu::sideBarPortal();
-$tapBarPortal  = menu::secondTapBarPortal();
-$footer        = menu::footerSSL();
-$top           = UIComponents::scrollToTopButton();
+  $arrayDivision = get::getDivisionName();
+  $sideBarPortal = menu::sideBarPortal();
+  $tapBarPortal  = menu::secondTapBarPortal();
+  $footer        = menu::footerSSL();
+  $top           = UIComponents::scrollToTopButton();
 
-$infoCfg      = json_decode($cfg->getInfo(1), true);
-$admin        = $user->isAdmin($_SESSION["user"]["run"]);
-$releasedTime = new DateTime($infoCfg['released_date']);
-$updateTime   = new DateTime($infoCfg['update_date']);
+  $infoCfg      = json_decode($cfg->getInfo(1), true);
+  $admin        = $user->isAdmin($_SESSION["user"]["run"]);
+  $releasedTime = new DateTime($infoCfg['released_date']);
+  $updateTime   = new DateTime($infoCfg['update_date']);
 
-/* Establece Limite de 30 minutos para el usuario pueda visitar el portal cliente */
-$tiempoMaximo = 1800; /* 30 minutos */
-if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
+  /* Establece Limite de 30 minutos para el usuario pueda visitar el portal cliente */
+  $tiempoMaximo = 1800; /* 30 minutos */
+  if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
   session_unset();
   session_destroy();
   header("Location: login.php?timeout=1");
   exit;
-}
+  }
 ?>
 
 <!-- HTML -->
@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /* Conteo regresivo para cierre de sesion */
 let inactivityTime = function () {
   let time;
-  let warningTimeout = 60 * 60 * 1000; /* Minutos a convenir */
+  let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
   let countdownTime = 30; /* 30 segundos para responder */
 
   function startTimer() {
