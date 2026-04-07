@@ -260,6 +260,10 @@ class menu extends iQuery
           border-radius: 12px !important;
         }
 
+        .mb-1, .my-1 {
+          margin-bottom: .55rem !important;
+        }
+
         /* caja principal */
         .select2-container--default .select2-selection--single {
           border-radius: 12px !important;
@@ -295,7 +299,7 @@ class menu extends iQuery
         }
 
         h1.h3.text-gray-800 {
-          border-bottom: 2px solid #4e73df;
+          border-bottom: 2px solid #3787ba;
           display: inline-block;
           padding-bottom: 0px;
           margin-bottom: 10px;
