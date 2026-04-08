@@ -1,112 +1,81 @@
 {
-    "intelephense.format.enable": false,
-    "intelephense.files.maxSize": 1000000,
-    "files.eol": "\n",
-    "editor.tabSize": 2,
-    "editor.insertSpaces": false,
-    "editor.formatOnPaste": true,
-    "editor.formatOnType": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveTimeout": 15000,
-    "[php]": {
-      "editor.defaultFormatter": "kokororin.vscode-phpfmt"
-    },
-    "[html]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[css]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "phpfmt.indent_with_space": 2,
-    "phpfmt.passes": [
-        "PSR2KeywordsLowerCase",
-        "PSR2LnAfterNamespace",
-        "PSR2CurlyOpenNextLine",
-        "PSR2ModifierVisibilityStaticOrder",
-        "PSR2SingleEmptyLineAndStripClosingTag",
-        "PSR2KeywordsLowerCase",
-        "PSR2LnAfterNamespace",
-        "PSR2CurlyOpenNextLine",
-        "PSR2ModifierVisibilityStaticOrder",
-        "PSR2SingleEmptyLineAndStripClosingTag",
-        "ReindentSwitchBlocks",
-        "AlignConstVisibilityEquals",
-        "AlignDoubleArrow",
-        "AlignDoubleSlashComments",
-        "AlignEquals",
-        "AlignGroupDoubleArrow",
-        "AlignTypehint",
-        "AutoSemicolon",
-        "NewLineBeforeReturn",
-        "OnlyOrderUseClauses",
-        "PrettyPrintDocBlocks",
-        "RemoveSemicolonAfterCurly",
-        "ReplaceBooleanAndOr",
-        "ShortArray",
-        "StripExtraCommaInArray",
-        "TrimSpaceBeforeSemicolon",
-        "AlignPHPCode",
-    ],
-    "phpfmt.exclude": [
-        "ReindentComments",
-        "StripNewlineWithinClassBody"
-    ],
-    "phpfmt.psr2": false,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "explorer.confirmDelete": false,
-    "explorer.confirmDragAndDrop": false,
+  "intelephense.format.enable": false,
+  "intelephense.files.maxSize": 1000000,
 
-    "liveServer.settings.donotVerifyTags": true,
-    "liveServer.settings.donotShowInfoMsg": true,
+  "files.eol": "\n",
+  "files.autoSave": "afterDelay",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
 
-    "workbench.editorAssociations": {
-      ".ipynb": "jupyter-notebook"
-    },
-    "security.workspace.trust.untrustedFiles": "open",
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.size": "proportional",
+  "editor.renderWhitespace": "boundary",
+  "editor.guides.bracketPairs": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.fontFamily": "JetBrains Mono, Consolas, monospace",
+  "editor.fontSize": 13,
+  "editor.lineHeight": 22,
+  "editor.fontLigatures": true,
+  "editor.cursorBlinking": "solid",
+  "editor.largeFileOptimizations": false,
 
-    "tabnine.experimentalAutoImports": true,
-    "editor.inlineSuggest.enabled": true,
-    "github.copilot.advanced": {},
+  "[php]": {
+    "editor.defaultFormatter": "junstyle.php-cs-fixer"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
-    "workbench.sideBar.location": "right",
-    "workbench.iconTheme": "material-icon-theme",
-    "workbench.productIconTheme": "macos-modern",
-    "workbench.startupEditor": "none",
-    "workbench.colorTheme": "Hack The Box",
+  "php.validate.executablePath": "/opt/homebrew/bin/php",
 
-    "editor.minimap.size": "fill",
-    "editor.fontFamily": "JetBrains Mono, Consolas, monospace",
-    "editor.fontSize": 12,
-    "editor.fontWeight": "300",
-    "editor.lineHeight": 20,
-    "editor.letterSpacing": 0.5,
-    "editor.fontLigatures": true,
-    "editor.cursorBlinking": "smooth",
+  "php-cs-fixer.executablePath": "${extensionPath}/php-cs-fixer.phar",
+  "php-cs-fixer.onsave": true,
+  "php-cs-fixer.config": ".php-cs-fixer.php",
+  "php-cs-fixer.rules": "@PSR12",
 
-    "material-icon-theme.folders.color": "#6e7b8c",
+  "diffEditor.ignoreTrimWhitespace": false,
 
-    "yaml.schemas": {
-      "file:///c%3A/Users/diego/.vscode/extensions/atlassian.atlascode-3.6.6/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-    },
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
 
-    "atlascode.bitbucket.enabled": false,
-    "atlascode.jira.lastCreateSiteAndProject": {
-      "siteId": "",
-      "projectKey": ""
-    },
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
 
-    "extensions.autoUpdate": "onlyEnabledExtensions",
-    "files.autoSave": "afterDelay",
-    "editor.largeFileOptimizations": false,
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Hack The Box",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.productIconTheme": "macos-modern",
+  "workbench.sideBar.location": "right",
+  "workbench.activityBar.location": "top",
 
-    "git.autofetch": true,
+  "material-icon-theme.folders.color": "#6e7b8c",
 
-    "terminal.integrated.defaultProfile.windows": "Git Bash",
-    "terminal.integrated.ignoreBracketedPasteMode": true,
+  "extensions.autoUpdate": "onlyEnabledExtensions",
 
-    "php.validate.executablePath": "/opt/homebrew/bin/php",
-    "phpfmt.php_bin": "/opt/homebrew/bin/php"
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.ignoreBracketedPasteMode": true,
+
+  "liveServer.settings.donotVerifyTags": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+
+  "security.workspace.trust.untrustedFiles": "open",
+
+  "tabnine.experimentalAutoImports": true,
+  "github.copilot.enable": true,
+
+  "atlascode.bitbucket.enabled": false,
+  "atlascode.rovodev.showEntitlementNotifications": false
 }

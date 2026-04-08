@@ -1,21 +1,21 @@
 <?php
-  require_once __DIR__ . '/../config/auth.php';
-  require_once __DIR__ . '/../config/includes.php';
+require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/includes.php';
 
-  $port = new outerPort();
-  $cfg  = new cfg();
-  $user = new user();
+$port = new outerPort();
+$cfg  = new cfg();
+$user = new user();
 
-  $infoCfg       = json_decode($cfg->getInfo(1), true);
-  $admin         = $user->isAdmin($_SESSION["user"]["run"]);
-  $releasedTime  = new DateTime($infoCfg['released_date']);
-  $updateTime    = new DateTime($infoCfg['update_date']);
-  $arrayDivision = get::getDivisionName();
-  $sideBarSSL    = menu::sideBarSSL();
-  $mainTapBarSSL = menu::mainTapBarSSL();
-  $footer        = menu::footerSSL();
-  $top           = UIComponents::scrollToTopButton();
-  $whatsAppBtn   = UIComponents::whatsappChatBox();
+$infoCfg       = json_decode($cfg->getInfo(1), true);
+$admin         = $user->isAdmin($_SESSION["user"]["run"]);
+$releasedTime  = new DateTime($infoCfg['released_date']);
+$updateTime    = new DateTime($infoCfg['update_date']);
+$arrayDivision = get::getDivisionName();
+$sideBarSSL    = menu::sideBarSSL();
+$mainTapBarSSL = menu::mainTapBarSSL();
+$footer        = menu::footerSSL();
+$top           = UIComponents::scrollToTopButton();
+$whatsAppBtn   = UIComponents::whatsappChatBox();
 ?>
 
 <!-- HTML -->
