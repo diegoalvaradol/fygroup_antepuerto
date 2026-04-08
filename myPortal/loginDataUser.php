@@ -1,102 +1,164 @@
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
-  header('Location: login.php');
 
-  exit;
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
 }
+
+$timeout = 1800;
+
+if (isset($_SESSION['last_session']) && (time() - $_SESSION['last_session'] > $timeout)) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
+
+if (!isset($_SESSION['ip'])) {
+    $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+} elseif ($_SESSION['ip'] !== $_SERVER['REMOTE_ADDR']) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
+
+if (!isset($_SESSION['user_agent'])) {
+    $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+} elseif ($_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
+
+$_SESSION['last_session'] = time();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
-  <meta http-equiv="refresh" content="5;url=dashboard.php">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Cargando...</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cargando...</title>
 
-  <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #eef2f7, #d6e0eb);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .container {
-      background: white;
-      padding: 2rem 3rem;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    h2 {
-      margin-bottom: 1rem;
-      color: #333;
-    }
-    p {
-      color: #555;
-      font-size: 1rem;
-      margin: 0.5rem 0;
-      opacity: 0;
-      transition: opacity 0.5s ease-in;
-    }
-    p.visible {
-      opacity: 1;
-    }
-    .loader {
-      margin: 1.5rem auto 0;
-      border: 4px solid #ddd;
-      border-top: 4px solid #2563eb;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-  </style>
+.card {
+  backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 2.5rem 2rem;
+  border-radius: 18px;
+  text-align: center;
+  color: #fff;
+  width: 320px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+h1 { margin: 0; font-size: 1.6rem; }
+h2 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* PROGRESS BAR */
+.progress {
+  margin-top: 1.5rem;
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #38bdf8, #6366f1);
+  transition: width 0.2s ease;
+}
+
+/* LOADER */
+.loader-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.2);
+  border-top-color: #38bdf8;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Bienvenido</h1>
-    <br>
-    <h2><?=htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"])?> 👋</h2>
 
-    <p id="msg1">Validando sesión...</p>
-    <p id="msg2">Cargando datos...</p>
-    <p id="msg3">Redirigiendo al panel...</p>
+<div class="card">
+  <h1>Bienvenido 👋</h1>
+  <h2><?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?></h2>
 
-    <div class="loader"></div>
+  <p id="status">Inicializando...</p>
+
+  <div class="progress">
+    <div class="progress-bar" id="bar"></div>
   </div>
 
-  <script>
-		const mensajes = ["msg1", "msg2", "msg3"];
-		let actual = -1;
+  <div class="loader-wrap">
+    <div class="loader"></div>
+  </div>
+</div>
 
-		function mostrarSiguiente() {
-			if (actual >= 0) {
-				const anterior = document.getElementById(mensajes[actual]);
-				anterior.style.color = "#888";  // gris para mensajes anteriores
-			}
+<script>
+const steps = [
+  { text: "Validando sesión...", progress: 30 },
+  { text: "Cargando datos...", progress: 70 },
+  { text: "Entrando al sistema...", progress: 100 }
+];
 
-			actual++;
-			if (actual < mensajes.length) {
-				const actualMsg = document.getElementById(mensajes[actual]);
-				actualMsg.classList.add("visible");
-				actualMsg.style.color = "#000"; // negro para el mensaje actual
-				setTimeout(mostrarSiguiente, 1500);
-			}
-		}
+let i = 0;
 
-		mostrarSiguiente();
-	</script>
+function nextStep() {
+  if (i < steps.length) {
+    document.getElementById("status").innerText = steps[i].text;
+    document.getElementById("bar").style.width = steps[i].progress + "%";
+    i++;
+    setTimeout(nextStep, 800);
+  } else {
+    setTimeout(() => {
+      window.location.href = "dashboard.php";
+    }, 400);
+  }
+}
+
+nextStep();
+</script>
 </body>
 </html>
