@@ -9,14 +9,27 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
-[*.md]
-trim_trailing_whitespace = false
+# PHP (backend)
+[*.php]
+indent_size = 4
 
+# Frontend
+[*.{js,jsx,ts,tsx,css,scss,html,json}]
+indent_size = 2
+
+# YAML
 [*.{yml,yaml}]
 indent_size = 2
 
-[*.{json,js,jsx,ts,tsx,css,scss,html}]
-indent_size = 2
+# Markdown (no romper espacios)
+[*.md]
+trim_trailing_whitespace = false
 
-[*.php]
-indent_size = 4
+# Scripts
+[*.sh]
+indent_size = 2
+end_of_line = lf
+
+# Windows
+[*.bat]
+end_of_line = crlf
