@@ -74,7 +74,11 @@
   "security.workspace.trust.untrustedFiles": "open",
 
   "tabnine.experimentalAutoImports": true,
-  "github.copilot.enable": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false
+  },
 
   "atlascode.bitbucket.enabled": false,
   "atlascode.rovodev.showEntitlementNotifications": false
