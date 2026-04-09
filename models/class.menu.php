@@ -139,331 +139,383 @@ class menu extends iQuery
 
         $sidebar = '
             <style>
-                .sidebar-brand {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 12px;
-                margin: 10px;
-                background: rgba(255,255,255,0.25);
-                border: 1px solid rgba(255,255,255,0.1);
-                border-radius: 10px;
-                }
-
-                .sidebar-brand img {
-                max-width: 150px;
-                width: 100%;
-                height: auto;
-                }
-
-                #accordionSidebar{
-                font-size:13px;
-                background:#3787ba;
-                }
-
-                #accordionSidebar .sidebar-brand{
-                padding:16px 10px;
-                border-bottom:1px solid rgba(255,255,255,.05);
-                }
-
-                #accordionSidebar .nav-item{
-                margin:2px 8px;
-                }
-
-                #accordionSidebar .nav-link{
-                padding:10px 14px;
-                border-radius:10px;
-                color:#fff;
-                display:flex;
-                align-items:center;
-                gap:10px;
-                transition:.2s;
-                }
-
-                #accordionSidebar .nav-link:hover{
-                background:rgba(255,255,255,0.08);
-                color:#fff;
-                }
-
-                #accordionSidebar .nav-link i{
-                width:18px;
-                text-align:center;
-                font-size:13px;
-                }
-
-                #accordionSidebar .nav-link .arrow{
-                margin-left:auto;
-                font-size:10px;
-                transition:.25s;
-                }
-
-                #accordionSidebar .nav-link[aria-expanded="true"] .arrow{
-                transform:rotate(180deg);
-                }
-
-                #accordionSidebar .collapse-inner{
-                background:#fff;
-                border-radius:10px;
-                margin:6px 4px 10px 4px;
-                padding:6px 4px;
-                box-shadow:0 4px 10px rgba(0,0,0,.08);
-                }
-
-                #accordionSidebar .collapse-item{
-                display:block;
-                padding:8px 12px;
-                border-radius:6px;
-                font-size:12.5px;
-                color:#1e293b;
-                transition:.2s;
-                }
-
-                #accordionSidebar .collapse-item:hover{
-                background:#e2e8f0;
-                padding-left:16px;
-                }
-
-                #accordionSidebar .sidebar-heading{
-                font-size:11px;
-                opacity:.6;
-                padding:8px 16px 4px;
-                letter-spacing:.5px;
-                }
-
-                #accordionSidebar .sidebar-footer{
-                padding:14px;
-                font-size:11px;
-                color:#fff;
-                border-top:1px solid rgba(255,255,255,.05);
-                }
-
-                #accordionSidebar .sidebar-footer i{
-                width:14px;
-                text-align:center;
-                margin-right:5px;
-                }
-
-                .sidebar.toggled {
-                overflow: visible;
-                width: 9.5rem!important;
-                }
-
-                /* formularios, card y tablas */
+                /* Formularios, card y tablas */
                 form,
                 form input,
                 form select,
                 form textarea,
                 .card.shadow.mb-4 {
-                border-radius: 12px !important;
-                overflow: hidden;
+                    border-radius: 12px !important;
+                    overflow: hidden;
                 }
 
                 .btn {
-                border-radius: 12px !important;
+                    border-radius: 12px !important;
                 }
 
                 .mb-1, .my-1 {
-                margin-bottom: .55rem !important;
+                    margin-bottom: .55rem !important;
                 }
 
                 /* caja principal */
                 .select2-container--default .select2-selection--single {
-                border-radius: 12px !important;
-                height: 38px;
-                display: flex;
-                align-items: center;
+                    border-radius: 12px !important;
+                    height: 38px;
+                    display: flex;
+                    align-items: center;
                 }
 
                 /* multiple */
                 .select2-container--default .select2-selection--multiple {
-                border-radius: 12px !important;
+                    border-radius: 12px !important;
                 }
 
                 /* dropdown */
                 .select2-dropdown {
-                border-radius: 12px !important;
-                overflow: hidden;
+                    border-radius: 12px !important;
+                    overflow: hidden;
                 }
 
                 /* modal */
                 .modal-content,
                 .modal-header,
                 .modal-footer {
-                border-radius: 12px !important;
+                    border-radius: 12px !important;
                 }
 
                 .input-group > .input-group-prepend > .input-group-text {
-                border-radius: 12px 0 0 12px !important;
+                    border-radius: 12px 0 0 12px !important;
                 }
 
                 .input-group > .form-control {
-                border-radius: 0 12px 12px 0 !important;
+                    border-radius: 0 12px 12px 0 !important;
                 }
 
                 h1.h3.text-gray-800 {
-                border-bottom: 2px solid #3787ba;
-                display: inline-block;
-                padding-bottom: 0px;
-                margin-bottom: 10px;
+                    border-bottom: 2px solid #3787ba;
+                    display: inline-block;
+                    padding-bottom: 0px;
+                    margin-bottom: 10px;
                 }
 
                 /* Tarjetas */
                 .custom-alert-info {
-                background: linear-gradient(135deg, #e0f2ff, #f0f9ff);
-                border: 1px solid #b6e0fe;
-                border-left: 5px solid #0d6efd;
-                border-radius: 10px;
-                color: #0c5460;
-                padding: 12px 16px;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+                    background: linear-gradient(135deg, #e0f2ff, #f0f9ff);
+                    border: 1px solid #b6e0fe;
+                    border-left: 5px solid #0d6efd;
+                    border-radius: 10px;
+                    color: #0c5460;
+                    padding: 12px 16px;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
                 }
 
                 .custom-alert-info .icon {
-                font-size: 20px;
-                color: #0d6efd;
+                    font-size: 20px;
+                    color: #0d6efd;
                 }
 
                 .custom-alert-warning {
-                background: linear-gradient(135deg, #fff4e5, #fffaf0);
-                border: 1px solid #ffe0b2;
-                border-left: 5px solid #f59e0b;
-                border-radius: 12px;
-                color: #7c4a03;
-                padding: 14px 18px;
-                box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+                    background: linear-gradient(135deg, #fff4e5, #fffaf0);
+                    border: 1px solid #ffe0b2;
+                    border-left: 5px solid #f59e0b;
+                    border-radius: 12px;
+                    color: #7c4a03;
+                    padding: 14px 18px;
+                    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
                 }
 
                 .custom-alert-warning .icon {
-                font-size: 20px;
-                color: #f59e0b;
+                    font-size: 20px;
+                    color: #f59e0b;
                 }
 
                 /* badge */
                 .flag-badge {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                background: white;
-                padding: 4px 10px;
-                border-radius: 20px;
-                border: 1px solid #ffe0b2;
-                font-size: 12px;
-                font-weight: 600;
-                color: #7c4a03;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                    background: white;
+                    padding: 4px 10px;
+                    border-radius: 20px;
+                    border: 1px solid #ffe0b2;
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #7c4a03;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
                 }
 
                 .flag-badge img {
-                width: 18px;
-                height: auto;
-                border-radius: 3px;
+                    width: 18px;
+                    height: auto;
+                    border-radius: 3px;
                 }
 
                 /* Tarjetas */
                 .card {
-                border: none;
-                border-radius: 1rem;
-                transition: transform .2s ease, box-shadow .2s ease;
-                background: #fff;
+                    border: none;
+                    border-radius: 1rem;
+                    transition: transform .2s ease, box-shadow .2s ease;
+                    background: #fff;
                 }
 
                 .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+                    transform: translateY(-5px);
+                    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
                 }
 
                 /* Progress bar animada */
                 .progress-bar {
-                background: linear-gradient(90deg, #36d1dc, #5b86e5);
-                transition: width 1s ease-in-out;
+                    background: linear-gradient(90deg, #36d1dc, #5b86e5);
+                    transition: width 1s ease-in-out;
                 }
 
                 /* Botones */
                 .btn {
-                border-radius: 30px;
-                transition: all .3s ease;
+                    border-radius: 30px;
+                    transition: all .3s ease;
                 }
                 .btn:hover {
-                transform: scale(1.05);
+                    transform: scale(1.05);
                 }
 
                 /* Modal más elegante */
                 .modal-content {
-                border-radius: 1rem;
-                box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+                    border-radius: 1rem;
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
                 }
 
-                /* === MOBILE === */
-                @media (max-width: 768px) {
-                #accordionSidebar {
-                    position: fixed;
-                    top: 0;
-                    left: -260px;
-                    width: 260px;
-                    height: 100%;
-                    z-index: 9999;
-                    transition: .3s;
+                /* ===== SIDEBAR BASE ===== */
+                #accordionSidebar{
+                    font-size:13px;
+                    background: linear-gradient(180deg,#3787ba,#2c6d96);
+                    z-index: 1000;
+                    transition: all .3s ease;
                 }
 
-                #accordionSidebar.active {
-                    left: 0;
+                /* ===== LOGO ===== */
+                .sidebar-brand {
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    padding:16px;
+                    margin:14px;
+                    background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.05));
+                    border:1px solid rgba(255,255,255,0.15);
+                    border-radius:16px;
+                    position:relative;
+                    overflow:hidden;
+                    transition:.3s;
                 }
 
-                .sidebar-overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0,0,0,.4);
-                    z-index: 9998;
-                    display: none;
+                .sidebar-brand::before{
+                    content:"";
+                    position:absolute;
+                    inset:0;
+                    background:radial-gradient(circle at top left,rgba(255,255,255,.4),transparent 60%);
+                    opacity:.6;
                 }
 
-                .sidebar-overlay.active {
-                    display: block;
-                }
-                }
-
-                /* botón hamburguesa */
-                .mobile-toggle {
-                position: fixed;
-                top: 10px;
-                left: 10px;
-                z-index: 10000;
-                border: none;
-                background: #3787ba;
-                color: #fff;
-                width: 42px;
-                height: 42px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0,0,0,.2);
+                .sidebar-brand:hover{
+                    transform:translateY(-2px) scale(1.02);
+                    box-shadow:0 8px 20px rgba(0,0,0,.25);
                 }
 
-                /* header sidebar */
-                .sidebar-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 10px;
-                }
-
-                /* botón cerrar */
-                .close-sidebar {
-                border: none;
-                background: transparent;
-                color: #fff;
-                font-size: 18px;
-                }
-
-                /* mejora logo */
                 .sidebar-brand img {
-                max-width: 130px;
+                    max-width:120px;
+                    filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+                    position:relative;
+                    z-index:2;
+                }
+
+                /* ===== ITEMS ===== */
+                #accordionSidebar .nav-item{
+                    margin:5px 10px;
+                }
+
+                #accordionSidebar .nav-link{
+                    padding:11px 14px;
+                    border-radius:12px;
+                    color:#fff;
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                    transition:.25s;
+                }
+
+                #accordionSidebar .nav-link:hover{
+                    background:rgba(255,255,255,0.10);
+                    transform:translateX(2px);
+                }
+
+                #accordionSidebar .nav-link.active{
+                    background:#fff;
+                    color:#2c6d96;
+                    font-weight:600;
+                    box-shadow:0 6px 14px rgba(0,0,0,.18);
+                }
+
+                #accordionSidebar .nav-link i{
+                    width:18px;
+                    text-align:center;
+                    font-size:13px;
+                    opacity:.85;
+                }
+
+                /* ===== FLECHA ===== */
+                #accordionSidebar .nav-link .arrow{
+                    margin-left:auto;
+                    font-size:10px;
+                    transition:.3s;
+                }
+
+                #accordionSidebar .nav-link[aria-expanded="true"]{
+                    background:rgba(255,255,255,0.08);
+                }
+
+                #accordionSidebar .nav-link[aria-expanded="true"] .arrow{
+                    transform:rotate(180deg);
+                }
+
+                /* ===== SUBMENU ===== */
+                #accordionSidebar .collapse-inner{
+                    background:#ffffff;
+                    border-radius:14px;
+                    margin:6px 4px 12px;
+                    padding:6px;
+                    box-shadow:0 8px 20px rgba(0,0,0,.15);
+                    border:1px solid rgba(0,0,0,.04);
+                }
+
+                #accordionSidebar .collapse-item{
+                    display:block;
+                    padding:9px 12px;
+                    border-radius:8px;
+                    font-size:12.5px;
+                    color:#334155;
+                    transition:.2s;
+                }
+
+                #accordionSidebar .collapse-item:hover{
+                    background:#f1f5f9;
+                    padding-left:16px;
+                }
+
+                /* ===== TEXTOS ===== */
+                #accordionSidebar .sidebar-heading{
+                    font-size:10.5px;
+                    opacity:.6;
+                    padding:10px 18px 4px;
+                    letter-spacing:.8px;
+                    text-transform:uppercase;
+                }
+
+                #accordionSidebar .sidebar-footer{
+                    padding:16px;
+                    font-size:11px;
+                    color:#fff;
+                    border-top:1px solid rgba(255,255,255,.08);
+                    opacity:.8;
+                }
+
+                /* ===== BOTÓN MOBILE ===== */
+                .mobile-toggle{
+                    position: fixed;
+                    top: 15px;
+                    left: 10px;
+                    z-index: 1001;
+
+                    width: 44px;
+                    height: 44px;
+                    border-radius: 12px;
+                    border: none;
+
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+
+                    background: linear-gradient(135deg,#3787ba,#2c6d96);
+                    color:#fff;
+                    font-size:18px;
+
+                    box-shadow: 0 8px 20px rgba(0,0,0,.3);
+                }
+
+                .mobile-toggle::after{
+                    content:"";
+                    position:absolute;
+                    inset:-6px;
+                    border-radius:16px;
+                    background:rgba(55,135,186,.25);
+                    z-index:-1;
+                }
+
+                .mobile-toggle:hover{
+                    transform:scale(1.05);
+                }
+
+                /* ===== OVERLAY ===== */
+                #sidebarOverlay{
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(0,0,0,.4);
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: .3s;
+                    z-index: 998;
+                }
+
+                #sidebarOverlay.active{
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                /* ===== DESKTOP ===== */
+                @media (min-width: 769px){
+                    #accordionSidebar{
+                        position: relative;
+                        left: 0;
+                        width: 260px;
+                        height: auto;
+                    }
+
+                    .mobile-toggle{
+                        display:none;
+                    }
+                }
+
+                /* ===== MOBILE ===== */
+                @media (max-width: 768px){
+                    html, body{
+                        overflow-x: hidden;
+                    }
+
+                    #accordionSidebar{
+                        position: fixed;
+                        left: -260px;
+                        top: 0;
+                        width: 260px;
+                        height: 100%;
+                    }
+
+                    #accordionSidebar.show{
+                        left: 0;
+                    }
+
+                    #content-wrapper{
+                        margin-left: 0 !important;
+                        width: 100% !important;
+                    }
+                }
+
+                /* ===== ANIMACIÓN ===== */
+                @keyframes fadeIn{
+                    from{opacity:0; transform:translateY(-4px);}
+                    to{opacity:1; transform:translateY(0);}
                 }
             </style>
 
             <!-- BOTON MOBILE -->
-            <button id="mobileSidebarToggle" class="mobile-toggle d-md-none">
+            <button id="mobileSidebarToggle" class="mobile-toggle">
                 <i class="fas fa-bars"></i>
             </button>
 
@@ -472,16 +524,14 @@ class menu extends iQuery
 
             <ul class="navbar-nav sidebar accordion d-flex flex-column" id="accordionSidebar">
                 <div class="sidebar-header">
-                <a class="sidebar-brand" href="dashboard.php">
-                    <img src="../images/logo-fygroup-v1_bg_removed.png" alt="logo">
-                </a>
-                <button id="closeSidebar" class="close-sidebar d-md-none">
-                    <i class="fas fa-times"></i>
-                </button>
+                    <a class="sidebar-brand flex-column" href="dashboard.php">
+                        <img src="../images/logo-fygroup-v1_bg_removed.png">
+                        <small style="color:#fff; opacity:.8; font-size:10px;">FY Group</small>
+                    </a>
                 </div>
 
                 <div class="sidebar-heading text-white">
-                Sistema Antepuerto
+                    Sistema Antepuerto
                 </div>
         ';
 
@@ -530,33 +580,26 @@ class menu extends iQuery
                     const sidebar = document.getElementById("accordionSidebar");
                     const toggle = document.getElementById("mobileSidebarToggle");
                     const overlay = document.getElementById("sidebarOverlay");
-                    const closeBtn = document.getElementById("closeSidebar");
-                    const toggleTop = document.getElementById("sidebarToggleTop");
 
-                    function openSidebar() {
-                    sidebar.classList.add("active");
-                    overlay.classList.add("active");
+                    function toggleSidebar(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        sidebar.classList.toggle("show");
+                        if (overlay) overlay.classList.toggle("active");
                     }
 
                     function closeSidebar() {
-                    sidebar.classList.remove("active");
-                    overlay.classList.remove("active");
+                        sidebar.classList.remove("show");
+                        if (overlay) overlay.classList.remove("active");
                     }
 
                     if (toggle) {
-                    toggle.addEventListener("click", openSidebar);
-                    }
-
-                    if (toggleTop) {
-                    toggleTop.addEventListener("click", openSidebar);
+                        toggle.addEventListener("click", toggleSidebar);
                     }
 
                     if (overlay) {
-                    overlay.addEventListener("click", closeSidebar);
-                    }
-
-                    if (closeBtn) {
-                    closeBtn.addEventListener("click", closeSidebar);
+                        overlay.addEventListener("click", closeSidebar);
                     }
                 });
             </script>
@@ -577,98 +620,83 @@ class menu extends iQuery
         $avatarName = $user->avatarIniciales($fullName, 35);
 
         $tapBar = '
-      <style>
-        #userDropdown .arrow{
-          transition:.25s;
-          font-size:11px;
-          margin-left:6px;
-        }
+            <style>
+            #userDropdown .arrow{
+                transition:.25s;
+                font-size:11px;
+                margin-left:6px;
+            }
 
-        #userDropdown.show .arrow{
-          transform:rotate(180deg);
-        }
+            #userDropdown.show .arrow{
+                transform:rotate(180deg);
+            }
 
-        .topbar{
-          background:#3787ba;
-          border-bottom:1px solid rgba(255,255,255,.05);
-        }
-      </style>
+            .topbar{
+                background:#3787ba;
+                border-bottom:1px solid rgba(255,255,255,.05);
+            }
+            </style>
 
-      <nav class="navbar navbar-expand navbar-dark topbar shadow" style="height:50px;margin-bottom:5px;">
-        <div class="container-fluid">
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none me-3">
-            <i class="fas fa-bars"></i>
-          </button>
+            <nav class="navbar navbar-expand navbar-dark topbar shadow" style="height:50px;margin-bottom:5px;">
+            <div class="container-fluid">
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none mr-3">
+                <i class="fas fa-bars"></i>
+                </button>
 
-          <div class="mx-auto text-white d-flex align-items-center small">
-            <i class="fas fa-clock me-2"></i>
-            <div id="relojFecha"></div>
-          </div>
-
-          <ul class="navbar-nav ms-auto me-3">
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle d-flex align-items-center px-2" href="#" id="userDropdown" data-bs-toggle="dropdown">
-                ' . $avatarName . '
-                &nbsp
-
-                <div class="d-flex flex-column ms-2 me-2">
-                  <span class="text-white small fw-semibold">' . $fullName . '</span>
-                  <span class="text-white small opacity-75">' . $run . '</span>
+                <div class="mx-auto text-white d-flex align-items-center small">
+                <i class="fas fa-clock mr-2"></i>
+                <div id="relojFecha"></div>
                 </div>
 
-                <i class="fas fa-chevron-down arrow text-white"></i>
-              </a>
+                <ul class="navbar-nav ml-auto mr-3">
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center px-2" href="#" id="userDropdown" data-toggle="dropdown">
+                    ' . $avatarName . '
+                    &nbsp;
 
-              <ul class="dropdown-menu dropdown-menu-end shadow">
-                <li class="px-3 py-3 text-center border-bottom">
-                  <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
-                  <br>
-                  <small class="text-muted">' . $arrayDivision[$division] . '</small>
-                </li>
+                    <div class="d-flex flex-column ml-2 mr-2">
+                        <span class="text-white small font-weight-bold">' . $fullName . '</span>
+                        <span class="text-white small opacity-75">' . $run . '</span>
+                    </div>
 
-                <li>
-                  <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#userModal">
-                    <i class="fas fa-user me-2 text-primary"></i> Perfil
-                  </a>
-                </li>';
+                    <i class="fas fa-chevron-down arrow text-white"></i>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right shadow">
+                    <div class="px-3 py-3 text-center border-bottom">
+                        <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
+                        <br>
+                        <small class="text-muted">' . $arrayDivision[$division] . '</small>
+                    </div>
+
+                    <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#userModal">
+                        <i class="fas fa-user mr-2 text-primary"></i> Perfil
+                    </a>
+        ';
 
         if ($admin) {
             $tapBar .= '
-              <li>
-                <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#goalModal">
-                  <i class="fas fa-cogs me-2 text-primary"></i> Ajustar Capacidad
-                </a>
-              </li>';
+              <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#goalModal">
+                <i class="fas fa-cogs mr-2 text-primary"></i> Ajustar Capacidad
+              </a>';
         }
 
         $tapBar .= '
-              <li>
-                <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#licenseModal">
-                  <i class="fas fa-copyright me-2 text-primary"></i> Licencia
-                </a>
-              </li>
+                    <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#licenseModal">
+                        <i class="fas fa-copyright mr-2 text-primary"></i> Licencia
+                    </a>
 
-              <li><hr class="dropdown-divider"></li>
+                    <div class="dropdown-divider"></div>
 
-              <li>
-                <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                  <i class="fas fa-right-from-bracket me-2 text-danger"></i> Cerrar Sesión
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function(){
-        var dropdown = document.getElementById("userDropdown");
-
-        dropdown.addEventListener("show.bs.dropdown", ()=> dropdown.classList.add("show"));
-        dropdown.addEventListener("hide.bs.dropdown", ()=> dropdown.classList.remove("show"));
-      });
-    </script>';
+                    <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt mr-2 text-danger"></i> Cerrar Sesión
+                    </a>
+                    </div>
+                </li>
+                </ul>
+            </div>
+            </nav>
+        ';
 
         return $tapBar;
     }
