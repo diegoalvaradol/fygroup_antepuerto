@@ -165,7 +165,7 @@ if (!$admin) {
                     <form id="editUserInfoForm">
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <div class="alert alert-info" role="alert" style="font-size:85%;"> <i class="fa-solid fa-circle-info"></i> ¡Para guardar los cambios deberás ingresar tu contraseña actual!</div>
+                                <div class="alert custom-alert-info" role="alert" style="font-size:85%;"> <i class="fa-solid fa-circle-info"></i> ¡Para guardar los cambios deberás ingresar tu contraseña actual!</div>
                             </div>
                             <div class="col-sm-12">
                                 <label>RUN:</label>
