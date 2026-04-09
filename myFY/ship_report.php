@@ -1,28 +1,28 @@
 <?php
-  require_once __DIR__ . '/../config/auth.php';
-  require_once __DIR__ . '/../config/includes.php';
+require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/includes.php';
 
-  $port = new outerPort();
-  $cfg  = new cfg();
-  $user = new user();
+$port = new outerPort();
+$cfg = new cfg();
+$user = new user();
 
-  $infoCfg       = json_decode($cfg->getInfo(1), true);
-  $admin         = $user->isAdmin($_SESSION["user"]["run"]);
-  $releasedTime  = new DateTime($infoCfg['released_date']);
-  $updateTime    = new DateTime($infoCfg['update_date']);
-  $arrayDivision = get::getDivisionName();
-  $sideBarSSL    = menu::sideBarSSL();
-  $mainTapBarSSL = menu::mainTapBarSSL();
-  $footer        = menu::footerSSL();
-  $top           = UIComponents::scrollToTopButton();
+$infoCfg = json_decode($cfg->getInfo(1), true);
+$admin = $user->isAdmin($_SESSION['user']['run']);
+$releasedTime = new DateTime($infoCfg['released_date']);
+$updateTime = new DateTime($infoCfg['update_date']);
+$arrayDivision = get::getDivisionName();
+$sideBarSSL = menu::sideBarSSL();
+$mainTapBarSSL = menu::mainTapBarSSL();
+$footer = menu::footerSSL();
+$top = UIComponents::scrollToTopButton();
 
-  /* Validar superadmin */
-  if (!$admin) {
-  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
-  $pag     = basename(__FILE__);
-  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-  mostrarAccesoDenegado($usuario, $pag, $url);
-  }
+/* Validar superadmin */
+if (!$admin) {
+    $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
+    $pag = basename(__FILE__);
+    $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    mostrarAccesoDenegado($usuario, $pag, $url);
+}
 ?>
 
 <!-- HTML -->
@@ -135,11 +135,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . '.'; ?></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="row justify-content-center">
-                    <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION["user"]["division"]]; ?></h6>
+                    <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION['user']['division']]; ?></h6>
                 </div>
                 <div class="modal-body">
                     <form id="editUserInfoForm">
@@ -149,20 +149,20 @@
                             </div>
                             <div class="col-sm-12">
                                 <label>RUN:</label>
-                                <input type="text" class="form-control form-control-user" disabled value="<?php echo $_SESSION["user"]["run"]; ?>">
+                                <input type="text" class="form-control form-control-user" disabled value="<?php echo $_SESSION['user']['run']; ?>">
                                 <label>Nombre:</label>
-                                <input type="text" class="form-control form-control-user" id="name" name="name" value="<?php echo $_SESSION["user"]["name"]; ?>">
+                                <input type="text" class="form-control form-control-user" id="name" name="name" value="<?php echo $_SESSION['user']['name']; ?>">
                                 <label>Apellido:</label>
-                                <input type="text" class="form-control form-control-user" id="lastname" name="lastname" value="<?php echo $_SESSION["user"]["last_name"]; ?>">
+                                <input type="text" class="form-control form-control-user" id="lastname" name="lastname" value="<?php echo $_SESSION['user']['last_name']; ?>">
                                 <label>Correo:</label>
-                                <input type="email" class="form-control form-control-user" id="email" name="email" value="<?php echo $_SESSION["user"]["email"]; ?>">
+                                <input type="email" class="form-control form-control-user" id="email" name="email" value="<?php echo $_SESSION['user']['email']; ?>">
                                 <label>Contraseña:</label>
                                 <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual">
                             </div>
                         </div>
 
-                        <input type="hidden" id="run" name="run" value="<?php echo $_SESSION["user"]["run"]; ?>">
-                        <input type="hidden" id="division" name="division" value="<?php echo $_SESSION["user"]["division"]; ?>">
+                        <input type="hidden" id="run" name="run" value="<?php echo $_SESSION['user']['run']; ?>">
+                        <input type="hidden" id="division" name="division" value="<?php echo $_SESSION['user']['division']; ?>">
                         <button type="button" name="saveinfouser" class="btn btn-success btn-user btn-sm" onclick="saveInfoUser()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
                     </form>
                 </div>
@@ -281,7 +281,8 @@
     <script src="../assets/js/sb-admin-2.min.js"></script>
 
     <!-- Bootstrap JS (necesario para popover) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>

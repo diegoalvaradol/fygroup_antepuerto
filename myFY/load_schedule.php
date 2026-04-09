@@ -1,17 +1,17 @@
 <?php
-  require_once __DIR__ . '/../config/auth.php';
-  require_once __DIR__ . '/../config/includes.php';
+require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/includes.php';
 
-  $user   = new user();
-  $admin  = $user->isAdmin($_SESSION["user"]["run"]);
-  $footer = menu::footerSSL();
+$user = new user();
+$admin = $user->isAdmin($_SESSION['user']['run']);
+$footer = menu::footerSSL();
 
-  if (!$admin) {
-  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
-  $pag     = basename(__FILE__);
-  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-  mostrarAccesoDenegado($usuario, $pag, $url);
-  }
+if (!$admin) {
+    $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
+    $pag = basename(__FILE__);
+    $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    mostrarAccesoDenegado($usuario, $pag, $url);
+}
 
 ?>
 
@@ -83,7 +83,7 @@
 					<h6 class="mb-0"><i class="fas fa-folder-open"></i> Planificaciones Cargadas</h6>
 				</div>
 				<div class="card-body">
-					<?php $dir      = __DIR__ . "/../shipping_planning/"; ?>
+					<?php $dir = __DIR__ . '/../shipping_planning/'; ?>
 					<?php $archivos = array_diff(scandir($dir), ['.', '..']); ?>
 
 					<?php if (empty($archivos)): ?>
@@ -138,7 +138,8 @@
   <script src="../assets/js/sb-admin-2.min.js"></script>
 
   <!-- Bootstrap JS (necesario para popover) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
   <!-- Select2 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>

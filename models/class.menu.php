@@ -1,570 +1,582 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
 class menu extends iQuery
 {
-  public function __construct()
-  {
-    parent::__construct(); // usa Database::get() desde iQuery
-  }
-
-  public static function sideBarSSL()
-  {
-    $cfg  = new cfg();
-    $user = new user();
-
-    $infoCfg    = json_decode($cfg->getInfo(1), true);
-    $updateTime = new DateTime($infoCfg['update_date']);
-    $admin      = $user->isAdmin($_SESSION["user"]["run"]);
-
-    /* Definición de menús */
-    $menus = [
-      [
-        'title' => 'Operaciones',
-        'icon'  => 'fa-truck',
-        'id'    => 'collapseOperaciones',
-        'items' => [
-          ['label' => 'Ingreso Contenedores', 'link' => generateMkey('enter_container_port')],
-          ['label' => 'Ingreso Termos', 'link' => generateMkey('enter_thermo_port')],
-          ['label' => 'Carga Internacional', 'link' => generateMkey('enter_container_international')],
-          ['label' => 'Seguimiento', 'link' => generateMkey('tracking')],
-          ['label' => 'Roleo de Carga', 'link' => generateMkey('vessel_transfer')]
-        ]
-      ],
-      [
-        'title' => 'Puerto',
-        'icon'  => 'fa-anchor',
-        'id'    => 'collapsePuerto',
-        'items' => [
-          ['label' => 'Naves', 'link' => generateMkey('enter_ship')],
-          ['label' => 'Lineas Navieras', 'link' => generateMkey('enter_ship_line')],
-          ['label' => 'Puertos', 'link' => generateMkey('enter_port')]
-        ]
-      ],
-      [
-        'title' => 'Empresas',
-        'icon'  => 'fa-building',
-        'id'    => 'collapseEmpresas',
-        'items' => [
-          ['label' => 'Empresa', 'link' => generateMkey('enter_company')]
-        ]
-      ],
-      [
-        'title' => 'Itinerarios',
-        'icon'  => 'fa-calendar-days',
-        'id'    => 'collapseProgramacion',
-        'items' => [
-          ['label' => 'Itinerarios FY', 'link' => generateMkey('program_fygroup')],
-          ['label' => 'Itinerarios TPC', 'link' => generateMkey('program_tpc')],
-          ['label' => 'Itinerarios EPCO', 'link' => generateMkey('program_epco')],
-          ['label' => 'Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
-          ['label' => 'Global Reefers', 'link' => generateMkey('program_global_reefers')]
-        ]
-      ],
-      [
-        'title' => 'Live Position',
-        'icon'  => 'fa-satellite',
-        'id'    => 'collapseLivePosition',
-        'items' => [
-          ['label' => 'Live Position', 'link' => generateMkey('marinetraffic_live_map')]
-        ]
-      ]
-    ];
-
-    if ($admin) {
-      $menus = array_merge($menus, [
-        [
-          'title' => 'Maersk',
-          'icon'  => 'fa-ship',
-          'id'    => 'collapseMaersk',
-          'items' => [
-            ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
-            ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
-            ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
-            ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
-            ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')]
-          ]
-        ],
-        [
-          'title' => 'MSC',
-          'icon'  => 'fa-ship',
-          'id'    => 'collapseMedlog',
-          'items' => [
-            ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
-            ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
-            ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')]
-          ]
-        ],
-
-        [
-          'title' => 'Reportes',
-          'icon'  => 'fa-file-pdf',
-          'id'    => 'collapseReporte',
-          'items' => [
-            ['label' => 'Reporte de Naves', 'link' => generateMkey('ship_report')],
-            ['label' => 'Liquidación de Naves', 'link' => generateMkey('vessel_liquidation')],
-            ['label' => 'Reporte de Turnos', 'link' => generateMkey('shifts_report')]
-          ]
-        ],
-        [
-          'title' => 'Estadística',
-          'icon'  => 'fa-chart-bar',
-          'id'    => 'collapseEstaditica',
-          'items' => [
-            ['label' => 'Estadística Naves', 'link' => generateMkey('stadistics_by_vessel')]
-          ]
-        ],
-        [
-          'title' => 'Tarifario',
-          'icon'  => 'fa-dollar-sign',
-          'id'    => 'collapsePrecio',
-          'items' => [
-            ['label' => 'Lista de Tarifas', 'link' => generateMkey('list_price_indicators')]
-          ]
-        ],
-        [
-          'title' => 'Servidor',
-          'icon'  => 'fa-server',
-          'id'    => 'collapseServer',
-          'items' => [
-            ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
-            ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')],
-            ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')]
-          ]
-        ]
-      ]);
+    public function __construct()
+    {
+        parent::__construct(); // usa Database::get() desde iQuery
     }
 
-    $sidebar = '
-      <style>
-        .sidebar-brand {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 12px;
-          margin: 10px;
-          background: rgba(255,255,255,0.25);
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 10px;
+    public static function sideBarSSL()
+    {
+        $cfg = new cfg();
+        $user = new user();
+
+        $infoCfg = json_decode($cfg->getInfo(1), true);
+        $updateTime = new DateTime($infoCfg['update_date']);
+        $admin = $user->isAdmin($_SESSION['user']['run']);
+
+        /* Definición de menús */
+        $menus = [
+          [
+            'title' => 'Operaciones',
+            'icon' => 'fa-truck',
+            'id' => 'collapseOperaciones',
+            'items' => [
+              ['label' => 'Ingreso Contenedores', 'link' => generateMkey('enter_container_port')],
+              ['label' => 'Ingreso Termos', 'link' => generateMkey('enter_thermo_port')],
+              ['label' => 'Carga Internacional', 'link' => generateMkey('enter_container_international')],
+              ['label' => 'Seguimiento', 'link' => generateMkey('tracking')],
+              ['label' => 'Roleo de Carga', 'link' => generateMkey('vessel_transfer')],
+            ],
+          ],
+          [
+            'title' => 'Puerto',
+            'icon' => 'fa-anchor',
+            'id' => 'collapsePuerto',
+            'items' => [
+              ['label' => 'Naves', 'link' => generateMkey('enter_ship')],
+              ['label' => 'Lineas Navieras', 'link' => generateMkey('enter_ship_line')],
+              ['label' => 'Puertos', 'link' => generateMkey('enter_port')],
+            ],
+          ],
+          [
+            'title' => 'Empresas',
+            'icon' => 'fa-building',
+            'id' => 'collapseEmpresas',
+            'items' => [
+              ['label' => 'Empresa', 'link' => generateMkey('enter_company')],
+            ],
+          ],
+          [
+            'title' => 'Itinerarios',
+            'icon' => 'fa-calendar-days',
+            'id' => 'collapseProgramacion',
+            'items' => [
+              ['label' => 'Itinerarios FY', 'link' => generateMkey('program_fygroup')],
+              ['label' => 'Itinerarios TPC', 'link' => generateMkey('program_tpc')],
+              ['label' => 'Itinerarios EPCO', 'link' => generateMkey('program_epco')],
+              ['label' => 'Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
+              ['label' => 'Global Reefers', 'link' => generateMkey('program_global_reefers')],
+            ],
+          ],
+          [
+            'title' => 'Live Position',
+            'icon' => 'fa-satellite',
+            'id' => 'collapseLivePosition',
+            'items' => [
+              ['label' => 'Live Position', 'link' => generateMkey('marinetraffic_live_map')],
+            ],
+          ],
+        ];
+
+        if ($admin) {
+            $menus = array_merge($menus, [
+              [
+                'title' => 'Maersk',
+                'icon' => 'fa-ship',
+                'id' => 'collapseMaersk',
+                'items' => [
+                  ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
+                  ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
+                  ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
+                  ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
+                  ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')],
+                ],
+              ],
+              [
+                'title' => 'MSC',
+                'icon' => 'fa-ship',
+                'id' => 'collapseMedlog',
+                'items' => [
+                  ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
+                  ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
+                  ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')],
+                ],
+              ],
+
+              [
+                'title' => 'Reportes',
+                'icon' => 'fa-file-pdf',
+                'id' => 'collapseReporte',
+                'items' => [
+                  ['label' => 'Reporte de Naves', 'link' => generateMkey('ship_report')],
+                  ['label' => 'Liquidación de Naves', 'link' => generateMkey('vessel_liquidation')],
+                  ['label' => 'Reporte de Turnos', 'link' => generateMkey('shifts_report')],
+                ],
+              ],
+              [
+                'title' => 'Estadística',
+                'icon' => 'fa-chart-bar',
+                'id' => 'collapseEstaditica',
+                'items' => [
+                  ['label' => 'Estadística Naves', 'link' => generateMkey('stadistics_by_vessel')],
+                ],
+              ],
+              [
+                'title' => 'Tarifario',
+                'icon' => 'fa-dollar-sign',
+                'id' => 'collapsePrecio',
+                'items' => [
+                  ['label' => 'Lista de Tarifas', 'link' => generateMkey('list_price_indicators')],
+                ],
+              ],
+              [
+                'title' => 'Servidor',
+                'icon' => 'fa-server',
+                'id' => 'collapseServer',
+                'items' => [
+                  ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
+                  ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')],
+                  ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')],
+                ],
+              ],
+            ]);
         }
 
-        .sidebar-brand img {
-          max-width: 150px;
-          width: 100%;
-          height: auto;
-        }
+        $sidebar = '
+            <style>
+                .sidebar-brand {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 12px;
+                margin: 10px;
+                background: rgba(255,255,255,0.25);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 10px;
+                }
 
-        #accordionSidebar{
-          font-size:13px;
-          background:#3787ba;
-        }
+                .sidebar-brand img {
+                max-width: 150px;
+                width: 100%;
+                height: auto;
+                }
 
-        #accordionSidebar .sidebar-brand{
-          padding:16px 10px;
-          border-bottom:1px solid rgba(255,255,255,.05);
-        }
+                #accordionSidebar{
+                font-size:13px;
+                background:#3787ba;
+                }
 
-        #accordionSidebar .nav-item{
-          margin:2px 8px;
-        }
+                #accordionSidebar .sidebar-brand{
+                padding:16px 10px;
+                border-bottom:1px solid rgba(255,255,255,.05);
+                }
 
-        #accordionSidebar .nav-link{
-          padding:10px 14px;
-          border-radius:10px;
-          color:#fff;
-          display:flex;
-          align-items:center;
-          gap:10px;
-          transition:.2s;
-        }
+                #accordionSidebar .nav-item{
+                margin:2px 8px;
+                }
 
-        #accordionSidebar .nav-link:hover{
-          background:rgba(255,255,255,0.08);
-          color:#fff;
-        }
+                #accordionSidebar .nav-link{
+                padding:10px 14px;
+                border-radius:10px;
+                color:#fff;
+                display:flex;
+                align-items:center;
+                gap:10px;
+                transition:.2s;
+                }
 
-        #accordionSidebar .nav-link i{
-          width:18px;
-          text-align:center;
-          font-size:13px;
-        }
+                #accordionSidebar .nav-link:hover{
+                background:rgba(255,255,255,0.08);
+                color:#fff;
+                }
 
-        #accordionSidebar .nav-link .arrow{
-          margin-left:auto;
-          font-size:10px;
-          transition:.25s;
-        }
+                #accordionSidebar .nav-link i{
+                width:18px;
+                text-align:center;
+                font-size:13px;
+                }
 
-        #accordionSidebar .nav-link[aria-expanded="true"] .arrow{
-          transform:rotate(180deg);
-        }
+                #accordionSidebar .nav-link .arrow{
+                margin-left:auto;
+                font-size:10px;
+                transition:.25s;
+                }
 
-        #accordionSidebar .collapse-inner{
-          background:#fff;
-          border-radius:10px;
-          margin:6px 4px 10px 4px;
-          padding:6px 4px;
-          box-shadow:0 4px 10px rgba(0,0,0,.08);
-        }
+                #accordionSidebar .nav-link[aria-expanded="true"] .arrow{
+                transform:rotate(180deg);
+                }
 
-        #accordionSidebar .collapse-item{
-          display:block;
-          padding:8px 12px;
-          border-radius:6px;
-          font-size:12.5px;
-          color:#1e293b;
-          transition:.2s;
-        }
+                #accordionSidebar .collapse-inner{
+                background:#fff;
+                border-radius:10px;
+                margin:6px 4px 10px 4px;
+                padding:6px 4px;
+                box-shadow:0 4px 10px rgba(0,0,0,.08);
+                }
 
-        #accordionSidebar .collapse-item:hover{
-          background:#e2e8f0;
-          padding-left:16px;
-        }
+                #accordionSidebar .collapse-item{
+                display:block;
+                padding:8px 12px;
+                border-radius:6px;
+                font-size:12.5px;
+                color:#1e293b;
+                transition:.2s;
+                }
 
-        #accordionSidebar .sidebar-heading{
-          font-size:11px;
-          opacity:.6;
-          padding:8px 16px 4px;
-          letter-spacing:.5px;
-        }
+                #accordionSidebar .collapse-item:hover{
+                background:#e2e8f0;
+                padding-left:16px;
+                }
 
-        #accordionSidebar .sidebar-footer{
-          padding:14px;
-          font-size:11px;
-          color:#fff;
-          border-top:1px solid rgba(255,255,255,.05);
-        }
+                #accordionSidebar .sidebar-heading{
+                font-size:11px;
+                opacity:.6;
+                padding:8px 16px 4px;
+                letter-spacing:.5px;
+                }
 
-        #accordionSidebar .sidebar-footer i{
-          width:14px;
-          text-align:center;
-          margin-right:5px;
-        }
+                #accordionSidebar .sidebar-footer{
+                padding:14px;
+                font-size:11px;
+                color:#fff;
+                border-top:1px solid rgba(255,255,255,.05);
+                }
 
-        .sidebar.toggled {
-          overflow: visible;
-          width: 9.5rem!important;
-        }
+                #accordionSidebar .sidebar-footer i{
+                width:14px;
+                text-align:center;
+                margin-right:5px;
+                }
 
-        /* formularios, card y tablas */
-        form,
-        form input,
-        form select,
-        form textarea,
-        .card.shadow.mb-4 {
-          border-radius: 12px !important;
-          overflow: hidden;
-        }
+                .sidebar.toggled {
+                overflow: visible;
+                width: 9.5rem!important;
+                }
 
-        .btn {
-          border-radius: 12px !important;
-        }
+                /* formularios, card y tablas */
+                form,
+                form input,
+                form select,
+                form textarea,
+                .card.shadow.mb-4 {
+                border-radius: 12px !important;
+                overflow: hidden;
+                }
 
-        .mb-1, .my-1 {
-          margin-bottom: .55rem !important;
-        }
+                .btn {
+                border-radius: 12px !important;
+                }
 
-        /* caja principal */
-        .select2-container--default .select2-selection--single {
-          border-radius: 12px !important;
-          height: 38px;
-          display: flex;
-          align-items: center;
-        }
+                .mb-1, .my-1 {
+                margin-bottom: .55rem !important;
+                }
 
-        /* multiple */
-        .select2-container--default .select2-selection--multiple {
-          border-radius: 12px !important;
-        }
+                /* caja principal */
+                .select2-container--default .select2-selection--single {
+                border-radius: 12px !important;
+                height: 38px;
+                display: flex;
+                align-items: center;
+                }
 
-        /* dropdown */
-        .select2-dropdown {
-          border-radius: 12px !important;
-          overflow: hidden;
-        }
+                /* multiple */
+                .select2-container--default .select2-selection--multiple {
+                border-radius: 12px !important;
+                }
 
-        /* modal */
-        .modal-content,
-        .modal-header,
-        .modal-footer {
-          border-radius: 12px !important;
-        }
+                /* dropdown */
+                .select2-dropdown {
+                border-radius: 12px !important;
+                overflow: hidden;
+                }
 
-        .input-group > .input-group-prepend > .input-group-text {
-          border-radius: 12px 0 0 12px !important;
-        }
+                /* modal */
+                .modal-content,
+                .modal-header,
+                .modal-footer {
+                border-radius: 12px !important;
+                }
 
-        .input-group > .form-control {
-          border-radius: 0 12px 12px 0 !important;
-        }
+                .input-group > .input-group-prepend > .input-group-text {
+                border-radius: 12px 0 0 12px !important;
+                }
 
-        h1.h3.text-gray-800 {
-          border-bottom: 2px solid #3787ba;
-          display: inline-block;
-          padding-bottom: 0px;
-          margin-bottom: 10px;
-        }
+                .input-group > .form-control {
+                border-radius: 0 12px 12px 0 !important;
+                }
 
-        /* Tarjetas */
-        .custom-alert-info {
-          background: linear-gradient(135deg, #e0f2ff, #f0f9ff);
-          border: 1px solid #b6e0fe;
-          border-left: 5px solid #0d6efd;
-          border-radius: 10px;
-          color: #0c5460;
-          padding: 12px 16px;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
+                h1.h3.text-gray-800 {
+                border-bottom: 2px solid #3787ba;
+                display: inline-block;
+                padding-bottom: 0px;
+                margin-bottom: 10px;
+                }
 
-        .custom-alert-info .icon {
-          font-size: 20px;
-          color: #0d6efd;
-        }
+                /* Tarjetas */
+                .custom-alert-info {
+                background: linear-gradient(135deg, #e0f2ff, #f0f9ff);
+                border: 1px solid #b6e0fe;
+                border-left: 5px solid #0d6efd;
+                border-radius: 10px;
+                color: #0c5460;
+                padding: 12px 16px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+                }
 
-        .custom-alert-warning {
-          background: linear-gradient(135deg, #fff4e5, #fffaf0);
-          border: 1px solid #ffe0b2;
-          border-left: 5px solid #f59e0b;
-          border-radius: 12px;
-          color: #7c4a03;
-          padding: 14px 18px;
-          box-shadow: 0 3px 8px rgba(0,0,0,0.06);
-        }
+                .custom-alert-info .icon {
+                font-size: 20px;
+                color: #0d6efd;
+                }
 
-        .custom-alert-warning .icon {
-          font-size: 20px;
-          color: #f59e0b;
-        }
+                .custom-alert-warning {
+                background: linear-gradient(135deg, #fff4e5, #fffaf0);
+                border: 1px solid #ffe0b2;
+                border-left: 5px solid #f59e0b;
+                border-radius: 12px;
+                color: #7c4a03;
+                padding: 14px 18px;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+                }
 
-        /* badge */
-        .flag-badge {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          background: white;
-          padding: 4px 10px;
-          border-radius: 20px;
-          border: 1px solid #ffe0b2;
-          font-size: 12px;
-          font-weight: 600;
-          color: #7c4a03;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
+                .custom-alert-warning .icon {
+                font-size: 20px;
+                color: #f59e0b;
+                }
 
-        .flag-badge img {
-          width: 18px;
-          height: auto;
-          border-radius: 3px;
-        }
+                /* badge */
+                .flag-badge {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                background: white;
+                padding: 4px 10px;
+                border-radius: 20px;
+                border: 1px solid #ffe0b2;
+                font-size: 12px;
+                font-weight: 600;
+                color: #7c4a03;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+                }
 
-        /* Tarjetas */
-        .card {
-          border: none;
-          border-radius: 1rem;
-          transition: transform .2s ease, box-shadow .2s ease;
-          background: #fff;
-        }
+                .flag-badge img {
+                width: 18px;
+                height: auto;
+                border-radius: 3px;
+                }
 
-        .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-        }
+                /* Tarjetas */
+                .card {
+                border: none;
+                border-radius: 1rem;
+                transition: transform .2s ease, box-shadow .2s ease;
+                background: #fff;
+                }
 
-        /* Progress bar animada */
-        .progress-bar {
-          background: linear-gradient(90deg, #36d1dc, #5b86e5);
-          transition: width 1s ease-in-out;
-        }
+                .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+                }
 
-        /* Botones */
-        .btn {
-          border-radius: 30px;
-          transition: all .3s ease;
-        }
-        .btn:hover {
-          transform: scale(1.05);
-        }
+                /* Progress bar animada */
+                .progress-bar {
+                background: linear-gradient(90deg, #36d1dc, #5b86e5);
+                transition: width 1s ease-in-out;
+                }
 
-        /* Modal más elegante */
-        .modal-content {
-          border-radius: 1rem;
-          box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
+                /* Botones */
+                .btn {
+                border-radius: 30px;
+                transition: all .3s ease;
+                }
+                .btn:hover {
+                transform: scale(1.05);
+                }
 
-        /* === MOBILE === */
-        @media (max-width: 768px) {
-          #accordionSidebar {
-            position: fixed;
-            top: 0;
-            left: -260px;
-            width: 260px;
-            height: 100%;
-            z-index: 9999;
-            transition: .3s;
-          }
+                /* Modal más elegante */
+                .modal-content {
+                border-radius: 1rem;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+                }
 
-          #accordionSidebar.active {
-            left: 0;
-          }
+                /* === MOBILE === */
+                @media (max-width: 768px) {
+                #accordionSidebar {
+                    position: fixed;
+                    top: 0;
+                    left: -260px;
+                    width: 260px;
+                    height: 100%;
+                    z-index: 9999;
+                    transition: .3s;
+                }
 
-          .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,.4);
-            z-index: 9998;
-            display: none;
-          }
+                #accordionSidebar.active {
+                    left: 0;
+                }
 
-          .sidebar-overlay.active {
-            display: block;
-          }
-        }
+                .sidebar-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,.4);
+                    z-index: 9998;
+                    display: none;
+                }
 
-        /* botón hamburguesa */
-        .mobile-toggle {
-          position: fixed;
-          top: 10px;
-          left: 10px;
-          z-index: 10000;
-          border: none;
-          background: #3787ba;
-          color: #fff;
-          width: 42px;
-          height: 42px;
-          border-radius: 10px;
-          box-shadow: 0 4px 10px rgba(0,0,0,.2);
-        }
+                .sidebar-overlay.active {
+                    display: block;
+                }
+                }
 
-        /* header sidebar */
-        .sidebar-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 10px;
-        }
+                /* botón hamburguesa */
+                .mobile-toggle {
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 10000;
+                border: none;
+                background: #3787ba;
+                color: #fff;
+                width: 42px;
+                height: 42px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0,0,0,.2);
+                }
 
-        /* botón cerrar */
-        .close-sidebar {
-          border: none;
-          background: transparent;
-          color: #fff;
-          font-size: 18px;
-        }
+                /* header sidebar */
+                .sidebar-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px;
+                }
 
-        /* mejora logo */
-        .sidebar-brand img {
-          max-width: 130px;
-        }
-      </style>
+                /* botón cerrar */
+                .close-sidebar {
+                border: none;
+                background: transparent;
+                color: #fff;
+                font-size: 18px;
+                }
 
-      <!-- BOTON MOBILE -->
-      <button id="mobileSidebarToggle" class="mobile-toggle d-md-none">
-        <i class="fas fa-bars"></i>
-      </button>
+                /* mejora logo */
+                .sidebar-brand img {
+                max-width: 130px;
+                }
+            </style>
 
-      <!-- OVERLAY -->
-      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+            <!-- BOTON MOBILE -->
+            <button id="mobileSidebarToggle" class="mobile-toggle d-md-none">
+                <i class="fas fa-bars"></i>
+            </button>
 
-      <ul class="navbar-nav sidebar accordion d-flex flex-column" id="accordionSidebar">
-        <div class="sidebar-header">
-          <a class="sidebar-brand" href="dashboard.php">
-            <img src="../images/logo-fygroup-v1_bg_removed.png" alt="logo">
-          </a>
-          <button id="closeSidebar" class="close-sidebar d-md-none">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
+            <!-- OVERLAY -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <div class="sidebar-heading text-white">
-          Sistema Antepuerto
-        </div>
-    ';
+            <ul class="navbar-nav sidebar accordion d-flex flex-column" id="accordionSidebar">
+                <div class="sidebar-header">
+                <a class="sidebar-brand" href="dashboard.php">
+                    <img src="../images/logo-fygroup-v1_bg_removed.png" alt="logo">
+                </a>
+                <button id="closeSidebar" class="close-sidebar d-md-none">
+                    <i class="fas fa-times"></i>
+                </button>
+                </div>
 
-    foreach ($menus as $menu) {
-      $sidebar .= '
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false">
-            <i class="fas ' . $menu['icon'] . '"></i>
-            <span>' . $menu['title'] . '</span>
-            <i class="fas fa-chevron-down arrow"></i>
-          </a>
-
-          <div id="' . $menu['id'] . '" class="collapse" data-parent="#accordionSidebar">
-            <div class="collapse-inner">
-      ';
-
-      foreach ($menu['items'] as $item) {
-        $sidebar .= '
-          <a class="collapse-item" href="' . $item['link'] . '">
-            ' . $item['label'] . '
-          </a>
+                <div class="sidebar-heading text-white">
+                Sistema Antepuerto
+                </div>
         ';
-      }
 
-      $sidebar .= '
-            </div>
-          </div>
-        </li>
-      ';
+        foreach ($menus as $menu) {
+            $sidebar .= '
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false">
+                    <i class="fas ' . $menu['icon'] . '"></i>
+                    <span>' . $menu['title'] . '</span>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </a>
+
+                <div id="' . $menu['id'] . '" class="collapse" data-parent="#accordionSidebar">
+                    <div class="collapse-inner">
+            ';
+
+            foreach ($menu['items'] as $item) {
+                $sidebar .= '
+                    <a class="collapse-item" href="' . $item['link'] . '">
+                        ' . $item['label'] . '
+                    </a>
+                ';
+            }
+
+            $sidebar .= '
+                    </div>
+                </div>
+                </li>
+            ';
+        }
+
+        $sidebar .= '
+                <div class="sidebar-footer mt-auto text-center">
+                <div><i class="fas fa-copyright"></i>' . $infoCfg['name'] . '</div>
+                <div><i class="fas fa-code-branch"></i>' . $infoCfg['version'] . '</div>
+                <div><i class="fas fa-rotate"></i>' . $updateTime->format('d-m-Y H:i') . '</div>
+
+                <div class="mt-2">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+                </div>
+            </ul>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const sidebar = document.getElementById("accordionSidebar");
+                    const toggle = document.getElementById("mobileSidebarToggle");
+                    const overlay = document.getElementById("sidebarOverlay");
+                    const closeBtn = document.getElementById("closeSidebar");
+                    const toggleTop = document.getElementById("sidebarToggleTop");
+
+                    function openSidebar() {
+                    sidebar.classList.add("active");
+                    overlay.classList.add("active");
+                    }
+
+                    function closeSidebar() {
+                    sidebar.classList.remove("active");
+                    overlay.classList.remove("active");
+                    }
+
+                    if (toggle) {
+                    toggle.addEventListener("click", openSidebar);
+                    }
+
+                    if (toggleTop) {
+                    toggleTop.addEventListener("click", openSidebar);
+                    }
+
+                    if (overlay) {
+                    overlay.addEventListener("click", closeSidebar);
+                    }
+
+                    if (closeBtn) {
+                    closeBtn.addEventListener("click", closeSidebar);
+                    }
+                });
+            </script>
+        ';
+
+        return $sidebar;
     }
 
-    $sidebar .= '
-        <div class="sidebar-footer mt-auto text-center">
-          <div><i class="fas fa-copyright"></i>' . $infoCfg['name'] . '</div>
-          <div><i class="fas fa-code-branch"></i>' . $infoCfg['version'] . '</div>
-          <div><i class="fas fa-rotate"></i>' . $updateTime->format('d-m-Y H:i') . '</div>
+    public static function mainTapBarSSL()
+    {
+        $user = new user();
+        $arrayDivision = get::getDivisionName();
 
-          <div class="mt-2">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-          </div>
-        </div>
-      </ul>
+        $admin = $user->isAdmin($_SESSION['user']['run']);
+        $fullName = htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']);
+        $run = $_SESSION['user']['run'];
+        $division = $_SESSION['user']['division'];
+        $avatarName = $user->avatarIniciales($fullName, 35);
 
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          const sidebar = document.getElementById("accordionSidebar");
-          const toggle = document.getElementById("mobileSidebarToggle");
-          const overlay = document.getElementById("sidebarOverlay");
-          const closeBtn = document.getElementById("closeSidebar");
-
-          toggle.addEventListener("click", () => {
-            sidebar.classList.toggle("active");
-            overlay.classList.toggle("active");
-          });
-
-          overlay.addEventListener("click", () => {
-            sidebar.classList.remove("active");
-            overlay.classList.remove("active");
-          });
-
-          if (closeBtn) {
-            closeBtn.addEventListener("click", () => {
-              sidebar.classList.remove("active");
-              overlay.classList.remove("active");
-            });
-          }
-        });
-      </script>
-    ';
-
-    return $sidebar;
-  }
-
-  public static function mainTapBarSSL()
-  {
-    $user          = new user();
-    $arrayDivision = get::getDivisionName();
-
-    $admin      = $user->isAdmin($_SESSION["user"]["run"]);
-    $fullName   = htmlspecialchars($_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"]);
-    $run        = $_SESSION["user"]["run"];
-    $division   = $_SESSION["user"]["division"];
-    $avatarName = $user->avatarIniciales($fullName, 35);
-
-    $tapBar = '
+        $tapBar = '
       <style>
         #userDropdown .arrow{
           transition:.25s;
@@ -620,16 +632,16 @@ class menu extends iQuery
                   </a>
                 </li>';
 
-    if ($admin) {
-      $tapBar .= '
+        if ($admin) {
+            $tapBar .= '
               <li>
                 <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#goalModal">
                   <i class="fas fa-cogs me-2 text-primary"></i> Ajustar Capacidad
                 </a>
               </li>';
-    }
+        }
 
-    $tapBar .= '
+        $tapBar .= '
               <li>
                 <a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#licenseModal">
                   <i class="fas fa-copyright me-2 text-primary"></i> Licencia
@@ -658,116 +670,116 @@ class menu extends iQuery
       });
     </script>';
 
-    return $tapBar;
-  }
+        return $tapBar;
+    }
 
-  public static function sideBarPortal()
-  {
-    $cfg     = new cfg();
-    $infoCfg = json_decode($cfg->getInfo(1), true);
+    public static function sideBarPortal()
+    {
+        $cfg = new cfg();
+        $infoCfg = json_decode($cfg->getInfo(1), true);
 
-    $sideBarPortal = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
-    $sideBarPortal .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
-    $sideBarPortal .= '<img src="../images/logo-fygroup-v1_bg_removed.png" style="width:100%;">';
-    $sideBarPortal .= '</a>';
-    $sideBarPortal .= '<div class="sidebar-heading">Sistema Antepuerto</div>';
-    $sideBarPortal .= '<div class="sidebar-heading">(Portal Cliente)</div>';
-    $sideBarPortal .= '<li class="nav-item">';
-    $sideBarPortal .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAntepuerto" aria-expanded="true" aria-controls="collapseAntepuerto">';
-    $sideBarPortal .= '<i class="fas fa-fw fa-truck"></i>';
-    $sideBarPortal .= '<span>Antepuerto</span>';
-    $sideBarPortal .= '</a>';
-    $sideBarPortal .= '<div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">';
-    $sideBarPortal .= '<div class="bg-white py-2 collapse-inner rounded">';
-    $sideBarPortal .= '<h6 class="collapse-header">Items:</h6>';
-    $sideBarPortal .= '<a class="collapse-item" href=' . generateMkey('enter_container_port', 'myPortal') . '>Ingreso Contenedores</a>';
-    $sideBarPortal .= '<a class="collapse-item" href=' . generateMkey('enter_thermo_port', 'myPortal') . '>Ingreso Termos</a>';
-    $sideBarPortal .= '</div>';
-    $sideBarPortal .= '</div>';
-    $sideBarPortal .= '</li>';
-    $sideBarPortal .= '<hr class="sidebar-divider d-none d-md-block">';
-    $sideBarPortal .= '<div class="text-center d-none d-md-inline">';
-    $sideBarPortal .= '<button class="rounded-circle border-0" id="sidebarToggle"></button>';
-    $sideBarPortal .= '</div>';
-    $sideBarPortal .= '<div class="d-flex flex-column h-100">';
-    $sideBarPortal .= '<div class="text-center d-none d-md-inline mt-auto" style="color: white;">';
-    $sideBarPortal .= '<hr class="sidebar-divider">';
-    $sideBarPortal .= '<small>' . $infoCfg['name'] . '</small>';
-    $sideBarPortal .= '<br>';
-    $sideBarPortal .= '<small><b>Versión: </b>' . $infoCfg['version'] . '</small>';
-    $sideBarPortal .= '</div>';
-    $sideBarPortal .= '</div>';
-    $sideBarPortal .= '</ul>';
+        $sideBarPortal = '<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">';
+        $sideBarPortal .= '<a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">';
+        $sideBarPortal .= '<img src="../images/logo-fygroup-v1_bg_removed.png" style="width:100%;">';
+        $sideBarPortal .= '</a>';
+        $sideBarPortal .= '<div class="sidebar-heading">Sistema Antepuerto</div>';
+        $sideBarPortal .= '<div class="sidebar-heading">(Portal Cliente)</div>';
+        $sideBarPortal .= '<li class="nav-item">';
+        $sideBarPortal .= '<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAntepuerto" aria-expanded="true" aria-controls="collapseAntepuerto">';
+        $sideBarPortal .= '<i class="fas fa-fw fa-truck"></i>';
+        $sideBarPortal .= '<span>Antepuerto</span>';
+        $sideBarPortal .= '</a>';
+        $sideBarPortal .= '<div id="collapseAntepuerto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">';
+        $sideBarPortal .= '<div class="bg-white py-2 collapse-inner rounded">';
+        $sideBarPortal .= '<h6 class="collapse-header">Items:</h6>';
+        $sideBarPortal .= '<a class="collapse-item" href=' . generateMkey('enter_container_port', 'myPortal') . '>Ingreso Contenedores</a>';
+        $sideBarPortal .= '<a class="collapse-item" href=' . generateMkey('enter_thermo_port', 'myPortal') . '>Ingreso Termos</a>';
+        $sideBarPortal .= '</div>';
+        $sideBarPortal .= '</div>';
+        $sideBarPortal .= '</li>';
+        $sideBarPortal .= '<hr class="sidebar-divider d-none d-md-block">';
+        $sideBarPortal .= '<div class="text-center d-none d-md-inline">';
+        $sideBarPortal .= '<button class="rounded-circle border-0" id="sidebarToggle"></button>';
+        $sideBarPortal .= '</div>';
+        $sideBarPortal .= '<div class="d-flex flex-column h-100">';
+        $sideBarPortal .= '<div class="text-center d-none d-md-inline mt-auto" style="color: white;">';
+        $sideBarPortal .= '<hr class="sidebar-divider">';
+        $sideBarPortal .= '<small>' . $infoCfg['name'] . '</small>';
+        $sideBarPortal .= '<br>';
+        $sideBarPortal .= '<small><b>Versión: </b>' . $infoCfg['version'] . '</small>';
+        $sideBarPortal .= '</div>';
+        $sideBarPortal .= '</div>';
+        $sideBarPortal .= '</ul>';
 
-    return $sideBarPortal;
-  }
+        return $sideBarPortal;
+    }
 
-  public static function mainTapBarPortal()
-  {
-    $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
-    $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
-    $tapBarPortal .= '<i class="fa fa-bars"></i>';
-    $tapBarPortal .= '</button>';
-    $tapBarPortal .= '<ul class="navbar-nav ml-auto">';
-    $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-    $tapBarPortal .= '<label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>';
-    $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
-    $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-    $tapBarPortal .= '<label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>';
-    $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
-    $tapBarPortal .= '<li class="nav-item dropdown no-arrow">';
-    $tapBarPortal .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-    $tapBarPortal .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
-    $tapBarPortal .= '</a>';
-    $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
-    $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
-    $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
-    $tapBarPortal .= '</a>';
-    $tapBarPortal .= '</div>';
-    $tapBarPortal .= '</li>';
-    $tapBarPortal .= '</ul>';
-    $tapBarPortal .= '</nav>';
+    public static function mainTapBarPortal()
+    {
+        $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
+        $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
+        $tapBarPortal .= '<i class="fa fa-bars"></i>';
+        $tapBarPortal .= '</button>';
+        $tapBarPortal .= '<ul class="navbar-nav ml-auto">';
+        $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
+        $tapBarPortal .= '<label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>';
+        $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
+        $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
+        $tapBarPortal .= '<label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>';
+        $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
+        $tapBarPortal .= '<li class="nav-item dropdown no-arrow">';
+        $tapBarPortal .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+        $tapBarPortal .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION['user']['name'] . '!</span>';
+        $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
+        $tapBarPortal .= '</a>';
+        $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
+        $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
+        $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
+        $tapBarPortal .= '</a>';
+        $tapBarPortal .= '</div>';
+        $tapBarPortal .= '</li>';
+        $tapBarPortal .= '</ul>';
+        $tapBarPortal .= '</nav>';
 
-    return $tapBarPortal;
-  }
+        return $tapBarPortal;
+    }
 
-  public static function secondTapBarPortal()
-  {
-    $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
-    $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
-    $tapBarPortal .= '<i class="fa fa-bars"></i>';
-    $tapBarPortal .= '</button>';
-    $tapBarPortal .= '<ul class="navbar-nav ml-auto">';
-    $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-    $tapBarPortal .= '<label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>';
-    $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
-    $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-    $tapBarPortal .= '<label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>';
-    $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
-    $tapBarPortal .= '<li class="nav-item dropdown no-arrow">';
-    $tapBarPortal .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-    $tapBarPortal .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION["user"]["name"] . '!</span>';
-    $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
-    $tapBarPortal .= '</a>';
-    $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
-    $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
-    $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
-    $tapBarPortal .= '</a>';
-    $tapBarPortal .= '</div>';
-    $tapBarPortal .= '</li>';
-    $tapBarPortal .= '</ul>';
-    $tapBarPortal .= '</nav>';
+    public static function secondTapBarPortal()
+    {
+        $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
+        $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
+        $tapBarPortal .= '<i class="fa fa-bars"></i>';
+        $tapBarPortal .= '</button>';
+        $tapBarPortal .= '<ul class="navbar-nav ml-auto">';
+        $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
+        $tapBarPortal .= '<label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>';
+        $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
+        $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
+        $tapBarPortal .= '<label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>';
+        $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
+        $tapBarPortal .= '<li class="nav-item dropdown no-arrow">';
+        $tapBarPortal .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+        $tapBarPortal .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION['user']['name'] . '!</span>';
+        $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
+        $tapBarPortal .= '</a>';
+        $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
+        $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
+        $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
+        $tapBarPortal .= '</a>';
+        $tapBarPortal .= '</div>';
+        $tapBarPortal .= '</li>';
+        $tapBarPortal .= '</ul>';
+        $tapBarPortal .= '</nav>';
 
-    return $tapBarPortal;
-  }
+        return $tapBarPortal;
+    }
 
-  public static function footerSSL()
-  {
-    $cfg     = new cfg();
-    $infoCfg = json_decode($cfg->getInfo(1), true);
+    public static function footerSSL()
+    {
+        $cfg = new cfg();
+        $infoCfg = json_decode($cfg->getInfo(1), true);
 
-    $footer = '
+        $footer = '
     <footer class="footer bg-light text-center text-muted" style="
         bottom: 0;
         width: -webkit-fill-available;
@@ -781,7 +793,7 @@ class menu extends iQuery
         </div>
     </footer>';
 
-    return $footer;
-  }
+        return $footer;
+    }
 
 }

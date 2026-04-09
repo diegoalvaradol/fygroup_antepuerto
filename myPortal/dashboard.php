@@ -1,30 +1,30 @@
 <?php
-  require_once __DIR__ . '/../config/auth.php';
-  require_once __DIR__ . '/../config/includes.php';
+require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/includes.php';
 
-  $port = new outerPort();
-  $cfg  = new cfg();
-  $user = new user();
+$port = new outerPort();
+$cfg = new cfg();
+$user = new user();
 
-  $arrayDivision = get::getDivisionName();
-  $sideBarPortal = menu::sideBarPortal();
-  $tapBarPortal  = menu::secondTapBarPortal();
-  $footer        = menu::footerSSL();
-  $top           = UIComponents::scrollToTopButton();
+$arrayDivision = get::getDivisionName();
+$sideBarPortal = menu::sideBarPortal();
+$tapBarPortal = menu::secondTapBarPortal();
+$footer = menu::footerSSL();
+$top = UIComponents::scrollToTopButton();
 
-  $infoCfg      = json_decode($cfg->getInfo(1), true);
-  $admin        = $user->isAdmin($_SESSION["user"]["run"]);
-  $releasedTime = new DateTime($infoCfg['released_date']);
-  $updateTime   = new DateTime($infoCfg['update_date']);
+$infoCfg = json_decode($cfg->getInfo(1), true);
+$admin = $user->isAdmin($_SESSION['user']['run']);
+$releasedTime = new DateTime($infoCfg['released_date']);
+$updateTime = new DateTime($infoCfg['update_date']);
 
-  /* Establece Limite de 30 minutos para el usuario pueda visitar el portal cliente */
-  $tiempoMaximo = 1800; /* 30 minutos */
-  if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
-  session_unset();
-  session_destroy();
-  header("Location: login.php?timeout=1");
-  exit;
-  }
+/* Establece Limite de 30 minutos para el usuario pueda visitar el portal cliente */
+$tiempoMaximo = 1800; /* 30 minutos */
+if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php?timeout=1');
+    exit;
+}
 ?>
 
 <!-- HTML -->
@@ -46,9 +46,6 @@
 
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- SweetAlert2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body id="page-top">
@@ -144,8 +141,8 @@
                                         <div class="col mr-12">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Camiones Arrivados</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php $totalTrucks         = $port->getTotalTrucks($admin); ?>
-                                                <?php $trucksInAntepuerto  = $port->getTotalTrucksInAnpuerto($admin); ?>
+                                                <?php $totalTrucks = $port->getTotalTrucks($admin); ?>
+                                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin); ?>
                                                 <?php $trucksArrivedTrucks = $port->getTotalArrivedTrucks($admin); ?>
 
                                                 <?php echo $totalTrucks; ?>
@@ -243,7 +240,8 @@
     <script src="../assets/js/sb-admin-2.min.js"></script>
 
     <!-- Bootstrap JS (necesario para popover) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
