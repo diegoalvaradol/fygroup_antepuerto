@@ -1906,12 +1906,13 @@ class outerPort extends iQuery
           <td><b class='text-success'>{$turnos}</b></td>
           <td>" . number_format($dias, 0, ',', '.') . "</td>
           <td><b>{$fin}</b></td>
-          <td><b>" . number_format($data['total_camiones']) . "</b></td>
+          <td><b>" . number_format((int) $data['total_camiones'], 0, ',', '.') . "</b></td>
           <td class='{$cntClass}'><b>{$totalCnts}</b></td>
           <td class='{$pltClass}'><b>{$totalPlts}</b></td>
+          <!--
           <td class='text-center'>
             <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#detailModal' onclick='loadDetail({$vid})'><i class='fas fa-eye'></i> Detalles</button>
-          </td>
+          </td> -->
         </tr>
       ";
 
@@ -1950,7 +1951,7 @@ class outerPort extends iQuery
                 <th>Camiones</th>
                 <th>Contenedores</th>
                 <th>Pallets</th>
-                <th class='text-center'>Detalle</th>
+                <!-- <th class='text-center'>Detalle</th> -->
               </tr>
             </thead>
             <tbody>$rows</tbody>

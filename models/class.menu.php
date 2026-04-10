@@ -622,6 +622,12 @@ class menu extends iQuery
                 .fa-clock {
                     display: inline-block;
                 }
+
+                @media (max-width: 576px){
+                    #userDropdown .flex-column{
+                        display: none !important;
+                    }
+                }
             </style>
 
             <nav class="navbar navbar-expand navbar-dark topbar shadow-sm">
