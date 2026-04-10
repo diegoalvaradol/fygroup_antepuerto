@@ -138,7 +138,7 @@ if (!$admin) {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="logoutModalLabel">¿Deseas cerrar sesión?</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
               <span>×</span>
             </button>
           </div>
@@ -146,7 +146,7 @@ if (!$admin) {
             Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
             <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
           </div>
         </div>
@@ -159,7 +159,7 @@ if (!$admin) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -184,7 +184,7 @@ if (!$admin) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION['user']['division']]; ?></h6>
@@ -205,7 +205,7 @@ if (!$admin) {
                                 <label>Correo:</label>
                                 <input type="email" class="form-control form-control-user" id="email" name="email" value="<?php echo $_SESSION['user']['email']; ?>">
                                 <label>Contraseña:</label>
-                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual">
+                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual" autocomplete="current-password">
                             </div>
                         </div>
 
@@ -224,7 +224,7 @@ if (!$admin) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -341,30 +341,28 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-/* Inicializa el popover */
-document.addEventListener('DOMContentLoaded', function () {
-  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-  popoverTriggerList.forEach(function (el) {
-    new bootstrap.Popover(el);
-  });
+/* ===== POPOVER (Bootstrap 4) ===== */
+$(document).ready(function () {
+  $('[data-toggle="popover"]').popover();
 });
 
-/* Conteo regresivo para cierre de sesion */
+/* ===== CONTROL MODALES + INACTIVIDAD ===== */
+let modalAbierto = false;
+
 let inactivityTime = function () {
   let time;
-  let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
-  let countdownTime = 30; /* 30 segundos para responder */
+  let warningTimeout = 30 * 60 * 1000; // 30 min
+  let countdownTime = 30;
 
   function startTimer() {
-    window.addEventListener('mousemove', resetTimer, false);
-    window.addEventListener('keypress', resetTimer, false);
     window.addEventListener('click', resetTimer, false);
-    window.addEventListener('scroll', resetTimer, false);
+    window.addEventListener('keypress', resetTimer, false);
     resetTimer();
   }
 
   function logoutCountdown() {
     let timerInterval;
+
     Swal.fire({
       title: "¿Sigues ahí?",
       html: `Serás desconectado en <b></b> segundos por inactividad.`,
@@ -384,12 +382,10 @@ let inactivityTime = function () {
           b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
         }, 1000);
       },
-      willClose: () => {
-        clearInterval(timerInterval);
-      }
+      willClose: () => clearInterval(timerInterval)
     }).then((result) => {
       if (result.isConfirmed) {
-        resetTimer(); /* Usuario activo, reiniciar contador */
+        resetTimer();
       } else {
         window.location = 'login.php?msg=sesion_expirada';
       }
@@ -397,6 +393,8 @@ let inactivityTime = function () {
   }
 
   function resetTimer() {
+    if (modalAbierto) return; // 🔥 evita parpadeo
+
     clearTimeout(time);
     time = setTimeout(logoutCountdown, warningTimeout);
   }
@@ -404,10 +402,7 @@ let inactivityTime = function () {
   startTimer();
 };
 
-window.onload = function () {
-  inactivityTime();
-};
-
+/* ===== RELOJ ===== */
 function actualizarReloj() {
   const ahora = new Date();
 
@@ -438,10 +433,27 @@ function actualizarReloj() {
     </div>
   `;
 }
-$(document).ready(function() {
-  setInterval(actualizarReloj, 1000);
-  actualizarReloj(); /* Primera llamada */
 
+/* ===== INIT GENERAL ===== */
+$(document).ready(function() {
+
+  // 🔥 detectar TODOS los modales
+  $('.modal').on('shown.bs.modal', function () {
+    modalAbierto = true;
+  });
+
+  $('.modal').on('hidden.bs.modal', function () {
+    modalAbierto = false;
+  });
+
+  // iniciar inactivity
+  inactivityTime();
+
+  // reloj
+  setInterval(actualizarReloj, 1000);
+  actualizarReloj();
+
+  /* ===== SELECT2 ===== */
   $('#vessel').select2({
     allowClear: true,
     tags: false,
@@ -453,14 +465,12 @@ $(document).ready(function() {
       delay: 250,
       data: function (params) {
         return {
-          search: params.term, /* Lo que escribe el usuario */
-          finished: 1 /* Muestra todas las naves finalizadas */
+          search: params.term,
+          finished: 1
         };
       },
       processResults: function (data) {
-        return {
-          results: data
-        };
+        return { results: data };
       },
       cache: true
     }
@@ -477,13 +487,11 @@ $(document).ready(function() {
       delay: 250,
       data: function (params) {
         return {
-          search: params.term /* Lo que escribe el usuario */
+          search: params.term
         };
       },
       processResults: function (data) {
-        return {
-          results: data
-        };
+        return { results: data };
       },
       cache: true
     }
@@ -511,9 +519,7 @@ $(document).ready(function() {
         $('#info-vessel').html(response);
       },
       error: function () {
-        $('#info-vessel').html(`
-          <div class="text-danger">Error al obtener la información.</div>
-        `);
+        $('#info-vessel').html('<div class="text-danger">Error al obtener la información.</div>');
       }
     });
 
@@ -542,10 +548,9 @@ $(document).ready(function() {
   }
 });
 
+/* ===== FIX FOCO SELECT2 ===== */
 $(document).on('select2:open', function () {
   let searchField = document.querySelector('.select2-container--open .select2-search__field');
-  if (searchField) {
-    searchField.focus();
-  }
+  if (searchField) searchField.focus();
 });
 </script>

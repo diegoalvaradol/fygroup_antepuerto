@@ -147,8 +147,8 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
                                                 <?php echo $totalTrucks; ?>
                                                 </br>
-                                                <small class="h5 mb-0 font-weight-bold text-success-800" style="font-size:small;color: green;">Solicitados: <?php echo $trucksArrivedTrucks; ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Camiones solicitados por terminal."></i>
-                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php echo $trucksInAntepuerto; ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Camiones que se encuentran en antepuerto."></i>
+                                                <small class="h5 mb-0 font-weight-bold text-success-800" style="font-size:small;color: green;">Solicitados: <?php echo $trucksArrivedTrucks; ?> </small><i class="fas fa-info-circle text-info" title="Solicitados" role="button" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Camiones solicitados por terminal."></i>
+                                                <small class="h5 mb-0 font-weight-bold text-danger-800" style="font-size:small;color: red;">Pendientes: <?php echo $trucksInAntepuerto; ?> </small><i class="fas fa-info-circle text-info" title="Pendientes" role="button" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Camiones que se encuentran en antepuerto."></i>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -213,7 +213,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">¿Deseas cerrar sesión?</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
               <span>×</span>
             </button>
                 </div>
@@ -255,7 +255,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 <script>
 /* Inicializa el popover */
 document.addEventListener('DOMContentLoaded', function () {
-  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
   popoverTriggerList.forEach(function (el) {
     new bootstrap.Popover(el);
   });

@@ -86,7 +86,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">¿Deseas cerrar sesión?</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
               <span>×</span>
             </button>
                 </div>
@@ -128,7 +128,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 <script>
 /* Inicializa el popover */
 document.addEventListener('DOMContentLoaded', function () {
-  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
   popoverTriggerList.forEach(function (el) {
     new bootstrap.Popover(el);
   });

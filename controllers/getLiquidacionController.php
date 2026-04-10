@@ -1,9 +1,11 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
 $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
-  exit('ID de motonave no válido.');
+    exit('ID de motonave no válido.');
 }
 
 $exporter = trim($_POST['exporter'] ?? '');
@@ -11,7 +13,7 @@ $exporter = ($exporter === '' || $exporter === '-') ? null : $exporter;
 
 $outer = new outerPort();
 
-$sql = "SELECT
+$sql = 'SELECT
     v.vessel_name   AS nave,
     v.eta,
     v.etd,
@@ -36,16 +38,16 @@ $sql = "SELECT
   INNER JOIN app_ports pod     ON pod.port_id = v.pod
   INNER JOIN app_ship_lines l  ON l.line_id   = v.ship_line
   WHERE a.vessel_id = :id
-";
+';
 
 $params = [':id' => $id];
 
 if ($exporter !== null) {
-  $sql .= " AND a.exporter = :exporter";
-  $params[':exporter'] = $exporter;
+    $sql .= ' AND a.exporter = :exporter';
+    $params[':exporter'] = $exporter;
 }
 
-$sql .= " ORDER BY a.exporter, a.container";
+$sql .= ' ORDER BY a.exporter, a.container';
 
 $stmt = $outer->getDb()->prepare($sql);
 $stmt->execute($params);
@@ -53,8 +55,8 @@ $stmt->execute($params);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (empty($rows)) {
-  echo '
-  <div class="alert alert-warning d-flex align-items-center py-2 px-3" style="max-width:545px;margin:0 auto;" role="alert">
+    echo '
+  <div class="alert custom-alert-warning d-flex align-items-center py-2 px-3" style="max-width:545px;margin:0 auto;" role="alert">
     <div>
       <i class="fa-solid fa-triangle-exclamation me-2"></i>
       <strong>Atención:</strong><br>
@@ -62,12 +64,12 @@ if (empty($rows)) {
     </div>
   </div>';
 
-  exit;
+    exit;
 }
 
 $query = http_build_query(array_filter([
-  'id'       => $id,
-  'exporter' => $exporter
+  'id' => $id,
+  'exporter' => $exporter,
 ]));
 
 echo '

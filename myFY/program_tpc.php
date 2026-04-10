@@ -151,7 +151,7 @@ $top = UIComponents::scrollToTopButton();
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="logoutModalLabel">¿Deseas cerrar sesión?</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
               <span>×</span>
             </button>
           </div>
@@ -159,7 +159,7 @@ $top = UIComponents::scrollToTopButton();
             Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
             <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
           </div>
         </div>
@@ -172,7 +172,7 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -197,7 +197,7 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION['user']['division']]; ?></h6>
@@ -218,7 +218,7 @@ $top = UIComponents::scrollToTopButton();
                                 <label>Correo:</label>
                                 <input type="email" class="form-control form-control-user" id="email" name="email" value="<?php echo $_SESSION['user']['email']; ?>">
                                 <label>Contraseña:</label>
-                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual">
+                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual" autocomplete="current-password">
                             </div>
                         </div>
 
@@ -237,7 +237,7 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
 
                 <div class="modal-body">

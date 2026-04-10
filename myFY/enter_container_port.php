@@ -96,7 +96,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                                     <select class="form-control select2 form-control-user" id="vessel" name="vessel">
                                                       <option value="-">Seleccione una motonave...</option>
                                                     </select>
-                                                    <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
                                                     <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
@@ -258,7 +258,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="logoutModalLabel">¿Deseas cerrar sesión?</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
               <span>×</span>
             </button>
           </div>
@@ -266,7 +266,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
             <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
           </div>
         </div>
@@ -279,7 +279,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -304,7 +304,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION['user']['division']]; ?></h6>
@@ -325,7 +325,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                 <label>Correo:</label>
                                 <input type="email" class="form-control form-control-user" id="email" name="email" value="<?php echo $_SESSION['user']['email']; ?>">
                                 <label>Contraseña:</label>
-                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual">
+                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual" autocomplete="current-password">
                             </div>
                         </div>
 
@@ -344,7 +344,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -538,7 +538,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 <script>
 /* Inicializa el popover */
 document.addEventListener('DOMContentLoaded', function () {
-  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
   popoverTriggerList.forEach(function (el) {
     new bootstrap.Popover(el);
   });

@@ -286,266 +286,177 @@ class menu extends iQuery
 
                 /* ===== SIDEBAR BASE ===== */
                 #accordionSidebar{
-                    font-size:13px;
-                    background: linear-gradient(180deg,#3787ba,#2c6d96);
-                    z-index: 1000;
-                    transition: all .3s ease;
-                }
-
-                /* ===== LOGO ===== */
-                .sidebar-brand {
-                    display:flex;
-                    justify-content:center;
-                    align-items:center;
-                    padding:16px;
-                    margin:14px;
-                    background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.05));
-                    border:1px solid rgba(255,255,255,0.15);
-                    border-radius:16px;
-                    position:relative;
-                    overflow:hidden;
-                    transition:.3s;
-                }
-
-                .sidebar-brand::before{
-                    content:"";
-                    position:absolute;
-                    inset:0;
-                    background:radial-gradient(circle at top left,rgba(255,255,255,.4),transparent 60%);
-                    opacity:.6;
-                }
-
-                .sidebar-brand:hover{
-                    transform:translateY(-2px) scale(1.02);
-                    box-shadow:0 8px 20px rgba(0,0,0,.25);
-                }
-
-                .sidebar-brand img {
-                    max-width:120px;
-                    filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
-                    position:relative;
-                    z-index:2;
-                }
-
-                /* ===== ITEMS ===== */
-                #accordionSidebar .nav-item{
-                    margin:5px 10px;
-                }
-
-                #accordionSidebar .nav-link{
-                    padding:11px 14px;
-                    border-radius:12px;
-                    color:#fff;
-                    display:flex;
-                    align-items:center;
-                    gap:10px;
-                    transition:.25s;
-                }
-
-                #accordionSidebar .nav-link:hover{
-                    background:rgba(255,255,255,0.10);
-                    transform:translateX(2px);
-                }
-
-                #accordionSidebar .nav-link.active{
-                    background:#fff;
-                    color:#2c6d96;
-                    font-weight:600;
-                    box-shadow:0 6px 14px rgba(0,0,0,.18);
-                }
-
-                #accordionSidebar .nav-link i{
-                    width:18px;
-                    text-align:center;
-                    font-size:13px;
-                    opacity:.85;
-                }
-
-                /* ===== FLECHA ===== */
-                #accordionSidebar .nav-link .arrow{
-                    margin-left:auto;
-                    font-size:10px;
-                    transition:.3s;
-                }
-
-                #accordionSidebar .nav-link[aria-expanded="true"]{
-                    background:rgba(255,255,255,0.08);
-                }
-
-                #accordionSidebar .nav-link[aria-expanded="true"] .arrow{
-                    transform:rotate(180deg);
-                }
-
-                /* ===== SUBMENU ===== */
-                #accordionSidebar .collapse-inner{
-                    background:#ffffff;
-                    border-radius:14px;
-                    margin:6px 4px 12px;
-                    padding:6px;
-                    box-shadow:0 8px 20px rgba(0,0,0,.15);
-                    border:1px solid rgba(0,0,0,.04);
-                }
-
-                #accordionSidebar .collapse-item{
-                    display:block;
-                    padding:9px 12px;
-                    border-radius:8px;
-                    font-size:12.5px;
-                    color:#334155;
-                    transition:.2s;
-                }
-
-                #accordionSidebar .collapse-item:hover{
-                    background:#f1f5f9;
-                    padding-left:16px;
-                }
-
-                /* ===== TEXTOS ===== */
-                #accordionSidebar .sidebar-heading{
-                    font-size:10.5px;
-                    opacity:.6;
-                    padding:10px 18px 4px;
-                    letter-spacing:.8px;
-                    text-transform:uppercase;
-                }
-
-                #accordionSidebar .sidebar-footer{
-                    padding:16px;
-                    font-size:11px;
-                    color:#fff;
-                    border-top:1px solid rgba(255,255,255,.08);
-                    opacity:.8;
-                }
-
-                /* ===== BOTÓN MOBILE ===== */
-                .mobile-toggle{
                     position: fixed;
-                    top: 15px;
-                    left: 10px;
-                    z-index: 1001;
-
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 12px;
-                    border: none;
-
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-
-                    background: linear-gradient(135deg,#3787ba,#2c6d96);
-                    color:#fff;
-                    font-size:18px;
-
-                    box-shadow: 0 8px 20px rgba(0,0,0,.3);
-                }
-
-                .mobile-toggle::after{
-                    content:"";
-                    position:absolute;
-                    inset:-6px;
-                    border-radius:16px;
-                    background:rgba(55,135,186,.25);
-                    z-index:-1;
-                }
-
-                .mobile-toggle:hover{
-                    transform:scale(1.05);
-                }
-
-                /* ===== OVERLAY ===== */
-                #sidebarOverlay{
-                    position: fixed;
-                    inset: 0;
-                    background: rgba(0,0,0,.4);
-                    opacity: 0;
-                    visibility: hidden;
+                    top: 0;
+                    left: -280px;
+                    width: 280px;
+                    height: 100vh;
+                    background: linear-gradient(180deg,#1f5f8b,#174a6b);
+                    font-size: 13px;
                     transition: .3s;
-                    z-index: 998;
+                    z-index: 1040;
+                    overflow-y:auto;
+                    padding-bottom:20px;
                 }
 
+                #accordionSidebar.show{
+                    left:0;
+                }
+
+                #sidebarOverlay{
+                    position:fixed;
+                    inset:0;
+                    background:rgba(0,0,0,.45);
+                    opacity:0;
+                    visibility:hidden;
+                    transition:.3s;
+                    z-index:1030;
+                }
                 #sidebarOverlay.active{
-                    opacity: 1;
-                    visibility: visible;
+                    opacity:1;
+                    visibility:visible;
                 }
 
-                /* ===== DESKTOP ===== */
-                @media (min-width: 769px){
-                    #accordionSidebar{
-                        position: relative;
-                        left: 0;
-                        width: 260px;
-                        height: auto;
-                    }
-
-                    .mobile-toggle{
-                        display:none;
-                    }
+                /* LOGO */
+                .sidebar-brand{
+                    display:flex;
+                    flex-direction:column;
+                    align-items:center;
+                    justify-content:center;
+                    padding:18px;
+                    margin:12px;
+                    border-radius:14px;
+                    background:rgba(255,255,255,.08);
+                    color:#fff;
+                    text-align:center;
+                }
+                .sidebar-brand img{
+                    max-width:140px;
+                    margin-bottom:6px;
                 }
 
-                /* ===== MOBILE ===== */
-                @media (max-width: 768px){
-                    html, body{
-                        overflow-x: hidden;
-                    }
-
-                    #accordionSidebar{
-                        position: fixed;
-                        left: -260px;
-                        top: 0;
-                        width: 260px;
-                        height: 100%;
-                    }
-
-                    #accordionSidebar.show{
-                        left: 0;
-                    }
-
-                    #content-wrapper{
-                        margin-left: 0 !important;
-                        width: 100% !important;
-                    }
+                /* ITEMS */
+                #accordionSidebar .nav-link{
+                    color:#fff;
+                    padding:10px 14px;
+                    border-radius:10px;
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                }
+                #accordionSidebar .nav-link:hover{
+                    background:rgba(255,255,255,.12);
                 }
 
-                /* ===== ANIMACIÓN ===== */
-                @keyframes fadeIn{
-                    from{opacity:0; transform:translateY(-4px);}
-                    to{opacity:1; transform:translateY(0);}
+                /* FLECHA */
+                .caret{
+                    transition:.3s;
+                }
+                .nav-link.collapsed .caret{
+                    transform:rotate(0deg);
+                }
+                .nav-link:not(.collapsed) .caret{
+                    transform:rotate(90deg);
+                }
+
+                /* SUBMENU */
+                .collapse-inner{
+                    background:#fff;
+                    margin:6px 10px;
+                    border-radius:10px;
+                    padding:6px;
+                }
+                .collapse-item{
+                    display:block;
+                    padding:8px 10px;
+                    color:#333;
+                    font-size:12px;
+                }
+
+                /* BOTON MOBILE */
+                #mobileSidebarToggle{
+                    position:fixed;
+                    top:12px;
+                    left:12px;
+                    z-index:1050;
+                    width:44px;
+                    height:44px;
+                    border:none;
+                    border-radius:10px;
+                    background:#174a6b;
+                    color:#fff;
+                }
+
+                #mobileSidebarToggle{
+                    position: fixed;
+                    top: 10px;
+                    left: 14px;
+                    z-index: 1050;
+
+                    width: 45px;
+                    height: 45px;
+
+                    border: 1px solid rgba(255,255,255,.18);
+                    border-radius: 14px;
+
+                    background: #1f5f8b;
+                    color: #fff;
+                    font-size: 20px;
+
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+
+                    cursor:pointer;
+
+                    box-shadow:
+                        0 12px 26px rgba(0,0,0,.35),
+                        inset 0 1px 0 rgba(255,255,255,.15);
+
+                    transition: all .25s ease;
+                }
+
+                /* estado activo (sidebar abierto) */
+                #mobileSidebarToggle.active{
+                    box-shadow:
+                        0 16px 34px rgba(0,0,0,.45),
+                        0 0 18px rgba(31,95,139,.9),
+                        0 0 30px rgba(23,74,107,.7),
+                        inset 0 1px 0 rgba(255,255,255,.25);
+
+                    transform: scale(1.04);
+                }
+
+                /* hover extra */
+                #mobileSidebarToggle:hover{
+                    transform: translateY(-2px);
+                }
+
+                #mobileSidebarToggle:active{
+                    transform: scale(.95);
                 }
             </style>
 
-            <!-- BOTON MOBILE -->
-            <button id="mobileSidebarToggle" class="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button id="mobileSidebarToggle"><i class="fa fa-bars"></i></button>
+            <div id="sidebarOverlay"></div>
 
-            <!-- OVERLAY -->
-            <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-            <ul class="navbar-nav sidebar accordion d-flex flex-column" id="accordionSidebar">
-                <div class="sidebar-header">
-                    <a class="sidebar-brand flex-column" href="dashboard.php">
-                        <img src="../images/logo-fygroup-v1_bg_removed.png">
-                        <small style="color:#fff; opacity:.8; font-size:10px;">FY Group</small>
-                    </a>
-                </div>
-
-                <div class="sidebar-heading text-white">
-                    Sistema Antepuerto
-                </div>
+            <ul id="accordionSidebar" class="navbar-nav">
+                <a class="sidebar-brand" href="dashboard.php">
+                    <img src="../images/logo-fygroup-v1_bg_removed.png">
+                    <div><b>' . $infoCfg['name'] . '</b></div>
+                </a>
         ';
 
         foreach ($menus as $menu) {
             $sidebar .= '
                 <li class="nav-item">
-                <a class="nav-link collapsed" href="javascript:void(0)" data-toggle="collapse" data-target="#' . $menu['id'] . '" aria-expanded="false">
-                    <i class="fas ' . $menu['icon'] . '"></i>
-                    <span>' . $menu['title'] . '</span>
-                    <i class="fas fa-chevron-down arrow"></i>
-                </a>
+                    <a class="nav-link collapsed" data-toggle="collapse" href="#' . $menu['id'] . '">
+                        <span><i class="fa ' . $menu['icon'] . '"></i> ' . $menu['title'] . '</span>
+                        <i class="fa fa-angle-right caret"></i>
+                    </a>
 
-                <div id="' . $menu['id'] . '" class="collapse" data-parent="#accordionSidebar">
-                    <div class="collapse-inner">
+                    <div id="' . $menu['id'] . '" class="collapse" data-parent="#accordionSidebar">
+                        <div class="collapse-inner">
             ';
 
             foreach ($menu['items'] as $item) {
@@ -557,50 +468,55 @@ class menu extends iQuery
             }
 
             $sidebar .= '
+                        </div>
                     </div>
-                </div>
                 </li>
             ';
         }
 
         $sidebar .= '
-                <div class="sidebar-footer mt-auto text-center">
-                <div><i class="fas fa-copyright"></i>' . $infoCfg['name'] . '</div>
-                <div><i class="fas fa-code-branch"></i>' . $infoCfg['version'] . '</div>
-                <div><i class="fas fa-rotate"></i>' . $updateTime->format('d-m-Y H:i') . '</div>
-
-                <div class="mt-2">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
+                <div class="text-white p-3 mt-auto text-center">
+                    <div><i class="fas fa-copyright"></i> ' . $infoCfg['name'] . '</div>
+                    <div><i class="fas fa-code-branch"></i> ' . $infoCfg['version'] . '</div>
+                    <div><i class="fas fa-rotate"></i> ' . $updateTime->format('d-m-Y H:i') . '</div>
                 </div>
             </ul>
 
             <script>
-                document.addEventListener("DOMContentLoaded", function () {
+                document.addEventListener("DOMContentLoaded", function(){
                     const sidebar = document.getElementById("accordionSidebar");
                     const toggle = document.getElementById("mobileSidebarToggle");
                     const overlay = document.getElementById("sidebarOverlay");
 
-                    function toggleSidebar(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        sidebar.classList.toggle("show");
-                        if (overlay) overlay.classList.toggle("active");
-                    }
-
-                    function closeSidebar() {
+                    function close(){
                         sidebar.classList.remove("show");
-                        if (overlay) overlay.classList.remove("active");
+                        overlay.classList.remove("active");
+                        toggle.classList.remove("active");
                     }
 
-                    if (toggle) {
-                        toggle.addEventListener("click", toggleSidebar);
+                    function open(){
+                        sidebar.classList.add("show");
+                        overlay.classList.add("active");
+                        toggle.classList.add("active");
                     }
 
-                    if (overlay) {
-                        overlay.addEventListener("click", closeSidebar);
-                    }
+                    toggle.addEventListener("click", function(){
+                        const isOpen = sidebar.classList.contains("show");
+
+                        if(isOpen){
+                            close();
+                        }else{
+                            open();
+                        }
+                    });
+
+                    overlay.addEventListener("click", close);
+
+                    window.addEventListener("resize", function(){
+                        if(window.innerWidth >= 769) close();
+                    });
+
+                    close();
                 });
             </script>
         ';
@@ -617,86 +533,156 @@ class menu extends iQuery
         $fullName = htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']);
         $run = $_SESSION['user']['run'];
         $division = $_SESSION['user']['division'];
-        $avatarName = $user->avatarIniciales($fullName, 35);
+        $avatarName = $user->avatarIniciales($fullName, 38);
 
         $tapBar = '
             <style>
-            #userDropdown .arrow{
-                transition:.25s;
-                font-size:11px;
-                margin-left:6px;
-            }
+                .topbar{
+                    background: linear-gradient(180deg,#1f5f8b,#174a6b);
+                    border-bottom: 1px solid rgba(255,255,255,.08);
+                    height: 56px;
+                    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+                }
 
-            #userDropdown.show .arrow{
-                transform:rotate(180deg);
-            }
+                /* reloj */
+                #relojFecha{
+                    font-weight: 500;
+                    letter-spacing:.3px;
+                }
 
-            .topbar{
-                background:#3787ba;
-                border-bottom:1px solid rgba(255,255,255,.05);
-            }
+                /* dropdown arrow */
+                #userDropdown .arrow{
+                    transition:.25s;
+                    font-size:11px;
+                    margin-left:8px;
+                    opacity:.9;
+                }
+
+                #userDropdown.show .arrow{
+                    transform: rotate(180deg);
+                }
+
+                /* hover usuario */
+                #userDropdown{
+                    border-radius:12px;
+                    transition:.2s ease;
+                }
+
+                #userDropdown:hover{
+                    background: rgba(255,255,255,.08);
+                }
+
+                /* avatar */
+                .user-avatar{
+                    border-radius:50%;
+                    box-shadow: 0 4px 12px rgba(0,0,0,.25);
+                }
+
+                /* dropdown */
+                .dropdown-menu{
+                    border: none;
+                    border-radius: 14px;
+                    overflow: hidden;
+                    box-shadow: 0 12px 28px rgba(0,0,0,.25);
+                    margin-top: 10px;
+                }
+
+                /* header dropdown */
+                .dropdown-menu .border-bottom{
+                    background: linear-gradient(180deg,#1f5f8b,#174a6b);
+                    color:#fff;
+                }
+
+                /* items */
+                .dropdown-item{
+                    font-size: 13px;
+                    padding: 10px 14px;
+                    transition:.2s;
+                }
+
+                .dropdown-item:hover{
+                    background: rgba(31,95,139,.08);
+                    transform: translateX(3px);
+                }
+
+                /* iconos */
+                .dropdown-item i{
+                    width: 18px;
+                }
+
+                /* divider */
+                .dropdown-divider{
+                    border-color: rgba(0,0,0,.06);
+                }
+
+                #relojFecha {
+                    display: inline-block;
+                }
+
+                .fa-clock {
+                    display: inline-block;
+                }
             </style>
 
-            <nav class="navbar navbar-expand navbar-dark topbar shadow" style="height:50px;margin-bottom:5px;">
-            <div class="container-fluid">
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none mr-3">
-                <i class="fas fa-bars"></i>
-                </button>
-
-                <div class="mx-auto text-white d-flex align-items-center small">
-                <i class="fas fa-clock mr-2"></i>
-                <div id="relojFecha"></div>
-                </div>
-
-                <ul class="navbar-nav ml-auto mr-3">
-                <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center px-2" href="#" id="userDropdown" data-toggle="dropdown">
-                    ' . $avatarName . '
-                    &nbsp;
-
-                    <div class="d-flex flex-column ml-2 mr-2">
-                        <span class="text-white small font-weight-bold">' . $fullName . '</span>
-                        <span class="text-white small opacity-75">' . $run . '</span>
+            <nav class="navbar navbar-expand navbar-dark topbar shadow-sm">
+                <div class="container-fluid d-flex align-items-center justify-content-between">
+                    <!-- reloj -->
+                    <div class="position-absolute w-100 text-white small d-flex justify-content-center align-items-center" style="pointer-events:none;">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span id="relojFecha"></span>
                     </div>
 
-                    <i class="fas fa-chevron-down arrow text-white"></i>
-                    </a>
+                    <!-- usuario -->
+                    <ul class="navbar-nav ml-auto mr-2">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center px-3" href="#" id="userDropdown" data-toggle="dropdown">
+                                <div class="user-avatar">
+                                    ' . $avatarName . '
+                                </div>
 
-                    <div class="dropdown-menu dropdown-menu-right shadow">
-                    <div class="px-3 py-3 text-center border-bottom">
-                        <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
-                        <br>
-                        <small class="text-muted">' . $arrayDivision[$division] . '</small>
-                    </div>
+                                <div class="d-flex flex-column ml-2 mr-2 text-left">
+                                    <span class="text-white small font-weight-bold">' . $fullName . '</span>
+                                    <span class="text-white small" style="opacity:.75;">' . $run . '</span>
+                                </div>
 
-                    <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#userModal">
-                        <i class="fas fa-user mr-2 text-primary"></i> Perfil
-                    </a>
-        ';
+                                <i class="fas fa-chevron-down arrow text-white"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right shadow">
+                                <div class="px-3 py-3 text-center border-bottom">
+                                    <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
+                                    <br>
+                                    <small style="opacity:.8;">' . $arrayDivision[$division] . '</small>
+                                </div>
+
+                                <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#userModal">
+                                    <i class="fas fa-user"></i> Perfil
+                                </a>
+                ';
 
         if ($admin) {
             $tapBar .= '
-              <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#goalModal">
-                <i class="fas fa-cogs mr-2 text-primary"></i> Ajustar Capacidad
-              </a>';
+                                <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#goalModal">
+                                    <i class="fas fa-cogs"></i> Ajustar Capacidad
+                                </a>';
         }
 
         $tapBar .= '
-                    <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#licenseModal">
-                        <i class="fas fa-copyright mr-2 text-primary"></i> Licencia
-                    </a>
+                                <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#licenseModal">
+                                    <i class="fas fa-copyright"></i> Licencia
+                                </a>
 
-                    <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>
 
-                    <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt mr-2 text-danger"></i> Cerrar Sesión
-                    </a>
-                    </div>
-                </li>
-                </ul>
-            </div>
+                                <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </nav>
-        ';
+            ';
 
         return $tapBar;
     }
@@ -745,7 +731,6 @@ class menu extends iQuery
     public static function mainTapBarPortal()
     {
         $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
-        $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
         $tapBarPortal .= '<i class="fa fa-bars"></i>';
         $tapBarPortal .= '</button>';
         $tapBarPortal .= '<ul class="navbar-nav ml-auto">';
@@ -775,7 +760,6 @@ class menu extends iQuery
     public static function secondTapBarPortal()
     {
         $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
-        $tapBarPortal .= '<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">';
         $tapBarPortal .= '<i class="fa fa-bars"></i>';
         $tapBarPortal .= '</button>';
         $tapBarPortal .= '<ul class="navbar-nav ml-auto">';

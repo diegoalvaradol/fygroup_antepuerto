@@ -101,7 +101,7 @@ $top = UIComponents::scrollToTopButton();
                           <div class="col-sm-4">
                             <div class="form-inline mb-3">
                               <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Origen</label>
-                              <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave de origen del roleo."></i>
+                              <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de origen del roleo."></i>
 
                               <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel">
                                 <option value="-">Seleccione una motonave...</option>
@@ -112,7 +112,7 @@ $top = UIComponents::scrollToTopButton();
                           <div class="col-sm-4">
                             <div class="form-inline mb-3">
                               <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Destino</label>
-                              <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica la nave de destino del roleo."></i>
+                              <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de destino del roleo."></i>
 
                               <select class="form-control select2 form-control-user" id="tovessel" name="tovessel">
                                 <option value="-">Seleccione una motonave...</option>
@@ -123,7 +123,7 @@ $top = UIComponents::scrollToTopButton();
                           <div class="col-sm-4">
                             <div class="form-inline mb-3">
                               <label class="mr-2 text-gray-800 font-weight-bold">Camiones Disponibles</label>
-                              <i class="fas fa-info-circle text-info" role="right" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right" data-bs-content="Indica los camiones disponibles para el roleo."></i>
+                              <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica los camiones disponibles para el roleo."></i>
                               <select class="form-control select2 form-control-user" id="rowId" name="rowId[]" multiple>
                                 <option value="-">Seleccione uno o más camiones...</option>
                               </select>
@@ -185,7 +185,7 @@ $top = UIComponents::scrollToTopButton();
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="logoutModalLabel">¿Deseas cerrar sesión?</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
               <span>×</span>
             </button>
           </div>
@@ -193,7 +193,7 @@ $top = UIComponents::scrollToTopButton();
             Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
             <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
           </div>
         </div>
@@ -206,7 +206,7 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -231,7 +231,7 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION['user']['division']]; ?></h6>
@@ -252,7 +252,7 @@ $top = UIComponents::scrollToTopButton();
                                 <label>Correo:</label>
                                 <input type="email" class="form-control form-control-user" id="email" name="email" value="<?php echo $_SESSION['user']['email']; ?>">
                                 <label>Contraseña:</label>
-                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual">
+                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Ingresa tu contraseña actual" autocomplete="current-password">
                             </div>
                         </div>
 
@@ -271,7 +271,7 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Licencia de Uso de Software</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
                 </div>
 
                 <div class="modal-body">
@@ -390,7 +390,7 @@ $top = UIComponents::scrollToTopButton();
 <script>
 /* Inicializa el popover */
 document.addEventListener('DOMContentLoaded', function () {
-  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
   popoverTriggerList.forEach(function (el) {
     new bootstrap.Popover(el);
   });
