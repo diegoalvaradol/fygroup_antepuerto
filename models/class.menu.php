@@ -628,10 +628,18 @@ class menu extends iQuery
                         display: none !important;
                     }
                 }
+
+                .nav-item {
+                    margin-right: -10px;
+                }
+
+                .dropdown-menu {
+                    padding-right: 15px;
+                }
             </style>
 
             <nav class="navbar navbar-expand navbar-dark topbar shadow-sm">
-                <div class="container-fluid d-flex align-items-center justify-content-between">
+                <div class="container-fluid d-flex align-items-center">
                     <!-- reloj -->
                     <div class="position-absolute w-100 text-white small d-flex justify-content-center align-items-center" style="pointer-events:none;">
                         <i class="fas fa-clock mr-2"></i>
@@ -639,14 +647,14 @@ class menu extends iQuery
                     </div>
 
                     <!-- usuario -->
-                    <ul class="navbar-nav ml-auto mr-2">
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle d-flex align-items-center px-3" href="#" id="userDropdown" data-toggle="dropdown">
-                                <div class="user-avatar">
+                                <div class="user-avatar mr-3">
                                     ' . $avatarName . '
                                 </div>
 
-                                <div class="d-flex flex-column ml-2 mr-2 text-left">
+                                <div class="d-flex flex-column text-left">
                                     <span class="text-white small font-weight-bold">' . $fullName . '</span>
                                     <span class="text-white small" style="opacity:.75;">' . $run . '</span>
                                 </div>
@@ -656,8 +664,12 @@ class menu extends iQuery
 
                             <div class="dropdown-menu dropdown-menu-right shadow">
                                 <div class="px-3 py-3 text-center border-bottom">
-                                    <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
-                                    <br>
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <div style="background: rgba(255,255,255,.08); padding: 8px 14px; border-radius: 12px; box-shadow: 0 6px 14px rgba(0,0,0,.25); backdrop-filter: blur(4px);">
+                                            <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
+                                        </div>
+                                    </div>
+
                                     <small style="opacity:.8;">' . $arrayDivision[$division] . '</small>
                                 </div>
 
