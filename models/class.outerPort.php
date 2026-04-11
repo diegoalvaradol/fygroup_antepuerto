@@ -520,6 +520,23 @@ class outerPort extends iQuery
         return number_format($totalArrivado - $totalAntepuerto, 0, ',', '.');
     }
 
+    public function avgTrucksPerDay()
+    {
+        $query = "SELECT AVG(camiones_dia) AS promedio_camiones_por_dia
+            FROM (
+            SELECT COUNT(*) AS camiones_dia
+            FROM $this->table
+            GROUP BY DATE(arrival_date)
+            ) t
+        ";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['promedio_camiones_por_dia'] !== null ? number_format((float) $result['promedio_camiones_por_dia'], 2, ',', '.') : '0';
+    }
+
     public function findByUser($run)
     {
         $query = 'SELECT * FROM app_users WHERE run = :run';
@@ -559,25 +576,25 @@ class outerPort extends iQuery
         $finCompleto = $fin . ' 23:59:59';
 
         $query = "
-      SELECT dia,
-            SUM(ingresos) AS total_ingresos,
-            SUM(egresos) AS total_egresos
-      FROM (
-        SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS ingresos, 0 AS egresos
-        FROM $this->table
-        WHERE $this->arrivaldate BETWEEN :inicio1 AND :fin1
-        GROUP BY dia
+            SELECT dia,
+                    SUM(ingresos) AS total_ingresos,
+                    SUM(egresos) AS total_egresos
+            FROM (
+                SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS ingresos, 0 AS egresos
+                FROM $this->table
+                WHERE $this->arrivaldate BETWEEN :inicio1 AND :fin1
+                GROUP BY dia
 
-        UNION ALL
+                UNION ALL
 
-        SELECT DATE($this->departuredate) AS dia, 0 AS ingresos, COUNT(*) AS egresos
-        FROM $this->table
-        WHERE $this->departuredate BETWEEN :inicio2 AND :fin2
-        GROUP BY dia
-      ) AS movimientos
-      GROUP BY dia
-      ORDER BY dia ASC
-    ";
+                SELECT DATE($this->departuredate) AS dia, 0 AS ingresos, COUNT(*) AS egresos
+                FROM $this->table
+                WHERE $this->departuredate BETWEEN :inicio2 AND :fin2
+                GROUP BY dia
+            ) AS movimientos
+            GROUP BY dia
+            ORDER BY dia ASC
+        ";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':inicio1', $inicioCompleto);

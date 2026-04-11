@@ -118,8 +118,25 @@ $whatsAppBtn = UIComponents::whatsappChatBox();
                           </div>
                         </div>
 
+                        <!-- Camiones por día -->
+                        <div class="col-xl-2 col-md-6 mb-4">
+                          <div class="card bg-light shadow-sm h-100">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <i class="fas fa-ranking-star fa-2x text-info mb-2"></i>
+                                <h6 class="text-info text-uppercase mb-3">Camiones por día</h6>
+                              </div>
+                              <div class="text-center">
+                                <?php $totalTrucks = $port->avgTrucksPerDay(); ?>
+                                <div class="text-muted small">Total Camiones Arrivados</div>
+                                <div class="h5 font-weight-bold text-dark"><?=$totalTrucks?></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         <!-- Arrivos -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center">
@@ -190,7 +207,7 @@ $whatsAppBtn = UIComponents::whatsappChatBox();
                         </div>
 
                         <!-- Camiones Enviados -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center mb-3">
