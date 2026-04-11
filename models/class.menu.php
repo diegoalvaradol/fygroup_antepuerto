@@ -295,7 +295,6 @@ class menu extends iQuery
                     font-size: 13px;
                     transition: .3s;
                     z-index: 1040;
-                    overflow-y:auto;
                     padding-bottom:20px;
                 }
 
@@ -614,10 +613,6 @@ class menu extends iQuery
                     #userDropdown .flex-column{
                         display: none !important;
                     }
-                }
-
-                .nav-item {
-                    margin-right: -10px;
                 }
 
                 .dropdown-menu {
