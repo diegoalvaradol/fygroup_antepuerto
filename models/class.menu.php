@@ -404,6 +404,7 @@ class menu extends iQuery
 
                 /* estado activo (sidebar abierto) */
                 #mobileSidebarToggle.active{
+                    z-index: 0;
                     box-shadow:
                         0 16px 34px rgba(0,0,0,.45),
                         0 0 18px rgba(31,95,139,.9),
