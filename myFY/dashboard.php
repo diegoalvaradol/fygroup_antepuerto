@@ -217,7 +217,7 @@ $whatsAppBtn = UIComponents::whatsappChatBox();
                               <small class="d-block text-muted text-center">
                                 Muestra los últimos 5 camiones enviados.
                               </small>
-                              <small class="d-block text-dark text-center">
+                              <small class="d-block text-dark text-center" style="font-size: 11px;">
                                 <?=$port->getLastSentTrucks();?>
                               </small>
                             </div>
