@@ -1,8 +1,8 @@
 <?php
 if (isset($_SESSION['user'])) {
-  header('Location: loginDataUser.php');
+    header('Location: loginDataUser.php');
 
-  exit();
+    exit();
 }
 ?>
 
@@ -93,7 +93,7 @@ if (isset($_SESSION['user'])) {
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input type="text" class="form-control text-center" id="run" name="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
+              <input type="text" class="form-control text-center" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
             </div>
           </div>
 
@@ -103,7 +103,7 @@ if (isset($_SESSION['user'])) {
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
               </div>
-              <input type="password" class="form-control text-center" id="password" name="password" placeholder="••••••••">
+              <input type="password" class="form-control text-center" id="password" name="password" autocomplete="current-password" placeholder="••••••••">
             </div>
           </div>
 

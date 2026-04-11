@@ -39,126 +39,132 @@ $_SESSION['last_session'] = time();
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cargando...</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Cargando...</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
+  <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+  <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+  <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-.card {
-  backdrop-filter: blur(14px);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 2.5rem 2rem;
-  border-radius: 18px;
-  text-align: center;
-  color: #fff;
-  width: 320px;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-}
+    <style>
+    body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    }
 
-h1 { margin: 0; font-size: 1.6rem; }
-h2 {
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #94a3b8;
-  margin-bottom: 1.5rem;
-}
+    .card {
+    backdrop-filter: blur(14px);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 2.5rem 2rem;
+    border-radius: 18px;
+    text-align: center;
+    color: #fff;
+    width: 320px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
 
-p {
-  margin: 0.3rem 0;
-  font-size: 0.9rem;
-  color: #94a3b8;
-}
+    h1 { margin: 0; font-size: 1.6rem; }
+    h2 {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    }
 
-/* PROGRESS BAR */
-.progress {
-  margin-top: 1.5rem;
-  width: 100%;
-  height: 6px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  overflow: hidden;
-}
+    p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    }
 
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #38bdf8, #6366f1);
-  transition: width 0.2s ease;
-}
+    /* PROGRESS BAR */
+    .progress {
+    margin-top: 1.5rem;
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    }
 
-/* LOADER */
-.loader-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
+    .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #38bdf8, #6366f1);
+    transition: width 0.2s ease;
+    }
 
-.loader {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid rgba(255,255,255,0.2);
-  border-top-color: #38bdf8;
-  animation: spin 0.8s linear infinite;
-}
+    /* LOADER */
+    .loader-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-</style>
+    .loader {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.2);
+    border-top-color: #38bdf8;
+    animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+    to { transform: rotate(360deg); }
+    }
+    </style>
 </head>
 
 <body>
+    <div class="card">
+    <h1>Bienvenido 👋</h1>
+    <h2><?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?></h2>
 
-<div class="card">
-  <h1>Bienvenido 👋</h1>
-  <h2><?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?></h2>
+    <p id="status">Inicializando...</p>
 
-  <p id="status">Inicializando...</p>
+    <div class="progress">
+        <div class="progress-bar" id="bar"></div>
+    </div>
 
-  <div class="progress">
-    <div class="progress-bar" id="bar"></div>
-  </div>
-
-  <div class="loader-wrap">
-    <div class="loader"></div>
-  </div>
-</div>
+    <div class="loader-wrap">
+        <div class="loader"></div>
+    </div>
+    </div>
+</body>
 
 <script>
-const steps = [
-  { text: "Validando sesión...", progress: 30 },
-  { text: "Cargando datos...", progress: 70 },
-  { text: "Entrando al sistema...", progress: 100 }
-];
+    const steps = [
+    { text: "Validando sesión...", progress: 30 },
+    { text: "Cargando datos...", progress: 70 },
+    { text: "Entrando al sistema...", progress: 100 }
+    ];
 
-let i = 0;
+    let i = 0;
 
-function nextStep() {
-  if (i < steps.length) {
-    document.getElementById("status").innerText = steps[i].text;
-    document.getElementById("bar").style.width = steps[i].progress + "%";
-    i++;
-    setTimeout(nextStep, 800);
-  } else {
-    setTimeout(() => {
-      window.location.href = "dashboard.php";
-    }, 400);
-  }
-}
+    function nextStep() {
+    if (i < steps.length) {
+        document.getElementById("status").innerText = steps[i].text;
+        document.getElementById("bar").style.width = steps[i].progress + "%";
+        i++;
+        setTimeout(nextStep, 800);
+    } else {
+        setTimeout(() => {
+        window.location.href = "dashboard.php";
+        }, 400);
+    }
+    }
 
-nextStep();
+    nextStep();
 </script>
-</body>
 </html>
