@@ -288,8 +288,8 @@ class menu extends iQuery
                 #accordionSidebar{
                     position: fixed;
                     top: 0;
-                    left: -280px;
-                    width: 280px;
+                    left: -200px;
+                    width: 200px;
                     height: 100vh;
                     background: linear-gradient(180deg,#1f5f8b,#174a6b);
                     font-size: 13px;
@@ -375,21 +375,8 @@ class menu extends iQuery
 
                 /* BOTON MOBILE */
                 #mobileSidebarToggle{
-                    position:fixed;
-                    top:12px;
-                    left:12px;
-                    z-index:1050;
-                    width:44px;
-                    height:44px;
-                    border:none;
-                    border-radius:10px;
-                    background:#174a6b;
-                    color:#fff;
-                }
-
-                #mobileSidebarToggle{
                     position: fixed;
-                    top: 10px;
+                    top: 4px;
                     left: 14px;
                     z-index: 1050;
 
@@ -443,7 +430,7 @@ class menu extends iQuery
             <ul id="accordionSidebar" class="navbar-nav">
                 <a class="sidebar-brand" href="dashboard.php">
                     <img src="../images/logo-fygroup-v1_bg_removed.png">
-                    <div><b>' . $infoCfg['name'] . '</b></div>
+                    <div><b>Sistema Antepuerto</b></div>
                 </a>
         ';
 
@@ -649,8 +636,8 @@ class menu extends iQuery
                     <!-- usuario -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center px-3" href="#" id="userDropdown" data-toggle="dropdown">
-                                <div class="user-avatar mr-3">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" data-toggle="dropdown">
+                                <div class="user-avatar">
                                     ' . $avatarName . '
                                 </div>
 
