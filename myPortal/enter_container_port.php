@@ -86,9 +86,9 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
             <div class="modal-content">
                 <div class="modal-header bg-info text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">¿Deseas cerrar sesión?</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">Selecciona 'Cerrar sesión' si realmente deseas hacerlo.</div>
                 <div class="modal-footer">

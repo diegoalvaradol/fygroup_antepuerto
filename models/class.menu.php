@@ -139,7 +139,7 @@ class menu extends iQuery
 
         $sidebar = '
             <style>
-                /* Formularios, card y tablas */
+                /* Formularios, Card y Tablas */
                 form,
                 form input,
                 form select,
@@ -157,7 +157,7 @@ class menu extends iQuery
                     margin-bottom: .55rem !important;
                 }
 
-                /* caja principal */
+                /* Caja Principal */
                 .select2-container--default .select2-selection--single {
                     border-radius: 12px !important;
                     height: 38px;
@@ -165,18 +165,18 @@ class menu extends iQuery
                     align-items: center;
                 }
 
-                /* multiple */
+                /* Multiple */
                 .select2-container--default .select2-selection--multiple {
                     border-radius: 12px !important;
                 }
 
-                /* dropdown */
+                /* Dropdown */
                 .select2-dropdown {
                     border-radius: 12px !important;
                     overflow: hidden;
                 }
 
-                /* modal */
+                /* Modal */
                 .modal-content,
                 .modal-header,
                 .modal-footer {
@@ -229,7 +229,7 @@ class menu extends iQuery
                     color: #f59e0b;
                 }
 
-                /* badge */
+                /* Badges */
                 .flag-badge {
                     display: flex;
                     align-items: center;
@@ -284,7 +284,7 @@ class menu extends iQuery
                     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
                 }
 
-                /* ===== SIDEBAR BASE ===== */
+                /* ===== Base Sidebar ===== */
                 #accordionSidebar{
                     position: fixed;
                     top: 0;
@@ -316,7 +316,7 @@ class menu extends iQuery
                     visibility:visible;
                 }
 
-                /* LOGO */
+                /* Logo */
                 .sidebar-brand{
                     display:flex;
                     flex-direction:column;
@@ -334,7 +334,7 @@ class menu extends iQuery
                     margin-bottom:6px;
                 }
 
-                /* ITEMS */
+                /* Items */
                 #accordionSidebar .nav-link{
                     color:#fff;
                     padding:10px 14px;
@@ -347,7 +347,7 @@ class menu extends iQuery
                     background:rgba(255,255,255,.12);
                 }
 
-                /* FLECHA */
+                /* Flecha */
                 .caret{
                     transition:.3s;
                 }
@@ -358,7 +358,7 @@ class menu extends iQuery
                     transform:rotate(90deg);
                 }
 
-                /* SUBMENU */
+                /* Submenu */
                 .collapse-inner{
                     background:#fff;
                     margin:6px 10px;
@@ -372,7 +372,23 @@ class menu extends iQuery
                     font-size:12px;
                 }
 
-                /* BOTON MOBILE */
+                .submenu-item {
+                    display: block;
+                    padding: 8px 12px;
+                    margin: 4px 8px;
+                    border-radius: 6px;
+                    background: #fff;
+                    transition: all 0.2s ease;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                }
+
+                .submenu-item:hover {
+                    transform: translateX(3px);
+                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                    background: #f8f9fa;
+                }
+
+                /* Boton Mobile */
                 #mobileSidebarToggle{
                     position: fixed;
                     top: 4px;
@@ -423,15 +439,19 @@ class menu extends iQuery
                     transform: scale(.95);
                 }
             </style>
+        ';
 
+        $sidebar .= '
             <button id="mobileSidebarToggle"><i class="fa fa-bars"></i></button>
             <div id="sidebarOverlay"></div>
 
             <ul id="accordionSidebar" class="navbar-nav">
                 <a class="sidebar-brand" href="dashboard.php">
                     <img src="../images/logo-fygroup-v1_bg_removed.png">
-                    <div><b>Sistema Antepuerto</b></div>
                 </a>
+
+                <div style="align-self: center;color: #fff; font-size: larger;"><b>Sistema Antepuerto</b></div>
+                </br>
         ';
 
         foreach ($menus as $menu) {
@@ -448,7 +468,7 @@ class menu extends iQuery
 
             foreach ($menu['items'] as $item) {
                 $sidebar .= '
-                    <a class="collapse-item" href="' . $item['link'] . '">
+                    <a class="collapse-item submenu-item" href="' . $item['link'] . '">
                         ' . $item['label'] . '
                     </a>
                 ';

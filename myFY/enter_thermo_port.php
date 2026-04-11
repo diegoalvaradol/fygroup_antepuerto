@@ -228,23 +228,23 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-white py-2 px-3">
-            <h6 class="modal-title font-weight-bold mb-0" id="logoutModalLabel">¿Deseas cerrar sesión?</h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
-          </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white py-2 px-3">
+                    <h6 class="modal-title font-weight-bold mb-0" id="logoutModalLabel">¿Deseas cerrar sesión?</h6>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Modal de ajustes-->
@@ -253,7 +253,9 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             <div class="modal-content">
                 <div class="modal-header bg-info text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -278,7 +280,9 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             <div class="modal-content">
                 <div class="modal-header bg-info text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION['user']['division']]; ?></h6>
@@ -318,7 +322,9 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
             <div class="modal-content">
                 <div class="modal-header bg-info text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Licencia de Uso de Software</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
                 </div>
 
                 <div class="modal-body">
@@ -410,7 +416,7 @@ $paginaActual = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
     <!-- Modal Añadir hora de salida del camión termo -->
     <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="addHourTermoModal" style="display:none; position:fixed; width:30%; top:20%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+    <div id="addHourTermoModal" style="display:none; position:fixed; width:80%; top:10%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
         <h4 id="h4-departure-hour"></h4>
         <form id="addHourTermoForm">
             <div class="form-group row">

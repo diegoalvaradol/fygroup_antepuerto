@@ -127,23 +127,23 @@ $top = UIComponents::scrollToTopButton();
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-info text-white py-2 px-3">
-            <h6 class="modal-title font-weight-bold mb-0" id="logoutModalLabel">¿Deseas cerrar sesión?</h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-              <span>×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
-          </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white py-2 px-3">
+                    <h6 class="modal-title font-weight-bold mb-0" id="logoutModalLabel">¿Deseas cerrar sesión?</h6>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Selecciona 'Cerrar sesión' si realmente deseas hacerlo.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-danger" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Modal de ajustes-->
@@ -152,7 +152,9 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header bg-info text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form id="addGoalForm">
@@ -177,7 +179,9 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header bg-info text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
                 </div>
                 <div class="row justify-content-center">
                     <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $arrayDivision[$_SESSION['user']['division']]; ?></h6>
@@ -217,7 +221,9 @@ $top = UIComponents::scrollToTopButton();
             <div class="modal-content">
                 <div class="modal-header bg-info text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Licencia de Uso de Software</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span>×</span></button>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
                 </div>
 
                 <div class="modal-body">
