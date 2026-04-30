@@ -33,6 +33,11 @@ if (!$admin) {
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles FYGroup-->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <script src="../assets/js/sidebar.js"></script>
+</head>
+
   <style>
     html, body {
       height: 100%;
@@ -78,47 +83,47 @@ if (!$admin) {
         </div>
       </div>
 
-			<div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
-				<div class="card-header bg-success text-white">
-					<h6 class="mb-0"><i class="fas fa-folder-open"></i> Planificaciones Cargadas</h6>
-				</div>
-				<div class="card-body">
-					<?php $dir = __DIR__ . '/../shipping_planning/'; ?>
-					<?php $archivos = array_diff(scandir($dir), ['.', '..']); ?>
+        <div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
+            <div class="card-header bg-success text-white">
+                <h6 class="mb-0"><i class="fas fa-folder-open"></i> Planificaciones Cargadas</h6>
+            </div>
+            <div class="card-body">
+                <?php $dir = __DIR__ . '/../shipping_planning/'; ?>
+                <?php $archivos = array_diff(scandir($dir), ['.', '..']); ?>
 
-					<?php if (empty($archivos)): ?>
-							<p class="text-muted text-center">No hay archivos cargados.</p>
-					<?php else: ?>
-					<table class="table table-bordered table-hover">
-							<thead style="background-color:#4e73df; color:white;">
-									<tr>
-											<th style="width:5%">#</th>
-											<th>Nombre</th>
-											<th style="width:20%" class="text-center">Acciones</th>
-									</tr>
-							</thead>
-							<tbody>
-									<?php foreach ($archivos as $i => $archivo): ?>
-											<tr data-file="<?=htmlspecialchars($archivo)?>">
-													<td><?=$i + 1?></td>
-													<td><?=htmlspecialchars($archivo)?></td>
-													<td class="text-center">
-															<a href="../controllers/downloadFilesSchedule.php?file=<?=urlencode($archivo)?>"class="btn btn-sm btn-success me-1" title="Descargar"><i class="fas fa-download"></i></a>
-															<button class="btn btn-sm btn-danger btn-delete"title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>"><i class="fas fa-trash"></i></button>
-													</td>
-											</tr>
-									<?php endforeach; ?>
-							</tbody>
-					</table>
-					<?php endif; ?>
-				</div>
-			</div>
+                <?php if (empty($archivos)): ?>
+                        <p class="text-muted text-center">No hay archivos cargados.</p>
+                <?php else: ?>
+                <table class="table table-bordered table-hover">
+                    <thead style="background-color:#4e73df; color:white;">
+                        <tr>
+                            <th style="width:5%">#</th>
+                            <th>Nombre</th>
+                            <th style="width:20%" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($archivos as $i => $archivo): ?>
+                            <tr data-file="<?=htmlspecialchars($archivo)?>">
+                                <td><?=$i + 1?></td>
+                                <td><?=htmlspecialchars($archivo)?></td>
+                                <td class="text-center">
+                                    <a href="../controllers/downloadFilesSchedule.php?file=<?=urlencode($archivo)?>"class="btn btn-sm btn-success me-1" title="Descargar"><i class="fas fa-download"></i></a>
+                                    <button class="btn btn-sm btn-danger btn-delete"title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php endif; ?>
+            </div>
+        </div>
 
       <div class="text-center mt-4">
-				<a href="dashboard.php" class="btn btn-sm btn-primary">
-					<i class="fas fa-arrow-left"></i> Volver al Inicio
-				</a>
-			</div>
+            <a href="dashboard.php" class="btn btn-sm btn-primary">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </a>
+        </div>
     </div>
   </div>
 

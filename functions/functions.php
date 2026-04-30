@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -7,16 +9,16 @@ use PHPMailer\PHPMailer\PHPMailer;
  *
  * @param  $module [modulo]
  * @param  $area   [area]
- * @return void
+ * @return String
  */
 function generateMkey($module, $area = 'myFY')
 {
-  $secretKey = "SSL-CHILE-DIEGO_2025_0517";
-  $time      = time();
-  $random    = bin2hex(random_bytes(5));
-  $token     = md5($secretKey . $module . $time . $random);
+    $secretKey = 'SSL-CHILE-DIEGO_2025_0517';
+    $time = time();
+    $random = bin2hex(random_bytes(5));
+    $token = md5($secretKey . $module . $time . $random);
 
-  return './?pag=' . $module . '&area=' . $area . '&mkey=' . $token;
+    return './?pag=' . $module . '&area=' . $area . '&mkey=' . $token;
 }
 
 /**
@@ -26,9 +28,9 @@ function generateMkey($module, $area = 'myFY')
  */
 function esLocalhost()
 {
-  $whitelist = ['127.0.0.1', '::1', 'localhost'];
+    $whitelist = ['127.0.0.1', '::1', 'localhost'];
 
-  return in_array($_SERVER['REMOTE_ADDR'], $whitelist) || in_array($_SERVER['SERVER_NAME'], $whitelist);
+    return in_array($_SERVER['REMOTE_ADDR'], $whitelist) || in_array($_SERVER['SERVER_NAME'], $whitelist);
 }
 
 /**
@@ -38,11 +40,11 @@ function esLocalhost()
  */
 function getCurrentUser()
 {
-  if (isset($_SESSION['user'])) {
-    return $_SESSION['user'];
-  } else {
-    return null;
-  }
+    if (isset($_SESSION['user'])) {
+        return $_SESSION['user'];
+    } else {
+        return null;
+    }
 }
 
 /**
@@ -54,20 +56,20 @@ function getCurrentUser()
  */
 function formatDate($date, $format = 'Y-m-d H:i:s')
 {
-  if ($date == '0000-00-00 00:00:00' || $date == '0000-00-00') {
-    return '';
-  }
+    if ($date == '0000-00-00 00:00:00' || $date == '0000-00-00') {
+        return '';
+    }
 
-  $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-  if (!$dateTime) {
-    $dateTime = DateTime::createFromFormat('Y-m-d', $date);
-  }
+    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+    if (!$dateTime) {
+        $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+    }
 
-  if ($dateTime) {
-    return $dateTime->format($format);
-  } else {
-    return '';
-  }
+    if ($dateTime) {
+        return $dateTime->format($format);
+    } else {
+        return '';
+    }
 }
 
 /**
@@ -80,11 +82,11 @@ function formatDate($date, $format = 'Y-m-d H:i:s')
  */
 function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
-  $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
-  $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://myfy.fygroup.cl/';
-  $logo    = $baseUrl . 'imageslogo-fygroup-v1_bg_removed.png.png';
+    $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
+    $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://myfy.fygroup.cl/';
+    $logo = $baseUrl . 'imageslogo-fygroup-v1_bg_removed.png.png';
 
-  echo '
+    echo '
   <!DOCTYPE html>
   <html lang="es">
   <head>
@@ -181,29 +183,29 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
   </html>
   ';
 
-  /* CORREO */
-  try {
-    require_once __DIR__ . '/../vendor/autoload.php';
-    require_once __DIR__ . '/../config/includes.php';
-    date_default_timezone_set("America/Santiago");
+    /* CORREO */
+    try {
+        require_once __DIR__ . '/../vendor/autoload.php';
+        require_once __DIR__ . '/../config/includes.php';
+        date_default_timezone_set('America/Santiago');
 
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host       = 'l0011525.ferozo.com';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'soporte@ssl-lines.com';
-    $mail->Password   = 'Ssl*2025sop';
-    $mail->SMTPSecure = 'ssl';
-    $mail->Port       = 465;
+        $mail = new PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = 'l0011525.ferozo.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'soporte@ssl-lines.com';
+        $mail->Password = 'Ssl*2025sop';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
 
-    $mail->CharSet = 'UTF-8';
-    $mail->setFrom('soporte@ssl-lines.com', 'SSL Sistema');
-    $mail->addAddress('diego.alvaraado@gmail.com');
+        $mail->CharSet = 'UTF-8';
+        $mail->setFrom('soporte@ssl-lines.com', 'SSL Sistema');
+        $mail->addAddress('diego.alvaraado@gmail.com');
 
-    $mail->isHTML(true);
-    $mail->Subject = '🚫 Acceso Denegado Detectado';
+        $mail->isHTML(true);
+        $mail->Subject = '🚫 Acceso Denegado Detectado';
 
-    $mail->Body = '
+        $mail->Body = '
     <div style="margin:0;padding:40px 0;background:#0f172a;font-family:Arial,sans-serif;color:#fff;">
       <div style="max-width:700px;margin:auto;background:#1e293b;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);">
 
@@ -257,10 +259,10 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
       </div>
     </div>';
 
-    $mail->send();
-  } catch (Exception $e) {
-    // opcional log
-  }
+        $mail->send();
+    } catch (Exception $e) {
+        // opcional log
+    }
 
-  exit;
+    exit;
 }

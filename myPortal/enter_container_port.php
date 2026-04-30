@@ -40,6 +40,10 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles FYGroup-->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <script src="../assets/js/sidebar.js"></script>
 </head>
 
 <body id="page-top">
@@ -63,7 +67,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                     <h1 class="h3 mb-1 text-gray-800">Reporte de Contenedores</h1>
 
                     <!-- Tabla de Contenedores -->
-                    <?php echo $port->getTableContainer(); ?>
+                    <?php echo $port->tableContainer(); ?>
                 </div>
                 <!-- container-fluid -->
             </div>
@@ -77,7 +81,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
+    <!-- Scroll to Top Button -->
     <?php echo $top; ?>
 
     <!-- Logout Modal-->

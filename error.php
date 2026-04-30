@@ -1,29 +1,31 @@
 <?php
-  session_start();
+session_start();
 
-  // Tiempo máximo de inactividad en segundos (30 minutos)
-  $max_inactivity = 30 * 60;
+// Tiempo máximo de inactividad en segundos (30 minutos)
+$max_inactivity = 30 * 60;
 
-  // Por defecto, ir a login
-  $redirect_url = 'login.php';
+// Por defecto, redirigir a login
+$redirect_url = 'myFY/login.php';
 
-  if (isset($_SESSION['user_id'])) {
-  if (!isset($_SESSION['last_activity']) || (time() - $_SESSION['last_activity'] <= $max_inactivity)) {
-    $redirect_url = 'dashboard.php'; // Sesión activa
-  } else {
-    // Sesión expirada
-    session_unset();
-    session_destroy();
-  }
-  }
+// Verifica si hay sesión activa y no expirada
+if (isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['last_activity']) || (time() - $_SESSION['last_activity'] <= $max_inactivity)) {
+        $redirect_url = 'dashboard.php';
+    } else {
+        // Sesión expirada
+        session_unset();
+        session_destroy();
+        $redirect_url = 'myFY/login.php';
+    }
+}
 
-  // Actualiza última actividad si la sesión sigue activa
-  if ($redirect_url === 'dashboard.php') {
-  $_SESSION['last_activity'] = time();
-  }
+// Actualiza última actividad si la sesión sigue activa
+if ($redirect_url === 'dashboard.php') {
+    $_SESSION['last_activity'] = time();
+}
 
-  // Establece código HTTP 403 para área inválida
-  http_response_code(403);
+// Establece código HTTP 403 para área inválida
+http_response_code(403);
 ?>
 
 <!DOCTYPE html>

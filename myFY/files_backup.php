@@ -37,6 +37,11 @@ if (!$admin) {
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles FYGroup-->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <script src="../assets/js/sidebar.js"></script>
+</head>
+
   <style>
     html, body {
       height: 100%;

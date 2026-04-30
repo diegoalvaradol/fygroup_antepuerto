@@ -73,8 +73,9 @@ $query = http_build_query(array_filter([
 ]));
 
 echo '
-<div class="text-center mb-3">
-  <a href="../controllers/exportReportPDF.php?' . $query . '" class="btn btn-success">
-    <i class="fa-solid fa-file-pdf"></i> Descargar PDF
-  </a>
-</div>';
+    <div class="text-center mb-3">
+    <a href="../controllers/exportReportPDF.php?' . $query . '" class="btn btn-success">
+        <i class="fa-solid fa-file-pdf"></i> Descargar PDF
+    </a>
+    </div>
+';

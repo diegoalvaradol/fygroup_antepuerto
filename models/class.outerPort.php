@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/includes.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class outerPort extends iQuery
 {
     protected string $table = 'app_outer_port';
@@ -167,27 +171,27 @@ class outerPort extends iQuery
             $query .= ' WHERE p.origin = 1';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        WHERE p.origin = 1 AND sh.finished = 0
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 1 AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '96.591.730-6') { /* Cliente: Cool Carriers */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 1
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 1
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '77.897.180-1') { /* Cliente: Seatrade */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 1
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 1
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         }
@@ -213,28 +217,28 @@ class outerPort extends iQuery
             $query .= ' WHERE p.origin = 1';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        WHERE p.origin = 1
-          AND sh.finished = 0
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 1
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '96.591.730-6') { /* Cliente: Cool Carriers */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 1
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 1
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '77.897.180-1') { /* Cliente: Seatrade */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 1
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 1
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         }
@@ -258,28 +262,28 @@ class outerPort extends iQuery
             $query .= ' WHERE p.origin = 2';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        WHERE p.origin = 2
-          AND sh.finished = 0
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 2
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '96.591.730-6') { /* Cliente: Cool Carriers */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 2
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 2
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '77.897.180-1') { /* Cliente: Seatrade */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 2
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 2
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         }
@@ -303,28 +307,28 @@ class outerPort extends iQuery
             $query .= ' WHERE p.origin = 2';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        WHERE p.origin = 2
-          AND sh.finished = 0
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 2
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '96.591.730-6') { /* Cliente: Cool Carriers */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 2
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 2
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '77.897.180-1') { /* Cliente: Seatrade */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE p.origin = 2
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE p.origin = 2
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         }
@@ -348,28 +352,28 @@ class outerPort extends iQuery
             $query .= ' WHERE 1';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
-         JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-         WHERE 1
-          AND sh.finished = 0
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE 1
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '96.591.730-6') { /* Cliente: Cool Carriers */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE 1
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE 1
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         } elseif ($_SESSION['user']['division'] === 'shipper' && $_SESSION['user']['run'] === '77.897.180-1') { /* Cliente: Seatrade */
             $query .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-        WHERE 1
-          AND sh.finished = 0
-          AND sl.rut = :rut
-      ';
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                WHERE 1
+                AND sh.finished = 0
+                AND sl.rut = :rut
+            ';
 
             $params[':rut'] = $_SESSION['user']['run'];
         }
@@ -448,9 +452,9 @@ class outerPort extends iQuery
 
             if ($division === 'shipper' && in_array($run, ['96.591.730-6', '77.897.180-1'])) {
                 $joins .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-      ';
+                    JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                    JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                ';
                 $where[] = 'sh.finished = 0';
                 $where[] = 'sl.rut = :rut';
                 $params[':rut'] = $run;
@@ -618,7 +622,7 @@ class outerPort extends iQuery
         return json_encode($data);
     }
 
-    public function getTableContainer()
+    public function tableContainer()
     {
         $ship = new ship();
         $user = new user();
@@ -682,47 +686,47 @@ class outerPort extends iQuery
 
         /* Formulario de filtros */
         $form = "
-    <div class='row'>
-      <div class='col-lg-12'>
-        <div class='card shadow mb-4'>
-          <div class='card-header py-3'>
-            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-          </div>
-
-          <div class='card-body'>
-            <form method='POST' class='form-container' id='filterFormContainer'>
-              <div class='form-group row'>
-                <div class='col-sm-4'>
-                  <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                  <select class='form-control select2 form-control-user' id='nave' name='nave'>
-                    <option value='-'>Seleccione una nave...</option>
-                  </select>
+            <div class='row'>
+            <div class='col-lg-12'>
+                <div class='card shadow mb-4'>
+                <div class='card-header py-3'>
+                    <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
                 </div>
 
-                <div class='col-sm-4'>
-                  <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
-                  <select class='form-control select2 form-control-user' id='patente' name='patente'>
-                    <option value='-'>Seleccione una patente...</option>
-                  </select>
-                </div>
+                <div class='card-body'>
+                    <form method='POST' class='form-container' id='filterFormContainer'>
+                    <div class='form-group row'>
+                        <div class='col-sm-4'>
+                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                        <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                            <option value='-'>Seleccione una nave...</option>
+                        </select>
+                        </div>
 
-                <div class='col-sm-4'>
-                  <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                  <input type='text' id='guia' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
-                </div>
-              </div>
+                        <div class='col-sm-4'>
+                        <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
+                        <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                            <option value='-'>Seleccione una patente...</option>
+                        </select>
+                        </div>
 
-              <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-solid fa-download'></i> Exportar XLS</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    ";
+                        <div class='col-sm-4'>
+                        <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
+                        <input type='text' id='guia' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                        </div>
+                    </div>
+
+                    <div class='d-flex gap-2'>
+                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
+        ";
 
         $thead = "<thead style='background-color:#4e73df; color:white;'>";
         $thead .= '<tr>';
@@ -831,69 +835,69 @@ class outerPort extends iQuery
         $tbclose = '</tbody>';
 
         $table = $form . "
-      <div class='row'>
-        <div class='col-lg-12'>
-          <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-              <h6 class='mb-0'>
-                <i class='fas fa-list'></i> Listado de Contenedores
-                <em>(Total: <span id='totalCnts'>$count</span>)</em>
-              </h6>
+            <div class='row'>
+                <div class='col-lg-12'>
+                <div class='card shadow mb-4'>
+                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                    <h6 class='mb-0'>
+                        <i class='fas fa-list'></i> Listado de Contenedores
+                        <em>(Total: <span id='totalCnts'>$count</span>)</em>
+                    </h6>
 
-              <div style='position:relative; max-width:250px; width:100%;'>
-                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                <input type='text' id='searchContainerTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-              </div>
+                    <div style='position:relative; max-width:250px; width:100%;'>
+                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                        <input type='text' id='searchContainerTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                    </div>
+                    </div>
+
+                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                    <table id='containerTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                        <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                        " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                        ' . $tr . $tbclose . "
+                    </table>
+                    </div>
+                </div>
+                </div>
             </div>
 
-            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-              <table id='containerTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
-                  ' . $tr . $tbclose . "
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+            <script>
+                document.getElementById('searchContainerTable').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('#containerTable tbody tr');
+                let visibleCount = 0;
 
-      <script>
-        document.getElementById('searchContainerTable').addEventListener('keyup', function() {
-          let filter = this.value.toLowerCase().trim();
-          let rows = document.querySelectorAll('#containerTable tbody tr');
-          let visibleCount = 0;
+                rows.forEach(row => {
+                    let text = (
+                    (row.cells[1]?.innerText || '') + ' ' +
+                    (row.cells[2]?.innerText || '') + ' ' +
+                    (row.cells[3]?.innerText || '') + ' ' +
+                    (row.cells[4]?.innerText || '') + ' ' +
+                    (row.cells[6]?.innerText || '') + ' ' +
+                    (row.cells[7]?.innerText || '')
+                    ).toLowerCase();
 
-          rows.forEach(row => {
-            let text = (
-              (row.cells[1]?.innerText || '') + ' ' +
-              (row.cells[2]?.innerText || '') + ' ' +
-              (row.cells[3]?.innerText || '') + ' ' +
-              (row.cells[4]?.innerText || '') + ' ' +
-              (row.cells[6]?.innerText || '') + ' ' +
-              (row.cells[7]?.innerText || '')
-            ).toLowerCase();
+                    let match = text.includes(filter);
 
-            let match = text.includes(filter);
+                    if (filter.includes(' ')) {
+                    let words = filter.split(' ');
+                    match = words.every(w => text.includes(w));
+                    }
 
-            if (filter.includes(' ')) {
-              let words = filter.split(' ');
-              match = words.every(w => text.includes(w));
-            }
+                    row.style.display = match ? '' : 'none';
 
-            row.style.display = match ? '' : 'none';
+                    if (match) visibleCount++;
+                });
 
-            if (match) visibleCount++;
-          });
-
-          document.getElementById('totalCnts').innerText = visibleCount;
-        });
-      </script>
-    ";
+                document.getElementById('totalCnts').innerText = visibleCount;
+                });
+            </script>
+        ";
 
         return $table;
     }
 
-    public function downloadTableContainerExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
+    public function tableContainerExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
     {
         $ship = new ship();
 
@@ -902,12 +906,12 @@ class outerPort extends iQuery
 
         if (!empty($nave)) {
             $where .= ' AND sh.ship_id = ?';
-            $filtros[] = "$nave";
+            $filtros[] = $nave;
         }
 
         if (!empty($patente)) {
             $where .= " AND $this->carplate = ?";
-            $filtros[] = "$patente";
+            $filtros[] = $patente;
         }
 
         if (!empty($guia)) {
@@ -915,98 +919,111 @@ class outerPort extends iQuery
             $filtros[] = "%$guia%";
         }
 
-        /* División Naviera para Marval (Cool Carriers) */
-        if ($division === 'shipper' && $cliente === '96.591.730-6') {
+        if ($division === 'shipper' && ($cliente === '96.591.730-6' || $cliente === '77.897.180-1')) {
             $where .= ' AND sl.rut = ?';
-            $filtros[] = "$cliente";
+            $filtros[] = $cliente;
         }
 
-        /* División Naviera para Seatrade */
-        if ($division === 'shipper' && $cliente === '77.897.180-1') {
-            $where .= ' AND sl.rut = ?';
-            $filtros[] = "$cliente";
-        }
+        $query = "SELECT * FROM $this->table AS p
+              JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+              JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id
+              $where AND sh.finished = 0
+              ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
 
-        $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
         $stmt = $this->db->prepare($query);
         $stmt->execute($filtros);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        /* Crear Excel */
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Listado de Contenedores');
 
-        /* Encabezados */
+        // headers
         $headers = [
-          'Posición', 'Nave', 'Patente', 'Guía', 'Contenedor', 'Sello', 'Exportador', 'Agencia', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Digitado Por',
+            'Posición','Nave','Patente','Guía','Contenedor','Sello','Exportador',
+            'Agencia','Pallets','Teléfono','Entrada','Salida','Tiempo de Estadía',
+            'Condición','Booking','Estadía','Observaciones','Creado','Digitado Por',
         ];
-        $sheet->fromArray($headers, null, 'A1');
 
-        /* Agregar los datos */
+        $col = 'A';
+        foreach ($headers as $h) {
+            $sheet->setCellValue($col . '1', $h);
+            $col++;
+        }
+
         $row = 2;
-        $stayTime = null;
+        $totalPallets = 0;
+        $totalRegistros = 0;
 
         foreach ($result as $data) {
-            $createdTime = new DateTime($data[$this->arrivaldate]);
-            $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
-            $created = $createdTime->format('d-m-Y H:i');
-            $arrival = $arrivalTime->format('d-m-Y H:i');
-            $departure = $data[$this->departuredate] != null ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+            $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
+            $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
-            if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
-                $arrivalDate = new DateTime($data[$this->arrivaldate]);
-                $departureDate = new DateTime($data[$this->departuredate]);
+            $departure = $data[$this->departuredate]
+                ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i')
+                : '';
 
-                $interval = $arrivalDate->diff($departureDate);
-                $days = $interval->format('%d');
-                $hours = $interval->format('%h');
-                $minutes = $interval->format('%i');
-
-                $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
-            } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
-                $stayTime = 'No disponible.';
+            // estadía corta (igual que los otrosDescargar Excels)
+            if ($data[$this->arrivaldate] && $data[$this->departuredate]) {
+                $a = new DateTime($data[$this->arrivaldate]);
+                $d = new DateTime($data[$this->departuredate]);
+                $i = $a->diff($d);
+                $stayTime = "{$i->d}d {$i->h}h {$i->i}m";
+            } else {
+                $stayTime = 'No disponible';
             }
 
             $sheet->fromArray([
-              $data[$this->countervessel],
-              $ship->getVesselName($data[$this->vessel]),
-              $data[$this->carplate],
-              $data[$this->guide],
-              $data[$this->container],
-              $data[$this->seal],
-              $data[$this->exporter],
-              $data[$this->agency],
-              $data[$this->pallets],
-              $data[$this->cellphonedriver],
-              $arrival,
-              $departure,
-              $stayTime,
-              $data[$this->comodity],
-              $data[$this->booking],
-              $data[$this->stay],
-              $data[$this->observations],
-              $created,
-              $this->findByUser($data[$this->createdby]),
-            ], null, 'A' . $row);
+                $data[$this->countervessel],
+                $ship->getVesselName($data[$this->vessel]),
+                $data[$this->carplate],
+                $data[$this->guide],
+                $data[$this->container],
+                $data[$this->seal],
+                $data[$this->exporter],
+                $data[$this->agency],
+                $data[$this->pallets],
+                $data[$this->cellphonedriver],
+                $arrival,
+                $departure,
+                $stayTime,
+                $data[$this->comodity],
+                $data[$this->booking],
+                $data[$this->stay],
+                $data[$this->observations],
+                $created,
+                $this->findByUser($data[$this->createdby]),
+            ], null, "A{$row}");
 
+            $totalPallets += (int) $data[$this->pallets];
+            $totalRegistros++;
             $row++;
         }
 
-        /* Enviar headers para descarga */
+        // totales
+        $sheet->setCellValue("A{$row}", 'Totales');
+        $sheet->setCellValue("I{$row}", $totalPallets);
+        $sheet->setCellValue("J{$row}", "Registros: {$totalRegistros}");
+
+        // autofiltro
+        $sheet->setAutoFilter('A1:S1');
+
+        // autosize columnas
+        foreach (range('A', 'S') as $c) {
+            $sheet->getColumnDimension($c)->setAutoSize(true);
+        }
+
+        // descarga
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="Reporte_Contenedores_Antepuerto_' . date('d-m-Y H:i:s') . '.xlsx"');
         header('Cache-Control: max-age=0');
 
-        /* Descargar el archivo */
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
-
         exit;
     }
 
-    public function getTableThermo()
+    public function tableThermo()
     {
         $ship = new ship();
         $user = new user();
@@ -1069,47 +1086,47 @@ class outerPort extends iQuery
 
         /* Formulario de filtros */
         $form = "
-    <div class='row'>
-      <div class='col-lg-12'>
-        <div class='card shadow mb-4'>
-          <div class='card-header py-3'>
-            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-          </div>
-
-          <div class='card-body'>
-            <form method='POST' class='form-container' id='filterFormThermo'>
-              <div class='form-group row'>
-                <div class='col-sm-4'>
-                  <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                  <select class='form-control select2 form-control-user' id='nave' name='nave'>
-                    <option value='-'>Seleccione una nave...</option>
-                  </select>
+            <div class='row'>
+            <div class='col-lg-12'>
+                <div class='card shadow mb-4'>
+                <div class='card-header py-3'>
+                    <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
                 </div>
 
-                <div class='col-sm-4'>
-                  <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
-                  <select class='form-control select2 form-control-user' id='patente' name='patente'>
-                    <option value='-'>Seleccione una patente...</option>
-                  </select>
-                </div>
+                <div class='card-body'>
+                    <form method='POST' class='form-container' id='filterFormThermo'>
+                    <div class='form-group row'>
+                        <div class='col-sm-4'>
+                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                        <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                            <option value='-'>Seleccione una nave...</option>
+                        </select>
+                        </div>
 
-                <div class='col-sm-4'>
-                  <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                  <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
-                </div>
-              </div>
+                        <div class='col-sm-4'>
+                        <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
+                        <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                            <option value='-'>Seleccione una patente...</option>
+                        </select>
+                        </div>
 
-              <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-solid fa-download'></i> Exportar XLS</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    ";
+                        <div class='col-sm-4'>
+                        <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
+                        <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                        </div>
+                    </div>
+
+                    <div class='d-flex gap-2'>
+                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
+        ";
 
         $thead = "<thead style='background-color:#4e73df; color:white;'>";
         $thead .= '<tr>';
@@ -1212,67 +1229,67 @@ class outerPort extends iQuery
         $tbclose = '</tbody>';
 
         $table = $form . "
-      <div class='row'>
-        <div class='col-lg-12'>
-          <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-              <h6 class='mb-0'>
-                <i class='fas fa-list'></i> Listado de Termos
-                <em>(Total: <span id='totalThermos'>$count</span>)</em>
-              </h6>
+            <div class='row'>
+                <div class='col-lg-12'>
+                <div class='card shadow mb-4'>
+                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                    <h6 class='mb-0'>
+                        <i class='fas fa-list'></i> Listado de Termos
+                        <em>(Total: <span id='totalThermos'>$count</span>)</em>
+                    </h6>
 
-              <div style='position:relative; max-width:250px; width:100%;'>
-                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                <input type='text' id='searchThermoTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-              </div>
+                    <div style='position:relative; max-width:250px; width:100%;'>
+                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                        <input type='text' id='searchThermoTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                    </div>
+                    </div>
+
+                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                    <table id='thermoTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                        <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                        " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                        ' . $tr . $tbclose . "
+                    </table>
+                    </div>
+                </div>
+                </div>
             </div>
 
-            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-              <table id='thermoTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
-                  ' . $tr . $tbclose . "
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+            <script>
+                document.getElementById('searchThermoTable').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('#thermoTable tbody tr');
+                let visibleCount = 0;
 
-      <script>
-        document.getElementById('searchThermoTable').addEventListener('keyup', function() {
-          let filter = this.value.toLowerCase().trim();
-          let rows = document.querySelectorAll('#thermoTable tbody tr');
-          let visibleCount = 0;
+                rows.forEach(row => {
+                    let text = (
+                    (row.cells[1]?.innerText || '') + ' ' +
+                    (row.cells[2]?.innerText || '') + ' ' +
+                    (row.cells[3]?.innerText || '') + ' ' +
+                    (row.cells[4]?.innerText || '')
+                    ).toLowerCase();
 
-          rows.forEach(row => {
-            let text = (
-              (row.cells[1]?.innerText || '') + ' ' +
-              (row.cells[2]?.innerText || '') + ' ' +
-              (row.cells[3]?.innerText || '') + ' ' +
-              (row.cells[4]?.innerText || '')
-            ).toLowerCase();
+                    let match = text.includes(filter);
 
-            let match = text.includes(filter);
+                    if (filter.includes(' ')) {
+                    let words = filter.split(' ');
+                    match = words.every(w => text.includes(w));
+                    }
 
-            if (filter.includes(' ')) {
-              let words = filter.split(' ');
-              match = words.every(w => text.includes(w));
-            }
+                    row.style.display = match ? '' : 'none';
 
-            row.style.display = match ? '' : 'none';
+                    if (match) visibleCount++;
+                });
 
-            if (match) visibleCount++;
-          });
-
-          document.getElementById('totalThermos').innerText = visibleCount;
-        });
-      </script>
-    ";
+                document.getElementById('totalThermos').innerText = visibleCount;
+                });
+            </script>
+        ";
 
         return $table;
     }
 
-    public function downloadTableThermoExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
+    public function tableThermoExcel($nave = '', $patente = '', $guia = '', $division = '', $cliente = '')
     {
         $ship = new ship();
 
@@ -1294,92 +1311,104 @@ class outerPort extends iQuery
             $filtros[] = "%$guia%";
         }
 
-        /* División Naviera para Marval (Cool Carriers) */
-        if ($division === 'shipper' && $cliente === '96.591.730-6') {
+        if ($division === 'shipper' && ($cliente === '96.591.730-6' || $cliente === '77.897.180-1')) {
             $where .= ' AND sl.rut = ?';
             $filtros[] = $cliente;
         }
 
-        /* División Naviera para Seatrade */
-        if ($division === 'shipper' && $cliente === '77.897.180-1') {
-            $where .= ' AND sl.rut = ?';
-            $filtros[] = $cliente;
-        }
+        $query = "SELECT * FROM $this->table AS p
+              JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+              JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id
+              $where AND sh.finished = 0
+              ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
 
-        $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id $where AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
         $stmt = $this->db->prepare($query);
         $stmt->execute($filtros);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Listado de Termos');
 
-        /* Encabezados del Excel */
+        // headers
         $headers = [
-          'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Teléfono', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Digitado Por',
+            'Posición','Nave','Patente','Guía','Exportador','Pallets','Teléfono',
+            'Entrada','Salida','Tiempo de Estadía','Condición','Booking',
+            'Estadía','Observaciones','Creado','Digitado Por',
         ];
-        $sheet->fromArray($headers, null, 'A1');
 
-        /* Filas de datos */
+        $col = 'A';
+        foreach ($headers as $h) {
+            $sheet->setCellValue($col . '1', $h);
+            $col++;
+        }
+
         $row = 2;
-        $stayTime = null;
+        $totalPallets = 0;
+        $totalRegistros = 0;
 
         foreach ($result as $data) {
-            $createdTime = new DateTime($data[$this->arrivaldate]);
-            $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
-            $created = $createdTime->format('d-m-Y H:i');
-            $arrival = $arrivalTime->format('d-m-Y H:i');
+            $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
+            $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
-            $departure = $data[$this->departuredate] != null ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+            $departure = $data[$this->departuredate]
+                ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i')
+                : '';
 
-            if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
-                $arrivalDate = new DateTime($data[$this->arrivaldate]);
-                $departureDate = new DateTime($data[$this->departuredate]);
-
-                $interval = $arrivalDate->diff($departureDate);
-                $days = $interval->format('%d');
-                $hours = $interval->format('%h');
-                $minutes = $interval->format('%i');
-
-                $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
-
-            } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
-                $stayTime = 'No disponible.';
+            // estadía corta como el resto de reportes
+            if ($data[$this->arrivaldate] && $data[$this->departuredate]) {
+                $a = new DateTime($data[$this->arrivaldate]);
+                $d = new DateTime($data[$this->departuredate]);
+                $i = $a->diff($d);
+                $stayTime = "{$i->d}d {$i->h}h {$i->i}m";
+            } else {
+                $stayTime = 'No disponible';
             }
 
             $sheet->fromArray([
-              $data[$this->countervessel],
-              $ship->getVesselName($data[$this->vessel]),
-              $data[$this->carplate],
-              $data[$this->guide],
-              $data[$this->exporter],
-              $data[$this->pallets],
-              $data[$this->cellphonedriver],
-              $arrival,
-              $departure,
-              $stayTime,
-              $data[$this->comodity],
-              $data[$this->booking],
-              $data[$this->stay],
-              $data[$this->observations],
-              $created,
-              $this->findByUser($data[$this->createdby]),
-            ], null, 'A' . $row);
+                $data[$this->countervessel],
+                $ship->getVesselName($data[$this->vessel]),
+                $data[$this->carplate],
+                $data[$this->guide],
+                $data[$this->exporter],
+                $data[$this->pallets],
+                $data[$this->cellphonedriver],
+                $arrival,
+                $departure,
+                $stayTime,
+                $data[$this->comodity],
+                $data[$this->booking],
+                $data[$this->stay],
+                $data[$this->observations],
+                $created,
+                $this->findByUser($data[$this->createdby]),
+            ], null, "A{$row}");
 
+            $totalPallets += (int) $data[$this->pallets];
+            $totalRegistros++;
             $row++;
         }
 
-        /* Cabeceras para descargar */
+        // totales
+        $sheet->setCellValue("A{$row}", 'Totales');
+        $sheet->setCellValue("F{$row}", $totalPallets);
+        $sheet->setCellValue("G{$row}", "Registros: {$totalRegistros}");
+
+        // autofiltro
+        $sheet->setAutoFilter('A1:P1');
+
+        // autosize columnas
+        foreach (range('A', 'P') as $c) {
+            $sheet->getColumnDimension($c)->setAutoSize(true);
+        }
+
+        // descarga
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="Reporte_Thermos_Antepuerto_' . date('d-m-Y H:i:s') . '.xlsx"');
         header('Cache-Control: max-age=0');
 
-        /* Descargar el archivo */
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
-
         exit;
     }
 
@@ -1439,49 +1468,49 @@ class outerPort extends iQuery
 
         /* Formulario de filtros */
         $form = "
-    <div class='row'>
-      <div class='col-lg-12'>
-        <div class='card shadow mb-4'>
-          <div class='card-header py-3'>
-            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-          </div>
+            <div class='row'>
+            <div class='col-lg-12'>
+                <div class='card shadow mb-4'>
+                <div class='card-header py-3'>
+                    <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
+                </div>
 
-          <div class='card-body'>
-            <form method='POST' class='form-container' id='filterFormShipReport'>
-              <div class='form-group row'>
-                <div class='col-sm-3'>
-                  <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                  <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
-                </div>
-                <div class='col-sm-3'>
-                  <label for='tipo' class='text-gray-800 font-weight-bold'>Tipo de Carga</label>
-                  <select class='form-control select2 form-control-user' id='tipo' name='tipo'>
-                    <option value='-' selected>Seleccione una tipo de carga...</option>
-                    <option value='1'>Contenedores</option>
-                    <option value='2'>Termos</option>
-                  </select>
-                </div>
-                <div class='col-sm-3'>
-                  <label for='desde' class='text-gray-800 font-weight-bold'>Desde</label>
-                  <input type='date' class='form-control form-control-user' id='desde' name='desde'>
-                </div>
-                <div class='col-sm-3'>
-                  <label for='hasta' class='text-gray-800 font-weight-bold'>Hasta</label>
-                  <input type='date' class='form-control form-control-user' id='hasta' name='hasta'>
-                </div>
-              </div>
+                <div class='card-body'>
+                    <form method='POST' class='form-container' id='filterFormShipReport'>
+                    <div class='form-group row'>
+                        <div class='col-sm-3'>
+                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                        <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
+                        </div>
+                        <div class='col-sm-3'>
+                        <label for='tipo' class='text-gray-800 font-weight-bold'>Tipo de Carga</label>
+                        <select class='form-control select2 form-control-user' id='tipo' name='tipo'>
+                            <option value='-' selected>Seleccione una tipo de carga...</option>
+                            <option value='1'>Contenedores</option>
+                            <option value='2'>Termos</option>
+                        </select>
+                        </div>
+                        <div class='col-sm-3'>
+                        <label for='desde' class='text-gray-800 font-weight-bold'>Desde</label>
+                        <input type='date' class='form-control form-control-user' id='desde' name='desde'>
+                        </div>
+                        <div class='col-sm-3'>
+                        <label for='hasta' class='text-gray-800 font-weight-bold'>Hasta</label>
+                        <input type='date' class='form-control form-control-user' id='hasta' name='hasta'>
+                        </div>
+                    </div>
 
-              <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['tipo'] ?? '') . "', '" . ($_POST['desde'] ?? '') . "', '" . ($_POST['hasta'] ?? '') . "')" . "\"><i class='fas fa-solid fa-download'></i> Exportar XLS</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    ";
+                    <div class='d-flex gap-2'>
+                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['tipo'] ?? '') . "', '" . ($_POST['desde'] ?? '') . "', '" . ($_POST['hasta'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+            </div>
+        ";
 
         $thead = "<thead style='background-color:#4e73df; color:white;'>";
         $thead .= '<tr>';
@@ -1575,68 +1604,68 @@ class outerPort extends iQuery
         $tbclose = '</tbody>';
 
         $table = $form . "
-      <div class='row'>
-        <div class='col-lg-12'>
-          <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-              <h6 class='mb-0'>
-                <i class='fas fa-list'></i> Listado
-                <em>(Total: <span id='totalShips'>$count</span>)</em>
-              </h6>
+            <div class='row'>
+                <div class='col-lg-12'>
+                <div class='card shadow mb-4'>
+                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                    <h6 class='mb-0'>
+                        <i class='fas fa-list'></i> Listado
+                        <em>(Total: <span id='totalShips'>$count</span>)</em>
+                    </h6>
 
-              <div style='position:relative; max-width:250px; width:100%;'>
-                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                <input type='text' id='searchShipReportTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-              </div>
+                    <div style='position:relative; max-width:250px; width:100%;'>
+                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                        <input type='text' id='searchShipReportTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                    </div>
+                    </div>
+
+                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                    <table id='shipReportTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+
+                        <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                        " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                        ' . $tr . $tbclose . "
+                    </table>
+                    </div>
+                </div>
+                </div>
             </div>
 
-            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-              <table id='shipReportTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+            <script>
+                document.getElementById('searchShipReportTable').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('#shipReportTable tbody tr');
+                let visibleCount = 0;
 
-                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
-                  ' . $tr . $tbclose . "
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+                rows.forEach(row => {
+                    let text = (
+                    (row.cells[1]?.innerText || '') + ' ' +
+                    (row.cells[2]?.innerText || '') + ' ' +
+                    (row.cells[3]?.innerText || '') + ' ' +
+                    (row.cells[4]?.innerText || '')
+                    ).toLowerCase();
 
-      <script>
-        document.getElementById('searchShipReportTable').addEventListener('keyup', function() {
-          let filter = this.value.toLowerCase().trim();
-          let rows = document.querySelectorAll('#shipReportTable tbody tr');
-          let visibleCount = 0;
+                    let match = text.includes(filter);
 
-          rows.forEach(row => {
-            let text = (
-              (row.cells[1]?.innerText || '') + ' ' +
-              (row.cells[2]?.innerText || '') + ' ' +
-              (row.cells[3]?.innerText || '') + ' ' +
-              (row.cells[4]?.innerText || '')
-            ).toLowerCase();
+                    if (filter.includes(' ')) {
+                    let words = filter.split(' ');
+                    match = words.every(w => text.includes(w));
+                    }
 
-            let match = text.includes(filter);
+                    row.style.display = match ? '' : 'none';
 
-            if (filter.includes(' ')) {
-              let words = filter.split(' ');
-              match = words.every(w => text.includes(w));
-            }
+                    if (match) visibleCount++;
+                });
 
-            row.style.display = match ? '' : 'none';
-
-            if (match) visibleCount++;
-          });
-
-          document.getElementById('totalShips').innerText = visibleCount;
-        });
-      </script>
-    ";
+                document.getElementById('totalShips').innerText = visibleCount;
+                });
+            </script>
+        ";
 
         return $table;
     }
 
-    public function downloadTableShipReport($nave = '', $tipo = '', $desde = '', $hasta = '')
+    public function shipReportExcel($nave = '', $tipo = '', $desde = '', $hasta = '')
     {
         $ship = new ship();
 
@@ -1663,79 +1692,97 @@ class outerPort extends iQuery
             $filtros[] = $hasta . ' 23:59:59';
         }
 
-        $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id $where ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
+        $query = "SELECT * FROM $this->table AS p
+              JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+              $where
+              ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
+
         $stmt = $this->db->prepare($query);
         $stmt->execute($filtros);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setTitle('Listado de Termos');
 
-        /* Encabezados del Excel */
+        // headers
         $headers = [
-          'Posición', 'Nave', 'Patente', 'Guía', 'Exportador', 'Pallets', 'Entrada', 'Salida', 'Tiempo de Estadía', 'Condición', 'Booking', 'Estadía', 'Observaciones', 'Creado', 'Digitado Por',
+            'Posición','Nave','Patente','Guía','Exportador','Pallets',
+            'Entrada','Salida','Tiempo de Estadía','Condición','Booking',
+            'Estadía','Observaciones','Creado','Digitado Por',
         ];
-        $sheet->fromArray($headers, null, 'A1');
 
-        /* Filas de datos */
+        $col = 'A';
+        foreach ($headers as $h) {
+            $sheet->setCellValue($col . '1', $h);
+            $col++;
+        }
+
         $row = 2;
-        $stayTime = null;
+        $totalPallets = 0;
+        $totalRegistros = 0;
 
         foreach ($result as $data) {
-            $createdTime = new DateTime($data[$this->arrivaldate]);
-            $arrivalTime = new DateTime($data[$this->arrivaldate]);
 
-            $created = $createdTime->format('d-m-Y H:i');
-            $arrival = $arrivalTime->format('d-m-Y H:i');
+            $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
+            $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
-            $departure = $data[$this->departuredate] != null ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+            $departure = $data[$this->departuredate]
+                ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i')
+                : '';
 
-            if ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] != null) {
-                $arrivalDate = new DateTime($data[$this->arrivaldate]);
-                $departureDate = new DateTime($data[$this->departuredate]);
-
-                $interval = $arrivalDate->diff($departureDate);
-                $days = $interval->format('%d');
-                $hours = $interval->format('%h');
-                $minutes = $interval->format('%i');
-
-                $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
-
-            } elseif ($data[$this->arrivaldate] != '0000-00-00 00:00:00' && $data[$this->departuredate] == null) {
-                $stayTime = 'No disponible.';
+            // estadía (formato corto como el otro)
+            if ($data[$this->arrivaldate] && $data[$this->departuredate]) {
+                $a = new DateTime($data[$this->arrivaldate]);
+                $d = new DateTime($data[$this->departuredate]);
+                $i = $a->diff($d);
+                $stayTime = "{$i->d}d {$i->h}h {$i->i}m";
+            } else {
+                $stayTime = 'No disponible';
             }
 
             $sheet->fromArray([
-              $data[$this->countervessel],
-              $ship->getVesselName($data[$this->vessel]),
-              $data[$this->carplate],
-              $data[$this->guide],
-              $data[$this->exporter],
-              $data[$this->pallets],
-              $arrival,
-              $departure,
-              $stayTime,
-              $data[$this->comodity],
-              $data[$this->booking],
-              $data[$this->stay],
-              $data[$this->observations],
-              $created,
-              $this->findByUser($data[$this->createdby]),
-            ], null, 'A' . $row);
+                $data[$this->countervessel],
+                $ship->getVesselName($data[$this->vessel]),
+                $data[$this->carplate],
+                $data[$this->guide],
+                $data[$this->exporter],
+                $data[$this->pallets],
+                $arrival,
+                $departure,
+                $stayTime,
+                $data[$this->comodity],
+                $data[$this->booking],
+                $data[$this->stay],
+                $data[$this->observations],
+                $created,
+                $this->findByUser($data[$this->createdby]),
+            ], null, "A{$row}");
 
+            $totalPallets += (int) $data[$this->pallets];
+            $totalRegistros++;
             $row++;
         }
 
-        /* Cabeceras para descargar */
+        // totales
+        $sheet->setCellValue("A{$row}", 'Totales');
+        $sheet->setCellValue("F{$row}", $totalPallets);
+        $sheet->setCellValue("G{$row}", "Registros: {$totalRegistros}");
+
+        // autofiltro
+        $sheet->setAutoFilter('A1:O1');
+
+        // autosize columnas
+        foreach (range('A', 'O') as $c) {
+            $sheet->getColumnDimension($c)->setAutoSize(true);
+        }
+
+        // descarga
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="Reporte_de_Naves_' . date('d-m-Y H:i:s') . '.xlsx"');
+        header('Content-Disposition: attachment;filename="Reporte_Naves.xlsx"');
         header('Cache-Control: max-age=0');
 
-        /* Descargar el archivo */
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         $writer->save('php://output');
-
         exit;
     }
 
@@ -1758,22 +1805,22 @@ class outerPort extends iQuery
         return $infoVessel;
     }
 
-    public function getDetailByVessel(int $vesselId): string
+    public function tableDetailByVessel(int $vesselId): string
     {
         $sql = "
-      SELECT
-        row_id,
-        car_plate,
-        container,
-        pallets_quantity,
-        origin,
-        exporter,
-        agency,
-        guide_number
-      FROM {$this->table}
-      WHERE vessel_id = :vessel_id
-      ORDER BY row_id ASC
-    ";
+            SELECT
+                row_id,
+                car_plate,
+                container,
+                pallets_quantity,
+                origin,
+                exporter,
+                agency,
+                guide_number
+            FROM {$this->table}
+            WHERE vessel_id = :vessel_id
+            ORDER BY row_id ASC
+        ";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':vessel_id', $vesselId, PDO::PARAM_INT);
@@ -1788,20 +1835,20 @@ class outerPort extends iQuery
         $html = "<div class='table-responsive'>";
         $html .= "<table id='detailTable' class='table table-hover'>";
         $html .= "
-      <thead style='background:#4e73df;color:white'>
-        <tr>
-          <th>#</th>
-          <th>Camión</th>
-          <th>Exportador</th>
-          <th>Agencia</th>
-          <th>Guía(s)</th>
-          <th>Contenedor</th>
-          <th>Pallets</th>
-          <th>Origen</th>
-        </tr>
-      </thead>
-      <tbody>
-    ";
+            <thead style='background:#4e73df;color:white'>
+                <tr>
+                <th>#</th>
+                <th>Camión</th>
+                <th>Exportador</th>
+                <th>Agencia</th>
+                <th>Guía(s)</th>
+                <th>Contenedor</th>
+                <th>Pallets</th>
+                <th>Origen</th>
+                </tr>
+            </thead>
+            <tbody>
+        ";
 
         $i = 1;
         $total = 0;
@@ -1819,62 +1866,62 @@ class outerPort extends iQuery
             $originText = $origin === 1 ? 'Contenedor' : 'Pallets';
 
             $html .= "
-        <tr>
-          <td>{$i}</td>
-          <td>{$carPlate}</td>
-          <td>{$exporter}</td>
-          <td>{$agency}</td>
-          <td>{$guide}</td>
-          <td>{$container}</td>
-          <td>{$pallets}</td>
-          <td>{$originText}</td>
-        </tr>
-      ";
+                <tr>
+                <td>{$i}</td>
+                <td>{$carPlate}</td>
+                <td>{$exporter}</td>
+                <td>{$agency}</td>
+                <td>{$guide}</td>
+                <td>{$container}</td>
+                <td>{$pallets}</td>
+                <td>{$originText}</td>
+                </tr>
+            ";
 
             $i++;
         }
 
         $html .= "
-      </tbody>
-      <tfoot>
-        <tr>
-          <th colspan='6'>Total</th>
-          <th>" . number_format($total, 0, ',', '.') . '</th>
-          <th></th>
-        </tr>
-      </tfoot>
-    ';
+            </tbody>
+            <tfoot>
+                <tr>
+                <th colspan='6'>Total</th>
+                <th>" . number_format($total, 0, ',', '.') . '</th>
+                <th></th>
+                </tr>
+            </tfoot>
+        ';
 
         $html .= '</table></div>';
 
         return $html;
     }
 
-    public function getTableStadisticsByShips()
+    public function tableStadisticsByShips()
     {
         $ship = new ship();
         $port = new port();
 
         $query = "
-      SELECT
-        op.vessel_id,
-        sh.pol,
-        sh.pod,
-        sh.eta,
-        sh.etd,
-        sh.ship_line,
-        sh.voyage,
-        sh.finished_date,
-        sh.voyage,
-        SUM(CASE WHEN op.origin = 1 THEN 1 ELSE 0 END) AS total_containers,
-        SUM(CASE WHEN op.origin = 2 THEN op.pallets_quantity ELSE 0 END) AS total_pallets,
-        COUNT(op.row_id) AS total_camiones
-      FROM $this->table op
-      JOIN app_ships sh ON op.vessel_id = sh.ship_id
-      WHERE sh.finished = 1
-      GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line
-      ORDER BY sh.ship_id ASC
-    ";
+            SELECT
+                op.vessel_id,
+                sh.pol,
+                sh.pod,
+                sh.eta,
+                sh.etd,
+                sh.ship_line,
+                sh.voyage,
+                sh.finished_date,
+                sh.voyage,
+                SUM(CASE WHEN op.origin = 1 THEN 1 ELSE 0 END) AS total_containers,
+                SUM(CASE WHEN op.origin = 2 THEN op.pallets_quantity ELSE 0 END) AS total_pallets,
+                COUNT(op.row_id) AS total_camiones
+            FROM $this->table op
+            JOIN app_ships sh ON op.vessel_id = sh.ship_id
+            WHERE sh.finished = 1
+            GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line
+            ORDER BY sh.ship_id ASC
+        ";
 
         $stmt = $this->db->prepare($query);
         $stmt->execute();
@@ -1911,122 +1958,122 @@ class outerPort extends iQuery
             $podName = $port->getPortName($data['pod']);
 
             $rows .= "
-        <tr>
-          <td>{$i}</td>
-          <td>{$vessel}</td>
-          <td>{$data['voyage']}</td>
-          <td>{$shipLine}</td>
-          <td>{$polFlag} {$polName}</td>
-          <td>{$podFlag} {$podName}</td>
-          <td>{$eta}</td>
-          <td>{$etd}</td>
-          <td><b class='text-success'>{$turnos}</b></td>
-          <td>" . number_format($dias, 0, ',', '.') . "</td>
-          <td><b>{$fin}</b></td>
-          <td><b>" . number_format((int) $data['total_camiones'], 0, ',', '.') . "</b></td>
-          <td class='{$cntClass}'><b>{$totalCnts}</b></td>
-          <td class='{$pltClass}'><b>{$totalPlts}</b></td>
-          <!--
-          <td class='text-center'>
-            <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#detailModal' onclick='loadDetail({$vid})'><i class='fas fa-eye'></i> Detalles</button>
-          </td> -->
-        </tr>
-      ";
+                <tr>
+                <td>{$i}</td>
+                <td>{$vessel}</td>
+                <td>{$data['voyage']}</td>
+                <td>{$shipLine}</td>
+                <td>{$polFlag} {$polName}</td>
+                <td>{$podFlag} {$podName}</td>
+                <td>{$eta}</td>
+                <td>{$etd}</td>
+                <td><b class='text-success'>{$turnos}</b></td>
+                <td>" . number_format($dias, 0, ',', '.') . "</td>
+                <td><b>{$fin}</b></td>
+                <td><b>" . number_format((int) $data['total_camiones'], 0, ',', '.') . "</b></td>
+                <td class='{$cntClass}'><b>{$totalCnts}</b></td>
+                <td class='{$pltClass}'><b>{$totalPlts}</b></td>
+                <!--
+                <td class='text-center'>
+                    <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#detailModal' onclick='loadDetail({$vid})'><i class='fas fa-eye'></i> Detalles</button>
+                </td> -->
+                </tr>
+            ";
 
-            $detailsJs[$vid] = $this->getDetailByVessel($vid);
+            $detailsJs[$vid] = $this->tableDetailByVessel($vid);
         }
 
         return "
-      <div class='card shadow mb-4'>
-        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap gap-2'>
-          <h6 class='mb-0'>
-            <i class='fas fa-chart-bar me-1'></i> Estadísticas por Nave
-            <em>(Total: <span id='totalShipStadistics'>{$i}</span>)</em>
-          </h6>
+            <div class='card shadow mb-4'>
+                <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap gap-2'>
+                <h6 class='mb-0'>
+                    <i class='fas fa-chart-bar me-1'></i> Estadísticas por Nave
+                    <em>(Total: <span id='totalShipStadistics'>{$i}</span>)</em>
+                </h6>
 
-          <div style='position:relative; max-width:250px; width:100%;'>
-            <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-            <input type='text' id='searchStadisticsByShipTable' placeholder='Buscar nave, naviera, puerto...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-          </div>
-        </div>
+                <div style='position:relative; max-width:250px; width:100%;'>
+                    <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                    <input type='text' id='searchStadisticsByShipTable' placeholder='Buscar nave, naviera, puerto...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                </div>
+                </div>
 
-        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-          <table id='stadisticsByShipTable' class='table table-hover mb-0 align-middle' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-            <thead style='background:#4e73df; color:white; position:sticky; top:0; z-index:2;'>
-              <tr>
-                <th>#</th>
-                <th>Nave</th>
-                <th>Viaje</th>
-                <th>Naviera</th>
-                <th>POL</th>
-                <th>POD</th>
-                <th>ETA</th>
-                <th>ETD</th>
-                <th>Turnos</th>
-                <th>Días</th>
-                <th>Finalizado</th>
-                <th>Camiones</th>
-                <th>Contenedores</th>
-                <th>Pallets</th>
-                <!-- <th class='text-center'>Detalle</th> -->
-              </tr>
-            </thead>
-            <tbody>$rows</tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Modal -->
-      <div class='modal fade' id='detailModal' tabindex='-1'>
-        <div class='modal-dialog modal-xl modal-dialog-scrollable'>
-          <div class='modal-content'>
-            <div class='modal-header' style='flex-direction:column; align-items:flex-start;'>
-              <h5 class='modal-title'>Desgloce de Carga</h5>
-              <h6 id='modalTitleDetail' class='modal-title'></h6>
-              <button type='button' class='close' data-dismiss='modal' aria-label='Cerrar' style='position:absolute; right:15px; top:15px;'>
-                <span>×</span>
-              </button>
+                <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                <table id='stadisticsByShipTable' class='table table-hover mb-0 align-middle' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                    <thead style='background:#4e73df; color:white; position:sticky; top:0; z-index:2;'>
+                    <tr>
+                        <th>#</th>
+                        <th>Nave</th>
+                        <th>Viaje</th>
+                        <th>Naviera</th>
+                        <th>POL</th>
+                        <th>POD</th>
+                        <th>ETA</th>
+                        <th>ETD</th>
+                        <th>Turnos</th>
+                        <th>Días</th>
+                        <th>Finalizado</th>
+                        <th>Camiones</th>
+                        <th>Contenedores</th>
+                        <th>Pallets</th>
+                        <!-- <th class='text-center'>Detalle</th> -->
+                    </tr>
+                    </thead>
+                    <tbody>$rows</tbody>
+                </table>
+                </div>
             </div>
-            <div class='modal-body' id='modalDetailBody'></div>
-          </div>
-        </div>
-      </div>
 
-      <script>
-        const vesselDetails = " . json_encode($detailsJs) . ";
-        function loadDetail(id){
-          document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
-        }
+            <!-- Modal -->
+            <div class='modal fade' id='detailModal' tabindex='-1'>
+                <div class='modal-dialog modal-xl modal-dialog-scrollable'>
+                <div class='modal-content'>
+                    <div class='modal-header' style='flex-direction:column; align-items:flex-start;'>
+                    <h5 class='modal-title'>Desgloce de Carga</h5>
+                    <h6 id='modalTitleDetail' class='modal-title'></h6>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Cerrar' style='position:absolute; right:15px; top:15px;'>
+                        <span>×</span>
+                    </button>
+                    </div>
+                    <div class='modal-body' id='modalDetailBody'></div>
+                </div>
+                </div>
+            </div>
 
-        document.getElementById('searchStadisticsByShipTable').addEventListener('keyup', function() {
-          const filter = this.value.toLowerCase().trim();
-          const rows   = document.querySelectorAll('#stadisticsByShipTable tbody tr');
-          let visibleCount = 0;
+            <script>
+                const vesselDetails = " . json_encode($detailsJs) . ";
+                function loadDetail(id){
+                document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
+                }
 
-          rows.forEach(row => {
-            const text = (
-              (row.cells[1]?.innerText || '') + ' ' +
-              (row.cells[2]?.innerText || '') + ' ' +
-              (row.cells[3]?.innerText || '') + ' ' +
-              (row.cells[4]?.innerText || '')
-            ).toLowerCase();
+                document.getElementById('searchStadisticsByShipTable').addEventListener('keyup', function() {
+                const filter = this.value.toLowerCase().trim();
+                const rows   = document.querySelectorAll('#stadisticsByShipTable tbody tr');
+                let visibleCount = 0;
 
-            let match = text.includes(filter);
+                rows.forEach(row => {
+                    const text = (
+                    (row.cells[1]?.innerText || '') + ' ' +
+                    (row.cells[2]?.innerText || '') + ' ' +
+                    (row.cells[3]?.innerText || '') + ' ' +
+                    (row.cells[4]?.innerText || '')
+                    ).toLowerCase();
 
-            if (filter.includes(' ')) {
-              const words = filter.split(' ').filter(Boolean);
-              match = words.every(w => text.includes(w));
-            }
+                    let match = text.includes(filter);
 
-            row.style.display = match ? '' : 'none';
+                    if (filter.includes(' ')) {
+                    const words = filter.split(' ').filter(Boolean);
+                    match = words.every(w => text.includes(w));
+                    }
 
-            if (match) visibleCount++;
-          });
+                    row.style.display = match ? '' : 'none';
 
-          document.getElementById('totalShipStadistics').innerText = visibleCount;
-        });
-      </script>
-    ";
+                    if (match) visibleCount++;
+                });
+
+                document.getElementById('totalShipStadistics').innerText = visibleCount;
+                });
+            </script>
+        ";
 
     }
 
@@ -2042,30 +2089,31 @@ class outerPort extends iQuery
         $totalPallets = $totalCamiones = 0;
 
         $sql = "SELECT
-      op.counter_vessel,
-      op.car_plate,
-      op.guide_number,
-      op.container,
-      op.seal_number,
-      op.exporter,
-      op.agency,
-      op.pallets_quantity,
-      op.arrival_date,
-      op.departure_date,
-      op.created,
-      op.created_by,
-      op.origin,
-      sh.ship_id,
-      sh.pol,
-      sh.pod,
-      sh.eta,
-      sh.etd,
-      sh.ship_line,
-      sh.voyage
-    FROM $this->table op
-    JOIN app_ships sh ON op.vessel_id = sh.ship_id
-    WHERE op.arrival_date BETWEEN :inicio AND :fin
-    ORDER BY $this->countervessel ASC";
+            op.counter_vessel,
+            op.car_plate,
+            op.guide_number,
+            op.container,
+            op.seal_number,
+            op.exporter,
+            op.agency,
+            op.pallets_quantity,
+            op.arrival_date,
+            op.departure_date,
+            op.created,
+            op.created_by,
+            op.origin,
+            sh.ship_id,
+            sh.pol,
+            sh.pod,
+            sh.eta,
+            sh.etd,
+            sh.ship_line,
+            sh.voyage
+            FROM $this->table op
+            JOIN app_ships sh ON op.vessel_id = sh.ship_id
+            WHERE op.arrival_date BETWEEN :inicio AND :fin
+            ORDER BY $this->countervessel ASC
+        ";
 
         $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime, 'fin' => $finDatetime]);
         if ($list->length()) {
@@ -2115,27 +2163,27 @@ class outerPort extends iQuery
                 }
 
                 $rows .= "
-          <tr>
-            <td>{$data['counter_vessel']}</td>
-            <td>{$status}</td>
-            <td>{$originText}</td>
-            <td>{$data['car_plate']}</td>
-            <td>{$data['guide_number']}</td>
-            <td>{$data['container']}</td>
-            <td>{$data['seal_number']}</td>
-            <td>{$data['exporter']}</td>
-            <td>{$data['agency']}</td>
-            <td>{$data['pallets_quantity']}</td>
-            <td>{$vessel}</td>
-            <td>{$shipLine}</td>
-            <td>{$polFlag} {$polName}</td>
-            <td>{$podFlag} {$podName}</td>
-            <td>{$arrival}</td>
-            <td>{$departure}</td>
-            <td>{$stayTime}</td>
-            <td>{$this->findByUser($data['created_by'])}</td>
-          </tr>
-        ";
+                    <tr>
+                        <td>{$data['counter_vessel']}</td>
+                        <td>{$status}</td>
+                        <td>{$originText}</td>
+                        <td>{$data['car_plate']}</td>
+                        <td>{$data['guide_number']}</td>
+                        <td>{$data['container']}</td>
+                        <td>{$data['seal_number']}</td>
+                        <td>{$data['exporter']}</td>
+                        <td>{$data['agency']}</td>
+                        <td>{$data['pallets_quantity']}</td>
+                        <td>{$vessel}</td>
+                        <td>{$shipLine}</td>
+                        <td>{$polFlag} {$polName}</td>
+                        <td>{$podFlag} {$podName}</td>
+                        <td>{$arrival}</td>
+                        <td>{$departure}</td>
+                        <td>{$stayTime}</td>
+                        <td>{$this->findByUser($data['created_by'])}</td>
+                    </tr>
+                ";
 
                 $style = "style='width:max-content'";
                 $totalPallets += (int) $data['pallets_quantity'];
@@ -2143,88 +2191,227 @@ class outerPort extends iQuery
             }
 
             $rows .= "
-        <tr style='font-weight:bold;background:#f8f9fc'>
-          <td colspan='9' class='text-right'>Totales</td>
-          <td>Pallets: " . number_format($totalPallets, 0, ',', '.') . "</td>
-          <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . '</td>
-        </tr>
-      ';
+                <tr style='font-weight:bold;background:#f8f9fc'>
+                <td colspan='9' class='text-right'>Totales</td>
+                <td>Pallets: " . number_format($totalPallets, 0, ',', '.') . "</td>
+                <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . '</td>
+                </tr>
+            ';
+
         } else {
             $rows .= "
-        <tr>
-          <td colspan='18' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
-        </tr>
-      ";
+                <tr>
+                <td colspan='18' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
+                </tr>
+            ";
         }
 
         return "
-      <div class='card shadow mb-4'>
-        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-          <h6 class='mb-0'>
-            <i class='fas fa-clock'></i> Reporte de Turnos
-            <em>(Total camiones: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
-          </h6>
+            <div class='card shadow mb-4'>
+                <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                <h6 class='mb-0'>
+                    <i class='fas fa-clock'></i> Reporte de Turnos
+                    <em>(Total camiones: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
+                </h6>
 
-          <div style='position:relative; max-width:250px;'>
-            <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
-            <input type='text' id='seacrhShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-          </div>
-        </div>
+                <div style='position:relative; max-width:250px;'>
+                    <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
+                    <input type='text' id='seacrhShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                </div>
+                </div>
 
-        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-          <table id='shiftsTable' class='table table-hover mb-0'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-            <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
-              <tr>
-                <th>#</th>
-                <th>Estado</th>
-                <th>Origen</th>
-                <th>Patente</th>
-                <th>N° Guia</th>
-                <th>Contenedor</th>
-                <th>Sello</th>
-                <th>Exportador</th>
-                <th>Agencia</th>
-                <th>Pallets</th>
-                <th>Nave</th>
-                <th>Linea</th>
-                <th>POL</th>
-                <th>POD</th>
-                <th>Entrada</th>
-                <th>Salida</th>
-                <th>Estadía</th>
-                <th>Ingresado Por</th>
-              </tr>
-            </thead>
-            <tbody>$rows</tbody>
-          </table>
-        </div>
-      </div>
+                <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                <table id='shiftsTable' class='table table-hover mb-0'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                    <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
+                    <tr>
+                        <th>#</th>
+                        <th>Estado</th>
+                        <th>Origen</th>
+                        <th>Patente</th>
+                        <th>N° Guia</th>
+                        <th>Contenedor</th>
+                        <th>Sello</th>
+                        <th>Exportador</th>
+                        <th>Agencia</th>
+                        <th>Pallets</th>
+                        <th>Nave</th>
+                        <th>Linea</th>
+                        <th>POL</th>
+                        <th>POD</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                        <th>Estadía</th>
+                        <th>Ingresado Por</th>
+                    </tr>
+                    </thead>
+                    <tbody>$rows</tbody>
+                </table>
+                </div>
+            </div>
 
-      <script>
-        document.getElementById('seacrhShiftsTable').addEventListener('keyup', function() {
-          let filter = this.value.toLowerCase().trim();
-          let rows = document.querySelectorAll('#shiftsTable tbody tr');
-          let visibleCount = 0;
+            <script>
+                document.getElementById('seacrhShiftsTable').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('#shiftsTable tbody tr');
+                let visibleCount = 0;
 
-          rows.forEach(row => {
-            let text = row.innerText.toLowerCase();
+                rows.forEach(row => {
+                    let text = row.innerText.toLowerCase();
 
-            let match = text.includes(filter);
+                    let match = text.includes(filter);
 
-            if (filter.includes(' ')) {
-              let words = filter.split(' ');
-              match = words.every(w => text.includes(w));
+                    if (filter.includes(' ')) {
+                    let words = filter.split(' ');
+                    match = words.every(w => text.includes(w));
+                    }
+
+                    row.style.display = match ? '' : 'none';
+
+                    if (match) visibleCount++;
+                });
+
+                document.getElementById('totalTrucks').innerText = visibleCount;
+                });
+            </script>
+        ";
+    }
+
+    public function shiftsReportExcel($shifts, $dateStart, $dateEnd)
+    {
+        $ship = new ship();
+        $port = new port();
+
+        list($inicio, $fin) = array_map('trim', explode(' - ', $shifts));
+        $inicioDatetime = $dateStart . ' ' . $inicio . ':00';
+        $finDatetime = $dateEnd . ' ' . $fin . ':00';
+
+        $sql = "SELECT
+        op.counter_vessel,
+        op.car_plate,
+        op.guide_number,
+        op.container,
+        op.seal_number,
+        op.exporter,
+        op.agency,
+        op.pallets_quantity,
+        op.arrival_date,
+        op.departure_date,
+        op.created,
+        op.created_by,
+        op.origin,
+        sh.ship_id,
+        sh.pol,
+        sh.pod,
+        sh.ship_line
+        FROM $this->table op
+        JOIN app_ships sh ON op.vessel_id = sh.ship_id
+        WHERE op.arrival_date BETWEEN :inicio AND :fin
+        ORDER BY $this->countervessel ASC";
+
+        $list = parent::findAllStatic($sql, [
+            'inicio' => $inicioDatetime,
+            'fin' => $finDatetime,
+        ]);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // headers
+        $headers = [
+            '#','Estado','Origen','Patente','N° Guia','Contenedor','Sello',
+            'Exportador','Agencia','Pallets','Nave','Linea','POL','POD',
+            'Entrada','Salida','Estadía','Ingresado Por',
+        ];
+
+        $col = 'A';
+        foreach ($headers as $h) {
+            $sheet->setCellValue($col . '1', $h);
+            $col++;
+        }
+
+        $row = 2;
+        $totalPallets = $totalCamiones = 0;
+
+        if ($list->length()) {
+            foreach ($list->getCollection() as $data) {
+
+                $vessel = $ship->getVesselName($data['ship_id']);
+                $shipLine = $ship->getShipLineName($data['ship_line']);
+                $polName = $port->getPortName($data['pol']);
+                $podName = $port->getPortName($data['pod']);
+
+                $originText = ((int) $data['origin'] === 1) ? 'Contenedor' : 'Pallets';
+
+                $arrival = $data['arrival_date']
+                    ? (new DateTime($data['arrival_date']))->format('d-m-Y H:i')
+                    : '';
+
+                $departure = $data['departure_date']
+                    ? (new DateTime($data['departure_date']))->format('d-m-Y H:i')
+                    : '';
+
+                // estadía
+                if ($data['arrival_date'] && $data['departure_date']) {
+                    $a = new DateTime($data['arrival_date']);
+                    $d = new DateTime($data['departure_date']);
+                    $i = $a->diff($d);
+                    $stayTime = "{$i->d}d {$i->h}h {$i->i}m";
+                } else {
+                    $stayTime = 'No disponible';
+                }
+
+                $status = ($data['arrival_date'] && !$data['departure_date']) ? 'Ingreso' : 'Egreso';
+
+                $sheet->fromArray([
+                    $data['counter_vessel'],
+                    $status,
+                    $originText,
+                    $data['car_plate'],
+                    $data['guide_number'],
+                    $data['container'],
+                    $data['seal_number'],
+                    $data['exporter'],
+                    $data['agency'],
+                    $data['pallets_quantity'],
+                    $vessel,
+                    $shipLine,
+                    $polName,
+                    $podName,
+                    $arrival,
+                    $departure,
+                    $stayTime,
+                    $this->findByUser($data['created_by']),
+                ], null, "A{$row}");
+
+                $totalPallets += (int) $data['pallets_quantity'];
+                $totalCamiones++;
+                $row++;
             }
 
-            row.style.display = match ? '' : 'none';
+            // totales
+            $sheet->setCellValue("A{$row}", 'Totales');
+            $sheet->setCellValue("J{$row}", $totalPallets);
+            $sheet->setCellValue("K{$row}", "Camiones: {$totalCamiones}");
+        } else {
+            $sheet->setCellValue('A2', 'Sin resultados');
+        }
 
-            if (match) visibleCount++;
-          });
+        // auto filtro (clave)
+        $sheet->setAutoFilter('A1:R1');
 
-          document.getElementById('totalTrucks').innerText = visibleCount;
-        });
-      </script>
-    ";
+        // autosize columnas
+        foreach (range('A', 'R') as $c) {
+            $sheet->getColumnDimension($c)->setAutoSize(true);
+        }
+
+        // header descarga
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="reporte_turnos.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('php://output');
+        exit;
     }
 
 }

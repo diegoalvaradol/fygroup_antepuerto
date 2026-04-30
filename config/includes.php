@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../models/class.iQuery.php';
 require_once __DIR__ . '/../models/class.config.php';
 require_once __DIR__ . '/../models/class.iRequest.php';
@@ -16,5 +18,6 @@ require_once __DIR__ . '/../models/class.menu.php';
 require_once __DIR__ . '/../models/class.company.php';
 require_once __DIR__ . '/../models/class.listPrice.php';
 require_once __DIR__ . '/../models/class.uiComponents.php';
+require_once __DIR__ . '/../models/class.modals.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../functions/functions.php';

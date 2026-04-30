@@ -1,16 +1,16 @@
 <?php
-  /* Código para incluir la mantencíon en la pagina requerida */
-  //header("Location: maintenance.php");
-  //exit;
+/* Código para incluir la mantencíon en la pagina requerida */
+//header("Location: maintenance.php");
+//exit;
 
-  http_response_code(503);
-  require_once __DIR__ . '/../config/auth.php';
-  require_once __DIR__ . '/../config/includes.php';
+http_response_code(503);
+require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/includes.php';
 
-  $cfg     = new cfg();
-  $footer  = menu::footerSSL();
-  $top     = UIComponents::scrollToTopButton();
-  $infoCfg = json_decode($cfg->getInfo(1), true);
+$cfg = new cfg();
+$footer = menu::footerSSL();
+$top = UIComponents::scrollToTopButton();
+$infoCfg = json_decode($cfg->getInfo(1), true);
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +32,10 @@
 
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles FYGroup-->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <script src="../assets/js/sidebar.js"></script>
 </head>
 
 <body id="page-top">
@@ -75,7 +79,7 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
+    <!-- Scroll to Top Button -->
     <?php echo $top; ?>
 
     <!-- Bootstrap core JavaScript-->

@@ -15,6 +15,7 @@ if (isset($_SESSION['user_id'])) {
         // Sesión expirada
         session_unset();
         session_destroy();
+        $redirect_url = 'myFY/login.php';
     }
 }
 

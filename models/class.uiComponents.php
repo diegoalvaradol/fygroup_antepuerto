@@ -1,241 +1,268 @@
 <?php
 class UIComponents
 {
-  public static function scrollToTopButton()
-  {
-    $top = '
-			<style>
-				#scrollTopBtn {
-					position: fixed;
-					bottom: 20px;
-					right: 20px;
-					background-color: #1e293b;
-					color: white;
-					border: none;
-					padding: 10px 15px;
-					border-radius: 50px;
-					font-size: 14px;
-					box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-					cursor: pointer;
-					z-index: 1000;
-					opacity: 0;
-					transform: translateY(40px);
-					transition: transform 0.4s ease, opacity 0.4s ease;
-					pointer-events: none;
-				}
+    public static function scrollToTopButton()
+    {
+        ob_start();
+        ?>
+            <style>
+                #scrollTopBtn {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
 
-				#scrollTopBtn.show {
-					opacity: 1;
-					transform: translateY(0);
-					pointer-events: auto;
-				}
+                    background-color: #1e293b;
+                    color: white;
+                    border: none;
 
-				#scrollTopBtn i {
-					margin-right: 5px;
-				}
+                    padding: 10px 15px;
+                    border-radius: 50px;
+                    font-size: 14px;
 
-				@media (max-width: 768px) {
-					#scrollTopBtn {
-						font-size: 12px;
-						padding: 8px 12px;
-					}
-				}
-			</style>
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+                    cursor: pointer;
 
-			<button id="scrollTopBtn" onclick="window.scrollTo({ top: 0, behavior: \'smooth\' });">
-				<i class="fas fa-circle-arrow-up"></i> Ir al inicio
-			</button>
+                    z-index: 1100;
 
-			<script>
-				const scrollBtn = document.getElementById("scrollTopBtn");
-				window.addEventListener("scroll", () => {
-					if (window.scrollY > 200) {
-						scrollBtn.classList.add("show");
-					} else {
-						scrollBtn.classList.remove("show");
-					}
-				});
-			</script>
-		';
+                    opacity: 0;
+                    transform: translateY(40px);
+                    transition: transform 0.4s ease, opacity 0.4s ease;
 
-    return $top;
-  }
+                    pointer-events: none;
+                }
 
-  public static function whatsappChatBox()
-  {
-    $whatsappBtn = '
-			<style>
-				#whatsapp-chat-box {
-					position: fixed;
-					bottom: 20px;
-					left: 20px;
-					width: 320px;
-					max-width: 92%;
-					background: #fff;
-					border-radius: 16px;
-					box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-					font-family: "Segoe UI", sans-serif;
-					z-index: 10000;
-					overflow: hidden;
-					transform: translateY(20px);
-					opacity: 0;
-					pointer-events: none;
-					transition: all 0.25s ease;
-				}
+                #scrollTopBtn.show {
+                    opacity: 1;
+                    transform: translateY(0);
+                    pointer-events: auto;
+                }
 
-				#whatsapp-chat-box.active {
-					transform: translateY(0);
-					opacity: 1;
-					pointer-events: auto;
-				}
+                #scrollTopBtn i {
+                    margin-right: 5px;
+                }
 
-				.chat-header {
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					padding: 14px;
-					background: linear-gradient(135deg, #25d366, #1ebe5d);
-					color: white;
-				}
+                @media (max-width: 768px) {
+                    #scrollTopBtn {
+                        font-size: 12px;
+                        padding: 8px 12px;
+                    }
+                }
+            </style>
 
-				.chat-title {
-					display: flex;
-					align-items: center;
-					gap: 10px;
-				}
+            <button id="scrollTopBtn"
+                    onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+                <i class="fas fa-circle-arrow-up"></i> Ir al inicio
+            </button>
 
-				.chat-title img {
-					width: 28px;
-				}
+            <script>
+                let scrollBtn = document.getElementById("scrollTopBtn");
 
-				.chat-close {
-					cursor: pointer;
-					font-size: 18px;
-				}
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > 200) {
+                        scrollBtn.classList.add("show");
+                    } else {
+                        scrollBtn.classList.remove("show");
+                    }
+                });
+            </script>
+        <?php
 
-				.chat-body {
-					padding: 16px;
-					display: none;
-					background: #ece5dd;
-				}
+        return ob_get_clean();
+    }
 
-				.msg {
-					background: #fff;
-					padding: 10px 14px;
-					border-radius: 12px;
-					font-size: 14px;
-					max-width: 85%;
-					margin-bottom: 10px;
-				}
+    public static function whatsappChatBox()
+    {
+        ob_start();
+        ?>
+            <style>
+                #whatsapp-chat-box {
+                    position: fixed;
+                    bottom: 20px;
+                    left: 20px;
 
-				.btn-chat {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					gap: 8px;
-					margin-top: 12px;
-					padding: 12px;
-					background: #25d366;
-					color: white;
-					text-decoration: none;
-					font-weight: 600;
-					border-radius: 10px;
-				}
+                    width: 320px;
+                    max-width: 92%;
 
-				.btn-chat img {
-					width: 18px;
-				}
+                    background: #fff;
+                    border-radius: 16px;
 
-				/* flotante */
-				#whatsapp-float-btn {
-					position: fixed;
-					bottom: 20px;
-					left: 20px;
-					width: 65px;
-					height: 65px;
-					background: linear-gradient(135deg, #25d366, #1ebe5d);
-					border-radius: 50%;
-					box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					cursor: pointer;
-					z-index: 9999;
-				}
+                    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+                    font-family: "Segoe UI", sans-serif;
 
-				#whatsapp-float-btn img {
-					width: 32px;
-				}
+                    z-index: 1100;
 
-				#whatsapp-chat-box a {
-					pointer-events: none;
-				}
+                    overflow: hidden;
+                    transform: translateY(20px);
+                    opacity: 0;
+                    pointer-events: none;
 
-				#whatsapp-chat-box.active a.btn-chat {
-					pointer-events: auto;
-					color: white;
-				}
-			</style>
+                    transition: all 0.25s ease;
+                }
 
-			<!-- botón flotante -->
-			<div id="whatsapp-float-btn" onclick="toggleChatBox(event)">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-			</div>
+                #whatsapp-chat-box.active {
+                    transform: translateY(0);
+                    opacity: 1;
+                    pointer-events: auto;
+                }
 
-			<!-- chat -->
-			<div id="whatsapp-chat-box">
-				<div class="chat-header">
-					<div class="chat-title">
-						<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" />
-						<span>Soporte FYGroup</span>
-					</div>
-					<span class="chat-close" onclick="closeChatBox()">✕</span>
-				</div>
+                .chat-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
 
-				<div class="chat-body" id="chatBody">
-					<div class="msg">
-						Hola ' . $_SESSION["user"]["name"] . ' 👋<br>
-						¿En qué podemos ayudarte?
-					</div>
+                    padding: 14px;
+                    background: linear-gradient(135deg, #25d366, #1ebe5d);
+                    color: white;
+                }
 
-					<a
-						href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="btn btn-sm btn-chat">
-						<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-						Escribir por WhatsApp
-					</a>
-				</div>
-			</div>
+                .chat-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
 
-			<script>
-				function toggleChatBox(e) {
-					e.stopPropagation();
+                .chat-title img {
+                    width: 28px;
+                }
 
-					const box = document.getElementById("whatsapp-chat-box");
-					const body = document.getElementById("chatBody");
+                .chat-close {
+                    cursor: pointer;
+                    font-size: 18px;
+                }
 
-					if (box.classList.contains("active")) {
-						box.classList.remove("active");
-						body.style.display = "none";
-					} else {
-						box.classList.add("active");
-						body.style.display = "block";
-					}
-				}
+                .chat-body {
+                    padding: 16px;
+                    display: none;
+                    background: #ece5dd;
+                }
 
-				function closeChatBox() {
-					const box = document.getElementById("whatsapp-chat-box");
-					const body = document.getElementById("chatBody");
+                .msg {
+                    background: #fff;
+                    padding: 10px 14px;
+                    border-radius: 12px;
+                    font-size: 14px;
+                    max-width: 85%;
+                    margin-bottom: 10px;
+                }
 
-					box.classList.remove("active");
-					body.style.display = "none";
-				}
-			</script>
-  	';
+                .btn-chat {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
 
-    return $whatsappBtn;
-  }
+                    margin-top: 12px;
+                    padding: 12px;
 
+                    background: #25d366;
+                    color: white;
+                    text-decoration: none;
+
+                    font-weight: 600;
+                    border-radius: 10px;
+                }
+
+                .btn-chat img {
+                    width: 18px;
+                }
+
+                #whatsapp-float-btn {
+                    position: fixed;
+                    bottom: 20px;
+                    left: 20px;
+
+                    width: 65px;
+                    height: 65px;
+
+                    background: linear-gradient(135deg, #25d366, #1ebe5d);
+                    border-radius: 50%;
+
+                    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    cursor: pointer;
+
+                    z-index: 1100;
+                }
+
+                #whatsapp-float-btn img {
+                    width: 32px;
+                }
+
+                #whatsapp-chat-box a {
+                    pointer-events: none;
+                }
+
+                #whatsapp-chat-box.active a.btn-chat {
+                    pointer-events: auto;
+                    color: white;
+                }
+            </style>
+
+            <!-- botón flotante -->
+            <div id="whatsapp-float-btn" onclick="toggleChatBox(event)">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+            </div>
+
+            <!-- chat -->
+            <div id="whatsapp-chat-box">
+
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+                        <span>Soporte FYGroup</span>
+                    </div>
+
+                    <span class="chat-close" onclick="closeChatBox()">✕</span>
+                </div>
+
+                <div class="chat-body" id="chatBody">
+                    <div class="msg">
+                        Hola <?= $_SESSION['user']['name'] ?> 👋<br>
+                        ¿En qué podemos ayudarte?
+                    </div>
+
+                    <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-chat">
+
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
+                        Escribir por WhatsApp
+                    </a>
+                </div>
+
+            </div>
+
+            <script>
+                function toggleChatBox(e) {
+                    e.stopPropagation();
+
+                    const box = document.getElementById("whatsapp-chat-box");
+                    const body = document.getElementById("chatBody");
+
+                    if (box.classList.contains("active")) {
+                        box.classList.remove("active");
+                        body.style.display = "none";
+                    } else {
+                        box.classList.add("active");
+                        body.style.display = "block";
+                    }
+                }
+
+                function closeChatBox() {
+                    const box = document.getElementById("whatsapp-chat-box");
+                    const body = document.getElementById("chatBody");
+
+                    box.classList.remove("active");
+                    body.style.display = "none";
+                }
+            </script>
+        <?php
+
+        return ob_get_clean();
+    }
 }

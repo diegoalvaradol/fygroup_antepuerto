@@ -1,64 +1,67 @@
 <?php
+
+declare(strict_types=1);
 require '../vendor/autoload.php';
 require_once __DIR__ . '/../config/includes.php';
-date_default_timezone_set("America/Santiago");
+date_default_timezone_set('America/Santiago');
 
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  /* Define si es localhost */
-  $whitelist = ['127.0.0.1', '::1', 'localhost'];
-  $localHost = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    /* Define si es localhost */
+    $whitelist = ['127.0.0.1', '::1', 'localhost'];
+    $localHost = false;
 
-  if (in_array($_SERVER['REMOTE_ADDR'], $whitelist) || in_array($_SERVER['SERVER_NAME'], $whitelist)) {
-    $localHost = true;
-  }
-
-  $email      = $_POST["email"];
-  $division   = $_POST["division"];
-  $token      = bin2hex(random_bytes(16));
-  $expiration = date("Y-m-d H:i:s", strtotime("+1 hour"));
-
-  $user = new user();
-
-  /* Buscar el nombre del usuario */
-  $sql  = "SELECT * FROM app_users WHERE email = :email AND division = :division LIMIT 1";
-  $list = $user->getFirstMember($sql, ['email' => $email, 'division' => $division]);
-
-  if ($list && $user->setResetToken($email, $token, $expiration)) {
-    $nombreUsuario = $list['name'];
-    $userDivision  = $list['division'];
-    $url           = generateMkey('reset_form') . '&token=' . $token;
-
-    if ($userDivision == 'fy') {
-      $link = $localHost ? "http://localhost/ssl-chile/myFY/" . $url : "https://myfy.fygroup.cl/myFY/" . $url;
-    } elseif ($userDivision == 'terminal' || $userDivision == 'exporter') {
-      $link = $localHost ? "http://localhost/ssl-chile/myPortal/" . $url : "https://myfy.fygroup.cl/myPortal/" . $url;
+    if (in_array($_SERVER['REMOTE_ADDR'], $whitelist) || in_array($_SERVER['SERVER_NAME'], $whitelist)) {
+        $localHost = true;
     }
 
-    $mail = new PHPMailer(true);
-    try {
-      // Configurar SMTP con Ferozo
-      $mail->isSMTP();
-      $mail->Host       = 'l0011525.ferozo.com';
-      $mail->SMTPAuth   = true;
-      $mail->Username   = 'soporte@ssl-lines.com';
-      $mail->Password   = 'Ssl*2025sop';
-      $mail->SMTPSecure = 'ssl'; // usar 'ssl'
-      $mail->Port       = 465;
+    $email = $_POST['email'];
+    $division = $_POST['division'];
+    $token = bin2hex(random_bytes(16));
+    $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-      // Configurar codificación
-      $mail->CharSet  = 'UTF-8';
-      $mail->Encoding = 'base64';
+    $user = new user();
 
-      // Datos del correo
-      $mail->setFrom('soporte@ssl-lines.com', 'Soporte FYGroup');
-      $mail->addAddress($email);
-      $mail->isHTML(true);
-      $mail->Priority = 1;
-      $mail->Subject  = 'Reestablecer tu contraseña en Sistema Integral FYGroup.';
-      $mail->Body     = '
+    /* Buscar el nombre del usuario */
+    $sql = 'SELECT * FROM app_users WHERE email = :email AND division = :division LIMIT 1';
+    $list = $user->getFirstMember($sql, ['email' => $email, 'division' => $division]);
+
+    if ($list && $user->setResetToken($email, $token, $expiration)) {
+        $nombreUsuario = $list['name'];
+        $userDivision = $list['division'];
+        $url = generateMkey('reset_form') . '&token=' . $token;
+
+        if ($userDivision == 'fy') {
+            $link = $localHost ? 'http://localhost/ssl-chile/myFY/' . $url : 'https://myfy.fygroup.cl/myFY/' . $url;
+        } elseif ($userDivision == 'terminal' || $userDivision == 'exporter') {
+            $link = $localHost ? 'http://localhost/ssl-chile/myPortal/' . $url : 'https://myfy.fygroup.cl/myPortal/' . $url;
+        }
+
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configurar SMTP con Ferozo
+            $mail->isSMTP();
+            $mail->Host = 'l0011525.ferozo.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'soporte@ssl-lines.com';
+            $mail->Password = 'Ssl*2025sop';
+            $mail->SMTPSecure = 'ssl'; // usar 'ssl'
+            $mail->Port = 465;
+
+            // Configurar codificación
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
+
+            // Datos del correo
+            $mail->setFrom('soporte@ssl-lines.com', 'Soporte FYGroup');
+            $mail->addAddress($email);
+            $mail->isHTML(true);
+            $mail->Priority = 1;
+            $mail->Subject = 'Reestablecer tu contraseña en Sistema Integral FYGroup.';
+            $mail->Body = '
                 <div style="font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 30px; text-align: center;">
                     <div style="background-color: #fff; padding: 30px; border-radius: 8px; display: inline-block; max-width: 500px;">
                         <h2 style="color: #4CAF50;">Hola ' . htmlspecialchars($nombreUsuario) . ' 👋</h2>
@@ -77,13 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
       ';
 
-      $mail->send();
+            $mail->send();
 
-      echo "OK";
-    } catch (Exception $e) {
-      echo "NOOK2";
+            echo 'OK';
+        } catch (Exception $e) {
+            echo 'NOOK2';
+        }
+    } else {
+        echo 'NOOK';
     }
-  } else {
-    echo "NOOK";
-  }
 }

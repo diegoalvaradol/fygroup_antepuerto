@@ -11,39 +11,39 @@ $basePath = str_replace(['/myPortal', '/myFY'], '', $basePath);
 Validar sesión
 =============================== */
 if (!isset($_SESSION['user'])) {
-  header("Location: {$basePath}/login.php");
-  exit();
+    header("Location: {$basePath}/login.php");
+    exit();
 }
 
 /* ===============================
 Variables
 =============================== */
-$division  = $_SESSION['user']['division'] ?? '';
-$uri       = $_SERVER['REQUEST_URI'];
-$seconds   = 5;
-$redirect  = "{$basePath}/login.php";
+$division = $_SESSION['user']['division'] ?? '';
+$uri = $_SERVER['REQUEST_URI'];
+$seconds = 5;
+$redirect = "{$basePath}/login.php";
 $forbidden = false;
 
 /* ===============================
 Reglas de acceso
 =============================== */
 if (strpos($uri, '/myPortal') !== false && ($division !== 'terminal' && $division !== 'shipper')) {
-  $redirect  = "{$basePath}/myPortal/login.php";
-  $forbidden = true;
+    $redirect = "{$basePath}/myPortal/login.php";
+    $forbidden = true;
 }
 
 if (strpos($uri, '/myFY') !== false && $division !== 'fy') {
-  $redirect  = "{$basePath}/myFY/login.php";
-  $forbidden = true;
+    $redirect = "{$basePath}/myFY/login.php";
+    $forbidden = true;
 }
 
 /* ===============================
 Vista 403 con redirección
 =============================== */
 if ($forbidden) {
-  http_response_code(403);
+    http_response_code(403);
 
-  ?>
+    ?>
   <!DOCTYPE html>
   <html lang="es">
   <head>
@@ -112,5 +112,5 @@ if ($forbidden) {
   </html>
   <?php
 
-  exit();
+    exit();
 }
