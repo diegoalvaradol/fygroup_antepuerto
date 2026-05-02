@@ -630,20 +630,17 @@ var deleteTruck = function(id) {
   });
 }
 
-var exportExcel = function(nave, condicion, exportador, division, cliente) {
-  var division = '<?php echo $_SESSION['user']['division']; ?>';
-  var cliente = '<?php echo $_SESSION['user']['run']; ?>';
+var exportExcel = function(nave, patente, guia) {
   const form = document.createElement('form');
   form.method = 'POST';
   form.action = '../controllers/thermoDownloadExcelController.php';
-  form.style.display = 'none';
 
   const fields = {
-    nave: nave,
-    condicion: condicion,
-    exportador: exportador,
-    division: division,
-    cliente: cliente
+    nave: nave || '',
+    patente: patente || '',
+    guia: guia || '',
+    division: '<?= $_SESSION['user']['division']; ?>',
+    cliente: '<?= $_SESSION['user']['run']; ?>'
   };
 
   for (const key in fields) {

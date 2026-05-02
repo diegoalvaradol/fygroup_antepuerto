@@ -687,44 +687,44 @@ class outerPort extends iQuery
         /* Formulario de filtros */
         $form = "
             <div class='row'>
-            <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                <div class='card-header py-3'>
-                    <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-                </div>
-
-                <div class='card-body'>
-                    <form method='POST' class='form-container' id='filterFormContainer'>
-                    <div class='form-group row'>
-                        <div class='col-sm-4'>
-                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                        <select class='form-control select2 form-control-user' id='nave' name='nave'>
-                            <option value='-'>Seleccione una nave...</option>
-                        </select>
+                <div class='col-lg-12'>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header py-3'>
+                            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
                         </div>
 
-                        <div class='col-sm-4'>
-                        <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
-                        <select class='form-control select2 form-control-user' id='patente' name='patente'>
-                            <option value='-'>Seleccione una patente...</option>
-                        </select>
-                        </div>
+                        <div class='card-body'>
+                            <form method='POST' class='form-container' id='filterFormContainer'>
+                                <div class='form-group row'>
+                                    <div class='col-sm-4'>
+                                    <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                                    <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                                        <option value='-'>Seleccione una nave...</option>
+                                    </select>
+                                    </div>
 
-                        <div class='col-sm-4'>
-                        <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                        <input type='text' id='guia' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                    <div class='col-sm-4'>
+                                    <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
+                                    <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                                        <option value='-'>Seleccione una patente...</option>
+                                    </select>
+                                    </div>
+
+                                    <div class='col-sm-4'>
+                                    <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
+                                    <input type='text' id='guia' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                    </div>
+                                </div>
+
+                                <div class='d-flex gap-2'>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div class='d-flex gap-2'>
-                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
-                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-                    </div>
-                    </form>
                 </div>
-                </div>
-            </div>
             </div>
         ";
 
@@ -955,7 +955,6 @@ class outerPort extends iQuery
         $totalRegistros = 0;
 
         foreach ($result as $data) {
-
             $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
 
@@ -1087,44 +1086,44 @@ class outerPort extends iQuery
         /* Formulario de filtros */
         $form = "
             <div class='row'>
-            <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                <div class='card-header py-3'>
-                    <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-                </div>
-
-                <div class='card-body'>
-                    <form method='POST' class='form-container' id='filterFormThermo'>
-                    <div class='form-group row'>
-                        <div class='col-sm-4'>
-                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                        <select class='form-control select2 form-control-user' id='nave' name='nave'>
-                            <option value='-'>Seleccione una nave...</option>
-                        </select>
+                <div class='col-lg-12'>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header py-3'>
+                            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
                         </div>
 
-                        <div class='col-sm-4'>
-                        <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
-                        <select class='form-control select2 form-control-user' id='patente' name='patente'>
-                            <option value='-'>Seleccione una patente...</option>
-                        </select>
-                        </div>
+                        <div class='card-body'>
+                            <form method='POST' class='form-container' id='filterFormThermo'>
+                                <div class='form-group row'>
+                                    <div class='col-sm-4'>
+                                    <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                                    <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                                        <option value='-'>Seleccione una nave...</option>
+                                    </select>
+                                    </div>
 
-                        <div class='col-sm-4'>
-                        <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                        <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                    <div class='col-sm-4'>
+                                    <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
+                                    <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                                        <option value='-'>Seleccione una patente...</option>
+                                    </select>
+                                    </div>
+
+                                    <div class='col-sm-4'>
+                                    <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
+                                    <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                    </div>
+                                </div>
+
+                                <div class='d-flex gap-2'>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div class='d-flex gap-2'>
-                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
-                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-                    </div>
-                    </form>
                 </div>
-                </div>
-            </div>
             </div>
         ";
 
@@ -1469,46 +1468,46 @@ class outerPort extends iQuery
         /* Formulario de filtros */
         $form = "
             <div class='row'>
-            <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                <div class='card-header py-3'>
-                    <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-                </div>
+                <div class='col-lg-12'>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header py-3'>
+                            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
+                        </div>
 
-                <div class='card-body'>
-                    <form method='POST' class='form-container' id='filterFormShipReport'>
-                    <div class='form-group row'>
-                        <div class='col-sm-3'>
-                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                        <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
-                        </div>
-                        <div class='col-sm-3'>
-                        <label for='tipo' class='text-gray-800 font-weight-bold'>Tipo de Carga</label>
-                        <select class='form-control select2 form-control-user' id='tipo' name='tipo'>
-                            <option value='-' selected>Seleccione una tipo de carga...</option>
-                            <option value='1'>Contenedores</option>
-                            <option value='2'>Termos</option>
-                        </select>
-                        </div>
-                        <div class='col-sm-3'>
-                        <label for='desde' class='text-gray-800 font-weight-bold'>Desde</label>
-                        <input type='date' class='form-control form-control-user' id='desde' name='desde'>
-                        </div>
-                        <div class='col-sm-3'>
-                        <label for='hasta' class='text-gray-800 font-weight-bold'>Hasta</label>
-                        <input type='date' class='form-control form-control-user' id='hasta' name='hasta'>
+                        <div class='card-body'>
+                            <form method='POST' class='form-container' id='filterFormShipReport'>
+                                <div class='form-group row'>
+                                    <div class='col-sm-3'>
+                                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                                        <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
+                                    </div>
+                                    <div class='col-sm-3'>
+                                        <label for='tipo' class='text-gray-800 font-weight-bold'>Tipo de Carga</label>
+                                        <select class='form-control select2 form-control-user' id='tipo' name='tipo'>
+                                            <option value='-' selected>Seleccione una tipo de carga...</option>
+                                            <option value='1'>Contenedores</option>
+                                            <option value='2'>Termos</option>
+                                        </select>
+                                    </div>
+                                    <div class='col-sm-3'>
+                                        <label for='desde' class='text-gray-800 font-weight-bold'>Desde</label>
+                                        <input type='date' class='form-control form-control-user' id='desde' name='desde'>
+                                    </div>
+                                    <div class='col-sm-3'>
+                                        <label for='hasta' class='text-gray-800 font-weight-bold'>Hasta</label>
+                                        <input type='date' class='form-control form-control-user' id='hasta' name='hasta'>
+                                    </div>
+                                </div>
+
+                                <div class='d-flex gap-2'>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['tipo'] ?? '') . "', '" . ($_POST['desde'] ?? '') . "', '" . ($_POST['hasta'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div class='d-flex gap-2'>
-                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['tipo'] ?? '') . "', '" . ($_POST['desde'] ?? '') . "', '" . ($_POST['hasta'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
-                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-                    </div>
-                    </form>
                 </div>
-                </div>
-            </div>
             </div>
         ";
 
@@ -1778,7 +1777,7 @@ class outerPort extends iQuery
 
         // descarga
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Reporte_Naves.xlsx"');
+        header('Content-Disposition: attachment;filename="Reporte_de_Naves_' . date('d-m-Y H:i:s') . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
@@ -2406,7 +2405,7 @@ class outerPort extends iQuery
 
         // header descarga
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="reporte_turnos.xlsx"');
+        header('Content-Disposition: attachment;filename="Reporte_de_Turnos_' . date('d-m-Y H:i:s') . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);
