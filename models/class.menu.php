@@ -163,6 +163,11 @@ class menu extends iQuery
                 </div>
                 <br>
 
+                <a class="nav-link d-flex align-items-center justify-content-start" href="dashboard.php" style="color:#fff; padding:8px 12px;">
+                    <i class="fa fa-home"></i>
+                    <span style="margin-left:8px;">Inicio</span>
+                </a>
+
                 <?php foreach ($menus as $menu): ?>
                     <li class="nav-item">
                         <a class="nav-link collapsed" data-toggle="collapse" href="#<?= $menu['id'] ?>">

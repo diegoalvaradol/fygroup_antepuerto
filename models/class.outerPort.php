@@ -407,9 +407,9 @@ class outerPort extends iQuery
 
             if ($division === 'shipper' && in_array($run, ['96.591.730-6', '77.897.180-1'])) {
                 $joins .= '
-        JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
-        JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
-      ';
+                    JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                    JOIN app_ship_lines AS sl ON sl.line_id = sh.ship_line
+                ';
                 $where[] = 'sh.finished = 0';
                 $where[] = 'sl.rut = :rut';
                 $params[':rut'] = $run;
@@ -430,7 +430,7 @@ class outerPort extends iQuery
         $total = (int) $result['total'];
         $percent = $goals > 0 ? ($total * 100) / $goals : 0;
 
-        return number_format($percent, 2, ',', '');
+        return number_format($percent, 0, ',', '');
     }
 
     public function getTotalTrucksInAnpuerto($admin)
@@ -538,7 +538,7 @@ class outerPort extends iQuery
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $result['promedio_camiones_por_dia'] !== null ? number_format((float) $result['promedio_camiones_por_dia'], 2, ',', '.') : '0';
+        return $result['promedio_camiones_por_dia'] !== null ? number_format((float) $result['promedio_camiones_por_dia'], 1, ',', '.') : '0';
     }
 
     public function findByUser($run)

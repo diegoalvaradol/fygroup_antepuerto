@@ -128,8 +128,8 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                           <div class="card bg-light shadow-sm h-100">
                             <div class="card-body">
                               <div class="text-center">
-                                <i class="fas fa-ranking-star fa-2x text-info mb-2"></i>
-                                <h6 class="text-info text-uppercase mb-3">Camiones por día</h6>
+                                <i class="fas fa-ranking-star fa-2x text-dark mb-2"></i>
+                                <h6 class="text-dark text-uppercase mb-3">Camiones por día</h6>
                               </div>
                               <div class="text-center">
                                 <?php $totalTrucks = $port->avgTrucksPerDay(); ?>
@@ -251,10 +251,19 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 <div class="row justify-content-center">
                                   <div class="col-12">
                                     <div id="divGraficoCamiones" style="position: relative;">
-                                      <p id="mensajeSinDatos" style="display: none; margin: 0;">
-                                        <i class="fas fa-exclamation-circle" style="margin-right:0.5rem;"></i>
-                                        No hay datos disponibles para las fechas seleccionadas. Por favor ajusta el rango e intenta nuevamente.
-                                      </p>
+                                        <div id="mensajeSinDatos" class="col-sm-12 d-flex justify-content-center align-items-center" style="display: none;">
+                                            <div class="alert custom-alert-warning d-flex align-items-center" role="alert">
+                                                <div class="icon me-2">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </div>
+                                                &nbsp;
+                                                <div>
+                                                    <strong>Atención:</strong>
+                                                    No hay datos disponibles para las fechas seleccionadas. Por favor ajusta el rango e intenta nuevamente.
+                                                </div>
+                                            </div>
+                                        </div>
+
                                       <canvas id="graficoCamiones"></canvas>
                                     </div>
                                   </div>
@@ -491,54 +500,43 @@ async function cargarDatos(fechaInicio, fechaFin) {
 /* Dibujar el gráfico */
 async function filtrarYActualizar(fechaInicio, fechaFin) {
   const datos = await cargarDatos(fechaInicio, fechaFin);
-
   const mensaje = document.getElementById('mensajeSinDatos');
   const canvas = document.getElementById('graficoCamiones');
   const divCanvas = document.getElementById('divGraficoCamiones');
+  const hayDatos = Array.isArray(datos) && datos.length > 0;
 
-  if (!datos.length) {
-    mensaje.style.display = 'flex';
-    mensaje.style.justifyContent = 'center';
-    mensaje.style.alignItems = 'center';
-    mensaje.style.height = '100%';
-    mensaje.style.color = '#b00020';
-    mensaje.style.fontSize = '1rem';
+  // UI estado
+  mensaje.style.display = hayDatos ? 'none' : 'flex';
+  canvas.style.display = hayDatos ? 'block' : 'none';
+  divCanvas.style.height = hayDatos ? '400px' : '120px';
 
-    canvas.style.display = 'none';
-    divCanvas.style.height = '120px';
+  if (!hayDatos) {
     if (chart) chart.destroy();
     return;
   }
 
-  mensaje.style.display = 'none';
-  canvas.style.display = 'block';
-  divCanvas.style.height = '400px';
-
   const labels = datos.map(d => d.Fecha);
-
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Ingresados',
-        data: datos.map(d => d.Ingresos),
-        backgroundColor: 'rgba(75, 192, 192, 0.7)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-      },
-      {
-        label: 'Despachados',
-        data: datos.map(d => d.Egresos),
-        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      }
-    ]
-  };
-
   const config = {
     type: 'bar',
-    data: data,
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Ingresados',
+          data: datos.map(d => d.Ingresos),
+          backgroundColor: 'rgba(75,192,192,0.7)',
+          borderColor: 'rgba(75,192,192,1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Despachados',
+          data: datos.map(d => d.Egresos),
+          backgroundColor: 'rgba(255,99,132,0.7)',
+          borderColor: 'rgba(255,99,132,1)',
+          borderWidth: 1
+        }
+      ]
+    },
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -557,9 +555,7 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
         }
       },
       scales: {
-        x: {
-          title: { display: true, text: 'Fecha' }
-        },
+        x: { title: { display: true, text: 'Fecha' } },
         y: {
           beginAtZero: true,
           title: { display: true, text: 'Cantidad de Camiones' },

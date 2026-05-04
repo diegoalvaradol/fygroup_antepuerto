@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/includes.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 use Mpdf\Mpdf;
 
 session_start();
@@ -118,6 +121,7 @@ $pol = "{$base['ciudadPOL']} - {$base['paisPOL']}";
 $pod = "{$base['ciudadPOD']} - {$base['paisPOD']}";
 $eta = $fmt($base['eta']);
 $etd = $fmt($base['etd']);
+$fecha = date('d-m-Y H:i:s');
 
 /* ========= HTML ========= */
 ob_start();
@@ -292,4 +296,4 @@ $mpdf = new Mpdf([
 
 $mpdf->WriteHTML($html);
 
-$mpdf->Output("Liquidacion_Nave_{$nave}_{$viaje}.pdf", 'D');
+$mpdf->Output("Liquidacion_Nave_{$nave}_{$viaje}_{$fecha}.pdf", 'D');
