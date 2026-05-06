@@ -25,4 +25,11 @@
   /* Transiciones */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
+
+  --z-sidebar: 1060;
+  --z-overlay: 1050;
+  --z-topbar: 1030;
+  --z-dropdown: 1040;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
 }

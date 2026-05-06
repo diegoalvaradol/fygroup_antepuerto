@@ -84,8 +84,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../images/logo-marinetraffic.png" style="width:10%;">
-                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:darkblue;">Powered by MarineTraffic.</h6>
+                                    <img src="../images/logo-marinetraffic.png" class="logo-responsive">
+                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                        Powered by MarineTraffic.
+                                    </h6>
                                 </div>
                             </div>
                         </div>

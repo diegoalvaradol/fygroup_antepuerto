@@ -2,14 +2,11 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/includes.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 use Mpdf\Mpdf;
 
 session_start();
 
-$logoPath = realpath(__DIR__ . '/../images/logo-fygroup-v1_bg_removed.png');
+$logoPath = realpath(__DIR__ . '/../images/logo-fygroup-bg-removed.png');
 $type = pathinfo($logoPath, PATHINFO_EXTENSION);
 $data = file_get_contents($logoPath);
 $logoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);

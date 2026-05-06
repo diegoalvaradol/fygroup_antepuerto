@@ -1,96 +1,96 @@
 <?php
-  require_once __DIR__ . '/../config/auth.php';
-  require_once __DIR__ . '/../config/includes.php';
+require_once __DIR__ . '/../config/auth.php';
+require_once __DIR__ . '/../config/includes.php';
 
-  $user   = new user();
-  $admin  = $user->isAdmin($_SESSION["user"]["run"]);
-  $footer = menu::footerSSL();
+$user = new user();
+$admin = $user->isAdmin($_SESSION['user']['run']);
+$footer = menu::footerSSL();
 
-  if (!$admin) {
-  $usuario = $_SESSION["user"]["name"] . ' ' . $_SESSION["user"]["last_name"] . ' (' . $_SESSION["user"]["run"] . ')';
-  $pag     = basename(__FILE__);
-  $url     = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-  mostrarAccesoDenegado($usuario, $pag, $url);
-  }
+if (!$admin) {
+    $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
+    $pag = basename(__FILE__);
+    $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    mostrarAccesoDenegado($usuario, $pag, $url);
+}
 
-  function ejecutarQuery($user)
-  {
-  $resultado = '';
+function ejecutarQuery($user)
+{
+    $resultado = '';
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['sql_query'])) {
-    $sql = trim($_POST['sql_query']);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['sql_query'])) {
+        $sql = trim($_POST['sql_query']);
 
-    if (!preg_match('/^\s*(SELECT|UPDATE|DELETE|DROP)\b/i', $sql)) {
-      return "
+        if (!preg_match('/^\s*(SELECT|UPDATE|DELETE|DROP)\b/i', $sql)) {
+            return "
         <script>
           Swal.fire({icon:'error', title:'Instrucción no permitida', text:'Solo SELECT, UPDATE, DELETE y DROP son permitidas.', timer:4000, showConfirmButton:false});
         </script>
       ";
-    }
+        }
 
-    // SweetAlert confirmación para DELETE y DROP
-    if (preg_match('/^\s*(DELETE|DROP)\b/i', $sql)) {
-      echo "
+        // SweetAlert confirmación para DELETE y DROP
+        if (preg_match('/^\s*(DELETE|DROP)\b/i', $sql)) {
+            echo "
         <script>
           let ejecutar = confirm('Esta operación puede modificar o eliminar datos. ¿Deseas continuar?');
           if(!ejecutar){ window.history.back(); }
         </script>
       ";
-    }
+        }
 
-    try {
-      $stmt = $user->getDb()->prepare($sql);
-      $stmt->execute();
+        try {
+            $stmt = $user->getDb()->prepare($sql);
+            $stmt->execute();
 
-      if (stripos($sql, 'SELECT') === 0) {
-        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($resultados) {
-          $resultado .= '<div class="table-responsive mt-3 mb-3"><table id="sqlResults" class="table table-bordered table-striped table-sm"><thead><tr>';
+            if (stripos($sql, 'SELECT') === 0) {
+                $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                if ($resultados) {
+                    $resultado .= '<div class="table-responsive mt-3 mb-3"><table id="sqlResults" class="table table-bordered table-striped table-sm"><thead><tr>';
 
-          foreach (array_keys($resultados[0]) as $col) {
-            $resultado .= "<th>" . htmlspecialchars($col) . "</th>";
-          }
+                    foreach (array_keys($resultados[0]) as $col) {
+                        $resultado .= '<th>' . htmlspecialchars($col) . '</th>';
+                    }
 
-          $resultado .= "</tr></thead><tbody>";
+                    $resultado .= '</tr></thead><tbody>';
 
-          foreach ($resultados as $fila) {
-            $resultado .= "<tr>";
+                    foreach ($resultados as $fila) {
+                        $resultado .= '<tr>';
 
-            foreach ($fila as $val) {
-              $resultado .= "<td>" . htmlspecialchars($val ?? '') . "</td>";
-            }
+                        foreach ($fila as $val) {
+                            $resultado .= '<td>' . htmlspecialchars($val ?? '') . '</td>';
+                        }
 
-            $resultado .= "</tr>";
-          }
+                        $resultado .= '</tr>';
+                    }
 
-          $resultado .= "</tbody></table></div>";
-        } else {
-          $resultado .= "
+                    $resultado .= '</tbody></table></div>';
+                } else {
+                    $resultado .= "
               <script>
                 Swal.fire({icon:'info', title:'Consulta ejecutada', text:'No se encontraron resultados.', timer:3500, showConfirmButton:false});
               </script>
             ";
-        }
-      } else {
-        $resultado .= "
+                }
+            } else {
+                $resultado .= "
             <script>
               Swal.fire({icon:'success', title:'Query ejecutada correctamente', timer:3000, showConfirmButton:false});
             </script>
           ";
-      }
-    } catch (PDOException $e) {
-      $resultado .= "
+            }
+        } catch (PDOException $e) {
+            $resultado .= "
           <script>
             Swal.fire({icon:'error', title:'Error al ejecutar', text:'" . htmlspecialchars($e->getMessage()) . "', showConfirmButton:true});
           </script>
         ";
+        }
     }
-  }
 
-  return $resultado;
-  }
+    return $resultado;
+}
 
-  $resultado = ejecutarQuery($user);
+$resultado = ejecutarQuery($user);
 ?>
 
 <!DOCTYPE html>
@@ -143,7 +143,7 @@
     <div id="content">
       <div class="container py-4">
         <div class="text-center mb-4">
-          <img src="../images/logo-fygroup-v1_bg_removed.png" class="img-fluid" style="max-width:180px;">
+          <img src="../images/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width:180px;">
         </div>
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-8">

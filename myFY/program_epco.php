@@ -107,8 +107,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </div>
 
                                     <div class="text-center">
-                                        <img src="../images/logo-epco.png" style="width:7%;">
-                                        <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:black;">Powered by EPCO.</h6>
+                                        <img src="../images/logo-epco.png" class="logo-responsive">
+                                        <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                            Powered by EPCO.
+                                        </h6>
                                     </div>
                                 </div>
                             </div>
@@ -227,50 +229,64 @@ function loadEpcoProgram() {
     Swal.fire({
       title: '¡Atención!',
       text: 'Debes ingresar ambas fechas para consultar la planificación naviera.',
-      icon: 'info',
-      confirmButtonColor: '#3085d6'
+      icon: 'info'
     });
     return;
   }
 
+  const btn = $('#btnBuscar');
+  const container = $('#divFrame');
+  const btnPrint = $('#btnPrintEpcoProgram');
+
+  btn.prop('disabled', true)
+     .html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+
+  container.hide().empty();
+  btnPrint.prop('disabled', true);
+
   $.ajax({
     url: '../controllers/programEpco.php',
     method: 'POST',
-    data: {
-      from: dateFrom,
-      to: dateTo
-    },
-    beforeSend: function() {
-      $('#btnBuscar').prop('disabled', true).html('<i class="fas fa-solid fa-spinner fa-spin"></i> Cargando...');
-    },
-    success: function(response) {
-      if (response.trim() !== '') {
-        $('#divFrame').html(response).fadeIn();
-        $('#btnPrintEpcoProgram').prop('disabled', false);
-      } else {
-        Swal.fire({
-          title: 'Sin resultados',
-          text: 'No se encontró una planificación naviera para el rango de fechas.',
-          icon: 'warning',
-          confirmButtonColor: '#3085d6'
-        });
-        $('#divFrame').hide().empty();
-        $('#btnPrintEpcoProgram').prop('disabled', true);
-      }
-    },
-    error: function(xhr, status, error) {
-      console.error('AJAX Error:', error);
-      $('#btnPrintEpcoProgram').prop('disabled', true);
+    data: { from: dateFrom, to: dateTo },
+    dataType: 'html',
+    timeout: 15000
+  })
+  .done(function(response) {
+    const clean = response.trim();
+
+    if (clean) {
+      container.html(clean).fadeIn();
+      btnPrint.prop('disabled', false);
+    } else {
       Swal.fire({
-        title: 'Error',
-        text: 'Ocurrió un error al consultar la planificación.',
-        icon: 'error',
-        confirmButtonColor: '#d33'
+        title: 'Sin resultados',
+        text: 'No se encontró una planificación naviera para el rango de fechas.',
+        icon: 'warning'
       });
-    },
-    complete: function() {
-      $('#btnBuscar').prop('disabled', false).html('<i class="fas fa-solid fa-search"></i> Buscar');
+
+      container.hide().empty();
+      btnPrint.prop('disabled', true);
     }
+  })
+  .fail(function(xhr, status) {
+    let msg = 'Ocurrió un error al consultar la planificación.';
+
+    if (status === 'timeout') {
+      msg = 'La consulta tardó demasiado (timeout).';
+    }
+
+    Swal.fire({
+      title: 'Error',
+      text: msg,
+      icon: 'error'
+    });
+
+    container.hide().empty();
+    btnPrint.prop('disabled', true);
+  })
+  .always(function() {
+    btn.prop('disabled', false)
+       .html('<i class="fas fa-search"></i> Buscar');
   });
 }
 

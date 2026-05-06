@@ -55,3 +55,103 @@
 #mobileSidebarToggle.active {
   left: 170px;
 }
+
+.logo-responsive {
+  width: 5%; /* base escritorio */
+  max-width: 100%;
+  height: auto;
+}
+
+/* móvil */
+@media (max-width: 768px) {
+  /* ===== BODY ===== */
+  body {
+    padding-top: 60px;
+    overflow-x: hidden;
+  }
+
+  /* ===== TOPBAR ===== */
+  .topbar {
+    height: 56px;
+    padding: 0 10px;
+  }
+
+  .clock-box {
+    display: none !important;
+  }
+
+  .topbar .nav-link {
+    gap: 6px;
+    padding: 4px 6px;
+  }
+
+  .topbar .nav-link span {
+    display: none;
+  }
+
+  .user-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  /* ===== SIDEBAR ===== */
+  #accordionSidebar {
+    width: 240px;
+    left: -240px;
+  }
+
+  #accordionSidebar.show {
+    left: 0;
+  }
+
+  /* ===== CONTENIDO ===== */
+  #content,
+  .container-fluid,
+  .content-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ===== TABLAS ===== */
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* ===== FORMULARIOS ===== */
+  .form-group.row {
+    display: block;
+  }
+
+  .form-control,
+  .select2-container {
+    width: 100% !important;
+  }
+
+  /* ===== MODALS ===== */
+  .modal-dialog {
+    margin: 1rem;
+  }
+
+  .modal-content {
+    border-radius: 14px;
+  }
+
+  /* ===== FOOTER ===== */
+  footer,
+  .footer {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  /* ===== BOTONES ===== */
+  .btn {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}

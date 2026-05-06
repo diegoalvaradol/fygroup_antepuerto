@@ -3,6 +3,12 @@
 @import 'forms.css';
 @import 'select2.css';
 @import 'components.css';
-@import 'modal.css';
+
+/* layout primero */
 @import 'sidebar.css';
+@import 'tapbar.css';
+@import 'footer.css';
+
+/* overlays al final */
+@import 'modal.css';
 @import 'mobile.css';

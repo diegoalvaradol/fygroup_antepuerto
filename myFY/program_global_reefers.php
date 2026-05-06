@@ -79,8 +79,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../images/logo-global-reefers.png" style="width:10%;">
-                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:darkorange;">Powered by Global Reefers.</h6>
+                                    <img src="../images/logo-global-reefers.png" class="logo-responsive">
+                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                        Powered by Global Reefers.
+                                    </h6>
                                 </div>
                             </div>
                         </div>

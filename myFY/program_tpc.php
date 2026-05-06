@@ -126,8 +126,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </div>
 
                                     <div class="text-center">
-                                        <img src="../images/logo-tpc-transparente.png" style="width:10%;">
-                                        <h6 class="m-0 font-weight-bold text-primary" style="text-align:center; font-size:small;">Powered by TPC.</h6>
+                                        <img src="../images/logo-tpc.png" class="logo-responsive">
+                                        <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                            Powered by TPC.
+                                        </h6>
                                     </div>
                                 </div>
                             </div>
@@ -253,65 +255,69 @@ function formatDateUrl(dateString) {
 }
 
 function loadPDF() {
-  var dateString = $('#datePicker').val();
+  const dateString = $('#datePicker').val();
 
-  if(dateString == ''){
+  if (!dateString) {
     Swal.fire({
       title: '¡Atención!',
       text: 'Debes ingresar una fecha para consultar la planificación naviera.',
-      icon: 'info',
-      cancelButtonColor: '#d33',
+      icon: 'info'
     });
-  }else{
-    /* Separar los componentes */
-    const [day, month, year] = dateString.split('-').map(Number);
-
-    /* Crear la fecha como local, no UTC */
-    const date = new Date(day, month - 1, year); /* mes va de 0 a 11 */
-
-    /* Obtener día de la semana en español */
-    const dateName = date.toLocaleDateString('es-CL', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Santiago'});
-
-    const formattedDate = formatDateFromInput(dateString);
-    const formattedDateUrl = formatDateUrl(dateString);
-    const framePdf = document.getElementById('framePdf');
-    const pdfUrl = `https://tpc.cl/wp-content/uploads/${formattedDateUrl}/Planificacion-Naviera-${formattedDate}.pdf`;
-
-    $.ajax({
-      url: '../controllers/programTPCVerify.php',
-      method: 'GET',
-      data: {
-        url: pdfUrl
-      },
-      beforeSend: function() {
-        $('#btnBuscar').prop('disabled', true).html('<i class="fas fa-solid fa-spinner fa-spin"></i> Cargando...');
-      },
-      success: function(response) {
-        const res = JSON.parse(response);
-
-        if (res.exists) {
-          $('#divFrame').fadeIn(); /* Muestra el div del framec con animación */
-          $('#divFrame').slideDown(); /* Muestra el div del framec con animación hacia abajo */
-          document.getElementById('framePdf').src = pdfUrl; /* Carga el frame */
-          framePdf.style.display = 'block'; /* Muestra el frame en la vista */
-          document.getElementById('tituloPlanificacion').innerHTML = `Planificación Naviera: ${dateName}`;
-        } else {
-          Swal.fire({
-            title: 'Oops...',
-            text: 'No se encontró una planificación naviera para la fecha: '+formattedDate+'.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          });
-        }
-      },
-      error: function() {
-        alert('Error verificando el PDF.');
-      },
-      complete: function() {
-        $('#btnBuscar').prop('disabled', false).html('<i class="fas fa-solid fa-search"></i> Buscar');
-      }
-    });
+    return;
   }
+
+  const [day, month, year] = dateString.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+
+  const dateName = date.toLocaleDateString('es-CL', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  const formattedDate = formatDateFromInput(dateString);   // 04-05-2026
+  const formattedDateUrl = formatDateUrl(dateString);      // 2026/05
+
+  const pdfUrl = `https://tpc.cl/wp-content/uploads/${formattedDateUrl}/Planificacion-Naviera-${formattedDate}.pdf`;
+
+  const framePdf = document.getElementById('framePdf');
+
+  // loading UI
+  $('#btnBuscar')
+    .prop('disabled', true)
+    .html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+
+  $('#divFrame').hide();
+
+  // manejar carga correcta
+  framePdf.onload = function () {
+    $('#divFrame').fadeIn().slideDown();
+    framePdf.style.display = 'block';
+
+    document.getElementById('tituloPlanificacion').innerHTML =
+      `Planificación Naviera: ${dateName}`;
+
+    $('#btnBuscar')
+      .prop('disabled', false)
+      .html('<i class="fas fa-search"></i> Buscar');
+  };
+
+  // manejar error real (PDF no existe)
+  framePdf.onerror = function () {
+    Swal.fire({
+      title: 'Oops...',
+      text: `No se encontró una planificación naviera para la fecha: ${formattedDate}.`,
+      icon: 'error'
+    });
+
+    $('#btnBuscar')
+      .prop('disabled', false)
+      .html('<i class="fas fa-search"></i> Buscar');
+  };
+
+  // cargar PDF
+  framePdf.src = pdfUrl;
 }
 
 var saveNewGoals = function() {

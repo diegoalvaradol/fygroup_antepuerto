@@ -252,7 +252,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                   <div class="col-12">
                                     <div id="divGraficoCamiones" style="position: relative;">
                                         <div id="mensajeSinDatos" class="col-sm-12 d-flex justify-content-center align-items-center" style="display: none;">
-                                            <div class="alert custom-alert-warning d-flex align-items-center" role="alert">
+                                            <div class="alert custom-alert-danger d-flex align-items-center" role="alert">
                                                 <div class="icon me-2">
                                                     <i class="fa-solid fa-circle-info"></i>
                                                 </div>
@@ -272,6 +272,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                             </div>
                           </div>
                         <?php endif; ?>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
             </div>

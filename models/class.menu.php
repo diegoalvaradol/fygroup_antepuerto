@@ -155,7 +155,7 @@ class menu extends iQuery
 
             <ul id="accordionSidebar" class="navbar-nav">
                 <a class="sidebar-brand" href="dashboard.php">
-                    <img src="../images/logo-fygroup-v1_bg_removed.png">
+                    <img src="../images/logo-fygroup-bg-removed.png">
                 </a>
 
                 <div style="align-self: center;color: #fff; font-size: larger;">
@@ -212,98 +212,11 @@ class menu extends iQuery
 
         ob_start();
         ?>
-            <style>
-                body{
-                    padding-top: 56px;
-                }
-
-                .topbar{
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    z-index: 1050;
-
-                    background: linear-gradient(180deg,#1f5f8b,#174a6b);
-                    border-bottom: 1px solid rgba(255,255,255,.08);
-                    height: 56px;
-                    box-shadow: 0 6px 18px rgba(0,0,0,.25);
-                }
-
-                #relojFecha{
-                    font-weight: 500;
-                    letter-spacing:.3px;
-                }
-
-                #userDropdown .arrow{
-                    transition:.25s;
-                    font-size:11px;
-                    margin-left:8px;
-                    opacity:.9;
-                }
-
-                #userDropdown.show .arrow{
-                    transform: rotate(180deg);
-                }
-
-                #userDropdown{
-                    border-radius:12px;
-                    transition:.2s ease;
-                }
-
-                #userDropdown:hover{
-                    background: rgba(255,255,255,.08);
-                }
-
-                .user-avatar{
-                    border-radius:50%;
-                    box-shadow: 0 4px 12px rgba(0,0,0,.25);
-                }
-
-                .dropdown-menu{
-                    border: none;
-                    border-radius: 14px;
-                    overflow: hidden;
-                    box-shadow: 0 12px 28px rgba(0,0,0,.25);
-                    margin-top: 10px;
-                    padding-right: 15px;
-                }
-
-                .dropdown-menu .border-bottom{
-                    background: linear-gradient(180deg,#1f5f8b,#174a6b);
-                    color:#fff;
-                }
-
-                .dropdown-item{
-                    font-size: 13px;
-                    padding: 10px 14px;
-                    transition:.2s;
-                }
-
-                .dropdown-item:hover{
-                    background: rgba(31,95,139,.08);
-                    transform: translateX(3px);
-                }
-
-                .dropdown-item i{
-                    width: 18px;
-                }
-
-                .dropdown-divider{
-                    border-color: rgba(0,0,0,.06);
-                }
-
-                @media (max-width: 576px){
-                    #userDropdown .flex-column{
-                        display: none !important;
-                    }
-                }
-            </style>
-
-            <nav class="navbar navbar-expand navbar-dark topbar shadow-sm">
+            <nav class="navbar navbar-expand topbar">
                 <div class="container-fluid d-flex align-items-center">
+
                     <!-- Reloj -->
-                    <div class="position-absolute w-100 text-white small d-flex justify-content-center align-items-center" style="pointer-events:none;">
+                    <div class="clock-box d-flex align-items-center">
                         <i class="fas fa-clock mr-2"></i>
                         <span id="relojFecha"></span>
                     </div>
@@ -316,23 +229,31 @@ class menu extends iQuery
                                     <?= $avatarName ?>
                                 </div>
 
-                                <div class="d-flex flex-column text-left">
-                                    <span class="text-white small font-weight-bold"><?= $fullName ?></span>
-                                    <span class="text-white small" style="opacity:.75;"><?= $run ?></span>
+                                <!-- Desktop -->
+                                <div class="d-none d-md-flex flex-column text-left ml-2">
+                                    <span class="text-white small font-weight-bold">
+                                        <?= $fullName ?>
+                                    </span>
+
+                                    <span class="text-white small" style="opacity:.75;">
+                                        <?= $run ?>
+                                    </span>
                                 </div>
 
-                                <i class="fas fa-chevron-down arrow text-white"></i>
+                                <i class="fas fa-chevron-down text-white ml-2"></i>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right shadow">
                                 <div class="px-3 py-3 text-center border-bottom">
                                     <div class="d-flex justify-content-center mb-2">
-                                        <div style="background: rgba(255,255,255,.08); padding: 8px 14px; border-radius: 12px; box-shadow: 0 6px 14px rgba(0,0,0,.25); backdrop-filter: blur(4px);">
-                                            <img src="../images/logo-fygroup-v1_bg_removed.png" width="70">
+                                        <div class="logo-box">
+                                            <img src="../images/logo-fygroup-bg-removed.png" width="70">
                                         </div>
                                     </div>
 
-                                    <small style="opacity:.8;"><?= $arrayDivision[$division] ?></small>
+                                    <small style="opacity:.8;">
+                                        <?= $arrayDivision[$division] ?>
+                                    </small>
                                 </div>
 
                                 <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#userModal">
@@ -359,7 +280,6 @@ class menu extends iQuery
                     </ul>
                 </div>
             </nav>
-
         <?php
 
         return ob_get_clean();
@@ -400,7 +320,7 @@ class menu extends iQuery
             <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">
 
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
-                    <img src="../images/logo-fygroup-v1_bg_removed.png" style="width:100%;">
+                    <img src="../images/logo-fygroup-bg-removed.png" style="width:100%;">
                 </a>
 
                 <div class="sidebar-heading">Sistema Antepuerto</div>
@@ -544,12 +464,7 @@ class menu extends iQuery
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right shadow">
-
-                            <a class="dropdown-item text-danger"
-                            href="logout.php"
-                            data-toggle="modal"
-                            data-target="#logoutModal">
-
+                            <a class="dropdown-item text-danger" href="logout.php" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fa-solid fa-right-from-bracket text-danger"></i>
                                 Cerrar Sesión
                             </a>
@@ -570,80 +485,9 @@ class menu extends iQuery
 
         ob_start();
         ?>
-            <style>
-                body{
-                    padding-bottom: 56px;
-                }
-
-                .footer-ssl{
-                    position: fixed;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    height: 56px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: #0f172a;
-                    color: rgba(255,255,255,.75);
-                    box-shadow: 0 -6px 18px rgba(0,0,0,.35);
-                    z-index: 1000;
-                    font-size: 13px;
-                }
-
-                .footer-inner{
-                    width: 100%;
-                    max-width: 1200px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 12px;
-                    padding: 0 15px;
-                }
-
-                .footer-logo{
-                    height: 30px;
-                    background: #fff;
-                    padding: 4px 8px;
-                    border-radius: 6px;
-                }
-
-                .footer-text{
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    text-align: center;
-                }
-
-                .footer-mark{
-                    font-weight: 600;
-                    color: #ffffff;
-                }
-
-                .footer-dot{
-                    opacity: .4;
-                }
-
-                .footer-icon{
-                    color: #38bdf8;
-                }
-
-                @media (max-width: 600px){
-                    .footer-ssl{
-                        font-size: 11px;
-                    }
-
-                    .footer-logo{
-                        height: 20px;
-                    }
-                }
-            </style>
-
             <footer class="footer-ssl">
                 <div class="footer-inner">
-                    <img class="footer-logo". src="../images/logo-fygroup-v1_bg_removed.png" alt="FYGroup - Sistema Integral">
+                    <img class="footer-logo". src="../images/logo-fygroup-bg-removed.png" alt="FYGroup - Sistema Integral">
 
                     <div class="footer-text">
                         <i class="fas fa-copyright footer-icon"></i>

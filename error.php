@@ -86,7 +86,7 @@ http_response_code(403);
 <body>
   <div class="card">
       <div style="justify-self: center;">
-          <img src="../images/logo-fygroup-v1.png" style="height: 50%; width: 75%;">
+          <img src="../images/logo-fygroup.png" style="height: 50%; width: 75%;">
       </div>
 
       <h1>Área Inválida.</h1>

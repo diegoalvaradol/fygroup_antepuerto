@@ -1,8 +1,8 @@
 <?php
 if (isset($_SESSION['user'])) {
-  header("Location: dashboard.php");
+    header('Location: dashboard.php');
 
-  exit();
+    exit();
 }
 ?>
 
@@ -73,7 +73,7 @@ if (isset($_SESSION['user'])) {
     <div class="col-xl-4 col-lg-5 col-md-7">
       <div class="card login-card p-4">
         <div class="text-center mb-4">
-          <img src="../images/logo-fygroup-v1_bg_removed.png" class="logo-img mb-3">
+          <img src="../images/logo-fygroup-bg-removed.png" class="logo-img mb-3">
           <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
           <small class="text-muted">Portal Cliente</small>
         </div>

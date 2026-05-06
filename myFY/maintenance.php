@@ -53,7 +53,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <div class="container-fluid">
                     <!-- 503 Maintenance Text -->
                     <div class="text-center">
-                        <img src="../images/logo-fygroup-v1_bg_removed.png" style="width:25%;">
+                        <img src="../images/logo-fygroup-bg-removed.png" style="width:25%;">
                         <p class="lead text-gray-800" style="font-size:400%;">¡Página en Mantención!</p>
                         <img src="../images/img-maintenance.jpg" style="width:30%;">
                         <br>
