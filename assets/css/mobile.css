@@ -57,9 +57,12 @@
 }
 
 .logo-responsive {
-  width: 5%; /* base escritorio */
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  max-width: 180px;
+  height: 90px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
 /* móvil */
@@ -153,5 +156,11 @@
   .btn {
     width: 100%;
     margin-bottom: 8px;
+  }
+
+  /* ===== IMAGENES PIE DE PÁGINA ===== */
+  .logo-responsive {
+    max-width: 120px;
+    height: 60px;
   }
 }
