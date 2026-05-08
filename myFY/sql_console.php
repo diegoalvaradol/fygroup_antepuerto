@@ -170,7 +170,7 @@ $resultado = ejecutarQuery($user);
       </div>
     </div>
 
-    <?=$footer?>
+    <?php echo $footer; ?>
   </div>
 </div>
 
@@ -183,6 +183,10 @@ $resultado = ejecutarQuery($user);
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- Custom styles FYGroup-->
+<link rel="stylesheet" href="../assets/css/app.css">
+<script src="../assets/js/sidebar.js"></script>
 
 <script>
   /* Conteo regresivo para cierre de sesion */

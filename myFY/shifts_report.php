@@ -283,21 +283,20 @@ function loadShiftsReport() {
 
       if (clean.length > 0) {
         $div.html(clean).fadeIn();
-
         $('#shiftTextMini').html(`Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css("font-size", "smaller");
         $('#shiftCardMini').fadeIn(150);
         $('#btnPrintShiftsReport').prop('disabled', false);
         $('#btnExcel').prop('disabled', false);
-      } else {
+      } else if (clean.length === 0) {
         $div.hide().empty();
         $('#shiftCardMini').fadeOut(150);
         $('#btnPrintShiftsReport').prop('disabled', true);
         $('#btnExcel').prop('disabled', true);
 
         Swal.fire({
+          icon: 'warning',
           title: 'Sin resultados',
-          text: 'No se encontró planificación para los filtros seleccionados.',
-          icon: 'info'
+          text: 'No se encontraron registros para el turno seleccionado.'
         });
       }
     },

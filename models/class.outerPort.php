@@ -2131,7 +2131,7 @@ class outerPort extends iQuery
             sh.voyage
             FROM $this->table op
             JOIN app_ships sh ON op.vessel_id = sh.ship_id
-            WHERE op.arrival_date BETWEEN :inicio AND :fin
+            WHERE op.created BETWEEN :inicio AND :fin
             ORDER BY $this->countervessel ASC
         ";
 
@@ -2218,82 +2218,78 @@ class outerPort extends iQuery
                 </tr>
             ';
 
-        } else {
-            $rows .= "
-                <tr>
-                <td colspan='18' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
-                </tr>
+            return "
+                <div class='card shadow mb-4'>
+                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                    <h6 class='mb-0'>
+                        <i class='fas fa-clock'></i> Reporte de Turnos
+                        <em>(Total camiones: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
+                    </h6>
+
+                    <div style='position:relative; max-width:250px;'>
+                        <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
+                        <input type='text' id='seacrhShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                    </div>
+                    </div>
+
+                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                    <table id='shiftsTable' class='table table-hover mb-0'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                        <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
+                        <tr>
+                            <th>#</th>
+                            <th>Estado</th>
+                            <th>Origen</th>
+                            <th>Patente</th>
+                            <th>N° Guia</th>
+                            <th>Contenedor</th>
+                            <th>Sello</th>
+                            <th>Exportador</th>
+                            <th>Agencia</th>
+                            <th>Pallets</th>
+                            <th>Nave</th>
+                            <th>Linea</th>
+                            <th>POL</th>
+                            <th>POD</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Estadía</th>
+                            <th>Ingresado Por</th>
+                        </tr>
+                        </thead>
+                        <tbody>$rows</tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <script>
+                    document.getElementById('seacrhShiftsTable').addEventListener('keyup', function() {
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#shiftsTable tbody tr');
+                    let visibleCount = 0;
+
+                    rows.forEach(row => {
+                        let text = row.innerText.toLowerCase();
+
+                        let match = text.includes(filter);
+
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
+
+                        row.style.display = match ? '' : 'none';
+
+                        if (match) visibleCount++;
+                    });
+
+                    document.getElementById('totalTrucks').innerText = visibleCount;
+                    });
+                </script>
             ";
+
+        } else {
+            return null;
         }
-
-        return "
-            <div class='card shadow mb-4'>
-                <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                <h6 class='mb-0'>
-                    <i class='fas fa-clock'></i> Reporte de Turnos
-                    <em>(Total camiones: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
-                </h6>
-
-                <div style='position:relative; max-width:250px;'>
-                    <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
-                    <input type='text' id='seacrhShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                </div>
-                </div>
-
-                <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                <table id='shiftsTable' class='table table-hover mb-0'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                    <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
-                    <tr>
-                        <th>#</th>
-                        <th>Estado</th>
-                        <th>Origen</th>
-                        <th>Patente</th>
-                        <th>N° Guia</th>
-                        <th>Contenedor</th>
-                        <th>Sello</th>
-                        <th>Exportador</th>
-                        <th>Agencia</th>
-                        <th>Pallets</th>
-                        <th>Nave</th>
-                        <th>Linea</th>
-                        <th>POL</th>
-                        <th>POD</th>
-                        <th>Entrada</th>
-                        <th>Salida</th>
-                        <th>Estadía</th>
-                        <th>Ingresado Por</th>
-                    </tr>
-                    </thead>
-                    <tbody>$rows</tbody>
-                </table>
-                </div>
-            </div>
-
-            <script>
-                document.getElementById('seacrhShiftsTable').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#shiftsTable tbody tr');
-                let visibleCount = 0;
-
-                rows.forEach(row => {
-                    let text = row.innerText.toLowerCase();
-
-                    let match = text.includes(filter);
-
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
-
-                    row.style.display = match ? '' : 'none';
-
-                    if (match) visibleCount++;
-                });
-
-                document.getElementById('totalTrucks').innerText = visibleCount;
-                });
-            </script>
-        ";
     }
 
     public function shiftsReportExcel($shifts, $dateStart, $dateEnd)
