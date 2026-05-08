@@ -235,24 +235,28 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <?php echo $modals->render();?>
 
     <!-- Modal Añadir hora de salida del camión termo -->
-    <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="addHourTermoModal" style="display:none; position:fixed; width:80%; top:10%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+    <div id="modalOverlay"></div>
+    <div id="addHourTermoModal" class="custom-modal">
         <h4 id="h4-departure-hour"></h4>
+
         <form id="addHourTermoForm">
             <div class="form-group row">
                 <div class="col-sm-12">
-                  <label id="label-stay" style="color:darkorange;"></label>
-                  </br>
-                  <label>Hora de salida:</label>
-                  <input type="datetime-local" class="form-control form-control-user" id="dateout" name="dateout">
-                  <small class="text-danger" id="error-dateout"></small>
+                    <p id="label-stay"></p>
+                    <label>Hora de salida:</label>
+                    <input type="datetime-local" class="form-control form-control-user" id="dateout" name="dateout">
+                    <small class="text-danger" id="error-dateout"></small>
                 </div>
             </div>
 
             <input type="hidden" id="rowId" name="rowId">
             <input type="hidden" id="originId" name="originId">
             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+
+            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()">
+                <i class='fas fa-solid fa-check-circle'></i> Guardar
+            </button>
+
             <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
         </form>
     </div>
@@ -381,6 +385,7 @@ function actualizarReloj() {
     </div>
   `;
 }
+
 var editTermoHour = function(id) {
   $.ajax({
     url: '../controllers/outerPortEditController.php',
@@ -399,7 +404,7 @@ var editTermoHour = function(id) {
       $('#rowId').val(data.row_id);
       $('#originId').val(data.origin);
       $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate);
-      $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`);
+      $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`).css('font-weight', 'bold').css('color', (dias >= 1) ? 'red' : 'green');
       $('#dateout').val(data.departure_date ? data.departure_date : '');
 
       /* Mostrar overlay y modal */

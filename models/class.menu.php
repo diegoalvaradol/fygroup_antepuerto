@@ -213,10 +213,9 @@ class menu extends iQuery
         ob_start();
         ?>
             <nav class="navbar navbar-expand topbar">
-                <div class="container-fluid d-flex align-items-center">
-
+                <div class="container-fluid d-flex align-items-center justify-content-between">
                     <!-- Reloj -->
-                    <div class="clock-box d-flex align-items-center">
+                    <div class="clock-box">
                         <i class="fas fa-clock mr-2"></i>
                         <span id="relojFecha"></span>
                     </div>
@@ -224,26 +223,29 @@ class menu extends iQuery
                     <!-- Usuario -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" data-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- Avatar -->
                                 <div class="user-avatar">
                                     <?= $avatarName ?>
                                 </div>
 
-                                <!-- Desktop -->
-                                <div class="d-none d-md-flex flex-column text-left ml-2">
-                                    <span class="text-white small font-weight-bold">
+                                <!-- Info -->
+                                <div class="d-flex flex-column text-left ml-2 user-info">
+                                    <span class="text-white small font-weight-bold text-truncate">
                                         <?= $fullName ?>
                                     </span>
 
-                                    <span class="text-white small" style="opacity:.75;">
+                                    <span class="text-white small user-run">
                                         <?= $run ?>
                                     </span>
                                 </div>
 
+                                <!-- Flecha -->
                                 <i class="fas fa-chevron-down text-white ml-2"></i>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right shadow">
+                            <!-- Dropdown -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
                                 <div class="px-3 py-3 text-center border-bottom">
                                     <div class="d-flex justify-content-center mb-2">
                                         <div class="logo-box">
@@ -257,29 +259,34 @@ class menu extends iQuery
                                 </div>
 
                                 <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#userModal">
-                                    <i class="fas fa-user"></i> Perfil
+                                    <i class="fas fa-user mr-2"></i>
+                                    Perfil
                                 </a>
 
                                 <?php if ($admin): ?>
                                     <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#goalModal">
-                                        <i class="fas fa-cogs"></i> Ajustar Capacidad
+                                        <i class="fas fa-cogs mr-2"></i>
+                                        Ajustar Capacidad
                                     </a>
                                 <?php endif; ?>
 
                                 <a class="dropdown-item text-primary" href="#" data-toggle="modal" data-target="#licenseModal">
-                                    <i class="fas fa-copyright"></i> Licencia
+                                    <i class="fas fa-copyright mr-2"></i>
+                                    Licencia
                                 </a>
 
                                 <div class="dropdown-divider"></div>
 
                                 <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                                    <i class="fas fa-sign-out-alt mr-2"></i>
+                                    Cerrar Sesión
                                 </a>
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
+
         <?php
 
         return ob_get_clean();

@@ -98,3 +98,35 @@
 .modal.show .modal-dialog {
   transform: translateY(0) scale(1);
 }
+
+/* Modal Overlay (Ingreso hora de salida Thermos/Contenedores) */
+#modalOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+.custom-modal {
+  display: none;
+  position: fixed;
+  width: 90%;
+  max-width: 900px;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* SOLO desktop */
+@media (min-width: 992px) {
+  .custom-modal {
+    width: 25%;
+    max-width: 500px;
+  }
+}

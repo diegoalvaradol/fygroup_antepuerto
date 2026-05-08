@@ -54,7 +54,6 @@ class Modals
                         <form id="addGoalForm">
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                <label id="label-stay" style="color:darkorange;"></label>
                                 <label>Capacidad:</label>
                                 <input type="text" class="form-control form-control-user" id="goals" name="goals" value="<?php echo $this->infoCfg['goals']; ?>">
                                 </div>

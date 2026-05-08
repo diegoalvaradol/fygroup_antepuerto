@@ -580,41 +580,62 @@ class outerPort extends iQuery
         $finCompleto = $fin . ' 23:59:59';
 
         $query = "
-            SELECT dia,
-                    SUM(ingresos) AS total_ingresos,
-                    SUM(egresos) AS total_egresos
-            FROM (
-                SELECT DATE($this->arrivaldate) AS dia, COUNT(*) AS ingresos, 0 AS egresos
-                FROM $this->table
-                WHERE $this->arrivaldate BETWEEN :inicio1 AND :fin1
-                GROUP BY dia
+        SELECT
+            dia,
+            SUM(ingresos) AS total_ingresos,
+            SUM(egresos) AS total_egresos
+        FROM (
 
-                UNION ALL
-
-                SELECT DATE($this->departuredate) AS dia, 0 AS ingresos, COUNT(*) AS egresos
-                FROM $this->table
-                WHERE $this->departuredate BETWEEN :inicio2 AND :fin2
-                GROUP BY dia
-            ) AS movimientos
+            SELECT
+                DATE($this->arrivaldate) AS dia,
+                COUNT(*) AS ingresos,
+                0 AS egresos
+            FROM $this->table
+            WHERE $this->arrivaldate BETWEEN :inicio1 AND :fin1
             GROUP BY dia
-            ORDER BY dia ASC
-        ";
+
+            UNION ALL
+
+            SELECT
+                DATE($this->departuredate) AS dia,
+                0 AS ingresos,
+                COUNT(*) AS egresos
+            FROM $this->table
+            WHERE $this->departuredate BETWEEN :inicio2 AND :fin2
+            GROUP BY dia
+
+        ) AS movimientos
+
+        GROUP BY dia
+        ORDER BY dia ASC
+    ";
 
         $stmt = $this->db->prepare($query);
+
         $stmt->bindParam(':inicio1', $inicioCompleto);
         $stmt->bindParam(':fin1', $finCompleto);
+
         $stmt->bindParam(':inicio2', $inicioCompleto);
         $stmt->bindParam(':fin2', $finCompleto);
+
         $stmt->execute();
 
-        $data = [];
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $data = [];
+
         foreach ($rows as $row) {
-            if ($row['total_ingresos'] > 0 && $row['total_egresos'] > 0) {
+
+            $ingresos = (int) $row['total_ingresos'];
+            $egresos = (int) $row['total_egresos'];
+
+            // Mostrar días con cualquier movimiento
+            if ($ingresos > 0 || $egresos > 0) {
+
                 $data[] = [
-                  'Fecha' => date('d-m-y', strtotime($row['dia'])),
-                  'Ingresos' => (int) $row['total_ingresos'],
-                  'Egresos' => (int) $row['total_egresos'],
+                    'Fecha' => date('d-m-Y', strtotime($row['dia'])),
+                    'Ingresos' => $ingresos,
+                    'Egresos' => $egresos,
                 ];
             }
         }

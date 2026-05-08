@@ -251,18 +251,19 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 <div class="row justify-content-center">
                                   <div class="col-12">
                                     <div id="divGraficoCamiones" style="position: relative;">
-                                        <div id="mensajeSinDatos" class="col-sm-12 d-flex justify-content-center align-items-center" style="display: none;">
-                                            <div class="alert custom-alert-danger d-flex align-items-center" role="alert">
-                                                <div class="icon me-2">
-                                                    <i class="fa-solid fa-circle-info"></i>
-                                                </div>
-                                                &nbsp;
-                                                <div>
-                                                    <strong>Atención:</strong>
-                                                    No hay datos disponibles para las fechas seleccionadas. Por favor ajusta el rango e intenta nuevamente.
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div id="mensajeSinDatos" class="col-sm-12 d-none justify-content-center align-items-center">
+    <div class="alert custom-alert-danger d-flex align-items-center" role="alert">
+        <div class="icon me-2">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+
+        <div>
+            <strong>Atención:</strong>
+            No hay datos disponibles para las fechas seleccionadas.
+            Por favor ajusta el rango e intenta nuevamente.
+        </div>
+    </div>
+</div>
 
                                       <canvas id="graficoCamiones"></canvas>
                                     </div>
@@ -511,8 +512,20 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
   canvas.style.display = hayDatos ? 'block' : 'none';
   divCanvas.style.height = hayDatos ? '400px' : '120px';
 
-  if (!hayDatos) {
-    if (chart) chart.destroy();
+  if (hayDatos) {
+    mensaje.classList.add('d-none');
+    canvas.style.display = 'block';
+    divCanvas.style.height = '400px';
+  } else {
+    mensaje.classList.remove('d-none');
+    canvas.style.display = 'none';
+    divCanvas.style.height = '120px';
+
+    if (chart) {
+      chart.destroy();
+      chart = null;
+    }
+
     return;
   }
 

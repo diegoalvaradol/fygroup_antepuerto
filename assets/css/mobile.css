@@ -53,7 +53,7 @@
 
 /* mueve botón junto al sidebar */
 #mobileSidebarToggle.active {
-  left: 170px;
+  left: 205px;
 }
 
 .logo-responsive {
@@ -98,7 +98,7 @@
     font-size: 12px;
   }
 
-  /* ===== SIDEBAR ===== */
+  /* Sidebar */
   #accordionSidebar {
     width: 240px;
     left: -240px;
@@ -108,7 +108,7 @@
     left: 0;
   }
 
-  /* ===== CONTENIDO ===== */
+  /* Contenido */
   #content,
   .container-fluid,
   .content-wrapper {
@@ -117,7 +117,7 @@
     overflow-x: hidden;
   }
 
-  /* ===== TABLAS ===== */
+  /* Tablas */
   table {
     display: block;
     width: 100%;
@@ -125,7 +125,7 @@
     white-space: nowrap;
   }
 
-  /* ===== FORMULARIOS ===== */
+  /* Formularios */
   .form-group.row {
     display: block;
   }
@@ -135,7 +135,7 @@
     width: 100% !important;
   }
 
-  /* ===== MODALS ===== */
+  /* Modals */
   .modal-dialog {
     margin: 1rem;
   }
@@ -144,7 +144,7 @@
     border-radius: 14px;
   }
 
-  /* ===== FOOTER ===== */
+  /* Footer */
   footer,
   .footer {
     padding: 10px;
@@ -152,15 +152,14 @@
     font-size: 12px;
   }
 
-  /* ===== BOTONES ===== */
-  .btn {
-    width: 100%;
-    margin-bottom: 8px;
-  }
-
-  /* ===== IMAGENES PIE DE PÁGINA ===== */
+  /* Imagenes pie de pagina */
   .logo-responsive {
     max-width: 120px;
     height: 60px;
+  }
+
+  /* mueve botón junto al sidebar */
+  #mobileSidebarToggle.active {
+    left: 245px;
   }
 }
