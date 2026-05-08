@@ -403,7 +403,7 @@ var editTermoHour = function(id) {
 
       $('#rowId').val(data.row_id);
       $('#originId').val(data.origin);
-      $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate);
+      $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate).css('font-weight', 'bold').css('font-size', '20px');
       $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`).css('font-weight', 'bold').css('color', (dias >= 1) ? 'red' : 'green');
       $('#dateout').val(data.departure_date ? data.departure_date : '');
 
