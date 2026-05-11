@@ -227,6 +227,7 @@ function actualizarReloj() {
     </div>
   `;
 }
+
 var exportExcel = function(nave, condicion, exportador, division, cliente) {
   var division = '<?php echo $_SESSION['user']['division']; ?>';
   var cliente = '<?php echo $_SESSION['user']['run']; ?>';

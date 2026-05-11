@@ -2430,4 +2430,27 @@ class outerPort extends iQuery
         exit;
     }
 
+    public function layoutAntepuerto()
+    {
+        $result = [];
+
+        $sql = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE sh.finished = 0 AND p.departure_date IS NULL ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
+        $list = parent::findAllStatic($sql);
+        if ($list->length()) {
+            foreach ($list->getCollection() as $r) {
+                if ($r['arrival_date'] !== '0000-00-00 00:00:00' && $r['departure_date'] === null) {
+
+                    $result[] = [
+                        'patente' => $r['car_plate'],
+                        'container' => $r['container'],
+                        'ship' => $r['vessel_name'],
+                        'status' => 'INGRESO',
+                    ];
+                }
+            }
+        }
+
+        return $result;
+    }
+
 }

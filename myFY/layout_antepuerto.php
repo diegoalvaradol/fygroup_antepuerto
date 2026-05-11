@@ -36,7 +36,7 @@ if (!$admin) {
     <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
     <meta name="Diego Alvarado López." content="">
     <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
-    <title>FYGroup | Liquidación de Nave</title>
+    <title>FYGroup | Layout Antepuerto</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -68,8 +68,8 @@ if (!$admin) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Liquidación de Naves</h1>
-                    <p class="mb-4">Acá podrás obtener la liquidación de carga por nave y exportador.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Layout Antepuerto</h1>
+                    <p class="mb-4">Acá podrás visualizar el transito en tiempo real en el antepuerto.</p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -78,43 +78,85 @@ if (!$admin) {
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Formulario de Búsqueda</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Mapa en vivo</h6>
                                 </div>
 
-                                <div class="card-body">
-                                    <form class="form-container" id="vesselReportForm">
-                                        <div class="form-row">
-                                          <!-- Exportador -->
-                                          <div class="form-group col-md-3">
-                                            <label for="exporter" class="text-gray-800 font-weight-bold">Exportador <em>(Opcional)</em></label>
-                                            <select class="form-control select2" id="exporter" name="exporter">
-                                              <option value="-">Seleccione un exportador...</option>
-                                            </select>
-                                          </div>
+                                <!-- MAP -->
+                                <div id="map">
+                                    <!-- HEADER -->
+                                    <div class="topbar-layout">
+                                        <div class="logo">
+                                            <h2>CONTROL PORTUARIO</h2>
+                                            <span>Visualización logística de antepuerto</span>
+                                        </div>
 
-                                          <!-- Motonave -->
-                                          <div class="form-group col-md-3">
-                                            <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
-                                            <select class="form-control select2" id="vessel" name="vessel">
-                                              <option value="-">Seleccione una motonave...</option>
-                                            </select>
-                                          </div>
+                                        <div class="stats">
+                                            <div class="logo">
+                                                <div class="card-title">CAMIONES</div>
+                                                <div class="card-value" id="truckCounter">
+                                                    0
+                                                </div>
+                                            </div>
 
-                                          <!-- Información Motonave -->
-                                          <div class="form-group col-md-3">
-                                            <label class="text-gray-800 font-weight-bold">Información de Motonave</label>
-                                            <small id="info-vessel" class="form-text text-muted"></small>
-                                          </div>
+                                            <div class="logo">
+                                                <div class="card-title">ESTADO</div>
+                                                <div class="card-value" id="statusCounter">
+                                                    NORMAL
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                          <!-- Liquidación -->
-                                          <div class="form-group col-md-3">
-                                              <label class="text-gray-800 font-weight-bold d-block">
-                                                Liquidación Motonave
-                                              </label>
-                                              <div id="detalleLiquidacion"></div>
-                                          </div>
-                                      </div>
-                                    </form>
+                                    <!-- CARRETERA -->
+                                    <div class="highway"></div>
+
+                                    <!-- CAMINO -->
+                                    <div class="access-lane"></div>
+
+                                    <!-- PORTON -->
+                                    <div class="gate">
+                                        CONTROL DE ACCESO
+                                    </div>
+
+                                    <!-- FLECHAS -->
+                                    <div class="flow in">
+                                        ↓
+                                    </div>
+
+                                    <div class="flow out">
+                                        ↑
+                                    </div>
+
+                                    <!-- CAMION MOVIMIENTO -->
+                                    <div class="truck-moving">
+                                        🚛 MOVIMIENTO
+                                    </div>
+
+                                    <!-- PARKING -->
+                                    <div class="parking low">
+                                        <div class="parking-header">
+                                            <div class="parking-title">
+                                                APARCADERO
+                                            </div>
+
+                                            <div class="parking-status">
+
+                                                <div class="badge green">
+                                                    NORMAL
+                                                </div>
+
+                                                <div class="badge yellow">
+                                                    MEDIA
+                                                </div>
+
+                                                <div class="badge red">
+                                                    ALTA
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="parkingGrid"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -328,15 +370,145 @@ var saveInfoUser = function() {
   }
 }
 
+const ZONES = {
+  PARKING: {
+    slots: createSlots(0.05, 0.30, 9, 2)
+  }
+};
+
+/* Crea posiciones */
+function createSlots(startX, startY, cols, rows){
+  const slots = [];
+  const stepX = 0.074;
+  const stepY = 0.115;
+
+  for(let y = 0; y < rows; y++){
+    for(let x = 0; x < cols; x++){
+      slots.push({
+        x: startX + (x * stepX),
+        y: startY + (y * stepY),
+        used:false
+      });
+    }
+  }
+
+  return slots;
+}
+
+/* Slot Libre */
+function getSlot(zone){
+  const slot = zone.slots.find(s => !s.used);
+
+  if(slot){
+    slot.used = true;
+
+    return slot;
+  }
+
+  return zone.slots[0];
+}
+
+/* Mapa */
+function loadMap(){
+  fetch('../controllers/layoutAntepuertoController.php?action=data').then(r => r.json()).then(data => {
+    const parkingGrid = document.getElementById('parkingGrid');
+    let total = 0;
+
+    /* LIMPIAR */
+    parkingGrid.innerHTML = '';
+
+    /* RESET SLOTS */
+    ZONES.PARKING.slots.forEach(s => s.used = false);
+
+    data.forEach(t => {
+      const slot = getSlot(ZONES.PARKING);
+
+      /* ESTADO */
+      let statusClass = null;
+      let statusText = null;
+
+      if(t.status === 'INGRESO'){
+        statusClass = 'green';
+        statusText = 'EN APARCADERO';
+      }
+
+      /* CREAR DIV */
+      const div = document.createElement('div');
+
+      div.className = `truck truck-dynamic ${statusClass}`;
+
+      /* POSICION */
+      div.style.position = 'absolute';
+      div.style.left = (slot.x * 100) + '%';
+      div.style.top = (slot.y * 100) + '%';
+      div.style.transform = 'translate(-50%, -50%)';
+
+      /* HTML */
+      div.innerHTML = `
+        <div class="truck-plate">
+          🚛 ${t.patente}
+        </div>
+
+        <div class="truck-container">
+          ${t.container || 'SIN CONTENEDOR'}
+        </div>
+
+        <div class="truck-vessel">
+          ${t.ship}
+        </div>
+
+        <div class="truck-time">
+          ${statusText}
+        </div>
+
+      `;
+
+      parkingGrid.appendChild(div);
+      total++;
+    });
+
+    /* TOTAL */
+    document.getElementById('truckCounter').innerHTML = total;
+
+    /* ESTADO GENERAL */
+    updateHeatmap(total);
+  })
+  .catch(error => {
+    console.error(error);
+
+    Swal.fire({
+      title: 'Error',
+      text: 'No se pudo cargar el mapa. Intenta recargando la página.',
+      icon: 'error',
+      confirmButtonColor: '#4e73df'
+    });
+  });
+}
+
+/* Heatmap  */
+function updateHeatmap(total){
+  const parking = document.querySelector('.parking');
+  const status = document.getElementById('statusCounter');
+
+  parking.classList.remove(
+    'low',
+    'medium',
+    'high'
+  );
+
+  if(total <= 5){
+    parking.classList.add('low');
+    status.innerHTML = 'NORMAL';
+  } else if(total <= 10){
+    parking.classList.add('medium');
+    status.innerHTML = 'MEDIA';
+  } else{
+    parking.classList.add('high');
+    status.innerHTML = 'ALTA';
+  }
+}
+
 $(document).ready(function() {
-  $('.modal').on('shown.bs.modal', function () {
-    modalAbierto = true;
-  });
-
-  $('.modal').on('hidden.bs.modal', function () {
-    modalAbierto = false;
-  });
-
   // iniciar inactivity
   inactivityTime();
 
@@ -344,104 +516,10 @@ $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
   actualizarReloj();
 
-  /* ===== SELECT2 ===== */
-  $('#vessel').select2({
-    allowClear: true,
-    tags: false,
-    width: '100%',
-    ajax: {
-      url: '../controllers/vesselJsonController.php',
-      method: 'POST',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        return {
-          search: params.term,
-          finished: 1
-        };
-      },
-      processResults: function (data) {
-        return { results: data };
-      },
-      cache: true
-    }
-  });
-
-  $('#exporter').select2({
-    allowClear: true,
-    tags: false,
-    width: '100%',
-    ajax: {
-      url: '../controllers/exporterJsonController.php',
-      method: 'POST',
-      dataType: 'json',
-      delay: 250,
-      data: function (params) {
-        return {
-          search: params.term
-        };
-      },
-      processResults: function (data) {
-        return { results: data };
-      },
-      cache: true
-    }
-  });
-
-  $('#vessel').on('change', cargarLiquidacion);
-  $('#exporter').on('change', cargarLiquidacion);
-
-  function cargarLiquidacion() {
-    const vessel   = $('#vessel').val();
-    const exporter = $('#exporter').val();
-
-    if (!vessel || vessel === '-') {
-      $('#info-vessel').html('');
-      $('#detalleLiquidacion').html('');
-      return;
-    }
-
-    /* Info motonave */
-    $.ajax({
-      url: '../controllers/vesselInfoController.php',
-      method: 'POST',
-      data: { id: vessel },
-      success: function (response) {
-        $('#info-vessel').html(response);
-      },
-      error: function () {
-        $('#info-vessel').html('<div class="text-danger">Error al obtener la información.</div>');
-      }
-    });
-
-    /* Liquidación */
-    $.ajax({
-      url: '../controllers/getLiquidacionController.php',
-      method: 'POST',
-      data: {
-        id: vessel,
-        exporter: exporter
-      },
-      success: function (response) {
-        $('#detalleLiquidacion')
-          .html(response)
-          .css('margin', '0 auto')
-          .css('display', 'inline-block');
-      },
-      error: function () {
-        $('#detalleLiquidacion').html(`
-          <div class="alert alert-warning">
-            No se pudo generar la liquidación.
-          </div>
-        `);
-      }
-    });
-  }
-});
-
-/* ===== FIX FOCO SELECT2 ===== */
-$(document).on('select2:open', function () {
-  let searchField = document.querySelector('.select2-container--open .select2-search__field');
-  if (searchField) searchField.focus();
+  //init map
+  loadMap();
+  setInterval(() => {
+    loadMap();
+  }, 300);
 });
 </script>

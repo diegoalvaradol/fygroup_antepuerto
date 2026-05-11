@@ -62,7 +62,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
             <div class="container-fluid">
               <!-- Page Heading -->
               <h1 class="h3 mb-1 text-gray-800">Roleo de Carga</h1>
-              <p class="mb-4">Acá podras realizar el roleo de carga entre naves del tipo liner y charter.</p>
+              <p class="mb-4">Acá podrás realizar el roleo de carga entre naves del tipo liner y charter.</p>
 
               <div class="col-sm-6">
                 <div class="alert custom-alert-info d-flex align-items-center" role="alert">

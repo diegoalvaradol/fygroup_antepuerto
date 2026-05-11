@@ -75,6 +75,14 @@ class menu extends iQuery
         if ($admin) {
             $menus = array_merge($menus, [
                 [
+                    'title' => 'Layout',
+                    'icon' => 'fa-satellite',
+                    'id' => 'collapseLayout',
+                    'items' => [
+                        ['label' => 'Layout Antepuerto', 'link' => generateMkey('layout_antepuerto')],
+                    ],
+                ],
+                [
                     'title' => 'Maersk',
                     'icon' => 'fa-ship',
                     'id' => 'collapseMaersk',
