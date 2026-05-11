@@ -81,81 +81,84 @@ if (!$admin) {
                                     <h6 class="m-0 font-weight-bold text-primary">Mapa en vivo</h6>
                                 </div>
 
-                                <!-- MAP -->
-                                <div id="map">
-                                    <!-- HEADER -->
-                                    <div class="topbar-layout">
-                                        <div class="logo">
-                                            <h2>CONTROL PORTUARIO</h2>
-                                            <span>Visualización logística de antepuerto</span>
-                                        </div>
-
-                                        <div class="stats">
+                                <div class="card-body">
+                                    <!-- MAP -->
+                                    <div id="map">
+                                        <!-- HEADER -->
+                                        <div class="topbar-layout">
                                             <div class="logo">
-                                                <div class="card-title">CAMIONES</div>
-                                                <div class="card-value" id="truckCounter">
-                                                    0
-                                                </div>
+                                                <h2>CONTROL PORTUARIO</h2>
+                                                <span>Visualización logística de antepuerto</span>
                                             </div>
 
-                                            <div class="logo">
-                                                <div class="card-title">ESTADO</div>
-                                                <div class="card-value" id="statusCounter">
-                                                    NORMAL
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- CARRETERA -->
-                                    <div class="highway"></div>
-
-                                    <!-- CAMINO -->
-                                    <div class="access-lane"></div>
-
-                                    <!-- PORTON -->
-                                    <div class="gate">
-                                        CONTROL DE ACCESO
-                                    </div>
-
-                                    <!-- FLECHAS -->
-                                    <div class="flow in">
-                                        ↓
-                                    </div>
-
-                                    <div class="flow out">
-                                        ↑
-                                    </div>
-
-                                    <!-- CAMION MOVIMIENTO -->
-                                    <div class="truck-moving">
-                                        🚛 MOVIMIENTO
-                                    </div>
-
-                                    <!-- PARKING -->
-                                    <div class="parking low">
-                                        <div class="parking-header">
-                                            <div class="parking-title">
-                                                APARCADERO
-                                            </div>
-
-                                            <div class="parking-status">
-
-                                                <div class="badge green">
-                                                    NORMAL
+                                            <div class="stats">
+                                                <div class="logo">
+                                                    <div class="card-title">CAMIONES</div>
+                                                    <div class="card-value" id="truckCounter">
+                                                        0
+                                                    </div>
                                                 </div>
 
-                                                <div class="badge yellow">
-                                                    MEDIA
-                                                </div>
-
-                                                <div class="badge red">
-                                                    ALTA
+                                                <div class="logo">
+                                                    <div class="card-title">ESTADO</div>
+                                                    <div class="card-value" id="statusCounter">
+                                                        NORMAL
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div id="parkingGrid"></div>
+                                        <!-- CARRETERA -->
+                                        <div class="highway"></div>
+
+                                        <!-- CAMINO -->
+                                        <div class="access-lane"></div>
+
+                                        <!-- PORTON -->
+                                        <div class="gate">
+                                            CONTROL DE ACCESO
+                                        </div>
+
+                                        <!-- FLECHAS -->
+                                        <div class="flow in">
+                                            ↓
+                                        </div>
+
+                                        <div class="flow out">
+                                            ↑
+                                        </div>
+
+                                        <!-- CAMION MOVIMIENTO -->
+                                        <div class="truck-moving">
+                                            🚛 MOVIMIENTO
+                                        </div>
+
+                                        <!-- PARKING -->
+                                        <div class="parking low">
+                                            <div class="parking-header">
+                                                <div class="parking-title">
+                                                    APARCADERO
+                                                </div>
+
+                                                <div class="parking-status">
+
+                                                    <div class="badge green">
+                                                        NORMAL
+                                                    </div>
+
+                                                    <div class="badge yellow">
+                                                        MEDIA
+                                                    </div>
+
+                                                    <div class="badge red">
+                                                        ALTA
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- JS INSERTA CAMIONES ACA -->
+                                            <div id="parkingGrid"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
