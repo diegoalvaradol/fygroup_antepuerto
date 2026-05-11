@@ -129,7 +129,7 @@ class shipLine extends iQuery
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
-                        <i class='fas fa-ship'></i> Listado de Líneas Navieras
+                        <i class='fas fa-list'></i> Listado
                         <em>(Total: <span id='totalShipLines'>$count</span>)</em>
                     </h6>
 
@@ -151,26 +151,26 @@ class shipLine extends iQuery
 
             <script>
                 document.getElementById('searchTableShipLine').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#shipLineTable tbody tr');
-                let visibleCount = 0;
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#shipLineTable tbody tr');
+                    let visibleCount = 0;
 
-                rows.forEach(row => {
-                    let cell = row.cells[1];
-                    let text = cell ? cell.innerText.toLowerCase() : '';
-                    let match = text.includes(filter);
+                    rows.forEach(row => {
+                        let cell = row.cells[1];
+                        let text = cell ? cell.innerText.toLowerCase() : '';
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
+                        row.style.display = match ? '' : 'none';
 
-                    if (match) visibleCount++;
-                });
+                        if (match) visibleCount++;
+                    });
 
-                document.getElementById('totalShipLines').innerText = visibleCount;
+                    document.getElementById('totalShipLines').innerText = visibleCount;
                 });
             </script>
         ";

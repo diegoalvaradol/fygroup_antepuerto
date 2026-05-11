@@ -89,6 +89,7 @@ if (!$admin) {
                                             <i class="fas fa-solid fa-print"></i> Imprimir
                                         </button>
                                     </div>
+
 									<!-- Tabla Estadítica por Naves -->
                                     <div id="stadisticVesselDiv">
                                         <?php echo $port->tableStadisticsByShips(); ?>

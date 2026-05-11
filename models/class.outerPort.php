@@ -861,7 +861,7 @@ class outerPort extends iQuery
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado de Contenedores
+                        <i class='fas fa-list'></i> Listado
                         <em>(Total: <span id='totalCnts'>$count</span>)</em>
                     </h6>
 
@@ -1254,7 +1254,7 @@ class outerPort extends iQuery
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado de Termos
+                        <i class='fas fa-list'></i> Listado
                         <em>(Total: <span id='totalThermos'>$count</span>)</em>
                     </h6>
 
@@ -2007,7 +2007,7 @@ class outerPort extends iQuery
             <div class='card shadow mb-4'>
                 <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap gap-2'>
                 <h6 class='mb-0'>
-                    <i class='fas fa-chart-bar me-1'></i> Estadísticas por Nave
+                    <i class='fas fa-list'></i> Listado
                     <em>(Total: <span id='totalShipStadistics'>{$i}</span>)</em>
                 </h6>
 
@@ -2062,39 +2062,38 @@ class outerPort extends iQuery
             <script>
                 const vesselDetails = " . json_encode($detailsJs) . ";
                 function loadDetail(id){
-                document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
+                    document.getElementById('modalDetailBody').innerHTML = vesselDetails[id] ?? 'Sin datos';
                 }
 
                 document.getElementById('searchStadisticsByShipTable').addEventListener('keyup', function() {
-                const filter = this.value.toLowerCase().trim();
-                const rows   = document.querySelectorAll('#stadisticsByShipTable tbody tr');
-                let visibleCount = 0;
+                    const filter = this.value.toLowerCase().trim();
+                    const rows   = document.querySelectorAll('#stadisticsByShipTable tbody tr');
+                    let visibleCount = 0;
 
-                rows.forEach(row => {
-                    const text = (
-                    (row.cells[1]?.innerText || '') + ' ' +
-                    (row.cells[2]?.innerText || '') + ' ' +
-                    (row.cells[3]?.innerText || '') + ' ' +
-                    (row.cells[4]?.innerText || '')
-                    ).toLowerCase();
+                    rows.forEach(row => {
+                        const text = (
+                        (row.cells[1]?.innerText || '') + ' ' +
+                        (row.cells[2]?.innerText || '') + ' ' +
+                        (row.cells[3]?.innerText || '') + ' ' +
+                        (row.cells[4]?.innerText || '')
+                        ).toLowerCase();
 
-                    let match = text.includes(filter);
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    const words = filter.split(' ').filter(Boolean);
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        const words = filter.split(' ').filter(Boolean);
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
+                        row.style.display = match ? '' : 'none';
 
-                    if (match) visibleCount++;
-                });
+                        if (match) visibleCount++;
+                    });
 
-                document.getElementById('totalShipStadistics').innerText = visibleCount;
+                    document.getElementById('totalShipStadistics').innerText = visibleCount;
                 });
             </script>
         ";
-
     }
 
     public function shiftsReport($shifts, $dateStart, $dateEnd)
@@ -2222,13 +2221,13 @@ class outerPort extends iQuery
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
-                        <i class='fas fa-clock'></i> Reporte de Turnos
-                        <em>(Total camiones: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
+                        <i class='fas fa-list'></i> Listado
+                        <em>(Total: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
                     </h6>
 
                     <div style='position:relative; max-width:250px;'>
                         <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
-                        <input type='text' id='seacrhShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                        <input type='text' id='searchShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
                     </div>
                     </div>
 
@@ -2262,27 +2261,27 @@ class outerPort extends iQuery
                 </div>
 
                 <script>
-                    document.getElementById('seacrhShiftsTable').addEventListener('keyup', function() {
-                    let filter = this.value.toLowerCase().trim();
-                    let rows = document.querySelectorAll('#shiftsTable tbody tr');
-                    let visibleCount = 0;
+                    document.getElementById('searchShiftsTable').addEventListener('keyup', function() {
+                        let filter = this.value.toLowerCase().trim();
+                        let rows = document.querySelectorAll('#shiftsTable tbody tr');
+                        let visibleCount = 0;
 
-                    rows.forEach(row => {
-                        let text = row.innerText.toLowerCase();
+                        rows.forEach(row => {
+                            let text = row.innerText.toLowerCase();
 
-                        let match = text.includes(filter);
+                            let match = text.includes(filter);
 
-                        if (filter.includes(' ')) {
-                        let words = filter.split(' ');
-                        match = words.every(w => text.includes(w));
-                        }
+                            if (filter.includes(' ')) {
+                            let words = filter.split(' ');
+                            match = words.every(w => text.includes(w));
+                            }
 
-                        row.style.display = match ? '' : 'none';
+                            row.style.display = match ? '' : 'none';
 
-                        if (match) visibleCount++;
-                    });
+                            if (match) visibleCount++;
+                        });
 
-                    document.getElementById('totalTrucks').innerText = visibleCount;
+                        document.getElementById('totalTrucks').innerText = visibleCount;
                     });
                 </script>
             ";

@@ -173,7 +173,7 @@ class ship extends iQuery
 
             $finish = ($data[$this->finisheddate]) ? (new DateTime($data[$this->finisheddate]))->format('d-m-Y H:i') : 'Por estimar.';
 
-            $btnFinishedDate = '<i class="fas fa-info-circle text-info" title="Fecha de Cierre: ' . $finish . '" data-toggle="popover"></i>';
+            $btnFinishedDate = '<i class="fas fa-info-circle text-info" role="button" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="' . $finish . '"></i>';
 
             $btnEndStacking = $data[$this->finished] == 0
             ? "<button class='btn btn-danger btn-sm' onclick='stackingShip(" . $data[$this->id] . ',"' . $data[$this->vessel] . '","' . $data[$this->voyage] . "\",1)'><i class='fas fa-lock'></i> Cerrar</button>"
@@ -206,7 +206,7 @@ class ship extends iQuery
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
-                        <i class='fas fa-ship'></i> Listado de Naves
+                        <i class='fas fa-list'></i> Listado
                         <em>(Total: <span id='totalShips'>$count</span>)</em>
                     </h6>
 
@@ -228,26 +228,26 @@ class ship extends iQuery
 
             <script>
                 document.getElementById('searchTableShip').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#shipTable tbody tr');
-                let visibleCount = 0;
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#shipTable tbody tr');
+                    let visibleCount = 0;
 
-                rows.forEach(row => {
-                    let cell = row.cells[1];
-                    let text = cell ? cell.innerText.toLowerCase() : '';
-                    let match = text.includes(filter);
+                    rows.forEach(row => {
+                        let cell = row.cells[1];
+                        let text = cell ? cell.innerText.toLowerCase() : '';
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
+                        row.style.display = match ? '' : 'none';
 
-                    if (match) visibleCount++;
-                });
+                        if (match) visibleCount++;
+                    });
 
-                document.getElementById('totalShips').innerText = visibleCount;
+                    document.getElementById('totalShips').innerText = visibleCount;
                 });
             </script>
         ";
