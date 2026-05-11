@@ -2296,6 +2296,8 @@ class outerPort extends iQuery
     {
         $ship = new ship();
         $port = new port();
+        $arrayShifts = get::arrayShifts();
+        $shiftName = $arrayShifts[$shifts] ?? 'Turno';
 
         list($inicio, $fin) = array_map('trim', explode(' - ', $shifts));
         $inicioDatetime = $dateStart . ' ' . $inicio . ':00';
@@ -2422,7 +2424,7 @@ class outerPort extends iQuery
 
         // header descarga
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Reporte_de_Turnos_' . date('d-m-Y H:i:s') . '.xlsx"');
+        header('Content-Disposition: attachment;filename="Reporte_' . $shiftName . '_' . date('d-m-Y H:i:s') . '.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = new Xlsx($spreadsheet);

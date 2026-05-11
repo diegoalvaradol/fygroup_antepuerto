@@ -320,34 +320,34 @@ function loadShiftsReport() {
 let fpInstance = null;
 
 function loadDatePicker() {
-	fetch('../controllers/dateWithMovs.php').then(res => res.json()).then(data => {
-		const fechasValidas = Array.isArray(data) ? data : [];
+  fetch('../controllers/dateWithMovs.php').then(res => res.json()).then(data => {
+    const fechasValidas = Array.isArray(data) ? data : [];
 
-		if (fpInstance) {
-			fpInstance.destroy();
-		}
+    if (fpInstance) {
+      fpInstance.destroy();
+    }
 
-		fpInstance = flatpickr("#dateForm", {
-			dateFormat: "Y-m-d",
-			enable: fechasValidas,
+    fpInstance = flatpickr("#dateForm", {
+      dateFormat: "Y-m-d",
+      enable: fechasValidas,
 
-			locale: {
-				...flatpickr.l10ns.es,
-				firstDayOfWeek: 1
-			},
+      locale: {
+        ...flatpickr.l10ns.es,
+        firstDayOfWeek: 1
+      },
 
-			onDayCreate: function (dObj, dStr, fp, dayElem) {
-				const fecha = dayElem.dateObj.toLocaleDateString('en-CA');
+      onDayCreate: function (dObj, dStr, fp, dayElem) {
+        const fecha = dayElem.dateObj.toLocaleDateString('en-CA');
 
-				if (fechasValidas.includes(fecha)) {
-					dayElem.style.background = "#28a745";
-					dayElem.style.color = "#fff";
-					dayElem.style.borderRadius = "50%";
-				}
-			}
-		});
-	})
-	.catch(err => console.error(err));
+        if (fechasValidas.includes(fecha)) {
+          dayElem.style.background = "#28a745";
+          dayElem.style.color = "#fff";
+          dayElem.style.borderRadius = "50%";
+        }
+      }
+    });
+  })
+  .catch(err => console.error(err));
 }
 
 document.addEventListener("DOMContentLoaded", loadDatePicker);
