@@ -344,7 +344,6 @@ $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
   actualizarReloj();
 
-  /* ===== SELECT2 ===== */
   $('#vessel').select2({
     allowClear: true,
     tags: false,

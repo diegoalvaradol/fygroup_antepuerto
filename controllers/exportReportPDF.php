@@ -6,12 +6,12 @@ use Mpdf\Mpdf;
 
 session_start();
 
-$logoPath = realpath(__DIR__ . '/../images/logo-fygroup-bg-removed.png');
+$logoPath = realpath(__DIR__ . '/../images/logo-fygroup.png');
 $type = pathinfo($logoPath, PATHINFO_EXTENSION);
 $data = file_get_contents($logoPath);
 $logoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
-/* ========= USUARIO ========= */
+/* Usuario */
 $user = $_SESSION['user'] ?? null;
 if (!$user) {
     exit('Sesión no válida');
@@ -24,7 +24,7 @@ $usuario = sprintf(
     $user['run']
 );
 
-/* ========= VALIDACIÓN ========= */
+/* Validación */
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     exit('ID no válido');
@@ -33,10 +33,7 @@ if (!$id) {
 $exporter = trim($_GET['exporter'] ?? '');
 $exporter = ($exporter === '' || $exporter === '-') ? null : $exporter;
 
-/* ========= DB ========= */
 $outer = new outerPort();
-
-/* ========= CONSULTA ========= */
 $sql = 'SELECT
     v.vessel_name AS nave,
     v.eta,
@@ -79,7 +76,7 @@ if (empty($rows)) {
     exit('Sin datos');
 }
 
-/* ========= PROCESO ========= */
+/* Proceso */
 $invalidos = ['N/A', 'NA', 'NO APLICA', 'SIN', 'SIN CONTENEDOR'];
 
 $resumen = [];
@@ -87,6 +84,7 @@ $detalle = [];
 $contenedoresGlobal = [];
 
 foreach ($rows as $r) {
+    $stayTime = 'No disponible';
     $exp = $r['exporter'];
 
     $resumen[$exp] ??= ['pallets' => 0, 'containers' => []];
@@ -103,10 +101,23 @@ foreach ($rows as $r) {
         }
     }
 
+    if (!empty($r['arrival_date']) && $r['arrival_date'] !== '0000-00-00 00:00:00' && !empty($r['departure_date']) && $r['departure_date'] !== '0000-00-00 00:00:00') {
+        $arrivalDate = new DateTime($r['arrival_date']);
+        $departureDate = new DateTime($r['departure_date']);
+
+        $interval = $arrivalDate->diff($departureDate);
+
+        $days = $interval->days;
+        $hours = $interval->h;
+        $minutes = $interval->i;
+
+        $stayTime = "{$days}d {$hours}h {$minutes}m";
+    }
+
     $detalle[$exp][] = $r;
 }
 
-/* ========= BASE ========= */
+/* Base */
 $base = $rows[0];
 
 $fmt = fn ($d) => $d ? date('d-m-Y H:i', strtotime($d)) : 'N/A';
@@ -120,7 +131,7 @@ $eta = $fmt($base['eta']);
 $etd = $fmt($base['etd']);
 $fecha = date('d-m-Y H:i:s');
 
-/* ========= HTML ========= */
+/* HTML */
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -189,9 +200,10 @@ ob_start();
             }
 
             .footer {
-                font-size: 9px;
+                font-size: 12px;
                 text-align: center;
-                color: #777;
+                color: #000;
+                margin-top: 12px;
             }
         </style>
     </head>
@@ -208,9 +220,9 @@ ob_start();
                 <th>Viaje</th><td><?= $viaje ?></td>
                 <th>Línea</th><td><?= $linea ?></td>
                 <th>ETA</th><td><?= $eta ?></td>
-                </tr>
+            </tr>
 
-                <tr>
+            <tr>
                 <th>POL</th><td><?= $pol ?></td>
                 <th>POD</th><td><?= $pod ?></td>
                 <th>ETD</th><td><?= $etd ?></td>
@@ -220,63 +232,89 @@ ob_start();
 
         <h3>Desglose de Carga</h3>
         <table>
-            <tr>
-                <th>Guía</th>
-                <th>Condición</th>
-                <th>Contenedor</th>
-                <th>Sello</th>
-                <th>Booking</th>
-                <th>Pallets</th>
-                <th>Llegada</th>
-                <th>Salida</th>
-            </tr>
-
             <?php foreach ($detalle as $exp => $items): ?>
+                <!-- Exportador -->
                 <tr>
-                    <td colspan="8" style="background:#ddd;font-weight:bold">Exportador: <?= $exp ?></td>
+                    <td colspan="9" style="background:#d9d9d9; font-weight:bold; font-size:13px; text-align:left; padding:8px; border:1px solid #ccc;">
+                        <?= strtoupper($exp) ?>
+                    </td>
+                </tr>
+
+                <!-- Columnas -->
+                <tr>
+                    <th style="text-align:left;">Guía</th>
+                    <th style="text-align:left;">Condición</th>
+                    <th style="text-align:left;">Contenedor</th>
+                    <th style="text-align:left;">Sello</th>
+                    <th style="text-align:left;">Booking</th>
+                    <th style="text-align:left;">Pallets</th>
+                    <th style="text-align:left;">Llegada</th>
+                    <th style="text-align:left;">Salida</th>
+                    <th style="text-align:left;">Estadía</th>
                 </tr>
 
                 <?php foreach ($items as $r): ?>
+                    <?php
+                    $stayTime = 'No disponible';
+
+                    if (!empty($r['arrival_date']) && $r['arrival_date'] !== '0000-00-00 00:00:00' && !empty($r['departure_date']) && $r['departure_date'] !== '0000-00-00 00:00:00') {
+                        $arrivalDate = new DateTime($r['arrival_date']);
+                        $departureDate = new DateTime($r['departure_date']);
+
+                        $interval = $arrivalDate->diff($departureDate);
+
+                        $days = $interval->days;
+                        $hours = $interval->h;
+                        $minutes = $interval->i;
+
+                        $stayTime = "{$days}d {$hours}h {$minutes}m";
+                    }
+                    ?>
+
                     <tr>
                         <td><?= $r['guide_number'] ?></td>
                         <td><?= $r['comodity'] ?></td>
-                        <td>
-                            <?= ($r['container'] && !in_array(strtoupper($r['container']), $invalidos, true)) ? strtoupper($r['container']) : '<span class="sin">SIN CONTENEDOR</span>'; ?>
-                        </td>
+                        <td><?= ($r['container'] && !in_array(strtoupper($r['container']), $invalidos, true)) ? strtoupper($r['container']) : '<span class="sin">SIN CONTENEDOR</span>'; ?></td>
                         <td><?= $r['seal_number'] ?></td>
                         <td><?= $r['booking'] ?></td>
                         <td><?= $r['pallets_quantity'] ?></td>
                         <td><?= $fmt($r['arrival_date']) ?></td>
                         <td><?= $fmt($r['departure_date']) ?></td>
+                        <td><?= $stayTime ?></td>
                     </tr>
                 <?php endforeach; ?>
+
+                <!-- Espacio entre exportadores -->
+                <tr>
+                    <td colspan="9" style="border:none; height:14px; background:#fff; padding:0;"></td>
+                </tr>
             <?php endforeach; ?>
         </table>
 
         <div style="page-break-before:always;">
-        <h3>Resumen por Exportador</h3>
-        <table>
-            <tr>
-            <th>Exportador</th>
-            <th>Pallets</th>
-            <th>Contenedores</th>
-            </tr>
-
-            <?php $tp = 0;
-foreach ($resumen as $exp => $r): ?>
+            <h3>Resumen por Exportador</h3>
+            <table>
                 <tr>
-                    <td><?= $exp ?></td>
-                    <td><?= $r['pallets'] ?></td>
-                    <td><?= count($r['containers']) ?></td>
+                    <th>Exportador</th>
+                    <th>Pallets</th>
+                    <th>Contenedores</th>
                 </tr>
-            <?php $tp += $r['pallets']; endforeach; ?>
 
-            <tr>
-                <td><strong>Total</strong></td>
-                <td><strong><?= $tp ?></strong></td>
-                <td><strong><?= count($contenedoresGlobal) ?></strong></td>
-            </tr>
-        </table>
+                <?php $tp = 0;?>
+                <?php foreach ($resumen as $exp => $r): ?>
+                    <tr>
+                        <td><?= $exp ?></td>
+                        <td><?= $r['pallets'] ?></td>
+                        <td><?= count($r['containers']) ?></td>
+                    </tr>
+                <?php $tp += $r['pallets'];?>
+                <?php endforeach; ?>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong><?= $tp ?></strong></td>
+                    <td><strong><?= count($contenedoresGlobal) ?></strong></td>
+                </tr>
+            </table>
         </div>
 
         <div class="footer">Generado por <?= $usuario ?> - <?= date('d/m/Y H:i') ?></div>
@@ -285,12 +323,7 @@ foreach ($resumen as $exp => $r): ?>
 <?php
 $html = ob_get_clean();
 
-/* ========= PDF ========= */
-$mpdf = new Mpdf([
-    'format' => 'A4-L',
-    'tempDir' => __DIR__ . '/../tmp',
-]);
-
+/* Generar PDF */
+$mpdf = new Mpdf(['format' => 'A4-L','tempDir' => __DIR__ . '/../tmp',]);
 $mpdf->WriteHTML($html);
-
 $mpdf->Output("Liquidacion_Nave_{$nave}_{$viaje}_{$fecha}.pdf", 'D');

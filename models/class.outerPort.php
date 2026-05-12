@@ -862,7 +862,7 @@ class outerPort extends iQuery
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
                         <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalCnts'>$count</span>)</em>
+                        <em>(Total: <span id='totalCnts'>" . number_format($count, 0, ',', '.') . "</span>)</em>
                     </h6>
 
                     <div style='position:relative; max-width:250px; width:100%;'>
@@ -1255,7 +1255,7 @@ class outerPort extends iQuery
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
                         <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalThermos'>$count</span>)</em>
+                        <em>(Total: <span id='totalThermos'>" . number_format($count, 0, ',', '.') . "</span>)</em>
                     </h6>
 
                     <div style='position:relative; max-width:250px; width:100%;'>
@@ -1586,7 +1586,7 @@ class outerPort extends iQuery
                     $hours = $interval->format('%h');
                     $minutes = $interval->format('%i');
 
-                    $stayTime = ($days <= 1 ? $days . ' día con ' : $days . ' días con ') . $hours . ' horas y ' . $minutes . ' minutos';
+                    $stayTime = "{$days}d {$hours}h {$minutes}m";
 
                     if ($days >= 1) {
                         $attr = "style='background-color:red; color:white;'";
@@ -1630,7 +1630,7 @@ class outerPort extends iQuery
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                     <h6 class='mb-0'>
                         <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalShips'>$count</span>)</em>
+                        <em>(Total: <span id='totalShips'>" . number_format($count, 0, ',', '.') . "</span>)</em>
                     </h6>
 
                     <div style='position:relative; max-width:250px; width:100%;'>
@@ -1742,13 +1742,9 @@ class outerPort extends iQuery
         $totalRegistros = 0;
 
         foreach ($result as $data) {
-
             $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
-
-            $departure = $data[$this->departuredate]
-                ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i')
-                : '';
+            $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : '';
 
             // estadía (formato corto como el otro)
             if ($data[$this->arrivaldate] && $data[$this->departuredate]) {
@@ -2008,7 +2004,7 @@ class outerPort extends iQuery
                 <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap gap-2'>
                 <h6 class='mb-0'>
                     <i class='fas fa-list'></i> Listado
-                    <em>(Total: <span id='totalShipStadistics'>{$i}</span>)</em>
+                    <em>(Total: <span id='totalShipStadistics'>" . number_format($i, 0, ',', '.') . "</span>)</em>
                 </h6>
 
                 <div style='position:relative; max-width:250px; width:100%;'>
