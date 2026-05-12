@@ -68,10 +68,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     <div class="col-sm-12">
                       <div class="alert custom-alert-warning d-flex align-items-center justify-content-between" role="alert">
                         <div class="d-flex align-items-center">
-                          <div class="icon me-2">
+                          <div class="icon me-4" style="padding-right: 5px;">
                             <i class="fa-solid fa-circle-info"></i>
                           </div>
-                          &nbsp;
                           <div>
                             <strong>Información:</strong>
                             Formulario de carga y contenedores provenientes desde el exterior.

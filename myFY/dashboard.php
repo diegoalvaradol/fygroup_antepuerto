@@ -252,18 +252,19 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                   <div class="col-12">
                                     <div id="divGraficoCamiones" style="position: relative;">
                                         <div id="mensajeSinDatos" class="col-sm-12 d-none justify-content-center align-items-center">
-    <div class="alert custom-alert-danger d-flex align-items-center" role="alert">
-        <div class="icon me-2">
-            <i class="fa-solid fa-circle-info"></i>
-        </div>
+                                            <div class="alert custom-alert-danger d-flex align-items-center" role="alert">
+                                                <div class="icon me-4" style="padding-right: 5px;">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </div>
 
-        <div>
-            <strong>Atención:</strong>
-            No hay datos disponibles para las fechas seleccionadas.
-            Por favor ajusta el rango e intenta nuevamente.
-        </div>
-    </div>
-</div>
+                                                <div>
+                                                    <strong>Atención:</strong>
+                                                    </br>
+                                                    No hay datos disponibles para las fechas seleccionadas.
+                                                    Por favor ajusta el rango e intenta nuevamente.
+                                                </div>
+                                            </div>
+                                        </div>
 
                                       <canvas id="graficoCamiones"></canvas>
                                     </div>

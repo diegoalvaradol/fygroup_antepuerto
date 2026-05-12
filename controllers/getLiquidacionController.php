@@ -56,13 +56,18 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (empty($rows)) {
     echo '
-  <div class="alert custom-alert-warning d-flex align-items-center py-2 px-3" style="max-width:545px;margin:0 auto;" role="alert">
-    <div>
-      <i class="fa-solid fa-triangle-exclamation me-2"></i>
-      <strong>Atención:</strong><br>
-      No hay información disponible para generar la liquidación de esta nave.
-    </div>
-  </div>';
+        <div class="alert custom-alert-warning d-flex align-items-center" role="alert">
+            <div class="icon me-4" style="padding-right: 5px;">
+                <i class="fa-solid fa-circle-info" ></i>
+            </div>
+
+            <div>
+                <strong>Atención:</strong>
+                </br>
+                No hay información disponible para generar la liquidación de esta nave.
+            </div>
+        </div>
+    ';
 
     exit;
 }

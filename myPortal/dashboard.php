@@ -71,7 +71,16 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="col-sm-12">
-                        <div class="alert alert-info" role="alert"> <i class="fa-solid fa-circle-info fa-lg"></i> <b style="font-size:100%;">¡Atención! : </b> Estimado usuario, cuenta con un tiempo de 30 minutos para visualizar el contenido del sistema, transcurrido dicho tiempo su sesión se cerrará.</div>
+                        <div class="alert custom-alert-danger d-flex align-items-center" role="alert">
+                            <div class="icon me-4" style="padding-right: 5px;">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+
+                            <div>
+                                <strong>Atención:</strong>
+                                Estimado usuario, cuenta con un tiempo de 30 minutos para visualizar el contenido del sistema, transcurrido dicho tiempo su sesión se cerrará.
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">

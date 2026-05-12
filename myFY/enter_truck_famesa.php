@@ -64,9 +64,15 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Ingreso Camiones Famesa</h1>
 
-                    <div class="col-sm-12">
-                      <div class="alert alert-info" role="alert"><i class="fa-solid fa-circle-info"></i>
-                        <b>¡Atención! : </b> Todos aquellos camiones que superen un día (1) de estadía en antepuerto serán destacados de color rojo.
+                    <div class="col-sm-6">
+                      <div class="alert custom-alert-info d-flex align-items-center" role="alert">
+                        <div class="icon me-4" style="padding-right: 5px;">
+                          <i class="fa-solid fa-circle-info"></i>
+                        </div>
+                        <div>
+                          <strong>Atención:</strong>
+                          Los camiones que superen 1 día de estadía en antepuerto serán resaltados en rojo.
+                        </div>
                       </div>
                     </div>
 

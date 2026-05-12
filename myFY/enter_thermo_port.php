@@ -66,10 +66,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                     <div class="col-sm-6">
                       <div class="alert custom-alert-info d-flex align-items-center" role="alert">
-                        <div class="icon me-2">
+                        <div class="icon me-4" style="padding-right: 5px;">
                           <i class="fa-solid fa-circle-info"></i>
                         </div>
-                        &nbsp;
                         <div>
                           <strong>Atención:</strong>
                           Los camiones que superen 1 día de estadía en antepuerto serán resaltados en rojo.
