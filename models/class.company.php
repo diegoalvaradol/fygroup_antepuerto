@@ -160,9 +160,9 @@ class company extends iQuery
                         <em>(Total: <span id='totalCompanies'>$count</span>)</em>
                     </h6>
 
-                    <div style='position:relative; max-width:250px; width:100%;'>
+                    <div class='input-search'>
                         <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                        <input type='text' id='serachCompanyTable' placeholder='Buscar por nombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                        <input type='text' id='searchCompanyTable' placeholder='Buscar por nombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
                     </div>
                     </div>
 
@@ -177,7 +177,7 @@ class company extends iQuery
             </div>
 
             <script>
-                document.getElementById('serachCompanyTable').addEventListener('keyup', function() {
+                document.getElementById('searchCompanyTable').addEventListener('keyup', function() {
                 let filter = this.value.toLowerCase().trim();
                 let rows = document.querySelectorAll('#companyTable tbody tr');
                 let visibleCount = 0;

@@ -65,14 +65,14 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Carga Internacional</h1>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                       <div class="alert custom-alert-warning d-flex align-items-center justify-content-between" role="alert">
                         <div class="d-flex align-items-center">
-                          <div class="icon me-4" style="padding-right: 5px;">
-                            <i class="fa-solid fa-circle-info"></i>
+                          <div class="icon me-4" style="padding-right: 10px; color:#eab308;">
+                            <i class="fa-solid fa-circle-info fa-xl me-3"></i>
                           </div>
                           <div>
-                            <strong>Información:</strong>
+                            <strong>Información:</strong></br>
                             Formulario de carga y contenedores provenientes desde el exterior.
                           </div>
                         </div>

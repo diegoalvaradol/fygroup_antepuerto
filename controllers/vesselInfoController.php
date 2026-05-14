@@ -2,10 +2,10 @@
 require_once __DIR__ . '/../config/includes.php';
 
 if (isset($_POST['id'])) {
-  $ship = new ship();
-  $id   = $_POST['id'];
+    $ship = new ship();
+    $id = $_POST['id'];
 
-  $sql = "SELECT
+    $sql = 'SELECT
       app_ships.*,
       sl.*,
       pol.city    AS pol_city,
@@ -17,56 +17,47 @@ if (isset($_POST['id'])) {
     JOIN app_ports AS pod ON app_ships.pod = pod.port_id
     JOIN app_ship_lines AS sl ON app_ships.ship_line = sl.line_id
     WHERE ship_id = :id LIMIT 1
-  ";
+  ';
 
-  $list = $ship->findAllStatic($sql, ['id' => $id]);
+    $list = $ship->findAllStatic($sql, ['id' => $id]);
 
-  $infoVessel = null;
-  $primary    = '#2563eb';
+    $infoVessel = null;
+    $primary = '#2563eb';
 
-  foreach ($list->getCollection() as $info) {
-    $eta    = $info['eta'];
-    $etd    = $info['etd'];
-    $pol    = $info['pol_city'] . ' - ' . $info['pol_country'];
-    $pod    = $info['pod_city'] . ' - ' . $info['pod_country'];
-    $voyage = $info['voyage'];
-    $line   = $info['name'];
+    foreach ($list->getCollection() as $info) {
+        $eta = $info['eta'];
+        $etd = $info['etd'];
+        $pol = $info['pol_city'] . ' - ' . $info['pol_country'];
+        $pod = $info['pod_city'] . ' - ' . $info['pod_country'];
+        $voyage = $info['voyage'];
+        $line = $info['name'];
 
-    $infoVessel = '
-      <div style="
-        border:1px solid #e5e7eb;
-        border-left:4px solid ' . $primary . ';
-        border-radius:8px;
-        padding:12px 16px;
-        background:#f9fafb;
-        font-family:Arial, sans-serif;
-        font-size:14px;
-      ">
+        $infoVessel = '
+            <div style=" border:1px solid #e5e7eb; border-left:4px solid ' . $primary . '; border-radius:8px; padding:12px 16px; background:#f9fafb; font-family:Arial, sans-serif; font-size:14px; width:500px;">
+                <div style="margin-bottom:6px;">
+                <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($eta))) . '
+                <span style="margin:0 6px; color:#9ca3af;">|</span>
+                <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($etd))) . '
+                </div>
 
-        <div style="margin-bottom:6px;">
-          <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($eta))) . '
-          <span style="margin:0 6px; color:#9ca3af;">|</span>
-          <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date("d-m-Y H:i", strtotime($etd))) . '
-        </div>
+                <div style="margin-bottom:6px;">
+                <b style="color:' . $primary . ';">POL:</b> ' . htmlspecialchars($pol) . '
+                <span style="margin:0 6px; color:#9ca3af;">|</span>
+                <b style="color:' . $primary . ';">POD:</b> ' . htmlspecialchars($pod) . '
+                </div>
 
-        <div style="margin-bottom:6px;">
-          <b style="color:' . $primary . ';">POL:</b> ' . htmlspecialchars($pol) . '
-          <span style="margin:0 6px; color:#9ca3af;">|</span>
-          <b style="color:' . $primary . ';">POD:</b> ' . htmlspecialchars($pod) . '
-        </div>
+                <div>
+                <b style="color:' . $primary . ';">Viaje:</b> ' . htmlspecialchars($voyage) . '
+                <span style="margin:0 6px; color:#9ca3af;">|</span>
+                <b style="color:' . $primary . ';">Línea:</b> ' . htmlspecialchars($line) . '
+                </div>
+            </div>
+        ';
+    }
 
-        <div>
-          <b style="color:' . $primary . ';">Viaje:</b> ' . htmlspecialchars($voyage) . '
-          <span style="margin:0 6px; color:#9ca3af;">|</span>
-          <b style="color:' . $primary . ';">Línea:</b> ' . htmlspecialchars($line) . '
-        </div>
-      </div>
-    ';
-  }
-
-  if ($id != null) {
-    if ($infoVessel != null) {
-      ?>
+    if ($id != null) {
+        if ($infoVessel != null) {
+            ?>
       <script>
         $(document).ready(function() {
           var seal = null;
@@ -84,11 +75,11 @@ if (isset($_POST['id'])) {
       </script>
       <?php
 
-      echo $infoVessel;
+            echo $infoVessel;
+        } else {
+            echo 'Información no encontrada.';
+        }
     } else {
-      echo "Información no encontrada.";
+        echo 'No se ha seleccionado una nave.';
     }
-  } else {
-    echo "No se ha seleccionado una nave.";
-  }
 }

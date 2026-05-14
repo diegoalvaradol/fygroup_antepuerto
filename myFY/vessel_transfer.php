@@ -5,6 +5,7 @@ require_once __DIR__ . '/../config/includes.php';
 $cfg = new cfg();
 $user = new user();
 $port = new outerPort();
+$alerts = new UIComponents();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $admin = $user->isAdmin($_SESSION['user']['run']);
@@ -65,15 +66,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
               <p class="mb-4">Acá podrás realizar el roleo de carga entre naves del tipo liner y charter.</p>
 
               <div class="col-sm-6">
-                <div class="alert custom-alert-warning d-flex align-items-center" role="alert">
-                  <div class="icon me-4" style="padding-right: 5px;">
-                    <i class="fa-solid fa-circle-info"></i>
-                  </div>
-                  <div>
-                    <strong>Atención:</strong>
-                    Considerar que la acción de roleo es un proceso irreversible.
-                  </div>
-                </div>
+                <?php echo $alerts->customAlert('warning', 'Atención', 'Considerar que la acción de roleo es un proceso irreversible.'); ?>
               </div>
 
               <!-- Content Row -->
@@ -88,15 +81,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                     <div class="card-body">
                       <div class="col-sm-3">
-                        <div class="alert custom-alert-info d-flex align-items-center" role="alert">
-                          <div class="icon me-4" style="padding-right: 5px;">
-                            <i class="fa-solid fa-circle-info"></i>
-                          </div>
-                          <div>
-                            <strong>Simbología:</strong>
-                            '-T': Termo | '-C': Contenedores.
-                          </div>
-                        </div>
+                        <?php echo $alerts->customAlert('info', 'Simbología', '"-T": Termo | "-C": Contenedores.'); ?>
                       </div>
 
                       <form class="form-container" id="vesselTransferForm">

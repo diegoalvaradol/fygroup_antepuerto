@@ -79,23 +79,17 @@ class UIComponents
                     position: fixed;
                     bottom: 20px;
                     left: 20px;
-
                     width: 320px;
                     max-width: 92%;
-
                     background: #fff;
                     border-radius: 16px;
-
                     box-shadow: 0 12px 30px rgba(0,0,0,0.25);
                     font-family: "Segoe UI", sans-serif;
-
                     z-index: 1100;
-
                     overflow: hidden;
                     transform: translateY(20px);
                     opacity: 0;
                     pointer-events: none;
-
                     transition: all 0.25s ease;
                 }
 
@@ -109,7 +103,6 @@ class UIComponents
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-
                     padding: 14px;
                     background: linear-gradient(135deg, #25d366, #1ebe5d);
                     color: white;
@@ -150,14 +143,11 @@ class UIComponents
                     align-items: center;
                     justify-content: center;
                     gap: 8px;
-
                     margin-top: 12px;
                     padding: 12px;
-
                     background: #25d366;
                     color: white;
                     text-decoration: none;
-
                     font-weight: 600;
                     border-radius: 10px;
                 }
@@ -170,21 +160,15 @@ class UIComponents
                     position: fixed;
                     bottom: 20px;
                     left: 20px;
-
                     width: 65px;
                     height: 65px;
-
                     background: linear-gradient(135deg, #25d366, #1ebe5d);
                     border-radius: 50%;
-
                     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-
                     display: flex;
                     align-items: center;
                     justify-content: center;
-
                     cursor: pointer;
-
                     z-index: 1100;
                 }
 
@@ -209,7 +193,6 @@ class UIComponents
 
             <!-- chat -->
             <div id="whatsapp-chat-box">
-
                 <div class="chat-header">
                     <div class="chat-title">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
@@ -225,16 +208,11 @@ class UIComponents
                         ¿En qué podemos ayudarte?
                     </div>
 
-                    <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-chat">
-
+                    <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" rel="noopener noreferrer" class="btn-chat">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
                         Escribir por WhatsApp
                     </a>
                 </div>
-
             </div>
 
             <script>
@@ -265,4 +243,48 @@ class UIComponents
 
         return ob_get_clean();
     }
+
+    public function customAlert($type, $title, $message)
+    {
+        $alerts = [
+            'danger' => [
+                'icon' => 'fa-circle-info',
+                'color' => '#dc2626',
+            ],
+
+            'success' => [
+                'icon' => 'fa-circle-check',
+                'color' => '#16a34a',
+            ],
+
+            'warning' => [
+                'icon' => 'fa-triangle-exclamation',
+                'color' => '#eab308',
+            ],
+
+            'info' => [
+                'icon' => 'fa-circle-info',
+                'color' => '#3b82f6',
+            ],
+        ];
+
+        $alert = $alerts[$type] ?? $alerts['info'];
+
+        ob_start();
+        ?>
+            <div class="alert custom-alert-<?= htmlspecialchars($type) ?> d-flex align-items-center" role="alert">
+                <div class="icon me-4 d-flex align-items-center" style="padding-right: 10px; color: <?= $alert['color'] ?>;">
+                    <i class="fa-solid <?= $alert['icon'] ?> fa-xl me-3"></i>
+                </div>
+
+                <div>
+                    <strong><?= htmlspecialchars($title) ?>: </strong><br>
+                    <?= strip_tags($message, '<b><strong><i><em><s><strike><mark><br>') ?>
+                </div>
+            </div>
+        <?php
+
+        return ob_get_clean();
+    }
+
 }

@@ -1,73 +1,75 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 class famesa extends iQuery
 {
-  protected string $table      = "app_famesa";
-  protected string $primaryKey = 'row_id';
+    protected string $table = 'app_famesa';
+    protected string $primaryKey = 'row_id';
 
-  public $id                   = "row_id";
-  public $countervessel        = "counter_vessel";
-  public $vessel               = "vessel_id";
-  public $carplatetruck        = "car_plate_truck";
-  public $carplateramp         = "car_plate_ramp";
-  public $guide                = "guide_number";
-  public $maxibags             = "maxibags_quantity";
-  public $category             = "category"; /* [1 => 1° Categoría, 2 => 2° Categoría] */
-  public $arrivaldateport      = "arrival_date_port";
-  public $departuredateport    = "departure_date_port";
-  public $arrivaldatedeposit   = "arrival_date_deposit";
-  public $departuredatedeposit = "departure_date_deposit";
-  public $observations         = "observations";
-  public $created              = "created";
-  public $createdby            = "created_by";
+    public $id = 'row_id';
+    public $countervessel = 'counter_vessel';
+    public $vessel = 'vessel_id';
+    public $carplatetruck = 'car_plate_truck';
+    public $carplateramp = 'car_plate_ramp';
+    public $guide = 'guide_number';
+    public $maxibags = 'maxibags_quantity';
+    public $category = 'category'; /* [1 => 1° Categoría, 2 => 2° Categoría] */
+    public $arrivaldateport = 'arrival_date_port';
+    public $departuredateport = 'departure_date_port';
+    public $arrivaldatedeposit = 'arrival_date_deposit';
+    public $departuredatedeposit = 'departure_date_deposit';
+    public $observations = 'observations';
+    public $created = 'created';
+    public $createdby = 'created_by';
 
-  public function __construct()
-  {
-    parent::__construct(); // usa Database::get() desde iQuery
-  }
+    public function __construct()
+    {
+        parent::__construct(); // usa Database::get() desde iQuery
+    }
 
-  public function save()
-  {
-    $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate_truck, car_plate_ramp, guide_number, maxibags_quantity, category, arrival_date_port, departure_date_port, arrival_date_deposit, departure_date_deposit, observations, created, created_by)";
-    $query .= "VALUES (:countervessel, :vessel, :carplatetruck, :carplateramp, :guide, :maxibags, :category, :arrivaldateport, :departuredateport, :arrivaldatedeposit, :departuredatedeposit, :observations, :created, :createdby)";
-    $stmt = $this->db->prepare($query);
+    public function save()
+    {
+        $query = "INSERT INTO $this->table (counter_vessel, vessel_id, car_plate_truck, car_plate_ramp, guide_number, maxibags_quantity, category, arrival_date_port, departure_date_port, arrival_date_deposit, departure_date_deposit, observations, created, created_by)";
+        $query .= 'VALUES (:countervessel, :vessel, :carplatetruck, :carplateramp, :guide, :maxibags, :category, :arrivaldateport, :departuredateport, :arrivaldatedeposit, :departuredatedeposit, :observations, :created, :createdby)';
+        $stmt = $this->db->prepare($query);
 
-    $this->countervessel        = htmlspecialchars(strip_tags($this->countervessel));
-    $this->vessel               = htmlspecialchars(strip_tags($this->vessel));
-    $this->carplatetruck        = htmlspecialchars(strip_tags($this->carplatetruck));
-    $this->carplateramp         = htmlspecialchars(strip_tags($this->carplateramp ?? ''));
-    $this->guide                = htmlspecialchars(strip_tags($this->guide));
-    $this->maxibags             = htmlspecialchars(strip_tags($this->maxibags));
-    $this->category             = htmlspecialchars(strip_tags($this->category));
-    $this->arrivaldateport      = $this->arrivaldateport;
-    $this->departuredateport    = $this->departuredateport;
-    $this->arrivaldatedeposit   = $this->arrivaldatedeposit;
-    $this->departuredatedeposit = $this->departuredatedeposit;
-    $this->observations         = $this->observations;
-    $this->created              = $this->created;
-    $this->createdby            = htmlspecialchars(strip_tags($this->createdby));
+        $this->countervessel = htmlspecialchars(strip_tags($this->countervessel));
+        $this->vessel = htmlspecialchars(strip_tags($this->vessel));
+        $this->carplatetruck = htmlspecialchars(strip_tags($this->carplatetruck));
+        $this->carplateramp = htmlspecialchars(strip_tags($this->carplateramp ?? ''));
+        $this->guide = htmlspecialchars(strip_tags($this->guide));
+        $this->maxibags = htmlspecialchars(strip_tags($this->maxibags));
+        $this->category = htmlspecialchars(strip_tags($this->category));
+        $this->arrivaldateport = $this->arrivaldateport;
+        $this->departuredateport = $this->departuredateport;
+        $this->arrivaldatedeposit = $this->arrivaldatedeposit;
+        $this->departuredatedeposit = $this->departuredatedeposit;
+        $this->observations = $this->observations;
+        $this->created = $this->created;
+        $this->createdby = htmlspecialchars(strip_tags($this->createdby));
 
-    $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
-    $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
-    $stmt->bindParam(":carplatetruck", $this->carplatetruck, PDO::PARAM_STR);
-    $stmt->bindParam(":carplateramp", $this->carplateramp, PDO::PARAM_STR);
-    $stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
-    $stmt->bindParam(":maxibags", $this->maxibags, PDO::PARAM_INT);
-    $stmt->bindParam(":category", $this->category, PDO::PARAM_INT);
-    $stmt->bindParam(":arrivaldateport", $this->arrivaldateport, PDO::PARAM_STR);
-    $stmt->bindParam(":departuredateport", $this->departuredateport, PDO::PARAM_STR);
-    $stmt->bindParam(":arrivaldatedeposit", $this->arrivaldatedeposit, PDO::PARAM_STR);
-    $stmt->bindParam(":departuredatedeposit", $this->departuredatedeposit, PDO::PARAM_STR);
-    $stmt->bindParam(":observations", $this->observations, PDO::PARAM_STR);
-    $stmt->bindParam(":created", $this->created, PDO::PARAM_STR);
-    $stmt->bindParam(":createdby", $this->createdby, PDO::PARAM_STR);
+        $stmt->bindParam(':countervessel', $this->countervessel, PDO::PARAM_INT);
+        $stmt->bindParam(':vessel', $this->vessel, PDO::PARAM_INT);
+        $stmt->bindParam(':carplatetruck', $this->carplatetruck, PDO::PARAM_STR);
+        $stmt->bindParam(':carplateramp', $this->carplateramp, PDO::PARAM_STR);
+        $stmt->bindParam(':guide', $this->guide, PDO::PARAM_STR);
+        $stmt->bindParam(':maxibags', $this->maxibags, PDO::PARAM_INT);
+        $stmt->bindParam(':category', $this->category, PDO::PARAM_INT);
+        $stmt->bindParam(':arrivaldateport', $this->arrivaldateport, PDO::PARAM_STR);
+        $stmt->bindParam(':departuredateport', $this->departuredateport, PDO::PARAM_STR);
+        $stmt->bindParam(':arrivaldatedeposit', $this->arrivaldatedeposit, PDO::PARAM_STR);
+        $stmt->bindParam(':departuredatedeposit', $this->departuredatedeposit, PDO::PARAM_STR);
+        $stmt->bindParam(':observations', $this->observations, PDO::PARAM_STR);
+        $stmt->bindParam(':created', $this->created, PDO::PARAM_STR);
+        $stmt->bindParam(':createdby', $this->createdby, PDO::PARAM_STR);
 
-    return $stmt->execute();
-  }
+        return $stmt->execute();
+    }
 
-  public function update()
-  {
-    $query = "UPDATE $this->table SET
+    public function update()
+    {
+        $query = "UPDATE $this->table SET
         counter_vessel = :countervessel,
         vessel_id = :vessel,
         car_plate_truck = :carplatetruck,
@@ -82,189 +84,189 @@ class famesa extends iQuery
         observations = :observations
         WHERE row_id = :id";
 
-    $stmt = $this->db->prepare($query);
+        $stmt = $this->db->prepare($query);
 
-    // Sanitización
-    $this->id                   = (int) $this->id;
-    $this->countervessel        = (int) $this->countervessel;
-    $this->vessel               = (int) $this->vessel;
-    $this->carplatetruck        = htmlspecialchars(strip_tags($this->carplatetruck));
-    $this->carplateramp         = htmlspecialchars(strip_tags($this->carplateramp ?? ''));
-    $this->guide                = htmlspecialchars(strip_tags($this->guide));
-    $this->maxibags             = (int) $this->maxibags;
-    $this->category             = (int) $this->category;
-    $this->arrivaldateport      = $this->arrivaldateport ?: null;
-    $this->departuredateport    = $this->departuredateport ?: null;
-    $this->arrivaldatedeposit   = $this->arrivaldatedeposit ?: null;
-    $this->departuredatedeposit = $this->departuredatedeposit ?: null;
-    $this->observations         = htmlspecialchars(strip_tags($this->observations));
+        // Sanitización
+        $this->id = (int) $this->id;
+        $this->countervessel = (int) $this->countervessel;
+        $this->vessel = (int) $this->vessel;
+        $this->carplatetruck = htmlspecialchars(strip_tags($this->carplatetruck));
+        $this->carplateramp = htmlspecialchars(strip_tags($this->carplateramp ?? ''));
+        $this->guide = htmlspecialchars(strip_tags($this->guide));
+        $this->maxibags = (int) $this->maxibags;
+        $this->category = (int) $this->category;
+        $this->arrivaldateport = $this->arrivaldateport ?: null;
+        $this->departuredateport = $this->departuredateport ?: null;
+        $this->arrivaldatedeposit = $this->arrivaldatedeposit ?: null;
+        $this->departuredatedeposit = $this->departuredatedeposit ?: null;
+        $this->observations = htmlspecialchars(strip_tags($this->observations));
 
-    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":countervessel", $this->countervessel, PDO::PARAM_INT);
-    $stmt->bindParam(":vessel", $this->vessel, PDO::PARAM_INT);
-    $stmt->bindParam(":carplatetruck", $this->carplatetruck, PDO::PARAM_STR);
-    $stmt->bindParam(":carplateramp", $this->carplateramp, PDO::PARAM_STR);
-    $stmt->bindParam(":guide", $this->guide, PDO::PARAM_STR);
-    $stmt->bindParam(":maxibags", $this->maxibags, PDO::PARAM_INT);
-    $stmt->bindParam(":category", $this->category, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':countervessel', $this->countervessel, PDO::PARAM_INT);
+        $stmt->bindParam(':vessel', $this->vessel, PDO::PARAM_INT);
+        $stmt->bindParam(':carplatetruck', $this->carplatetruck, PDO::PARAM_STR);
+        $stmt->bindParam(':carplateramp', $this->carplateramp, PDO::PARAM_STR);
+        $stmt->bindParam(':guide', $this->guide, PDO::PARAM_STR);
+        $stmt->bindParam(':maxibags', $this->maxibags, PDO::PARAM_INT);
+        $stmt->bindParam(':category', $this->category, PDO::PARAM_INT);
 
-    // Fechas: bindValue con PDO::PARAM_NULL si son null
-    $stmt->bindValue(":arrivaldateport", $this->arrivaldateport ?? null, $this->arrivaldateport ? PDO::PARAM_STR : PDO::PARAM_NULL);
-    $stmt->bindValue(":departuredateport", $this->departuredateport ?? null, $this->departuredateport ? PDO::PARAM_STR : PDO::PARAM_NULL);
-    $stmt->bindValue(":arrivaldatedeposit", $this->arrivaldatedeposit ?? null, $this->arrivaldatedeposit ? PDO::PARAM_STR : PDO::PARAM_NULL);
-    $stmt->bindValue(":departuredatedeposit", $this->departuredatedeposit ?? null, $this->departuredatedeposit ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        // Fechas: bindValue con PDO::PARAM_NULL si son null
+        $stmt->bindValue(':arrivaldateport', $this->arrivaldateport ?? null, $this->arrivaldateport ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $stmt->bindValue(':departuredateport', $this->departuredateport ?? null, $this->departuredateport ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $stmt->bindValue(':arrivaldatedeposit', $this->arrivaldatedeposit ?? null, $this->arrivaldatedeposit ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $stmt->bindValue(':departuredatedeposit', $this->departuredatedeposit ?? null, $this->departuredatedeposit ? PDO::PARAM_STR : PDO::PARAM_NULL);
 
-    $stmt->bindParam(":observations", $this->observations, PDO::PARAM_STR);
+        $stmt->bindParam(':observations', $this->observations, PDO::PARAM_STR);
 
-    return $stmt->execute();
-  }
-
-  public function delete()
-  {
-    $query = "DELETE FROM $this->table WHERE row_id = :id";
-    $stmt  = $this->db->prepare($query);
-
-    $this->id = htmlspecialchars(strip_tags($this->id));
-
-    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-
-    return $stmt->execute();
-  }
-
-  public function updateDateTruck($field, $date)
-  {
-    $allowed = ['departure_date_port', 'arrival_date_deposit', 'departure_date_deposit'];
-
-    // validar campo
-    if (!in_array($field, $allowed)) {
-      return false;
+        return $stmt->execute();
     }
 
-    // convertir formato
-    $rawDate = str_replace('T', ' ', $date);
-    $d       = DateTime::createFromFormat('Y-m-d H:i', $rawDate);
+    public function delete()
+    {
+        $query = "DELETE FROM $this->table WHERE row_id = :id";
+        $stmt = $this->db->prepare($query);
 
-    if (!$d) {
-      return false;
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+
+        return $stmt->execute();
     }
 
-    // FORMATEAR a string (clave)
-    $dateFormatted = $d->format('Y-m-d H:i:s');
+    public function updateDateTruck($field, $date)
+    {
+        $allowed = ['departure_date_port', 'arrival_date_deposit', 'departure_date_deposit'];
 
-    $query = "UPDATE {$this->table} SET {$field} = :date WHERE row_id = :id";
-    $stmt  = $this->db->prepare($query);
+        // validar campo
+        if (!in_array($field, $allowed)) {
+            return false;
+        }
 
-    $this->id = (int) $this->id;
+        // convertir formato
+        $rawDate = str_replace('T', ' ', $date);
+        $d = DateTime::createFromFormat('Y-m-d H:i', $rawDate);
 
-    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":date", $dateFormatted, PDO::PARAM_STR);
+        if (!$d) {
+            return false;
+        }
 
-    return $stmt->execute();
-  }
+        // FORMATEAR a string (clave)
+        $dateFormatted = $d->format('Y-m-d H:i:s');
 
-  public function updateArrivalDeposit()
-  {
-    $query = "UPDATE $this->table SET arrival_date_deposit = :arrivaldatedeposit WHERE row_id = :id";
-    $stmt  = $this->db->prepare($query);
+        $query = "UPDATE {$this->table} SET {$field} = :date WHERE row_id = :id";
+        $stmt = $this->db->prepare($query);
 
-    $this->id                 = htmlspecialchars(strip_tags($this->id));
-    $this->arrivaldatedeposit = $this->arrivaldatedeposit;
+        $this->id = (int) $this->id;
 
-    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":arrivaldatedeposit", $this->arrivaldatedeposit, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':date', $dateFormatted, PDO::PARAM_STR);
 
-    return $stmt->execute();
-  }
-
-  public function updateDepartureDeposit()
-  {
-    $query = "UPDATE $this->table SET departure_date_deposit = :departuredatedeposit WHERE row_id = :id";
-    $stmt  = $this->db->prepare($query);
-
-    $this->id                   = htmlspecialchars(strip_tags($this->id));
-    $this->departuredatedeposit = $this->departuredatedeposit;
-
-    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":departuredatedeposit", $this->departuredatedeposit, PDO::PARAM_STR);
-
-    return $stmt->execute();
-  }
-
-  public function findByUser($run)
-  {
-    $query = "SELECT * FROM app_users WHERE run = :run";
-    $stmt  = $this->db->prepare($query);
-    $stmt->bindParam(":run", $run, PDO::PARAM_STR);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    $name = $result["name"] . ' ' . $result["last_name"];
-
-    return $name;
-  }
-
-  public function getTableTrucksFamesa()
-  {
-    $ship      = new ship();
-    $user      = new user();
-    $adminEdit = $user->isAdminEdit($_SESSION["user"]["run"]);
-    $count     = 0;
-
-    /* Filtros */
-    $filterNave    = isset($_POST['nave']) ? $_POST['nave'] : '-';
-    $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '-';
-    $filterGuia    = isset($_POST['guia']) ? trim($_POST['guia']) : '';
-
-    /* Construir cláusulas WHERE dinámicamente */
-    $conditions = ["1"];
-    $params     = [];
-
-    if ($filterNave !== '-') {
-      $conditions[]    = "sh.ship_id = :nave";
-      $params[':nave'] = $filterNave;
+        return $stmt->execute();
     }
 
-    if ($filterPatente !== '-') {
-      $conditions[]       = "$this->carplatetruck = :patente";
-      $params[':patente'] = $filterPatente;
+    public function updateArrivalDeposit()
+    {
+        $query = "UPDATE $this->table SET arrival_date_deposit = :arrivaldatedeposit WHERE row_id = :id";
+        $stmt = $this->db->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->arrivaldatedeposit = $this->arrivaldatedeposit;
+
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':arrivaldatedeposit', $this->arrivaldatedeposit, PDO::PARAM_STR);
+
+        return $stmt->execute();
     }
 
-    if ($filterGuia !== '') {
-      $conditions[]    = "$this->guide LIKE :guia";
-      $params[':guia'] = "%$filterGuia%";
+    public function updateDepartureDeposit()
+    {
+        $query = "UPDATE $this->table SET departure_date_deposit = :departuredatedeposit WHERE row_id = :id";
+        $stmt = $this->db->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->departuredatedeposit = $this->departuredatedeposit;
+
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':departuredatedeposit', $this->departuredatedeposit, PDO::PARAM_STR);
+
+        return $stmt->execute();
     }
 
-    $whereClause = implode(' AND ', $conditions);
+    public function findByUser($run)
+    {
+        $query = 'SELECT * FROM app_users WHERE run = :run';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':run', $run, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    /* Contador de registros */
-    $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
-    $countStmt  = $this->db->prepare($countQuery);
-    $countStmt->execute($params);
-    $totalRegistros = $countStmt->fetchColumn();
+        $name = $result['name'] . ' ' . $result['last_name'];
 
-    /* Construccion total de la página y query */
-    $porPagina = 25; /* Número de registros por página */
-    $pagina    = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $inicio    = ($pagina - 1) * $porPagina;
-
-    if ($_SESSION["user"]["division"] === 'fy') {
-      $urlBase = generateMkey('enter_thermo_port', 'myFY') . '&page=';
-    } else {
-      $urlBase = generateMkey('enter_thermo_port', 'myPortal') . '&page=';
+        return $name;
     }
 
-    $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
-    $stmt  = $this->db->prepare($query);
-    foreach ($params as $key => $value) {
-      $stmt->bindValue($key, $value);
-    }
-    $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
-    $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getTableTrucksFamesa()
+    {
+        $ship = new ship();
+        $user = new user();
+        $adminEdit = $user->isAdminEdit($_SESSION['user']['run']);
+        $count = 0;
 
-    /* Formulario de filtros */
-    $form = "
+        /* Filtros */
+        $filterNave = isset($_POST['nave']) ? $_POST['nave'] : '-';
+        $filterPatente = isset($_POST['patente']) ? $_POST['patente'] : '-';
+        $filterGuia = isset($_POST['guia']) ? trim($_POST['guia']) : '';
+
+        /* Construir cláusulas WHERE dinámicamente */
+        $conditions = ['1'];
+        $params = [];
+
+        if ($filterNave !== '-') {
+            $conditions[] = 'sh.ship_id = :nave';
+            $params[':nave'] = $filterNave;
+        }
+
+        if ($filterPatente !== '-') {
+            $conditions[] = "$this->carplatetruck = :patente";
+            $params[':patente'] = $filterPatente;
+        }
+
+        if ($filterGuia !== '') {
+            $conditions[] = "$this->guide LIKE :guia";
+            $params[':guia'] = "%$filterGuia%";
+        }
+
+        $whereClause = implode(' AND ', $conditions);
+
+        /* Contador de registros */
+        $countQuery = "SELECT COUNT(*) FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0";
+        $countStmt = $this->db->prepare($countQuery);
+        $countStmt->execute($params);
+        $totalRegistros = $countStmt->fetchColumn();
+
+        /* Construccion total de la página y query */
+        $porPagina = 25; /* Número de registros por página */
+        $pagina = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $inicio = ($pagina - 1) * $porPagina;
+
+        if ($_SESSION['user']['division'] === 'fy') {
+            $urlBase = generateMkey('enter_thermo_port', 'myFY') . '&page=';
+        } else {
+            $urlBase = generateMkey('enter_thermo_port', 'myPortal') . '&page=';
+        }
+
+        $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
+        $stmt = $this->db->prepare($query);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+        $stmt->bindValue(':inicio', $inicio, PDO::PARAM_INT);
+        $stmt->bindValue(':porPagina', $porPagina, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        /* Formulario de filtros */
+        $form = "
     <div class='row'>
       <div class='col-lg-12'>
         <div class='card shadow mb-4'>
@@ -306,76 +308,76 @@ class famesa extends iQuery
     </div>
     ";
 
-    $thead = "<thead style='background-color:#4e73df; color:white;'>";
-    $thead .= "<tr>";
-    $thead .= "<th>Posición</th>";
-    $thead .= "<th>Nave</th>";
-    $thead .= "<th>Patente Camión</th>";
-    $thead .= "<th>Patente Rampla</th>";
-    $thead .= "<th>Guía(s)</th>";
-    $thead .= "<th>Cant. Maxi Sacos</th>";
-    $thead .= "<th>Categoría</th>";
-    $thead .= "<th>Entrada Puerto</th>";
-    $thead .= "<th>Salida Puerto</th>";
-    $thead .= "<th>Entrada Depósito</th>";
-    $thead .= "<th>Salida Depósito</th>";
-    $thead .= "<th>Creado</th>";
-    $thead .= "<th>Digitado Por</th>";
-    $thead .= "<th>Acciones</th>";
-    $thead .= "</tr>";
-    $thead .= "</thead>";
-    $thead .= "<tbody>";
+        $thead = "<thead style='background-color:#4e73df; color:white;'>";
+        $thead .= '<tr>';
+        $thead .= '<th>Posición</th>';
+        $thead .= '<th>Nave</th>';
+        $thead .= '<th>Patente Camión</th>';
+        $thead .= '<th>Patente Rampla</th>';
+        $thead .= '<th>Guía(s)</th>';
+        $thead .= '<th>Cant. Maxi Sacos</th>';
+        $thead .= '<th>Categoría</th>';
+        $thead .= '<th>Entrada Puerto</th>';
+        $thead .= '<th>Salida Puerto</th>';
+        $thead .= '<th>Entrada Depósito</th>';
+        $thead .= '<th>Salida Depósito</th>';
+        $thead .= '<th>Creado</th>';
+        $thead .= '<th>Digitado Por</th>';
+        $thead .= '<th>Acciones</th>';
+        $thead .= '</tr>';
+        $thead .= '</thead>';
+        $thead .= '<tbody>';
 
-    $tr = null;
+        $tr = null;
 
-    if ($result !== []) {
-      foreach ($result as $data) {
-        $createdTime          = new DateTime($data[$this->arrivaldateport]);
-        $arrivalTimePort      = new DateTime($data[$this->arrivaldateport]);
-        $departureDatePort    = $data[$this->departuredateport] != null ? new DateTime($data[$this->departuredateport]) : null;
-        $arrivalTimeDeposit   = $data[$this->arrivaldatedeposit] != null ? new DateTime($data[$this->arrivaldatedeposit]) : null;
-        $departureDateDeposit = $data[$this->departuredatedeposit] != null ? new DateTime($data[$this->departuredatedeposit]) : null;
+        if ($result !== []) {
+            foreach ($result as $data) {
+                $createdTime = new DateTime($data[$this->arrivaldateport]);
+                $arrivalTimePort = new DateTime($data[$this->arrivaldateport]);
+                $departureDatePort = $data[$this->departuredateport] != null ? new DateTime($data[$this->departuredateport]) : null;
+                $arrivalTimeDeposit = $data[$this->arrivaldatedeposit] != null ? new DateTime($data[$this->arrivaldatedeposit]) : null;
+                $departureDateDeposit = $data[$this->departuredatedeposit] != null ? new DateTime($data[$this->departuredatedeposit]) : null;
 
-        $btnAddTDeparturePort    = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'departure_port')\"><i class='fas fa-clock'></i> Salida Puerto</button>";
-        $btnAddTArrivalDeposit   = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'arrival_depot')\"><i class='fas fa-clock'></i> Entrada Depósito</button>";
-        $btnAddTDepartureDeposit = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'departure_depot')\"><i class='fas fa-clock'></i> Salida Depósito</button>";
+                $btnAddTDeparturePort = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'departure_port')\"><i class='fas fa-clock'></i> Salida Puerto</button>";
+                $btnAddTArrivalDeposit = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'arrival_depot')\"><i class='fas fa-clock'></i> Entrada Depósito</button>";
+                $btnAddTDepartureDeposit = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'departure_depot')\"><i class='fas fa-clock'></i> Salida Depósito</button>";
 
-        $created          = $createdTime->format('d-m-Y H:i');
-        $arrivalPort      = $arrivalTimePort->format('d-m-Y H:i');
-        $departurePort    = $data[$this->departuredateport] != null ? $departureDatePort->format('d-m-Y H:i') : $btnAddTDeparturePort;
-        $arrivalDeposit   = $data[$this->arrivaldatedeposit] != null ? $arrivalTimeDeposit->format('d-m-Y H:i') : $btnAddTArrivalDeposit;
-        $departureDeposit = $data[$this->departuredatedeposit] != null ? $departureDateDeposit->format('d-m-Y H:i') : $btnAddTDepartureDeposit;
+                $created = $createdTime->format('d-m-Y H:i');
+                $arrivalPort = $arrivalTimePort->format('d-m-Y H:i');
+                $departurePort = $data[$this->departuredateport] != null ? $departureDatePort->format('d-m-Y H:i') : $btnAddTDeparturePort;
+                $arrivalDeposit = $data[$this->arrivaldatedeposit] != null ? $arrivalTimeDeposit->format('d-m-Y H:i') : $btnAddTArrivalDeposit;
+                $departureDeposit = $data[$this->departuredatedeposit] != null ? $departureDateDeposit->format('d-m-Y H:i') : $btnAddTDepartureDeposit;
 
-        $btnEdit   = $adminEdit ? "<button type='button' class='btn btn-sm btn-warning btn-user' onclick='editTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
-        $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
+                $btnEdit = $adminEdit ? "<button type='button' class='btn btn-sm btn-warning btn-user' onclick='editTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
+                $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
 
-        $tr .= "<td>" . $data[$this->countervessel] . "</td>";
-        $tr .= "<td>" . $ship->getVesselName($data[$this->vessel]) . "</td>";
-        $tr .= "<td>" . $data[$this->carplatetruck] . "</td>";
-        $tr .= "<td>" . $data[$this->carplateramp] . "</td>";
-        $tr .= "<td>" . $data[$this->guide] . "</td>";
-        $tr .= "<td>" . $data[$this->maxibags] . "</td>";
-        $tr .= "<td>" . $data[$this->category] . "</td>";
-        $tr .= "<td>" . $arrivalPort . "</td>";
-        $tr .= "<td>" . $departurePort . "</td>";
-        $tr .= "<td>" . $arrivalDeposit . "</td>";
-        $tr .= "<td>" . $departureDeposit . "</td>";
-        $tr .= "<td>" . $created . "</td>";
-        $tr .= "<td>" . $this->findByUser($data[$this->createdby]) . "</td>";
-        $tr .= "<td>" . $btnEdit . ' ' . $btnDelete . "</td>";
-        $tr .= "</tr>";
+                $tr .= '<td>' . $data[$this->countervessel] . '</td>';
+                $tr .= '<td>' . $ship->getVesselName($data[$this->vessel]) . '</td>';
+                $tr .= '<td>' . $data[$this->carplatetruck] . '</td>';
+                $tr .= '<td>' . $data[$this->carplateramp] . '</td>';
+                $tr .= '<td>' . $data[$this->guide] . '</td>';
+                $tr .= '<td>' . $data[$this->maxibags] . '</td>';
+                $tr .= '<td>' . $data[$this->category] . '</td>';
+                $tr .= '<td>' . $arrivalPort . '</td>';
+                $tr .= '<td>' . $departurePort . '</td>';
+                $tr .= '<td>' . $arrivalDeposit . '</td>';
+                $tr .= '<td>' . $departureDeposit . '</td>';
+                $tr .= '<td>' . $created . '</td>';
+                $tr .= '<td>' . $this->findByUser($data[$this->createdby]) . '</td>';
+                $tr .= '<td>' . $btnEdit . ' ' . $btnDelete . '</td>';
+                $tr .= '</tr>';
 
-        $count++;
-      }
-    } else {
-      $tr .= "<tr>";
-      $tr .= "<td colspan='14' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
-      $tr .= "</tr>";
-    }
+                $count++;
+            }
+        } else {
+            $tr .= '<tr>';
+            $tr .= "<td colspan='14' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>";
+            $tr .= '</tr>';
+        }
 
-    $tbclose = "</tbody>";
+        $tbclose = '</tbody>';
 
-    $table = $form . "
+        $table = $form . "
       <div class='row'>
         <div class='col-lg-12'>
           <div class='card shadow mb-4'>
@@ -385,7 +387,7 @@ class famesa extends iQuery
                 <em>(Total: " . $count . ")</em>
               </h6>
 
-              <div style='position:relative; max-width:250px; width:100%;'>
+              <div class='input-search'>
                 <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
                 <input type='text' id='searchFamesaTruckTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
               </div>
@@ -394,8 +396,8 @@ class famesa extends iQuery
             <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
               <table id='famesaTruckTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
                 <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", "", $thead) . "
-                  " . $tr . $tbclose . "
+                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                  ' . $tr . $tbclose . "
               </table>
             </div>
           </div>
@@ -428,117 +430,117 @@ class famesa extends iQuery
       </script>
     ";
 
-    return $table;
-  }
-
-  public function downloadTableTrucksFamesaExcel($nave = '-', $patente = '-', $guia = '')
-  {
-    $ship = new ship();
-
-    /* Filtros */
-    $conditions = ["1"];
-    $params     = [];
-
-    if ($nave !== '-') {
-      $conditions[]    = "sh.ship_id = :nave";
-      $params[':nave'] = $nave;
+        return $table;
     }
 
-    if ($patente !== '-') {
-      $conditions[]       = "f.car_plate_truck = :patente";
-      $params[':patente'] = $patente;
-    }
+    public function downloadTableTrucksFamesaExcel($nave = '-', $patente = '-', $guia = '')
+    {
+        $ship = new ship();
 
-    if (!empty($guia)) {
-      $conditions[]    = "f.guide_number LIKE :guia";
-      $params[':guia'] = "%$guia%";
-    }
+        /* Filtros */
+        $conditions = ['1'];
+        $params = [];
 
-    $whereClause = "WHERE " . implode(' AND ', $conditions);
+        if ($nave !== '-') {
+            $conditions[] = 'sh.ship_id = :nave';
+            $params[':nave'] = $nave;
+        }
 
-    $query = "SELECT f.*, sh.*
+        if ($patente !== '-') {
+            $conditions[] = 'f.car_plate_truck = :patente';
+            $params[':patente'] = $patente;
+        }
+
+        if (!empty($guia)) {
+            $conditions[] = 'f.guide_number LIKE :guia';
+            $params[':guia'] = "%$guia%";
+        }
+
+        $whereClause = 'WHERE ' . implode(' AND ', $conditions);
+
+        $query = "SELECT f.*, sh.*
             FROM $this->table AS f
             JOIN app_ships AS sh ON sh.ship_id = f.vessel_id
             $whereClause
             ORDER BY f.counter_vessel ASC";
 
-    $stmt = $this->db->prepare($query);
-    foreach ($params as $k => $v) {
-      $stmt->bindValue($k, $v);
+        $stmt = $this->db->prepare($query);
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v);
+        }
+
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        /* Spreadsheet */
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        /* Cabeceras */
+        $headers = [
+          'Posición', 'Nave', 'Patente Camión', 'Patente Rampla', 'Guía(s)',
+          'Cant. Maxi Sacos', 'Categoría', 'Entrada Puerto', 'Salida Puerto',
+          'Entrada Depósito', 'Salida Depósito', 'Creado', 'Digitado Por',
+        ];
+
+        $col = 'A';
+        foreach ($headers as $h) {
+            $sheet->setCellValue($col . '1', $h);
+            $col++;
+        }
+
+        /* Helper fecha */
+        $formatDate = function ($v) {
+            if (empty($v) || $v === '0000-00-00 00:00:00') {
+                return '';
+            }
+
+            return date('d-m-Y H:i', strtotime($v));
+        };
+
+        /* Datos */
+        $row = 2;
+        var_dump($query);
+        foreach ($data as $d) {
+            $sheet->setCellValue("A$row", $d['counter_vessel']);
+            $sheet->setCellValue("B$row", $ship->getVesselName($d['vessel_id']));
+            $sheet->setCellValue("C$row", $d['car_plate_truck']);
+            $sheet->setCellValue("D$row", $d['car_plate_ramp']);
+            $sheet->setCellValue("E$row", $d['guide_number']);
+            $sheet->setCellValue("F$row", $d['maxibags_quantity']);
+            $sheet->setCellValue("G$row", $d['category']);
+            $sheet->setCellValue("H$row", $formatDate($d['arrival_date_port']));
+            $sheet->setCellValue("I$row", $formatDate($d['departure_date_port']));
+            $sheet->setCellValue("J$row", $formatDate($d['arrival_date_deposit']));
+            $sheet->setCellValue("K$row", $formatDate($d['departure_date_deposit']));
+            $sheet->setCellValue("L$row", $formatDate($d['created']));
+            $sheet->setCellValue("M$row", $this->findByUser($d['created_by']));
+            $row++;
+        }
+
+        /* Descargar */
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Reporte_Camiones_Famesa_' . date('d-m-Y H:i:s') . '.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer->save('php://output');
+
+        exit;
     }
 
-    $stmt->execute();
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function shiftsReportFamesa($shifts, $dateStart, $dateEnd)
+    {
+        $ship = new ship();
+        $port = new port();
 
-    /* Spreadsheet */
-    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-    $sheet       = $spreadsheet->getActiveSheet();
+        list($inicio, $fin) = array_map('trim', explode(' - ', $shifts));
+        $inicioDatetime = $dateStart . ' ' . $inicio . ':00';
+        $finDatetime = $dateEnd . ' ' . $fin . ':00';
+        $rows = $style = $stayTime = $status = '';
+        $totalMaxiBags = $totalCamiones = 0;
 
-    /* Cabeceras */
-    $headers = [
-      'Posición', 'Nave', 'Patente Camión', 'Patente Rampla', 'Guía(s)',
-      'Cant. Maxi Sacos', 'Categoría', 'Entrada Puerto', 'Salida Puerto',
-      'Entrada Depósito', 'Salida Depósito', 'Creado', 'Digitado Por'
-    ];
-
-    $col = 'A';
-    foreach ($headers as $h) {
-      $sheet->setCellValue($col . '1', $h);
-      $col++;
-    }
-
-    /* Helper fecha */
-    $formatDate = function ($v) {
-      if (empty($v) || $v === '0000-00-00 00:00:00') {
-        return '';
-      }
-
-      return date('d-m-Y H:i', strtotime($v));
-    };
-
-    /* Datos */
-    $row = 2;
-    var_dump($query);
-    foreach ($data as $d) {
-      $sheet->setCellValue("A$row", $d['counter_vessel']);
-      $sheet->setCellValue("B$row", $ship->getVesselName($d['vessel_id']));
-      $sheet->setCellValue("C$row", $d['car_plate_truck']);
-      $sheet->setCellValue("D$row", $d['car_plate_ramp']);
-      $sheet->setCellValue("E$row", $d['guide_number']);
-      $sheet->setCellValue("F$row", $d['maxibags_quantity']);
-      $sheet->setCellValue("G$row", $d['category']);
-      $sheet->setCellValue("H$row", $formatDate($d['arrival_date_port']));
-      $sheet->setCellValue("I$row", $formatDate($d['departure_date_port']));
-      $sheet->setCellValue("J$row", $formatDate($d['arrival_date_deposit']));
-      $sheet->setCellValue("K$row", $formatDate($d['departure_date_deposit']));
-      $sheet->setCellValue("L$row", $formatDate($d['created']));
-      $sheet->setCellValue("M$row", $this->findByUser($d['created_by']));
-      $row++;
-    }
-
-    /* Descargar */
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Reporte_Camiones_Famesa_' . date('d-m-Y H:i:s') . '.xlsx"');
-    header('Cache-Control: max-age=0');
-
-    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-    $writer->save('php://output');
-
-    exit;
-  }
-
-  public function shiftsReportFamesa($shifts, $dateStart, $dateEnd)
-  {
-    $ship = new ship();
-    $port = new port();
-
-    list($inicio, $fin) = array_map('trim', explode(' - ', $shifts));
-    $inicioDatetime     = $dateStart . ' ' . $inicio . ':00';
-    $finDatetime        = $dateEnd . ' ' . $fin . ':00';
-    $rows               = $style               = $stayTime               = $status               = '';
-    $totalMaxiBags      = $totalCamiones      = 0;
-
-    $sql = "SELECT
+        $sql = "SELECT
       f.counter_vessel,
       f.car_plate_truck,
       f.car_plate_ramp,
@@ -563,41 +565,41 @@ class famesa extends iQuery
     WHERE f.arrival_date_port BETWEEN :inicio AND :fin
     ORDER BY $this->countervessel ASC";
 
-    $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime, 'fin' => $finDatetime]);
-    if ($list->length()) {
-      foreach ($list->getCollection() as $data) {
-        $vessel   = $ship->getVesselName($data['ship_id']);
-        $shipLine = $ship->getShipLineName($data['ship_line']);
+        $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime, 'fin' => $finDatetime]);
+        if ($list->length()) {
+            foreach ($list->getCollection() as $data) {
+                $vessel = $ship->getVesselName($data['ship_id']);
+                $shipLine = $ship->getShipLineName($data['ship_line']);
 
-        $polFlag = $port->getflagImage($port->getCountryName($data['pol']));
-        $polName = $port->getPortName($data['pol']);
+                $polFlag = $port->getflagImage($port->getCountryName($data['pol']));
+                $polName = $port->getPortName($data['pol']);
 
-        $podFlag = $port->getflagImage($port->getCountryName($data['pod']));
-        $podName = $port->getPortName($data['pod']);
+                $podFlag = $port->getflagImage($port->getCountryName($data['pod']));
+                $podName = $port->getPortName($data['pod']);
 
-        $arrivalPort      = (!empty($data['arrival_date_port']) && $data['arrival_date_port'] !== '0000-00-00 00:00:00') ? (new DateTime($data['arrival_date_port']))->format('d-m-Y H:i') : '<em>No registra</em>';
-        $departurePort    = (!empty($data['departure_date_port']) && $data['departure_date_port'] !== '0000-00-00 00:00:00') ? (new DateTime($data['departure_date_port']))->format('d-m-Y H:i') : '<em>No registra</em>';
-        $arrivalDeposit   = (!empty($data['arrival_date_deposit']) && $data['arrival_date_deposit'] !== '0000-00-00 00:00:00') ? (new DateTime($data['arrival_date_deposit']))->format('d-m-Y H:i') : '<em>No registra</em>';
-        $departureDeposit = (!empty($data['departure_date_deposit']) && $data['departure_date_deposit'] !== '0000-00-00 00:00:00') ? (new DateTime($data['departure_date_deposit']))->format('d-m-Y H:i') : '<em>No registra</em>';
+                $arrivalPort = (!empty($data['arrival_date_port']) && $data['arrival_date_port'] !== '0000-00-00 00:00:00') ? (new DateTime($data['arrival_date_port']))->format('d-m-Y H:i') : '<em>No registra</em>';
+                $departurePort = (!empty($data['departure_date_port']) && $data['departure_date_port'] !== '0000-00-00 00:00:00') ? (new DateTime($data['departure_date_port']))->format('d-m-Y H:i') : '<em>No registra</em>';
+                $arrivalDeposit = (!empty($data['arrival_date_deposit']) && $data['arrival_date_deposit'] !== '0000-00-00 00:00:00') ? (new DateTime($data['arrival_date_deposit']))->format('d-m-Y H:i') : '<em>No registra</em>';
+                $departureDeposit = (!empty($data['departure_date_deposit']) && $data['departure_date_deposit'] !== '0000-00-00 00:00:00') ? (new DateTime($data['departure_date_deposit']))->format('d-m-Y H:i') : '<em>No registra</em>';
 
-        if ($data['arrival_date_port'] !== '0000-00-00 00:00:00' && $data['departure_date_port'] === null) {
-          // Llegó al puerto pero NO ha salido
-          $status = "En Puerto";
-        } elseif ($data['arrival_date_port'] !== '0000-00-00 00:00:00' && $data['departure_date_port'] !== null && $data['arrival_date_deposit'] === null) {
-          // Salió del puerto pero aún NO llega al depósito
-          $status = "En Tránsito a Depósito";
-        } elseif ($data['arrival_date_deposit'] !== '0000-00-00 00:00:00' && $data['departure_date_deposit'] === null) {
-          // Llegó al depósito pero NO ha salido
-          $status = "En Depósito";
-        } elseif ($data['departure_date_deposit'] !== null) {
-          // Ya salió del depósito (proceso terminado)
-          $status = "Finalizado";
-        } else {
-          // Aún no entra al puerto
-          $status = "Pendiente";
-        }
+                if ($data['arrival_date_port'] !== '0000-00-00 00:00:00' && $data['departure_date_port'] === null) {
+                    // Llegó al puerto pero NO ha salido
+                    $status = 'En Puerto';
+                } elseif ($data['arrival_date_port'] !== '0000-00-00 00:00:00' && $data['departure_date_port'] !== null && $data['arrival_date_deposit'] === null) {
+                    // Salió del puerto pero aún NO llega al depósito
+                    $status = 'En Tránsito a Depósito';
+                } elseif ($data['arrival_date_deposit'] !== '0000-00-00 00:00:00' && $data['departure_date_deposit'] === null) {
+                    // Llegó al depósito pero NO ha salido
+                    $status = 'En Depósito';
+                } elseif ($data['departure_date_deposit'] !== null) {
+                    // Ya salió del depósito (proceso terminado)
+                    $status = 'Finalizado';
+                } else {
+                    // Aún no entra al puerto
+                    $status = 'Pendiente';
+                }
 
-        $rows .= "
+                $rows .= "
           <tr>
             <td>{$data['counter_vessel']}</td>
             <td>{$status}</td>
@@ -618,27 +620,27 @@ class famesa extends iQuery
           </tr>
         ";
 
-        $style = "style='width:max-content'";
-        $totalMaxiBags += (int) $data['maxibags_quantity'];
-        $totalCamiones++;
-      }
+                $style = "style='width:max-content'";
+                $totalMaxiBags += (int) $data['maxibags_quantity'];
+                $totalCamiones++;
+            }
 
-      $rows .= "
+            $rows .= "
         <tr style='font-weight:bold;background:#f8f9fc'>
           <td colspan='9' class='text-right'>Totales</td>
           <td>Pallets: " . number_format($totalMaxiBags, 0, ',', '.') . "</td>
-          <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . "</td>
+          <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . '</td>
         </tr>
-      ";
-    } else {
-      $rows .= "
+      ';
+        } else {
+            $rows .= "
         <tr>
           <td colspan='16' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
         </tr>
       ";
-    }
+        }
 
-    return "
+        return "
       <div class='card shadow'>
         <div class='table-responsive'>
           <table class='table table-bordered table-hover' $style>
@@ -667,6 +669,6 @@ class famesa extends iQuery
         </div>
       </div>
     ";
-  }
+    }
 
 }

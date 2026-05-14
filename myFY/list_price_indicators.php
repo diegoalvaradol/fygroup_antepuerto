@@ -5,6 +5,7 @@ require_once __DIR__ . '/../config/includes.php';
 $cfg = new cfg();
 $user = new user();
 $price = new listPrice();
+$alerts = new UIComponents();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $admin = $user->isAdmin($_SESSION['user']['run']);
@@ -75,7 +76,9 @@ if (!$admin) {
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Lista de Precios</h1>
                     <p class="mb-1">Acá encontraras los precios de Gate In y Gate Out de cada naviera respectivamente.</p>
-                    <p class="mb-1" style="color:red">Los valores se encuentran actualizados a la fecha: <b>01 de marzo de 2025</b>.</p>
+                    <div class="col-sm-6">
+                      <?php echo $alerts->customAlert('info', 'Atención', 'Los valores se encuentran actualizados a la fecha: <b>14 de mayo de 2026</b>.'); ?>
+                    </div>
 
                     <?php echo $tablePriceMSC; ?>
                     <?php echo $tablePriceMSK; ?>
