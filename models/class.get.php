@@ -75,7 +75,7 @@ class get
     /**
      * Method arrayShifts //Array de turnos portuarios
      *
-     * @return void
+     * @return String
      */
     public static function arrayShifts()
     {

@@ -113,8 +113,12 @@ if (!$admin) {
                                                     <i class="fas fa-solid fa-search"></i> Buscar
                                                 </button>
 
-                                                <button type="button" class="btn btn-success btn-user" id="btnExcel" onclick="exportExcel()" disabled>
+                                                <button type="button" class="btn btn-success btn-user" id="btnExcel" onclick="exportShift(1,0)" disabled>
                                                     <i class="fas fa-file-excel"></i> Descargar Excel
+                                                </button>
+
+                                                <button type="button" class="btn btn-success btn-user" id="btnPDF" onclick="exportShift(0,1)" disabled>
+                                                    <i class="fas fa-file-pdf"></i> Descargar PDF
                                                 </button>
                                             </div>
                                         </div>
@@ -287,11 +291,13 @@ function loadShiftsReport() {
         $('#shiftCardMini').fadeIn(150);
         $('#btnPrintShiftsReport').prop('disabled', false);
         $('#btnExcel').prop('disabled', false);
+        $('#btnPDF').prop('disabled', false);
       } else if (clean.length === 0) {
         $div.hide().empty();
         $('#shiftCardMini').fadeOut(150);
         $('#btnPrintShiftsReport').prop('disabled', true);
         $('#btnExcel').prop('disabled', true);
+        $('#btnPDF').prop('disabled', true);
 
         Swal.fire({
           icon: 'warning',
@@ -352,12 +358,12 @@ function loadDatePicker() {
 
 document.addEventListener("DOMContentLoaded", loadDatePicker);
 
-var exportExcel = function() {
+var exportShift = function(excel, pdf) {
   const date = $('#dateForm').val();
   const shifts = $('#shifts').val();
 
   if (!date || shifts === '-' || !shifts) return;
-  window.location = `../controllers/shiftsReportExcelController.php?date=${date}&shifts=${shifts}`;
+  window.location = `../controllers/shiftsReportExportController.php?date=${date}&shifts=${shifts}&excel=${excel}&pdf=${pdf}`;
 }
 
 var saveNewGoals = function() {

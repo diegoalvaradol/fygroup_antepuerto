@@ -6,7 +6,7 @@ use Mpdf\Mpdf;
 
 session_start();
 
-$logoPath = realpath(__DIR__ . '/../images/logo-fygroup.png');
+$logoPath = realpath(__DIR__ . '/../images/logo-fygroup-bg-removed.png');
 $type = pathinfo($logoPath, PATHINFO_EXTENSION);
 $data = file_get_contents($logoPath);
 $logoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -18,10 +18,9 @@ if (!$user) {
 }
 
 $usuario = sprintf(
-    '%s %s (%s)',
+    '%s %s',
     $user['name'],
-    $user['last_name'],
-    $user['run']
+    $user['last_name']
 );
 
 /* Validación */
@@ -199,11 +198,35 @@ ob_start();
                 margin: 0;
             }
 
-            .footer {
-                font-size: 12px;
+            .signature {
+                position: fixed;
+                bottom: 55px;
+                left: 0;
+                width: 100%;
                 text-align: center;
-                color: #000;
-                margin-top: 12px;
+            }
+
+            .signature-logo {
+                height: 25px;
+                display: block;
+                margin: 0 auto 8px auto;
+                opacity: 0.95;
+            }
+
+            .signature-text {
+                font-size: 10px;
+                color: #555;
+                line-height: 1.4;
+            }
+
+            .footer {
+                position: fixed;
+                bottom: 15px;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 10px;
+                color: #666;
             }
         </style>
     </head>
@@ -317,7 +340,21 @@ ob_start();
             </table>
         </div>
 
-        <div class="footer">Generado por <?= $usuario ?> - <?= date('d/m/Y H:i') ?></div>
+        <div class="signature">
+            <?php if ($logoBase64): ?>
+                <img src="<?= $logoBase64 ?>" alt="Firma" class="signature-logo">
+            <?php endif; ?>
+
+            <div class="signature-text">
+                <strong>FYGroup Digital.</strong><br>
+                <div style="margin: 1px auto; width: 120px; border-top: 1px solid #000;"></div>
+                Firmador por:
+            </div>
+        </div>
+
+        <div class="footer">
+            Generado por <?= $usuario ?> - <?= date('d/m/Y H:i') ?>
+        </div>
     </body>
 </html>
 <?php
