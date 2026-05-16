@@ -136,6 +136,10 @@ if (!$admin) {
                                     </div>
                                     </br>
 
+                                    <div id="loader" style="display:none; text-align:center; padding:20px;">
+                                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando...
+                                    </div>
+
                                     <!-- Tabla Reporte de Turnos -->
                                     <div id="shiftsDiv"></div>
                                 </div>
@@ -254,14 +258,19 @@ function loadShiftsReport() {
   const shifts = $('#shifts').val();
   const textShifts = $('#shifts option:selected').text();
 
-  /* Separar los componentes */
+  const MIN_TIME = 2000;
+  let startTime = Date.now();
+
   const [day, month, year] = date.split('-').map(Number);
 
-  /* Crear la fecha como local, no UTC */
-  const dateTitle = new Date(day, month - 1, year); /* mes va de 0 a 11 */
+  const dateTitle = new Date(day, month - 1, year);
 
-  /* Obtener día de la semana en español */
-  const dateName = dateTitle.toLocaleDateString('es-CL', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'America/Santiago'});
+  const dateName = dateTitle.toLocaleDateString('es-CL', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'America/Santiago'
+  });
 
   if (!date || shifts === '-' || !shifts) {
     Swal.fire({
@@ -280,21 +289,29 @@ function loadShiftsReport() {
 
     beforeSend() {
       $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+      $('#loader').show();
+      $div.hide();
     },
 
     success(response) {
       const clean = response.trim();
 
       if (clean.length > 0) {
-        $div.html(clean).fadeIn();
-        $('#shiftTextMini').html(`Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css("font-size", "smaller");
+        $div.html(clean);
+
+        $('#shiftTextMini')
+          .html(`Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`)
+          .css("font-size", "smaller");
+
         $('#shiftCardMini').fadeIn(150);
         $('#btnPrintShiftsReport').prop('disabled', false);
         $('#btnExcel').prop('disabled', false);
         $('#btnPDF').prop('disabled', false);
-      } else if (clean.length === 0) {
+
+      } else {
         $div.hide().empty();
         $('#shiftCardMini').fadeOut(150);
+
         $('#btnPrintShiftsReport').prop('disabled', true);
         $('#btnExcel').prop('disabled', true);
         $('#btnPDF').prop('disabled', true);
@@ -309,7 +326,9 @@ function loadShiftsReport() {
 
     error(xhr) {
       console.error(xhr.responseText);
-		$('#btnPrintShiftsReport').prop('disabled', true);
+
+      $('#btnPrintShiftsReport').prop('disabled', true);
+
       Swal.fire({
         title: 'Error',
         text: 'Error al consultar la información.',
@@ -318,7 +337,14 @@ function loadShiftsReport() {
     },
 
     complete() {
-      $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(MIN_TIME - elapsed, 0);
+
+      setTimeout(function () {
+        $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
+        $('#loader').hide();
+        $div.show();
+      }, remaining);
     }
   });
 }

@@ -1615,7 +1615,7 @@ class outerPort extends iQuery
         $tbclose = '</tbody>';
 
         $table = $form . "
-            <div class='row'>
+            <div class='row' id='divShipReportTable'>
                 <div class='col-lg-12'>
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
@@ -1632,7 +1632,6 @@ class outerPort extends iQuery
 
                     <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                     <table id='shipReportTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-
                         <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
                         " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
                         ' . $tr . $tbclose . "
@@ -2200,9 +2199,9 @@ class outerPort extends iQuery
 
             $rows .= "
                 <tr style='font-weight:bold;background:#f8f9fc'>
-                <td colspan='9' class='text-right'>Totales</td>
-                <td>Pallets: " . number_format($totalPallets, 0, ',', '.') . "</td>
-                <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . '</td>
+                    <td colspan='9' class='text-right'>Totales</td>
+                    <td>Pallets: " . number_format($totalPallets, 0, ',', '.') . "</td>
+                    <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . '</td>
                 </tr>
             ';
 
@@ -2466,15 +2465,6 @@ class outerPort extends iQuery
 
         $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime,'fin' => $finDatetime]);
 
-        $logoPath = realpath(__DIR__ . '/../images/logo-fygroup.png');
-        $logoBase64 = '';
-
-        if ($logoPath && file_exists($logoPath)) {
-            $type = pathinfo($logoPath, PATHINFO_EXTENSION);
-            $data = file_get_contents($logoPath);
-            $logoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        }
-
         ob_start();
         ?>
             <!DOCTYPE html>
@@ -2534,22 +2524,23 @@ class outerPort extends iQuery
 
                         .signature {
                             position: fixed;
-                            bottom: 55px;
+                            bottom: 35px;
                             left: 0;
                             width: 100%;
                             text-align: center;
                         }
 
                         .signature-logo {
-                            height: 25px;
+                            height: 75px;
                             display: block;
                             margin: 0 auto 8px auto;
                             opacity: 0.95;
+                            transform: rotate(-15deg);
                         }
 
                         .signature-text {
                             font-size: 10px;
-                            color: #555;
+                            color: #000;
                             line-height: 1.4;
                         }
 
@@ -2560,18 +2551,16 @@ class outerPort extends iQuery
                             width: 100%;
                             text-align: center;
                             font-size: 10px;
-                            color: #666;
+                            color: #000;
                         }
                     </style>
                 </head>
 
                 <body>
                     <div class="header-box">
-                        <?php if ($logoBase64): ?>
-                            <img src="<?= $logoBase64 ?>">
-                        <?php endif; ?>
+                        <img src="../images/logo-fygroup.png" alt="FYGroup Logo">
 
-                        <h2>Reporte Antepuerto</h2>
+                        <h2>Reporte Turno Antepuerto</h2>
                         <h3><?= $shiftName ?></h3>
 
                         <strong>Desde:</strong>
@@ -2603,7 +2592,7 @@ class outerPort extends iQuery
                                 <th>Entrada</th>
                                 <th>Salida</th>
                                 <th>Estadía</th>
-                                <th>Ingresado Por</th>
+                                <th>Digtado Por</th>
                             </tr>
                         </thead>
 
@@ -2664,11 +2653,10 @@ class outerPort extends iQuery
                                 <?php endforeach; ?>
 
                                 <tr class="totales">
-                                    <td colspan="9">Totales</td>
+                                    <td colspan="9" class='text-right'>Totales: </td>
                                     <td><?= $totalPallets ?></td>
                                     <td colspan="8">Camiones: <?= $totalCamiones ?></td>
                                 </tr>
-
                             <?php else: ?>
                                 <tr>
                                     <td colspan="18" style="text-align:center;">
@@ -2680,28 +2668,37 @@ class outerPort extends iQuery
                     </table>
 
                     <div class="signature">
-                        <?php if ($logoBase64): ?>
-                            <img src="<?= $logoBase64 ?>" alt="Firma" class="signature-logo">
-                        <?php endif; ?>
+                        <img src="../images/timbre-fygroup-bg-removed.png" alt="Firma" class="signature-logo">
 
                         <div class="signature-text">
-                            <strong>FYGroup Digital.</strong><br>
-                            <div style="margin: 1px auto; width: 120px; border-top: 1px solid #000;"></div>
-                            Firmador por:
+                            <div style="margin: 1px auto; width: 70px; border-top: 1px solid #000;"></div>
+                            <b><em>Firma</em></b>
                         </div>
                     </div>
 
                     <div class="footer">
-                        Generado por <?= $usuario ?> - <?= date('d/m/Y H:i') ?>
+                        <b><em>Generado por <?= $usuario ?> - <?= date('d/m/Y H:i') ?></em></b>
                     </div>
                 </body>
             </html>
         <?php
         $html = ob_get_clean();
 
-        $mpdf = new \Mpdf\Mpdf(['format' => 'A4-L','tempDir' => __DIR__ . '/../tmp',]);
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4-L',
+            'tempDir' => __DIR__ . '/../tmp',
+            'margin_left' => 5,
+            'margin_right' => 5,
+            'margin_top' => 5,
+            'margin_bottom' => 5,
+        ]);
+
         $mpdf->WriteHTML($html);
-        $fileName = 'Reporte_Antepuerto_' . str_replace(['°', ' '], ['', '_'], $shiftName) . '_' . date('d-m-Y_H-i-s') . '.pdf';
+
+        $fileName = 'Reporte_Antepuerto_' .
+            str_replace(['°', ' '], ['', '_'], $shiftName) .
+            '_' . date('d-m-Y_H-i-s') . '.pdf';
+
         $mpdf->Output($fileName, 'D');
 
         exit;

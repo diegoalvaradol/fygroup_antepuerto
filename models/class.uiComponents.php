@@ -244,7 +244,7 @@ class UIComponents
         return ob_get_clean();
     }
 
-    public function customAlert($type, $title, $message)
+    public static function customAlert($type, $title, $message)
     {
         $alerts = [
             'danger' => [

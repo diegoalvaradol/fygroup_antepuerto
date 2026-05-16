@@ -2,14 +2,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../config/includes.php';
 
-use Mpdf\Mpdf;
-
 session_start();
-
-$logoPath = realpath(__DIR__ . '/../images/logo-fygroup-bg-removed.png');
-$type = pathinfo($logoPath, PATHINFO_EXTENSION);
-$data = file_get_contents($logoPath);
-$logoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
 /* Usuario */
 $user = $_SESSION['user'] ?? null;
@@ -200,22 +193,23 @@ ob_start();
 
             .signature {
                 position: fixed;
-                bottom: 55px;
+                bottom: 35px;
                 left: 0;
                 width: 100%;
                 text-align: center;
             }
 
             .signature-logo {
-                height: 25px;
+                height: 75px;
                 display: block;
                 margin: 0 auto 8px auto;
                 opacity: 0.95;
+                transform: rotate(-15deg);
             }
 
             .signature-text {
                 font-size: 10px;
-                color: #555;
+                color: #000;
                 line-height: 1.4;
             }
 
@@ -226,14 +220,14 @@ ob_start();
                 width: 100%;
                 text-align: center;
                 font-size: 10px;
-                color: #666;
+                color: #000;
             }
         </style>
     </head>
 
     <body>
         <div class="header-box">
-            <img src="<?= $logoBase64 ?>" style="height:50px;">
+            <img src="../images/logo-fygroup-bg-removed.png" style="height:50px;">
             <h2>Liquidación de Nave</h2>
         </div>
 
@@ -341,19 +335,16 @@ ob_start();
         </div>
 
         <div class="signature">
-            <?php if ($logoBase64): ?>
-                <img src="<?= $logoBase64 ?>" alt="Firma" class="signature-logo">
-            <?php endif; ?>
+            <img src="../images/timbre-fygroup-bg-removed.png" alt="Firma" class="signature-logo">
 
             <div class="signature-text">
-                <strong>FYGroup Digital.</strong><br>
-                <div style="margin: 1px auto; width: 120px; border-top: 1px solid #000;"></div>
-                Firmador por:
+                <div style="margin: 1px auto; width: 70px; border-top: 1px solid #000;"></div>
+                <b><em>Firma</em></b>
             </div>
         </div>
 
         <div class="footer">
-            Generado por <?= $usuario ?> - <?= date('d/m/Y H:i') ?>
+            <b><em>Generado por <?= $usuario ?> - <?= date('d/m/Y H:i') ?></em></b>
         </div>
     </body>
 </html>
@@ -361,6 +352,14 @@ ob_start();
 $html = ob_get_clean();
 
 /* Generar PDF */
-$mpdf = new Mpdf(['format' => 'A4-L','tempDir' => __DIR__ . '/../tmp',]);
+$mpdf = new \Mpdf\Mpdf([
+    'format' => 'A4-L',
+    'tempDir' => __DIR__ . '/../tmp',
+    'margin_left' => 5,
+    'margin_right' => 5,
+    'margin_top' => 5,
+    'margin_bottom' => 5,
+]);
+
 $mpdf->WriteHTML($html);
 $mpdf->Output("Liquidacion_Nave_{$nave}_{$viaje}_{$fecha}.pdf", 'D');

@@ -73,6 +73,10 @@ if (!$admin) {
 
                     <!-- Tabla de Naves -->
                     <?php echo $port->shipReport(); ?>
+
+                    <div id="loader" style="display:none; text-align:center; padding:20px;">
+                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando...
+                    </div>
                 </div>
                 <!-- container-fluid -->
             </div>
@@ -216,6 +220,7 @@ function actualizarReloj() {
     </div>
   `;
 }
+
 var exportExcel = function(nave, tipo, desde, hasta) {
   const form = document.createElement('form');
   form.method = 'POST';
@@ -241,9 +246,22 @@ var exportExcel = function(nave, tipo, desde, hasta) {
   form.submit();
 }
 
+function showShipReport() {
+  const MIN_TIME = 2000;
+
+  $('#loader').show();
+  $('#divShipReportTable').hide();
+
+  setTimeout(function () {
+    $('#loader').hide();
+    $('#divShipReportTable').fadeIn();
+  }, MIN_TIME);
+}
+
 $(document).ready(function() {
   setInterval(actualizarReloj, 1000);
   actualizarReloj(); /* Primera llamada */
+  showShipReport();
 
   $('#nave').select2({
     placeholder: 'Seleccione una motonave...',

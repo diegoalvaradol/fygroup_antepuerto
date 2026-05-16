@@ -38,6 +38,7 @@ class iRequest
             exit;
         }
     }
+
     // --- NUEVO: render JS ---
     public function renderFiltrosScript($clear = true)
     {
@@ -47,22 +48,24 @@ class iRequest
             unset($_SESSION['filtros']);
         }
 
-        echo '<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const filtros = ' . json_encode($filtros) . ';
+        echo '
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const filtros = ' . json_encode($filtros) . ';
 
-        Object.entries(filtros).forEach(([key, value]) => {
-            const el = document.querySelector(`[name="${key}"]`);
-            if (!el) return;
+                    Object.entries(filtros).forEach(([key, value]) => {
+                        const el = document.querySelector(`[name="${key}"]`);
+                        if (!el) return;
 
-            el.value = value;
+                        el.value = value;
 
-            // soporte select2
-            if (el.classList.contains("select2")) {
-                $(el).trigger("change");
-            }
-        });
-    });
-    </script>';
+                        // soporte select2
+                        if (el.classList.contains("select2")) {
+                            $(el).trigger("change");
+                        }
+                    });
+                });
+            </script>
+        ';
     }
 }
