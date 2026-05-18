@@ -81,109 +81,109 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
 
                                 <div class="card-body">
-                                        <form class="form-container" id="inTruckForm">
-                                            <div class="form-inline mb-3">
-                                                <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
-                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
-                                                <small class="text-danger" id="error-countervessel"></small>
+                                    <form class="form-container" id="inTruckForm">
+                                        <div class="form-inline mb-3">
+                                            <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
+                                            <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
+                                            <small class="text-danger" id="error-countervessel"></small>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
+                                                <select class="form-control select2 form-control-user" id="vessel" name="vessel">
+                                                    <option value="-">Seleccione una motonave...</option>
+                                                </select>
+                                                <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
+                                                <small class="text-danger" id="error-vessel"></small>
                                             </div>
 
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
-                                                    <select class="form-control select2 form-control-user" id="vessel" name="vessel">
-                                                        <option value="-">Seleccione una motonave...</option>
-                                                    </select>
-                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
-                                                    <small class="text-danger" id="error-vessel"></small>
-                                                </div>
+                                            <div class="col-sm-3">
+                                                <label for='voyage' class='text-gray-800 font-weight-bold'>Información de Motonave</label>
+                                                </br>
+                                                <small id="info-vessel"></small>
+                                            </div>
+                                        </div>
 
-                                                <div class="col-sm-6">
-                                                    <label for='voyage' class='text-gray-800 font-weight-bold'>Información de Motonave</label>
-                                                    </br>
-                                                    <small class="text-black" id="info-vessel"></small>
-                                                </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="carplatetruck" class="text-gray-800 font-weight-bold">Patente Camión</label>
+                                                <select class="form-control select2 form-control-user" id="carplatetruck" name="carplatetruck">
+                                                    <option value="-">Seleccione una patente...</option>
+                                                </select>
+                                                <small class="text-danger" id="error-carplatetruck"></small>
                                             </div>
 
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label for="carplatetruck" class="text-gray-800 font-weight-bold">Patente Camión</label>
-                                                    <select class="form-control select2 form-control-user" id="carplatetruck" name="carplatetruck">
-                                                        <option value="-">Seleccione una patente...</option>
-                                                    </select>
-                                                    <small class="text-danger" id="error-carplatetruck"></small>
-                                                </div>
 
+                                            <div class="col-sm-6">
+                                                <label for="carplateramp" class="text-gray-800 font-weight-bold">Patente Rampla</label>
+                                                <select class="form-control select2 form-control-user" id="carplateramp" name="carplateramp">
+                                                    <option value="-">Seleccione una patente...</option>
+                                                </select>
+                                                <small class="text-danger" id="error-carplateramp"></small>
+                                            </div>
+                                        </div>
 
-                                                <div class="col-sm-6">
-                                                    <label for="carplateramp" class="text-gray-800 font-weight-bold">Patente Rampla</label>
-                                                    <select class="form-control select2 form-control-user" id="carplateramp" name="carplateramp">
-                                                        <option value="-">Seleccione una patente...</option>
-                                                    </select>
-                                                    <small class="text-danger" id="error-carplateramp"></small>
-                                                </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="guidenumber" class="text-gray-800 font-weight-bold">N° de Guía</label>
+                                                <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía (Ej: 123 ó 123, 456)">
+                                                <small class="text-danger" id="error-guidenumber"></small>
                                             </div>
 
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label for="guidenumber" class="text-gray-800 font-weight-bold">N° de Guía</label>
-                                                    <input type="text" class="form-control form-control-user" id="guidenumber" name="guidenumber" placeholder="N° de Guía (Ej: 123 ó 123, 456)">
-                                                    <small class="text-danger" id="error-guidenumber"></small>
+                                            <div class="col-sm-6">
+                                                <label for="maxibagsquantity" class="text-gray-800 font-weight-bold">MaxiBags</label>
+                                                <input type="number" class="form-control form-control-user" id="maxibagsquantity" name="maxibagsquantity" min="0" max="40" step="1" oninput="validarMaximo(this)" value="20" placeholder="N° de MaxiBags">
+                                                <small class="text-danger" id="error-maxibagsquantity"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="text-gray-800 font-weight-bold">Categoría</label>
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="category" id="cat1" value="1">
+                                                    <label class="form-check-label" for="cat1">Cat. 1</label>
                                                 </div>
 
-                                                <div class="col-sm-6">
-                                                    <label for="maxibagsquantity" class="text-gray-800 font-weight-bold">MaxiBags</label>
-                                                    <input type="number" class="form-control form-control-user" id="maxibagsquantity" name="maxibagsquantity" min="0" max="40" step="1" oninput="validarMaximo(this)" value="20" placeholder="N° de MaxiBags">
-                                                    <small class="text-danger" id="error-maxibagsquantity"></small>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="category" id="cat2" value="2">
+                                                    <label class="form-check-label" for="cat2">Cat. 2</label>
                                                 </div>
+
+                                                <small class="text-danger" id="error-category"></small>
                                             </div>
 
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                    <label class="text-gray-800 font-weight-bold">Categoría</label>
-
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="category" id="cat1" value="1">
-                                                        <label class="form-check-label" for="cat1">Cat. 1</label>
-                                                    </div>
-
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="category" id="cat2" value="2">
-                                                        <label class="form-check-label" for="cat2">Cat. 2</label>
-                                                    </div>
-
-                                                    <small class="text-danger" id="error-category"></small>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <label for="arrivaldateport" class="text-gray-800 font-weight-bold">Fecha y Hora de Entrada Puerto</label>
-                                                    <input type="datetime-local" class="form-control form-control-user" id="arrivaldateport" name="arrivaldateport">
-                                                    <small class="text-danger" id="error-arrivaldateport"></small>
-                                                </div>
+                                            <div class="col-sm-6">
+                                                <label for="arrivaldateport" class="text-gray-800 font-weight-bold">Fecha y Hora de Entrada Puerto</label>
+                                                <input type="datetime-local" class="form-control form-control-user" id="arrivaldateport" name="arrivaldateport">
+                                                <small class="text-danger" id="error-arrivaldateport"></small>
                                             </div>
+                                        </div>
 
-                                            <div class="form-group row">
-                                                <div class="col-sm-6">
-                                                   <label for="observations" class="text-gray-800 font-weight-bold">Observaciones</label>
-                                                    <input type="text" class="form-control form-control-user" id="observations" name="observations" placeholder="Observaciones">
-                                                    <small class="text-danger" id="error-observations"></small>
-                                                </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label for="observations" class="text-gray-800 font-weight-bold">Observaciones</label>
+                                                <input type="text" class="form-control form-control-user" id="observations" name="observations" placeholder="Observaciones">
+                                                <small class="text-danger" id="error-observations"></small>
                                             </div>
+                                        </div>
 
-                                            <input type="hidden" id="departuredateport" name="departuredateport" value="0">
-                                            <input type="hidden" id="arrivaldatedeposit" name="arrivaldatedeposit" value="0">
-                                            <input type="hidden" id="departuredatedeposit" name="departuredatedeposit" value="0">
+                                        <input type="hidden" id="departuredateport" name="departuredateport" value="0">
+                                        <input type="hidden" id="arrivaldatedeposit" name="arrivaldatedeposit" value="0">
+                                        <input type="hidden" id="departuredatedeposit" name="departuredatedeposit" value="0">
 
-                                            <input type="hidden" id="truckId" name="truckId" value="0">
-                                            <input type="hidden" id="isUpdate" name="isUpdate" value="0">
-                                            <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION['user']['run']; ?>">
-                                            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-                                            <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTruck()">
-                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
-                                              <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                            </button>
-                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
-                                        </form>
+                                        <input type="hidden" id="truckId" name="truckId" value="0">
+                                        <input type="hidden" id="isUpdate" name="isUpdate" value="0">
+                                        <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION['user']['run']; ?>">
+                                        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+                                        <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTruck()">
+                                            <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
+                                            <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                        </button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

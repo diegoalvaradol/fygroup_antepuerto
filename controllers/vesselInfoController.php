@@ -33,23 +33,23 @@ if (isset($_POST['id'])) {
         $line = $info['name'];
 
         $infoVessel = '
-            <div style=" border:1px solid #e5e7eb; border-left:4px solid ' . $primary . '; border-radius:8px; padding:12px 16px; background:#f9fafb; font-family:Arial, sans-serif; font-size:14px;">
+            <div style=" border:1px solid #e5e7eb; border-left:4px solid ' . $primary . '; border-radius:8px; padding:8px 16px; background:#f9fafb; font-size:14px;">
                 <div style="margin-bottom:6px;">
-                <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($eta))) . '
-                <span style="margin:0 6px; color:#9ca3af;">|</span>
-                <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($etd))) . '
+                    <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($eta))) . '
+                    <span style="margin:0 6px; color:#9ca3af;">|</span>
+                    <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($etd))) . '
                 </div>
 
                 <div style="margin-bottom:6px;">
-                <b style="color:' . $primary . ';">POL:</b> ' . htmlspecialchars($pol) . '
-                <span style="margin:0 6px; color:#9ca3af;">|</span>
-                <b style="color:' . $primary . ';">POD:</b> ' . htmlspecialchars($pod) . '
+                    <b style="color:' . $primary . ';">POL:</b> ' . htmlspecialchars($pol) . '
+                    <span style="margin:0 6px; color:#9ca3af;">|</span>
+                    <b style="color:' . $primary . ';">POD:</b> ' . htmlspecialchars($pod) . '
                 </div>
 
-                <div>
-                <b style="color:' . $primary . ';">Viaje:</b> ' . htmlspecialchars($voyage) . '
-                <span style="margin:0 6px; color:#9ca3af;">|</span>
-                <b style="color:' . $primary . ';">Línea:</b> ' . htmlspecialchars($line) . '
+                <div style="margin-bottom:6px;">
+                    <b style="color:' . $primary . ';">Viaje:</b> ' . htmlspecialchars($voyage) . '
+                    <span style="margin:0 6px; color:#9ca3af;">|</span>
+                    <b style="color:' . $primary . ';">Línea:</b> ' . htmlspecialchars($line) . '
                 </div>
             </div>
         ';

@@ -90,14 +90,15 @@ if (!$admin) {
 
                                 <div class="card-body">
                                     <form class="form-container" id="shiftsReportForm">
-                                        <div class="form-group d-flex flex-wrap align-items-end justify-content-center">
-                                            <div class="col-12 col-md-auto me-md-4 mb-3">
+                                        <div class="form-group row justify-content-center">
+                                          <!-- Exportador -->
+                                            <div class="col-sm-2">
                                                 <label for="dateForm" class="text-gray-800 font-weight-bold">Fecha</label>
                                                 <input type="text" class="form-control form-control-user" id="dateForm" name="dateForm">
                                                 <small class="text-danger" id="error-dateForm"></small>
                                             </div>
 
-                                            <div class="col-12 col-md-auto me-md-4 mb-3">
+                                            <div class="col-sm-2">
                                                 <label for="shifts" class="text-gray-800 font-weight-bold">Turno</label>
                                                 <select class="form-control select2 form-control-user" id="shifts" name="shifts">
                                                     <option value="-">Seleccione un turno...</option>
@@ -108,7 +109,7 @@ if (!$admin) {
                                                 <small class="text-danger" id="error-shifts"></small>
                                             </div>
 
-                                            <div class="col-12 col-md-auto me-md-4 mb-3">
+                                            <div class="col-sm-4" style="margin-top: 30px;">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReport()">
                                                     <i class="fas fa-solid fa-search"></i> Buscar
                                                 </button>
@@ -126,7 +127,7 @@ if (!$admin) {
 
                                     <!-- Div de contenido Dinamico -->
                                     <div class="d-flex justify-content-center mt-3">
-                                        <div class="card border-left-primary shadow-sm" style="max-width:300px; display:none;" id="shiftCardMini">
+                                        <div class="card border-left-primary shadow-sm" style="display:none;" id="shiftCardMini">
                                             <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
                                                 <span class="small"><b>Información:</b></span>
                                                 &nbsp;

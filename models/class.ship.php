@@ -203,26 +203,26 @@ class ship extends iQuery
         $table = "
             <div class='row'>
                 <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                    <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalShips'>$count</span>)</em>
-                    </h6>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                            <h6 class='mb-0'>
+                                <i class='fas fa-list'></i> Listado
+                                <em>(Total: <span id='totalShips'>$count</span>)</em>
+                            </h6>
 
-                    <div class='input-search'>
-                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                        <input type='text' id='searchTableShip' placeholder='Buscar por nave' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                    </div>
-                    </div>
+                            <div class='input-search'>
+                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                                <input type='text' id='searchTableShip' placeholder='Buscar por nave' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                            </div>
+                        </div>
 
-                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                    <table id='shipTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                        $thead
-                        $tr
-                    </table>
+                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                            <table id='shipTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                                $thead
+                                $tr
+                            </table>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 

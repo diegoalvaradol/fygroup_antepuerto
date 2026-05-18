@@ -719,29 +719,31 @@ class outerPort extends iQuery
                             <form method='POST' class='form-container' id='filterFormContainer'>
                                 <div class='form-group row'>
                                     <div class='col-sm-4'>
-                                    <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                                    <select class='form-control select2 form-control-user' id='nave' name='nave'>
-                                        <option value='-'>Seleccione una nave...</option>
-                                    </select>
+                                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                                        <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                                            <option value='-'>Seleccione una nave...</option>
+                                        </select>
                                     </div>
 
                                     <div class='col-sm-4'>
-                                    <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
-                                    <select class='form-control select2 form-control-user' id='patente' name='patente'>
-                                        <option value='-'>Seleccione una patente...</option>
-                                    </select>
+                                        <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
+                                        <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                                            <option value='-'>Seleccione una patente...</option>
+                                        </select>
                                     </div>
 
                                     <div class='col-sm-4'>
-                                    <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                                    <input type='text' id='guia' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                        <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
+                                        <input type='text' id='guia' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
                                     </div>
                                 </div>
 
-                                <div class='d-flex gap-2'>
-                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                                    <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
-                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                <div class='form-group row'>
+                                    <div class='col-sm-4'>
+                                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -854,27 +856,27 @@ class outerPort extends iQuery
         $table = $form . "
             <div class='row'>
                 <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                    <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalCnts'>" . number_format($count, 0, ',', '.') . "</span>)</em>
-                    </h6>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                            <h6 class='mb-0'>
+                                <i class='fas fa-list'></i> Listado
+                                <em>(Total: <span id='totalCnts'>" . number_format($count, 0, ',', '.') . "</span>)</em>
+                            </h6>
 
-                    <div class='input-search'>
-                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                        <input type='text' id='searchContainerTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                    </div>
-                    </div>
+                            <div class='input-search'>
+                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                                <input type='text' id='searchContainerTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                            </div>
+                        </div>
 
-                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                    <table id='containerTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                        <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                        " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
-                        ' . $tr . $tbclose . "
-                    </table>
+                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                            <table id='containerTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                                " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                                ' . $tr . $tbclose . "
+                            </table>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 
@@ -1116,32 +1118,34 @@ class outerPort extends iQuery
                             <form method='POST' class='form-container' id='filterFormThermo'>
                                 <div class='form-group row'>
                                     <div class='col-sm-4'>
-                                    <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                                    <select class='form-control select2 form-control-user' id='nave' name='nave'>
-                                        <option value='-'>Seleccione una nave...</option>
-                                    </select>
+                                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                                        <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                                            <option value='-'>Seleccione una nave...</option>
+                                        </select>
                                     </div>
 
                                     <div class='col-sm-4'>
-                                    <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
-                                    <select class='form-control select2 form-control-user' id='patente' name='patente'>
-                                        <option value='-'>Seleccione una patente...</option>
-                                    </select>
+                                        <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
+                                        <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                                            <option value='-'>Seleccione una patente...</option>
+                                        </select>
                                     </div>
 
                                     <div class='col-sm-4'>
-                                    <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                                    <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                        <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
+                                        <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
                                     </div>
                                 </div>
 
-                                <div class='d-flex gap-2'>
-                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                                              </form>
-                        </div>                  <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
-                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                <div class='form-group row'>
+                                    <div class='col-sm-4'>
+                                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                        <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                                        <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar</button>
+                                    </div>
                                 </div>
-
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1245,27 +1249,27 @@ class outerPort extends iQuery
         $table = $form . "
             <div class='row'>
                 <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                    <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalThermos'>" . number_format($count, 0, ',', '.') . "</span>)</em>
-                    </h6>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                            <h6 class='mb-0'>
+                                <i class='fas fa-list'></i> Listado
+                                <em>(Total: <span id='totalThermos'>" . number_format($count, 0, ',', '.') . "</span>)</em>
+                            </h6>
 
-                    <div class='input-search'>
-                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                        <input type='text' id='searchThermoTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                    </div>
-                    </div>
+                            <div class='input-search'>
+                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                                <input type='text' id='searchThermoTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                            </div>
+                        </div>
 
-                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                    <table id='thermoTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                        <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                        " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
-                        ' . $tr . $tbclose . "
-                    </table>
+                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                            <table id='thermoTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                                " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                                ' . $tr . $tbclose . "
+                            </table>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 
@@ -1519,7 +1523,7 @@ class outerPort extends iQuery
                                 <div class='d-flex gap-2'>
                                     <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
                                     <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['tipo'] ?? '') . "', '" . ($_POST['desde'] ?? '') . "', '" . ($_POST['hasta'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
-                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar</button>
                                 </div>
                             </form>
                         </div>
@@ -1619,15 +1623,15 @@ class outerPort extends iQuery
                 <div class='col-lg-12'>
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                    <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalShips'>" . number_format($count, 0, ',', '.') . "</span>)</em>
-                    </h6>
+                        <h6 class='mb-0'>
+                            <i class='fas fa-list'></i> Listado
+                            <em>(Total: <span id='totalShips'>" . number_format($count, 0, ',', '.') . "</span>)</em>
+                        </h6>
 
-                    <div class='input-search'>
-                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                        <input type='text' id='searchShipReportTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                    </div>
+                        <div class='input-search'>
+                            <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                            <input type='text' id='searchShipReportTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                        </div>
                     </div>
 
                     <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
@@ -2038,16 +2042,16 @@ class outerPort extends iQuery
             <!-- Modal -->
             <div class='modal fade' id='detailModal' tabindex='-1'>
                 <div class='modal-dialog modal-xl modal-dialog-scrollable'>
-                <div class='modal-content'>
-                    <div class='modal-header' style='flex-direction:column; align-items:flex-start;'>
-                    <h5 class='modal-title'>Desgloce de Carga</h5>
-                    <h6 id='modalTitleDetail' class='modal-title'></h6>
-                    <button type='button' class='close' data-dismiss='modal' aria-label='Cerrar' style='position:absolute; right:15px; top:15px;'>
-                        <span>×</span>
-                    </button>
+                    <div class='modal-content'>
+                        <div class='modal-header' style='flex-direction:column; align-items:flex-start;'>
+                            <h5 class='modal-title'>Desgloce de Carga</h5>
+                            <h6 id='modalTitleDetail' class='modal-title'></h6>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Cerrar' style='position:absolute; right:15px; top:15px;'>
+                                <span>×</span>
+                            </button>
+                        </div>
+                        <div class='modal-body' id='modalDetailBody'></div>
                     </div>
-                    <div class='modal-body' id='modalDetailBody'></div>
-                </div>
                 </div>
             </div>
 
@@ -2208,43 +2212,43 @@ class outerPort extends iQuery
             return "
                 <div class='card shadow mb-4'>
                     <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                    <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
-                    </h6>
+                        <h6 class='mb-0'>
+                            <i class='fas fa-list'></i> Listado
+                            <em>(Total: <span id='totalTrucks'>" . number_format($totalCamiones, 0, ',', '.') . "</span>)</em>
+                        </h6>
 
-                    <div style='position:relative; max-width:250px;'>
-                        <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
-                        <input type='text' id='searchShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                    </div>
+                        <div style='position:relative; max-width:250px;'>
+                            <i class='fas fa-search'style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d;'></i>
+                            <input type='text' id='searchShiftsTable' placeholder='Buscar...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                        </div>
                     </div>
 
                     <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                    <table id='shiftsTable' class='table table-hover mb-0'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                        <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
-                        <tr>
-                            <th>#</th>
-                            <th>Estado</th>
-                            <th>Origen</th>
-                            <th>Patente</th>
-                            <th>N° Guia</th>
-                            <th>Contenedor</th>
-                            <th>Sello</th>
-                            <th>Exportador</th>
-                            <th>Agencia</th>
-                            <th>Pallets</th>
-                            <th>Nave</th>
-                            <th>Linea</th>
-                            <th>POL</th>
-                            <th>POD</th>
-                            <th>Entrada</th>
-                            <th>Salida</th>
-                            <th>Estadía</th>
-                            <th>Ingresado Por</th>
-                        </tr>
-                        </thead>
-                        <tbody>$rows</tbody>
-                    </table>
+                        <table id='shiftsTable' class='table table-hover mb-0'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                            <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Estado</th>
+                                    <th>Origen</th>
+                                    <th>Patente</th>
+                                    <th>N° Guia</th>
+                                    <th>Contenedor</th>
+                                    <th>Sello</th>
+                                    <th>Exportador</th>
+                                    <th>Agencia</th>
+                                    <th>Pallets</th>
+                                    <th>Nave</th>
+                                    <th>Linea</th>
+                                    <th>POL</th>
+                                    <th>POD</th>
+                                    <th>Entrada</th>
+                                    <th>Salida</th>
+                                    <th>Estadía</th>
+                                    <th>Ingresado Por</th>
+                                </tr>
+                            </thead>
+                            <tbody>$rows</tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -2592,7 +2596,7 @@ class outerPort extends iQuery
                                 <th>Entrada</th>
                                 <th>Salida</th>
                                 <th>Estadía</th>
-                                <th>Digtado Por</th>
+                                <th>Digitado Por</th>
                             </tr>
                         </thead>
 

@@ -267,46 +267,46 @@ class famesa extends iQuery
 
         /* Formulario de filtros */
         $form = "
-    <div class='row'>
-      <div class='col-lg-12'>
-        <div class='card shadow mb-4'>
-          <div class='card-header py-3'>
-            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-          </div>
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header py-3'>
+                            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
+                        </div>
 
-          <div class='card-body'>
-            <form method='POST' class='form-container' id='filterFormTruck'>
-              <div class='form-group row'>
-                <div class='col-sm-4'>
-                  <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
-                  <select class='form-control select2 form-control-user' id='nave' name='nave'>
-                    <option value='-'>Seleccione una nave...</option>
-                  </select>
+                        <div class='card-body'>
+                            <form method='POST' class='form-container' id='filterFormTruck'>
+                                <div class='form-group row'>
+                                    <div class='col-sm-4'>
+                                        <label for='nave' class='text-gray-800 font-weight-bold'>Motonave</label>
+                                        <select class='form-control select2 form-control-user' id='nave' name='nave'>
+                                            <option value='-'>Seleccione una nave...</option>
+                                        </select>
+                                    </div>
+
+                                    <div class='col-sm-4'>
+                                        <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
+                                        <select class='form-control select2 form-control-user' id='patente' name='patente'>
+                                            <option value='-'>Seleccione una patente...</option>
+                                        </select>
+                                    </div>
+
+                                    <div class='col-sm-4'>
+                                        <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
+                                        <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                    </div>
+                                </div>
+
+                                <div class='d-flex gap-2'>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class='col-sm-4'>
-                  <label for='patente' class='text-gray-800 font-weight-bold'>Patente</label>
-                  <select class='form-control select2 form-control-user' id='patente' name='patente'>
-                    <option value='-'>Seleccione una patente...</option>
-                  </select>
-                </div>
-
-                <div class='col-sm-4'>
-                  <label for='guia' class='text-gray-800 font-weight-bold'>N° de Guía</label>
-                  <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
-                </div>
-              </div>
-
-              <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    ";
+            </div>
+        ";
 
         $thead = "<thead style='background-color:#4e73df; color:white;'>";
         $thead .= '<tr>';
@@ -378,57 +378,57 @@ class famesa extends iQuery
         $tbclose = '</tbody>';
 
         $table = $form . "
-      <div class='row'>
-        <div class='col-lg-12'>
-          <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-              <h6 class='mb-0'>
-                <i class='fas fa-list'></i> Listado de Cámiones
-                <em>(Total: " . $count . ")</em>
-              </h6>
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                            <h6 class='mb-0'>
+                                <i class='fas fa-list'></i> Listado de Cámiones
+                                <em>(Total: " . $count . ")</em>
+                            </h6>
 
-              <div class='input-search'>
-                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                <input type='text' id='searchFamesaTruckTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-              </div>
+                            <div class='input-search'>
+                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                                <input type='text' id='searchFamesaTruckTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                            </div>
+                        </div>
+
+                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                            <table id='famesaTruckTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                                " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                                ' . $tr . $tbclose . "
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-              <table id='famesaTruckTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                  " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
-                  ' . $tr . $tbclose . "
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+            <script>
+                document.getElementById('searchFamesaTruckTable').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('#famesaTruckTable tbody tr');
 
-      <script>
-        document.getElementById('searchFamesaTruckTable').addEventListener('keyup', function() {
-          let filter = this.value.toLowerCase().trim();
-          let rows = document.querySelectorAll('#famesaTruckTable tbody tr');
+                rows.forEach(row => {
+                    let text = (
+                    (row.cells[1]?.innerText || '') + ' ' +
+                    (row.cells[2]?.innerText || '') + ' ' +
+                    (row.cells[3]?.innerText || '') + ' ' +
+                    (row.cells[4]?.innerText || '')
+                    ).toLowerCase();
 
-          rows.forEach(row => {
-            let text = (
-              (row.cells[1]?.innerText || '') + ' ' +
-              (row.cells[2]?.innerText || '') + ' ' +
-              (row.cells[3]?.innerText || '') + ' ' +
-              (row.cells[4]?.innerText || '')
-            ).toLowerCase();
+                    let match = text.includes(filter);
 
-            let match = text.includes(filter);
+                    if (filter.includes(' ')) {
+                    let words = filter.split(' ');
+                    match = words.every(w => text.includes(w));
+                    }
 
-            if (filter.includes(' ')) {
-              let words = filter.split(' ');
-              match = words.every(w => text.includes(w));
-            }
-
-            row.style.display = match ? '' : 'none';
-          });
-        });
-      </script>
-    ";
+                    row.style.display = match ? '' : 'none';
+                });
+                });
+            </script>
+        ";
 
         return $table;
     }
@@ -541,29 +541,30 @@ class famesa extends iQuery
         $totalMaxiBags = $totalCamiones = 0;
 
         $sql = "SELECT
-      f.counter_vessel,
-      f.car_plate_truck,
-      f.car_plate_ramp,
-      f.guide_number,
-      f.maxibags_quantity,
-      f.category,
-      f.arrival_date_port,
-      f.departure_date_port,
-      f.arrival_date_deposit,
-      f.departure_date_deposit,
-      f.observations,
-      f.created_by,
-      sh.ship_id,
-      sh.pol,
-      sh.pod,
-      sh.eta,
-      sh.etd,
-      sh.ship_line,
-      sh.voyage
-    FROM $this->table f
-    JOIN app_ships sh ON f.vessel_id = sh.ship_id
-    WHERE f.arrival_date_port BETWEEN :inicio AND :fin
-    ORDER BY $this->countervessel ASC";
+            f.counter_vessel,
+            f.car_plate_truck,
+            f.car_plate_ramp,
+            f.guide_number,
+            f.maxibags_quantity,
+            f.category,
+            f.arrival_date_port,
+            f.departure_date_port,
+            f.arrival_date_deposit,
+            f.departure_date_deposit,
+            f.observations,
+            f.created_by,
+            sh.ship_id,
+            sh.pol,
+            sh.pod,
+            sh.eta,
+            sh.etd,
+            sh.ship_line,
+            sh.voyage
+            FROM $this->table f
+            JOIN app_ships sh ON f.vessel_id = sh.ship_id
+            WHERE f.arrival_date_port BETWEEN :inicio AND :fin
+            ORDER BY $this->countervessel ASC
+        ";
 
         $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime, 'fin' => $finDatetime]);
         if ($list->length()) {
@@ -600,25 +601,25 @@ class famesa extends iQuery
                 }
 
                 $rows .= "
-          <tr>
-            <td>{$data['counter_vessel']}</td>
-            <td>{$status}</td>
-            <td>{$data['car_plate_truck']}</td>
-            <td>{$data['car_plate_ramp']}</td>
-            <td>{$data['guide_number']}</td>
-            <td>{$data['maxibags_quantity']}</td>
-            <td>{$data['category']}</td>
-            <td>{$vessel}</td>
-            <td>{$shipLine}</td>
-            <td>{$polFlag} {$polName}</td>
-            <td>{$podFlag} {$podName}</td>
-            <td>{$arrivalPort}</td>
-            <td>{$departurePort}</td>
-            <td>{$arrivalDeposit}</td>
-            <td>{$departureDeposit}</td>
-            <td>{$this->findByUser($data['created_by'])}</td>
-          </tr>
-        ";
+                    <tr>
+                        <td>{$data['counter_vessel']}</td>
+                        <td>{$status}</td>
+                        <td>{$data['car_plate_truck']}</td>
+                        <td>{$data['car_plate_ramp']}</td>
+                        <td>{$data['guide_number']}</td>
+                        <td>{$data['maxibags_quantity']}</td>
+                        <td>{$data['category']}</td>
+                        <td>{$vessel}</td>
+                        <td>{$shipLine}</td>
+                        <td>{$polFlag} {$polName}</td>
+                        <td>{$podFlag} {$podName}</td>
+                        <td>{$arrivalPort}</td>
+                        <td>{$departurePort}</td>
+                        <td>{$arrivalDeposit}</td>
+                        <td>{$departureDeposit}</td>
+                        <td>{$this->findByUser($data['created_by'])}</td>
+                    </tr>
+                ";
 
                 $style = "style='width:max-content'";
                 $totalMaxiBags += (int) $data['maxibags_quantity'];
@@ -626,49 +627,49 @@ class famesa extends iQuery
             }
 
             $rows .= "
-        <tr style='font-weight:bold;background:#f8f9fc'>
-          <td colspan='9' class='text-right'>Totales</td>
-          <td>Pallets: " . number_format($totalMaxiBags, 0, ',', '.') . "</td>
-          <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . '</td>
-        </tr>
-      ';
+                <tr style='font-weight:bold;background:#f8f9fc'>
+                <td colspan='9' class='text-right'>Totales</td>
+                <td>Pallets: " . number_format($totalMaxiBags, 0, ',', '.') . "</td>
+                <td colspan='8'>Camiones: " . number_format($totalCamiones, 0, ',', '.') . '</td>
+                </tr>
+            ';
         } else {
             $rows .= "
-        <tr>
-          <td colspan='16' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
-        </tr>
-      ";
+                <tr>
+                <td colspan='16' class='text-center text-muted'><em>¡No se han encontrado resultados!</em></td>
+                </tr>
+            ";
         }
 
         return "
-      <div class='card shadow'>
-        <div class='table-responsive'>
-          <table class='table table-bordered table-hover' $style>
-            <thead style='background:#4e73df;color:white'>
-              <tr>
-                <th>#</th>
-                <th>Estado</th>
-                <th>Patente Camión</th>
-                <th>Patente Rampla</th>
-                <th>Guía(s)</th>
-                <th>Cant. Maxi Sacos</th>
-                <th>Categoría</th>
-                <th>Nave</th>
-                <th>Linea</th>
-                <th>POL</th>
-                <th>POD</th>
-                <th>Entrada Puerto</th>
-                <th>Salida Puerto</th>
-                <th>Entrada Depósito</th>
-                <th>Salida Depósito</th>
-                <th>Digitado Por</th>
-              </tr>
-            </thead>
-            <tbody>$rows</tbody>
-          </table>
-        </div>
-      </div>
-    ";
+            <div class='card shadow'>
+                <div class='table-responsive'>
+                    <table class='table table-bordered table-hover' $style>
+                        <thead style='background:#4e73df;color:white'>
+                            <tr>
+                                <th>#</th>
+                                <th>Estado</th>
+                                <th>Patente Camión</th>
+                                <th>Patente Rampla</th>
+                                <th>Guía(s)</th>
+                                <th>Cant. Maxi Sacos</th>
+                                <th>Categoría</th>
+                                <th>Nave</th>
+                                <th>Linea</th>
+                                <th>POL</th>
+                                <th>POD</th>
+                                <th>Entrada Puerto</th>
+                                <th>Salida Puerto</th>
+                                <th>Entrada Depósito</th>
+                                <th>Salida Depósito</th>
+                                <th>Digitado Por</th>
+                            </tr>
+                        </thead>
+                        <tbody>$rows</tbody>
+                    </table>
+                </div>
+            </div>
+        ";
     }
 
 }

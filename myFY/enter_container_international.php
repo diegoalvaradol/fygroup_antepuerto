@@ -110,8 +110,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                                     <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
-                                                <div class="col-sm-6">
-                                                    <small class="text-black" id="info-vessel"></small>
+                                                <div class="col-sm-3">
+                                                    <label for='voyage' class='text-gray-800 font-weight-bold'>Información de Motonave</label>
+                                                    </br>
+                                                    <small id="info-vessel"></small>
                                                 </div>
                                             </div>
 

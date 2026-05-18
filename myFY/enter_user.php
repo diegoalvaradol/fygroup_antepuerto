@@ -70,6 +70,10 @@ if (!$admin) {
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Usuarios</h1>
+                    <p class="mb-4">
+                        Para agregar un nuevo usuario haz click en el botón agregar.
+                        <button class='btn btn-success btn-sm' onclick="addNewUser()"><i class='fas fa-plus'></i> Agregar</button>
+                    </p>
 
                     <!-- Tabla de Usuarios -->
                     <?php echo $user->getTableUser(); ?>
@@ -98,18 +102,99 @@ if (!$admin) {
         <h4>Resetear contraseña</h4>
 
         <form id="resetPasswordForm">
-            <div class="form-group">
-                <label>Nueva contraseña:</label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label>Nueva contraseña:</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                </div>
             </div>
 
             <input type="hidden" id="userRun" name="userRun">
             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
 
-            <br>
-
             <button type="button" class="btn btn-success btn-sm" onclick="saveChanges()"><i class='fas fa-check-circle'></i> Guardar</button>
             <button type="button" class="btn btn-danger btn-sm" onclick="closeModal()">Cancelar</button>
+        </form>
+    </div>
+
+    <!-- Modal Nuevo Usuario-->
+    <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
+    <div id="newUserModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3); min-width:300px; width:50%; max-width:600px; max-height:90vh; overflow-y:auto;">
+        <h4>Crear nuevo usuario</h4>
+
+        <form id="newUserForm">
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>RUN:</label>
+                    <input type="text" class="form-control form-control-user" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
+                    <small class="text-danger" id="error-run"></small>
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Divisón:</label>
+                    <select class="form-control select2 form-control-user" id="division" name="division">
+                        <option value="-" selected>Seleccione una división...</option>
+                        <option value="fy">Personal FYGroup</option>
+                        <option value="terminal">Terminal</option>
+                        <option value="shipper">Naviera</option>
+                    </select>
+                    <small class="text-danger" id="error-division"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Nombre:</label>
+                    <input type="text" class="form-control form-control-user" id="name" name="name">
+                    <small class="text-danger" id="error-name"></small>
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Apellido:</label>
+                    <input type="text" class="form-control form-control-user" id="lastname" name="lastname">
+                    <small class="text-danger" id="error-lastname"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Correo:</label>
+                    <input type="email" class="form-control form-control-user" id="email" name="email">
+                    <small class="text-danger" id="error-email"></small>
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Contraseña:</label>
+                    <input type="password" class="form-control form-control-user" id="password" name="password">
+                    <small class="text-danger" id="error-password"></small>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label>Administrador:</label>
+                    <select class="form-control select2 form-control-user" id="is_admin" name="is_admin">
+                        <option value="-" selected>Seleccione una opción...</option>
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
+                    <small class="text-danger" id="error-is_admin"></small>
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Editor:</label>
+                    <select class="form-control select2 form-control-user" id="is_admin_edit" name="is_admin_edit">
+                        <option value="-" selected>Seleccione una opción...</option>
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
+                    <small class="text-danger" id="error-is_admin_edit"></small>
+                </div>
+            </div>
+
+            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+            <button type="button" class="btn btn-success btn-sm" onclick="saveNewUser()"><i class='fas fa-check-circle'></i> Guardar</button>
+            <button type="button" class="btn btn-danger btn-sm" onclick="closeModalNewUser()">Cancelar</button>
         </form>
     </div>
 
@@ -236,6 +321,157 @@ function actualizarReloj() {
       </div>
     </div>
   `;
+}
+
+var formatearRut = function (inputRun) {
+  let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
+  let cuerpo = rut.slice(0, -1);
+  let dv = rut.slice(-1);
+  let cuerpoFormateado = '';
+  let i = 0;
+
+  for (let j = cuerpo.length - 1; j >= 0; j--) {
+    cuerpoFormateado = cuerpo[j] + cuerpoFormateado;
+    i++;
+    if (i % 3 === 0 && j !== 0) {
+    cuerpoFormateado = '.' + cuerpoFormateado;
+    }
+  }
+
+  inputRun.value = cuerpoFormateado + '-' + dv;
+}
+
+var validaRut = function (rut) {
+  rut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+
+  Swal.fire({
+    title: 'RUT inválido',
+    icon: 'error',
+    confirmButtonColor: '#d33',
+  }).then((result) => {
+    $('#run').focus();
+  });
+
+  const cuerpo = rut.slice(0, -1);
+  const dv = rut.slice(-1);
+
+  let suma = 0;
+  let multiplo = 2;
+
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo[i]) * multiplo;
+    multiplo = multiplo < 7 ? multiplo + 1 : 2;
+  }
+
+  const dvEsperado = 11 - (suma % 11);
+  let dvCalculado = '';
+
+  if (dvEsperado === 11) {
+    dvCalculado = '0';
+  } else if (dvEsperado === 10) {
+    dvCalculado = 'K';
+  } else {
+    dvCalculado = dvEsperado.toString();
+  }
+
+  if (dv !== dvCalculado) {
+    Swal.fire({
+      title: 'RUT inválido',
+      text: 'El dígito verificador no coincide.',
+      icon: 'error',
+      confirmButtonColor: '#d33',
+    }).then((result) => {
+      $('#run').focus();
+    });
+
+    return false;
+  }
+
+  return true;
+}
+
+var saveNewUser = function() {
+  const form = document.getElementById('newUserForm');
+  const formData = new FormData(form);
+  let hasError = false;
+  var paginaActual = $('input[name="page"]').val();
+
+  document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
+  document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
+
+  /* Validar si algún campo está vacío */
+  for (let [key, value] of formData.entries()) {
+    const inputElement = form.querySelector(`[name="${key}"]`);
+    const errorElement = document.getElementById('error-' + key);
+    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
+    const isEmpty = value.trim() === '' || value === '-';
+
+    if (isEmpty) {
+      if (errorElement) {
+        errorElement.innerText = 'Este campo es obligatorio.';
+      }
+
+      if (isSelect2) {
+        // Para select2: agrega borde rojo al contenedor visible
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .addClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.add('is-invalid');
+      }
+
+      hasError = true;
+    } else {
+      if (errorElement) {
+        errorElement.innerText = '';
+      }
+
+      if (isSelect2) {
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .removeClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.remove('is-invalid');
+      }
+    }
+  }
+  /* Hace envio de los datos a traves del formulario */
+  if(!hasError){
+    $.ajax({
+      url: '../controllers/userController.php',
+      data: $('#newUserForm').serialize(),
+      type: 'POST',
+    }).done(function(x) {
+      if(x == 'OK'){
+        Swal.fire({
+          title: '¡Éxito!',
+          text: '¡Usuario ingresado con éxito!',
+          icon: 'success',
+          confirmButtonColor: '#4CAF50'
+        }).then((result) => {
+          window.location = '<?php echo generateMkey('enter_user'); ?>&page=' + paginaActual;
+        });
+      }else if(x == 'NOOK') {
+        Swal.fire({
+          title: 'Oops...',
+          text: 'Error al ingresar usuario.',
+          icon: 'error',
+          cancelButtonColor: '#d33',
+        });
+      }
+    });
+  }
+}
+
+var addNewUser = function(run) {
+  $('#userRun').val(run);
+  $('#modalOverlay').fadeIn(200);
+  $('#newUserModal').fadeIn(200);
+}
+
+var closeModalNewUser = function() {
+  $('#newUserModal').fadeOut(200);
+  $('#modalOverlay').fadeOut(200);
 }
 
 var resetPassword = function(run) {

@@ -12,6 +12,7 @@ $exporter = trim($_POST['exporter'] ?? '');
 $exporter = ($exporter === '' || $exporter === '-') ? null : $exporter;
 
 $outer = new outerPort();
+$alerts = new UIComponents();
 
 $sql = 'SELECT
     v.vessel_name   AS nave,
@@ -55,19 +56,7 @@ $stmt->execute($params);
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (empty($rows)) {
-    echo '
-        <div class="alert custom-alert-warning d-flex align-items-center" role="alert">
-            <div class="icon me-4" style="padding-right: 5px;">
-                <i class="fa-solid fa-circle-info" ></i>
-            </div>
-
-            <div>
-                <strong>Atención:</strong>
-                </br>
-                No hay información disponible para generar la liquidación de esta nave.
-            </div>
-        </div>
-    ';
+    echo $alerts->customAlert('warning', 'Atención', 'No hay información disponible para generar la liquidación de esta nave.');
 
     exit;
 }
@@ -79,8 +68,8 @@ $query = http_build_query(array_filter([
 
 echo '
     <div class="text-center mb-3">
-    <a href="../controllers/exportReportPDF.php?' . $query . '" class="btn btn-success">
-        <i class="fa-solid fa-file-pdf"></i> Descargar PDF
-    </a>
+        <a href="../controllers/exportReportPDF.php?' . $query . '" class="btn btn-success">
+            <i class="fa-solid fa-file-pdf"></i> Descargar PDF
+        </a>
     </div>
 ';

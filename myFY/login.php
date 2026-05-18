@@ -139,6 +139,7 @@ if (isset($_SESSION['user'])) {
         cuerpoFormateado = '.' + cuerpoFormateado;
       }
     }
+
     inputRun.value = cuerpoFormateado + '-' + dv;
   }
 

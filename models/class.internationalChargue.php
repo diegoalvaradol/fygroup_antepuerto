@@ -195,38 +195,40 @@ class internationalChargue extends iQuery
 
         /* Formulario de filtros */
         $form = "
-    <div class='row'>
-      <div class='col-lg-12'>
-        <div class='card shadow mb-4'>
-          <div class='card-header py-3'>
-            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
-          </div>
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header py-3'>
+                            <h6 class='m-0 font-weight-bold text-primary'>Formulario de Búsqueda</h6>
+                        </div>
 
-          <div class='card-body'>
-            <form method='POST' class='form-container' id='filterFormInternationalChargue'>
-              <div class='form-group row'>
-                <div class='col-sm-4'>
-                  <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
-                </div>
-                <div class='col-sm-4'>
-                  <select class='form-control select2 form-control-user' id='patente' name='patente'></select>
-                </div>
-                <div class='col-sm-4'>
-                  <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
-                </div>
-              </div>
+                        <div class='card-body'>
+                            <form method='POST' class='form-container' id='filterFormInternationalChargue'>
+                                <div class='form-group row'>
+                                    <div class='col-sm-4'>
+                                        <select class='form-control select2 form-control-user' id='nave' name='nave'></select>
+                                    </div>
 
-              <div class='d-flex gap-2'>
-                <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
-                <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
-                <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    ";
+                                    <div class='col-sm-4'>
+                                        <select class='form-control select2 form-control-user' id='patente' name='patente'></select>
+                                    </div>
+
+                                    <div class='col-sm-4'>
+                                        <input type='text' name='guia' class='form-control' placeholder='N° de Guía' value='" . htmlspecialchars($filterGuia) . "'>
+                                    </div>
+                                </div>
+
+                                <div class='d-flex gap-2'>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
+                                    <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ";
 
         $thead = "<thead style='background-color:#4e73df; color:white;'>";
         $thead .= '<tr>';
@@ -282,23 +284,23 @@ class internationalChargue extends iQuery
         $tbclose = '</tbody>';
 
         $table = $form . "
-    <div class='row'>
-        <div class='col-lg-12'>
-          <div class='card shadow mb-4'>
-            <div class='card-header bg-primary text-white'>
-              <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Contenedores <em>(Total de Registros: " . $count . ")</em></h6>
-            </div>
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header bg-primary text-white'>
+                            <h6 class='mb-0'><i class='fas fa-list'></i> Listado de Contenedores <em>(Total de Registros: " . $count . ")</em></h6>
+                        </div>
 
-            <div class='table-responsive'>
-              <table class='table table-bordered table-hover' style='width:max-content;'>
-                " . $thead . $tr . $tbclose . '
-              </table>
+                        <div class='table-responsive'>
+                            <table class='table table-bordered table-hover' style='width:max-content;'>
+                                " . $thead . $tr . $tbclose . '
+                            </table>
+                        </div>
+                    </div>
+                ' . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . '
+                </div>
             </div>
-          </div>
-          ' . $this->paginate($totalRegistros, $porPagina, $pagina, $urlBase) . '
-        </div>
-      </div>
-    ';
+        ';
 
         return $table;
     }

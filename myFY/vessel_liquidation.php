@@ -83,9 +83,9 @@ if (!$admin) {
 
                                 <div class="card-body">
                                     <form class="form-container" id="vesselReportForm">
-                                        <div class="form-row">
+                                        <div class="form-group row">
                                           <!-- Exportador -->
-                                          <div class="form-group col-md-3">
+                                          <div class="col-md-3">
                                             <label for="exporter" class="text-gray-800 font-weight-bold">Exportador <em>(Opcional)</em></label>
                                             <select class="form-control select2" id="exporter" name="exporter">
                                               <option value="-">Seleccione un exportador...</option>
@@ -93,7 +93,7 @@ if (!$admin) {
                                           </div>
 
                                           <!-- Motonave -->
-                                          <div class="form-group col-md-3">
+                                          <div class="col-md-3">
                                             <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
                                             <select class="form-control select2" id="vessel" name="vessel">
                                               <option value="-">Seleccione una motonave...</option>
@@ -101,17 +101,17 @@ if (!$admin) {
                                           </div>
 
                                           <!-- Información Motonave -->
-                                          <div class="form-group col-md-3">
+                                          <div class="col-md-3">
                                             <label class="text-gray-800 font-weight-bold">Información de Motonave</label>
-                                            <small id="info-vessel" class="form-text text-muted"></small>
+                                            <small id="info-vessel"></small>
                                           </div>
 
                                           <!-- Liquidación -->
-                                          <div class="form-group col-md-3">
-                                              <label class="text-gray-800 font-weight-bold d-block">
-                                                Liquidación Motonave
-                                              </label>
-                                              <div id="detalleLiquidacion"></div>
+                                          <div class="col-md-3">
+                                            <label class="text-gray-800 font-weight-bold d-block">
+                                            Liquidación Motonave
+                                            </label>
+                                            <div id="detalleLiquidacion"></div>
                                           </div>
                                       </div>
                                     </form>

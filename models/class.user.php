@@ -32,7 +32,7 @@ class user extends iQuery
 
     public function save()
     {
-        $query = "INSERT INTO $this->table (run, name, last_name, email, password, division, created, last_update) VALUES (:run, :name, :lastname, :email, :password, :division, :created, :lastupdate)";
+        $query = "INSERT INTO $this->table (run, name, last_name, email, password, division, is_admin, is_admin_edit, is_active, last_session, created, last_update) VALUES (:run, :name, :lastname, :email, :password, :division, :isadmin, :isadminedit, :isactive, :lastsession, :created, :lastupdate)";
         $stmt = $this->db->prepare($query);
 
         $this->run = htmlspecialchars(strip_tags($this->run));
@@ -41,6 +41,10 @@ class user extends iQuery
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         $this->division = htmlspecialchars(strip_tags($this->division));
+        $this->isadmin = (int) $this->isadmin;
+        $this->isadminedit = (int) $this->isadminedit;
+        $this->isactive = (int) $this->isactive;
+        $this->lastsession = $this->lastsession;
         $this->created = $this->created;
         $this->lastupdate = $this->lastupdate;
 
@@ -50,6 +54,10 @@ class user extends iQuery
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
         $stmt->bindParam(':division', $this->division, PDO::PARAM_STR);
+        $stmt->bindParam(':isadmin', $this->isadmin, PDO::PARAM_INT);
+        $stmt->bindParam(':isadminedit', $this->isadminedit, PDO::PARAM_INT);
+        $stmt->bindParam(':isactive', $this->isactive, PDO::PARAM_INT);
+        $stmt->bindParam(':lastsession', $this->lastsession, PDO::PARAM_STR);
         $stmt->bindParam(':created', $this->created, PDO::PARAM_STR);
         $stmt->bindParam(':lastupdate', $this->lastupdate, PDO::PARAM_STR);
 
@@ -220,7 +228,7 @@ class user extends iQuery
         $count = 0;
         $tr = '';
 
-        $query = "SELECT * FROM $this->table WHERE 1 AND $this->division = 'fy' ORDER BY user_id ASC";
+        $query = "SELECT * FROM $this->table ORDER BY user_id ASC";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -232,7 +240,6 @@ class user extends iQuery
         $thead .= '<th>Nombre</th>';
         $thead .= '<th>Apellido</th>';
         $thead .= '<th>Email</th>';
-        $thead .= '<th>Contraseña</th>';
         $thead .= '<th>División</th>';
         $thead .= '<th>Administrador</th>';
         $thead .= '<th>Administrador Editor</th>';
@@ -248,7 +255,7 @@ class user extends iQuery
             $colorAdminEdit = $data[$this->isadminedit] ? 'text-success' : 'text-danger';
             $colorActive = $data[$this->isactive] ? 'text-success' : 'text-danger';
 
-            $btnRefresh = "<button class='btn btn-info btn-sm' onclick=\"resetPassword('{$data[$this->run]}')\"><i class='fas fa-refresh'></i> Resetar</button>";
+            $btnRefresh = "<button class='btn btn-info btn-sm' onclick=\"resetPassword('{$data[$this->run]}')\"><i class='fas fa-key'></i> Resetear</button>";
 
             $btnDeshabilite = $data[$this->isactive] == 1
             ? "<button class='btn btn-danger btn-sm' onclick=\"changeStatusUser('{$data[$this->run]}', 0)\"><i class='fas fa-lock'></i> Deshabilitar</button>"
@@ -260,7 +267,6 @@ class user extends iQuery
             $tr .= "<td>{$data[$this->name]}</td>";
             $tr .= "<td>{$data[$this->lastname]}</td>";
             $tr .= "<td>{$data[$this->email]}</td>";
-            $tr .= '<td>••••••••</td>';
             $tr .= "<td>{$arrayDivision[$data[$this->division]]}</td>";
             $tr .= "<td class='{$colorAdmin}'>{$arrayYesNo[$data[$this->isadmin]]}</td>";
             $tr .= "<td class='{$colorAdminEdit}'>{$arrayYesNo[$data[$this->isadminedit]]}</td>";
@@ -275,26 +281,26 @@ class user extends iQuery
         $table = "
             <div class='row'>
                 <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                    <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalUsers'>$count</span>)</em>
-                    </h6>
+                    <div class='card shadow mb-4'>
+                        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
+                            <h6 class='mb-0'>
+                                <i class='fas fa-list'></i> Listado
+                                <em>(Total: <span id='totalUsers'>$count</span>)</em>
+                            </h6>
 
-                    <div class='input-search'>
-                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                        <input type='text' id='searchTableShip' placeholder='Buscar por run, nnombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                    </div>
-                    </div>
+                            <div class='input-search'>
+                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                                <input type='text' id='searchTableShip' placeholder='Buscar por run, nombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                            </div>
+                        </div>
 
-                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                    <table id='shipTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                        $thead
-                        $tr
-                    </table>
+                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                            <table id='shipTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                                $thead
+                                $tr
+                            </table>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 

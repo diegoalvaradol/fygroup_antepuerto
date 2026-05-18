@@ -26,6 +26,7 @@ $exporter = trim($_GET['exporter'] ?? '');
 $exporter = ($exporter === '' || $exporter === '-') ? null : $exporter;
 
 $outer = new outerPort();
+
 $sql = 'SELECT
     v.vessel_name AS nave,
     v.eta,
