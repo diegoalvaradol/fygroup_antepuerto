@@ -380,11 +380,11 @@ class famesa extends iQuery
         $table = $form . "
             <div class='row'>
                 <div class='col-lg-12'>
+                    <h1 class='h3 mb-1 text-gray-800'>Listado</h1> <em>(Total: " . $count . ")</em>
                     <div class='card shadow mb-4'>
                         <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
                             <h6 class='mb-0'>
-                                <i class='fas fa-list'></i> Listado de Cámiones
-                                <em>(Total: " . $count . ")</em>
+                                <i class='fas fa-list'></i>
                             </h6>
 
                             <div class='input-search'>

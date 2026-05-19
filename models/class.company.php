@@ -153,51 +153,47 @@ class company extends iQuery
         $table = "
             <div class='row'>
                 <div class='col-lg-12'>
-                <div class='card shadow mb-4'>
-                    <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                    <h6 class='mb-0'>
-                        <i class='fas fa-list'></i> Listado
-                        <em>(Total: <span id='totalCompanies'>$count</span>)</em>
-                    </h6>
+                    <h1 class='h3 mb-1 text-gray-800'>Listado</h1> <em>(Total: <span id='totalCompanies'>" . number_format($count, 0, ',', '.') . "</span>)</em>
+                    <div class='card shadow mb-4'>
+                        <div class='d-flex justify-content-end'>
+                            <div class='input-search'>
+                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
+                                <input type='text' id='searchCompanyTable' placeholder='Buscar por nombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                            </div>
+                        </div>
 
-                    <div class='input-search'>
-                        <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                        <input type='text' id='searchCompanyTable' placeholder='Buscar por nombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
+                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6;'>
+                            <table id='companyTable' class='table table-hover mb-0' style='min-width:900px; white-space:nowrap;'>
+                                $thead
+                                $tr
+                            </table>
+                        </div>
                     </div>
-                    </div>
-
-                    <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6;'>
-                    <table id='companyTable' class='table table-hover mb-0' style='min-width:900px; white-space:nowrap;'>
-                        $thead
-                        $tr
-                    </table>
-                    </div>
-                </div>
                 </div>
             </div>
 
             <script>
                 document.getElementById('searchCompanyTable').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#companyTable tbody tr');
-                let visibleCount = 0;
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#companyTable tbody tr');
+                    let visibleCount = 0;
 
-                rows.forEach(row => {
-                    let cell = row.cells[1];
-                    let text = cell ? cell.innerText.toLowerCase() : '';
-                    let match = text.includes(filter);
+                    rows.forEach(row => {
+                        let cell = row.cells[1];
+                        let text = cell ? cell.innerText.toLowerCase() : '';
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
+                        row.style.display = match ? '' : 'none';
 
-                    if (match) visibleCount++;
-                });
+                        if (match) visibleCount++;
+                    });
 
-                document.getElementById('totalCompanies').innerText = visibleCount;
+                    document.getElementById('totalCompanies').innerText = visibleCount;
                 });
             </script>
         ";

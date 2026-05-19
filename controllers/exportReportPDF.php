@@ -322,14 +322,14 @@ ob_start();
                 <?php foreach ($resumen as $exp => $r): ?>
                     <tr>
                         <td><?= $exp ?></td>
-                        <td><?= $r['pallets'] ?></td>
+                        <td><?= number_format($r['pallets'], 0, ',', '.') ?></td>
                         <td><?= count($r['containers']) ?></td>
                     </tr>
                 <?php $tp += $r['pallets'];?>
                 <?php endforeach; ?>
                 <tr>
                     <td><strong>Total</strong></td>
-                    <td><strong><?= $tp ?></strong></td>
+                    <td><strong><?= number_format($tp, 0, ',', '.') ?></strong></td>
                     <td><strong><?= count($contenedoresGlobal) ?></strong></td>
                 </tr>
             </table>

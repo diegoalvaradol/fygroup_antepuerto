@@ -144,13 +144,9 @@ class port extends iQuery
         $table = "
             <div class='row'>
                 <div class='col-lg-12'>
+                    <h1 class='h3 mb-1 text-gray-800'>Listado</h1> <em>(Total: <span id='totalPorts'>" . number_format($count, 0, ',', '.') . "</span>)</em>
                     <div class='card shadow mb-4'>
-                        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                            <h6 class='mb-0'>
-                                <i class='fas fa-list'></i> Listado
-                                <em>(Total: <span id='totalPorts'>$count</span>)</em>
-                            </h6>
-
+                        <div class='d-flex justify-content-end'>
                             <div class='input-search'>
                                 <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
                                 <input type='text' id='searchTablePort' placeholder='Buscar por ciudad' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
