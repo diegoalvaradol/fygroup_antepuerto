@@ -210,14 +210,6 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-/* ===== POPOVER (Bootstrap 4) ===== */
-$(document).ready(function () {
-  $('[data-toggle="popover"]').popover();
-});
-
-/* ===== CONTROL MODALES + INACTIVIDAD ===== */
-let modalAbierto = false;
-
 let inactivityTime = function () {
   let time;
   let warningTimeout = 30 * 60 * 1000; // 30 min
@@ -262,8 +254,6 @@ let inactivityTime = function () {
   }
 
   function resetTimer() {
-    if (modalAbierto) return;
-
     clearTimeout(time);
     time = setTimeout(logoutCountdown, warningTimeout);
   }

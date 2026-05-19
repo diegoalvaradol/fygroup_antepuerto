@@ -68,7 +68,7 @@ if (!$admin) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Liquidación de Naves</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Liquidación de Nave</h1>
                     <p class="mb-4">Acá podrás obtener la liquidación de carga por nave y exportador.</p>
 
                     <!-- Content Row -->
@@ -106,12 +106,10 @@ if (!$admin) {
                                             <small id="info-vessel"></small>
                                           </div>
 
-                                          <!-- Liquidación -->
+                                          <!-- Liquidación y Excel-->
                                           <div class="col-md-3">
-                                            <label class="text-gray-800 font-weight-bold d-block">
-                                            Liquidación Motonave
-                                            </label>
-                                            <div id="detalleLiquidacion"></div>
+                                            <label class="text-gray-800 font-weight-bold d-block">Liquidación Motonave</label>
+                                            <div id="btnPdfVesselLiquidation"></div>
                                           </div>
                                       </div>
                                     </form>
@@ -165,14 +163,6 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-/* ===== POPOVER (Bootstrap 4) ===== */
-$(document).ready(function () {
-  $('[data-toggle="popover"]').popover();
-});
-
-/* ===== CONTROL MODALES + INACTIVIDAD ===== */
-let modalAbierto = false;
-
 let inactivityTime = function () {
   let time;
   let warningTimeout = 30 * 60 * 1000; // 30 min
@@ -217,8 +207,6 @@ let inactivityTime = function () {
   }
 
   function resetTimer() {
-    if (modalAbierto) return;
-
     clearTimeout(time);
     time = setTimeout(logoutCountdown, warningTimeout);
   }
@@ -329,14 +317,6 @@ var saveInfoUser = function() {
 }
 
 $(document).ready(function() {
-  $('.modal').on('shown.bs.modal', function () {
-    modalAbierto = true;
-  });
-
-  $('.modal').on('hidden.bs.modal', function () {
-    modalAbierto = false;
-  });
-
   // iniciar inactivity
   inactivityTime();
 
@@ -396,7 +376,8 @@ $(document).ready(function() {
 
     if (!vessel || vessel === '-') {
       $('#info-vessel').html('');
-      $('#detalleLiquidacion').html('');
+      $('#btnPdfVesselLiquidation').html('');
+
       return;
     }
 
@@ -422,13 +403,13 @@ $(document).ready(function() {
         exporter: exporter
       },
       success: function (response) {
-        $('#detalleLiquidacion')
+        $('#btnPdfVesselLiquidation')
           .html(response)
           .css('margin', '0 auto')
           .css('display', 'inline-block');
       },
       error: function () {
-        $('#detalleLiquidacion').html(`
+        $('#btnPdfVesselLiquidation').html(`
           <div class="alert alert-warning">
             No se pudo generar la liquidación.
           </div>
@@ -437,6 +418,28 @@ $(document).ready(function() {
     });
   }
 });
+
+var exportExcel = function(nave) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '../controllers/shipsReportDownloadExcelController.php';
+  form.style.display = 'none';
+
+  const fields = {
+    nave: nave
+  };
+
+  for (const key in fields) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = fields[key];
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+}
 
 /* ===== FIX FOCO SELECT2 ===== */
 $(document).on('select2:open', function () {

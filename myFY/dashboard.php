@@ -284,35 +284,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <!-- Modales -->
     <?php echo $modals->render();?>
 
-    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-info text-white py-2 px-3">
-                    <h6 class="modal-title font-weight-bold mb-0"id="exampleModalLabel">
-                        <i class="fas fa-info-circle mr-2"></i> Información
-                    </h6>
-                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body text-center">
-                    <div class="mb-2">
-                        <i class="fas fa-sync-alt text-info" style="font-size: 32px;"></i>
-                    </div>
-                    <p class="mb-1 font-weight-bold">
-                        Nueva navegación disponible
-                    </p>
-                    <small class="text-muted">
-                        El menú ahora está en la parte superior para un acceso más rápido, cómodo y eficiente.
-                          </br>
-                        Si no ves los cambios, recarga la página.
-                    </small>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

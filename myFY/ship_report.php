@@ -69,7 +69,7 @@ if (!$admin) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Reporte de Naves</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Reporte por Nave</h1>
 
                     <!-- Tabla de Naves -->
                     <?php echo $port->shipReport(); ?>
@@ -219,6 +219,76 @@ function actualizarReloj() {
       </div>
     </div>
   `;
+}
+
+var saveNewGoals = function() {
+  $.ajax({
+    url: '../controllers/configSaveController.php',
+    data: $('#addGoalForm').serialize(),
+    type: 'POST',
+  }).done(function(x) {
+    if(x == 'OK'){
+      Swal.fire({
+        title: '¡Éxito!',
+        text: '¡Ocupación actualizada con éxito!',
+        icon: 'success',
+        confirmButtonColor: '#4CAF50'
+      }).then((result) => {
+        window.location = '<?php echo generateMkey('vessel_liquidation'); ?>';
+      });
+    } else {
+      Swal.fire({
+        title: 'Oops...',
+        text: 'Error al actualizar la ocupación.',
+        icon: 'error',
+        cancelButtonColor: '#d33',
+      });
+    }
+  });
+}
+
+var saveInfoUser = function() {
+  const password = $('#password').val();
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  let hasError = false;
+
+  /* Revisa que la contraseña tenga los caracteres obligatorios */
+  if (!regex.test(password)) {
+    Swal.fire({
+      title: 'Oops...',
+      text: 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.',
+      icon: 'error',
+      cancelButtonColor: '#d33',
+    });
+
+    hasError = true;
+  }
+
+  if(!hasError){
+    $.ajax({
+      url: '../controllers/userSaveController.php',
+      data: $('#editUserInfoForm').serialize(),
+      type: 'POST',
+    }).done(function(x) {
+      if(x == 'OK'){
+        Swal.fire({
+          title: '¡Éxito!',
+          html: '¡Información actualizada con éxito! </br> Por motivos de seguridad deberás iniciar sesión nuevamente.',
+          icon: 'success',
+          confirmButtonColor: '#4CAF50'
+        }).then((result) => {
+          window.location = 'logout.php';
+        });
+      } else {
+        Swal.fire({
+          title: 'Oops...',
+          text: 'Error al actualizar la información.',
+          icon: 'error',
+          cancelButtonColor: '#d33',
+        });
+      }
+    });
+  }
 }
 
 var exportExcel = function(nave, tipo, desde, hasta) {

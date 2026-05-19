@@ -109,9 +109,9 @@ class menu extends iQuery
                     'icon' => 'fa-file-pdf',
                     'id' => 'collapseReporte',
                     'items' => [
-                        ['label' => 'Reporte de Naves', 'link' => generateMkey('ship_report')],
-                        ['label' => 'Liquidación de Naves', 'link' => generateMkey('vessel_liquidation')],
-                        ['label' => 'Reporte de Turnos', 'link' => generateMkey('shifts_report')],
+                        ['label' => 'Reporte por Nave', 'link' => generateMkey('ship_report')],
+                        ['label' => 'Liquidación de Nave', 'link' => generateMkey('vessel_liquidation')],
+                        ['label' => 'Reporte de Turno', 'link' => generateMkey('shifts_report')],
                     ],
                 ],
                 [
