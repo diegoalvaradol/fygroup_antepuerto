@@ -69,7 +69,7 @@ if (!$admin) {
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Liquidación de Nave</h1>
-                    <p class="mb-4">Acá podrás obtener la liquidación de carga por nave y exportador.</p>
+                    <p class="mb-4">Acá podrás obtener la liquidación de carga por nave y/o exportador.</p>
 
                     <!-- Content Row -->
                     <div class="row">
