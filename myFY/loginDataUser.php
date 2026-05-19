@@ -52,102 +52,126 @@ $_SESSION['last_session'] = time();
 
     <style>
     body {
-    margin: 0;
-    font-family: system-ui, -apple-system, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+        margin: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
     }
 
     .card {
-    backdrop-filter: blur(14px);
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 2.5rem 2rem;
-    border-radius: 18px;
-    text-align: center;
-    color: #fff;
-    width: 320px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        backdrop-filter: blur(14px);
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 2.5rem 2rem;
+        border-radius: 18px;
+        text-align: center;
+        color: #fff;
+        width: 320px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
     }
 
-    h1 { margin: 0; font-size: 1.6rem; }
+    h1 {
+        margin: 0;
+        font-size: 1.6rem;
+    }
+
     h2 {
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: #94a3b8;
-    margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 400;
+        color: #94a3b8;
+        margin-bottom: 1.5rem;
     }
 
     p {
-    margin: 0.3rem 0;
-    font-size: 0.9rem;
-    color: #94a3b8;
+        margin: 0.3rem 0;
+        font-size: 0.9rem;
+        color: #94a3b8;
     }
 
     /* PROGRESS BAR */
     .progress {
-    margin-top: 1.5rem;
-    width: 100%;
-    height: 6px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
+        margin-top: 1.5rem;
+        width: 100%;
+        height: 6px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        overflow: hidden;
     }
 
     .progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #38bdf8, #6366f1);
-    transition: width 0.2s ease;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #38bdf8, #6366f1);
+        transition: width 0.2s ease;
     }
 
     /* LOADER */
     .loader-wrap {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
     }
 
     .loader {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 3px solid rgba(255,255,255,0.2);
-    border-top-color: #38bdf8;
-    animation: spin 0.8s linear infinite;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 3px solid rgba(255,255,255,0.2);
+        border-top-color: #38bdf8;
+        animation: spin 0.8s linear infinite;
     }
 
     @keyframes spin {
-    to { transform: rotate(360deg); }
+        to { transform: rotate(360deg); }
     }
     </style>
 </head>
 
-<body>
-    <div class="card">
-    <h1>Bienvenido 👋</h1>
-    <h2><?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?></h2>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg border-0 rounded-lg p-5 text-center" style="max-width: 500px; width: 95%;">
+        <div class="mb-4">
+            <div class="rounded-circle bg-white text-white d-inline-flex justify-content-center align-items-center" style="width:90px; height:90px; font-size:40px;">
+                <img src="../images/logo-fygroup-bg-removed.png" alt="Logo" style="width: 90%;">
+            </div>
+        </div>
 
-    <p id="status">Inicializando...</p>
+        <h1 class="h3 font-weight-bold text-muted mb-2">
+            Bienvenido 👋
+        </h1>
 
-    <div class="progress">
-        <div class="progress-bar" id="bar"></div>
-    </div>
+        <h2 class="h5 text-primary mb-4">
+            <?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?>
+        </h2>
 
-    <div class="loader-wrap">
-        <div class="loader"></div>
-    </div>
+        <p id="status" class="text-muted mb-4">
+            Inicializando sistema...
+        </p>
+
+        <div class="progress mb-4" style="height: 12px; border-radius: 20px; overflow: hidden;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="bar" role="progressbar" style="width: 0%"></div>
+        </div>
+
+        <div class="loader-wrap d-flex justify-content-center">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
+
+        <div class="mt-4 text-muted small">
+            Espere un momento mientras cargamos tu información.
+        </div>
     </div>
 </body>
 
 <script>
     const steps = [
-    { text: "Validando sesión...", progress: 30 },
-    { text: "Cargando datos...", progress: 70 },
-    { text: "Entrando al sistema...", progress: 100 }
+        { text: "Validando datos...", progress: 25 },
+        { text: "Validando sesión...", progress: 50 },
+        { text: "Cargando preferencias...", progress: 75 },
+        { text: "Entrando al sistema...", progress: 100 }
     ];
 
     let i = 0;
@@ -157,6 +181,7 @@ $_SESSION['last_session'] = time();
         document.getElementById("status").innerText = steps[i].text;
         document.getElementById("bar").style.width = steps[i].progress + "%";
         i++;
+
         setTimeout(nextStep, 800);
     } else {
         setTimeout(() => {
