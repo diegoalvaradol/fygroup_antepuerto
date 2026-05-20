@@ -779,11 +779,11 @@ class outerPort extends iQuery
         $thead .= '<tbody>';
 
         $tr = null;
-        $stayTime = 'No disponible';
 
         if ($result !== []) {
             foreach ($result as $data) {
                 $attr = null;
+                $stayTime = 'No disponible';
 
                 $createdTime = new DateTime($data[$this->arrivaldate]);
                 $arrivalTime = new DateTime($data[$this->arrivaldate]);
@@ -798,7 +798,7 @@ class outerPort extends iQuery
                     $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . '</button>';
                 }
 
-                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                     $arrivalDate = new DateTime($data['arrival_date']);
                     $departureDate = new DateTime($data['departure_date']);
 
@@ -978,14 +978,14 @@ class outerPort extends iQuery
         $row = 2;
         $totalPallets = 0;
         $totalRegistros = 0;
-        $stayTime = 'No disponible';
 
         foreach ($result as $data) {
+            $stayTime = 'No disponible';
             $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-            if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+            if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                 $arrivalDate = new DateTime($data['arrival_date']);
                 $departureDate = new DateTime($data['departure_date']);
 
@@ -1181,11 +1181,10 @@ class outerPort extends iQuery
         $thead .= '<tbody>';
 
         $tr = null;
-        $stayTime = 'No disponible';
-
         if ($result !== []) {
             foreach ($result as $data) {
                 $attr = null;
+                $stayTime = 'No disponible';
 
                 $createdTime = new DateTime($data[$this->arrivaldate]);
                 $arrivalTime = new DateTime($data[$this->arrivaldate]);
@@ -1200,7 +1199,7 @@ class outerPort extends iQuery
                     $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . '</button>';
                 }
 
-                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                     $arrivalDate = new DateTime($data['arrival_date']);
                     $departureDate = new DateTime($data['departure_date']);
 
@@ -1375,14 +1374,14 @@ class outerPort extends iQuery
         $row = 2;
         $totalPallets = 0;
         $totalRegistros = 0;
-        $stayTime = 'No disponible';
 
         foreach ($result as $data) {
+            $stayTime = 'No disponible';
             $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-            if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+            if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                 $arrivalDate = new DateTime($data['arrival_date']);
                 $departureDate = new DateTime($data['departure_date']);
 
@@ -1566,11 +1565,11 @@ class outerPort extends iQuery
         $thead .= '<tbody>';
 
         $tr = null;
-        $stayTime = 'No disponible';
 
         if ($result !== []) {
             foreach ($result as $data) {
                 $attr = null;
+                $stayTime = 'No disponible';
 
                 $createdTime = new DateTime($data[$this->arrivaldate]);
                 $arrivalTime = new DateTime($data[$this->arrivaldate]);
@@ -1585,7 +1584,7 @@ class outerPort extends iQuery
                     $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . '</button>';
                 }
 
-                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                     $arrivalDate = new DateTime($data['arrival_date']);
                     $departureDate = new DateTime($data['departure_date']);
 
@@ -1752,14 +1751,14 @@ class outerPort extends iQuery
         $row = 2;
         $totalPallets = 0;
         $totalRegistros = 0;
-        $stayTime = 'No disponible';
 
         foreach ($result as $data) {
+            $stayTime = 'No disponible';
             $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
             $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-            if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+            if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                 $arrivalDate = new DateTime($data['arrival_date']);
                 $departureDate = new DateTime($data['departure_date']);
 
@@ -2166,6 +2165,7 @@ class outerPort extends iQuery
             $totalPallets = $totalCamiones = 0;
 
             foreach ($list->getCollection() as $data) {
+                $stayTime = 'No disponible';
                 $vessel = $ship->getVesselName($data['ship_id']);
                 $shipLine = $ship->getShipLineName($data['ship_line']);
 
@@ -2185,8 +2185,7 @@ class outerPort extends iQuery
                 $arrival = $arrivalTime->format('d-m-Y H:i');
                 $departure = $data['departure_date'] ? (new DateTime($data['departure_date']))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
 
-                $stayTime = 'No disponible';
-                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                     $arrivalDate = new DateTime($data['arrival_date']);
                     $departureDate = new DateTime($data['departure_date']);
 
@@ -2378,6 +2377,7 @@ class outerPort extends iQuery
             $totalPallets = $totalCamiones = 0;
 
             foreach ($list->getCollection() as $data) {
+                $stayTime = 'No disponible';
                 $vessel = $ship->getVesselName($data['ship_id']);
                 $shipLine = $ship->getShipLineName($data['ship_line']);
                 $polName = $port->getPortName($data['pol']);
@@ -2387,8 +2387,7 @@ class outerPort extends iQuery
                 $arrival = $data['arrival_date'] ? (new DateTime($data['arrival_date']))->format('d-m-Y H:i') : 'Sin hora de ingreso.';
                 $departure = $data['departure_date'] ? (new DateTime($data['departure_date']))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-                $stayTime = 'No disponible';
-                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                     $arrivalDate = new DateTime($data['arrival_date']);
                     $departureDate = new DateTime($data['departure_date']);
 
@@ -2643,6 +2642,7 @@ class outerPort extends iQuery
                                 <?php $totalPallets = $totalCamiones = 0;?>
                                 <?php foreach ($list->getCollection() as $data): ?>
                                     <?php
+                                    $stayTime = 'No disponible';
                                     $vessel = $ship->getVesselName($data['ship_id']);
                                     $shipLine = $ship->getShipLineName($data['ship_line']);
                                     $polName = $port->getPortName($data['pol']);
@@ -2652,8 +2652,7 @@ class outerPort extends iQuery
                                     $arrival = $data['arrival_date'] ? (new DateTime($data['arrival_date']))->format('d-m-Y H:i') : 'Sin hora de ingreso.';
                                     $departure = $data['departure_date'] ? (new DateTime($data['departure_date']))->format('d-m-Y H:i') : 'Sin hora de salida.';
 
-                                    $stayTime = 'No disponible';
-                                    if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== '0000-00-00 00:00:00') {
+                                    if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                                         $arrivalDate = new DateTime($data['arrival_date']);
                                         $departureDate = new DateTime($data['departure_date']);
 
