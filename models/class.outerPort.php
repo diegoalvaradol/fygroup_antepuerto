@@ -1946,14 +1946,13 @@ class outerPort extends iQuery
                 sh.ship_line,
                 sh.voyage,
                 sh.finished_date,
-                sh.voyage,
-                SUM(CASE WHEN op.origin = 1 THEN 1 ELSE 0 END) AS total_containers,
-                SUM(CASE WHEN op.origin = 2 THEN op.pallets_quantity ELSE 0 END) AS total_pallets,
+                COUNT(op.container) AS total_containers,
+                SUM(op.pallets_quantity) AS total_pallets,
                 COUNT(op.row_id) AS total_camiones
             FROM $this->table op
             JOIN app_ships sh ON op.vessel_id = sh.ship_id
             WHERE sh.finished = 1
-            GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line
+            GROUP BY op.vessel_id, sh.pol, sh.pod, sh.ship_line, sh.eta, sh.etd, sh.voyage, sh.finished_date
             ORDER BY sh.ship_id ASC
         ";
 
