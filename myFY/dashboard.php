@@ -88,11 +88,12 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 <i class="fas fa-boxes-stacked fa-2x text-primary mb-2"></i>
                                 <h6 class="text-primary text-uppercase mb-3">Contenedores</h6>
                               </div>
-                              <div class="d-flex justify-content-between px-3">
-                                <div class="text-center">
+                              <div class="d-flex justify-content-center">
+                                <div class="text-center mr-5">
                                   <div class="text-muted small">Contenedores</div>
                                   <div class="h5 font-weight-bold text-dark"><?=$port->getTotalContainer($admin);?></div>
                                 </div>
+
                                 <div class="text-center">
                                   <div class="text-muted small">Pallets</div>
                                   <div class="h5 font-weight-bold text-dark"><?=$port->getTotalContainerPallets($admin);?></div>
@@ -110,14 +111,19 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 <i class="fas fa-snowflake fa-2x text-success mb-2"></i>
                                 <h6 class="text-success text-uppercase mb-3">Termos</h6>
                               </div>
-                              <div class="d-flex justify-content-between px-3">
-                                <div class="text-center">
-                                  <div class="text-muted small">Camiones</div>
-                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalThermo($admin);?></div>
+                              <div class="d-flex justify-content-center">
+                                <div class="text-center mr-5">
+                                    <div class="text-muted small">Camiones</div>
+                                    <div class="h5 font-weight-bold text-dark">
+                                        <?=$port->getTotalThermo($admin);?>
+                                    </div>
                                 </div>
+
                                 <div class="text-center">
-                                  <div class="text-muted small">Pallets</div>
-                                  <div class="h5 font-weight-bold text-dark"><?=$port->getTotalPallets($admin);?></div>
+                                    <div class="text-muted small">Pallets</div>
+                                    <div class="h5 font-weight-bold text-dark">
+                                        <?=$port->getTotalPallets($admin);?>
+                                    </div>
                                 </div>
                               </div>
                             </div>
