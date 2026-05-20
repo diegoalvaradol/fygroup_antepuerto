@@ -72,23 +72,9 @@ if (!$admin) {
                     <h1 class="h3 mb-1 text-gray-800">Estadística por Nave</h1>
                     <p class="mb-4">Acá puedes visualizar la estadística de las cargas de contenedores y pallets por nave que ya se encuentren finalizadas.</p>
 
-                    <!-- Content Row -->
-                    <div class="row">
-                        <!-- First Column -->
-                        <div class="col-lg-12">
-                            <div class="card-body">
-                                <div class="col-12 col-md-auto me-md-4 mb-3">
-                                    <button type="button" class="btn btn-success btn-user" id="btnPrintStadisticVessel" onclick="printStadisticVessel()">
-                                        <i class="fas fa-solid fa-print"></i> Imprimir
-                                    </button>
-                                </div>
-
-                                <!-- Tabla Estadítica por Naves -->
-                                <div id="stadisticVesselDiv">
-                                    <?php echo $port->tableStadisticsByShips(); ?>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Tabla Estadítica por Naves -->
+                    <div id="stadisticVesselDiv">
+                        <?php echo $port->tableStadisticsByShips(); ?>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -195,14 +181,59 @@ window.onload = function () {
   inactivityTime();
 };
 
-var printStadisticVessel = function () {
-  const contenido = document.getElementById('stadisticVesselDiv').innerHTML;
-  if (!contenido.trim()) return;
-  const ventana = window.open('', '', 'width=1200,height=800');
-  ventana.document.write(contenido);
+var printStadisticVessel = function() {
+  const table = document.getElementById("stadisticsByShipTable");
+
+  if (!table) {
+    alert("No se encontró la tabla");
+    return;
+  }
+
+  // Clonar tabla
+  const clonedTable = table.cloneNode(true);
+  const ventana = window.open("", "_blank", "width=1400,height=900");
+  ventana.document.write(`
+    <html>
+    <head>
+      <title>Estadística por Nave</title>
+        <style>
+          @page {
+            margin: 1mm;
+          }
+
+          body{
+            padding:20px;
+            font-family: Arial, sans-serif;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+
+          table{
+            width:100%;
+            border-collapse: collapse;
+            font-size: 75%;
+          }
+
+          thead{
+            display: table-header-group;
+          }
+        </style>
+    </head>
+
+    <body>
+        ${clonedTable.outerHTML}
+    </body>
+    </html>
+  `);
+
   ventana.document.close();
-  ventana.focus();
-  ventana.print();
+  ventana.onload = function () {
+    ventana.focus();
+    setTimeout(() => {
+      ventana.print();
+      ventana.close();
+    }, 500);
+  };
 }
 
 var saveNewGoals = function() {

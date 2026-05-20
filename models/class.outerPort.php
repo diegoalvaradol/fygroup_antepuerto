@@ -1993,24 +1993,24 @@ class outerPort extends iQuery
 
             $rows .= "
                 <tr>
-                <td>{$i}</td>
-                <td>{$vessel}</td>
-                <td>{$data['voyage']}</td>
-                <td>{$shipLine}</td>
-                <td>{$polFlag} {$polName}</td>
-                <td>{$podFlag} {$podName}</td>
-                <td>{$eta}</td>
-                <td>{$etd}</td>
-                <td><b class='text-success'>{$turnos}</b></td>
-                <td>" . number_format($dias, 0, ',', '.') . "</td>
-                <td><b>{$fin}</b></td>
-                <td><b>" . number_format((int) $data['total_camiones'], 0, ',', '.') . "</b></td>
-                <td class='{$cntClass}'><b>{$totalCnts}</b></td>
-                <td class='{$pltClass}'><b>{$totalPlts}</b></td>
-                <!--
-                <td class='text-center'>
-                    <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#detailModal' onclick='loadDetail({$vid})'><i class='fas fa-eye'></i> Detalles</button>
-                </td> -->
+                    <td>{$i}</td>
+                    <td>{$vessel}</td>
+                    <td>{$data['voyage']}</td>
+                    <td>{$shipLine}</td>
+                    <td>{$polFlag} {$polName}</td>
+                    <td>{$podFlag} {$podName}</td>
+                    <td>{$eta}</td>
+                    <td>{$etd}</td>
+                    <td><b class='text-success'>{$turnos}</b></td>
+                    <td>" . number_format($dias, 0, ',', '.') . "</td>
+                    <td><b>{$fin}</b></td>
+                    <td><b>" . number_format((int) $data['total_camiones'], 0, ',', '.') . "</b></td>
+                    <td class='{$cntClass}'><b>{$totalCnts}</b></td>
+                    <td class='{$pltClass}'><b>{$totalPlts}</b></td>
+                    <!--
+                    <td class='text-center'>
+                        <button class='btn btn-sm btn-success' data-toggle='modal' data-target='#detailModal' onclick='loadDetail({$vid})'><i class='fas fa-eye'></i> Detalles</button>
+                    </td> -->
                 </tr>
             ";
 
@@ -2018,48 +2018,57 @@ class outerPort extends iQuery
         }
 
         return "
-            <div class='card shadow mb-4'>
-                <div class='d-flex justify-content-between align-items-center mb-3 flex-wrap'>
-                    <div>
-                        <h1 class='h3 mb-1 text-gray-800 d-inline'>
-                            Listado
-                        </h1>
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <div class='d-flex justify-content-between align-items-center mb-3 flex-wrap'>
+                        <div>
+                            <h1 class='h3 mb-1 text-gray-800 d-inline'>
+                                Listado
+                            </h1>
 
-                        <em>
-                            (Total:
-                            <span id='totalShipStadistics'>" . number_format($i, 0, ',', '.') . "</span>)
-                        </em>
+                            <em>
+                                (Total:
+                                <span id='totalShipStadistics'>" . number_format($i, 0, ',', '.') . "</span>)
+                            </em>
+
+                            <button type='button' class='btn btn-success btn-user' id='btnPrintStadisticVessel' onclick='printStadisticVessel()'>
+                                <i class='fas fa-solid fa-print'></i> Imprimir
+                            </button>
+                        </div>
+
+                        <div class='input-search'>
+                            <i class='fas fa-search'></i>
+                            <input type='text' id='searchStadisticsByShipTable' placeholder='Buscar nave, naviera, puerto...' class='form-control form-control-sm'>
+                        </div>
                     </div>
 
-                    <div class='input-search'>
-                        <i class='fas fa-search'></i>
-                        <input type='text' id='searchStadisticsByShipTable' placeholder='Buscar nave, naviera, puerto...' class='form-control form-control-sm'>
-                    </div>
-                </div>
+                    <div class='card shadow mb-4'>
+                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                            <table id='stadisticsByShipTable' class='table table-hover mb-0 align-middle' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                                <thead style='background:#4e73df; color:white; position:sticky; top:0; z-index:2;'>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nave</th>
+                                        <th>Viaje</th>
+                                        <th>Naviera</th>
+                                        <th>POL</th>
+                                        <th>POD</th>
+                                        <th>ETA</th>
+                                        <th>ETD</th>
+                                        <th>Turnos</th>
+                                        <th>Días</th>
+                                        <th>Finalizado</th>
+                                        <th>Camiones</th>
+                                        <th>Contenedores</th>
+                                        <th>Pallets</th>
+                                        <!-- <th class='text-center'>Detalle</th> -->
+                                    </tr>
+                                </thead>
 
-                <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                <table id='stadisticsByShipTable' class='table table-hover mb-0 align-middle' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                    <thead style='background:#4e73df; color:white; position:sticky; top:0; z-index:2;'>
-                    <tr>
-                        <th>#</th>
-                        <th>Nave</th>
-                        <th>Viaje</th>
-                        <th>Naviera</th>
-                        <th>POL</th>
-                        <th>POD</th>
-                        <th>ETA</th>
-                        <th>ETD</th>
-                        <th>Turnos</th>
-                        <th>Días</th>
-                        <th>Finalizado</th>
-                        <th>Camiones</th>
-                        <th>Contenedores</th>
-                        <th>Pallets</th>
-                        <!-- <th class='text-center'>Detalle</th> -->
-                    </tr>
-                    </thead>
-                    <tbody>$rows</tbody>
-                </table>
+                                <tbody>$rows</tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 
