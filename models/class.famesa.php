@@ -380,19 +380,18 @@ class famesa extends iQuery
         $table = $form . "
             <div class='row'>
                 <div class='col-lg-12'>
-                    <h1 class='h3 mb-1 text-gray-800'>Listado</h1> <em>(Total: " . $count . ")</em>
-                    <div class='card shadow mb-4'>
-                        <div class='card-header bg-primary text-white d-flex justify-content-between align-items-center'>
-                            <h6 class='mb-0'>
-                                <i class='fas fa-list'></i>
-                            </h6>
-
-                            <div class='input-search'>
-                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                                <input type='text' id='searchFamesaTruckTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                            </div>
+                    <div class='d-flex justify-content-between align-items-center mb-3 flex-wrap'>
+                        <div>
+                            <h1 class='h3 mb-1 text-gray-800'>Listado</h1> <em>(Total: " . $count . ")</em>
                         </div>
 
+                        <div class='input-search'>
+                            <i class='fas fa-search'></i>
+                            <input type='text' id='searchFamesaTruckTable' placeholder='Buscar por nave, patente, guía...' class='form-control form-control-sm'>
+                        </div>
+                    </div>
+
+                    <div class='card shadow mb-4'>
                         <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                             <table id='famesaTruckTable' class='table table-hover mb-0' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
                                 <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>

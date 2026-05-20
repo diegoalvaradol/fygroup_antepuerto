@@ -153,15 +153,25 @@ class company extends iQuery
         $table = "
             <div class='row'>
                 <div class='col-lg-12'>
-                    <h1 class='h3 mb-1 text-gray-800'>Listado</h1> <em>(Total: <span id='totalCompanies'>" . number_format($count, 0, ',', '.') . "</span>)</em>
-                    <div class='card shadow mb-4'>
-                        <div class='d-flex justify-content-end'>
-                            <div class='input-search'>
-                                <i class='fas fa-search' style='position:absolute; top:50%; left:10px; transform:translateY(-50%); color:#6c757d; font-size:13px;'></i>
-                                <input type='text' id='searchCompanyTable' placeholder='Buscar por nombre' class='form-control form-control-sm' style='border-radius:20px; padding-left:30px;'>
-                            </div>
+                    <div class='d-flex justify-content-between align-items-center mb-3 flex-wrap'>
+                        <div>
+                            <h1 class='h3 mb-1 text-gray-800 d-inline'>
+                                Listado
+                            </h1>
+
+                            <em>
+                                (Total:
+                                <span id='totalCompanies'>" . number_format($count, 0, ',', '.') . "</span>)
+                            </em>
                         </div>
 
+                        <div class='input-search'>
+                            <i class='fas fa-search'></i>
+                            <input type='text' id='searchCompanyTable' placeholder='Buscar por nombre' class='form-control form-control-sm'>
+                        </div>
+                    </div>
+
+                    <div class='card shadow mb-4'>
                         <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6;'>
                             <table id='companyTable' class='table table-hover mb-0' style='min-width:900px; white-space:nowrap;'>
                                 $thead
