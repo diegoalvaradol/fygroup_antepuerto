@@ -173,7 +173,17 @@ class ship extends iQuery
 
             $finish = ($data[$this->finisheddate]) ? (new DateTime($data[$this->finisheddate]))->format('d-m-Y H:i') : 'Por estimar.';
 
-            $btnFinishedDate = '<i class="fas fa-info-circle text-info" role="button" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="' . $finish . '"></i>';
+            $btnFinishedDate = '
+                <i class="fas fa-info-circle text-info"
+                role="button"
+                tabindex="0"
+                data-toggle="popover"
+                data-html="true"
+                data-trigger="hover focus"
+                data-placement="right"
+                data-content="<b>Cierre:</b> ' . htmlspecialchars($finish) . '">
+                </i>
+            ';
 
             $btnEndStacking = $data[$this->finished] == 0
             ? "<button class='btn btn-danger btn-sm' onclick='stackingShip(" . $data[$this->id] . ',"' . $data[$this->vessel] . '","' . $data[$this->voyage] . "\",1)'><i class='fas fa-lock'></i> Cerrar</button>"
