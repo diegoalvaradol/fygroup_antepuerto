@@ -1946,7 +1946,7 @@ class outerPort extends iQuery
                 sh.ship_line,
                 sh.voyage,
                 sh.finished_date,
-                COUNT(op.container) AS total_containers,
+                COUNT(CASE WHEN op.container <> 'N/A' THEN op.container END) AS total_containers,
                 SUM(op.pallets_quantity) AS total_pallets,
                 COUNT(op.row_id) AS total_camiones
             FROM $this->table op
