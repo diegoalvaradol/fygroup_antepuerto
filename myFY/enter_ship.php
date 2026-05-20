@@ -253,6 +253,14 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
 <!-- JAVASCRIPT -->
 <script>
+/* Inicializa el popover */
+document.addEventListener('DOMContentLoaded', function () {
+  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
+  popoverTriggerList.forEach(function (el) {
+    new bootstrap.Popover(el);
+  });
+});
+
 /* Conteo regresivo para cierre de sesion */
 let inactivityTime = function () {
   let time;

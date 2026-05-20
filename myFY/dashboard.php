@@ -648,11 +648,6 @@ var saveInfoUser = function() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    var modal = new bootstrap.Modal(document.getElementById('messageModal'));
-    modal.show();
-});
-
 $(document).ready(function() {
     setInterval(actualizarReloj,1000);
     actualizarReloj();
