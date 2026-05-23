@@ -290,6 +290,28 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <!-- Modales -->
     <?php echo $modals->render();?>
 
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-info text-white py-2 px-3">
+                    <h6 class="modal-title font-weight-bold mb-0"id="exampleModalLabel">
+                        <i class="fas fa-info-circle mr-2"></i> Ocupación en Antepuerto
+                    </h6>
+                    <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <?php $total = $port->getTotalTrucksInAnpuerto($admin); ?>
+                    <?php $color = $total == 0 ? 'success' : 'danger';?>
+                    <?php $message = $total > 0 ? '<br> <b>Por favor regulariza la situación lo antes posible.</b>' : '';?>
+                    <?php echo $alerts->customAlert($color, 'Atención', 'Cuentas con un total de <b>' . $total . '</b> camiones en antepuerto.' . $message);?>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -326,6 +348,9 @@ document.addEventListener('DOMContentLoaded', function () {
   popoverTriggerList.forEach(function (el) {
     new bootstrap.Popover(el);
   });
+
+  var modal = new bootstrap.Modal(document.getElementById('messageModal'));
+    modal.show();
 });
 
 /* Conteo regresivo para cierre de sesion */

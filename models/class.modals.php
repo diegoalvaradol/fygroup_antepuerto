@@ -24,7 +24,7 @@ class Modals
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content border-0 shadow">
                     <div class="modal-header bg-info text-white py-2 px-3">
                         <h6 class="modal-title font-weight-bold mb-0" id="logoutModalLabel">¿Deseas cerrar sesión?</h6>
                         <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
@@ -45,7 +45,7 @@ class Modals
         <!-- Modal de ajustes-->
         <div class="modal fade" id="goalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content border-0 shadow">
                     <div class="modal-header bg-info text-white py-2 px-3">
                         <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Configurar Capacidad de Antepuerto</h6>
                         <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
@@ -71,7 +71,7 @@ class Modals
         <!-- Modal del perfil de usuario-->
         <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content border-0 shadow">
                     <div class="modal-header bg-info text-white py-2 px-3">
                         <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h6>
                         <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
@@ -113,7 +113,7 @@ class Modals
         <!-- Modal licencia del software-->
         <div class="modal fade" id="licenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
+                <div class="modal-content border-0 shadow">
                     <div class="modal-header bg-info text-white py-2 px-3">
                         <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Licencia de Uso de Software</h6>
                         <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
