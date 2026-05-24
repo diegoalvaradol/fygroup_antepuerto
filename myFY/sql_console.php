@@ -100,7 +100,7 @@ $resultado = ejecutarQuery($user);
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>FYGroup | SQL Administrador</title>
-  <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
 
   <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">

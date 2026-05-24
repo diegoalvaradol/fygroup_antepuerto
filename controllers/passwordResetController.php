@@ -39,16 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $link = $localHost ? 'http://localhost/ssl-chile/myPortal/' . $url : 'https://myfy.fygroup.cl/myPortal/' . $url;
         }
 
-        $mail = new PHPMailer(true);
-
         try {
-            // Configurar SMTP con Ferozo
+            // Configurar SMTP con CPanel
+            $mail = new PHPMailer(true);
             $mail->isSMTP();
-            $mail->Host = 'l0011525.ferozo.com';
+            $mail->Host = 'mail.fygroup.cl';
             $mail->SMTPAuth = true;
-            $mail->Username = 'soporte@ssl-lines.com';
-            $mail->Password = 'Ssl*2025sop';
-            $mail->SMTPSecure = 'ssl'; // usar 'ssl'
+            $mail->Username = 'soporte@fygroup.cl';
+            $mail->Password = 'Panul2026._';
+            $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
 
             // Configurar codificación
@@ -78,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </footer>
                     </div>
                 </div>
-      ';
+            ';
 
             $mail->send();
 

@@ -36,7 +36,7 @@ http_response_code(401);
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>FY Group | Área Inválida.</title>
   <meta http-equiv="refresh" content="5;url=<?php echo $redirect_url; ?>">
-  <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
   <style>
     body {
       margin: 0;

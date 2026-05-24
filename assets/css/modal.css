@@ -123,7 +123,11 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-/* SOLO desktop */
+.modal-color {
+  background: var(--color-accent);
+}
+
+/* Solo desktop */
 @media (min-width: 992px) {
   .custom-modal {
     width: 25%;

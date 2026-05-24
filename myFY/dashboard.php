@@ -28,9 +28,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="Dasboard" content="">
-    <meta name="Diego Alvarado López." content="">
-    <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Dashboard</title>
 
     <!-- Custom fonts for this template-->
@@ -259,7 +257,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                   <div class="col-12">
                                     <div id="divGraficoCamiones" style="position: relative;">
                                         <div id="mensajeSinDatos" class="col-sm-12 d-none justify-content-center align-items-center">
-                                            <?php echo $alerts->customAlert('danger', 'Atención', 'No hay datos disponibles para las fechas seleccionadas. Por favor ajusta el rango e intenta nuevamente.'); ?>
+                                            <?php echo $alerts->customAlert('danger', 'Atención', 'No hay datos disponibles para las fechas seleccionadas. </br> Por favor ajusta el rango e intenta nuevamente.'); ?>
                                         </div>
 
                                       <canvas id="graficoCamiones"></canvas>
@@ -293,7 +291,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-info text-white py-2 px-3">
+                <div class="modal-header modal-color text-white py-2 px-3">
                     <h6 class="modal-title font-weight-bold mb-0"id="exampleModalLabel">
                         <i class="fas fa-info-circle mr-2"></i> Ocupación en Antepuerto
                     </h6>

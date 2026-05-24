@@ -28,9 +28,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="Vista Formulario de Registro de Nuevo Usuario" content="">
-    <meta name="Diego Alvarado López." content="">
-    <link rel="icon" type="image/png" href="../favicon/favicon-256x256.png"/>
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Ingreso Contenedores</title>
 
     <!-- Custom fonts for this template-->
@@ -277,57 +275,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
             <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
         </form>
-    </div>
-
-    <!-- Modal Nueva Agencia-->
-     <div class="modal fade" id="modalAddAgency" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-          <div class="modal-header bg-info text-white py-2 px-3">
-            <h6 class="modal-title font-weight-bold mb-0">Nueva Agencia</h6>
-            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-          </div>
-
-          <div class="modal-body">
-            <div class="form-group">
-              <form id="editCompanyForm">
-                <div class="form-group row">
-                  <div class="col-sm-12">
-                    <label>Nombre:</label>
-                    <input type="text" class="form-control form-control-user" id="companyName" name="companyName">
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label>Exportador:</label>
-                    <select class="form-control select2 form-control-user" id="isExporter" name="isExporter">
-                      <option value="-">Seleccione..</option>
-                      <option value="1">Si</option>
-                      <option value="0">No</option>
-                    </select>
-                  </div>
-
-                  <div class="col-sm-6">
-                    <label>Agencia:</label>
-                    <select class="form-control select2 form-control-user" id="isAgency" name="isAgency">
-                      <option value="-">Seleccione..</option>
-                      <option value="1">Si</option>
-                      <option value="0">No</option>
-                    </select>
-                  </div>
-                </div>
-
-                <input type="hidden" id="agency" name="agency" value="1">
-              </form>
-            </div>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
-            <button type="button" class="btn btn-danger btn-user btn-sm" data-dismiss="modal">Cancelar</button>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- SweetAlert2 CDN -->
