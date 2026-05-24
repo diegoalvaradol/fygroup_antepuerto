@@ -18,13 +18,13 @@ if (isset($_SESSION['user'])) {
   <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
   <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-  <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../assets/css/fygroup.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <style>
   body {
-    background: url("../images/coquimbo_port_background_3.jpg") no-repeat center center fixed;
+    background: url("../images/coquimbo_port_background_5.jpg") no-repeat center center fixed;
     background-size: cover;
     position: relative;
   }
@@ -81,7 +81,7 @@ if (isset($_SESSION['user'])) {
     <div class="col-xl-4 col-lg-5 col-md-7">
       <div class="card login-card p-4">
         <div class="text-center mb-4">
-          <img src="../images/logo-fygroup-circle-bg-removed.png" class="logo-img mb-3">
+          <img src="../images/logo-fygroup-circle-v1.png" class="logo-img mb-3">
           <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
           <small class="text-muted">Acceso Personal</small>
         </div>
@@ -120,7 +120,7 @@ if (isset($_SESSION['user'])) {
   <script src="../assets/vendor/jquery/jquery.min.js"></script>
   <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="../assets/js/sb-admin-2.min.js"></script>
+  <script src="../assets/js/fygroup.js"></script>
 </body>
 </html>
 
