@@ -89,7 +89,13 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
     $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
     $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://antepuerto.fygroup.cl/';
-    $logo = $baseUrl . 'images/logo-fygroup-bg-removed.png';
+    $logo = $baseUrl . 'images/logo-fygroup-circle-bg-removed.png';
+
+    $emails = [
+        'diego.alvaraado@gmail.com',
+        'alvarado@fygroup.cl',
+        'flores@fygroup.cl',
+    ];
 
     echo '
         <!DOCTYPE html>
@@ -166,7 +172,7 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
 
         <body>
             <div class="card">
-                <img src="' . $logo . '" alt="SSL Logo">
+                <img src="' . $logo . '" alt="FYGroup Logo">
 
                 <div class="icon">
                 <i class="fa-solid fa-ban"></i>
@@ -202,7 +208,10 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
 
         $mail->CharSet = 'UTF-8';
         $mail->setFrom('soporte@fygroup.cl', 'Soporte FYGroup');
-        $mail->addAddress('diego.alvaraado@gmail.com');
+
+        foreach ($emails as $email) {
+            $mail->addAddress($email);
+        }
 
         $mail->isHTML(true);
         $mail->Subject = '🚫 Acceso Denegado Detectado';
