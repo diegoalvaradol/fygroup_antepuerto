@@ -110,31 +110,30 @@ $resultado = ejecutarQuery($user);
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"/>
 
   <style>
-  textarea {
-    resize: none; overflow: hidden; transition: height 0.2s; margin-bottom: 1rem;
-  }
+    textarea {
+        resize: none; overflow: hidden; transition: height 0.2s; margin-bottom: 1rem;
+    }
 
-  .btn-submit-wrapper {
-    display:flex; justify-content:center; margin-bottom:2rem;
-  }
+    .btn-submit-wrapper {
+        display:flex; justify-content:center; margin-bottom:2rem;
+    }
 
-  .dataTables_wrapper .dataTables_info {
-    float:left; margin-bottom:0.5rem;
-  }
+    .dataTables_wrapper .dataTables_info {
+        float:left; margin-bottom:0.5rem;
+    }
 
-  .dataTables_wrapper .dataTables_paginate {
-    display:flex !important; justify-content:center; margin-top:1rem; float:none !important;
-  }
+    .dataTables_wrapper .dataTables_paginate {
+        display:flex !important; justify-content:center; margin-top:1rem; float:none !important;
+    }
 
-  .dataTables_wrapper .dataTables_filter {
-    float:right; margin-bottom:0.5rem; text-align:right;
-  }
+    .dataTables_wrapper .dataTables_filter {
+        float:right; margin-bottom:0.5rem; text-align:right;
+    }
 
-  .table-responsive {
-    margin-bottom:1rem;
-  }
+    .table-responsive {
+        margin-bottom:1rem;
+    }
   </style>
-
 </head>
 
 <body>
@@ -149,6 +148,11 @@ $resultado = ejecutarQuery($user);
           <div class="col-12 col-md-10 col-lg-8">
             <h4 class="text-center mb-3">Ejecutar Consulta SQL</h4>
 
+            <div class="card shadow mx-auto" style="max-width: 600px;">
+              <!-- Breadcrumb -->
+              <?= menu::breadcrumb(); ?>
+            </div>
+            </br>
             <?=$resultado?>
 
             <form method="POST" class="mb-4">

@@ -10,14 +10,9 @@ class menu extends iQuery
         parent::__construct(); // usa Database::get() desde iQuery
     }
 
-    public static function sideBarSSL()
+    public static function menu()
     {
-        $cfg = new cfg();
-        $user = new user();
-
-        $infoCfg = json_decode($cfg->getInfo(1), true);
-        $updateTime = new DateTime($infoCfg['update_date']);
-        $admin = $user->isAdmin($_SESSION['user']['run']);
+        $admin = (new user())->isAdmin($_SESSION['user']['run']);
 
         $menus = [
             [
@@ -73,83 +68,140 @@ class menu extends iQuery
         ];
 
         if ($admin) {
-            $menus = array_merge($menus, [
-                [
-                    'title' => 'Layout',
-                    'icon' => 'fa-satellite',
-                    'id' => 'collapseLayout',
-                    'items' => [
-                        ['label' => 'Layout Antepuerto', 'link' => generateMkey('layout_antepuerto')],
-                    ],
+            $menus[] = [
+                'title' => 'Layout',
+                'icon' => 'fa-satellite',
+                'id' => 'collapseLayout',
+                'items' => [
+                    ['label' => 'Layout Antepuerto', 'link' => generateMkey('layout_antepuerto')],
                 ],
-                [
-                    'title' => 'Maersk',
-                    'icon' => 'fa-ship',
-                    'id' => 'collapseMaersk',
-                    'items' => [
-                        ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
-                        ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
-                        ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
-                        ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
-                        ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')],
-                    ],
+            ];
+
+            $menus[] = [
+                'title' => 'Maersk',
+                'icon' => 'fa-ship',
+                'id' => 'collapseMaersk',
+                'items' => [
+                    ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
+                    ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
+                    ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
+                    ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
+                    ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')],
                 ],
-                [
-                    'title' => 'MSC',
-                    'icon' => 'fa-ship',
-                    'id' => 'collapseMedlog',
-                    'items' => [
-                        ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
-                        ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
-                        ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')],
-                    ],
+            ];
+
+            $menus[] = [
+                'title' => 'MSC',
+                'icon' => 'fa-ship',
+                'id' => 'collapseMedlog',
+                'items' => [
+                    ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
+                    ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
+                    ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')],
                 ],
-                [
-                    'title' => 'Reportes',
-                    'icon' => 'fa-file-pdf',
-                    'id' => 'collapseReporte',
-                    'items' => [
-                        ['label' => 'Reporte por Nave', 'link' => generateMkey('ship_report')],
-                        ['label' => 'Liquidación de Nave', 'link' => generateMkey('vessel_liquidation')],
-                        ['label' => 'Reporte de Turno', 'link' => generateMkey('shifts_report')],
-                    ],
+            ];
+
+            $menus[] = [
+                'title' => 'Reportes',
+                'icon' => 'fa-file-pdf',
+                'id' => 'collapseReporte',
+                'items' => [
+                    ['label' => 'Reporte por Nave', 'link' => generateMkey('ship_report')],
+                    ['label' => 'Liquidación de Nave', 'link' => generateMkey('vessel_liquidation')],
+                    ['label' => 'Reporte de Turno', 'link' => generateMkey('shifts_report')],
                 ],
-                [
-                    'title' => 'Estadística',
-                    'icon' => 'fa-chart-bar',
-                    'id' => 'collapseEstaditica',
-                    'items' => [
-                        ['label' => 'Estadística Naves', 'link' => generateMkey('stadistics_by_vessel')],
-                    ],
+            ];
+
+            $menus[] = [
+                'title' => 'Estadística',
+                'icon' => 'fa-chart-bar',
+                'id' => 'collapseEstadistica',
+                'items' => [
+                    ['label' => 'Estadística Naves', 'link' => generateMkey('stadistics_by_vessel')],
                 ],
-                [
-                    'title' => 'Tarifario',
-                    'icon' => 'fa-dollar-sign',
-                    'id' => 'collapsePrecio',
-                    'items' => [
-                        ['label' => 'Lista de Tarifas', 'link' => generateMkey('list_price_indicators')],
-                    ],
+            ];
+
+            $menus[] = [
+                'title' => 'Tarifario',
+                'icon' => 'fa-dollar-sign',
+                'id' => 'collapsePrecio',
+                'items' => [
+                    ['label' => 'Lista de Tarifas', 'link' => generateMkey('list_price_indicators')],
                 ],
-                [
-                    'title' => 'Usuarios',
-                    'icon' => 'fa-user',
-                    'id' => 'collapseUser',
-                    'items' => [
-                        ['label' => 'Usuarios', 'link' => generateMkey('enter_user')],
-                    ],
+            ];
+
+            $menus[] = [
+                'title' => 'Usuarios',
+                'icon' => 'fa-users',
+                'id' => 'collapseUser',
+                'items' => [
+                    ['label' => 'Usuarios', 'link' => generateMkey('enter_user')],
                 ],
-                [
-                    'title' => 'Servidor',
-                    'icon' => 'fa-server',
-                    'id' => 'collapseServer',
-                    'items' => [
-                        ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
-                        ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')],
-                        ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')],
-                    ],
+            ];
+
+            $menus[] = [
+                'title' => 'Servidor',
+                'icon' => 'fa-server',
+                'id' => 'collapseServer',
+                'items' => [
+                    ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
+                    ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')],
+                    ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')],
                 ],
-            ]);
+            ];
         }
+
+        return $menus;
+    }
+
+    public static function breadcrumb()
+    {
+        $menus = self::menu();
+
+        $currentPage = $_GET['pag'] ?? '';
+
+        ob_start();
+        ?>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <b>Estás en: </b>
+                    &nbsp;
+                    &nbsp;
+                    <li class="breadcrumb-item">
+                        <a href="dashboard.php">Inicio</a>
+                    </li>
+
+                    <?php foreach ($menus as $menu): ?>
+                        <?php foreach ($menu['items'] as $item): ?>
+                            <?php $url = parse_url($item['link']);?>
+                            <?php parse_str($url['query'] ?? '', $query);?>
+                            <?php $menuPage = $query['pag'] ?? '';?>
+
+                            <?php if ($menuPage === $currentPage): ?>
+                                <li class="breadcrumb-item">
+                                    <?= $menu['title']; ?>
+                                </li>
+
+                                <li class="breadcrumb-item active">
+                                    <?= $item['label']; ?>
+                                </li>
+                                <?php break 2; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </ol>
+            </nav>
+
+        <?php
+
+        return ob_get_clean();
+    }
+
+    public static function sideBarSSL()
+    {
+        $infoCfg = json_decode((new cfg())->getInfo(1), true);
+        $updateTime = new DateTime($infoCfg['update_date']);
+        $menus = self::menu();
 
         ob_start();
         ?>

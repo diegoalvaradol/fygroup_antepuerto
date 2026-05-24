@@ -71,6 +71,9 @@ if (!$admin) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Lista de Precios</h1>
                     <p class="mb-1">Acá encontraras los precios de Gate In y Gate Out de cada naviera respectivamente.</p>

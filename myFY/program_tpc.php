@@ -78,6 +78,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Planificación Naviera Terminal Puerto Coquimbo (TPC)</h1>
                     <p class="mb-4">Acá podrás consultar la planificación naviera actual y fechas pasadas del terminal.</p>
