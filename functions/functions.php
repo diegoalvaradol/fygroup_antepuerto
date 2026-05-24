@@ -18,7 +18,7 @@ date_default_timezone_set('America/Santiago');
  */
 function generateMkey($module, $area = 'myFY')
 {
-    $secretKey = 'SSL-CHILE-DIEGO_2025_0517';
+    $secretKey = 'FYGROUP_DIEGO_2026_0517';
     $time = time();
     $random = bin2hex(random_bytes(5));
     $token = md5($secretKey . $module . $time . $random);
@@ -29,7 +29,7 @@ function generateMkey($module, $area = 'myFY')
 /**
  * Method esLocalhost //Verifica si la solicitud proviene de localhost o una IP local.
  *
- * @return void
+ * @return String
  */
 function esLocalhost()
 {
@@ -41,7 +41,7 @@ function esLocalhost()
 /**
  * Method getCurrentUser //Obtiene el usuario actual de la sesión.
  *
- * @return void
+ * @return String
  */
 function getCurrentUser()
 {
@@ -55,13 +55,13 @@ function getCurrentUser()
 /**
  * Method formatDate //Formatea una fecha a un formato específico.
  *
- * @param  $date   [fecha   a formatear]
+ * @param  $date   [fecha a formatear]
  * @param  $format [formato de fecha, por defecto 'Y-m-d H:i:s']
- * @return void
+ * @return String
  */
-function formatDate($date, $format = 'Y-m-d H:i:s')
+function formatDate($date, $format = 'd-m-Y H:i:s')
 {
-    if ($date == '0000-00-00 00:00:00' || $date == '0000-00-00') {
+    if ($date == '0000-00-00 00:00:00' || $date == '0000-00-00' || $date == null) {
         return '';
     }
 
