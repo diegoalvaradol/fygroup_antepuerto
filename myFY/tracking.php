@@ -53,8 +53,8 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
         <!-- Sidebar -->
         <?php echo $sideBarSSL; ?>
         <!-- End of Sidebar -->
-					<!-- Content Wrapper -->
-					<div id="content-wrapper" class="d-flex flex-column">
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
@@ -63,6 +63,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Seguimiento de Carga</h1>
 

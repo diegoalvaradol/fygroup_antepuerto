@@ -59,96 +59,99 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-              <!-- Page Heading -->
-              <h1 class="h3 mb-1 text-gray-800">Roleo de Carga</h1>
-              <p class="mb-4">Acá podrás realizar el roleo de carga entre naves del tipo liner y charter.</p>
+                <!-- Breadcrumb -->
+                <?= menu::breadcrumb(); ?>
 
-              <div class="col-sm-6">
-                <?php echo $alerts->customAlert('warning', 'Atención', 'Considerar que la acción de roleo es un proceso irreversible.'); ?>
-              </div>
+                <!-- Page Heading -->
+                <h1 class="h3 mb-1 text-gray-800">Roleo de Carga</h1>
+                <p class="mb-4">Acá podrás realizar el roleo de carga entre naves del tipo liner y charter.</p>
 
-              <!-- Content Row -->
-              <div class="row">
-                <!-- First Column -->
-                <div class="col-lg">
-                  <!-- Custom Text Color Utilities -->
-                  <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">Formulario de Roleo</h6>
-                    </div>
-
-                    <div class="card-body">
-                      <div class="col-sm-3">
-                        <?php echo $alerts->customAlert('info', 'Simbología', '"-T": Termo | "-C": Contenedores.'); ?>
-                      </div>
-
-                      <form class="form-container" id="vesselTransferForm">
-                        <div class="form-group row">
-                          <div class="col-sm-4">
-                            <div class="form-inline mb-3">
-                              <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Origen</label>
-                              <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de origen del roleo."></i>
-
-                              <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel">
-                                <option value="-">Seleccione una motonave...</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div class="col-sm-4">
-                            <div class="form-inline mb-3">
-                              <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Destino</label>
-                              <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de destino del roleo."></i>
-
-                              <select class="form-control select2 form-control-user" id="tovessel" name="tovessel">
-                                <option value="-">Seleccione una motonave...</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div class="col-sm-4">
-                            <div class="form-inline mb-3">
-                              <label class="mr-2 text-gray-800 font-weight-bold">Camiones Disponibles</label>
-                              <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica los camiones disponibles para el roleo."></i>
-                              <select class="form-control select2 form-control-user" id="rowId" name="rowId[]" multiple>
-                                <option value="-">Seleccione uno o más camiones...</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                          <div class="col-sm-4">
-                            <div class="form-inline mb-3">
-                              <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Origen</label>
-                            </div>
-
-                            <div class="form-inline mb-3">
-                              <small class="text-black" id="info-fromvessel"></small>
-                            </div>
-                          </div>
-
-                          <div class="col-sm-4">
-                            <div class="form-inline mb-3">
-                              <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Destino</label>
-                            </div>
-
-                            <div class="form-inline mb-3">
-                              <small class="text-black" id="info-tovessel"></small>
-                            </div>
-                          </div>
-                        </div>
-
-                        <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveVesselTransfer()">
-                          <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Realizar Roleo</span>
-                          <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                        </button>
-                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
-                      </form>
-                    </div>
-                  </div>
+                <div class="col-sm-6">
+                    <?php echo $alerts->customAlert('warning', 'Atención', 'Considerar que la acción de roleo es un proceso irreversible.'); ?>
                 </div>
-              </div>
+
+                <!-- Content Row -->
+                <div class="row">
+                    <!-- First Column -->
+                    <div class="col-lg">
+                    <!-- Custom Text Color Utilities -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Formulario de Roleo</h6>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="col-sm-3">
+                                    <?php echo $alerts->customAlert('info', 'Simbología', '"-T": Termo | "-C": Contenedores.'); ?>
+                                </div>
+
+                                <form class="form-container" id="vesselTransferForm">
+                                    <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <div class="form-inline mb-3">
+                                        <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Origen</label>
+                                        <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de origen del roleo."></i>
+
+                                        <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel">
+                                            <option value="-">Seleccione una motonave...</option>
+                                        </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-inline mb-3">
+                                        <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Destino</label>
+                                        <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de destino del roleo."></i>
+
+                                        <select class="form-control select2 form-control-user" id="tovessel" name="tovessel">
+                                            <option value="-">Seleccione una motonave...</option>
+                                        </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-inline mb-3">
+                                        <label class="mr-2 text-gray-800 font-weight-bold">Camiones Disponibles</label>
+                                        <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica los camiones disponibles para el roleo."></i>
+                                        <select class="form-control select2 form-control-user" id="rowId" name="rowId[]" multiple>
+                                            <option value="-">Seleccione uno o más camiones...</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                    <div class="col-sm-4">
+                                        <div class="form-inline mb-3">
+                                        <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Origen</label>
+                                        </div>
+
+                                        <div class="form-inline mb-3">
+                                        <small class="text-black" id="info-fromvessel"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-inline mb-3">
+                                        <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Destino</label>
+                                        </div>
+
+                                        <div class="form-inline mb-3">
+                                        <small class="text-black" id="info-tovessel"></small>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveVesselTransfer()">
+                                    <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Realizar Roleo</span>
+                                    <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                    </button>
+                                    <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.container-fluid -->
         </div>

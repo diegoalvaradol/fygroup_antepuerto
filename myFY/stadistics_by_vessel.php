@@ -66,6 +66,9 @@ if (!$admin) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Estadística por Nave</h1>
                     <p class="mb-4">Acá puedes visualizar la estadística de las cargas de contenedores y pallets por nave que ya se encuentren finalizadas.</p>

@@ -71,6 +71,8 @@ if (!$admin) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Reporte Turnos Famesa</h1>

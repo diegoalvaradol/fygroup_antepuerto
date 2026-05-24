@@ -65,6 +65,10 @@ if (!$admin) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+
+
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Layout Antepuerto</h1>
                     <p class="mb-4">Acá podrás visualizar el transito en tiempo real en el antepuerto.</p>

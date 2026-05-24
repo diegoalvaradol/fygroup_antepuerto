@@ -65,6 +65,9 @@ if (!$admin) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Liquidación de Nave</h1>
                     <p class="mb-4">Acá podrás obtener la liquidación de carga por nave y/o exportador.</p>
