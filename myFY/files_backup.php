@@ -136,7 +136,7 @@ if (!$admin) {
 	<script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="../assets/js/fygroup.min.js"></script>
+	<script src="../assets/js/fygroup.js"></script>
 
 	<!-- Select2 CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>

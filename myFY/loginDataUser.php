@@ -133,8 +133,8 @@ $_SESSION['last_session'] = time();
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow-lg border-0 rounded-lg p-5 text-center" style="max-width: 500px; width: 95%;">
         <div class="mb-4">
-            <div class="rounded-circle bg-white text-white d-inline-flex justify-content-center align-items-center" style="width:90px; height:90px; font-size:40px;">
-                <img src="../images/logo-fygroup-bg-removed.png" alt="Logo" style="width: 90%;">
+            <div class=" d-inline-flex justify-content-center align-items-center" style="width:90px; height:90px; font-size:40px;">
+                <img src="../images/logo-fygroup-circle-v1.png" style="width:90%">
             </div>
         </div>
 

@@ -175,7 +175,7 @@ if (!$admin) {
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="../assets/js/fygroup.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
 
     <!-- Bootstrap JS (necesario para popover) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
