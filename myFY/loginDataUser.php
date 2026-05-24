@@ -177,17 +177,17 @@ $_SESSION['last_session'] = time();
     let i = 0;
 
     function nextStep() {
-    if (i < steps.length) {
-        document.getElementById("status").innerText = steps[i].text;
-        document.getElementById("bar").style.width = steps[i].progress + "%";
-        i++;
+        if (i < steps.length) {
+            document.getElementById("status").innerText = steps[i].text;
+            document.getElementById("bar").style.width = steps[i].progress + "%";
+            i++;
 
-        setTimeout(nextStep, 800);
-    } else {
-        setTimeout(() => {
-        window.location.href = "dashboard.php";
-        }, 400);
-    }
+            setTimeout(nextStep, 800);
+        } else {
+            setTimeout(() => {
+            window.location.href = "dashboard.php";
+            }, 400);
+        }
     }
 
     nextStep();
