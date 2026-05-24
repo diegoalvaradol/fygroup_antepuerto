@@ -47,7 +47,7 @@ $_SESSION['last_session'] = time();
   <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
   <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-  <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../assets/css/fygroup.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>

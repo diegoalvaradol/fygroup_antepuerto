@@ -104,7 +104,7 @@ $resultado = ejecutarQuery($user);
 
   <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-  <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../assets/css/fygroup.css" rel="stylesheet">
 
   <!-- DataTables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"/>
@@ -178,7 +178,7 @@ $resultado = ejecutarQuery($user);
 <script src="../assets/vendor/jquery/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="../assets/js/sb-admin-2.min.js"></script>
+<script src="../assets/js/fygroup.min.js"></script>
 
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
