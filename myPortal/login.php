@@ -94,7 +94,7 @@ if (isset($_SESSION['user'])) {
           </div>
 
           <div class="form-group mb-3">
-            <label class="small text-muted">RUN</label>
+            <label class="small text-muted">R.U.N</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>

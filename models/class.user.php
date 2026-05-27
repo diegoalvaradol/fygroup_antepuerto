@@ -236,7 +236,7 @@ class user extends iQuery
         $thead = "<thead style='background-color:#4e73df; color:white; top:0; z-index:1;'>";
         $thead .= '<tr>';
         $thead .= '<th>Id</th>';
-        $thead .= '<th>RUN</th>';
+        $thead .= '<th>R.U.N</th>';
         $thead .= '<th>Nombre</th>';
         $thead .= '<th>Apellido</th>';
         $thead .= '<th>Email</th>';
