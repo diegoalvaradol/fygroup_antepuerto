@@ -157,18 +157,17 @@ class menu extends iQuery
     public static function breadcrumb()
     {
         $menus = self::menu();
-
         $currentPage = $_GET['pag'] ?? '';
 
         ob_start();
         ?>
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <b>Estás en: </b>
-                    &nbsp;
-                    &nbsp;
-                    <li class="breadcrumb-item">
-                        <a href="dashboard.php">Inicio</a>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item home">
+                        <a href="dashboard.php">
+                            <i class="fas fa-home"></i>
+                            <span>Inicio</span>
+                        </a>
                     </li>
 
                     <?php foreach ($menus as $menu): ?>
@@ -178,11 +177,11 @@ class menu extends iQuery
                             <?php $menuPage = $query['pag'] ?? '';?>
 
                             <?php if ($menuPage === $currentPage): ?>
-                                <li class="breadcrumb-item">
+                                <li class="breadcrumb-item menu">
                                     <?= $menu['title']; ?>
                                 </li>
 
-                                <li class="breadcrumb-item active">
+                                <li class="breadcrumb-item page active">
                                     <?= $item['label']; ?>
                                 </li>
                                 <?php break 2; ?>
