@@ -3,8 +3,6 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   padding-top: 65px;
-
-  /* Mejora visual */
   font-size: 14px;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
