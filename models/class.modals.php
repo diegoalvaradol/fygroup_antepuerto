@@ -73,13 +73,21 @@ class Modals
             <div class="modal-dialog" role="document">
                 <div class="modal-content border-0 shadow">
                     <div class="modal-header modal-color text-white py-2 px-3">
-                        <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Perfil de: <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?></h6>
+                        <h6 class="modal-title font-weight-bold mb-0" id="exampleModalLabel">Perfil de Usuario</h6>
                         <button type="button" class="close text-white p-0 m-0" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
                     </div>
-                    <div class="row justify-content-center">
-                        <h6 class="modal-title" id="exampleModalLabel">División: <?php echo $this->arrayDivision[$_SESSION['user']['division']]; ?></h6>
+                    <div class="px-4 pt-3 pb-1 text-center">
+                        <h6 class="modal-title mb-2">
+                            Usuario:
+                            <?php echo $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . '.'; ?>
+                        </h6>
+
+                        <h6 class="modal-title text-muted mb-0">
+                            División:
+                            <?php echo $this->arrayDivision[$_SESSION['user']['division']]; ?>
+                        </h6>
                     </div>
                     <div class="modal-body">
                         <form id="editUserInfoForm">

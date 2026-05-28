@@ -247,24 +247,25 @@ class UIComponents
     public static function customAlert($type, $title, $message)
     {
         $alerts = [
+
             'danger' => [
-                'icon' => 'fa-circle-info',
-                'color' => '#dc2626',
+                'icon' => 'fa-circle-xmark',
+                'color' => 'var(--color-danger)',
             ],
 
             'success' => [
                 'icon' => 'fa-circle-check',
-                'color' => '#16a34a',
+                'color' => 'var(--color-success)',
             ],
 
             'warning' => [
                 'icon' => 'fa-triangle-exclamation',
-                'color' => '#eab308',
+                'color' => 'var(--color-warning)',
             ],
 
             'info' => [
                 'icon' => 'fa-circle-info',
-                'color' => '#3b82f6',
+                'color' => 'var(--color-info)',
             ],
         ];
 
@@ -272,16 +273,21 @@ class UIComponents
 
         ob_start();
         ?>
-            <div class="alert custom-alert-<?= htmlspecialchars($type) ?> d-flex align-items-center" role="alert">
-                <div class="icon me-4 d-flex align-items-center" style="padding-right: 10px; color: <?= $alert['color'] ?>;">
-                    <i class="fa-solid <?= $alert['icon'] ?> fa-xl me-3"></i>
+        <div class="custom-alert-<?= htmlspecialchars($type) ?> d-flex align-items-start" role="alert">
+            <div class="custom-alert-icon" style="color: <?= $alert['color'] ?>;">
+                <i class="fa-solid <?= $alert['icon'] ?>"></i>
+            </div>
+
+            <div class="custom-alert-content">
+                <div class="custom-alert-title">
+                    <?= htmlspecialchars($title) ?>
                 </div>
 
-                <div>
-                    <strong><?= htmlspecialchars($title) ?>: </strong><br>
+                <div class="custom-alert-message">
                     <?= strip_tags($message, '<b><strong><i><em><s><strike><mark><br>') ?>
                 </div>
             </div>
+        </div>
         <?php
 
         return ob_get_clean();
