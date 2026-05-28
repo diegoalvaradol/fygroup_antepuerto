@@ -88,7 +88,7 @@ class Modals
                                     <?php echo $alerts->customAlert('info', 'Atención', '¡Para guardar los cambios deberás ingresar tu contraseña actual!'); ?>
                                 </div>
                                 <div class="col-sm-12">
-                                    <label>RUN:</label>
+                                    <label>R.U.N:</label>
                                     <input type="text" class="form-control form-control-user" disabled value="<?php echo $_SESSION['user']['run']; ?>">
                                     <label>Nombre:</label>
                                     <input type="text" class="form-control form-control-user" id="name" name="name" value="<?php echo $_SESSION['user']['name']; ?>">

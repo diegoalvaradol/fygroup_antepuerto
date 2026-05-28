@@ -1,14 +1,18 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $user = new user();
-  $run  = $_POST['run'];
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    exit;
+}
 
-  $sql  = "SELECT * FROM app_users WHERE run = :run";
-  $list = $user->getFirstMember($sql, ['run' => $run]);
+$user = new user();
+$run = $_POST['run'];
 
-  if ($list > 0) {
-    echo "NOOK";
-  }
+$sql = 'SELECT run FROM app_users WHERE run = :run LIMIT 1';
+$list = $user->getFirstMember($sql, ['run' => $run]);
+
+if ($list > 0) {
+    echo 'NOOK';
 }

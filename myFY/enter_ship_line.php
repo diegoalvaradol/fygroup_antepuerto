@@ -259,6 +259,7 @@ function actualizarReloj() {
     </div>
   `;
 }
+
 var formatearRut = function (inputRun) {
   let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
 

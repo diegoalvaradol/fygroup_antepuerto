@@ -88,12 +88,12 @@ if (isset($_SESSION['user'])) {
 
         <form id="loginForm">
           <div class="form-group mb-3">
-            <label class="small text-muted">RUN</label>
+            <label class="small text-muted">R.U.N</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input type="text" class="form-control text-center" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
+              <input type="text" class="form-control text-center" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRun(this)" onblur="validaRun(this.value)">
             </div>
           </div>
 
@@ -125,7 +125,7 @@ if (isset($_SESSION['user'])) {
 </html>
 
 <script>
-  var formatearRut = function (inputRun) {
+  var formatearRun = function (inputRun) {
     let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
     let cuerpo = rut.slice(0, -1);
     let dv = rut.slice(-1);
@@ -143,7 +143,7 @@ if (isset($_SESSION['user'])) {
     inputRun.value = cuerpoFormateado + '-' + dv;
   }
 
-  var validaRut = function (rut) {
+  var validaRun = function (rut) {
     rut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
     if (rut.length < 2) return false;
     const cuerpo = rut.slice(0, -1);
@@ -176,7 +176,7 @@ if (isset($_SESSION['user'])) {
     if (!run || !password) {
       Swal.fire({
         title: '¡Atención!',
-        html: 'Debes ingresar RUN y contraseña.',
+        html: 'Debes ingresar R.U.N y contraseña.',
         icon: 'warning'
       });
       return;
@@ -207,7 +207,7 @@ if (isset($_SESSION['user'])) {
           break;
 
         case 'NOOK':
-          showError('RUN y/o contraseña inválidos.');
+          showError('R.U.N y/o contraseña inválidos.');
           break;
 
         default:

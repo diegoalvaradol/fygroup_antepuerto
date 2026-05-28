@@ -126,8 +126,8 @@ if (!$admin) {
         <form id="newUserForm">
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <label>RUN:</label>
-                    <input type="text" class="form-control form-control-user" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
+                    <label>R.U.N:</label>
+                    <input type="text" class="form-control form-control-user" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRun(this)" onblur="verifyRun(this.value), validaRun(this.value)">
                     <small class="text-danger" id="error-run"></small>
                 </div>
 
@@ -320,41 +320,63 @@ function actualizarReloj() {
   `;
 }
 
-var formatearRut = function (inputRun) {
+var verifyRun = function(run) {
+  if(run !== ''){
+    $.ajax({
+      url: '../controllers/runVerifyController.php',
+      data: {
+        run: run
+      },
+      type: "POST",
+    }).done(function(x) {
+      if(x == 'NOOK'){
+        Swal.fire({
+          title: 'Oops...',
+          html: 'R.U.N <b>'+run+'</b> ya se encuentra registrado. </br> Intenta ingresando un R.U.N diferente o nuevo.',
+          icon: 'error',
+          cancelButtonColor: '#d33',
+        }).then((result) => {
+          $('#run').val('').focus();
+        });
+      }else{
+        validaRun(run);
+      }
+    });
+  }
+}
+
+var formatearRun = function (inputRun) {
   let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
+
+  /* Separar cuerpo y DV */
   let cuerpo = rut.slice(0, -1);
   let dv = rut.slice(-1);
+
+  /* Agregar puntos cada 3 dígitos desde la derecha */
   let cuerpoFormateado = '';
   let i = 0;
-
   for (let j = cuerpo.length - 1; j >= 0; j--) {
     cuerpoFormateado = cuerpo[j] + cuerpoFormateado;
     i++;
     if (i % 3 === 0 && j !== 0) {
-    cuerpoFormateado = '.' + cuerpoFormateado;
+      cuerpoFormateado = '.' + cuerpoFormateado;
     }
   }
 
   inputRun.value = cuerpoFormateado + '-' + dv;
 }
 
-var validaRut = function (rut) {
+var validaRun = function(rut) {
   rut = rut.replace(/[^0-9kK]/g, '').toUpperCase();
 
-  Swal.fire({
-    title: 'RUT inválido',
-    icon: 'error',
-    confirmButtonColor: '#d33',
-  }).then((result) => {
-    $('#run').focus();
-  });
-
+  if (rut.length < 2) return false;
   const cuerpo = rut.slice(0, -1);
-  const dv = rut.slice(-1);
+  const dvIngresado = rut.slice(-1);
 
   let suma = 0;
   let multiplo = 2;
 
+  /* Recorrer el cuerpo del RUT de derecha a izquierda */
   for (let i = cuerpo.length - 1; i >= 0; i--) {
     suma += parseInt(cuerpo[i]) * multiplo;
     multiplo = multiplo < 7 ? multiplo + 1 : 2;
@@ -363,28 +385,27 @@ var validaRut = function (rut) {
   const dvEsperado = 11 - (suma % 11);
   let dvCalculado = '';
 
-  if (dvEsperado === 11) {
-    dvCalculado = '0';
-  } else if (dvEsperado === 10) {
-    dvCalculado = 'K';
-  } else {
-    dvCalculado = dvEsperado.toString();
-  }
+  if (dvEsperado === 11) dvCalculado = '0';
+  else if (dvEsperado === 10) dvCalculado = 'K';
+  else dvCalculado = dvEsperado.toString();
 
-  if (dv !== dvCalculado) {
+  if(dvCalculado === dvIngresado){
     Swal.fire({
-      title: 'RUT inválido',
-      text: 'El dígito verificador no coincide.',
-      icon: 'error',
-      confirmButtonColor: '#d33',
+      title: '¡Éxito!',
+      text: '¡El R.U.N ingresado es válido!',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    });
+  }else{
+    Swal.fire({
+      title: 'Error!',
+      text: '¡El R.U.N ingresado no es válido!',
+      icon: 'warning',
+      cancelButtonColor: 'Aceptar'
     }).then((result) => {
       $('#run').focus();
     });
-
-    return false;
   }
-
-  return true;
 }
 
 var saveNewUser = function() {
