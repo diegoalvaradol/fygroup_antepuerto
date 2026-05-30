@@ -178,65 +178,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
 <!-- JAVASCRIPT -->
 <script>
-/* Conteo regresivo para cierre de sesion */
-let inactivityTime = function () {
-  let time;
-  let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
-  let countdownTime = 30; /* 30 segundos para responder */
-
-  function startTimer() {
-    window.addEventListener('mousemove', resetTimer, false);
-    window.addEventListener('keypress', resetTimer, false);
-    window.addEventListener('click', resetTimer, false);
-    window.addEventListener('scroll', resetTimer, false);
-    resetTimer();
-  }
-
-  function logoutCountdown() {
-    let timerInterval;
-    Swal.fire({
-      title: "¿Sigues ahí?",
-      html: `Serás desconectado en <b></b> segundos por inactividad.`,
-      icon: "warning",
-      timer: countdownTime * 1000,
-      timerProgressBar: true,
-      showCancelButton: true,
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      confirmButtonColor: '#4e73df',
-      cancelButtonColor: '#d33',
-      confirmButtonText: "¡Sigo aquí!",
-      cancelButtonText: "Cerrar sesión",
-      didOpen: () => {
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-        }, 1000);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        resetTimer(); /* Usuario activo, reiniciar contador */
-      } else {
-        window.location = 'login.php?msg=sesion_expirada';
-      }
-    });
-  }
-
-  function resetTimer() {
-    clearTimeout(time);
-    time = setTimeout(logoutCountdown, warningTimeout);
-  }
-
-  startTimer();
-};
-
-window.onload = function () {
-  inactivityTime();
-};
-
 /* Condiciona a que solo pueda mostrar la fecha de hoy como maximo */
 const today = new Date().toLocaleString("en-CA", { timeZone: "America/Santiago", year: "numeric", month: "2-digit", day: "2-digit" });
 document.getElementById('datePicker').setAttribute('max', today);
@@ -394,37 +335,5 @@ document.getElementById('programForm').addEventListener('submit', function(e) {
   loadPDF(selectedDateStr);
 });
 
-function actualizarReloj() {
-  const ahora = new Date();
-
-  const hora = ahora.toLocaleTimeString("es-CL", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  });
-
-  const diaSemana = ahora.toLocaleDateString("es-CL", { weekday: "long" });
-  const fecha = ahora.toLocaleDateString("es-CL", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-
-  document.getElementById("relojFecha").innerHTML = `
-    <div style="display:flex; align-items:center; gap:10px;">
-      <div style="font-size:20px; font-weight:bold;">
-        ${hora}
-      </div>
-      |
-      <div style="line-height:1.2;">
-        <div>${diaSemana}</div>
-        <div style="font-size:12px;">${fecha}</div>
-      </div>
-    </div>
-  `;
-}
-setInterval(actualizarReloj, 1000);
-actualizarReloj(); /* Primera llamada */
 $('#divFrame').hide(); /* Oculta el div del frame al carga la pagina */
 </script>

@@ -208,89 +208,6 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-let inactivityTime = function () {
-  let time;
-  let warningTimeout = 30 * 60 * 1000; // 30 min
-  let countdownTime = 30;
-
-  function startTimer() {
-    window.addEventListener('click', resetTimer, false);
-    window.addEventListener('keypress', resetTimer, false);
-    resetTimer();
-  }
-
-  function logoutCountdown() {
-    let timerInterval;
-
-    Swal.fire({
-      title: "¿Sigues ahí?",
-      html: `Serás desconectado en <b></b> segundos por inactividad.`,
-      icon: "warning",
-      timer: countdownTime * 1000,
-      timerProgressBar: true,
-      showCancelButton: true,
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      confirmButtonColor: '#4e73df',
-      cancelButtonColor: '#d33',
-      confirmButtonText: "¡Sigo aquí!",
-      cancelButtonText: "Cerrar sesión",
-      didOpen: () => {
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-        }, 1000);
-      },
-      willClose: () => clearInterval(timerInterval)
-    }).then((result) => {
-      if (result.isConfirmed) {
-        resetTimer();
-      } else {
-        window.location = 'login.php?msg=sesion_expirada';
-      }
-    });
-  }
-
-  function resetTimer() {
-    clearTimeout(time);
-    time = setTimeout(logoutCountdown, warningTimeout);
-  }
-
-  startTimer();
-};
-
-/* ===== RELOJ ===== */
-function actualizarReloj() {
-  const ahora = new Date();
-
-  const hora = ahora.toLocaleTimeString("es-CL", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  });
-
-  const diaSemana = ahora.toLocaleDateString("es-CL", { weekday: "long" });
-  const fecha = ahora.toLocaleDateString("es-CL", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-
-  document.getElementById("relojFecha").innerHTML = `
-    <div style="display:flex; align-items:center; gap:10px;">
-      <div style="font-size:20px; font-weight:bold;">
-        ${hora}
-      </div>
-      |
-      <div style="line-height:1.2;">
-        <div>${diaSemana}</div>
-        <div style="font-size:12px;">${fecha}</div>
-      </div>
-    </div>
-  `;
-}
-
 var saveNewGoals = function() {
   $.ajax({
     url: '../controllers/configSaveController.php',
@@ -500,13 +417,6 @@ function updateHeatmap(total){
 }
 
 $(document).ready(function() {
-  // iniciar inactivity
-  inactivityTime();
-
-  // reloj
-  setInterval(actualizarReloj, 1000);
-  actualizarReloj();
-
   //init map
   loadMap();
   setInterval(() => {

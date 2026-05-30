@@ -158,139 +158,80 @@ if (!$admin) {
 </html>
 
 <script>
-  /* Conteo regresivo para cierre de sesion */
-  let inactivityTime = function () {
-    let time;
-    let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
-    let countdownTime = 30; /* 30 segundos para responder */
+function uploadFile() {
+    const archivo = document.getElementById("archivo").files[0];
+    const nombre = $('#shppingPlanningName').val();
 
-    function startTimer() {
-      window.addEventListener('mousemove', resetTimer, false);
-      window.addEventListener('keypress', resetTimer, false);
-      window.addEventListener('click', resetTimer, false);
-      window.addEventListener('scroll', resetTimer, false);
-      resetTimer();
+    if (!archivo) {
+        Swal.fire('Error', 'Debes seleccionar un archivo.', 'error');
+        return;
     }
 
-    function logoutCountdown() {
-      let timerInterval;
-      Swal.fire({
-        title: "¿Sigues ahí?",
-        html: `Serás desconectado en <b></b> segundos por inactividad.`,
-        icon: "warning",
-        timer: countdownTime * 1000,
-        timerProgressBar: true,
-        showCancelButton: true,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        confirmButtonColor: '#4e73df',
-        cancelButtonColor: '#d33',
-        confirmButtonText: "¡Sigo aquí!",
-        cancelButtonText: "Cerrar sesión",
-        didOpen: () => {
-          const b = Swal.getHtmlContainer().querySelector("b");
-          timerInterval = setInterval(() => {
-            b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-          }, 1000);
+    if (nombre == '') {
+        Swal.fire('Error', 'Debes asignar un nombre al archivo.', 'error');
+        return;
+    }
+
+    if (archivo.size > 5 * 1024 * 1024) {
+        Swal.fire('Error', 'El archivo supera los 5MB.', 'error');
+        return;
+    }
+
+    const formData = new FormData(document.getElementById("uploadForm"));
+    $.ajax({
+        url: "../controllers/uploadFilesSchedule.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            if (res === "OK") {
+                Swal.fire('Éxito', 'Archivo subido correctamente', 'success').then(() => {
+                    window.location.href = "<?=generateMkey('load_schedule');?>";
+                });
+            } else {
+                Swal.fire('Error', 'No se pudo subir el archivo.', 'error');
+            }
         },
-        willClose: () => {
-          clearInterval(timerInterval);
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          resetTimer(); /* Usuario activo, reiniciar contador */
-        } else {
-          window.location = 'login.php?msg=sesion_expirada';
-        }
-      });
-    }
+        error: () => Swal.fire('Error', 'Ocurrió un error de red.', 'error')
+    });
+}
 
-    function resetTimer() {
-      clearTimeout(time);
-      time = setTimeout(logoutCountdown, warningTimeout);
-    }
-
-    startTimer();
-  };
-
-  window.onload = function () {
-    inactivityTime();
-  };
-
-	function uploadFile() {
-		const archivo = document.getElementById("archivo").files[0];
-		const nombre = $('#shppingPlanningName').val();
-
-		if (!archivo) {
-			Swal.fire('Error', 'Debes seleccionar un archivo.', 'error');
-			return;
-		}
-
-		if (nombre == '') {
-			Swal.fire('Error', 'Debes asignar un nombre al archivo.', 'error');
-			return;
-		}
-
-		if (archivo.size > 5 * 1024 * 1024) {
-			Swal.fire('Error', 'El archivo supera los 5MB.', 'error');
-			return;
-		}
-
-		const formData = new FormData(document.getElementById("uploadForm"));
-		$.ajax({
-			url: "../controllers/uploadFilesSchedule.php",
-			type: "POST",
-			data: formData,
-			contentType: false,
-			processData: false,
-			success: function (res) {
-				if (res === "OK") {
-					Swal.fire('Éxito', 'Archivo subido correctamente', 'success').then(() => {
-						window.location.href = "<?=generateMkey('load_schedule');?>";
-					});
-				} else {
-					Swal.fire('Error', 'No se pudo subir el archivo.', 'error');
-				}
-			},
-			error: () => Swal.fire('Error', 'Ocurrió un error de red.', 'error')
-		});
-	}
-
-	$(document).ready(function() {
+$(document).ready(function() {
     $('.btn-delete').click(function() {
-      const file = $(this).data('file');
-      const listItem = $(this).closest('li');
+        const file = $(this).data('file');
+        const listItem = $(this).closest('li');
 
-      Swal.fire({
+        Swal.fire({
         title: '¿Eliminar archivo?',
         text: "No podrás revertir esta acción.",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar'
-      }).then((result) => {
+        }).then((result) => {
         if (result.isConfirmed) {
-          $.ajax({
+            $.ajax({
             url: '../controllers/deleteFilesScheudle.php',
             method: 'POST',
             data: { file: file },
             success: function(response) {
-              if (response === 'OK') {
+                if (response === 'OK') {
                 Swal.fire('Eliminado', 'El archivo fue eliminado.', 'success');
                 listItem.remove();
                 if ($('#fileList li').length === 0) {
-                  $('#fileList').html('<p class="text-muted text-center">No hay archivos cargados.</p>');
+                    $('#fileList').html('<p class="text-muted text-center">No hay archivos cargados.</p>');
                 }
-              } else {
+                } else {
                 Swal.fire('Error', response, 'error');
-              }
+                }
             },
             error: function() {
-              Swal.fire('Error', 'Error en la comunicación con el servidor.', 'error');
+                Swal.fire('Error', 'Error en la comunicación con el servidor.', 'error');
             }
-          });
+            });
         }
-      });
+        });
     });
-  });
+});
 </script>

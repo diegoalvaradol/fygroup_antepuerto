@@ -6,18 +6,18 @@ if (isset($_POST['id'])) {
     $id = $_POST['id'];
 
     $sql = 'SELECT
-      app_ships.*,
-      sl.*,
-      pol.city    AS pol_city,
-      pol.country AS pol_country,
-      pod.city    AS pod_city,
-      pod.country AS pod_country
-    FROM app_ships
-    JOIN app_ports AS pol ON app_ships.pol = pol.port_id
-    JOIN app_ports AS pod ON app_ships.pod = pod.port_id
-    JOIN app_ship_lines AS sl ON app_ships.ship_line = sl.line_id
-    WHERE ship_id = :id LIMIT 1
-  ';
+        app_ships.*,
+        sl.*,
+        pol.city    AS pol_city,
+        pol.country AS pol_country,
+        pod.city    AS pod_city,
+        pod.country AS pod_country
+        FROM app_ships
+        JOIN app_ports AS pol ON app_ships.pol = pol.port_id
+        JOIN app_ports AS pod ON app_ships.pod = pod.port_id
+        JOIN app_ship_lines AS sl ON app_ships.ship_line = sl.line_id
+        WHERE ship_id = :id LIMIT 1
+    ';
 
     $list = $ship->findAllStatic($sql, ['id' => $id]);
 
@@ -58,22 +58,22 @@ if (isset($_POST['id'])) {
     if ($id != null) {
         if ($infoVessel != null) {
             ?>
-      <script>
-        $(document).ready(function() {
-          var seal = null;
-          var isUpdate = $('#isUpdate').val();
-          var sealNumber = $('#sealnumber');
+            <script>
+            $(document).ready(function() {
+                var seal = null;
+                var isUpdate = $('#isUpdate').val();
+                var sealNumber = $('#sealnumber');
 
-          <?php if (stripos($line, 'MAERSK') !== false): ?>
-            seal = 'MLCL';
-          <?php elseif (stripos($line, 'MSC') !== false || stripos($line, 'MEDITERRANEAN') !== false): ?>
-            seal = 'FX';
-          <?php endif; ?>
+                <?php if (stripos($line, 'MAERSK') !== false): ?>
+                    seal = 'MLCL';
+                <?php elseif (stripos($line, 'MSC') !== false || stripos($line, 'MEDITERRANEAN') !== false): ?>
+                    seal = 'FX';
+                <?php endif; ?>
 
-          isUpdate == 0 ? sealNumber.val(seal) : sealNumber.val();
-        });
-      </script>
-      <?php
+                isUpdate == 0 ? sealNumber.val(seal) : sealNumber.val();
+            });
+            </script>
+            <?php
 
             echo $infoVessel;
         } else {
