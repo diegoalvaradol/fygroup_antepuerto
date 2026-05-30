@@ -2753,12 +2753,15 @@ class outerPort extends iQuery
         $list = parent::findAllStatic($sql);
         if ($list->length()) {
             foreach ($list->getCollection() as $r) {
-                if ($r['arrival_date'] !== '0000-00-00 00:00:00' && $r['departure_date'] === null) {
+                $arrival = (new DateTime($r['arrival_date']))->format('d-m-Y H:i') ;
 
+                if ($r['arrival_date'] !== '0000-00-00 00:00:00' && $r['departure_date'] === null) {
                     $result[] = [
                         'patente' => $r['car_plate'],
                         'container' => $r['container'],
                         'ship' => $r['vessel_name'],
+                        'arrival' => $arrival,
+                        'guide' => $r['guide_number'],
                         'status' => 'INGRESO',
                     ];
                 }
