@@ -127,15 +127,13 @@ if (!$admin) {
 
                                     <!-- Div de contenido Dinamico -->
                                     <div class="d-flex justify-content-center mt-3">
-                                        <div class="card border-left-primary shadow-sm" style="display:none;" id="shiftCardMini">
-                                            <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
-                                                <span class="small"><b>Información:</b></span>
-                                                &nbsp;
-                                                <span class="badge badge-primary" id="shiftTextMini"></span>
+                                        <div id="shiftCardMini" style="border:1px solid #e5e7eb; border-left:4px solid #2563eb; border-radius:8px; padding:8px 16px; background:#f9fafb; display:none">
+                                            <div style="margin-bottom:6px;">
+                                                <b style="color:#2563eb;">Información:</b>
+                                                <span id="shiftTextMini" style="margin:0 6px; color:#9ca3af;"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    </br>
 
                                     <div id="loader" style="display:none; text-align:center; padding:20px;">
                                         <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando...
@@ -189,65 +187,6 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-/* Conteo regresivo para cierre de sesion */
-let inactivityTime = function () {
-  let time;
-  let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
-  let countdownTime = 30; /* 30 segundos para responder */
-
-  function startTimer() {
-    window.addEventListener('mousemove', resetTimer, false);
-    window.addEventListener('keypress', resetTimer, false);
-    window.addEventListener('click', resetTimer, false);
-    window.addEventListener('scroll', resetTimer, false);
-    resetTimer();
-  }
-
-  function logoutCountdown() {
-    let timerInterval;
-    Swal.fire({
-      title: "¿Sigues ahí?",
-      html: `Serás desconectado en <b></b> segundos por inactividad.`,
-      icon: "warning",
-      timer: countdownTime * 1000,
-      timerProgressBar: true,
-      showCancelButton: true,
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      confirmButtonColor: '#4e73df',
-      cancelButtonColor: '#d33',
-      confirmButtonText: "¡Sigo aquí!",
-      cancelButtonText: "Cerrar sesión",
-      didOpen: () => {
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-        }, 1000);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        resetTimer(); /* Usuario activo, reiniciar contador */
-      } else {
-        window.location = 'login.php?msg=sesion_expirada';
-      }
-    });
-  }
-
-  function resetTimer() {
-    clearTimeout(time);
-    time = setTimeout(logoutCountdown, warningTimeout);
-  }
-
-  startTimer();
-};
-
-window.onload = function () {
-  inactivityTime();
-};
-
 function loadShiftsReport() {
   const $btn = $('#btnBuscar');
   const $div = $('#shiftsDiv');
@@ -296,15 +235,11 @@ function loadShiftsReport() {
       if (clean.length > 0) {
         $div.html(clean);
 
-        $('#shiftTextMini')
-          .html(`Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`)
-          .css("font-size", "smaller");
-
+        $('#shiftTextMini').html(`</br> Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css('font-size', '14px').css('font-weight', 'bold');
         $('#shiftCardMini').fadeIn(150);
         $('#btnPrintShiftsReport').prop('disabled', false);
         $('#btnExcel').prop('disabled', false);
         $('#btnPDF').prop('disabled', false);
-
       } else {
         $div.hide().empty();
         $('#shiftCardMini').fadeOut(150);
@@ -458,37 +393,4 @@ var saveInfoUser = function() {
     });
   }
 }
-
-function actualizarReloj() {
-  const ahora = new Date();
-
-  const hora = ahora.toLocaleTimeString("es-CL", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  });
-
-  const diaSemana = ahora.toLocaleDateString("es-CL", { weekday: "long" });
-  const fecha = ahora.toLocaleDateString("es-CL", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-
-  document.getElementById("relojFecha").innerHTML = `
-    <div style="display:flex; align-items:center; gap:10px;">
-      <div style="font-size:20px; font-weight:bold;">
-        ${hora}
-      </div>
-      |
-      <div style="line-height:1.2;">
-        <div>${diaSemana}</div>
-        <div style="font-size:12px;">${fecha}</div>
-      </div>
-    </div>
-  `;
-}
-setInterval(actualizarReloj, 1000);
-actualizarReloj(); /* Primera llamada */
 </script>
