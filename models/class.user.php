@@ -227,6 +227,7 @@ class user extends iQuery
         $arrayDivision = get::getDivisionName();
         $count = 0;
         $tr = '';
+        $url = esLocalhost() ? 'localhost/ssl-chile' : 'antepuerto.fygroup.cl';
 
         $query = "SELECT * FROM $this->table ORDER BY user_id ASC";
         $stmt = $this->db->prepare($query);
@@ -245,6 +246,7 @@ class user extends iQuery
         $thead .= '<th>Administrador Editor</th>';
         $thead .= '<th>¿Activo?</th>';
         $thead .= '<th>Últ. Sesión</th>';
+        $thead .= '<th>Portal Cliente</th>';
         $thead .= '<th>Acciones</th>';
         $thead .= '</tr>';
         $thead .= '</thead><tbody>';
@@ -261,6 +263,18 @@ class user extends iQuery
             ? "<button class='btn btn-danger btn-sm' onclick=\"changeStatusUser('{$data[$this->run]}', 0)\"><i class='fas fa-lock'></i> Deshabilitar</button>"
             : "<button class='btn btn-success btn-sm' onclick=\"changeStatusUser('{$data[$this->run]}', 1)\"><i class='fas fa-lock-open'></i> Habilitar</button>";
 
+            if ($data[$this->division] != 'fy') {
+                $linkPortal = "
+                    <a href='https://{$url}/controllers/autoLogin.php?id={$data[$this->id]}'
+                    target='_blank'
+                    class='btn btn-primary btn-sm'>
+                        <i class='fas fa-external-link-alt'></i> Portal
+                    </a>
+                ";
+            } else {
+                $linkPortal = '<em class="text-danger">No aplica.</em>';
+            }
+
             $tr .= '<tr>';
             $tr .= "<td>{$data[$this->id]}</td>";
             $tr .= "<td>{$data[$this->run]}</td>";
@@ -272,6 +286,7 @@ class user extends iQuery
             $tr .= "<td class='{$colorAdminEdit}'>{$arrayYesNo[$data[$this->isadminedit]]}</td>";
             $tr .= "<td class='{$colorActive}'>{$arrayYesNo[$data[$this->isactive]]}</td>";
             $tr .= "<td>{$lastSession}</td>";
+            $tr .= "<td>{$linkPortal}</td>";
             $tr .= "<td>{$btnRefresh} {$btnDeshabilite}</td>";
             $tr .= '</tr>';
 

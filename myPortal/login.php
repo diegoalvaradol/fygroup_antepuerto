@@ -4,21 +4,29 @@ if (isset($_SESSION['user'])) {
 
     exit();
 }
+
+require_once __DIR__ . '/../config/includes.php';
+
+$footer = menu::footerSSL();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Portal FYGroup | Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Portal FYGroup | Login</title>
 
-  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-  <link href="../assets/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-  <link href="../assets/css/fygroup.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <link href="../assets/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="../assets/css/fygroup.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Custom styles FYGroup-->
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <script src="../assets/js/sidebar.js"></script>
 </head>
 
 <style>
@@ -69,62 +77,62 @@ if (isset($_SESSION['user'])) {
 </style>
 
 <body>
-  <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
-    <div class="col-xl-4 col-lg-5 col-md-7">
-      <div class="card login-card p-4">
-        <div class="text-center mb-4">
-          <img src="../images/logo-fygroup-circle-v1.png" class="logo-img mb-3">
-          <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
-          <small class="text-muted">Portal Cliente</small>
+    <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
+        <div class="col-xl-4 col-lg-5 col-md-7">
+            <div class="card login-card p-4">
+                <div class="text-center mb-4">
+                    <img src="../images/logo-fygroup-circle-v1.png" class="logo-img mb-3">
+                    <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
+                    <small class="text-muted">Portal Cliente</small>
+                </div>
+
+                <form id="loginForm">
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">División</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            </div>
+                            <select class="form-control text-center" id="division" name="division">
+                                <option value="-" selected>Seleccione...</option>
+                                <option value="terminal">Terminal</option>
+                                <option value="shipper">Naviera</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="small text-muted">R.U.N</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control text-center" id="run" name="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="small text-muted">Contraseña</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            </div>
+                            <input type="password" class="form-control text-center" id="password" name="password" placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <button id="loadBtn" type="button" onclick="loadSession()" class="btn btn-success btn-login btn-block">
+                        <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
+                        <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                    </button>
+                </form>
+            </div>
         </div>
-
-        <form id="loginForm">
-          <div class="form-group mb-3">
-            <label class="small text-muted">División</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-building"></i></span>
-              </div>
-              <select class="form-control text-center" id="division" name="division">
-                <option value="-" selected>Seleccione...</option>
-                <option value="terminal">Terminal</option>
-                <option value="shipper">Naviera</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group mb-3">
-            <label class="small text-muted">R.U.N</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-              </div>
-              <input type="text" class="form-control text-center" id="run" name="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
-            </div>
-          </div>
-
-          <div class="form-group mb-4">
-            <label class="small text-muted">Contraseña</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-              </div>
-              <input type="password" class="form-control text-center" id="password" name="password" placeholder="••••••••">
-            </div>
-          </div>
-
-          <button id="loadBtn" type="button" onclick="loadSession()" class="btn btn-success btn-login btn-block">
-            <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
-            <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
-          </button>
-        </form>
-      </div>
     </div>
-  </div>
 
-  <script src="../assets/vendor/jquery/jquery.min.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/fygroup.js"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
 </body>
 </html>
 

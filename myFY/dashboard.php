@@ -46,12 +46,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
     <script src="../assets/js/sidebar.js"></script>
-
-    <style>
-      body {
-        background: #f7f9fc;
-      }
-    </style>
 </head>
 
 <body id="page-top">

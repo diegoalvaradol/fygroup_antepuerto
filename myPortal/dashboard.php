@@ -47,7 +47,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
     <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
 </head>
 
 <body id="page-top">
@@ -260,73 +259,6 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
 <!-- JAVASCRIPT -->
 <script>
-/* Inicializa el popover */
-document.addEventListener('DOMContentLoaded', function () {
-  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="popover"]'));
-  popoverTriggerList.forEach(function (el) {
-    new bootstrap.Popover(el);
-  });
-});
-
-/* Conteo regresivo para cierre de sesion */
-let inactivityTime = function () {
-  let time;
-  let warningTimeout = 30 * 60 * 1000; /* Minutos a convenir */
-  let countdownTime = 30; /* 30 segundos para responder */
-
-  function startTimer() {
-    window.addEventListener('mousemove', resetTimer, false);
-    window.addEventListener('keypress', resetTimer, false);
-    window.addEventListener('click', resetTimer, false);
-    window.addEventListener('scroll', resetTimer, false);
-    resetTimer();
-  }
-
-  function logoutCountdown() {
-    let timerInterval;
-    Swal.fire({
-      title: "¿Sigues ahí?",
-      html: `Serás desconectado en <b></b> segundos por inactividad.`,
-      icon: "warning",
-      timer: countdownTime * 1000,
-      timerProgressBar: true,
-      showCancelButton: true,
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      confirmButtonColor: '#4e73df',
-      cancelButtonColor: '#d33',
-      confirmButtonText: "¡Sigo aquí!",
-      cancelButtonText: "Cerrar sesión",
-      didOpen: () => {
-        const b = Swal.getHtmlContainer().querySelector("b");
-        timerInterval = setInterval(() => {
-          b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-        }, 1000);
-      },
-      willClose: () => {
-        clearInterval(timerInterval);
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        resetTimer(); /* Usuario activo, reiniciar contador */
-      } else {
-        window.location = 'login.php?msg=sesion_expirada';
-      }
-    });
-  }
-
-  function resetTimer() {
-    clearTimeout(time);
-    time = setTimeout(logoutCountdown, warningTimeout);
-  }
-
-  startTimer();
-};
-
-window.onload = function () {
-  inactivityTime();
-};
-
 /* Porcentaje de ocupación del antepuerto */
 setProgress(<?=$percentUsage;?>); //cambia a 30%
 
@@ -346,36 +278,6 @@ function setProgress(value) {
   progressBar.setAttribute('aria-valuenow', percentage);
 }
 
-function actualizarReloj() {
-  const ahora = new Date();
-
-  const hora = ahora.toLocaleTimeString("es-CL", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  });
-
-  const diaSemana = ahora.toLocaleDateString("es-CL", { weekday: "long" });
-  const fecha = ahora.toLocaleDateString("es-CL", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-
-  document.getElementById("relojFecha").innerHTML = `
-    <div style="display:flex; align-items:center; gap:10px;">
-      <div style="font-size:20px; font-weight:bold;">
-        ${hora}
-      </div>
-      |
-      <div style="line-height:1.2;">
-        <div>${diaSemana}</div>
-        <div style="font-size:12px;">${fecha}</div>
-      </div>
-    </div>
-  `;
-}
 var saveInfoUser = function() {
   const password = $('#password').val();
   var division = 'portal'; /* Division portal cliente */
@@ -420,46 +322,4 @@ var saveInfoUser = function() {
     });
   }
 }
-
-/* Si ya hay un tiempo guardado en sessionStorage, úsalo. Si no, restablece a 30 segundos */
-let tiempoLimite = sessionStorage.getItem('tiempoLimite') ? parseInt(sessionStorage.getItem('tiempoLimite')) : 1800; /* 30 segundos por defecto si no está en sessionStorage */
-
-/* Función que actualiza el contador */
-function actualizarConteo() {
-  let minutos = Math.floor(tiempoLimite / 60);
-  let segundos = tiempoLimite % 60;
-
-  /* Muestra el tiempo en formato MM:SS */
-  $('#countDownSession').html(`Tiempo restante: ${minutos}:${segundos < 10 ? '0' + segundos : segundos}`);
-
-  if (tiempoLimite <= 0) {
-    clearInterval(contador); /* Detiene el contador cuando llega a 0 */
-  } else {
-    tiempoLimite--;
-    sessionStorage.setItem('tiempoLimite', tiempoLimite); /* Guarda el tiempo restante en sessionStorage */
-  }
-}
-
-/* Puedes simular el inicio y cierre de sesión con botones: */
-// startCountDown(); // Llama esta función cuando el usuario inicie sesión
-// finishCountDown(); // Llama esta función cuando el usuario cierre sesión
-
-/* Simulación de inicio de sesión */
-function startCountDown() {
-  sessionStorage.setItem('tiempoLimite', 1800); /* Restablece el temporizador a 30 segundos al iniciar sesión */
-  localStorage.setItem('tiempoLimite', 1800); /* Si es el primer inicio, establece el tiempo por defecto en localStorage */
-}
-
-/* Simulación de cierre de sesión */
-function finishCountDown() {
-  sessionStorage.removeItem('tiempoLimite'); /* Elimina el tiempo de la sesión actual */
-}
-
-$(document).ready(function() {
-  const contador = setInterval(actualizarConteo, 1000); /* Llama a la función cada segundo (1000ms) */
-
-  setInterval(actualizarReloj, 1000);
-  actualizarReloj(); /* Primera llamada */
-  startCountDown();
-});
 </script>
