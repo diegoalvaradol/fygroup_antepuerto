@@ -167,6 +167,54 @@ $(document).on('select2:open', function () {
   }
 });
 
+/* PORTAL CLIENTE */
+/* Si ya hay un tiempo guardado en sessionStorage, úsalo. Si no, restablece a 30 segundos */
+let tiempoLimite = sessionStorage.getItem('tiempoLimite')
+  ? parseInt(sessionStorage.getItem('tiempoLimite'))
+  : 1800; /* 30 segundos por defecto si no está en sessionStorage */
+
+/* Función que actualiza el contador */
+function actualizarConteo() {
+  let minutos = Math.floor(tiempoLimite / 60);
+  let segundos = tiempoLimite % 60;
+
+  /* Muestra el tiempo en formato MM:SS */
+  $('#countDownSession').html(
+    `Tiempo restante: ${minutos}:${segundos < 10 ? '0' + segundos : segundos}`,
+  );
+
+  if (tiempoLimite <= 0) {
+    clearInterval(contador); /* Detiene el contador cuando llega a 0 */
+  } else {
+    tiempoLimite--;
+    sessionStorage.setItem(
+      'tiempoLimite',
+      tiempoLimite,
+    ); /* Guarda el tiempo restante en sessionStorage */
+  }
+}
+
+/* Puedes simular el inicio y cierre de sesión con botones: */
+// startCountDown(); // Llama esta función cuando el usuario inicie sesión
+// finishCountDown(); // Llama esta función cuando el usuario cierre sesión
+
+/* Simulación de inicio de sesión */
+function startCountDown() {
+  sessionStorage.setItem(
+    'tiempoLimite',
+    1800,
+  ); /* Restablece el temporizador a 30 segundos al iniciar sesión */
+  localStorage.setItem(
+    'tiempoLimite',
+    1800,
+  ); /* Si es el primer inicio, establece el tiempo por defecto en localStorage */
+}
+
+/* Simulación de cierre de sesión */
+function finishCountDown() {
+  sessionStorage.removeItem('tiempoLimite'); /* Elimina el tiempo de la sesión actual */
+}
+
 $(document).ready(function () {
   inactivityTime();
   setInterval(actualizarReloj, 1000);
