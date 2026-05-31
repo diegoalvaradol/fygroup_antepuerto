@@ -2599,7 +2599,7 @@ class outerPort extends iQuery
 
                 <body>
                     <div class="header-box">
-                        <img src="../images/logo-fygroup.png" alt="FYGroup Logo">
+                        <img src="../logos/logo-fygroup.png" alt="FYGroup Logo">
 
                         <h2>Reporte Turno Antepuerto</h2>
                         <h3><?= $shiftName ?></h3>

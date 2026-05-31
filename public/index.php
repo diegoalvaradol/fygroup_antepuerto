@@ -61,7 +61,7 @@
         <!-- HERO -->
         <div class="hero">
             <div class="logo">
-                <img src="../images/logo-fygroup-circle-bg-removed.png"
+                <img src="../logos/logo-fygroup-circle-bg-removed.png"
                     style="max-width:280px; width:90%; height:auto;">
             </div>
 

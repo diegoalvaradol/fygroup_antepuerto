@@ -54,7 +54,7 @@ if (!$admin) {
   <div class="content-wrapper">
     <div class="container py-5">
       <div class="text-center mb-4">
-        <img src="../images/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
+        <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
         <h3 class="mt-3">Carga Planificación Naviera</h3>
 
         <div class="card shadow mx-auto" style="max-width: 600px;">

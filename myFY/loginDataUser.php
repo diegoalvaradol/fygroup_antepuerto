@@ -134,7 +134,7 @@ $_SESSION['last_session'] = time();
     <div class="card shadow-lg border-0 rounded-lg p-5 text-center" style="max-width: 500px; width: 95%;">
         <div class="mb-4">
             <div class=" d-inline-flex justify-content-center align-items-center" style="width:90px; height:90px; font-size:40px;">
-                <img src="../images/logo-fygroup-circle-v1.png" style="width:90%">
+                <img src="../logos/logo-fygroup-circle-v1.png" style="width:90%">
             </div>
         </div>
 

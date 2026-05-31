@@ -79,7 +79,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../images/logo-cool-carriers.png" class="logo-responsive">
+                                    <img src="../logos/logo-cool-carriers.png" class="logo-responsive">
                                     <h6 class="m-0 font-weight-bold text-center small text-primary">
                                         Powered by Cool Carriers.
                                     </h6>
