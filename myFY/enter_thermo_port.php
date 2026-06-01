@@ -94,7 +94,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                                     <select class="form-control select2 form-control-user" id="vessel" name="vessel">
                                                         <option value="-">Seleccione una motonave...</option>
                                                     </select>
-                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que se encuentran abiertas."></i>
                                                     <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 

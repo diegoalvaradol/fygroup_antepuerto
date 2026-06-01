@@ -65,6 +65,14 @@ class menu extends iQuery
                     ['label' => 'Live Position', 'link' => generateMkey('marinetraffic_live_map')],
                 ],
             ],
+            [
+                'title' => 'Portadas',
+                'icon' => 'fa-file-pen',
+                'id' => 'collapsePortadas',
+                'items' => [
+                    ['label' => 'Crear Portada', 'link' => generateMkey('cover_maker')],
+                ],
+            ],
         ];
 
         if ($admin) {
