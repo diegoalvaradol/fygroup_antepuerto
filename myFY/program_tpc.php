@@ -82,7 +82,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Planificación Naviera Terminal Puerto Coquimbo (TPC)</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Itinerarios TPC</h1>
                     <p class="mb-4">Acá podrás consultar la planificación naviera actual y fechas pasadas del terminal.</p>
 
                     <!-- Content Row -->
@@ -111,7 +111,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                         </div>
                                     </form>
 
-                                    <div class="card-body" id="divFrame">
+                                    <div id="divFrame">
                                         <!-- Div de contenido Dinamico -->
                                         <h6 class="m-0 font-weight-bold text-primary" id="tituloPlanificacion" style="text-align:center;"></h6>
                                         <hr>
@@ -204,8 +204,7 @@ function loadPDF() {
     return;
   }
 
-  const [day, month, year] = dateString.split('-').map(Number);
-  const date = new Date(year, month - 1, day);
+  const date = new Date(dateString + 'T00:00:00');
 
   const dateName = date.toLocaleDateString('es-CL', {
     weekday: 'long',
@@ -214,8 +213,8 @@ function loadPDF() {
     year: 'numeric'
   });
 
-  const formattedDate = formatDateFromInput(dateString);   // 04-05-2026
-  const formattedDateUrl = formatDateUrl(dateString);      // 2026/05
+  const formattedDate = formatDateFromInput(dateString);
+  const formattedDateUrl = formatDateUrl(dateString);
 
   const pdfUrl = `https://tpc.cl/wp-content/uploads/${formattedDateUrl}/Planificacion-Naviera-${formattedDate}.pdf`;
 

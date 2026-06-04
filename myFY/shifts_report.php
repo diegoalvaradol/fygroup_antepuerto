@@ -126,7 +126,7 @@ if (!$admin) {
                                     </form>
 
                                     <!-- Div de contenido Dinamico -->
-                                    <div class="d-flex justify-content-center mt-3">
+                                    <div class="d-flex justify-content-center mt-3 mb-3">
                                         <div id="shiftCardMini" style="border:1px solid #e5e7eb; border-left:4px solid #2563eb; border-radius:8px; padding:8px 16px; background:#f9fafb; display:none">
                                             <div style="margin-bottom:6px;">
                                                 <b style="color:#2563eb;">Información:</b>

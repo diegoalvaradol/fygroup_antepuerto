@@ -181,7 +181,7 @@ var coverMaker = function() {
 
   const vessel = $('#vessel').val();
   const exporter = $('#exporter').val();
-  const agency = $('#agency').val();
+  const agency = $('#agency').val('FYGROUP');
 
   document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
   document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
