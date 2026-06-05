@@ -76,6 +76,25 @@ $footer = menu::footerSSL();
     max-height: 100px;
   }
 
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid #b9bcc0;
+  }
+
+  .divider span {
+    padding: 0 12px;
+    color: #6c757d;
+    font-size: 12px;
+  }
+
   @media (max-width: 576px) {
     .login-card {
       margin: 1rem;
@@ -89,7 +108,7 @@ $footer = menu::footerSSL();
         <div class="col-xl-4 col-lg-5 col-md-7">
             <div class="card login-card p-4">
                 <div class="text-center mb-4">
-                    <img src="../images/logo-fygroup-circle-v1.png" class="logo-img mb-3">
+                    <img src="../logos/logo-fygroup-circle-v1.png" class="logo-img mb-3">
                     <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
                     <small class="text-muted">Acceso Personal</small>
                 </div>
@@ -119,6 +138,10 @@ $footer = menu::footerSSL();
                         <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
                         <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                     </button>
+
+                    <div class="divider">
+                        <span>Soporte</span>
+                    </div>
 
                     <div class="mt-3">
                         <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" class="btn btn-outline-success btn-block">

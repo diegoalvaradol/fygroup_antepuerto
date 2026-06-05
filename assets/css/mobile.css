@@ -79,6 +79,20 @@
   padding-left: 30px;
 }
 
+/* Sidebar animation */
+#accordionSidebar {
+  transition: left 0.3s ease;
+}
+
+/* Select2 */
+.select2-container {
+  width: 100% !important;
+}
+
+.select2-selection {
+  min-height: 38px;
+}
+
 /* Móvil */
 @media (max-width: 768px) {
   /* Body */
@@ -132,10 +146,12 @@
   }
 
   /* Tablas */
-  table {
-    display: block;
-    width: 100%;
+  .table-responsive {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-responsive table {
     white-space: nowrap;
   }
 
@@ -183,21 +199,6 @@
     gap: 10px;
   }
 
-  .input-search {
-    width: 150px;
-  }
-
-  .input-search i {
-    left: 10px;
-    font-size: 12px;
-  }
-
-  .input-search input {
-    border-radius: 20px;
-    padding-left: 28px;
-    font-size: 12px;
-  }
-
   /* Breadcrumb */
   .breadcrumb {
     margin: 0;
@@ -235,5 +236,178 @@
   .breadcrumb-item.active {
     color: #0d6efd;
     font-weight: 700;
+  }
+
+  /* Layout Antepuerto */
+  #map {
+    padding: 12px;
+  }
+
+  /* Encabezado */
+  .topbar-layout {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .logo h2 {
+    font-size: 20px;
+  }
+
+  .logo span {
+    font-size: 11px;
+  }
+
+  /* Estadísticas */
+  .stats {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .stat-card {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px;
+  }
+
+  .card-value {
+    font-size: 20px;
+  }
+
+  /* Ruta */
+  .highway {
+    height: 60px;
+  }
+
+  .highway::after {
+    font-size: 10px;
+    left: 10px;
+  }
+
+  /* Conexión */
+  .access-lane {
+    width: 60px;
+    height: 50px;
+  }
+
+  /* Zona acceso */
+  .access-zone {
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Garita */
+  .gate {
+    width: 85px;
+    height: 50px;
+    margin-right: 0;
+  }
+
+  .gate-window {
+    width: 15px;
+    height: 12px;
+    top: 10px;
+  }
+
+  .gate-window.left {
+    left: 8px;
+  }
+
+  .gate-window.right {
+    right: 8px;
+  }
+
+  .gate-door {
+    width: 12px;
+    height: 22px;
+  }
+
+  .gate-label {
+    font-size: 8px;
+    bottom: -18px;
+  }
+
+  /* Camino */
+  .road-entry {
+    width: 50px;
+    height: 120px;
+  }
+
+  .road-entry::before {
+    font-size: 18px;
+  }
+
+  .road-entry::after {
+    border-left-width: 2px;
+  }
+
+  /* Barrera */
+  .barrier {
+    width: 60px;
+    height: 4px;
+    top: 10px;
+  }
+
+  /* Flujo */
+  .flow {
+    font-size: 22px;
+  }
+
+  /* Aparcadero */
+  .parking {
+    padding: 15px;
+    margin-top: 10px;
+  }
+
+  .parking-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .parking-title {
+    font-size: 20px;
+  }
+
+  .parking-status {
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+
+  /* Bahías */
+  #parkingGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .truck-slot {
+    min-height: auto;
+    padding: 14px;
+  }
+
+  .slot-number {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .truck-plate {
+    font-size: 20px;
+    padding: 10px;
+    letter-spacing: 1px;
+  }
+
+  .truck-info {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .empty {
+    min-height: 120px;
+    font-size: 14px;
   }
 }

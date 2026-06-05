@@ -35,7 +35,7 @@ if (!$admin) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <title>FYGroup | Reporte de Turnos</title>
+    <title>FYGroup | Crear Portada</title>
 
     <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -75,8 +75,8 @@ if (!$admin) {
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Reporte de Turnos</h1>
-                    <p class="mb-4">Acá puedes visualizar la carga movilizada por cada turno.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Crear Portada</h1>
+                    <p class="mb-4">Acá puedes generar portadas para tus reportes.</p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -85,62 +85,49 @@ if (!$admin) {
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Reporte de Turno</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Crear Portada</h6>
                                 </div>
 
                                 <div class="card-body">
-                                    <form class="form-container" id="shiftsReportForm">
+                                    <form class="form-container" id="coverMakerForm">
                                         <div class="form-group row justify-content-center">
                                           <!-- Exportador -->
                                             <div class="col-sm-2">
-                                                <label for="dateForm" class="text-gray-800 font-weight-bold">Fecha</label>
-                                                <input type="text" class="form-control form-control-user" id="dateForm" name="dateForm">
-                                                <small class="text-danger" id="error-dateForm"></small>
+                                                <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
+                                                <select class="form-control select2 form-control-user" id="vessel" name="vessel">
+                                                    <option value="-">Seleccione una motonave...</option>
+                                                </select>
+                                                <small class="text-danger" id="error-vessel"></small>
                                             </div>
 
                                             <div class="col-sm-2">
-                                                <label for="shifts" class="text-gray-800 font-weight-bold">Turno</label>
-                                                <select class="form-control select2 form-control-user" id="shifts" name="shifts">
-                                                    <option value="-">Seleccione un turno...</option>
-                                                    <?php foreach ((object) get::arrayShifts() as $k => $v): ?>
-                                                            <option value="<?= $k ?>"><?= $v ?></option>
-                                                    <?php endforeach; ?>
+                                                <label for="exporter" class="text-gray-800 font-weight-bold">Exportador</label>
+                                                <select class="form-control select2 form-control-user" id="exporter" name="exporter">
+                                                    <option value="-">Seleccione un exportador...</option>
                                                 </select>
-                                                <small class="text-danger" id="error-shifts"></small>
+                                                <small class="text-danger" id="error-exporter"></small>
                                             </div>
 
-                                            <div class="col-sm-4" style="margin-top: 30px;">
-                                                <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReport()">
-                                                    <i class="fas fa-solid fa-search"></i> Buscar
-                                                </button>
+                                            <div class="col-sm-2">
+                                                <label for="agency" class="text-gray-800 font-weight-bold">Agencia</label>
+                                            <input type="text" class="form-control form-control-user" id="agency" name="agency" value="FYGROUP" placeholder="FYGROUP" readonly>
+                                                <small class="text-danger" id="error-agency"></small>
+                                            </div>
 
-                                                <button type="button" class="btn btn-success btn-user" id="btnExcel" onclick="exportShift(1,0)" disabled>
-                                                    <i class="fas fa-file-excel"></i> Descargar Excel
-                                                </button>
-
-                                                <button type="button" class="btn btn-success btn-user" id="btnPDF" onclick="exportShift(0,1)" disabled>
-                                                    <i class="fas fa-file-pdf"></i> Descargar PDF
+                                            <div class="col-sm-2" style="margin-top: 30px;">
+                                                <button type="button" class="btn btn-primary btn-user" id="btnGenerar" onclick="coverMaker()">
+                                                    <i class="fas fa-solid fa-marker"></i> Generar
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
 
-                                    <!-- Div de contenido Dinamico -->
-                                    <div class="d-flex justify-content-center mt-3 mb-3">
-                                        <div id="shiftCardMini" style="border:1px solid #e5e7eb; border-left:4px solid #2563eb; border-radius:8px; padding:8px 16px; background:#f9fafb; display:none">
-                                            <div style="margin-bottom:6px;">
-                                                <b style="color:#2563eb;">Información:</b>
-                                                <span id="shiftTextMini" style="margin:0 6px; color:#9ca3af;"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div id="loader" style="display:none; text-align:center; padding:20px;">
-                                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando...
+                                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Generando portada...
                                     </div>
 
-                                    <!-- Tabla Reporte de Turnos -->
-                                    <div id="shiftsDiv"></div>
+                                    <!--Div Portada -->
+                                    <div id="coverDiv" style="width:100%; height:800px; display:none;"></div>
                                 </div>
                             </div>
                         </div>
@@ -187,142 +174,81 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-function loadShiftsReport() {
-  const $btn = $('#btnBuscar');
-  const $div = $('#shiftsDiv');
-  const date = $('#dateForm').val();
-  const shifts = $('#shifts').val();
-  const textShifts = $('#shifts option:selected').text();
+var coverMaker = function() {
+  const form = document.getElementById('coverMakerForm');
+  const formData = new FormData(form);
+  let hasError = false;
 
-  const MIN_TIME = 2000;
-  let startTime = Date.now();
+  const vessel = $('#vessel').val();
+  const exporter = $('#exporter').val();
+  const agency = $('#agency').val('FYGROUP');
 
-  const [day, month, year] = date.split('-').map(Number);
+  document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
+  document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
 
-  const dateTitle = new Date(day, month - 1, year);
+  /* Validar si algún campo está vacío */
+  for (let [key, value] of formData.entries()) {
+    const inputElement = form.querySelector(`[name="${key}"]`);
+    const errorElement = document.getElementById('error-' + key);
+    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
+    const isEmpty = value.trim() === '' || value === '-';
 
-  const dateName = dateTitle.toLocaleDateString('es-CL', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'America/Santiago'
-  });
+    if (isEmpty) {
+      if (errorElement) {
+        errorElement.innerText = 'Este campo es obligatorio.';
+      }
 
-  if (!date || shifts === '-' || !shifts) {
-    Swal.fire({
-      title: 'Datos incompletos',
-      text: 'Debe seleccionar fecha y turno.',
-      icon: 'warning'
-    });
-    return;
+      if (isSelect2) {
+        // Para select2: agrega borde rojo al contenedor visible
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .addClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.add('is-invalid');
+      }
+
+      hasError = true;
+    } else {
+      if (errorElement) {
+        errorElement.innerText = '';
+      }
+
+      if (isSelect2) {
+        $(inputElement).next('.select2-container')
+          .find('.select2-selection')
+          .removeClass('border border-danger');
+      } else if (inputElement) {
+        inputElement.classList.remove('is-invalid');
+      }
+    }
   }
 
-  $.ajax({
-    url: '../controllers/shiftsReportController.php',
-    type: 'POST',
-    dataType: 'html',
-    data: { date, shifts },
+  if(!hasError){
+    $('#coverDiv').show().empty();
+    $('#loader').show();
 
-    beforeSend() {
-      $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
-      $('#loader').show();
-      $div.hide();
-    },
+    const src =
+    '../controllers/coverMakerController.php?vessel=' +
+    encodeURIComponent(vessel) +
+    '&exporter=' +
+    encodeURIComponent(exporter) +
+    '&agency=' +
+    encodeURIComponent(agency);
 
-    success(response) {
-      const clean = response.trim();
-
-      if (clean.length > 0) {
-        $div.html(clean);
-
-        $('#shiftTextMini').html(`</br> Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css('font-size', '14px').css('font-weight', 'bold');
-        $('#shiftCardMini').fadeIn(150);
-        $('#btnPrintShiftsReport').prop('disabled', false);
-        $('#btnExcel').prop('disabled', false);
-        $('#btnPDF').prop('disabled', false);
-      } else {
-        $div.hide().empty();
-        $('#shiftCardMini').fadeOut(150);
-
-        $('#btnPrintShiftsReport').prop('disabled', true);
-        $('#btnExcel').prop('disabled', true);
-        $('#btnPDF').prop('disabled', true);
-
-        Swal.fire({
-          icon: 'warning',
-          title: 'Sin resultados',
-          text: 'No se encontraron registros para el turno seleccionado.'
-        });
-      }
-    },
-
-    error(xhr) {
-      console.error(xhr.responseText);
-
-      $('#btnPrintShiftsReport').prop('disabled', true);
-
-      Swal.fire({
-        title: 'Error',
-        text: 'Error al consultar la información.',
-        icon: 'error'
-      });
-    },
-
-    complete() {
-      const elapsed = Date.now() - startTime;
-      const remaining = Math.max(MIN_TIME - elapsed, 0);
-
-      setTimeout(function () {
-        $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
-        $('#loader').hide();
-        $div.show();
-      }, remaining);
-    }
-  });
-}
-
-let fpInstance = null;
-
-function loadDatePicker() {
-  fetch('../controllers/dateWithMovs.php').then(res => res.json()).then(data => {
-    const fechasValidas = Array.isArray(data) ? data : [];
-
-    if (fpInstance) {
-      fpInstance.destroy();
-    }
-
-    fpInstance = flatpickr("#dateForm", {
-      dateFormat: "Y-m-d",
-      enable: fechasValidas,
-
-      locale: {
-        ...flatpickr.l10ns.es,
-        firstDayOfWeek: 1
-      },
-
-      onDayCreate: function (dObj, dStr, fp, dayElem) {
-        const fecha = dayElem.dateObj.toLocaleDateString('en-CA');
-
-        if (fechasValidas.includes(fecha)) {
-          dayElem.style.background = "#28a745";
-          dayElem.style.color = "#fff";
-          dayElem.style.borderRadius = "50%";
-        }
-      }
+    const iframe = $('<iframe>', {
+        src: src,
+        width: '100%',
+        height: '800',
+        frameborder: '0'
     });
-  })
-  .catch(err => console.error(err));
-}
 
-document.addEventListener("DOMContentLoaded", loadDatePicker);
+    iframe.on('load', function() {
+        $('#loader').hide();
+    });
 
-var exportShift = function(excel, pdf) {
-  const date = $('#dateForm').val();
-  const shifts = $('#shifts').val();
-
-  if (!date || shifts === '-' || !shifts) return;
-  window.location = `../controllers/shiftsReportExportController.php?date=${date}&shifts=${shifts}&excel=${excel}&pdf=${pdf}`;
-}
+    $('#coverDiv').html(iframe);
+  }
+};
 
 var saveNewGoals = function() {
   $.ajax({
@@ -393,4 +319,54 @@ var saveInfoUser = function() {
     });
   }
 }
+
+$(document).ready(function() {
+  $('#vessel').select2({
+    allowClear: true,
+    tags: false,
+    width: '95%',
+    ajax: {
+      url: '../controllers/vesselJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term, /* Lo que escribe el usuario */
+          current: 1 /* Muestra las naves que cuentan con una ETA mayor a la fecha actual */
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+
+  $('#exporter').select2({
+    allowClear: true,
+    tags: false,
+    width: '100%',
+    ajax: {
+      url: '../controllers/exporterJsonController.php',
+      method: 'POST',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term, /* Lo que escribe el usuario */
+          fygroup: 1
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
+});
 </script>

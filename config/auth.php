@@ -99,7 +99,7 @@ if ($forbidden) {
   <body>
     <div class="card">
       <div style="justify-self: center;">
-        <img src="../images/logo-fygroup.png" style="height: 50%; width: 75%;">
+        <img src="../logos/logo-fygroup.png" style="height: 50%; width: 75%;">
       </div>
 
       <h1>403</h1>

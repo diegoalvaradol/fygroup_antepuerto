@@ -228,7 +228,7 @@ ob_start();
 
     <body>
         <div class="header-box">
-            <img src="../images/logo-fygroup-bg-removed.png" style="height:50px;">
+            <img src="../logos/logo-fygroup-bg-removed.png" style="height:50px;">
             <h2>Liquidación de Nave</h2>
         </div>
 

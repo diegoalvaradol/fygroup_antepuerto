@@ -87,7 +87,7 @@ if (!$admin) {
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../images/logo-maersk.png" class="logo-responsive">
+                                    <img src="../logos/logo-maersk.png" class="logo-responsive">
                                     <h6 class="m-0 font-weight-bold text-center small text-primary">
                                         Powered by Maersk.
                                     </h6>

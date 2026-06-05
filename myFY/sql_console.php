@@ -142,7 +142,7 @@ $resultado = ejecutarQuery($user);
     <div id="content">
       <div class="container py-4">
         <div class="text-center mb-4">
-          <img src="../images/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width:180px;">
+          <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width:180px;">
         </div>
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-8">

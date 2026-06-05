@@ -68,7 +68,6 @@ if (!$admin) {
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
-
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Layout Antepuerto</h1>
                     <p class="mb-4">Acá podrás visualizar el transito en tiempo real en el antepuerto.</p>
@@ -77,91 +76,66 @@ if (!$admin) {
                     <div class="row">
                         <!-- First Column -->
                         <div class="col-lg">
-                            <!-- Custom Text Color Utilities -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Mapa en vivo</h6>
-                                </div>
+                            <!-- MAP -->
+                            <div id="map">
+                                <!-- HEADER -->
+                                <div class="topbar-layout">
+                                    <div class="logo">
+                                        <h2>CONTROL PORTUARIO</h2>
+                                        <span>Visualización logística de antepuerto</span>
+                                    </div>
 
-                                <div class="card-body">
-                                    <!-- MAP -->
-                                    <div id="map">
-                                        <!-- HEADER -->
-                                        <div class="topbar-layout">
-                                            <div class="logo">
-                                                <h2>CONTROL PORTUARIO</h2>
-                                                <span>Visualización logística de antepuerto</span>
-                                            </div>
-
-                                            <div class="stats">
-                                                <div class="logo">
-                                                    <div class="card-title">CAMIONES</div>
-                                                    <div class="card-value" id="truckCounter">
-                                                        0
-                                                    </div>
-                                                </div>
-
-                                                <div class="logo">
-                                                    <div class="card-title">ESTADO</div>
-                                                    <div class="card-value" id="statusCounter">
-                                                        NORMAL
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="stats">
+                                        <div class="stat-card">
+                                            <div class="card-title">CAMIONES</div>
+                                            <div class="card-value" id="truckCounter">0 / 0</div>
                                         </div>
 
-                                        <!-- CARRETERA -->
-                                        <div class="highway"></div>
-
-                                        <!-- CAMINO -->
-                                        <div class="access-lane"></div>
-
-                                        <!-- PORTON -->
-                                        <div class="gate">
-                                            CONTROL DE ACCESO
-                                        </div>
-
-                                        <!-- FLECHAS -->
-                                        <div class="flow in">
-                                            ↓
-                                        </div>
-
-                                        <div class="flow out">
-                                            ↑
-                                        </div>
-
-                                        <!-- CAMION MOVIMIENTO -->
-                                        <div class="truck-moving">
-                                            🚛 MOVIMIENTO
-                                        </div>
-
-                                        <!-- PARKING -->
-                                        <div class="parking low">
-                                            <div class="parking-header">
-                                                <div class="parking-title">
-                                                    APARCADERO
-                                                </div>
-
-                                                <div class="parking-status">
-
-                                                    <div class="badge green">
-                                                        NORMAL
-                                                    </div>
-
-                                                    <div class="badge yellow">
-                                                        MEDIA
-                                                    </div>
-
-                                                    <div class="badge red">
-                                                        ALTA
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- JS INSERTA CAMIONES ACA -->
-                                            <div id="parkingGrid"></div>
+                                        <div class="stat-card">
+                                            <div class="card-title">ESTADO</div>
+                                            <div class="card-value" id="statusCounter">NORMAL</div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <!-- CARRETERA -->
+                                <div class="highway"></div>
+
+                                <!-- PORTÓN -->
+                                <div class="access-lane"></div>
+
+                                <!-- ZONA DE ACCESO -->
+                                <div class="access-zone">
+                                    <!-- GARITA -->
+                                    <div class="gate">
+                                        <div class="gate-window left"></div>
+                                        <div class="gate-window right"></div>
+                                        <div class="gate-door"></div>
+                                        <div class="gate-label">CONTROL</div>
+                                    </div>
+
+                                    <!-- CAMINO INTERIOR -->
+                                    <div class="road-entry">
+                                        <div class="barrier"></div>
+                                    </div>
+                                </div>
+
+                                <!-- APARCADERO -->
+                                <div class="parking">
+                                    <div class="parking-header">
+                                        <div class="parking-title">
+                                            APARCADERO
+                                        </div>
+
+                                        <div class="parking-status">
+                                            <div class="badge green">NORMAL</div>
+                                            <div class="badge yellow">MEDIA</div>
+                                            <div class="badge red">ALTA</div>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="parkingGrid"></div>
                                 </div>
                             </div>
                         </div>
@@ -221,7 +195,7 @@ var saveNewGoals = function() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = '<?php echo generateMkey('vessel_liquidation'); ?>';
+        window.location = '<?php echo generateMkey('layout_antepuerto'); ?>';
       });
     } else {
       Swal.fire({
@@ -317,71 +291,62 @@ function getSlot(zone){
 }
 
 /* Mapa */
-function loadMap(){
+function loadMap() {
   fetch('../controllers/layoutAntepuertoController.php?action=data').then(r => r.json()).then(data => {
     const parkingGrid = document.getElementById('parkingGrid');
-    let total = 0;
-
-    /* LIMPIAR */
     parkingGrid.innerHTML = '';
 
-    /* RESET SLOTS */
-    ZONES.PARKING.slots.forEach(s => s.used = false);
+    let total = data.length;
 
-    data.forEach(t => {
-      const slot = getSlot(ZONES.PARKING);
+    data.forEach((t, index) => {
+      let statusClass = 'normal';
 
-      /* ESTADO */
-      let statusClass = null;
-      let statusText = null;
-
-      if(t.status === 'INGRESO'){
-        statusClass = 'green';
-        statusText = 'EN APARCADERO';
+      if(t.status === 'MEDIA'){
+        statusClass = 'medium';
       }
 
-      /* CREAR DIV */
+      if(t.status === 'ALTA'){
+        statusClass = 'high';
+      }
+
       const div = document.createElement('div');
-
-      div.className = `truck truck-dynamic ${statusClass}`;
-
-      /* POSICION */
-      div.style.position = 'absolute';
-      div.style.left = (slot.x * 100) + '%';
-      div.style.top = (slot.y * 100) + '%';
-      div.style.transform = 'translate(-50%, -50%)';
-
-      /* HTML */
+      div.className = `truck-slot ${statusClass}`;
       div.innerHTML = `
+        <div class="slot-number">${index + 1}</div>
+
         <div class="truck-plate">
-          🚛 ${t.patente}
+          ${t.patente}
         </div>
 
-        <div class="truck-container">
-          ${t.container || 'SIN CONTENEDOR'}
+        <div class="truck-info">
+          <div><b>Guía:</b> ${t.guide || '-'}</div>
+          <div><b>Nave:</b> ${t.ship || '-'}</div>
+          <div><b>Contenedor:</b> ${t.container || '-'}</div>
+          <div><b>Ingreso:</b> ${t.arrival || '-'}</div>
         </div>
-
-        <div class="truck-vessel">
-          ${t.ship}
-        </div>
-
-        <div class="truck-time">
-          ${statusText}
-        </div>
-
       `;
 
       parkingGrid.appendChild(div);
-      total++;
     });
 
-    /* TOTAL */
-    document.getElementById('truckCounter').innerHTML = total;
+    const capacidad = <?php echo (int) $infoCfg['goals']; ?>;
 
-    /* ESTADO GENERAL */
+    for(let i = total; i < capacidad; i++){
+      const empty = document.createElement('div');
+      empty.className = 'truck-slot empty';
+      empty.innerHTML = `
+        <div class="slot-number">${i + 1}</div>
+        <div class="empty-label">
+          DISPONIBLE
+        </div>
+      `;
+
+      parkingGrid.appendChild(empty);
+    }
+
+    document.getElementById('truckCounter').innerHTML = `${total} <small>/ ${capacidad}</small>`;
     updateHeatmap(total);
-  })
-  .catch(error => {
+  }).catch(error => {
     console.error(error);
 
     Swal.fire({
@@ -419,8 +384,5 @@ function updateHeatmap(total){
 $(document).ready(function() {
   //init map
   loadMap();
-  setInterval(() => {
-    loadMap();
-  }, 300);
 });
 </script>

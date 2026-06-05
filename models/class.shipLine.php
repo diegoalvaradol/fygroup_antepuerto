@@ -133,8 +133,7 @@ class shipLine extends iQuery
                             </h1>
 
                             <em>
-                                (Total:
-                                <span id='totalShipLines'>" . number_format($count, 0, ',', '.') . "</span>)
+                                (Total: <span id='totalShipLines'>" . number_format($count, 0, ',', '.') . "</span>)
                             </em>
                         </div>
 
@@ -145,8 +144,8 @@ class shipLine extends iQuery
                     </div>
 
                     <div class='card shadow mb-4'>
-                        <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                            <table id='shipLineTable' class='table table-hover mb-0' style='min-width:700px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                        <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                            <table id='shipLineTable' class='table' style='min-width:700px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
                                 $thead
                                 $tr
                             </table>

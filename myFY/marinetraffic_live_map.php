@@ -68,27 +68,21 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <!-- First Column -->
                         <div class="col-lg">
                             <!-- Custom Text Color Utilities -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Live Map MarineTraffic</h6>
+                            <div style="width:100%;">
+                                <div style="position:relative; width:100%; padding-bottom:56.25%; overflow:hidden; border-radius:10px;">
+                                    <iframe
+                                        src="https://www.marinetraffic.com/es/ais/embed/centerx:-71.323/centery:-29.947/zoom:14/maptype:2/shownames:true/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:false/remember:false"
+                                        style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+                                        loading="lazy">
+                                    </iframe>
                                 </div>
+                            </div>
 
-                                <div style="display:flex; justify-content:center; padding:2%;">
-                                    <div style="width:100%; max-width:1200px; position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px;">
-                                        <iframe
-                                            src="https://www.marinetraffic.com/es/ais/embed/centerx:-71.323/centery:-29.947/zoom:14/maptype:2/shownames:true/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:false/remember:false"
-                                            style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
-                                            loading="lazy">
-                                        </iframe>
-                                    </div>
-                                </div>
-
-                                <div class="text-center">
-                                    <img src="../images/logo-marinetraffic.png" class="logo-responsive">
-                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                        Powered by MarineTraffic.
-                                    </h6>
-                                </div>
+                            <div class="text-center">
+                                <img src="../logos/logo-marinetraffic.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by MarineTraffic.
+                                </h6>
                             </div>
                         </div>
                     </div>

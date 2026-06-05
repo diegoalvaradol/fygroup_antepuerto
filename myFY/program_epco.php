@@ -61,7 +61,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Planificación Naviera EPCO</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Itinerarios EPCO</h1>
                     <p class="mb-4">Acá puedes revisar las naves anunciadas para el Puerto de Coquimbo</p>
 
                     <!-- Content Row -->
@@ -107,7 +107,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </div>
 
                                     <div class="text-center">
-                                        <img src="../images/logo-epco.png" class="logo-responsive">
+                                        <img src="../logos/logo-epco.png" class="logo-responsive">
                                         <h6 class="m-0 font-weight-bold text-center small text-primary">
                                             Powered by EPCO.
                                         </h6>
@@ -189,7 +189,13 @@ function loadEpcoProgram() {
     timeout: 15000
   })
   .done(function(response) {
+    console.log(response);
+    console.log('Largo:', response.length);
+
     const clean = response.trim();
+
+    console.log('Clean:', clean);
+    console.log('Largo clean:', clean.length);
 
     if (clean) {
       container.html(clean).fadeIn();
@@ -222,8 +228,7 @@ function loadEpcoProgram() {
     btnPrint.prop('disabled', true);
   })
   .always(function() {
-    btn.prop('disabled', false)
-       .html('<i class="fas fa-search"></i> Buscar');
+    btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
   });
 }
 

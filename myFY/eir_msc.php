@@ -89,7 +89,7 @@ if (!$admin) {
                                 </div>
 
                                 <div class="text-center">
-                                    <img src="../images/logo-medlog.svg" style="width:10%;">
+                                    <img src="../logos/logo-medlog.svg" style="width:10%;">
                                     <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:black;">Powered by Medlog.</h6>
                                 </div>
                             </div>
