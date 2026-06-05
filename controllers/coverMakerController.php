@@ -97,10 +97,7 @@ ob_start();
 
         .signature-logo {
             height: 75px;
-        }
-
-
-        .footer {
+        }        .footer {
             position: fixed;
             bottom: 15px;
             left: 0;
