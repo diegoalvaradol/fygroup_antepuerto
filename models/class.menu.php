@@ -73,9 +73,6 @@ class menu extends iQuery
                     ['label' => 'Crear Portada', 'link' => generateMkey('cover_maker')],
                 ],
             ],
-        ];
-
-        if ($admin) {
             $menus[] = [
                 'title' => 'Layout',
                 'icon' => 'fa-satellite',
@@ -83,8 +80,10 @@ class menu extends iQuery
                 'items' => [
                     ['label' => 'Layout Antepuerto', 'link' => generateMkey('layout_antepuerto')],
                 ],
-            ];
+            ],
+        ];
 
+        if ($admin) {
             $menus[] = [
                 'title' => 'Maersk',
                 'icon' => 'fa-ship',
