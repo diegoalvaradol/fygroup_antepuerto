@@ -361,192 +361,168 @@ class menu extends iQuery
 
     public static function sideBarPortal()
     {
-        $cfg = new cfg();
-        $infoCfg = json_decode($cfg->getInfo(1), true);
+        $infoCfg = json_decode((new cfg())->getInfo(1), true);
+        $updateTime = new DateTime($infoCfg['update_date']);
 
         ob_start();
         ?>
-            <style>
-                #accordionSidebar{
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    height: 100vh;
-                    z-index: 1040;
-                    overflow-y: auto;
-                }
+            <button id="mobileSidebarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-                body{
-                    padding-left: 220px; /* ajusta al ancho real del sidebar */
-                }
+            <div id="sidebarOverlay"></div>
 
-                @media (max-width: 768px){
-                    body{
-                        padding-left: 0;
-                    }
-
-                    #accordionSidebar{
-                        position: absolute;
-                    }
-                }
-            </style>
-
-            <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color:#1e293b;">
-
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
-                    <img src="../logos/logo-fygroup-bg-removed.png" style="width:100%;">
+            <ul id="accordionSidebar" class="navbar-nav">
+                <a class="sidebar-brand" href="dashboard.php">
+                    <img src="../logos/logo-fygroup-circle-bg-removed.png">
                 </a>
 
-                <div class="sidebar-heading">Sistema Antepuerto</div>
-                <div class="sidebar-heading">(Portal Cliente)</div>
+                <div style="align-self:center;color:#fff;font-size:larger;">
+                    <b>Sistema Antepuerto</b>
+                </div>
+
+                <div style="align-self:center;color:#cbd5e1;font-size:13px;">
+                    Portal Cliente
+                </div>
+
+                <br>
+
+                <a class="nav-link d-flex align-items-center justify-content-start" href="dashboard.php" style="color:#fff;padding:8px 12px;">
+                    <i class="fa fa-home"></i>
+                    <span style="margin-left:8px;">Inicio</span>
+                </a>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAntepuerto">
-                        <i class="fas fa-fw fa-truck"></i>
-                        <span>Antepuerto</span>
+                    <a class="nav-link collapsed" href="#collapseAntepuerto" data-toggle="collapse" aria-expanded="false">
+                        <span>
+                            <i class="fa fa-truck"></i>
+                            Antepuerto
+                        </span>
+
+                        <i class="fa fa-angle-right caret"></i>
                     </a>
 
                     <div id="collapseAntepuerto" class="collapse" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Items:</h6>
 
-                            <a class="collapse-item" href="<?= generateMkey('enter_container_port', 'myPortal') ?>">
+                        <div class="collapse-inner">
+                            <a class="collapse-item submenu-item"
+                            href="<?= generateMkey('enter_container_port', 'myPortal') ?>">
                                 Ingreso Contenedores
                             </a>
 
-                            <a class="collapse-item" href="<?= generateMkey('enter_thermo_port', 'myPortal') ?>">
+                            <a class="collapse-item submenu-item"
+                            href="<?= generateMkey('enter_thermo_port', 'myPortal') ?>">
                                 Ingreso Termos
                             </a>
                         </div>
                     </div>
                 </li>
 
-                <hr class="sidebar-divider d-none d-md-block">
+                <div class="text-white p-3 mt-auto text-center">
+                    <div>
+                        <i class="fas fa-copyright"></i>
+                        <?= $infoCfg['name'] ?>
+                    </div>
 
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
+                    <div>
+                        <i class="fas fa-code-branch"></i>
+                        <?= $infoCfg['version'] ?>
+                    </div>
 
-                <div class="d-flex flex-column h-100">
-                    <div class="text-center d-none d-md-inline mt-auto" style="color: white;">
-                        <hr class="sidebar-divider">
-                        <small><?= $infoCfg['name'] ?></small>
-                        <br>
-                        <small><b>Versión: </b><?= $infoCfg['version'] ?></small>
+                    <div>
+                        <i class="fas fa-rotate"></i>
+                        <?= $updateTime->format('d-m-Y H:i') ?>
                     </div>
                 </div>
             </ul>
-
         <?php
 
         return ob_get_clean();
     }
 
-    public static function mainTapBarPortal()
-    {
-        $tapBarPortal = '<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow" style="background:#1e293b;">';
-        $tapBarPortal .= '<i class="fa fa-bars"></i>';
-        $tapBarPortal .= '</button>';
-        $tapBarPortal .= '<ul class="navbar-nav ml-auto">';
-        $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-        $tapBarPortal .= '<label class="ml-auto" id="relojFecha" style="color:white; align-content:center;"></label>';
-        $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
-        $tapBarPortal .= '<label style="color:white; align-content:center;"><i class="fas fa-solid fa-1x fa-clock"></i>&nbsp;</label>';
-        $tapBarPortal .= '<label class="ml-auto" id="countDownSession" style="color:white; align-content:center;"></label>';
-        $tapBarPortal .= '<div class="topbar-divider d-none d-sm-block"></div>';
-        $tapBarPortal .= '<li class="nav-item dropdown no-arrow">';
-        $tapBarPortal .= '<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-        $tapBarPortal .= '<span class="mr-2 d-none d-lg-inline text-white-600 large">Bienvenido, ' . $_SESSION['user']['name'] . '!</span>';
-        $tapBarPortal .= '<img class="img-profile rounded-circle" src="../images/undraw_profile.svg">';
-        $tapBarPortal .= '</a>';
-        $tapBarPortal .= '<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">';
-        $tapBarPortal .= '<a class="dropdown-item" href="logout.php" data-toggle="modal" data-target="#logoutModal" style="color: #ef4444;">';
-        $tapBarPortal .= '<i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> Cerrar Sesión';
-        $tapBarPortal .= '</a>';
-        $tapBarPortal .= '</div>';
-        $tapBarPortal .= '</li>';
-        $tapBarPortal .= '</ul>';
-        $tapBarPortal .= '</nav>';
-
-        return $tapBarPortal;
-    }
-
     public static function secondTapBarPortal()
     {
+        $user = new user();
+        $arrayDivision = get::getDivisionName();
+
+        $admin = $user->isAdmin($_SESSION['user']['run']);
+        $fullName = htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']);
+        $run = $_SESSION['user']['run'];
+        $division = $_SESSION['user']['division'];
+        $avatarName = $user->avatarIniciales($fullName, 38);
+
         ob_start();
         ?>
-            <style>
-                body{
-                    padding-top: 56px;
-                }
+            <nav class="navbar navbar-expand topbar">
+                <div class="container-fluid d-flex align-items-center justify-content-between">
 
-                .topbar-portal-2{
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 56px;
-                    z-index: 1050;
+                    <!-- Reloj -->
+                    <div class="clock-box">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span id="relojFecha"></span>
 
-                    background: #1e293b;
-                    box-shadow: 0 4px 12px rgba(0,0,0,.25);
-                }
+                        <div class="mx-3 d-none d-md-block"
+                            style="width:1px;height:25px;background:rgba(255,255,255,.2);"></div>
 
-                .topbar-divider{
-                    width: 1px;
-                    height: 20px;
-                    background: rgba(255,255,255,.2);
-                    margin: 0 10px;
-                }
+                        <i class="fas fa-hourglass-half mr-2 d-none d-md-block"></i>
+                        <span id="countDownSession" class="d-none d-md-block"></span>
+                    </div>
 
-                #relojFecha,
-                #countDownSession{
-                    color: white;
-                }
-            </style>
+                    <!-- Usuario -->
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
 
-            <nav class="navbar navbar-expand navbar-light topbar-portal-2 shadow-sm">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- Avatar -->
+                                <div class="user-avatar">
+                                    <?= $avatarName ?>
+                                </div>
 
-                <button class="btn btn-link text-white">
-                    <i class="fa fa-bars"></i>
-                </button>
+                                <!-- Información Usuario -->
+                                <div class="d-flex flex-column text-left ml-2 user-info">
+                                    <span class="text-white small font-weight-bold text-truncate">
+                                        <?= $fullName ?>
+                                    </span>
 
-                <ul class="navbar-nav ml-auto align-items-center">
+                                    <span class="text-white small user-run">
+                                        <?= $run ?>
+                                    </span>
+                                </div>
 
-                    <li class="nav-item d-flex align-items-center">
-                        <i class="fas fa-clock text-white"></i>
-                        <span id="relojFecha" class="ml-2"></span>
-                    </li>
-
-                    <div class="topbar-divider"></div>
-
-                    <li class="nav-item d-flex align-items-center">
-                        <i class="fas fa-clock text-white"></i>
-                        <span id="countDownSession" class="ml-2"></span>
-                    </li>
-
-                    <div class="topbar-divider"></div>
-
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-toggle="dropdown">
-
-                            <span class="mr-2 text-white">
-                                Bienvenido, <?= $_SESSION['user']['name'] ?>!
-                            </span>
-
-                            <img class="img-profile rounded-circle" src="../images/undraw_profile.svg" width="32">
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right shadow">
-                            <a class="dropdown-item text-danger" href="logout.php" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fa-solid fa-right-from-bracket text-danger"></i>
-                                Cerrar Sesión
+                                <!-- Flecha -->
+                                <i class="fas fa-chevron-down text-white ml-2"></i>
                             </a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
 
+                            <!-- Dropdown -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
+                                <div class="px-3 py-3 text-center border-bottom">
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <div class="logo-box">
+                                            <img src="../logos/logo-fygroup-circle-bg-removed.png" width="70" alt="Logo">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <strong><?= $fullName ?></strong>
+                                    </div>
+
+                                    <small style="opacity:.8;">
+                                        Portal Cliente
+                                    </small>
+
+                                </div>
+
+                                <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>
+                                    Cerrar Sesión
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         <?php
 
         return ob_get_clean();

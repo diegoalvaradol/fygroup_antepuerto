@@ -11,7 +11,6 @@ $sideBarPortal = menu::sideBarPortal();
 $tapBarPortal = menu::secondTapBarPortal();
 $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
-
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $admin = $user->isAdmin($_SESSION['user']['run']);
 $releasedTime = new DateTime($infoCfg['released_date']);
@@ -47,6 +46,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
 
     <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
+    <script src="../assets/js/sidebar.js"></script>
 </head>
 
 <body id="page-top">
@@ -322,4 +322,12 @@ var saveInfoUser = function() {
     });
   }
 }
+
+$(document).ready(function() {
+  const contador = setInterval(actualizarConteo, 1000); /* Llama a la función cada segundo (1000ms) */
+
+  setInterval(actualizarReloj, 1000);
+  actualizarReloj(); /* Primera llamada */
+  startCountDown();
+});
 </script>
