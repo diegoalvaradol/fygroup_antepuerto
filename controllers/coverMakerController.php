@@ -55,12 +55,12 @@ ob_start();
         .logo {
             text-align: center;
             margin-top: 20px;
-            height: 160px;
+            height: 100px;
         }
 
         .logo img {
             width: auto;
-            height: 160px;
+            height: 100px;
             object-fit: contain;
             background: #fff;
         }

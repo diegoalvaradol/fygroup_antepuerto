@@ -16,14 +16,6 @@ $mainTapBarSSL = menu::mainTapBarSSL();
 $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
 $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
-
-/* Validar superadmin */
-if (!$admin) {
-    $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
-    $pag = basename(__FILE__);
-    $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-    mostrarAccesoDenegado($usuario, $pag, $url);
-}
 ?>
 
 <!-- HTML -->
