@@ -97,10 +97,13 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             APARCADERO
                                         </div>
 
-                                        <div class="parking-status">
-                                            <div class="badge green">NORMAL</div>
-                                            <div class="badge yellow">MEDIA</div>
-                                            <div class="badge red">ALTA</div>
+                                        <div class="stat-card">
+                                            <div class="card-title">PERIODO DE ESTADÍA</div>
+                                            <div class="parking-status">
+                                                <div class="badge green">< 2 hrs</div>
+                                                <div class="badge yellow">2 a 4 hrs</div>
+                                                <div class="badge red">> 4 hrs</div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -251,10 +254,12 @@ var loadMap = function () {
         </div>
 
         <div class="truck-info">
-          <div><b>Guía:</b> ${t.guide || '-'}</div>
-          <div><b>Nave:</b> ${t.ship || '-'}</div>
+          <div><b>Guía:</b> ${t.guide}</div>
+          <div><b>Exportador:</b> ${t.exporter}</div>
+          <div><b>Nave:</b> ${t.ship}</div>
           <div><b>Contenedor:</b> ${t.container || '-'}</div>
-          <div><b>Ingreso:</b> ${t.arrival || '-'}</div>
+          <div><b>Ingreso:</b> ${t.arrival}</div>
+          <div style="color: #16a34a;"><b>Estadía:</b> ${t.staytime}</div>
         </div>
       `;
 
@@ -321,6 +326,6 @@ $(document).ready(function() {
   loadMap();
   setInterval(() => {
     loadMap();
-  }, 300);
+  }, 1000);
 });
 </script>
