@@ -117,5 +117,4 @@ class get
 
         return $arrayTypeSchedule;
     }
-
 }

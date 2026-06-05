@@ -57,165 +57,6 @@
   color: #111827;
 }
 
-/* Ruta principal */
-.highway {
-  height: 90px;
-  background: #374151;
-  border-radius: 12px;
-  position: relative;
-  margin-bottom: 0;
-  overflow: hidden;
-}
-
-.highway::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border-top: 5px dashed #fff;
-}
-
-.highway::after {
-  content: 'RUTA ACCESO A ANTEPUERTO';
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  color: #fff;
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-
-/* Conexión desde ruta */
-.access-lane {
-  width: 80px;
-  height: 70px;
-  background: #4b5563;
-  margin: 0 auto;
-  position: relative;
-}
-
-.access-lane::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  height: 100%;
-  border-left: 3px dashed #fff;
-  transform: translateX(-50%);
-}
-
-/* Zona de acceso */
-.access-zone {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-/* Garita */
-.gate {
-  position: relative;
-  width: 120px;
-  height: 65px;
-  margin-right: 10px;
-  background: #f8fafc;
-  border: 2px solid #475569;
-  border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.gate::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: -5px;
-  width: calc(100% + 10px);
-  height: 12px;
-  background: #334155;
-  border-radius: 4px 4px 0 0;
-}
-
-.gate-window {
-  position: absolute;
-  top: 12px;
-  width: 22px;
-  height: 16px;
-  background: #93c5fd;
-  border: 1px solid #64748b;
-}
-
-.gate-window.left {
-  left: 12px;
-}
-
-.gate-window.right {
-  right: 12px;
-}
-
-.gate-door {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 18px;
-  height: 30px;
-  background: #475569;
-}
-
-.gate-label {
-  position: absolute;
-  bottom: -22px;
-  width: 100%;
-  text-align: center;
-  font-size: 10px;
-  font-weight: 700;
-  color: #334155;
-}
-
-/* Camino interno */
-.road-entry {
-  position: relative;
-  width: 80px;
-  height: 180px;
-  background: #4b5563;
-  border-radius: 0 0 6px 6px;
-}
-
-.road-entry::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0;
-  height: 100%;
-  border-left: 3px dashed #fff;
-  transform: translateX(-50%);
-}
-
-.road-entry::before {
-  content: '↓';
-  position: absolute;
-  left: 50%;
-  top: 55%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-/* Barrera */
-.barrier {
-  position: absolute;
-  top: 15px;
-  left: -8px;
-  width: 95px;
-  height: 6px;
-  background: repeating-linear-gradient(90deg, #fff, #fff 10px, #dc2626 10px, #dc2626 20px);
-  transform: rotate(-15deg);
-  transform-origin: left center;
-  border-radius: 3px;
-}
-
 /* Flujo */
 .flow {
   text-align: center;
@@ -292,6 +133,26 @@
   min-height: 200px;
   border: 1px solid #e5e7eb;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.slot-type {
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #1e293b;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.slot-type.container {
+  background: #2563eb;
+  color: #fff;
+}
+
+.slot-type.thermo {
+  background: #dc2626;
+  color: #fff;
 }
 
 .slot-number {

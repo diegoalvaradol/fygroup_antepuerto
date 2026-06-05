@@ -2743,21 +2743,40 @@ class outerPort extends iQuery
     public function layoutAntepuerto()
     {
         $result = [];
+        $status = '';
 
         $sql = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE sh.finished = 0 AND p.departure_date IS NULL ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
         $list = parent::findAllStatic($sql);
         if ($list->length()) {
             foreach ($list->getCollection() as $r) {
                 $arrival = (new DateTime($r['arrival_date']))->format('d-m-Y H:i') ;
+                $origin = (int) ($r['origin']);
+
+                if (!empty($r['arrival_date']) && $r['arrival_date'] !== '0000-00-00 00:00:00') {
+                    $arrivalDate = new DateTime($r['arrival_date']);
+                    $today = new DateTime(date('Y-m-d H:i:s'));
+
+                    $interval = $arrivalDate->diff($today);
+                    $hours = $interval->h;
+
+                    if ($hours < 1) {
+                        $status = 'normal';
+                    } elseif ($hours >= 1 && $hours < 2) {
+                        $status = 'medium';
+                    } else {
+                        $status = 'high';
+                    }
+                }
 
                 if ($r['arrival_date'] !== '0000-00-00 00:00:00' && $r['departure_date'] === null) {
                     $result[] = [
-                        'patente' => $r['car_plate'],
+                        'carplate' => $r['car_plate'],
                         'container' => $r['container'],
                         'ship' => $r['vessel_name'],
                         'arrival' => $arrival,
                         'guide' => $r['guide_number'],
-                        'status' => 'INGRESO',
+                        'status' => $status,
+                        'origin' => $origin,
                     ];
                 }
             }

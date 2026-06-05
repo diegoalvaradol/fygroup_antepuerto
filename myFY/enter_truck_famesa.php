@@ -113,10 +113,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                                     <option value="-">Seleccione una patente...</option>
                                                 </select>
                                                 <small class="text-danger" id="error-carplatetruck"></small>
-                                            </div>
-
-
-                                            <div class="col-sm-6">
+                                            </div>                                            <div class="col-sm-6">
                                                 <label for="carplateramp" class="text-gray-800 font-weight-bold">Patente Rampla</label>
                                                 <select class="form-control select2 form-control-user" id="carplateramp" name="carplateramp">
                                                     <option value="-">Seleccione una patente...</option>
@@ -673,51 +670,6 @@ var saveNewGoals = function() {
     }
   });
 }
-
-var saveInfoUser = function() {
-  const password = $('#password').val();
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-  let hasError = false;
-
-  /* Revisa que la contraseña tenga los caracteres obligatorios */
-  if (!regex.test(password)) {
-    Swal.fire({
-      title: 'Oops...',
-      text: 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.',
-      icon: 'error',
-      cancelButtonColor: '#d33',
-    });
-
-    hasError = true;
-  }
-
-  if(!hasError){
-    $.ajax({
-      url: '../controllers/userSaveController.php',
-      data: $('#editUserInfoForm').serialize(),
-      type: 'POST',
-    }).done(function(x) {
-      if(x == 'OK'){
-        Swal.fire({
-          title: '¡Éxito!',
-          html: '¡Información actualizada con éxito! </br> Por motivos de seguridad deberás iniciar sesión nuevamente.',
-          icon: 'success',
-          confirmButtonColor: '#4CAF50'
-        }).then((result) => {
-          window.location = 'logout.php';
-        });
-      } else {
-        Swal.fire({
-          title: 'Oops...',
-          text: 'Error al actualizar la información.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        });
-      }
-    });
-  }
-}
-
 
 $(document).ready(function() {
   $('#vessel').select2({

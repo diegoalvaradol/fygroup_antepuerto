@@ -81,7 +81,7 @@ if (!$admin) {
                                 <!-- HEADER -->
                                 <div class="topbar-layout">
                                     <div class="logo">
-                                        <h2>CONTROL PORTUARIO</h2>
+                                        <h2>CONTROL ANTEPUERTO</h2>
                                         <span>Visualización logística de antepuerto</span>
                                     </div>
 
@@ -98,28 +98,6 @@ if (!$admin) {
                                     </div>
                                 </div>
 
-                                <!-- CARRETERA -->
-                                <div class="highway"></div>
-
-                                <!-- PORTÓN -->
-                                <div class="access-lane"></div>
-
-                                <!-- ZONA DE ACCESO -->
-                                <div class="access-zone">
-                                    <!-- GARITA -->
-                                    <div class="gate">
-                                        <div class="gate-window left"></div>
-                                        <div class="gate-window right"></div>
-                                        <div class="gate-door"></div>
-                                        <div class="gate-label">CONTROL</div>
-                                    </div>
-
-                                    <!-- CAMINO INTERIOR -->
-                                    <div class="road-entry">
-                                        <div class="barrier"></div>
-                                    </div>
-                                </div>
-
                                 <!-- APARCADERO -->
                                 <div class="parking">
                                     <div class="parking-header">
@@ -132,7 +110,6 @@ if (!$admin) {
                                             <div class="badge yellow">MEDIA</div>
                                             <div class="badge red">ALTA</div>
                                         </div>
-
                                     </div>
 
                                     <div id="parkingGrid"></div>
@@ -208,50 +185,6 @@ var saveNewGoals = function() {
   });
 }
 
-var saveInfoUser = function() {
-  const password = $('#password').val();
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-  let hasError = false;
-
-  /* Revisa que la contraseña tenga los caracteres obligatorios */
-  if (!regex.test(password)) {
-    Swal.fire({
-      title: 'Oops...',
-      text: 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.',
-      icon: 'error',
-      cancelButtonColor: '#d33',
-    });
-
-    hasError = true;
-  }
-
-  if(!hasError){
-    $.ajax({
-      url: '../controllers/userSaveController.php',
-      data: $('#editUserInfoForm').serialize(),
-      type: 'POST',
-    }).done(function(x) {
-      if(x == 'OK'){
-        Swal.fire({
-          title: '¡Éxito!',
-          html: '¡Información actualizada con éxito! </br> Por motivos de seguridad deberás iniciar sesión nuevamente.',
-          icon: 'success',
-          confirmButtonColor: '#4CAF50'
-        }).then((result) => {
-          window.location = 'logout.php';
-        });
-      } else {
-        Swal.fire({
-          title: 'Oops...',
-          text: 'Error al actualizar la información.',
-          icon: 'error',
-          cancelButtonColor: '#d33',
-        });
-      }
-    });
-  }
-}
-
 const ZONES = {
   PARKING: {
     slots: createSlots(0.05, 0.30, 9, 2)
@@ -291,31 +224,38 @@ function getSlot(zone){
 }
 
 /* Mapa */
-function loadMap() {
-  fetch('../controllers/layoutAntepuertoController.php?action=data').then(r => r.json()).then(data => {
+var loadMap = function () {
+  fetch('../controllers/layoutAntepuertoController.php?action=data')
+    .then(r => r.json())
+    .then(data => {
     const parkingGrid = document.getElementById('parkingGrid');
     parkingGrid.innerHTML = '';
 
     let total = data.length;
 
     data.forEach((t, index) => {
-      let statusClass = 'normal';
+      let originClass = '';
+      let originText = '';
 
-      if(t.status === 'MEDIA'){
-        statusClass = 'medium';
-      }
-
-      if(t.status === 'ALTA'){
-        statusClass = 'high';
+      if(t.origin === 1){
+        originClass = 'container';
+        originText = 'Contenedor';
+      } else if(t.origin === 2){
+        originClass = 'thermo';
+        originText = 'Thermo';
       }
 
       const div = document.createElement('div');
-      div.className = `truck-slot ${statusClass}`;
+      div.className = `truck-slot ${t.status}`;
       div.innerHTML = `
         <div class="slot-number">${index + 1}</div>
 
+        <div class="slot-type ${originClass}">
+          ${originText}
+        </div>
+
         <div class="truck-plate">
-          ${t.patente}
+          ${t.carplate}
         </div>
 
         <div class="truck-info">
@@ -345,7 +285,7 @@ function loadMap() {
     }
 
     document.getElementById('truckCounter').innerHTML = `${total} <small>/ ${capacidad}</small>`;
-    updateHeatmap(total);
+    updateHeatmap(total, capacidad);
   }).catch(error => {
     console.error(error);
 
@@ -359,9 +299,10 @@ function loadMap() {
 }
 
 /* Heatmap  */
-function updateHeatmap(total){
+var updateHeatmap = function(total, capacidad){
   const parking = document.querySelector('.parking');
   const status = document.getElementById('statusCounter');
+  const occupancy = (total / capacidad) * 100;
 
   parking.classList.remove(
     'low',
@@ -369,20 +310,25 @@ function updateHeatmap(total){
     'high'
   );
 
-  if(total <= 5){
+  if(occupancy <= 50){
     parking.classList.add('low');
     status.innerHTML = 'NORMAL';
-  } else if(total <= 10){
+    status.style.color = '#16a34a';
+  } else if(occupancy <= 75){
     parking.classList.add('medium');
     status.innerHTML = 'MEDIA';
+    status.style.color = '#f59e0b';
   } else{
     parking.classList.add('high');
     status.innerHTML = 'ALTA';
+    status.style.color = '#dc2626';
   }
 }
 
 $(document).ready(function() {
-  //init map
   loadMap();
+  setInterval(() => {
+    loadMap();
+  }, 300);
 });
 </script>
