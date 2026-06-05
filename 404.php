@@ -86,7 +86,7 @@ http_response_code(404);
 <body>
   <div class="card">
       <div style="justify-self: center;">
-          <img src="logos/logo-fygroup-circle-v1.png" style="height: 50%; width: 75%;">
+          <img src="logos/logo-fygroup-circle-v1.png" style="height: 50%; width: 50%;">
       </div>
 
       <h1>404</h1>
