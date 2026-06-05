@@ -36,7 +36,7 @@ switch ($exporter) {
         $logoExporter = realpath(__DIR__ . '/../logos/logo-agricola-calvario.jpeg');
         break;
 
-    case 'FGF TRAPANI S.A.':
+    case 'FGF TRAPANI S.A':
         $logoExporter = realpath(__DIR__ . '/../logos/logo-trapani.jpeg');
         break;
 }
@@ -62,6 +62,7 @@ ob_start();
             width: auto;
             height: 160px;
             object-fit: contain;
+            background: #fff;
         }
 
         .content {
