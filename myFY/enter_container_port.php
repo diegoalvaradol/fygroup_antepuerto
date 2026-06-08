@@ -369,18 +369,35 @@ var editContainerHour = function(id) {
      data: { id: id },
      dataType: 'json',
      success: function(data) {
-      const fechaIngreso = new Date(data.arrival_date); /* Reemplaza con la fecha y hora reales */
-      const ahora = new Date();
-      const msDiff = ahora - fechaIngreso;
-      const totalMinutos = Math.floor(msDiff / (1000 * 60));
-      const dias = Math.floor(totalMinutos / (60 * 24));
-      const horas = Math.floor((totalMinutos % (60 * 24)) / 60);
-      const minutos = totalMinutos % 60;
+      const fechaIngreso = new Date(data.arrival_date);
+      const fechaSalida = data.departure_date ? new Date(data.departure_date) : null;
+
+      function actualizarEstadia() {
+        const ahora = fechaSalida != null ? new Date(fechaSalida) : new Date();
+        const msDiff = ahora - fechaIngreso;
+
+        const totalSegundos = Math.floor(msDiff / 1000);
+        const dias = Math.floor(totalSegundos / (60 * 60 * 24));
+        const horas = Math.floor((totalSegundos % (60 * 60 * 24)) / (60 * 60));
+        const minutos = Math.floor((totalSegundos % (60 * 60)) / 60);
+        const segundos = totalSegundos % 60;
+
+        $('#label-stay')
+          .html(`Estadía: ${dias}d ${horas}h ${minutos}m ${segundos}s`)
+          .css('font-weight', 'bold')
+          .css('color', dias >= 1 ? 'red' : 'green');
+      }
+
+      actualizarEstadia();
+      clearInterval(window.estadiaInterval);
+
+      if (!fechaSalida) {
+        window.estadiaInterval = setInterval(actualizarEstadia, 1000);
+      }
 
       $('#rowId').val(data.row_id);
       $('#originId').val(data.origin);
       $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate).css('font-weight', 'bold').css('font-size', '20px');
-      $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`).css('font-weight', 'bold').css('color', (dias >= 1) ? 'red' : 'green');
       $('#dateout').val(data.departure_date ? data.departure_date : '');
 
       /* Mostrar overlay y modal */
