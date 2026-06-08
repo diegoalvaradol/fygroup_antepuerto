@@ -2151,7 +2151,7 @@ class outerPort extends iQuery
             sh.voyage
             FROM $this->table op
             JOIN app_ships sh ON op.vessel_id = sh.ship_id
-            WHERE op.arrival_date BETWEEN :inicio AND :fin
+            WHERE (op.arrival_date BETWEEN :inicio AND :fin) OR (op.departure_date BETWEEN :inicio AND :fin)
             ORDER BY $this->countervessel ASC
         ";
 
@@ -2349,7 +2349,7 @@ class outerPort extends iQuery
         sh.ship_line
         FROM $this->table op
         JOIN app_ships sh ON op.vessel_id = sh.ship_id
-        WHERE op.arrival_date BETWEEN :inicio AND :fin
+        WHERE (op.arrival_date BETWEEN :inicio AND :fin) OR (op.departure_date BETWEEN :inicio AND :fin)
         ORDER BY $this->countervessel ASC";
 
         $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime,'fin' => $finDatetime]);
@@ -2495,7 +2495,7 @@ class outerPort extends iQuery
                 sh.ship_line
             FROM $this->table op
             JOIN app_ships sh ON op.vessel_id = sh.ship_id
-            WHERE op.arrival_date BETWEEN :inicio AND :fin
+            WHERE (op.arrival_date BETWEEN :inicio AND :fin) OR (op.departure_date BETWEEN :inicio AND :fin)
             ORDER BY $this->countervessel ASC
         ";
 
@@ -2751,29 +2751,33 @@ class outerPort extends iQuery
             foreach ($list->getCollection() as $r) {
                 $arrival = (new DateTime($r['arrival_date']))->format('d-m-Y H:i') ;
                 $origin = (int) ($r['origin']);
+                $arrivalDate = new DateTime($r['arrival_date']);
+                $today = new DateTime(date('Y-m-d H:i:s'));
 
-                if (!empty($r['arrival_date']) && $r['arrival_date'] !== '0000-00-00 00:00:00') {
-                    $arrivalDate = new DateTime($r['arrival_date']);
-                    $today = new DateTime(date('Y-m-d H:i:s'));
+                $interval = $arrivalDate->diff($today);
+                $days = $interval->days;
+                $hours = $interval->h;
+                $minutes = $interval->i;
+                $seconds = $interval->s;
 
-                    $interval = $arrivalDate->diff($today);
-                    $hours = $interval->h;
+                $stayTime = "{$days}d {$hours}h {$minutes}m {$seconds}s";
 
-                    if ($hours < 1) {
-                        $status = 'normal';
-                    } elseif ($hours >= 1 && $hours < 2) {
-                        $status = 'medium';
-                    } else {
-                        $status = 'high';
-                    }
+                if ($hours < 2) {
+                    $status = 'normal';
+                } elseif ($hours >= 2 && $hours < 4) {
+                    $status = 'medium';
+                } else {
+                    $status = 'high';
                 }
 
                 if ($r['arrival_date'] !== '0000-00-00 00:00:00' && $r['departure_date'] === null) {
                     $result[] = [
                         'carplate' => $r['car_plate'],
                         'container' => $r['container'],
+                        'exporter' => $r['exporter'],
                         'ship' => $r['vessel_name'],
                         'arrival' => $arrival,
+                        'staytime' => $stayTime,
                         'guide' => $r['guide_number'],
                         'status' => $status,
                         'origin' => $origin,

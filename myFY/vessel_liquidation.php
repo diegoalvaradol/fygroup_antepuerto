@@ -244,7 +244,6 @@ $(document).ready(function() {
       return;
     }
 
-    /* Info motonave */
     $.ajax({
       url: '../controllers/vesselInfoController.php',
       method: 'POST',
@@ -257,7 +256,6 @@ $(document).ready(function() {
       }
     });
 
-    /* Liquidación */
     $.ajax({
       url: '../controllers/getLiquidacionController.php',
       method: 'POST',

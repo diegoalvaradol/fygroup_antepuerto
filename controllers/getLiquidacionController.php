@@ -72,7 +72,7 @@ echo '
             <i class="fa-solid fa-file-pdf"></i> Descargar PDF
         </button>
 
-        <button type="button" class="btn btn-warning" onclick="exportExcel(' . $id . ')">
+        <button type="button" class="btn btn-success" onclick="exportExcel(' . $id . ')">
             <i class="fa-solid fa-file-excel"></i> Descargar Excel
         </button>
     </div>
