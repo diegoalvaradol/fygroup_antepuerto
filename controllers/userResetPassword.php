@@ -7,6 +7,7 @@ date_default_timezone_set('America/Santiago');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST['userRun']) || empty($_POST['newPassword'])) {
         echo 'EMPTY_PASSWORD';
+
         exit;
     }
 
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user->password = password_hash($_POST['newPassword'], PASSWORD_DEFAULT);
     $user->lastupdate = date('Y-m-d H:i:s');
 
-    if ($user->update()) {
+    if ($user->resetPassword()) {
         echo 'OK';
     } else {
         echo 'NOOK';

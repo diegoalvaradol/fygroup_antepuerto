@@ -66,6 +66,26 @@ class user extends iQuery
 
     public function update()
     {
+        $query = "UPDATE $this->table SET name = :name, last_name = :lastname, email = :email, last_update = :lastupdate WHERE run = :run";
+
+        $stmt = $this->db->prepare($query);
+
+        $this->run = htmlspecialchars(strip_tags($this->run));
+        $this->name = htmlspecialchars(strip_tags($this->name));
+        $this->lastname = htmlspecialchars(strip_tags($this->lastname));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+
+        $stmt->bindParam(':run', $this->run, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);
+        $stmt->bindParam(':lastname', $this->lastname, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
+        $stmt->bindParam(':lastupdate', $this->lastupdate, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    public function resetPassword()
+    {
         $query = "UPDATE $this->table SET password = :password, last_update = :lastupdate WHERE run = :run";
 
         $stmt = $this->db->prepare($query);
@@ -125,7 +145,7 @@ class user extends iQuery
         return $stmt->execute();
     }
 
-    public function resetPassword($token, $newPassword)
+    public function resetPasswordToken($token, $newPassword)
     {
         $query = "SELECT * FROM $this->table WHERE reset_token = :token AND token_expiration > NOW() LIMIT 1";
         $stmt = $this->db->prepare($query);
