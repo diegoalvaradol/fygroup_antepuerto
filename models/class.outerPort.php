@@ -2151,7 +2151,7 @@ class outerPort extends iQuery
             sh.voyage
             FROM $this->table op
             JOIN app_ships sh ON op.vessel_id = sh.ship_id
-            WHERE op.arrival_date BETWEEN :inicio AND :fin
+            WHERE (op.arrival_date BETWEEN :inicio AND :fin) OR (op.departure_date BETWEEN :inicio AND :fin)
             ORDER BY $this->countervessel ASC
         ";
 
@@ -2349,7 +2349,7 @@ class outerPort extends iQuery
         sh.ship_line
         FROM $this->table op
         JOIN app_ships sh ON op.vessel_id = sh.ship_id
-        WHERE op.arrival_date BETWEEN :inicio AND :fin
+        WHERE (op.arrival_date BETWEEN :inicio AND :fin) OR (op.departure_date BETWEEN :inicio AND :fin)
         ORDER BY $this->countervessel ASC";
 
         $list = parent::findAllStatic($sql, ['inicio' => $inicioDatetime,'fin' => $finDatetime]);
@@ -2495,7 +2495,7 @@ class outerPort extends iQuery
                 sh.ship_line
             FROM $this->table op
             JOIN app_ships sh ON op.vessel_id = sh.ship_id
-            WHERE op.arrival_date BETWEEN :inicio AND :fin
+            WHERE (op.arrival_date BETWEEN :inicio AND :fin) OR (op.departure_date BETWEEN :inicio AND :fin)
             ORDER BY $this->countervessel ASC
         ";
 
