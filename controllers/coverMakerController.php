@@ -39,6 +39,10 @@ switch ($exporter) {
     case 'FGF TRAPANI S.A':
         $logoExporter = realpath(__DIR__ . '/../logos/logo-trapani.jpeg');
         break;
+
+    case 'CITROMAX S.A.C.I':
+        $logoExporter = realpath(__DIR__ . '/../logos/logo-citromax.jpeg');
+        break;
 }
 
 ob_start();
