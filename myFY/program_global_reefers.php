@@ -77,13 +77,13 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
                                     <iframe src="https://globalreefers.app/GRonline/itinerarios/Maritimo" width="1250" height="600" style="border: none;"></iframe>
                                 </div>
+                            </div>
 
-                                <div class="text-center">
-                                    <img src="../logos/logo-global-reefers.png" class="logo-responsive">
-                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                        Powered by Global Reefers.
-                                    </h6>
-                                </div>
+                            <div class="text-center">
+                                <img src="../logos/logo-global-reefers.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by Global Reefers.
+                                </h6>
                             </div>
                         </div>
                     </div>

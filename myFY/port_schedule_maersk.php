@@ -70,28 +70,20 @@ if (!$admin) {
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Itinerarios Puerto Maersk</h1>
-                    <p class="mb-4">Acá puedes revisar los itinerarios por puerto de Maersk.</p>
+                    <p class="mb-4">Itinerario de naves con recaladas confirmadas en el puerto. <em>(Itinerario sujeto a cambios)</em></p>
 
                     <!-- Content Row -->
                     <div class="row">
                         <!-- First Column -->
                         <div class="col-lg">
                             <!-- Custom Text Color Utilities -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Búsqueda de Itinerario</h6>
-                                </div>
+                            <div id="maersk-port-schedules"></div>
 
-                                <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
-                                    <iframe src="https://www.maersk.com/schedules/portCalls" width="1250" height="600" style="border: none;"></iframe>
-                                </div>
-
-                                <div class="text-center">
-                                    <img src="../logos/logo-maersk.png" class="logo-responsive">
-                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                        Powered by Maersk.
-                                    </h6>
-                                </div>
+                            <div class="text-center">
+                                <img src="../logos/logo-maersk.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by Maersk.
+                                </h6>
                             </div>
                         </div>
                     </div>
@@ -137,6 +129,15 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
+fetch('../controllers/portScheduleMaersk.php')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('maersk-port-schedules').innerHTML = html;
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
 var saveNewGoals = function() {
   $.ajax({
     url: '../controllers/configSaveController.php',

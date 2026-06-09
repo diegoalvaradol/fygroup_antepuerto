@@ -88,7 +88,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     <!-- Content Row -->
                     <div class="row">
                         <!-- First Column -->
-                        <div class="col-lg-12">
+                        <div class="col-lg">
                             <!-- Custom Text Color Utilities -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -125,14 +125,14 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             Por favor, intenta con otra fecha o vuelve más tarde.
                                         </div>
                                     </div>
-
-                                    <div class="text-center">
-                                        <img src="../logos/logo-tpc.png" class="logo-responsive">
-                                        <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                            Powered by TPC.
-                                        </h6>
-                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="text-center">
+                                <img src="../logos/logo-tpc.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by TPC.
+                                </h6>
                             </div>
                         </div>
                     </div>

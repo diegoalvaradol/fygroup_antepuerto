@@ -85,13 +85,13 @@ if (!$admin) {
                                 <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
                                     <iframe src="https://www.maersk.com/schedules/pointToPoint" width="1250" height="600" style="border: none;"></iframe>
                                 </div>
+                            </div>
 
-                                <div class="text-center">
-                                    <img src="../logos/logo-maersk.png" class="logo-responsive">
-                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                        Powered by Maersk.
-                                    </h6>
-                                </div>
+                            <div class="text-center">
+                                <img src="../logos/logo-maersk.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by Maersk.
+                                </h6>
                             </div>
                         </div>
                     </div>
