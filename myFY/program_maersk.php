@@ -87,13 +87,13 @@ if (!$admin) {
                                         <i class="fas fa-fw fa-ship"></i> Itinerarios Maersk
                                     </button>
                                 </div>
+                            </div>
 
-                                <div class="text-center">
-                                    <img src="../logos/logo-maersk.png" class="logo-responsive">
-                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                        Powered by Maersk.
-                                    </h6>
-                                </div>
+                            <div class="text-center">
+                                <img src="../logos/logo-maersk.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by Maersk.
+                                </h6>
                             </div>
                         </div>
                     </div>

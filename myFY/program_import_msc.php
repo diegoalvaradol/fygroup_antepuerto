@@ -85,13 +85,13 @@ if (!$admin) {
                                 <div style="display:flex; justify-content:center; padding-top:2%; padding-bottom:2%;">
                                     <iframe src="https://deadline.mscchile.cl/deadlines_details_eid_590_lid_6_ing.html" width="1000" height="600" style="border: none;"></iframe>
                                 </div>
+                            </div>
 
-                                <div class="text-center">
-                                    <img src="../logos/logo-msc.png" class="logo-responsive">
-                                    <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                        Powered by MSC.
-                                    </h6>
-                                </div>
+                            <div class="text-center">
+                                <img src="../logos/logo-msc.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by MSC.
+                                </h6>
                             </div>
                         </div>
                     </div>

@@ -105,14 +105,14 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                         <!-- Frame del PDF -->
                                         <iframe id="framePdf" name="framePdf" frameborder="0"></iframe>
                                     </div>
-
-                                    <div class="text-center">
-                                        <img src="../logos/logo-epco.png" class="logo-responsive">
-                                        <h6 class="m-0 font-weight-bold text-center small text-primary">
-                                            Powered by EPCO.
-                                        </h6>
-                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="text-center">
+                                <img src="../logos/logo-epco.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by EPCO.
+                                </h6>
                             </div>
                         </div>
                     </div>

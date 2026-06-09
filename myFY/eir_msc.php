@@ -87,11 +87,13 @@ if (!$admin) {
                                         <i class="fas fa-fw fa-ship"></i> EIR Medlog
                                     </button>
                                 </div>
+                            </div>
 
-                                <div class="text-center">
-                                    <img src="../logos/logo-medlog.svg" style="width:10%;">
-                                    <h6 class="m-0 font-weight-bold" style="text-align:center; font-size:small; color:black;">Powered by Medlog.</h6>
-                                </div>
+                            <div class="text-center">
+                                <img src="../logos/logo-msc.png" class="logo-responsive">
+                                <h6 class="m-0 font-weight-bold text-center small text-primary">
+                                    Powered by MSC.
+                                </h6>
                             </div>
                         </div>
                     </div>
