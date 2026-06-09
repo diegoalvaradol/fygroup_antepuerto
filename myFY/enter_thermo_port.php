@@ -82,19 +82,21 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                 <div class="card-body">
                                         <form class="form-container" id="inTermoForm">
-                                            <div class="form-inline mb-3">
-                                                <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
-                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
-                                                <small class="text-danger" id="error-countervessel"></small>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
+                                                    <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
+                                                    <small class="text-danger" id="error-countervessel"></small>
+                                                </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que están en estado abierto."></i>
                                                     <select class="form-control select2 form-control-user" id="vessel" name="vessel">
                                                         <option value="-">Seleccione una motonave...</option>
                                                     </select>
-                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que se encuentran abiertas."></i>
                                                     <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
@@ -199,7 +201,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
-                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                         </form>
                                 </div>
                             </div>
@@ -284,18 +286,35 @@ var editTermoHour = function(id) {
      data: { id: id },
      dataType: 'json',
      success: function(data) {
-      const fechaIngreso = new Date(data.arrival_date); /* Reemplaza con la fecha y hora reales */
-      const ahora = new Date();
-      const msDiff = ahora - fechaIngreso;
-      const totalMinutos = Math.floor(msDiff / (1000 * 60));
-      const dias = Math.floor(totalMinutos / (60 * 24));
-      const horas = Math.floor((totalMinutos % (60 * 24)) / 60);
-      const minutos = totalMinutos % 60;
+      const fechaIngreso = new Date(data.arrival_date);
+      const fechaSalida = data.departure_date ? new Date(data.departure_date) : null;
+
+      function actualizarEstadia() {
+        const ahora = fechaSalida != null ? new Date(fechaSalida) : new Date();
+        const msDiff = ahora - fechaIngreso;
+
+        const totalSegundos = Math.floor(msDiff / 1000);
+        const dias = Math.floor(totalSegundos / (60 * 60 * 24));
+        const horas = Math.floor((totalSegundos % (60 * 60 * 24)) / (60 * 60));
+        const minutos = Math.floor((totalSegundos % (60 * 60)) / 60);
+        const segundos = totalSegundos % 60;
+
+        $('#label-stay')
+          .html(`Estadía: ${dias}d ${horas}h ${minutos}m ${segundos}s`)
+          .css('font-weight', 'bold')
+          .css('color', dias >= 1 ? 'red' : 'green');
+      }
+
+      actualizarEstadia();
+      clearInterval(window.estadiaInterval);
+
+      if (!fechaSalida) {
+        window.estadiaInterval = setInterval(actualizarEstadia, 1000);
+      }
 
       $('#rowId').val(data.row_id);
       $('#originId').val(data.origin);
       $('#h4-departure-hour').html('Registrar Salida Camión: '+data.car_plate).css('font-weight', 'bold').css('font-size', '20px');
-      $('#label-stay').html(`Estadía: ${dias} días con ${horas} horas y ${minutos} minutos.`).css('font-weight', 'bold').css('color', (dias >= 1) ? 'red' : 'green');
       $('#dateout').val(data.departure_date ? data.departure_date : '');
 
       /* Mostrar overlay y modal */
@@ -395,9 +414,7 @@ var saveInTermo = function() {
 
       if (isSelect2) {
         // Para select2: agrega borde rojo al contenedor visible
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .addClass('border border-danger');
+        $(inputElement).data('select2').$container.addClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
@@ -409,9 +426,7 @@ var saveInTermo = function() {
       }
 
       if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .removeClass('border border-danger');
+        $(inputElement).data('select2').$container.removeClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.remove('is-invalid');
       }

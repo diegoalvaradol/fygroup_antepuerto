@@ -95,7 +95,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for='voyage' class='text-gray-800 font-weight-bold'>N° de Viaje</label>
+                                                    <label for='voyage' class='text-gray-800 font-weight-bold'>Viaje</label>
                                                     <input type="text" class="form-control form-control-user" id="voyage" name="voyage" placeholder="525N">
                                                     <small class="text-danger" id="error-voyage"></small>
                                                 </div>
@@ -103,13 +103,13 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label for='eta' class='text-gray-800 font-weight-bold'>Fecha y Hora de Arrivo</label>
+                                                    <label for='eta' class='text-gray-800 font-weight-bold'>Fecha y Hora de Arrivo <em>(ETA)</em></label>
                                                     <input type="datetime-local" class="form-control form-control-user" id="eta" name="eta">
                                                     <small class="text-danger" id="error-eta"></small>
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for='etd' class='text-gray-800 font-weight-bold'>Fecha y Hora de Zarpe</label>
+                                                    <label for='etd' class='text-gray-800 font-weight-bold'>Fecha y Hora de Zarpe <em>(ETD)</em></label>
                                                     <input type="datetime-local" class="form-control form-control-user" id="etd" name="etd">
                                                     <small class="text-danger" id="error-etd"></small>
                                                 </div>
@@ -117,7 +117,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                    <label for='pol' class='text-gray-800 font-weight-bold'>Puerto de Carga</label>
+                                                    <label for='pol' class='text-gray-800 font-weight-bold'>Puerto de Carga <em>(POL)</em></label>
                                                     <select class="form-control select2 form-control-user" id="pol" name="pol">
                                                         <option value="-">Seleccione un puerto...</option>
                                                     </select>
@@ -125,7 +125,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for='pod' class='text-gray-800 font-weight-bold'>Puerto de Descarga</label>
+                                                    <label for='pod' class='text-gray-800 font-weight-bold'>Puerto de Descarga <em>(POD)</em></label>
                                                     <select class="form-control select2 form-control-user" id="pod" name="pod">
                                                         <option value="-">Seleccione un puerto...</option>
                                                     </select>
@@ -138,7 +138,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
-                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                         </form>
                                 </div>
 
@@ -437,9 +437,7 @@ var saveShip = function() {
 
       if (isSelect2) {
         // Para select2: agrega borde rojo al contenedor visible
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .addClass('border border-danger');
+        $(inputElement).data('select2').$container.addClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
@@ -451,9 +449,7 @@ var saveShip = function() {
       }
 
       if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .removeClass('border border-danger');
+        $(inputElement).data('select2').$container.removeClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.remove('is-invalid');
       }

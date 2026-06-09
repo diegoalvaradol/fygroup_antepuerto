@@ -1,18 +1,24 @@
 /* Formularios */
-form,
-form input,
-form select,
-form textarea,
-.card.shadow.mb-4 {
-  border-radius: var(--radius-md) !important;
-  overflow: hidden;
+.form-control,
+.custom-select,
+textarea,
+select,
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border-radius: var(--radius-md);
 }
 
-/* Input group */
-.input-group > .input-group-prepend > .input-group-text {
-  border-radius: var(--radius-md) 0 0 var(--radius-md) !important;
+/* Cards */
+.card {
+  border-radius: var(--radius-md);
 }
 
-.input-group > .form-control {
-  border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+/* Input groups */
+.input-group-text {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.input-group > .form-control,
+.input-group > .custom-select {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }

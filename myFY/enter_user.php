@@ -234,7 +234,7 @@ var verifyRun = function(run) {
       if(x == 'NOOK'){
         Swal.fire({
           title: 'Oops...',
-          html: 'R.U.N <b>'+run+'</b> ya se encuentra registrado. </br> Intenta ingresando un R.U.N diferente o nuevo.',
+          html: 'R.U.N <b>'+run+'</b> ya se encuentra registrado. </br> Ingresa un nuevo R.U.N.',
           icon: 'error',
           cancelButtonColor: '#d33',
         }).then((result) => {
@@ -333,9 +333,7 @@ var saveNewUser = function() {
 
       if (isSelect2) {
         // Para select2: agrega borde rojo al contenedor visible
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .addClass('border border-danger');
+        $(inputElement).data('select2').$container.addClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
@@ -347,9 +345,7 @@ var saveNewUser = function() {
       }
 
       if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .removeClass('border border-danger');
+        $(inputElement).data('select2').$container.removeClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.remove('is-invalid');
       }

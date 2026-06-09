@@ -24,6 +24,7 @@ if ($fyGroup) {
         ['id' => 'EXPORTADORA UNIFRUTTI TRADERS SPA', 'text' => 'EXPORTADORA UNIFRUTTI TRADERS SPA'],
         ['id' => 'AGRICOLA EL CALVARIO S.A', 'text' => 'AGRICOLA EL CALVARIO S.A'],
         ['id' => 'FGF TRAPANI S.A', 'text' => 'FGF TRAPANI S.A'],
+        ['id' => 'CITROMAX S.A.C.I', 'text' => 'CITROMAX S.A.C.I'],
     ];
 } else {
     foreach ($list->getCollection() as $info) {

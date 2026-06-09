@@ -96,17 +96,19 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                 <div class="card-body">
                                         <form class="form-container" id="inInternationalContainerForm">
-                                            <div class="form-inline mb-3">
-                                                <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
-                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
-                                                <small class="text-danger" id="error-countervessel"></small>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
+                                                    <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
+                                                    <small class="text-danger" id="error-countervessel"></small>
+                                                </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
                                                     <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que están en estado abierto."></i>
                                                     <select class="form-control select2 form-control-user" id="vessel" name="vessel"></select>
-                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que no hayan zarpado de puerto."></i>
                                                     <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
@@ -184,7 +186,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
-                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                       </form>
                                 </div>
                             </div>
