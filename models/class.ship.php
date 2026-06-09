@@ -152,10 +152,10 @@ class ship extends iQuery
         $thead .= '<th>Nave</th>';
         $thead .= '<th>Linea</th>';
         $thead .= '<th>Viaje</th>';
-        $thead .= '<th>Puerto de Carga</th>';
-        $thead .= '<th>Puerto de Descarga</th>';
-        $thead .= '<th>Arrivo</th>';
-        $thead .= '<th>Zarpe</th>';
+        $thead .= '<th>Puerto de Carga <em>(POL)</em></th>';
+        $thead .= '<th>Puerto de Descarga <em>(POD)</em></th>';
+        $thead .= '<th>Arrivo <em>(ETA)</em></th>';
+        $thead .= '<th>Zarpe <em>(ETD)</em></th>';
         $thead .= '<th>Creado</th>';
         $thead .= '<th>Actualizado</th>';
         $thead .= '<th>Embarque</th>';

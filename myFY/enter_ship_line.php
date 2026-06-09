@@ -80,7 +80,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                         <div class="form-group row">
                                             <div class="col-sm-3">
                                                 <label for='rutShipLine' class='text-gray-800 font-weight-bold'>R.U.T</label>
-                                                <input type="text" class="form-control form-control-user" id="rutShipLine" name="rutShipLine" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value)" placeholder="11.222.333-0">
+                                                <input type="text" class="form-control form-control-user" id="rutShipLine" name="rutShipLine" oninput="formatearRut(this)" maxlength="12" onblur="validaRut(this.value), verifyRut(this.value)" placeholder="11.222.333-0">
                                                 <small class="text-danger" id="error-rutShipLine"></small>
                                             </div>
 
@@ -96,7 +96,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                           <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                           <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                         </button>
-                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                     </form>
                                 </div>
                             </div>
@@ -233,6 +233,29 @@ var validaRut = function(rut) {
   }
 }
 
+var verifyRut = function(rut) {
+  if(rut !== ''){
+    $.ajax({
+      url: '../controllers/shipLineRutVerifyController.php',
+      data: {
+        rut: rut
+      },
+      type: "POST",
+    }).done(function(x) {
+      if(x == 'NOOK'){
+        Swal.fire({
+          title: 'Oops...',
+          html: 'R.U.T <b>'+rut+'</b> ya se encuentra registrado.',
+          icon: 'error',
+          cancelButtonColor: '#d33',
+        }).then((result) => {
+          $('#rutShipLine').val('').focus();
+        });
+      }
+    });
+  }
+}
+
 var verifyShipLine = function(name) {
   if(name !== ''){
     $.ajax({
@@ -245,7 +268,7 @@ var verifyShipLine = function(name) {
       if(x == 'NOOK'){
         Swal.fire({
           title: 'Oops...',
-          text: 'La Linea '+name+' ya se encuentra registrado.',
+          html: 'Linea <b>'+name+'</b> ya se encuentra registrado.',
           icon: 'error',
           cancelButtonColor: '#d33',
         }).then((result) => {

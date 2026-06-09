@@ -82,26 +82,28 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                 <div class="card-body">
                                         <form class="form-container" id="inContainerForm">
-                                            <div class="form-inline mb-3">
-                                                <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
-                                                <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
-                                                <small class="text-danger" id="error-countervessel"></small>
+                                            <div class="form-group row">
+                                                <div class="col-sm-2">
+                                                    <label for="countervessel" class="mr-2 text-gray-800 font-weight-bold">N° de Camión</label>
+                                                    <input type="text" class="form-control form-control-user" id="countervessel" name="countervessel" placeholder="Ingresa número" style="max-width: 150px;">
+                                                    <small class="text-danger" id="error-countervessel"></small>
+                                                </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-sm-6">
-                                                  <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
-                                                  <select class="form-control select2 form-control-user" id="vessel" name="vessel">
-                                                    <option value="-">Seleccione una motonave...</option>
-                                                  </select>
-                                                  <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que se encuentran abiertas."></i>
-                                                  <small class="text-danger" id="error-vessel"></small>
+                                                    <label for="vessel" class="text-gray-800 font-weight-bold">Motonave</label>
+                                                    <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Solo muestra aquellas motonaves que están en estado abierto."></i>
+                                                    <select class="form-control select2 form-control-user" id="vessel" name="vessel">
+                                                        <option value="-">Seleccione una motonave...</option>
+                                                    </select>
+                                                    <small class="text-danger" id="error-vessel"></small>
                                                 </div>
 
                                                 <div class="col-sm-3">
-                                                  <label for='voyage' class='text-gray-800 font-weight-bold'>Información de Motonave</label>
-                                                  </br>
-                                                  <small id="info-vessel"></small>
+                                                    <label for='voyage' class='text-gray-800 font-weight-bold'>Información de Motonave</label>
+                                                    </br>
+                                                    <small id="info-vessel"></small>
                                                 </div>
                                             </div>
 
@@ -129,7 +131,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <label for="sealnumber" class="text-gray-800 font-weight-bold">Sello de Naviera</label>
+                                                    <label for="sealnumber" class="text-gray-800 font-weight-bold">Sello Naviera</label>
                                                     <input type="text" class="form-control form-control-user" id="sealnumber" name="sealnumber" placeholder="N° de Sello">
                                                     <small class="text-danger" id="error-sealnumber"></small>
                                                 </div>
@@ -223,7 +225,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                               <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
-                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                       </form>
                                 </div>
                             </div>
@@ -498,9 +500,7 @@ var saveInContainer = function() {
 
       if (isSelect2) {
         // Para select2: agrega borde rojo al contenedor visible
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .addClass('border border-danger');
+        $(inputElement).data('select2').$container.addClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
@@ -512,9 +512,7 @@ var saveInContainer = function() {
       }
 
       if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .removeClass('border border-danger');
+        $(inputElement).data('select2').$container.removeClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.remove('is-invalid');
       }

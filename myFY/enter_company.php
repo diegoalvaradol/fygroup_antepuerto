@@ -110,7 +110,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                           <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
                                           <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                         </button>
-                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                     </form>
                                 </div>
                             </div>
@@ -204,18 +204,16 @@ var verifyCompany = function(name) {
       },
       type: "POST",
     }).done(function(x) {
-
-        if(x == 'NOOK'){
-          Swal.fire({
-            title: 'Oops...',
-            text: 'La Empresa '+name+' ya se encuentra registrado.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
-          }).then((result) => {
-            $('#company').val('').focus();
-          });
-        }
-
+      if(x == 'NOOK'){
+        Swal.fire({
+          title: 'Oops...',
+          html: 'Empresa <b>'+name+'</b> ya se encuentra registrado.',
+          icon: 'error',
+          cancelButtonColor: '#d33',
+        }).then((result) => {
+          $('#company').val('').focus();
+        });
+      }
     });
   }
 }

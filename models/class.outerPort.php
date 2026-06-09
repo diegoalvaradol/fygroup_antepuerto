@@ -2425,8 +2425,8 @@ class outerPort extends iQuery
 
             // totales
             $sheet->setCellValue("A{$row}", 'Totales');
-            $sheet->setCellValue("J{$row}", $totalPallets);
-            $sheet->setCellValue("K{$row}", "Camiones: {$totalCamiones}");
+            $sheet->setCellValue("J{$row}", number_format($totalPallets, 0, ',', '.'));
+            $sheet->setCellValue("K{$row}", "Camiones: " . number_format($totalCamiones, 0, ',', '.'));
         } else {
             $sheet->setCellValue('A2', 'Sin resultados');
         }

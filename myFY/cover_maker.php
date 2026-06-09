@@ -192,9 +192,7 @@ var coverMaker = function() {
 
       if (isSelect2) {
         // Para select2: agrega borde rojo al contenedor visible
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .addClass('border border-danger');
+        $(inputElement).data('select2').$container.addClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
@@ -206,9 +204,7 @@ var coverMaker = function() {
       }
 
       if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .removeClass('border border-danger');
+        $(inputElement).data('select2').$container.removeClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.remove('is-invalid');
       }

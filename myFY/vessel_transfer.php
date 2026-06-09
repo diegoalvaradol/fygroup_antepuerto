@@ -146,7 +146,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Realizar Roleo</span>
                                     <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                     </button>
-                                    <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Limpiar</button>
+                                    <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                 </form>
                             </div>
                         </div>
@@ -221,9 +221,7 @@ var saveVesselTransfer = function() {
       }
 
       if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .addClass('border border-danger');
+        $(inputElement).data('select2').$container.addClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.add('is-invalid');
       }
@@ -235,9 +233,7 @@ var saveVesselTransfer = function() {
       }
 
       if (isSelect2) {
-        $(inputElement).next('.select2-container')
-          .find('.select2-selection')
-          .removeClass('border border-danger');
+        $(inputElement).data('select2').$container.removeClass('select2-error');
       } else if (inputElement) {
         inputElement.classList.remove('is-invalid');
       }
