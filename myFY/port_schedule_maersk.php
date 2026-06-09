@@ -76,8 +76,50 @@ if (!$admin) {
                     <div class="row">
                         <!-- First Column -->
                         <div class="col-lg">
-                            <!-- Custom Text Color Utilities -->
-                            <div id="maersk-port-schedules"></div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Formulario de Búsqueda</h6>
+                                </div>
+
+                                <div class="card-body">
+                                    <!-- Custom Text Color Utilities -->
+                                    <form class="form-container" id="portScheduleForm">
+                                        <div class="form-group row justify-content-center">
+                                            <!-- Exportador -->
+                                            <div class="col-sm-2">
+                                                <label for="dateFrom" class="text-gray-800 font-weight-bold">Desde</label>
+                                                <input type="date" class="form-control form-control-user" id="dateFrom" name="dateFrom">
+                                                <small class="text-danger" id="error-dateFrom"></small>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <label for="dateTo" class="text-gray-800 font-weight-bold">Hasta</label>
+                                                <input type="date" class="form-control form-control-user"id="dateTo" name="dateTo">
+                                                <small class="text-danger" id="error-dateTo"></small>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <label for="port" class="text-gray-800 font-weight-bold">Puerto</label>
+                                                <select class="form-control select2 form-control-user" id="port" name="port">
+                                                    <option value="-" selected>Seleccione un puerto...</option>
+                                                    <option value="3PL6KRQMXKB5Q">Coquimbo</option>
+                                                    <option value="2CBOYMUSVJHJT">Valparaíso</option>
+                                                </select>
+                                                <small class="text-danger" id="error-port"></small>
+                                            </div>
+
+                                            <div class="col-sm-2" style="margin-top: 30px;">
+                                                <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadPortSchedules()">
+                                                    <i class="fas fa-solid fa-search"></i> Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <!-- Tabla Puertos Confirmados -->
+                                    <div id="maersk-port-schedules"></div>
+                                </div>
+                            </div>
 
                             <div class="text-center">
                                 <img src="../logos/logo-maersk.png" class="logo-responsive">
@@ -129,14 +171,34 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-fetch('../controllers/portScheduleMaersk.php')
-    .then(response => response.text())
-    .then(html => {
-        document.getElementById('maersk-port-schedules').innerHTML = html;
-    })
-    .catch(error => {
-        console.error(error);
+var loadPortSchedules = function() {
+  var dateFrom = document.getElementById('dateFrom').value;
+  var dateTo = document.getElementById('dateTo').value;
+  var port = document.getElementById('port').value;
+
+  if (!dateFrom || !dateTo || port === '-') {
+    Swal.fire({
+      title: 'Datos incompletos',
+      text: 'Debe seleccionar fecha y puerto.',
+      icon: 'warning'
     });
+    return;
+  }
+
+  fetch('../controllers/portScheduleMaersk.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({
+      fromDate: dateFrom,
+      toDate: dateTo,
+      port: port
+    })
+  }).then(response => response.text()).then(html => {
+    document.getElementById('maersk-port-schedules').innerHTML = html;
+  });
+}
 
 var saveNewGoals = function() {
   $.ajax({

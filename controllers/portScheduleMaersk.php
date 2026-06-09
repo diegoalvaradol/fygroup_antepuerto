@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
+$fromDate = $_POST['fromDate'] ?? date('Y-m-d');
+$toDate = $_POST['toDate'] ?? date('Y-m-d', strtotime('+30 days'));
+$port = $_POST['port'];
+
 $url = 'https://api.maersk.com/synergy/schedules/port-calls?' . http_build_query([
-    'portCode' => '3PL6KRQMXKB5Q',
-    'fromDate' => '2026-06-01',
-    'toDate' => '2026-09-30',
+    'portCode' => $port,
+    'fromDate' => $fromDate,
+    'toDate' => $toDate,
     'carrierCodes' => 'MAEU',
 ]);
 
@@ -79,7 +83,7 @@ foreach (($data['portCalls'] ?? []) as $row) {
 
     /* Terminal (POL) */
     $html .= '            <div class="col-lg-2 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Terminal (POL)</div>';
+    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Terminal <em>(POL)</em></div>';
     $html .= '                <div>';
     $html .= htmlspecialchars($row['marineContainerTerminalName'] ?? '');
     $html .= '                </div>';
@@ -87,7 +91,7 @@ foreach (($data['portCalls'] ?? []) as $row) {
 
     /* ETA */
     $html .= '            <div class="col-lg-2 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Arribo (ETA)</div>';
+    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Arrivo <em>(ETA)</em></div>';
     $html .= '                <div>';
     $html .= $eta;
     $html .= '                </div>';
@@ -95,7 +99,7 @@ foreach (($data['portCalls'] ?? []) as $row) {
 
     /* ETD */
     $html .= '            <div class="col-lg-2 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Salida (ETD)</div>';
+    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Salida <em>(ETD)</em></div>';
     $html .= '                <div>';
     $html .= $etd;
     $html .= '                </div>';
@@ -111,7 +115,7 @@ foreach (($data['portCalls'] ?? []) as $row) {
 
     /* Destino (POD) */
     $html .= '            <div class="col-lg-1 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Destino (POD)</div>';
+    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Destino <em>(POD)</em></div>';
     $html .= '                <div>Balboa - Panamá</div>';
     $html .= '            </div>';
 
