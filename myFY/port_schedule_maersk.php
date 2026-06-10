@@ -70,7 +70,7 @@ if (!$admin) {
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-1 text-gray-800">Itinerarios Puerto Maersk</h1>
-                    <p class="mb-4">Itinerario de naves con recaladas confirmadas en el puerto. <em>(Itinerario sujeto a cambios)</em></p>
+                    <p class="mb-4">Itinerario de naves con recaladas confirmadas en puerto. <em>(Itinerario sujeto a cambios)</em></p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -115,6 +115,10 @@ if (!$admin) {
                                             </div>
                                         </div>
                                     </form>
+
+                                    <div id="loader" style="display:none; text-align:center; padding:20px;">
+                                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Buscando itinerarios...
+                                    </div>
 
                                     <!-- Tabla Puertos Confirmados -->
                                     <div id="maersk-port-schedules"></div>
@@ -172,33 +176,85 @@ if (!$admin) {
 <!-- JAVASCRIPT -->
 <script>
 var loadPortSchedules = function() {
-  var dateFrom = document.getElementById('dateFrom').value;
-  var dateTo = document.getElementById('dateTo').value;
-  var port = document.getElementById('port').value;
+  const $btn = $('#btnBuscar');
+  const $div = $('#maersk-port-schedules');
+  const $loader = $('#loader');
 
-  if (!dateFrom || !dateTo || port === '-') {
-    Swal.fire({
-      title: 'Datos incompletos',
-      text: 'Debe seleccionar fecha y puerto.',
-      icon: 'warning'
-    });
+  const form = document.getElementById('portScheduleForm');
+  const formData = new FormData(form);
+
+  const dateFrom = $('#dateFrom').val();
+  const dateTo = $('#dateTo').val();
+  const port = $('#port').val();
+
+  let hasError = false;
+
+  $('small.text-danger').text('');
+  $('.form-control-user').removeClass('is-invalid');
+  $('.select2-container').removeClass('select2-error');
+
+  for (const [key, value] of formData.entries()) {
+
+    const input = form.querySelector(`[name="${key}"]`);
+    const error = document.getElementById(`error-${key}`);
+
+    const isSelect2 = input && $(input).hasClass('select2-hidden-accessible');
+    const isEmpty = !String(value).trim() || value === '-';
+
+    if (isEmpty) {
+      if (error) {
+        error.textContent = 'Este campo es obligatorio.';
+      }
+
+      if (isSelect2) {
+        $(input).data('select2').$container.addClass('select2-error');
+      } else if (input) {
+        input.classList.add('is-invalid');
+      }
+
+      hasError = true;
+    }
+  }
+
+  if (hasError) {
     return;
   }
 
-  fetch('../controllers/portScheduleMaersk.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: new URLSearchParams({
+  $.ajax({
+    url: '../controllers/portScheduleMaersk.php',
+    type: 'POST',
+    data: {
       fromDate: dateFrom,
       toDate: dateTo,
       port: port
-    })
-  }).then(response => response.text()).then(html => {
-    document.getElementById('maersk-port-schedules').innerHTML = html;
+    },
+
+    beforeSend() {
+      $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Buscando...');
+      $loader.show();
+      $div.hide().empty();
+    },
+
+    success(html) {
+      $div.html(html).show();
+    },
+
+    error(xhr, status, error) {
+      console.error(error);
+
+      $div.html(`
+        <div class="alert alert-danger">
+            Error al cargar los itinerarios.
+        </div>
+      `).show();
+    },
+
+    complete() {
+      $loader.hide();
+      $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
+    }
   });
-}
+};
 
 var saveNewGoals = function() {
   $.ajax({
