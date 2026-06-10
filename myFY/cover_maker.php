@@ -108,7 +108,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <div class="col-sm-2" style="margin-top: 30px;">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnGenerar" onclick="coverMaker()">
-                                                    <i class="fas fa-solid fa-marker"></i> Generar
+                                                    <i class="fas fa-marker"></i> Generar
                                                 </button>
                                             </div>
                                         </div>
@@ -166,76 +166,103 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
 <!-- JAVASCRIPT -->
 <script>
+let currentPdfUrl = null;
+
 var coverMaker = function() {
+  const $btn = $('#btnGenerar');
+  const $div = $('#coverDiv');
+  const $loader = $('#loader');
+
   const form = document.getElementById('coverMakerForm');
   const formData = new FormData(form);
-  let hasError = false;
 
   const vessel = $('#vessel').val();
   const exporter = $('#exporter').val();
-  const agency = $('#agency').val('FYGROUP');
+  const agency = 'FYGROUP';
 
-  document.querySelectorAll('small.text-danger').forEach(el => el.innerText = '');
-  document.querySelectorAll('.form-control-user').forEach(el => el.classList.remove('is-invalid'));
+  let hasError = false;
 
-  /* Validar si algún campo está vacío */
-  for (let [key, value] of formData.entries()) {
-    const inputElement = form.querySelector(`[name="${key}"]`);
-    const errorElement = document.getElementById('error-' + key);
-    const isSelect2 = inputElement && $(inputElement).hasClass('select2-hidden-accessible');
-    const isEmpty = value.trim() === '' || value === '-';
+  $('small.text-danger').text('');
+  $('.form-control-user').removeClass('is-invalid');
+  $('.select2-container').removeClass('select2-error');
+
+  for (const [key, value] of formData.entries()) {
+    const input = form.querySelector(`[name="${key}"]`);
+    const error = document.getElementById(`error-${key}`);
+
+    const isSelect2 = input && $(input).hasClass('select2-hidden-accessible');
+    const isEmpty = !String(value).trim() || value === '-';
 
     if (isEmpty) {
-      if (errorElement) {
-        errorElement.innerText = 'Este campo es obligatorio.';
+      if (error) {
+        error.textContent = 'Este campo es obligatorio.';
       }
 
       if (isSelect2) {
-        // Para select2: agrega borde rojo al contenedor visible
-        $(inputElement).data('select2').$container.addClass('select2-error');
-      } else if (inputElement) {
-        inputElement.classList.add('is-invalid');
+        $(input).data('select2').$container.addClass('select2-error');
+      } else if (input) {
+        input.classList.add('is-invalid');
       }
 
       hasError = true;
-    } else {
-      if (errorElement) {
-        errorElement.innerText = '';
-      }
-
-      if (isSelect2) {
-        $(inputElement).data('select2').$container.removeClass('select2-error');
-      } else if (inputElement) {
-        inputElement.classList.remove('is-invalid');
-      }
     }
   }
 
-  if(!hasError){
-    $('#coverDiv').show().empty();
-    $('#loader').show();
-
-    const src =
-    '../controllers/coverMakerController.php?vessel=' +
-    encodeURIComponent(vessel) +
-    '&exporter=' +
-    encodeURIComponent(exporter) +
-    '&agency=' +
-    encodeURIComponent(agency);
-
-    const iframe = $('<iframe>', {
-        src: src,
-        width: '100%',
-        height: '800',
-        frameborder: '0'
-    });
-
-    iframe.on('load', function() {
-        $('#loader').hide();
-    });
-
-    $('#coverDiv').html(iframe);
+  if (hasError) {
+    return;
   }
+
+  $.ajax({
+    url: '../controllers/coverMakerController.php',
+    type: 'GET',
+    data: {
+      vessel,
+      exporter,
+      agency
+    },
+    xhrFields: {
+      responseType: 'blob'
+    },
+
+    beforeSend() {
+      $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Generando...');
+      $loader.show();
+      $div.hide().empty();
+    },
+
+    success(blob) {
+      if (currentPdfUrl) {
+        URL.revokeObjectURL(currentPdfUrl);
+      }
+
+      currentPdfUrl = URL.createObjectURL(blob);
+
+      $div.html(`
+        <iframe
+          src="${currentPdfUrl}"
+          width="100%"
+          height="800"
+          style="border:none;"
+          loading="lazy">
+        </iframe>
+      `).show();
+    },
+
+    error(xhr, status, error) {
+      console.error(error);
+
+      $div.html(`
+        <div class="alert alert-danger">
+            Error al generar el documento.
+        </div>
+      `).show();
+    },
+
+    complete() {
+      $loader.hide();
+      $btn.prop('disabled', false).html('<i class="fas fa-marker"></i> Generar');
+    }
+  });
 };
 
 var saveNewGoals = function() {
