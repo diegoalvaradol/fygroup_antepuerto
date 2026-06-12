@@ -165,7 +165,7 @@ ob_start();
                                     '<?= $podCode ?>',
                                     'API_MAERSK'
                                 )">
-                                <i class="fas fa-check"></i> Añadir
+                                <i class="fas fa-circle-plus"></i> Añadir
                             </button>
                         <?php else : ?>
                             <button type="button" class="btn btn-danger btn-user" disabled> <i class="fas fa-circle-xmark"></i> Añadir</button>
