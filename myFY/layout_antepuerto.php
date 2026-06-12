@@ -56,7 +56,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 

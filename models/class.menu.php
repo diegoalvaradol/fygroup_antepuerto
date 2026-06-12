@@ -133,7 +133,7 @@ class menu extends iQuery
                 'icon' => 'fa-dollar-sign',
                 'id' => 'collapsePrecio',
                 'items' => [
-                    ['label' => 'Lista de Tarifas', 'link' => generateMkey('list_price_indicators')],
+                    ['label' => 'Lista de Tarifas ', 'link' => generateMkey('list_price_indicators')],
                 ],
             ];
 

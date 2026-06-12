@@ -62,7 +62,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -89,7 +89,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             </div>
 
                                             <div class="col-sm-3">
-                                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-solid fa-search"></i> Buscar</button>
+                                                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-search"></i> Buscar</button>
                                             </div>
                                         </div>
                                     </form>
@@ -136,7 +136,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
         <input type="hidden" id="chargueId" name="chargueId">
         <input type="hidden" id="itemId" name="itemId">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-solid fa-check-circle'></i> Guardar</button>
+        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-check-circle'></i> Guardar</button>
         <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
     </form>
     </div>

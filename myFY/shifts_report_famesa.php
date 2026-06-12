@@ -70,7 +70,7 @@ if (!$admin) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -110,11 +110,11 @@ if (!$admin) {
 
                                             <div class="col-12 col-md-auto me-md-4 mb-3">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReportFamesa()">
-                                                    <i class="fas fa-solid fa-search"></i> Buscar
+                                                    <i class="fas fa-search"></i> Buscar
                                                 </button>
 
                                                 <button type="button" class="btn btn-success btn-user" id="btnPrintShiftsReportFamesa" onclick="printShiftsReportFamesa()" disabled>
-                                                    <i class="fas fa-solid fa-print"></i> Imprimir
+                                                    <i class="fas fa-print"></i> Imprimir
                                                 </button>
                                             </div>
                                         </div>

@@ -58,7 +58,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
+            <div class="container-fluid-custom">
                 <!-- Breadcrumb -->
                 <?= menu::breadcrumb(); ?>
 
@@ -143,7 +143,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </div>
 
                                     <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveVesselTransfer()">
-                                    <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Realizar Roleo</span>
+                                    <span id="loadBtnText"><i class="fas fa-check-circle"></i> Realizar Roleo</span>
                                     <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                     </button>
                                     <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>

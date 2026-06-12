@@ -47,7 +47,7 @@ $infoCfg = json_decode($cfg->getInfo(1), true);
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- 503 Maintenance Text -->
                     <div class="text-center">
                         <img src="../logos/logo-fygroup-bg-removed.png" style="width:25%;">
