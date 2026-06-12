@@ -115,34 +115,34 @@ if (!$admin) {
                                                 </button>
 
                                                 <button type="button" class="btn btn-success btn-user" id="btnExcel" onclick="exportShift(1,0)" disabled>
-                                                    <i class="fas fa-file-excel"></i> Descargar Excel
+                                                    <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i> Excel
                                                 </button>
 
                                                 <button type="button" class="btn btn-success btn-user" id="btnPDF" onclick="exportShift(0,1)" disabled>
-                                                    <i class="fas fa-file-pdf"></i> Descargar PDF
+                                                    <i class="fas fa-download"></i> <i class="fas fa-file-pdf"></i> PDF
                                                 </button>
                                             </div>
                                         </div>
                                     </form>
-
-                                    <!-- Div de contenido Dinamico -->
-                                    <div class="d-flex justify-content-center mt-3 mb-3">
-                                        <div id="shiftCardMini" style="border:1px solid #e5e7eb; border-left:4px solid #2563eb; border-radius:8px; padding:8px 16px; background:#f9fafb; display:none">
-                                            <div style="margin-bottom:6px;">
-                                                <b style="color:#2563eb;">Información:</b>
-                                                <span id="shiftTextMini" style="margin:0 6px; color:#9ca3af;"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="loader" style="display:none; text-align:center; padding:20px;">
-                                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando...
-                                    </div>
-
-                                    <!-- Tabla Reporte de Turnos -->
-                                    <div id="shiftsDiv"></div>
                                 </div>
                             </div>
+
+                            <!-- Div de contenido Dinamico -->
+                            <div class="d-flex justify-content-center mt-3 mb-3">
+                                <div id="shiftCardMini" style="border:1px solid #e5e7eb; border-left:4px solid #2563eb; border-radius:8px; padding:8px 16px; background:#f9fafb; display:none">
+                                    <div style="margin-bottom:6px;">
+                                        <b style="color:#2563eb;">Información:</b>
+                                        <span id="shiftTextMini" style="margin:0 6px; color:#9ca3af;"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="loader" style="display:none; text-align:center; padding:20px;">
+                                <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando información...
+                            </div>
+
+                            <!-- Tabla Reporte de Turnos -->
+                            <div id="shiftsDiv"></div>
                         </div>
                     </div>
                 </div>
@@ -234,7 +234,6 @@ function loadShiftsReport() {
 
       if (clean.length > 0) {
         $div.html(clean);
-
         $('#shiftTextMini').html(`</br> Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css('font-size', '14px').css('font-weight', 'bold');
         $('#shiftCardMini').fadeIn(150);
         $('#btnPrintShiftsReport').prop('disabled', false);
@@ -243,7 +242,6 @@ function loadShiftsReport() {
       } else {
         $div.hide().empty();
         $('#shiftCardMini').fadeOut(150);
-
         $('#btnPrintShiftsReport').prop('disabled', true);
         $('#btnExcel').prop('disabled', true);
         $('#btnPDF').prop('disabled', true);
@@ -258,7 +256,6 @@ function loadShiftsReport() {
 
     error(xhr) {
       console.error(xhr.responseText);
-
       $('#btnPrintShiftsReport').prop('disabled', true);
 
       Swal.fire({

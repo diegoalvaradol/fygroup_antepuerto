@@ -60,6 +60,10 @@
   margin: 0 auto;
 }
 
+.logo-div {
+  padding-bottom: 2%;
+}
+
 .input-search {
   position: relative;
   width: 260px;
@@ -186,6 +190,10 @@
   .logo-responsive {
     max-width: 120px;
     height: 60px;
+  }
+
+  .logo-div {
+    padding-bottom: 10%;
   }
 
   /* Mueve botón junto al sidebar */
