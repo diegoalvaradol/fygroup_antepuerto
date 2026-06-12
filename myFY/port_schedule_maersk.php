@@ -125,7 +125,7 @@ if (!$admin) {
                                 </div>
                             </div>
 
-                            <div class="text-center">
+                            <div class="text-center mb-4 logo-div">
                                 <img src="../logos/logo-maersk.png" class="logo-responsive">
                                 <h6 class="m-0 font-weight-bold text-center small text-primary">
                                     Powered by Maersk.

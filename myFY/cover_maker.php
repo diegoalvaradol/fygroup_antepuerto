@@ -113,15 +113,15 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             </div>
                                         </div>
                                     </form>
-
-                                    <div id="loader" style="display:none; text-align:center; padding:20px;">
-                                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Generando portada...
-                                    </div>
-
-                                    <!--Div Portada -->
-                                    <div id="coverDiv" style="width:100%; height:800px; display:none;"></div>
                                 </div>
                             </div>
+
+                            <div id="loader" style="display:none; text-align:center; padding:20px;">
+                                <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Generando portada...
+                            </div>
+
+                            <!--Div Portada -->
+                            <div id="coverDiv" style="width:100%; height:800px; display:none;"></div>
                         </div>
                     </div>
                 </div>
