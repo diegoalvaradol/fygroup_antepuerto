@@ -115,6 +115,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </form>
                                 </div>
                             </div>
+                            <h1 class="h3 mb-1 text-gray-800">Portada</h1>
 
                             <div id="loader" style="display:none; text-align:center; padding:20px;">
                                 <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Generando portada...
