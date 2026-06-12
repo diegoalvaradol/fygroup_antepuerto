@@ -70,7 +70,7 @@ if (!$admin) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -111,7 +111,7 @@ if (!$admin) {
 
                                             <div class="col-sm-4" style="margin-top: 30px;">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReport()">
-                                                    <i class="fas fa-solid fa-search"></i> Buscar
+                                                    <i class="fas fa-search"></i> Buscar
                                                 </button>
 
                                                 <button type="button" class="btn btn-success btn-user" id="btnExcel" onclick="exportShift(1,0)" disabled>

@@ -64,7 +64,7 @@ if (!$admin) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -89,7 +89,7 @@ if (!$admin) {
                                 </div>
                             </div>
 
-                            <div class="text-center mb-4 logo-div">
+                            <div class="text-center mb-4">
                                 <img src="../logos/logo-maersk.png" class="logo-responsive">
                                 <h6 class="m-0 font-weight-bold text-center small text-primary">
                                     Powered by Maersk.

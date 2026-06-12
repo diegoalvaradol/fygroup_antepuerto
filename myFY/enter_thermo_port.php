@@ -59,7 +59,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -198,7 +198,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION['user']['run']; ?>">
                                             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTermo()">
-                                              <span id="loadBtnText"><i class="fas fa-solid fa-check-circle"></i> Guardar</span>
+                                              <span id="loadBtnText"><i class="fas fa-check-circle"></i> Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
                                             <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
@@ -249,7 +249,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
 
             <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()">
-                <i class='fas fa-solid fa-check-circle'></i> Guardar
+                <i class='fas fa-check-circle'></i> Guardar
             </button>
 
             <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
@@ -592,7 +592,7 @@ var editThermo = function(id) {
       $('#stay').val(data.stay);
       $('#observations').val(data.observations);
       $('#loadBtn').addClass('btn-info');
-      $('#loadBtnText').html('<i class="fas fa-solid fa-check-circle"></i> Actualizar Termo');
+      $('#loadBtnText').html('<i class="fas fa-check-circle"></i> Actualizar Termo');
       $('#scrollTopBtn').trigger('click');
     },
     error: function() {

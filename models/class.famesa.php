@@ -298,7 +298,7 @@ class famesa extends iQuery
                                 </div>
 
                                 <div class='d-flex gap-2'>
-                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-search'></i> Buscar</button>
                                     <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
                                 </div>
                             </form>
@@ -348,8 +348,8 @@ class famesa extends iQuery
                 $arrivalDeposit = $data[$this->arrivaldatedeposit] != null ? $arrivalTimeDeposit->format('d-m-Y H:i') : $btnAddTArrivalDeposit;
                 $departureDeposit = $data[$this->departuredatedeposit] != null ? $departureDateDeposit->format('d-m-Y H:i') : $btnAddTDepartureDeposit;
 
-                $btnEdit = $adminEdit ? "<button type='button' class='btn btn-sm btn-warning btn-user' onclick='editTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
-                $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
+                $btnEdit = $adminEdit ? "<button type='button' class='btn btn-sm btn-warning btn-user' onclick='editTruck(" . $data[$this->id] . ")'><i class='fas fa-pencil'></i> Editar</button>" : null;
+                $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
 
                 $tr .= '<td>' . $data[$this->countervessel] . '</td>';
                 $tr .= '<td>' . $ship->getVesselName($data[$this->vessel]) . '</td>';

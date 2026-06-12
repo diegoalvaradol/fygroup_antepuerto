@@ -740,7 +740,7 @@ class outerPort extends iQuery
 
                                 <div class='form-group row'>
                                     <div class='col-sm-4'>
-                                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-search'></i> Buscar</button>
                                         <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
                                         <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar</button>
                                     </div>
@@ -793,9 +793,9 @@ class outerPort extends iQuery
                 $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
 
                 if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-                    $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
+                    $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
                 } else {
-                    $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . '</button>';
+                    $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-check'></i> " . $data[$this->comodity] . '</button>';
                 }
 
                 if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
@@ -815,10 +815,10 @@ class outerPort extends iQuery
                     $stayTime = "{$days}d {$hours}h {$minutes}m";
                 }
 
-                $btnAddContainerHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
-                $btnEdit = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
-                $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-                $btnCellphone = $_SESSION['user']['division'] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
+                $btnAddContainerHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editContainerHour(" . $data[$this->id] . ")'><i class='fas fa-clock'></i> Salida</button>";
+                $btnEdit = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-pencil'></i> Editar</button>" : null;
+                $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
+                $btnCellphone = $_SESSION['user']['division'] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-phone'></i></button>" : null;
 
                 $tr .= '<tr ' . $attr . '>';
                 $tr .= '<td>' . $data[$this->countervessel] . '</td>';
@@ -1144,7 +1144,7 @@ class outerPort extends iQuery
 
                                 <div class='form-group row'>
                                     <div class='col-sm-4'>
-                                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                        <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-search'></i> Buscar</button>
                                         <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
                                         <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar</button>
                                     </div>
@@ -1193,9 +1193,9 @@ class outerPort extends iQuery
                 $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
 
                 if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-                    $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
+                    $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
                 } else {
-                    $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . '</button>';
+                    $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-check'></i> " . $data[$this->comodity] . '</button>';
                 }
 
                 if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
@@ -1215,10 +1215,10 @@ class outerPort extends iQuery
                     $stayTime = "{$days}d {$hours}h {$minutes}m";
                 }
 
-                $btnAddThermoHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-solid fa-clock'></i> Salida</button>";
-                $btnEdit = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
-                $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-solid fa-trash'></i> Eliminar</button>";
-                $btnCellphone = $_SESSION['user']['division'] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-solid fa-phone'></i></button>" : null;
+                $btnAddThermoHour = "<button type='button' class='btn btn-success btn-user btn-sm' onclick='editTermoHour(" . $data[$this->id] . ")'><i class='fas fa-clock'></i> Salida</button>";
+                $btnEdit = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editThermo(" . $data[$this->id] . ")'><i class='fas fa-pencil'></i> Editar</button>" : null;
+                $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
+                $btnCellphone = $_SESSION['user']['division'] === 'fy' ? "<button type='button' class='btn btn-success btn-user btn-sm px-2 py-1' title='Llamar a +56{$data[$this->cellphonedriver]}' style='width:30px; height:30px;' onclick=\"window.location.href='tel:+56{$data[$this->cellphonedriver]}'\"><i class='fas fa-phone'></i></button>" : null;
 
                 $tr .= '<tr ' . $attr . '>';
                 $tr .= '<td>' . $data[$this->countervessel] . '</td>';
@@ -1530,7 +1530,7 @@ class outerPort extends iQuery
                                 </div>
 
                                 <div class='d-flex gap-2'>
-                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-search'></i> Buscar</button>
                                     <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['tipo'] ?? '') . "', '" . ($_POST['desde'] ?? '') . "', '" . ($_POST['hasta'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
                                     <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar</button>
                                 </div>
@@ -1577,9 +1577,9 @@ class outerPort extends iQuery
                 $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
 
                 if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
-                    $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-solid fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
+                    $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
                 } else {
-                    $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-solid fa-check'></i> " . $data[$this->comodity] . '</button>';
+                    $comodity = "<button type='button' class='btn btn-success btn-user btn-sm'><i class='fas fa-check'></i> " . $data[$this->comodity] . '</button>';
                 }
 
                 if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
@@ -2026,7 +2026,7 @@ class outerPort extends iQuery
                             </em>
 
                             <button type='button' class='btn btn-success btn-user' id='btnPrintStadisticVessel' onclick='printStadisticVessel()'>
-                                <i class='fas fa-solid fa-print'></i> Imprimir
+                                <i class='fas fa-print'></i> Imprimir
                             </button>
                         </div>
 
@@ -2426,7 +2426,7 @@ class outerPort extends iQuery
             // totales
             $sheet->setCellValue("A{$row}", 'Totales');
             $sheet->setCellValue("J{$row}", number_format($totalPallets, 0, ',', '.'));
-            $sheet->setCellValue("K{$row}", "Camiones: " . number_format($totalCamiones, 0, ',', '.'));
+            $sheet->setCellValue("K{$row}", 'Camiones: ' . number_format($totalCamiones, 0, ',', '.'));
         } else {
             $sheet->setCellValue('A2', 'Sin resultados');
         }

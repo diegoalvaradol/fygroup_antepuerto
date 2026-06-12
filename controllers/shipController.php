@@ -1,28 +1,50 @@
 <?php
+
+declare(strict_types=1);
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+
 require_once __DIR__ . '/../config/includes.php';
-date_default_timezone_set("America/Santiago");
+date_default_timezone_set('America/Santiago');
+$port = new port();
+$shipLine = new shipLine();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $rawEta = str_replace('T', ' ', $_POST['eta']);
-  $eta    = DateTime::createFromFormat('Y-m-d H:i', $rawEta);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (($_POST['api'] ?? '') === 'API_MAERSK') {
+        $eta = new DateTime($_POST['eta']) ;
+        $etd = new DateTime($_POST['etd']) ;
 
-  $rawEtd = str_replace('T', ' ', $_POST['etd']);
-  $etd    = DateTime::createFromFormat('Y-m-d H:i', $rawEtd);
+        $line = $shipLine->getIdByName($_POST['line']);
+        $pol = $port->getIdByName($_POST['pol']);
+        $pod = $port->getIdByName($_POST['pod']);
+    } else {
+        $rawEta = str_replace('T', ' ', $_POST['eta'] ?? '');
+        $eta = DateTime::createFromFormat('Y-m-d H:i:s', $rawEta);
 
-  $ship             = new ship();
-  $ship->vessel     = strtoupper($_POST["vessel"]);
-  $ship->voyage     = strtoupper($_POST["voyage"]);
-  $ship->line       = $_POST["line"];
-  $ship->pol        = $_POST["pol"];
-  $ship->pod        = $_POST["pod"];
-  $ship->eta        = $eta ? $eta->format('Y-m-d H:i:s') : null;
-  $ship->etd        = $etd ? $etd->format('Y-m-d H:i:s') : null;
-  $ship->created    = date('Y-m-d H:i:s');
-  $ship->lastupdate = date('Y-m-d H:i:s');
+        $rawEtd = str_replace('T', ' ', $_POST['etd'] ?? '');
+        $etd = DateTime::createFromFormat('Y-m-d H:i:s', $rawEtd);
 
-  if ($ship->save()) {
-    echo "OK";
-  } else {
-    echo "NOOK";
-  }
+        $line = $_POST['line'];
+        $pol = $_POST['pol'];
+        $pod = $_POST['pol'];
+    }
+
+    $ship = new ship();
+    $ship->vessel = strtoupper(trim($_POST['vessel'] ?? ''));
+    $ship->voyage = strtoupper(trim($_POST['voyage'] ?? ''));
+    $ship->line = $line;
+    $ship->pol = $pol;
+    $ship->pod = $pod;
+    $ship->eta = $eta ? $eta->format('Y-m-d H:i:s') : null;
+    $ship->etd = $etd ? $etd->format('Y-m-d H:i:s') : null;
+    $ship->created = date('Y-m-d H:i:s');
+    $ship->lastupdate = date('Y-m-d H:i:s');
+
+    if ($ship->save()) {
+        echo 'OK';
+    } else {
+        echo 'NOOK';
+    }
 }

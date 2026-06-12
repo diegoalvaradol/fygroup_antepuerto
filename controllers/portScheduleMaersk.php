@@ -31,105 +31,154 @@ $data = json_decode($response, true);
 
 $hoy = new DateTime();
 
-$html = '
-    <style>
-    .card-programado{
-        border-left:5px solid #4e73df !important;
-    }
+ob_start();
+?>
 
-    .card-zarpado{
-        border-left:5px solid #1cc88a !important;
-        background:#ecfdf5;
-    }
-
-    .card-zarpado .text-muted{
-        color:#065f46 !important;
-    }
-
-    .card-zarpado .font-weight-bold{
-        color:#065f46 !important;
-    }
-    </style>
-';
-
-foreach (($data['portCalls'] ?? []) as $row) {
-    $fechaLlegada = new DateTime($row['arrivalTime']);
-    $fechaSalida = new DateTime($row['departureTime']);
-
-    $eta = $fechaLlegada->format('d M Y H:i');
-    $etd = $fechaSalida->format('d M Y H:i');
-
-    $claseCard = ($fechaSalida < $hoy) ? 'card-zarpado' : 'card-programado';
-
-    $html .= '<div class="card shadow-sm mb-3 ' . $claseCard . '">';
-    $html .= '    <div class="card-body">';
-    $html .= '        <div class="row">';
-
-    /* Motonave / Viaje */
-    $html .= '            <div class="col-lg-3 col-md-6 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Motonave / Viaje</div>';
-    $html .= '                <div class="font-weight-bold text-dark">';
-    $html .= htmlspecialchars($row['vesselName'] ?? '');
-    $html .= '                </div>';
-    $html .= '                <div class="text-primary">';
-    $html .= htmlspecialchars($row['departureVoyageNumber'] ?? '');
-
-    if (!empty($row['arrivalVoyageNumber'])) {
-        $html .= ' | ' . htmlspecialchars($row['arrivalVoyageNumber']);
-    }
-
-    $html .= '                </div>';
-    $html .= '            </div>';
-
-    /* Terminal (POL) */
-    $html .= '            <div class="col-lg-2 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Terminal <em>(POL)</em></div>';
-    $html .= '                <div>';
-    $html .= htmlspecialchars($row['marineContainerTerminalName'] ?? '');
-    $html .= '                </div>';
-    $html .= '            </div>';
-
-    /* ETA */
-    $html .= '            <div class="col-lg-2 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Arrivo <em>(ETA)</em></div>';
-    $html .= '                <div>';
-    $html .= $eta;
-    $html .= '                </div>';
-    $html .= '            </div>';
-
-    /* ETD */
-    $html .= '            <div class="col-lg-2 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Salida <em>(ETD)</em></div>';
-    $html .= '                <div>';
-    $html .= $etd;
-    $html .= '                </div>';
-    $html .= '            </div>';
-
-    /* Servicio */
-    $html .= '            <div class="col-lg-1 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Servicio</div>';
-    $html .= '                <div>';
-    $html .= htmlspecialchars($row['departureServiceName'] ?? '');
-    $html .= '                </div>';
-    $html .= '            </div>';
-
-    /* Destino (POD) */
-    $html .= '            <div class="col-lg-1 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Destino <em>(POD)</em></div>';
-    $html .= '                <div>Balboa - Panamá</div>';
-    $html .= '            </div>';
-
-    /* Destino Final */
-    $html .= '            <div class="col-lg-1 col-md-12 mb-3">';
-    $html .= '                <div class="text-muted small font-weight-bold text-uppercase mb-1">Destino Final</div>';
-    $html .= '                <div>';
-    $html .= htmlspecialchars($row['departureServiceCode'] ?? '');
-    $html .= '                </div>';
-    $html .= '            </div>';
-
-    $html .= '        </div>';
-    $html .= '    </div>';
-    $html .= '</div>';
+<style>
+.card-programado{
+    border-left:5px solid #4e73df !important;
 }
 
-echo $html;
+.card-zarpado{
+    border-left:5px solid #1cc88a !important;
+    background:#ecfdf5;
+}
+
+.card-zarpado .text-muted{
+    color:#065f46 !important;
+}
+
+.card-zarpado .font-weight-bold{
+    color:#065f46 !important;
+}
+</style>
+
+<?php foreach (($data['portCalls'] ?? []) as $row): ?>
+    <?php
+    $fechaLlegada = new DateTime($row['arrivalTime']);
+    $fechaSalida = new DateTime($row['departureTime']);
+    $claseCard = ($fechaSalida < $hoy) ? 'card-zarpado' : 'card-programado';
+    $allowCreate = ($fechaSalida < $hoy) ? 0 : 1;
+
+    $eta = $fechaLlegada->format('d-m-Y H:i');
+    $etd = $fechaSalida->format('d-m-Y H:i');
+
+    $pol = explode(' ', $row['marineContainerTerminalName'])[0];
+    $pod = 'Balboa - Panamá';
+    $podCode = explode(' - ', $pod)[0];
+    ?>
+
+    <div class="card shadow-sm mb-3 <?= $claseCard ?>">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-2 col-md-6 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Motonave / Viaje
+                    </div>
+
+                    <div class="font-weight-bold text-dark">
+                        <?= htmlspecialchars($row['vesselName'] ?? '') ?>
+                    </div>
+
+                    <div class="text-primary">
+                        <?= htmlspecialchars($row['departureVoyageNumber'] ?? '') ?>
+
+                        <?php if (!empty($row['arrivalVoyageNumber'])): ?>
+                            | <?= htmlspecialchars($row['arrivalVoyageNumber']) ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-12 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Terminal <em>(POL)</em>
+                    </div>
+
+                    <div>
+                        <?= htmlspecialchars($pol) ?>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-12 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Arrivo <em>(ETA)</em>
+                    </div>
+
+                    <div><?= $eta ?></div>
+                </div>
+
+                <div class="col-lg-2 col-md-12 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Salida <em>(ETD)</em>
+                    </div>
+
+                    <div><?= $etd ?></div>
+                </div>
+
+                <div class="col-lg-1 col-md-12 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Servicio
+                    </div>
+
+                    <div>
+                        <?= htmlspecialchars($row['departureServiceName'] ?? '') ?>
+                    </div>
+                </div>
+
+                <div class="col-lg-1 col-md-12 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Destino <em>(POD)</em>
+                    </div>
+
+                    <div>
+                        <?= htmlspecialchars($pod) ?>
+                    </div>
+                </div>
+
+                <div class="col-lg-1 col-md-12 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Destino Final
+                    </div>
+
+                    <div>
+                        <?= htmlspecialchars($row['departureServiceCode'] ?? '') ?>
+                    </div>
+                </div>
+
+                <div class="col-lg-1 col-md-12 mb-3">
+                    <div class="text-muted small font-weight-bold text-uppercase mb-1">
+                        Añadir a Sistema
+                    </div>
+
+                    <div>
+                        <?php if ($allowCreate) : ?>
+                            <button
+                                type="button"
+                                class="btn btn-success btn-user"
+                                onclick="bookVesselSystem(
+                                    '<?= addslashes($row['vesselName']) ?>',
+                                    'MAERSK LINE',
+                                    '<?= addslashes($row['departureVoyageNumber']) ?>',
+                                    '<?= $row['arrivalTime'] ?>',
+                                    '<?= $row['departureTime'] ?>',
+                                    '<?= $pol ?>',
+                                    '<?= $podCode ?>',
+                                    'API_MAERSK'
+                                )">
+                                <i class="fas fa-check"></i> Añadir
+                            </button>
+                        <?php else : ?>
+                            <button type="button" class="btn btn-danger btn-user" disabled> <i class="fas fa-circle-xmark"></i> Añadir</button>
+                        <?php endif ; ?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<?php endforeach; ?>
+
+<?php
+    echo ob_get_clean();
+?>

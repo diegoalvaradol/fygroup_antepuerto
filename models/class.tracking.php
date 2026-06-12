@@ -101,7 +101,7 @@ class tracking extends iQuery
                 foreach ($etapas as $index => $nombre) {
                     $isActive = ($data[$this->status] >= $index);
                     $color = $isActive ? 'success' : 'secondary';
-                    $icon = $isActive ? 'fas' : 'far';
+                    $icon = $isActive ? 'fas ' : 'far';
                     $statusDate = $isActive ? $fechas[$index] : 'Por estimar.';
 
                     $button = '';

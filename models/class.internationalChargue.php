@@ -219,7 +219,7 @@ class internationalChargue extends iQuery
                                 </div>
 
                                 <div class='d-flex gap-2'>
-                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-solid fa-search'></i> Buscar</button>
+                                    <button type='submit' class='btn btn-sm btn-primary btn-user' style='margin-right:0.5%;'><i class='fas fa-search'></i> Buscar</button>
                                     <button type='button' class='btn btn-sm btn-success btn-user' style='margin-right:0.5%;' onclick=\"" . "exportExcel('" . htmlspecialchars($_POST['nave'] ?? '') . "', '" . htmlspecialchars($_POST['patente'] ?? '') . "', '" . htmlspecialchars($_POST['guia'] ?? '') . "')" . "\"><i class='fas fa-file-excel'></i> Descargar Excel</button>
                                     <button type='button' class='btn btn-sm btn-warning btn-user' onclick='location.href=window.location.href'><i class='fas fa-undo'></i> Recargar Filtros</button>
                                 </div>
@@ -255,7 +255,7 @@ class internationalChargue extends iQuery
             foreach ($result as $data) {
                 $createdTime = new DateTime($data[$this->created]);
                 $created = $createdTime->format('d-m-Y H:i');
-                $btnEdit = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-solid fa-pencil'></i> Editar</button>" : null;
+                $btnEdit = $adminEdit ? "<button id='editcontainer' type='button' class='btn btn-sm btn-warning btn-user' onclick='editContainer(" . $data[$this->id] . ")'><i class='fas fa-pencil'></i> Editar</button>" : null;
 
                 $tr .= '<tr>';
                 $tr .= '<td>' . $data[$this->countervessel] . '</td>';

@@ -64,7 +64,7 @@ if (!$admin) {
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -110,7 +110,7 @@ if (!$admin) {
 
                                             <div class="col-sm-2" style="margin-top: 30px;">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadPortSchedules()">
-                                                    <i class="fas fa-solid fa-search"></i> Buscar
+                                                    <i class="fas fa-search"></i> Buscar
                                                 </button>
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@ if (!$admin) {
                                 </div>
                             </div>
 
-                            <div class="text-center mb-4 logo-div">
+                            <div class="text-center mb-4">
                                 <img src="../logos/logo-maersk.png" class="logo-responsive">
                                 <h6 class="m-0 font-weight-bold text-center small text-primary">
                                     Powered by Maersk.
@@ -255,6 +255,61 @@ var loadPortSchedules = function() {
     }
   });
 };
+
+var bookVesselSystem = function(vessel, line, voyage, eta, etd, pol, pod, api) {
+  $.ajax({
+    url: '../controllers/shipController.php',
+    type: 'POST',
+    data: {
+      vessel: vessel,
+      line: line,
+      voyage: voyage,
+      eta: eta,
+      etd: etd,
+      pol: pol,
+      pod: pod,
+      api: api
+    },
+  }).done(function(x) {
+    Swal.fire({
+      title: "¿Estás seguo de realizar esta acción?",
+      text: "Crear nave de manera automática en el sistema a partir de los datos entregados por Itinerario de Maersk.",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#4CAF50",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, crear",
+      cancelButtonText: "No, cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(x == 'OK'){
+          Swal.fire({
+            title: '¡Éxito!',
+            text: '¡Motonave creada con éxito!',
+            icon: 'success',
+            confirmButtonColor: '#4CAF50'
+          });
+        } else {
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Error al crear la nave.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
+        }else if(result.dismiss){
+          Swal.fire({
+            title: 'Oops...',
+            text: 'Operación cancelado por el usuario.',
+            icon: 'error',
+            cancelButtonColor: '#d33',
+          });
+        }
+      });
+  });
+
+
+}
 
 var saveNewGoals = function() {
   $.ajax({

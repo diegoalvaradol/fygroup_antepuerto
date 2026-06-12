@@ -77,7 +77,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -105,7 +105,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <div class="col-12 col-md-auto mb-3">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadPDF()">
-                                                    <i class="fas fa-solid fa-search"></i> Buscar
+                                                    <i class="fas fa-search"></i> Buscar
                                                 </button>
                                             </div>
                                         </div>
@@ -128,7 +128,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
                             </div>
 
-                            <div class="text-center mb-4 logo-div">
+                            <div class="text-center mb-4">
                                 <img src="../logos/logo-tpc.png" class="logo-responsive">
                                 <h6 class="m-0 font-weight-bold text-center small text-primary">
                                     Powered by TPC.

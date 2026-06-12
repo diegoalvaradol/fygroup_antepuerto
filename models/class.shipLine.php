@@ -82,6 +82,23 @@ class shipLine extends iQuery
         }
     }
 
+    public function getIdByName($name)
+    {
+        $searchName = "%{$name}%";
+
+        $query = "SELECT line_id FROM  $this->table WHERE $this->name LIKE :name LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':name', $searchName, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result > 0) {
+            return $result[$this->id];
+        } else {
+            return '-';
+        }
+    }
+
     public function getTableShipLine()
     {
         $query = "SELECT * FROM $this->table WHERE 1 ORDER BY $this->id ASC";

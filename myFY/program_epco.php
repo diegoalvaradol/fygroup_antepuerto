@@ -56,7 +56,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid-custom">
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
@@ -91,11 +91,11 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <div class="col-12 col-md-auto me-md-4 mb-3">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadEpcoProgram()">
-                                                        <i class="fas fa-solid fa-search"></i> Buscar
+                                                        <i class="fas fa-search"></i> Buscar
                                                 </button>
 
                                                 <button type="button" class="btn btn-success btn-user" id="btnPrintEpcoProgram" onclick="printEpcoProgram()" disabled>
-                                                        <i class="fas fa-solid fa-print"></i> Imprimir
+                                                        <i class="fas fa-print"></i> Imprimir
                                                 </button>
                                             </div>
                                         </div>
@@ -108,7 +108,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
                             </div>
 
-                            <div class="text-center mb-4 logo-div">
+                            <div class="text-center mb-4">
                                 <img src="../logos/logo-epco.png" class="logo-responsive">
                                 <h6 class="m-0 font-weight-bold text-center small text-primary">
                                     Powered by EPCO.

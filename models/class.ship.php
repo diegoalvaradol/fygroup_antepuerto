@@ -31,10 +31,10 @@ class ship extends iQuery
         $stmt = $this->db->prepare($query);
 
         $this->vessel = htmlspecialchars(strip_tags($this->vessel));
-        $this->line = htmlspecialchars(strip_tags($this->line));
+        $this->line = $this->line;
         $this->voyage = htmlspecialchars(strip_tags($this->voyage));
-        $this->pol = htmlspecialchars(strip_tags($this->pol));
-        $this->pod = htmlspecialchars(strip_tags($this->pod));
+        $this->pol = $this->pol;
+        $this->pod = $this->pod;
         $this->eta = $this->eta;
         $this->etd = $this->etd;
         $this->finished = $this->finished;
