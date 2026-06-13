@@ -272,7 +272,7 @@ var bookVesselSystem = function(vessel, line, voyage, eta, etd, pol, pod, api) {
     },
   }).done(function(x) {
     Swal.fire({
-      title: "¿Estás seguo de realizar esta acción?",
+      title: "¿Estás seguro de realizar esta acción?",
       text: "Crear nave de manera automática en el sistema a partir de los datos entregados por Itinerario de Maersk.",
       icon: "info",
       showCancelButton: true,

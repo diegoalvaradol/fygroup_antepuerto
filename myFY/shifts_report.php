@@ -224,7 +224,7 @@ function loadShiftsReport() {
     data: { date, shifts },
 
     beforeSend() {
-      $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+      $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Buscando...');
       $('#loader').show();
       $div.hide();
     },
