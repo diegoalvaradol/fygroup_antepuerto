@@ -16,6 +16,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $line = $shipLine->getIdByName($_POST['line']);
         $pol = $port->getIdByName($_POST['pol']);
         $pod = $port->getIdByName($_POST['pod']);
+
+        if (empty($line)) {
+            exit('La naviera "' . $_POST['line'] . '" no existe en el sistema.');
+        }
+
+        if (empty($pol)) {
+            exit('El puerto POL "' . $_POST['pol'] . '" no existe en el sistema.');
+        }
+
+        if (empty($pod)) {
+            exit('El puerto POD "' . $_POST['pod'] . '" no existe en el sistema.');
+        }
     } else {
         $rawEta = str_replace('T', ' ', $_POST['eta'] ?? '');
         $eta = DateTime::createFromFormat('Y-m-d H:i:s', $rawEta);

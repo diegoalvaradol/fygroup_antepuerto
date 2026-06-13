@@ -289,26 +289,31 @@ var bookVesselSystem = function(vessel, line, voyage, eta, etd, pol, pod, api) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           });
-        } else {
+        } else if (x == 'NOOK'){
           Swal.fire({
             title: 'Oops...',
             text: 'Error al crear la nave.',
             icon: 'error',
             cancelButtonColor: '#d33',
           });
-        }
-        }else if(result.dismiss){
+        }else{
           Swal.fire({
-            title: 'Oops...',
-            text: 'Operación cancelado por el usuario.',
-            icon: 'error',
+            title: 'Validación',
+            text: x,
+            icon: 'warning',
             cancelButtonColor: '#d33',
           });
         }
-      });
+      }else if(result.dismiss){
+        Swal.fire({
+        title: 'Oops...',
+        text: 'Operación cancelado por el usuario.',
+        icon: 'error',
+        cancelButtonColor: '#d33',
+        });
+      }
+    });
   });
-
-
 }
 
 var saveNewGoals = function() {

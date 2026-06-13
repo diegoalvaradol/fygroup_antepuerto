@@ -96,7 +96,7 @@ class port extends iQuery
         if ($result > 0) {
             return $result[$this->id];
         } else {
-            return '-';
+            return null;
         }
     }
 
