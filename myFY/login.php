@@ -1,4 +1,12 @@
 <?php
+require_once __DIR__ . '/../config/maintenance.php';
+
+if (MAINTENANCE_MODE_FYGROUP) {
+    require_once __DIR__ . '/../maintenance.php';
+
+    exit;
+}
+
 if (isset($_SESSION['user'])) {
     header('Location: loginDataUser.php');
 
