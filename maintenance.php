@@ -1,27 +1,27 @@
 <?php
 require_once __DIR__ . '/config/includes.php';
 
-$footer = menu::footerSSL();
-$top = UIComponents::scrollToTopButton();
+$start = new DateTime(MAINTENANCE_START);
+$end = new DateTime(MAINTENANCE_END);
+$interval = $start->diff($end);
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Mantención</title>
-    <link rel="icon" type="image/png" href="/ssl-chile/favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
 
     <!-- Fonts -->
-    <link href="/ssl-chile/assets/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Estilos del sistema -->
-    <link href="/ssl-chile/assets/css/fygroup.css" rel="stylesheet">
-    <link href="/ssl-chile/assets/css/app.css" rel="stylesheet">
+    <link href="../assets/css/fygroup.css" rel="stylesheet">
+    <link href="../assets/css/app.css" rel="stylesheet">
 
     <style>
         body{
@@ -44,7 +44,9 @@ $top = UIComponents::scrollToTopButton();
 
         .maintenance-card{
             border:none;
+            border-top:4px solid #293c74;
             border-radius:12px;
+            margin-bottom: 50px;
             overflow:hidden;
             box-shadow:0 .15rem 1.75rem rgba(58,59,69,.15);
         }
@@ -57,7 +59,8 @@ $top = UIComponents::scrollToTopButton();
 
         .maintenance-logo{
             width:100px;
-            margin-bottom:20px;
+            height:auto;
+            margin-bottom:15px;
         }
 
         .maintenance-banner h1{
@@ -106,34 +109,96 @@ $top = UIComponents::scrollToTopButton();
             color:#fff;
         }
 
+        .maintenance-schedule{
+            margin-top:30px;
+            margin-bottom:30px;
+            background:#f8f9fc;
+            border:1px solid #e3e6f0;
+            border-radius:12px;
+            overflow:hidden;
+        }
+
+        .schedule-header{
+            background:#293c74;
+            color:#fff;
+            padding:15px;
+            font-weight:700;
+            text-align:center;
+        }
+
+        .schedule-header i{
+            margin-right:8px;
+        }
+
+        .schedule-box{
+            padding:25px;
+        }
+
+        .schedule-label{
+            color:#858796;
+            font-size:.85rem;
+            text-transform:uppercase;
+            font-weight:700;
+        }
+
+        .schedule-date{
+            color:#293c74;
+            font-size:1.3rem;
+            font-weight:800;
+            margin-top:8px;
+        }
+
+        .schedule-time{
+            font-size:1rem;
+            color:#5a5c69;
+            margin-top:5px;
+        }
+
         @media (max-width:768px){
+            .maintenance-panel{
+                margin-top:20px;
+                margin-bottom:20px;
+            }
+
             .maintenance-banner{
-                padding:30px;
+                padding:25px;
             }
 
             .maintenance-body{
-                padding:30px;
+                padding:25px;
             }
 
             .maintenance-banner h1{
-                font-size:2rem;
+                font-size:1.7rem;
             }
 
             .maintenance-logo{
-                width:80px;
+                width:50px;
+            }
+
+            .schedule-box{
+                padding:15px;
+            }
+
+            .btn-fy{
+                width:100%;
+            }
+
+            .status-item{
+                margin-bottom:15px;
             }
         }
     </style>
 </head>
 
-<body id="page-top">
+<body>
     <div class="maintenance-topbar"></div>
     <div class="container maintenance-panel">
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">
                 <div class="card maintenance-card">
                     <div class="maintenance-banner text-center">
-                        <img src="/ssl-chile/logos/logo-fygroup-circle-bg-removed.png"valt="FYGroup"vclass="maintenance-logo">
+                        <img src="../logos/logo-fygroup-circle-v1.png" alt="FYGroup" class="maintenance-logo">
                         <h1>Mantención Programada</h1>
 
                         <p class="mb-0">
@@ -159,8 +224,61 @@ $top = UIComponents::scrollToTopButton();
                             El acceso será restablecido una vez finalizadas las tareas de mantención.
                         </p>
 
+
+                        <div class="alert alert-primary mt-4 mb-4">
+                            <i class="fas fa-clock mr-2"></i>
+
+                            Duración estimada:
+
+                            <strong>
+                                <?= ($interval->days * 24) + $interval->h ?> horas
+                                <?= $interval->i ?> minutos
+                            </strong>
+                        </div>
+
+                        <div class="maintenance-schedule">
+                            <div class="schedule-header">
+                                <i class="fas fa-calendar-alt"></i>
+                                Ventana de Mantención
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <div class="schedule-box">
+                                        <div class="schedule-label">
+                                            Inicio
+                                        </div>
+
+                                        <div class="schedule-date">
+                                            <?= $start->format('d-m-Y') ?>
+                                        </div>
+
+                                        <div class="schedule-time">
+                                            <?= $start->format('H:i') ?> hrs
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="schedule-box">
+                                        <div class="schedule-label">
+                                            Fin Estimado
+                                        </div>
+
+                                        <div class="schedule-date">
+                                            <?= $end->format('d-m-Y') ?>
+                                        </div>
+
+                                        <div class="schedule-time">
+                                            <?= $end->format('H:i') ?> hrs
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row mt-5">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
                                 <div class="status-item">
                                     <div class="status-icon">
                                         <i class="fas fa-server"></i>
@@ -174,7 +292,7 @@ $top = UIComponents::scrollToTopButton();
                                 </div>
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
                                 <div class="status-item">
                                     <div class="status-icon">
                                         <i class="fas fa-cogs"></i>
@@ -188,7 +306,7 @@ $top = UIComponents::scrollToTopButton();
                                 </div>
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
                                 <div class="status-item">
                                     <div class="status-icon">
                                         <i class="fas fa-headset"></i>
@@ -204,10 +322,7 @@ $top = UIComponents::scrollToTopButton();
                         </div>
 
                         <div class="mt-5">
-                            <button type="button"
-                                    class="btn btn-fy btn-lg"
-                                    onclick="location.reload();">
-
+                            <button type="button" class="btn btn-fy btn-lg" onclick="location.reload();">
                                 <i class="fas fa-sync-alt mr-2"></i>
                                 Reintentar
                             </button>
@@ -218,14 +333,10 @@ $top = UIComponents::scrollToTopButton();
         </div>
     </div>
 
-    <?php echo $footer; ?>
-    <?php echo $top; ?>
-
     <!-- Scripts -->
-    <script src="/ssl-chile/assets/vendor/jquery/jquery.min.js"></script>
-    <script src="/ssl-chile/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/ssl-chile/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="/ssl-chile/assets/js/fygroup.js"></script>
-
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
 </body>
 </html>
