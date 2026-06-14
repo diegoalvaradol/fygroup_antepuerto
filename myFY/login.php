@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/maintenance.php';
 
-if (MAINTENANCE_MODE) {
+if (MAINTENANCE_MODE_FYGROUP) {
     require_once __DIR__ . '/../maintenance.php';
 
     exit;
