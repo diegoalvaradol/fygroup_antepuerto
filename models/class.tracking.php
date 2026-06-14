@@ -79,7 +79,7 @@ class tracking extends iQuery
         if ($result !== []) {
             $fechas = [];
             foreach ($result as $row) {
-                $fechas[(int) $row[$this->status]] = (new DateTime($row[$this->statusdate]))->format('d-m-Y H:i');
+                $fechas[(int) $row[$this->status]] = formatDate($row[$this->statusdate]);
                 $container = htmlspecialchars($row['container']);
                 $vessel = htmlspecialchars($row['vessel_name']);
                 $voyage = htmlspecialchars($row['voyage']);

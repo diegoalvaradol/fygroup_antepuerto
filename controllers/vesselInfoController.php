@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
 if (isset($_POST['id'])) {
@@ -25,8 +27,8 @@ if (isset($_POST['id'])) {
     $primary = '#2563eb';
 
     foreach ($list->getCollection() as $info) {
-        $eta = $info['eta'];
-        $etd = $info['etd'];
+        $eta = formatDate($info['eta']);
+        $etd = formatDate($info['etd']);
         $pol = $info['pol_city'] . ' - ' . $info['pol_country'];
         $pod = $info['pod_city'] . ' - ' . $info['pod_country'];
         $voyage = $info['voyage'];
@@ -35,9 +37,9 @@ if (isset($_POST['id'])) {
         $infoVessel = '
             <div style=" border:1px solid #e5e7eb; border-left:4px solid ' . $primary . '; border-radius:8px; padding:8px 16px; background:#f9fafb; font-size:14px;">
                 <div style="margin-bottom:6px;">
-                    <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($eta))) . '
+                    <b style="color:' . $primary . ';">ETA:</b> ' . htmlspecialchars($eta) . '
                     <span style="margin:0 6px; color:#9ca3af;">|</span>
-                    <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars(date('d-m-Y H:i', strtotime($etd))) . '
+                    <b style="color:' . $primary . ';">ETD:</b> ' . htmlspecialchars($etd) . '
                 </div>
 
                 <div style="margin-bottom:6px;">

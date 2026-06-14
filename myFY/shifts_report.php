@@ -196,9 +196,7 @@ function loadShiftsReport() {
 
   const MIN_TIME = 2000;
   let startTime = Date.now();
-
   const [day, month, year] = date.split('-').map(Number);
-
   const dateTitle = new Date(day, month - 1, year);
 
   const dateName = dateTitle.toLocaleDateString('es-CL', {
@@ -214,6 +212,7 @@ function loadShiftsReport() {
       text: 'Debe seleccionar fecha y turno.',
       icon: 'warning'
     });
+
     return;
   }
 
@@ -250,6 +249,9 @@ function loadShiftsReport() {
           icon: 'warning',
           title: 'Sin resultados',
           text: 'No se encontraron registros para el turno seleccionado.'
+        }).then((result) => {
+          $('#loader').hide();
+          $div.hide();
         });
       }
     },
@@ -262,6 +264,9 @@ function loadShiftsReport() {
         title: 'Error',
         text: 'Error al consultar la información.',
         icon: 'error'
+      }).then((result) => {
+        $('#loader').hide();
+        $div.hide();
       });
     },
 

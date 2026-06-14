@@ -332,21 +332,15 @@ class famesa extends iQuery
 
         if ($result !== []) {
             foreach ($result as $data) {
-                $createdTime = new DateTime($data[$this->arrivaldateport]);
-                $arrivalTimePort = new DateTime($data[$this->arrivaldateport]);
-                $departureDatePort = $data[$this->departuredateport] != null ? new DateTime($data[$this->departuredateport]) : null;
-                $arrivalTimeDeposit = $data[$this->arrivaldatedeposit] != null ? new DateTime($data[$this->arrivaldatedeposit]) : null;
-                $departureDateDeposit = $data[$this->departuredatedeposit] != null ? new DateTime($data[$this->departuredatedeposit]) : null;
-
                 $btnAddTDeparturePort = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'departure_port')\"><i class='fas fa-clock'></i> Salida Puerto</button>";
                 $btnAddTArrivalDeposit = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'arrival_depot')\"><i class='fas fa-clock'></i> Entrada Depósito</button>";
                 $btnAddTDepartureDeposit = "<button type='button' class='btn btn-success btn-user btn-sm' onclick=\"openModalHour(" . $data[$this->id] . ", 'departure_depot')\"><i class='fas fa-clock'></i> Salida Depósito</button>";
 
-                $created = $createdTime->format('d-m-Y H:i');
-                $arrivalPort = $arrivalTimePort->format('d-m-Y H:i');
-                $departurePort = $data[$this->departuredateport] != null ? $departureDatePort->format('d-m-Y H:i') : $btnAddTDeparturePort;
-                $arrivalDeposit = $data[$this->arrivaldatedeposit] != null ? $arrivalTimeDeposit->format('d-m-Y H:i') : $btnAddTArrivalDeposit;
-                $departureDeposit = $data[$this->departuredatedeposit] != null ? $departureDateDeposit->format('d-m-Y H:i') : $btnAddTDepartureDeposit;
+                $created = formatDate($data[$this->arrivaldateport]);
+                $arrivalPort = formatDate($data[$this->arrivaldateport]);
+                $departurePort = $data[$this->departuredateport] != null ? formatDate($data[$this->departuredateport]) : $btnAddTDeparturePort;
+                $arrivalDeposit = $data[$this->arrivaldatedeposit] != null ? formatDate($data[$this->arrivaldatedeposit]) : $btnAddTArrivalDeposit;
+                $departureDeposit = $data[$this->departuredatedeposit] != null ? formatDate($data[$this->departuredatedeposit]) : $btnAddTDepartureDeposit;
 
                 $btnEdit = $adminEdit ? "<button type='button' class='btn btn-sm btn-warning btn-user' onclick='editTruck(" . $data[$this->id] . ")'><i class='fas fa-pencil'></i> Editar</button>" : null;
                 $btnDelete = "<button type='button' class='btn btn-danger btn-user btn-sm' onclick='deleteTruck(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
@@ -405,26 +399,26 @@ class famesa extends iQuery
 
             <script>
                 document.getElementById('searchFamesaTruckTable').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#famesaTruckTable tbody tr');
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#famesaTruckTable tbody tr');
 
-                rows.forEach(row => {
-                    let text = (
-                    (row.cells[1]?.innerText || '') + ' ' +
-                    (row.cells[2]?.innerText || '') + ' ' +
-                    (row.cells[3]?.innerText || '') + ' ' +
-                    (row.cells[4]?.innerText || '')
-                    ).toLowerCase();
+                    rows.forEach(row => {
+                        let text = (
+                        (row.cells[1]?.innerText || '') + ' ' +
+                        (row.cells[2]?.innerText || '') + ' ' +
+                        (row.cells[3]?.innerText || '') + ' ' +
+                        (row.cells[4]?.innerText || '')
+                        ).toLowerCase();
 
-                    let match = text.includes(filter);
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
-                });
+                        row.style.display = match ? '' : 'none';
+                    });
                 });
             </script>
         ";
@@ -488,32 +482,23 @@ class famesa extends iQuery
             $col++;
         }
 
-        /* Helper fecha */
-        $formatDate = function ($v) {
-            if (empty($v) || $v === '0000-00-00 00:00:00') {
-                return '';
-            }
-
-            return date('d-m-Y H:i', strtotime($v));
-        };
-
         /* Datos */
         $row = 2;
         var_dump($query);
         foreach ($data as $d) {
-            $sheet->setCellValue("A$row", $d['counter_vessel']);
+            $sheet->setCellValue("A$row", $d[$this->countervessel]);
             $sheet->setCellValue("B$row", $ship->getVesselName($d['vessel_id']));
-            $sheet->setCellValue("C$row", $d['car_plate_truck']);
-            $sheet->setCellValue("D$row", $d['car_plate_ramp']);
-            $sheet->setCellValue("E$row", $d['guide_number']);
-            $sheet->setCellValue("F$row", $d['maxibags_quantity']);
-            $sheet->setCellValue("G$row", $d['category']);
-            $sheet->setCellValue("H$row", $formatDate($d['arrival_date_port']));
-            $sheet->setCellValue("I$row", $formatDate($d['departure_date_port']));
-            $sheet->setCellValue("J$row", $formatDate($d['arrival_date_deposit']));
-            $sheet->setCellValue("K$row", $formatDate($d['departure_date_deposit']));
-            $sheet->setCellValue("L$row", $formatDate($d['created']));
-            $sheet->setCellValue("M$row", $this->findByUser($d['created_by']));
+            $sheet->setCellValue("C$row", formatCarPlate($d[$this->carplatetruck]));
+            $sheet->setCellValue("D$row", formatCarPlate($d[$this->carplateramp]));
+            $sheet->setCellValue("E$row", $d[$this->guide]);
+            $sheet->setCellValue("F$row", $d[$this->maxibags]);
+            $sheet->setCellValue("G$row", $d[$this->category]);
+            $sheet->setCellValue("H$row", formatDate($d[$this->arrivaldateport]));
+            $sheet->setCellValue("I$row", formatDate($d[$this->departuredateport]));
+            $sheet->setCellValue("J$row", formatDate($d[$this->arrivaldatedeposit]));
+            $sheet->setCellValue("K$row", formatDate($d[$this->departuredatedeposit]));
+            $sheet->setCellValue("L$row", formatDate($d[$this->created]));
+            $sheet->setCellValue("M$row", $this->findByUser($d[$this->createdby]));
             $row++;
         }
 
@@ -577,21 +562,21 @@ class famesa extends iQuery
                 $podFlag = $port->getflagImage($port->getCountryName($data['pod']));
                 $podName = $port->getPortName($data['pod']);
 
-                $arrivalPort = (!empty($data['arrival_date_port']) && $data['arrival_date_port'] !== '0000-00-00 00:00:00') ? (new DateTime($data['arrival_date_port']))->format('d-m-Y H:i') : '<em>No registra</em>';
-                $departurePort = (!empty($data['departure_date_port']) && $data['departure_date_port'] !== '0000-00-00 00:00:00') ? (new DateTime($data['departure_date_port']))->format('d-m-Y H:i') : '<em>No registra</em>';
-                $arrivalDeposit = (!empty($data['arrival_date_deposit']) && $data['arrival_date_deposit'] !== '0000-00-00 00:00:00') ? (new DateTime($data['arrival_date_deposit']))->format('d-m-Y H:i') : '<em>No registra</em>';
-                $departureDeposit = (!empty($data['departure_date_deposit']) && $data['departure_date_deposit'] !== '0000-00-00 00:00:00') ? (new DateTime($data['departure_date_deposit']))->format('d-m-Y H:i') : '<em>No registra</em>';
+                $arrivalPort = (!empty($data[$this->arrivaldateport]) && $data[$this->arrivaldateport] !== '0000-00-00 00:00:00') ? formatDate($data[$this->arrivaldateport]) : '<em>No registra</em>';
+                $departurePort = (!empty($data[$this->departuredateport]) && $data[$this->departuredateport] !== '0000-00-00 00:00:00') ? formatDate($data[$this->departuredateport]) : '<em>No registra</em>';
+                $arrivalDeposit = (!empty($data[$this->arrivaldatedeposit]) && $data[$this->arrivaldatedeposit] !== '0000-00-00 00:00:00') ? formatDate($data[$this->arrivaldatedeposit]) : '<em>No registra</em>';
+                $departureDeposit = (!empty($data[$this->departuredatedeposit]) && $data[$this->departuredatedeposit] !== '0000-00-00 00:00:00') ? formatDate($data[$this->departuredatedeposit]) : '<em>No registra</em>';
 
-                if ($data['arrival_date_port'] !== '0000-00-00 00:00:00' && $data['departure_date_port'] === null) {
+                if ($data[$this->arrivaldateport] !== '0000-00-00 00:00:00' && $data[$this->arrivaldateport] === null) {
                     // Llegó al puerto pero NO ha salido
                     $status = 'En Puerto';
-                } elseif ($data['arrival_date_port'] !== '0000-00-00 00:00:00' && $data['departure_date_port'] !== null && $data['arrival_date_deposit'] === null) {
+                } elseif ($data[$this->arrivaldateport] !== '0000-00-00 00:00:00' && $data[$this->departuredateport] !== null && $data[$this->arrivaldatedeposit] === null) {
                     // Salió del puerto pero aún NO llega al depósito
                     $status = 'En Tránsito a Depósito';
-                } elseif ($data['arrival_date_deposit'] !== '0000-00-00 00:00:00' && $data['departure_date_deposit'] === null) {
+                } elseif ($data[$this->arrivaldatedeposit] !== '0000-00-00 00:00:00' && $data[$this->departuredatedeposit] === null) {
                     // Llegó al depósito pero NO ha salido
                     $status = 'En Depósito';
-                } elseif ($data['departure_date_deposit'] !== null) {
+                } elseif ($data[$this->departuredatedeposit] !== null) {
                     // Ya salió del depósito (proceso terminado)
                     $status = 'Finalizado';
                 } else {
@@ -616,12 +601,12 @@ class famesa extends iQuery
                         <td>{$departurePort}</td>
                         <td>{$arrivalDeposit}</td>
                         <td>{$departureDeposit}</td>
-                        <td>{$this->findByUser($data['created_by'])}</td>
+                        <td>{$this->findByUser($data[$this->createdby])}</td>
                     </tr>
                 ";
 
                 $style = "style='width:max-content'";
-                $totalMaxiBags += (int) $data['maxibags_quantity'];
+                $totalMaxiBags += (int) $data[$this->maxibags];
                 $totalCamiones++;
             }
 

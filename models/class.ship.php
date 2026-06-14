@@ -166,12 +166,12 @@ class ship extends iQuery
         $tr = '';
 
         foreach ($result as $data) {
-            $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
-            $updated = (new DateTime($data[$this->lastupdate]))->format('d-m-Y H:i');
-            $eta = (new DateTime($data[$this->eta]))->format('d-m-Y H:i');
-            $etd = (new DateTime($data[$this->etd]))->format('d-m-Y H:i');
+            $created = formatDate($data[$this->created]);
+            $updated = formatDate($data[$this->lastupdate]);
+            $eta = formatDate($data[$this->eta]);
+            $etd = formatDate($data[$this->etd]);
 
-            $finish = ($data[$this->finisheddate]) ? (new DateTime($data[$this->finisheddate]))->format('d-m-Y H:i') : 'Por estimar.';
+            $finish = ($data[$this->finisheddate]) ? formatDate($data[$this->finisheddate]) : 'Por estimar.';
 
             $btnFinishedDate = '
                 <i class="fas fa-info-circle text-info"

@@ -1,17 +1,17 @@
 <?php
-$dir      = __DIR__ . "/../shipping_planning";
+$dir = __DIR__ . '/../shipping_planning';
 $archivos = glob($dir . '/*.pdf');
 
 if (!$archivos) {
-  header('Content-Type: text/html; charset=utf-8');
-  echo '<p style="text-align:center;margin-top:50px;">No existen archivos para mostrar.</p>';
-  exit;
+    header('Content-Type: text/html; charset=utf-8');
+    echo '<p style="text-align:center;margin-top:50px;">No existen archivos para mostrar.</p>';
+    exit;
 }
 
 // último PDF por fecha de modificación
-usort($archivos, fn($a, $b) => filemtime($b) <=> filemtime($a));
+usort($archivos, fn ($a, $b) => filemtime($b) <=> filemtime($a));
 $ultimo = basename($archivos[0]);
-$ruta   = "../shipping_planning/" . $ultimo;
+$ruta = '../shipping_planning/' . $ultimo;
 
 header('Content-Type: text/html; charset=utf-8');
 

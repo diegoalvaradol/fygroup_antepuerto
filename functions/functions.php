@@ -78,6 +78,28 @@ function formatDate($date, $format = 'd-m-Y H:i:s')
 }
 
 /**
+ * Method formatCarPlate //Formatea una patente a formato chileno
+ *
+ * @param $plate  [patente a formatear]
+ *
+ * @return String
+ */
+function formatCarPlate($plate)
+{
+    $plate = strtoupper(str_replace('-', '', trim($plate)));
+
+    if (preg_match('/^([A-Z]{4})(\d{2})$/', $plate, $m)) {
+        return $m[1] . '-' . $m[2]; // XXXX-11
+    }
+
+    if (preg_match('/^([A-Z]{2})(\d{4})$/', $plate, $m)) {
+        return $m[1] . '-' . $m[2]; // XX-1111
+    }
+
+    return $plate;
+}
+
+/**
  * Method mostrarAccesoDenegado
  *
  * @param  $usuario [usuario que intenta acceder]
