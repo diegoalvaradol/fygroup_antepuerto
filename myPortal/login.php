@@ -1,7 +1,11 @@
 <?php
 require_once __DIR__ . '/../config/maintenance.php';
 
-if (MAINTENANCE_MODE_PORTAL) {
+$now = new DateTime();
+$start = new DateTime(MAINTENANCE_START);
+$end = new DateTime(MAINTENANCE_END);
+
+if (MAINTENANCE_MODE_PORTAL && $now >= $start && $now <= $end) {
     require_once __DIR__ . '/../maintenance.php';
 
     exit;
