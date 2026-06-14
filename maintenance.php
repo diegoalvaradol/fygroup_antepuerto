@@ -69,31 +69,37 @@ $interval = $start->diff($end);
                             </strong>
                         </div>
 
-                        <div class="maintenance-countdown mt-4 mb-4">
-                            <h5 class="countdown-title">
-                                <i class="fas fa-hourglass-half mr-2"></i>
+                        <div class="maintenance-countdown">
+                            <div class="countdown-header">
+                                <i class="fas fa-hourglass-half"></i>
                                 Tiempo Restante
-                            </h5>
+                            </div>
 
-                            <div class="countdown-grid">
-                                <div class="countdown-card">
-                                    <span class="countdown-number" id="days">00</span>
-                                    <span class="countdown-label">Días</span>
+                            <div class="countdown-digital">
+                                <div class="time-box">
+                                    <div class="time-value" id="days">00</div>
+                                    <div class="time-text">Días</div>
                                 </div>
 
-                                <div class="countdown-card">
-                                    <span class="countdown-number" id="hours">00</span>
-                                    <span class="countdown-label">Horas</span>
+                                <div class="time-separator">:</div>
+
+                                <div class="time-box">
+                                    <div class="time-value" id="hours">00</div>
+                                    <div class="time-text">Horas</div>
                                 </div>
 
-                                <div class="countdown-card">
-                                    <span class="countdown-number" id="minutes">00</span>
-                                    <span class="countdown-label">Min</span>
+                                <div class="time-separator">:</div>
+
+                                <div class="time-box">
+                                    <div class="time-value" id="minutes">00</div>
+                                    <div class="time-text">Min</div>
                                 </div>
 
-                                <div class="countdown-card">
-                                    <span class="countdown-number" id="seconds">00</span>
-                                    <span class="countdown-label">Seg</span>
+                                <div class="time-separator">:</div>
+
+                                <div class="time-box">
+                                    <div class="time-value" id="seconds">00</div>
+                                    <div class="time-text">Seg</div>
                                 </div>
                             </div>
                         </div>
