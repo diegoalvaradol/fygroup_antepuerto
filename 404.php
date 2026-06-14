@@ -126,7 +126,7 @@ http_response_code(404);
                             </div>
                         </div>
 
-                        <div class="mt-5">
+                        <div class="mt-3">
                             <a href="<?= $redirect_url; ?>" class="btn btn-fy btn-lg">
                                 <i class="fas fa-home mr-2"></i>
                                 Ir Ahora

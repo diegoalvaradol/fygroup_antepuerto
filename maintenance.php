@@ -40,15 +40,14 @@ $interval = $start->diff($end);
                     </div>
 
                     <div class="maintenance-body text-center">
-                        <i class="fas fa-tools fa-4x mb-4"
-                           style="color:#293c74;"></i>
+                        <i class="fas fa-tools fa-4x mb-4" style="color:#293c74;"></i>
 
                         <h3 class="text-gray-800">
                             Estamos realizando mejoras
                         </h3>
 
                         <p class="text-muted mt-3">
-                            Nuestro equipo se encuentra trabajando para optimizar la plataforma,
+                            Nos encontramos trabajando para optimizar la plataforma,
                             mejorar la estabilidad del sistema y entregar una mejor experiencia
                             a nuestros usuarios.
                         </p>
@@ -56,7 +55,6 @@ $interval = $start->diff($end);
                         <p class="text-muted">
                             El acceso será restablecido una vez finalizadas las tareas de mantención.
                         </p>
-
 
                         <div class="alert alert-primary mt-4 mb-4">
                             <i class="fas fa-clock mr-2"></i>
