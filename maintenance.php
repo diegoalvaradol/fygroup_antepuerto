@@ -22,173 +22,6 @@ $interval = $start->diff($end);
     <!-- Estilos del sistema -->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
     <link href="../assets/css/app.css" rel="stylesheet">
-
-    <style>
-        body{
-            background:#f4f6fb;
-            font-family:'Nunito',sans-serif;
-            margin:0;
-            padding:0;
-        }
-
-        .maintenance-topbar{
-            background:#293c74;
-            height:70px;
-            box-shadow:0 .15rem 1.75rem rgba(58,59,69,.15);
-        }
-
-        .maintenance-panel{
-            margin-top:50px;
-            margin-bottom:50px;
-        }
-
-        .maintenance-card{
-            border:none;
-            border-top:4px solid #293c74;
-            border-radius:12px;
-            margin-bottom: 50px;
-            overflow:hidden;
-            box-shadow:0 .15rem 1.75rem rgba(58,59,69,.15);
-        }
-
-        .maintenance-banner{
-            background:linear-gradient(135deg,#293c74,#3b5297);
-            color:#fff;
-            padding:50px;
-        }
-
-        .maintenance-logo{
-            width:100px;
-            height:auto;
-            margin-bottom:15px;
-        }
-
-        .maintenance-banner h1{
-            font-weight:800;
-            margin-bottom:10px;
-        }
-
-        .maintenance-body{
-            padding:50px;
-        }
-
-        .maintenance-body h3{
-            font-weight:800;
-        }
-
-        .status-item{
-            background:#f8f9fc;
-            border-radius:10px;
-            padding:25px;
-            transition:.3s;
-            height:100%;
-            border:1px solid #e3e6f0;
-        }
-
-        .status-item:hover{
-            transform:translateY(-3px);
-        }
-
-        .status-icon{
-            font-size:2rem;
-            color:#293c74;
-            margin-bottom:15px;
-        }
-
-        .btn-fy{
-            background:#293c74;
-            border-color:#293c74;
-            color:#fff;
-            font-weight:600;
-            padding:12px 25px;
-        }
-
-        .btn-fy:hover{
-            background:#1f2e5a;
-            border-color:#1f2e5a;
-            color:#fff;
-        }
-
-        .maintenance-schedule{
-            margin-top:30px;
-            margin-bottom:30px;
-            background:#f8f9fc;
-            border:1px solid #e3e6f0;
-            border-radius:12px;
-            overflow:hidden;
-        }
-
-        .schedule-header{
-            background:#293c74;
-            color:#fff;
-            padding:15px;
-            font-weight:700;
-            text-align:center;
-        }
-
-        .schedule-header i{
-            margin-right:8px;
-        }
-
-        .schedule-box{
-            padding:25px;
-        }
-
-        .schedule-label{
-            color:#858796;
-            font-size:.85rem;
-            text-transform:uppercase;
-            font-weight:700;
-        }
-
-        .schedule-date{
-            color:#293c74;
-            font-size:1.3rem;
-            font-weight:800;
-            margin-top:8px;
-        }
-
-        .schedule-time{
-            font-size:1rem;
-            color:#5a5c69;
-            margin-top:5px;
-        }
-
-        @media (max-width:768px){
-            .maintenance-panel{
-                margin-top:20px;
-                margin-bottom:20px;
-            }
-
-            .maintenance-banner{
-                padding:25px;
-            }
-
-            .maintenance-body{
-                padding:25px;
-            }
-
-            .maintenance-banner h1{
-                font-size:1.7rem;
-            }
-
-            .maintenance-logo{
-                width:50px;
-            }
-
-            .schedule-box{
-                padding:15px;
-            }
-
-            .btn-fy{
-                width:100%;
-            }
-
-            .status-item{
-                margin-bottom:15px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -234,6 +67,43 @@ $interval = $start->diff($end);
                                 <?= ($interval->days * 24) + $interval->h ?> horas
                                 <?= $interval->i ?> minutos
                             </strong>
+                        </div>
+
+                        <div class="maintenance-countdown mt-4 mb-4">
+                            <div class="schedule-header">
+                                <i class="fas fa-hourglass-half"></i>
+                                Tiempo Restante
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col-3">
+                                    <div class="schedule-box">
+                                        <div class="schedule-date" id="days">00</div>
+                                        <div class="schedule-label">Días</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="schedule-box">
+                                        <div class="schedule-date" id="hours">00</div>
+                                        <div class="schedule-label">Horas</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="schedule-box">
+                                        <div class="schedule-date" id="minutes">00</div>
+                                        <div class="schedule-label">Minutos</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="schedule-box">
+                                        <div class="schedule-date" id="seconds">00</div>
+                                        <div class="schedule-label">Segundos</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="maintenance-schedule">
@@ -287,7 +157,7 @@ $interval = $start->diff($end);
                                     <strong>Plataforma</strong>
 
                                     <div class="text-muted mt-2">
-                                        FYGroup
+                                        Sistema Antepuerto
                                     </div>
                                 </div>
                             </div>
@@ -321,7 +191,14 @@ $interval = $start->diff($end);
                             </div>
                         </div>
 
-                        <div class="mt-5">
+                        <div class="mt-3">
+                            <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" class="btn btn-outline-success btn-lg">
+                                <i class="fab fa-whatsapp mr-2"></i>
+                                Soporte por WhatsApp
+                            </a>
+                        </div>
+
+                        <div class="mt-3">
                             <button type="button" class="btn btn-fy btn-lg" onclick="location.reload();">
                                 <i class="fas fa-sync-alt mr-2"></i>
                                 Reintentar
@@ -340,3 +217,35 @@ $interval = $start->diff($end);
     <script src="../assets/js/fygroup.js"></script>
 </body>
 </html>
+
+<script>
+const maintenanceEnd = new Date("<?= $end->format('Y-m-d H:i:s') ?>").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = maintenanceEnd - now;
+
+    if (distance <= 0) {
+        document.getElementById('days').innerHTML = '00';
+        document.getElementById('hours').innerHTML = '00';
+        document.getElementById('minutes').innerHTML = '00';
+        document.getElementById('seconds').innerHTML = '00';
+
+        location.reload();
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').innerHTML = String(days).padStart(2, '0');
+    document.getElementById('hours').innerHTML = String(hours).padStart(2, '0');
+    document.getElementById('minutes').innerHTML = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').innerHTML = String(seconds).padStart(2, '0');
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>

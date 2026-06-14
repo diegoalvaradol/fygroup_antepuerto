@@ -1,15 +1,20 @@
+/* base */
 @import 'variables.css';
 @import 'base.css';
 @import 'forms.css';
 @import 'select2.css';
 @import 'components.css';
 
-/* layout primero */
+/* layout */
 @import 'sidebar.css';
 @import 'tapbar.css';
 @import 'footer.css';
 
-/* overlays al final */
+/* overlays */
 @import 'modal.css';
 @import 'mobile.css';
 @import 'layout.css';
+
+/* páginas especiales */
+@import 'error.css';
+@import 'maintenance.css';

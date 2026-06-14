@@ -45,133 +45,6 @@ http_response_code(401);
     <!-- Estilos del sistema -->
     <link href="assets/css/fygroup.css" rel="stylesheet">
     <link href="assets/css/app.css" rel="stylesheet">
-    <style>
-        body{
-            background:#f4f6fb;
-            font-family:'Nunito',sans-serif;
-            margin:0;
-            padding:0;
-        }
-
-        .error-card{
-            border:none;
-            border-top:4px solid #293c74;
-            border-radius:12px;
-            margin-bottom: 50px;
-            overflow:hidden;
-            box-shadow:0 .15rem 1.75rem rgba(58,59,69,.15);
-        }
-
-        .error-banner{
-            background:linear-gradient(135deg,#293c74,#3b5297);
-            color:#fff;
-            padding:50px;
-        }
-
-        .error-banner h1{
-            font-weight:800;
-            margin-bottom:10px;
-        }
-
-        .error-topbar{
-            background:#293c74;
-            height:70px;
-            box-shadow:0 .15rem 1.75rem rgba(58,59,69,.15);
-        }
-
-        .error-panel{
-            margin-top:50px;
-            margin-bottom:50px;
-        }
-
-        .error-body{
-            padding:50px;
-        }
-
-        .status-item{
-            background:#f8f9fc;
-            border-radius:10px;
-            padding:25px;
-            transition:.3s;
-            height:100%;
-            border:1px solid #e3e6f0;
-        }
-
-        .status-item:hover{
-            transform:translateY(-3px);
-        }
-
-        .status-icon{
-            font-size:2rem;
-            color:#293c74;
-            margin-bottom:15px;
-        }
-
-        .btn-fy{
-            background:#293c74;
-            border-color:#293c74;
-            color:#fff;
-            font-weight:600;
-            padding:12px 25px;
-        }
-
-        .btn-fy:hover{
-            background:#1f2e5a;
-            border-color:#1f2e5a;
-            color:#fff;
-        }
-
-        .page-logo{
-            width:100px;
-            height:auto;
-            margin-bottom:15px;
-        }
-
-        .page-icon{
-            font-size:4rem;
-            color:#293c74;
-            margin-bottom:25px;
-        }
-
-        @media (max-width:768px){
-            .error-panel{
-                margin-top:20px;
-                margin-bottom:20px;
-            }
-
-            .error-body{
-                padding:25px;
-            }
-
-            .error-banner{
-                padding:25px;
-            }
-
-            .page-logo{
-                width:60px;
-            }
-
-            .btn-fy{
-                width:100%;
-            }
-
-            .status-item{
-                margin-bottom:15px;
-            }
-
-            .page-body{
-                padding:25px;
-            }
-
-            .page-logo{
-                width:60px;
-            }
-
-            .btn-fy{
-                width:100%;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="error-topbar"></div>
@@ -209,7 +82,7 @@ http_response_code(401);
                         <div class="alert alert-warning mt-4 mb-4">
                             <i class="fas fa-clock mr-2"></i>
                             Serás redirigido automáticamente en
-                            <strong>5 segundos</strong>
+                            <strong id="countdown">5</strong> segundos
                         </div>
 
                         <div class="row mt-5">
@@ -274,3 +147,20 @@ http_response_code(401);
     <script src="assets/js/fygroup.js"></script>
 </body>
 </html>
+
+<script>
+let seconds = 5;
+
+const countdownElement = document.getElementById('countdown');
+
+const timer = setInterval(() => {
+    seconds--;
+
+    countdownElement.textContent = seconds;
+
+    if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = "<?= $redirect_url ?>";
+    }
+}, 1000);
+</script>
