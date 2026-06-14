@@ -1,43 +1,45 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
-$ship      = new ship();
+$ship = new ship();
 $outerPort = new outerPort();
 
 /* Helpers */
 function post($key, $default = null)
 {
-  return $_POST[$key] ?? $default;
+    return $_POST[$key] ?? $default;
 }
 
-$searchForm       = trim(post('search', ''));
-$vesselId         = (int) post('vessel', 0);
-$fieldsId         = trim(post('field', ''));
+$searchForm = trim(post('search', ''));
+$vesselId = (int) post('vessel', 0);
+$fieldsId = trim(post('field', ''));
 $searchLikeVessel = "%{$searchForm}%";
-$searchLikeField  = "%{$fieldsId}%";
+$searchLikeField = "%{$fieldsId}%";
 
 /* CARGA DE NAVES */
 if (!post('trucks')) {
-  $conditions = [];
-  $params     = ['search' => $searchLikeVessel];
+    $conditions = [];
+    $params = ['search' => $searchLikeVessel];
 
-  $conditions[] = "vessel_name LIKE :search";
+    $conditions[] = 'vessel_name LIKE :search';
 
-  if (post('current') == 1) {
-    $conditions[] = "finished = 0";
-  }
+    if (post('current') == 1) {
+        $conditions[] = 'finished = 0';
+    }
 
-  if (post('finished') == 1) {
-    $conditions[] = "finished = 1";
-  }
+    if (post('finished') == 1) {
+        $conditions[] = 'finished = 1';
+    }
 
-  if (post('all') == 1) {
-    $conditions[] = "(finished = 0 OR finished = 1)";
-  }
+    if (post('all') == 1) {
+        $conditions[] = '(finished = 0 OR finished = 1)';
+    }
 
-  $where = implode(' AND ', $conditions);
+    $where = implode(' AND ', $conditions);
 
-  $sql = "SELECT
+    $sql = "SELECT
       ship_id,
       vessel_name,
       voyage
@@ -47,23 +49,23 @@ if (!post('trucks')) {
     LIMIT 10
   ";
 
-  $listShip = $ship->findAllStatic($sql, $params);
+    $listShip = $ship->findAllStatic($sql, $params);
 
-  $data = [[
-    'id'   => '-',
-    'text' => 'Seleccione una motonave...'
-  ]];
+    $data = [[
+      'id' => '-',
+      'text' => 'Seleccione una motonave...',
+    ]];
 
-  foreach ($listShip->getCollection() as $row) {
-    $data[] = [
-      'id'   => $row['ship_id'],
-      'text' => "{$row['vessel_name']} (Viaje: {$row['voyage']})"
-    ];
-  }
+    foreach ($listShip->getCollection() as $row) {
+        $data[] = [
+          'id' => $row['ship_id'],
+          'text' => "{$row['vessel_name']} (Viaje: {$row['voyage']})",
+        ];
+    }
 
-/* CARGA DE CAMIONES */
+    /* CARGA DE CAMIONES */
 } else {
-  $sql = "SELECT
+    $sql = 'SELECT
       row_id,
       car_plate,
       container,
@@ -73,21 +75,21 @@ if (!post('trucks')) {
     WHERE vessel_id = :vessel AND (row_id LIKE :field OR car_plate LIKE :field)
     ORDER BY row_id ASC
     LIMIT 10
-  ";
+  ';
 
-  $listOuterPort = $outerPort->findAllStatic($sql, ['vessel' => $vesselId, 'field' => $searchLikeField]);
+    $listOuterPort = $outerPort->findAllStatic($sql, ['vessel' => $vesselId, 'field' => $searchLikeField]);
 
-  $data = [[]];
+    $data = [[]];
 
-  foreach ($listOuterPort->getCollection() as $row) {
-    $container = $row['container'] != 'N/A' ? $row['container'] : 'N/A';
-    $origin    = $row['origin'] == 1 ? 'C' : 'T';
+    foreach ($listOuterPort->getCollection() as $row) {
+        $container = $row['container'] != 'N/A' ? $row['container'] : 'N/A';
+        $origin = $row['origin'] == 1 ? 'C' : 'T';
 
-    $data[] = [
-      'id'   => $row['row_id'],
-      'text' => "Posición: {$row['counter_vessel']}-{$origin} | Patente: {$row['car_plate']} | Contenedor: {$container}"
-    ];
-  }
+        $data[] = [
+          'id' => $row['row_id'],
+          'text' => "Posición: {$row['counter_vessel']}-{$origin} | Patente: {$row['car_plate']} | Contenedor: {$container}",
+        ];
+    }
 }
 
 header('Content-Type: application/json');

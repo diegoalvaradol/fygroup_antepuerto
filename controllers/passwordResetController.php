@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $division = $_POST['division'];
     $token = bin2hex(random_bytes(16));
     $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
+    $link = null;
 
     $user = new user();
 

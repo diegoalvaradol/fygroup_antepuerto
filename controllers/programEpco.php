@@ -1,7 +1,9 @@
 <?php
+
+declare(strict_types=1);
 $from = urlencode($_POST['from'] . 'T00:00:00');
-$to   = urlencode($_POST['to'] . 'T23:59:59');
-$url  = "https://coquimbobus.biznet.cl:8243/EPCO_formulario_op_select_planifacion_naviera_puerto_coquimbo_fecha?fecha1=$from&fecha2=$to";
+$to = urlencode($_POST['to'] . 'T23:59:59');
+$url = "https://coquimbobus.biznet.cl:8243/EPCO_formulario_op_select_planifacion_naviera_puerto_coquimbo_fecha?fecha1=$from&fecha2=$to";
 
 // Obtener datos desde API
 $ch = curl_init($url);
@@ -13,13 +15,13 @@ curl_close($ch);
 $data = json_decode($response, true);
 
 if (empty($data['Entries']['Entry'])) {
-  echo '';
-  exit;
+    echo '';
+    exit;
 }
 
 $fechaInicio = (new DateTime($_POST['from']))->format('d-m-Y');
-$fechaFin    = (new DateTime($_POST['to']))->format('d-m-Y');
-$count       = 0;
+$fechaFin = (new DateTime($_POST['to']))->format('d-m-Y');
+$count = 0;
 
 $table = '<div class="container" style="max-width:-webkit-fill-available;">';
 $table .= '<div class="table-responsive" style="font-size:13px;">';
@@ -47,36 +49,34 @@ $table .= '</thead>';
 $table .= '<tbody>';
 
 foreach ($data['Entries']['Entry'] as $fila) {
-  $fechaEta = new DateTime($fila["eta"]);
-  $fechaEtd = new DateTime($fila["etd"]);
-  $eta      = $fechaEta->format('d-m-Y H:i');
-  $etd      = $fechaEtd->format('d-m-Y H:i');
+    $eta = formatDate($fila['eta']);
+    $etd = formatDate($fila['etd']);
 
-  $loa          = $fila["loa"] === null ? '-' : $fila["loa"];
-  $cantidad     = number_format($fila["cantidad"], 0, ',', '.');
-  $tipoCantidad = $fila["tipo_cantidad"] === "-1" ? null : $fila["tipo_cantidad"];
-  $sitio        = $fila["sitio"] === "-1" ? 'Por definir' : $fila["sitio"];
-  $obs          = $fila["observacion"] === null ? '-' : $fila["observacion"];
-  $estado       = $fila["estado"] === "Aceptado" ? 'style="color:green;"' : 'style="color:red;"';
+    $loa = $fila['loa'] === null ? '-' : $fila['loa'];
+    $cantidad = number_format($fila['cantidad'], 0, ',', '.');
+    $tipoCantidad = $fila['tipo_cantidad'] === '-1' ? null : $fila['tipo_cantidad'];
+    $sitio = $fila['sitio'] === '-1' ? 'Por definir' : $fila['sitio'];
+    $obs = $fila['observacion'] === null ? '-' : $fila['observacion'];
+    $estado = $fila['estado'] === 'Aceptado' ? 'style="color:green;"' : 'style="color:red;"';
 
-  $table .= '<tr>';
-  $table .= '<td>' . htmlspecialchars($fila["nave"]) . '</td>';
-  $table .= '<td>' . htmlspecialchars($eta) . '</td>';
-  $table .= '<td>' . htmlspecialchars($etd) . '</td>';
-  $table .= '<td>' . htmlspecialchars($fila["turnos"]) . '</td>';
-  $table .= '<td>' . htmlspecialchars($loa) . '</td>';
-  $table .= '<td>' . htmlspecialchars($fila["agencia"]) . '</td>';
-  $table .= '<td>' . htmlspecialchars($fila["cliente"]) . '</td>';
-  $table .= '<td>' . htmlspecialchars($fila["operacion"]) . '</td>';
-  $table .= '<td>' . htmlspecialchars($fila["tipo_carga"]) . '</td>';
-  $table .= '<td>' . htmlspecialchars($cantidad . ' ' . $tipoCantidad) . '</td>';
-  $table .= '<td>' . htmlspecialchars($sitio) . '</td>';
-  $table .= '<td>' . htmlspecialchars($fila["puerto_anterior"]) . '</td>';
-  $table .= '<td>' . htmlspecialchars($obs) . '</td>';
-  $table .= '<td ' . $estado . '> <b>' . htmlspecialchars($fila["estado"]) . '</b></td>';
-  $table .= '</tr>';
+    $table .= '<tr>';
+    $table .= '<td>' . htmlspecialchars($fila['nave']) . '</td>';
+    $table .= '<td>' . htmlspecialchars($eta) . '</td>';
+    $table .= '<td>' . htmlspecialchars($etd) . '</td>';
+    $table .= '<td>' . htmlspecialchars($fila['turnos']) . '</td>';
+    $table .= '<td>' . htmlspecialchars($loa) . '</td>';
+    $table .= '<td>' . htmlspecialchars($fila['agencia']) . '</td>';
+    $table .= '<td>' . htmlspecialchars($fila['cliente']) . '</td>';
+    $table .= '<td>' . htmlspecialchars($fila['operacion']) . '</td>';
+    $table .= '<td>' . htmlspecialchars($fila['tipo_carga']) . '</td>';
+    $table .= '<td>' . htmlspecialchars($cantidad . ' ' . $tipoCantidad) . '</td>';
+    $table .= '<td>' . htmlspecialchars($sitio) . '</td>';
+    $table .= '<td>' . htmlspecialchars($fila['puerto_anterior']) . '</td>';
+    $table .= '<td>' . htmlspecialchars($obs) . '</td>';
+    $table .= '<td ' . $estado . '> <b>' . htmlspecialchars($fila['estado']) . '</b></td>';
+    $table .= '</tr>';
 
-  $count++;
+    $count++;
 }
 
 $table .= "<p class='m-1 font-weight-bold text-grey'>Total de registros: $count</p>";

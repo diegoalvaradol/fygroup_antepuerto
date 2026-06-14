@@ -1,10 +1,12 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
 $ship = new ship();
-$id   = $_POST['id'];
+$id = $_POST['id'];
 
-$sql = "SELECT
+$sql = 'SELECT
 		s.ship_id AS id,
 		s.vessel_name as vesselName,
 		s.voyage AS voyage,
@@ -24,7 +26,7 @@ $sql = "SELECT
 	JOIN app_ship_lines sl ON s.ship_line = sl.line_id
 	WHERE ship_id = :id
 	LIMIT 1
-";
+';
 
 $list = $ship->getFirstMember($sql, ['id' => $id]);
 

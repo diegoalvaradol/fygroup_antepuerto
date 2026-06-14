@@ -1,15 +1,18 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $port     = new port();
-  $cityForm = trim($_POST['city']);
-  $city     = "%{$cityForm}%";
+    $port = new port();
 
-  $sql  = "SELECT 1 FROM app_ports WHERE city LIKE :city LIMIT 1";
-  $list = $port->getFirstMember($sql, ['city' => $city]);
+    $cityForm = trim($_POST['city']);
+    $city = "%{$cityForm}%";
 
-  if ($list > 0) {
-    echo "NOOK";
-  }
+    $sql = 'SELECT 1 FROM app_ports WHERE city LIKE :city LIMIT 1';
+    $list = $port->getFirstMember($sql, ['city' => $city]);
+
+    if ($list > 0) {
+        echo 'NOOK';
+    }
 }

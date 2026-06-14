@@ -217,8 +217,7 @@ class user extends iQuery
         $color = "rgb($r,$g,$b)";
 
         $img = '
-            <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-semibold me-2"
-            style="width:' . $size . 'px; height:' . $size . 'px; background:' . $color . '; font-size:' . ($size * 0.45) . 'px;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-semibold me-2" style="width:' . $size . 'px; height:' . $size . 'px; background:' . $color . '; font-size:' . ($size * 0.45) . 'px;">
             ' . $iniciales . '
             </div>
         ';
@@ -272,7 +271,7 @@ class user extends iQuery
         $thead .= '</thead><tbody>';
 
         foreach ($result as $data) {
-            $lastSession = (new DateTime($data[$this->lastsession]))->format('d-m-Y H:i');
+            $lastSession = formatDate($data[$this->lastsession]);
             $colorAdmin = $data[$this->isadmin] ? 'text-success' : 'text-danger';
             $colorAdminEdit = $data[$this->isadminedit] ? 'text-success' : 'text-danger';
             $colorActive = $data[$this->isactive] ? 'text-success' : 'text-danger';

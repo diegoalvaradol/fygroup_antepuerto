@@ -1,112 +1,114 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
 
 class cfg extends iQuery
 {
-  protected string $table      = "app_config";
-  protected string $primaryKey = 'id';
+    protected string $table = 'app_config';
+    protected string $primaryKey = 'id';
 
-  public $id          = "id";
-  public $mark        = "mark";
-  public $name        = "name";
-  public $version     = "version";
-  public $compilation = "compilation";
-  public $author      = "author";
-  public $released    = "released_date";
-  public $update      = "update_date";
-  public $goals       = "goals";
-  public $created     = "created";
-  public $lastupdate  = "last_update";
+    public $id = 'id';
+    public $mark = 'mark';
+    public $name = 'name';
+    public $version = 'version';
+    public $compilation = 'compilation';
+    public $author = 'author';
+    public $released = 'released_date';
+    public $update = 'update_date';
+    public $goals = 'goals';
+    public $created = 'created';
+    public $lastupdate = 'last_update';
 
-  public function __construct()
-  {
-    parent::__construct(); // usa Database::get() desde iQuery
-  }
+    public function __construct()
+    {
+        parent::__construct(); // usa Database::get() desde iQuery
+    }
 
-  public function save()
-  {
-    $query = "INSERT INTO $this->table (mark, name, version, compilation, author, released_date, update_date, goals, created, last_update) VALUES (:mark, :name, :version, :compilation, :author, :released, :update, :goals, :created, :lastupdate)";
-    $stmt  = $this->db->prepare($query);
+    public function save()
+    {
+        $query = "INSERT INTO $this->table (mark, name, version, compilation, author, released_date, update_date, goals, created, last_update) VALUES (:mark, :name, :version, :compilation, :author, :released, :update, :goals, :created, :lastupdate)";
+        $stmt = $this->db->prepare($query);
 
-    $this->mark        = htmlspecialchars(strip_tags($this->mark));
-    $this->name        = htmlspecialchars(strip_tags($this->name));
-    $this->version     = htmlspecialchars(strip_tags($this->version));
-    $this->compilation = htmlspecialchars(strip_tags($this->compilation));
-    $this->author      = htmlspecialchars(strip_tags($this->author));
-    $this->released    = $this->released;
-    $this->update      = $this->update;
-    $this->goals       = htmlspecialchars(strip_tags($this->goals));
-    $this->created     = $this->created;
-    $this->lastupdate  = $this->lastupdate;
+        $this->mark = htmlspecialchars(strip_tags($this->mark));
+        $this->name = htmlspecialchars(strip_tags($this->name));
+        $this->version = htmlspecialchars(strip_tags($this->version));
+        $this->compilation = htmlspecialchars(strip_tags($this->compilation));
+        $this->author = htmlspecialchars(strip_tags($this->author));
+        $this->released = $this->released;
+        $this->update = $this->update;
+        $this->goals = htmlspecialchars(strip_tags($this->goals));
+        $this->created = $this->created;
+        $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":mark", $this->mark);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":version", $this->version);
-    $stmt->bindParam(":compilation", $this->compilation);
-    $stmt->bindParam(":author", $this->author);
-    $stmt->bindParam(":released", $this->released);
-    $stmt->bindParam(":update", $this->update);
-    $stmt->bindParam(":goals", $this->goals);
-    $stmt->bindParam(":created", $this->created);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+        $stmt->bindParam(':mark', $this->mark);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':version', $this->version);
+        $stmt->bindParam(':compilation', $this->compilation);
+        $stmt->bindParam(':author', $this->author);
+        $stmt->bindParam(':released', $this->released);
+        $stmt->bindParam(':update', $this->update);
+        $stmt->bindParam(':goals', $this->goals);
+        $stmt->bindParam(':created', $this->created);
+        $stmt->bindParam(':lastupdate', $this->lastupdate);
 
-    return $stmt->execute();
-  }
+        return $stmt->execute();
+    }
 
-  public function update()
-  {
-    $query = "UPDATE $this->table SET mark = :mark, name = :name, version = :version, compilation = :compilation, author = :author, released_date = :released, update_date = :update, goals = :goals, last_update = :lastupdate WHERE id = :id";
-    $stmt  = $this->db->prepare($query);
+    public function update()
+    {
+        $query = "UPDATE $this->table SET mark = :mark, name = :name, version = :version, compilation = :compilation, author = :author, released_date = :released, update_date = :update, goals = :goals, last_update = :lastupdate WHERE id = :id";
+        $stmt = $this->db->prepare($query);
 
-    $this->id          = htmlspecialchars(strip_tags($this->id));
-    $this->mark        = htmlspecialchars(strip_tags($this->mark));
-    $this->name        = htmlspecialchars(strip_tags($this->name));
-    $this->version     = htmlspecialchars(strip_tags($this->version));
-    $this->compilation = htmlspecialchars(strip_tags($this->compilation));
-    $this->author      = htmlspecialchars(strip_tags($this->author));
-    $this->released    = $this->released;
-    $this->update      = $this->update;
-    $this->goals       = htmlspecialchars(strip_tags($this->goals));
-    $this->lastupdate  = $this->lastupdate;
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->mark = htmlspecialchars(strip_tags($this->mark));
+        $this->name = htmlspecialchars(strip_tags($this->name));
+        $this->version = htmlspecialchars(strip_tags($this->version));
+        $this->compilation = htmlspecialchars(strip_tags($this->compilation));
+        $this->author = htmlspecialchars(strip_tags($this->author));
+        $this->released = $this->released;
+        $this->update = $this->update;
+        $this->goals = htmlspecialchars(strip_tags($this->goals));
+        $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":mark", $this->mark);
-    $stmt->bindParam(":name", $this->name);
-    $stmt->bindParam(":version", $this->version);
-    $stmt->bindParam(":compilation", $this->compilation);
-    $stmt->bindParam(":author", $this->author);
-    $stmt->bindParam(":released", $this->released);
-    $stmt->bindParam(":update", $this->update);
-    $stmt->bindParam(":goals", $this->goals);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':mark', $this->mark);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':version', $this->version);
+        $stmt->bindParam(':compilation', $this->compilation);
+        $stmt->bindParam(':author', $this->author);
+        $stmt->bindParam(':released', $this->released);
+        $stmt->bindParam(':update', $this->update);
+        $stmt->bindParam(':goals', $this->goals);
+        $stmt->bindParam(':lastupdate', $this->lastupdate);
 
-    return $stmt->execute();
-  }
+        return $stmt->execute();
+    }
 
-  public function updateGoals()
-  {
-    $query = "UPDATE $this->table SET goals = :goals,last_update = :lastupdate WHERE id = :id";
-    $stmt  = $this->db->prepare($query);
+    public function updateGoals()
+    {
+        $query = "UPDATE $this->table SET goals = :goals,last_update = :lastupdate WHERE id = :id";
+        $stmt = $this->db->prepare($query);
 
-    $this->goals      = htmlspecialchars(strip_tags($this->goals));
-    $this->lastupdate = $this->lastupdate;
+        $this->goals = htmlspecialchars(strip_tags($this->goals));
+        $this->lastupdate = $this->lastupdate;
 
-    $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
-    $stmt->bindParam(":goals", $this->goals);
-    $stmt->bindParam(":lastupdate", $this->lastupdate);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindParam(':goals', $this->goals);
+        $stmt->bindParam(':lastupdate', $this->lastupdate);
 
-    return $stmt->execute();
-  }
+        return $stmt->execute();
+    }
 
-  public function getInfo($id)
-  {
-    $query = "SELECT * FROM $this->table WHERE $this->id = :id LIMIT 1";
-    $stmt  = $this->db->prepare($query);
-    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function getInfo($id)
+    {
+        $query = "SELECT * FROM $this->table WHERE $this->id = :id LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return json_encode($result);
-  }
+        return json_encode($result);
+    }
 
 }

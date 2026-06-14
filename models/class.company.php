@@ -114,8 +114,8 @@ class company extends iQuery
         $tr = '';
 
         foreach ($result as $data) {
-            $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
-            $updated = (new DateTime($data[$this->lastupdate]))->format('d-m-Y H:i');
+            $created = formatDate($data[$this->created]);
+            $updated = formatDate($data[$this->lastupdate]);
 
             $isExporter = $arrayYesNo[$data[$this->exporter]];
             $isAgency = $arrayYesNo[$data[$this->agency]];

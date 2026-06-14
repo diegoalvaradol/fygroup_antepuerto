@@ -785,12 +785,9 @@ class outerPort extends iQuery
                 $attr = null;
                 $stayTime = 'No disponible';
 
-                $createdTime = new DateTime($data[$this->arrivaldate]);
-                $arrivalTime = new DateTime($data[$this->arrivaldate]);
-
-                $created = $createdTime->format('d-m-Y H:i');
-                $arrival = $arrivalTime->format('d-m-Y H:i');
-                $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
+                $created = formatDate($data[$this->arrivaldate]);
+                $arrival = formatDate($data[$this->arrivaldate]);
+                $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : '<em>Sin hora de salida.</em>';
 
                 if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
                     $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
@@ -823,7 +820,7 @@ class outerPort extends iQuery
                 $tr .= '<tr ' . $attr . '>';
                 $tr .= '<td>' . $data[$this->countervessel] . '</td>';
                 $tr .= '<td>' . $ship->getVesselName($data[$this->vessel]) . '</td>';
-                $tr .= '<td>' . $data[$this->carplate] . '</td>';
+                $tr .= '<td>' . formatCarPlate($data[$this->carplate]) . '</td>';
                 $tr .= '<td>' . $data[$this->guide] . '</td>';
                 $tr .= '<td>' . $data[$this->container] . '</td>';
                 $tr .= '<td>' . $data[$this->seal] . '</td>';
@@ -887,33 +884,33 @@ class outerPort extends iQuery
 
             <script>
                 document.getElementById('searchContainerTable').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#containerTable tbody tr');
-                let visibleCount = 0;
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#containerTable tbody tr');
+                    let visibleCount = 0;
 
-                rows.forEach(row => {
-                    let text = (
-                    (row.cells[1]?.innerText || '') + ' ' +
-                    (row.cells[2]?.innerText || '') + ' ' +
-                    (row.cells[3]?.innerText || '') + ' ' +
-                    (row.cells[4]?.innerText || '') + ' ' +
-                    (row.cells[6]?.innerText || '') + ' ' +
-                    (row.cells[7]?.innerText || '')
-                    ).toLowerCase();
+                    rows.forEach(row => {
+                        let text = (
+                        (row.cells[1]?.innerText || '') + ' ' +
+                        (row.cells[2]?.innerText || '') + ' ' +
+                        (row.cells[3]?.innerText || '') + ' ' +
+                        (row.cells[4]?.innerText || '') + ' ' +
+                        (row.cells[6]?.innerText || '') + ' ' +
+                        (row.cells[7]?.innerText || '')
+                        ).toLowerCase();
 
-                    let match = text.includes(filter);
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
+                        row.style.display = match ? '' : 'none';
 
-                    if (match) visibleCount++;
-                });
+                        if (match) visibleCount++;
+                    });
 
-                document.getElementById('totalCnts').innerText = visibleCount;
+                    document.getElementById('totalCnts').innerText = visibleCount;
                 });
             </script>
         ";
@@ -980,9 +977,9 @@ class outerPort extends iQuery
 
         foreach ($result as $data) {
             $stayTime = 'No disponible';
-            $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
-            $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
-            $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+            $created = formatDate($data[$this->arrivaldate]);
+            $arrival = formatDate($data[$this->arrivaldate]);
+            $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : 'Sin hora de salida.';
 
             if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                 $arrivalDate = new DateTime($data['arrival_date']);
@@ -1000,7 +997,7 @@ class outerPort extends iQuery
             $sheet->fromArray([
                 $data[$this->countervessel],
                 $ship->getVesselName($data[$this->vessel]),
-                $data[$this->carplate],
+                formatCarPlate($data[$this->carplate]),
                 $data[$this->guide],
                 $data[$this->container],
                 $data[$this->seal],
@@ -1185,12 +1182,9 @@ class outerPort extends iQuery
                 $attr = null;
                 $stayTime = 'No disponible';
 
-                $createdTime = new DateTime($data[$this->arrivaldate]);
-                $arrivalTime = new DateTime($data[$this->arrivaldate]);
-
-                $created = $createdTime->format('d-m-Y H:i');
-                $arrival = $arrivalTime->format('d-m-Y H:i');
-                $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
+                $created = formatDate($data[$this->arrivaldate]);
+                $arrival = formatDate($data[$this->arrivaldate]);
+                $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : '<em>Sin hora de salida.</em>';
 
                 if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
                     $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
@@ -1223,7 +1217,7 @@ class outerPort extends iQuery
                 $tr .= '<tr ' . $attr . '>';
                 $tr .= '<td>' . $data[$this->countervessel] . '</td>';
                 $tr .= '<td>' . $ship->getVesselName($data[$this->vessel]) . '</td>';
-                $tr .= '<td>' . $data[$this->carplate] . '</td>';
+                $tr .= '<td>' . formatCarPlate($data[$this->carplate]) . '</td>';
                 $tr .= '<td>' . $data[$this->guide] . '</td>';
                 $tr .= '<td>' . $data[$this->exporter] . '</td>';
                 $tr .= '<td>' . $data[$this->pallets] . '</td>';
@@ -1284,31 +1278,31 @@ class outerPort extends iQuery
 
             <script>
                 document.getElementById('searchThermoTable').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#thermoTable tbody tr');
-                let visibleCount = 0;
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#thermoTable tbody tr');
+                    let visibleCount = 0;
 
-                rows.forEach(row => {
-                    let text = (
-                    (row.cells[1]?.innerText || '') + ' ' +
-                    (row.cells[2]?.innerText || '') + ' ' +
-                    (row.cells[3]?.innerText || '') + ' ' +
-                    (row.cells[4]?.innerText || '')
-                    ).toLowerCase();
+                    rows.forEach(row => {
+                        let text = (
+                        (row.cells[1]?.innerText || '') + ' ' +
+                        (row.cells[2]?.innerText || '') + ' ' +
+                        (row.cells[3]?.innerText || '') + ' ' +
+                        (row.cells[4]?.innerText || '')
+                        ).toLowerCase();
 
-                    let match = text.includes(filter);
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
+                        row.style.display = match ? '' : 'none';
 
-                    if (match) visibleCount++;
-                });
+                        if (match) visibleCount++;
+                    });
 
-                document.getElementById('totalThermos').innerText = visibleCount;
+                    document.getElementById('totalThermos').innerText = visibleCount;
                 });
             </script>
         ";
@@ -1375,9 +1369,9 @@ class outerPort extends iQuery
 
         foreach ($result as $data) {
             $stayTime = 'No disponible';
-            $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
-            $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
-            $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+            $created = formatDate($data[$this->arrivaldate]);
+            $arrival = formatDate($data[$this->arrivaldate]);
+            $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : 'Sin hora de salida.';
 
             if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                 $arrivalDate = new DateTime($data['arrival_date']);
@@ -1395,7 +1389,7 @@ class outerPort extends iQuery
             $sheet->fromArray([
                 $data[$this->countervessel],
                 $ship->getVesselName($data[$this->vessel]),
-                $data[$this->carplate],
+                formatCarPlate($data[$this->carplate]),
                 $data[$this->guide],
                 $data[$this->exporter],
                 $data[$this->pallets],
@@ -1569,12 +1563,9 @@ class outerPort extends iQuery
                 $attr = null;
                 $stayTime = 'No disponible';
 
-                $createdTime = new DateTime($data[$this->arrivaldate]);
-                $arrivalTime = new DateTime($data[$this->arrivaldate]);
-
-                $created = $createdTime->format('d-m-Y H:i');
-                $arrival = $arrivalTime->format('d-m-Y H:i');
-                $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
+                $created = formatDate($data[$this->arrivaldate]);
+                $arrival = formatDate($data[$this->arrivaldate]);
+                $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : '<em>Sin hora de salida.</em>';
 
                 if ($data[$this->comodity] == 'USDA' || $data[$this->comodity] == 'System Approach') {
                     $comodity = "<button type='button' class='btn btn-danger btn-user btn-sm'><i class='fas fa-exclamation-triangle'></i> " . $data[$this->comodity] . '</button>';
@@ -1602,7 +1593,7 @@ class outerPort extends iQuery
                 $tr .= '<tr ' . $attr . '>';
                 $tr .= '<td>' . $data[$this->countervessel] . '</td>';
                 $tr .= '<td>' . $ship->getVesselName($data[$this->vessel]) . '</td>';
-                $tr .= '<td>' . $data[$this->carplate] . '</td>';
+                $tr .= '<td>' . formatCarPlate($data[$this->carplate]) . '</td>';
                 $tr .= '<td>' . $data[$this->guide] . '</td>';
                 $tr .= '<td>' . $data[$this->exporter] . '</td>';
                 $tr .= '<td>' . $data[$this->pallets] . '</td>';
@@ -1661,31 +1652,31 @@ class outerPort extends iQuery
 
             <script>
                 document.getElementById('searchShipReportTable').addEventListener('keyup', function() {
-                let filter = this.value.toLowerCase().trim();
-                let rows = document.querySelectorAll('#shipReportTable tbody tr');
-                let visibleCount = 0;
+                    let filter = this.value.toLowerCase().trim();
+                    let rows = document.querySelectorAll('#shipReportTable tbody tr');
+                    let visibleCount = 0;
 
-                rows.forEach(row => {
-                    let text = (
-                    (row.cells[1]?.innerText || '') + ' ' +
-                    (row.cells[2]?.innerText || '') + ' ' +
-                    (row.cells[3]?.innerText || '') + ' ' +
-                    (row.cells[4]?.innerText || '')
-                    ).toLowerCase();
+                    rows.forEach(row => {
+                        let text = (
+                        (row.cells[1]?.innerText || '') + ' ' +
+                        (row.cells[2]?.innerText || '') + ' ' +
+                        (row.cells[3]?.innerText || '') + ' ' +
+                        (row.cells[4]?.innerText || '')
+                        ).toLowerCase();
 
-                    let match = text.includes(filter);
+                        let match = text.includes(filter);
 
-                    if (filter.includes(' ')) {
-                    let words = filter.split(' ');
-                    match = words.every(w => text.includes(w));
-                    }
+                        if (filter.includes(' ')) {
+                        let words = filter.split(' ');
+                        match = words.every(w => text.includes(w));
+                        }
 
-                    row.style.display = match ? '' : 'none';
+                        row.style.display = match ? '' : 'none';
 
-                    if (match) visibleCount++;
-                });
+                        if (match) visibleCount++;
+                    });
 
-                document.getElementById('totalShips').innerText = visibleCount;
+                    document.getElementById('totalShips').innerText = visibleCount;
                 });
             </script>
         ";
@@ -1751,9 +1742,9 @@ class outerPort extends iQuery
 
         foreach ($result as $data) {
             $stayTime = 'No disponible';
-            $created = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
-            $arrival = (new DateTime($data[$this->arrivaldate]))->format('d-m-Y H:i');
-            $departure = $data[$this->departuredate] ? (new DateTime($data[$this->departuredate]))->format('d-m-Y H:i') : 'Sin hora de salida.';
+            $created = formatDate($data[$this->arrivaldate]);
+            $arrival = formatDate($data[$this->arrivaldate]);
+            $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : 'Sin hora de salida.';
 
             if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
                 $arrivalDate = new DateTime($data['arrival_date']);
@@ -1771,7 +1762,7 @@ class outerPort extends iQuery
             $sheet->fromArray([
                 $data[$this->countervessel],
                 $ship->getVesselName($data[$this->vessel]),
-                $data[$this->carplate],
+                formatCarPlate($data[$this->carplate]),
                 $data[$this->guide],
                 $data[$this->exporter],
                 $data[$this->pallets],
@@ -1826,7 +1817,7 @@ class outerPort extends iQuery
 
         foreach ($result as $info) {
             $position = (string) $info[$this->countervessel];
-            $carplate = (string) $info[$this->carplate];
+            $carplate = (string) formatCarPlate($info[$this->carplate]);
             $vessel = (string) $info['vessel_name'];
 
             $infoVessel .= '#' . htmlspecialchars($position) . ' / ' . '<b> Patente: </b>' . htmlspecialchars($carplate) . ' / ' . '<b>Nave: </b>' . htmlspecialchars($vessel) . '<br>';
@@ -1884,13 +1875,13 @@ class outerPort extends iQuery
         $total = 0;
 
         foreach ($rows as $r) {
-            $carPlate = htmlspecialchars($r['car_plate'] ?? '');
-            $exporter = htmlspecialchars($r['exporter'] ?? '');
-            $agency = htmlspecialchars($r['agency'] ?? '');
-            $guide = htmlspecialchars($r['guide_number'] ?? '');
-            $container = htmlspecialchars($r['container'] ?? '');
-            $pallets = (int) ($r['pallets_quantity'] ?? 0);
-            $origin = (int) ($r['origin'] ?? 0);
+            $carPlate = htmlspecialchars(formatCarPlate($r[$this->carplate]) ?? '');
+            $exporter = htmlspecialchars($r[$this->exporter] ?? '');
+            $agency = htmlspecialchars($r[$this->agency] ?? '');
+            $guide = htmlspecialchars($r[$this->guide] ?? '');
+            $container = htmlspecialchars($r[$this->container] ?? '');
+            $pallets = (int) ($r[$this->pallets] ?? 0);
+            $origin = (int) ($r[$this->origin] ?? 0);
 
             $total += $pallets;
             $originText = $origin === 1 ? 'Contenedor' : 'Pallets';
@@ -1964,9 +1955,9 @@ class outerPort extends iQuery
             $i++;
             $vid = (int) $data['vessel_id'];
 
-            $eta = (new DateTime($data['eta']))->format('d-m-Y H:i');
-            $etd = (new DateTime($data['etd']))->format('d-m-Y H:i');
-            $fin = (new DateTime($data['finished_date']))->format('d-m-Y H:i');
+            $eta = formatDate($data['eta']);
+            $etd = formatDate($data['etd']);
+            $fin = formatDate($data['finish_date']);
 
             $diff = (new DateTime($data['eta']))->diff(new DateTime($data['etd']));
             $turnos = ceil((($diff->days * 24) + $diff->h) / 8);
@@ -2174,16 +2165,14 @@ class outerPort extends iQuery
                 $origin = (int) ($data['origin'] ?? 0);
                 $originText = $origin === 1 ? 'Contenedor' : 'Pallets';
 
-                $createdTime = new DateTime($data['created']);
-                $arrivalTime = new DateTime($data['arrival_date']);
+                $arrival = formatDate($data[$this->arrivaldate]);
+                $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : '<em>Sin hora de salida.</em>';
 
-                $created = $createdTime->format('d-m-Y H:i');
-                $arrival = $arrivalTime->format('d-m-Y H:i');
-                $departure = $data['departure_date'] ? (new DateTime($data['departure_date']))->format('d-m-Y H:i') : '<em>Sin hora de salida.</em>';
+                $carPlate = formatCarPlate($data[$this->carplate]);
 
-                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
-                    $arrivalDate = new DateTime($data['arrival_date']);
-                    $departureDate = new DateTime($data['departure_date']);
+                if (!empty($data[$this->arrivaldate]) && $data[$this->arrivaldate] !== '0000-00-00 00:00:00' && !empty($data[$this->departuredate]) && $data[$this->departuredate] !== null) {
+                    $arrivalDate = new DateTime($data[$this->arrivaldate]);
+                    $departureDate = new DateTime($data[$this->departuredate]);
 
                     $interval = $arrivalDate->diff($departureDate);
 
@@ -2194,24 +2183,24 @@ class outerPort extends iQuery
                     $stayTime = "{$days}d {$hours}h {$minutes}m";
                 }
 
-                if ($data['arrival_date'] !== '0000-00-00 00:00:00' && $data['departure_date'] === null) {
+                if ($data[$this->arrivaldate] !== '0000-00-00 00:00:00' && $data[$this->departuredate] === null) {
                     $status = "<i class='fas fa-arrow-up text-success'></i> <b style='color:#1cc88a'>Ingreso</b>";
-                } elseif ($data['arrival_date'] !== '0000-00-00 00:00:00' && $data['departure_date'] !== null) {
+                } elseif ($data[$this->arrivaldate] !== '0000-00-00 00:00:00' && $data[$this->departuredate] !== null) {
                     $status = "<i class='fas fa-arrow-down text-danger'></i> <b style='color:#e74a3b'>Egreso</b>";
                 }
 
                 $rows .= "
                     <tr>
-                        <td>{$data['counter_vessel']}</td>
+                        <td>{$data[$this->countervessel]}</td>
                         <td>{$status}</td>
                         <td>{$originText}</td>
-                        <td>{$data['car_plate']}</td>
-                        <td>{$data['guide_number']}</td>
-                        <td>{$data['container']}</td>
-                        <td>{$data['seal_number']}</td>
-                        <td>{$data['exporter']}</td>
-                        <td>{$data['agency']}</td>
-                        <td>{$data['pallets_quantity']}</td>
+                        <td>{$carPlate}</td>
+                        <td>{$data[$this->guide]}</td>
+                        <td>{$data[$this->container]}</td>
+                        <td>{$data[$this->seal]}</td>
+                        <td>{$data[$this->exporter]}</td>
+                        <td>{$data[$this->agency]}</td>
+                        <td>{$data[$this->pallets]}</td>
                         <td>{$vessel}</td>
                         <td>{$shipLine}</td>
                         <td>{$polFlag} {$polName}</td>
@@ -2219,12 +2208,11 @@ class outerPort extends iQuery
                         <td>{$arrival}</td>
                         <td>{$departure}</td>
                         <td>{$stayTime}</td>
-                        <td>{$this->findByUser($data['created_by'])}</td>
+                        <td>{$this->findByUser($data[$this->createdby])}</td>
                     </tr>
                 ";
 
-                $style = "style='width:max-content'";
-                $totalPallets += (int) $data['pallets_quantity'];
+                $totalPallets += (int) $data[$this->pallets];
                 $totalCamiones++;
             }
 
@@ -2378,13 +2366,13 @@ class outerPort extends iQuery
                 $polName = $port->getPortName($data['pol']);
                 $podName = $port->getPortName($data['pod']);
 
-                $originText = ((int) $data['origin'] === 1) ? 'Contenedor' : 'Pallets';
-                $arrival = $data['arrival_date'] ? (new DateTime($data['arrival_date']))->format('d-m-Y H:i') : 'Sin hora de ingreso.';
-                $departure = $data['departure_date'] ? (new DateTime($data['departure_date']))->format('d-m-Y H:i') : 'Sin hora de salida.';
+                $originText = ((int) $data[$this->origin] === 1) ? 'Contenedor' : 'Pallets';
+                $arrival = formatDate($data[$this->arrivaldate]);
+                $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : 'Sin hora de salida.';
 
-                if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
-                    $arrivalDate = new DateTime($data['arrival_date']);
-                    $departureDate = new DateTime($data['departure_date']);
+                if (!empty($data[$this->arrivaldate]) && $data[$this->arrivaldate] !== '0000-00-00 00:00:00' && !empty($data[$this->departuredate]) && $data[$this->departuredate] !== null) {
+                    $arrivalDate = new DateTime($data[$this->arrivaldate]);
+                    $departureDate = new DateTime($data[$this->departuredate]);
 
                     $interval = $arrivalDate->diff($departureDate);
 
@@ -2395,19 +2383,19 @@ class outerPort extends iQuery
                     $stayTime = "{$days}d {$hours}h {$minutes}m";
                 }
 
-                $status = ($data['arrival_date'] && !$data['departure_date']) ? 'Ingreso' : 'Egreso';
+                $status = ($data[$this->arrivaldate] && !$data[$this->departuredate]) ? 'Ingreso' : 'Egreso';
 
                 $sheet->fromArray([
-                    $data['counter_vessel'],
+                    $data[$this->countervessel],
                     $status,
                     $originText,
-                    $data['car_plate'],
-                    $data['guide_number'],
-                    $data['container'],
-                    $data['seal_number'],
-                    $data['exporter'],
-                    $data['agency'],
-                    $data['pallets_quantity'],
+                    formatCarPlate($data[$this->carplate]),
+                    $data[$this->guide],
+                    $data[$this->container],
+                    $data[$this->seal],
+                    $data[$this->exporter],
+                    $data[$this->agency],
+                    $data[$this->pallets],
                     $vessel,
                     $shipLine,
                     $polName,
@@ -2415,10 +2403,10 @@ class outerPort extends iQuery
                     $arrival,
                     $departure,
                     $stayTime,
-                    $this->findByUser($data['created_by']),
+                    $this->findByUser($data[$this->createdby]),
                 ], null, "A{$row}");
 
-                $totalPallets += (int) $data['pallets_quantity'];
+                $totalPallets += (int) $data[$this->pallets];
                 $totalCamiones++;
                 $row++;
             }
@@ -2644,12 +2632,12 @@ class outerPort extends iQuery
                                     $podName = $port->getPortName($data['pod']);
 
                                     $originText = ((int) $data['origin'] === 1) ? 'Contenedor' : 'Pallets';
-                                    $arrival = $data['arrival_date'] ? (new DateTime($data['arrival_date']))->format('d-m-Y H:i') : 'Sin hora de ingreso.';
-                                    $departure = $data['departure_date'] ? (new DateTime($data['departure_date']))->format('d-m-Y H:i') : 'Sin hora de salida.';
+                                    $arrival = formatDate($data[$this->arrivaldate]);
+                                    $departure = $data[$this->departuredate] ? formatDate($data[$this->departuredate]) : 'Sin hora de salida';
 
-                                    if (!empty($data['arrival_date']) && $data['arrival_date'] !== '0000-00-00 00:00:00' && !empty($data['departure_date']) && $data['departure_date'] !== null) {
-                                        $arrivalDate = new DateTime($data['arrival_date']);
-                                        $departureDate = new DateTime($data['departure_date']);
+                                    if (!empty($data[$this->arrivaldate]) && $data[$this->arrivaldate] !== '0000-00-00 00:00:00' && !empty($data[$this->departuredate]) && $data[$this->departuredate] !== null) {
+                                        $arrivalDate = new DateTime($data[$this->arrivaldate]);
+                                        $departureDate = new DateTime($data[$this->departuredate]);
 
                                         $interval = $arrivalDate->diff($departureDate);
 
@@ -2660,23 +2648,23 @@ class outerPort extends iQuery
                                         $stayTime = "{$days}d {$hours}h {$minutes}m";
                                     }
 
-                                    $status = ($data['arrival_date'] && !$data['departure_date']) ? 'Ingreso' : 'Egreso';
+                                    $status = ($data[$this->arrivaldate] && ! $data[$this->departuredate]) ? 'Ingreso' : 'Egreso';
 
-                                    $totalPallets += (int) $data['pallets_quantity'];
+                                    $totalPallets += (int) $data[$this->pallets];
                                     $totalCamiones++;
                                     ?>
 
                                     <tr>
-                                        <td><?= $data['counter_vessel'] ?></td>
+                                        <td><?= $data[$this->countervessel] ?></td>
                                         <td><?= $status ?></td>
                                         <td><?= $originText ?></td>
-                                        <td><?= $data['car_plate'] ?></td>
-                                        <td><?= $data['guide_number'] ?></td>
-                                        <td><?= $data['container'] ?></td>
-                                        <td><?= $data['seal_number'] ?></td>
-                                        <td><?= $data['exporter'] ?></td>
-                                        <td><?= $data['agency'] ?></td>
-                                        <td><?= $data['pallets_quantity'] ?></td>
+                                        <td><?= formatCarPlate($data[$this->carplate]) ?></td>
+                                        <td><?= $data[$this->guide] ?></td>
+                                        <td><?= $data[$this->container] ?></td>
+                                        <td><?= $data[$this->seal]?></td>
+                                        <td><?= $data[$this->exporter] ?></td>
+                                        <td><?= $data[$this->agency] ?></td>
+                                        <td><?= $data[$this->pallets]?></td>
                                         <td><?= $vessel ?></td>
                                         <td><?= $shipLine ?></td>
                                         <td><?= $polName ?></td>
@@ -2684,7 +2672,7 @@ class outerPort extends iQuery
                                         <td><?= $arrival ?></td>
                                         <td><?= $departure ?></td>
                                         <td><?= $stayTime ?></td>
-                                        <td><?= $this->findByUser($data['created_by']) ?></td>
+                                        <td><?= $this->findByUser($data[$this->createdby]) ?></td>
                                     </tr>
                                 <?php endforeach; ?>
 
@@ -2730,11 +2718,7 @@ class outerPort extends iQuery
         ]);
 
         $mpdf->WriteHTML($html);
-
-        $fileName = 'Reporte_Antepuerto_' .
-            str_replace(['°', ' '], ['', '_'], $shiftName) .
-            '_' . date('d-m-Y_H-i-s') . '.pdf';
-
+        $fileName = 'Reporte_Antepuerto_' . str_replace(['°', ' '], ['', '_'], $shiftName) . '_' . date('d-m-Y_H-i-s') . '.pdf';
         $mpdf->Output($fileName, 'D');
 
         exit;
@@ -2748,10 +2732,10 @@ class outerPort extends iQuery
         $sql = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE sh.finished = 0 AND p.departure_date IS NULL ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
         $list = parent::findAllStatic($sql);
         if ($list->length()) {
-            foreach ($list->getCollection() as $r) {
-                $arrival = (new DateTime($r['arrival_date']))->format('d-m-Y H:i') ;
-                $origin = (int) ($r['origin']);
-                $arrivalDate = new DateTime($r['arrival_date']);
+            foreach ($list->getCollection() as $data) {
+                $arrival = $data[$this->arrivaldate] ;
+                $origin = (int) ($data[$this->origin]);
+                $arrivalDate = new DateTime($data[$this->arrivaldate]);
                 $today = new DateTime(date('Y-m-d H:i:s'));
 
                 $interval = $arrivalDate->diff($today);
@@ -2770,15 +2754,15 @@ class outerPort extends iQuery
                     $status = 'high';
                 }
 
-                if ($r['arrival_date'] !== '0000-00-00 00:00:00' && $r['departure_date'] === null) {
+                if ($data[$this->arrivaldate] !== '0000-00-00 00:00:00' && $data[$this->departuredate] === null) {
                     $result[] = [
-                        'carplate' => $r['car_plate'],
-                        'container' => $r['container'],
-                        'exporter' => $r['exporter'],
-                        'ship' => $r['vessel_name'],
+                        'carplate' => formatCarPlate($data[$this->carplate]),
+                        'container' => $data[$this->container],
+                        'exporter' => $data[$this->exporter],
+                        'ship' => $data['vessel_name'],
                         'arrival' => $arrival,
                         'staytime' => $stayTime,
-                        'guide' => $r['guide_number'],
+                        'guide' => $data[$this->guide],
                         'status' => $status,
                         'origin' => $origin,
                     ];

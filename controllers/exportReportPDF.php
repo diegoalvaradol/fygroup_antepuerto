@@ -87,6 +87,7 @@ foreach ($rows as $r) {
     if ($raw !== '' && !in_array($raw, $invalidos, true)) {
         foreach (preg_split('/[,\-\/]+/', $raw) as $c) {
             $c = trim($c);
+
             if ($c !== '' && !in_array($c, $invalidos, true)) {
                 $resumen[$exp]['containers'][$c] = true;
                 $contenedoresGlobal[$c] = true;

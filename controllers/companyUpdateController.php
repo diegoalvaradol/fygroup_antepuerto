@@ -1,21 +1,23 @@
 <?php
+
+declare(strict_types=1);
 require_once __DIR__ . '/../config/includes.php';
-date_default_timezone_set("America/Santiago");
+date_default_timezone_set('America/Santiago');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $isExporter = $_POST['isExporter'] ?? '0';
-  $isAgency   = $_POST['isAgency'] ?? '0';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $isExporter = $_POST['isExporter'] ?? '0';
+    $isAgency = $_POST['isAgency'] ?? '0';
 
-  $company             = new company();
-  $company->id         = $_POST["companyId"];
-  $company->name       = strtoupper($_POST["companyName"]);
-  $company->exporter   = $isExporter;
-  $company->agency     = $isAgency;
-  $company->lastupdate = date('Y-m-d H:i:s');
+    $company = new company();
+    $company->id = $_POST['companyId'];
+    $company->name = strtoupper($_POST['companyName']);
+    $company->exporter = $isExporter;
+    $company->agency = $isAgency;
+    $company->lastupdate = date('Y-m-d H:i:s');
 
-  if ($company->update()) {
-    echo "OK";
-  } else {
-    echo "NOOK";
-  }
+    if ($company->update()) {
+        echo 'OK';
+    } else {
+        echo 'NOOK';
+    }
 }

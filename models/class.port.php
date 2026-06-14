@@ -96,7 +96,7 @@ class port extends iQuery
         if ($result > 0) {
             return $result[$this->id];
         } else {
-            return '-';
+            return null;
         }
     }
 
@@ -139,8 +139,8 @@ class port extends iQuery
         $tr = '';
 
         foreach ($result as $data) {
-            $created = (new DateTime($data[$this->created]))->format('d-m-Y H:i');
-            $updated = (new DateTime($data[$this->lastupdate]))->format('d-m-Y H:i');
+            $created = formatDate($data[$this->created]);
+            $updated = formatDate($data[$this->lastupdate]);
 
             $btnEdit = "<button class='btn btn-warning btn-sm' onclick='editPort(" . $data[$this->id] . ")'><i class='fas fa-pen'></i> Editar</button>";
             $btnDelete = "<button class='btn btn-danger btn-sm' onclick='deletePort(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
