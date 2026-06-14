@@ -62,7 +62,8 @@ $interval = $start->diff($end);
                             Duración estimada:
 
                             <strong>
-                                <?= ($interval->days * 24) + $interval->h ?> horas
+                                <?= $interval->days > 0 ? $interval->days . ' días ' : '' ?>
+                                <?= $interval->h ?> horas
                                 <?= $interval->i ?> minutos
                             </strong>
                         </div>
