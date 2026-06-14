@@ -45,6 +45,15 @@ http_response_code(403);
     <!-- Estilos del sistema -->
     <link href="assets/css/fygroup.css" rel="stylesheet">
     <link href="assets/css/app.css" rel="stylesheet">
+
+    <style>
+       body {
+        background: #f4f6fb;
+        font-family: 'Nunito', sans-serif;
+        margin: 0;
+        padding: 0;
+        }
+    </style>
 </head>
 <body>
     <div class="error-topbar"></div>
