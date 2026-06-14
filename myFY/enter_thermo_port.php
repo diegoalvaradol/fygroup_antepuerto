@@ -652,7 +652,7 @@ $(document).ready(function() {
   $('#vessel').select2({
     allowClear: true,
     tags: false,
-    width: '95%',
+    width: '100%',
     ajax: {
       url: '../controllers/vesselJsonController.php',
       method: 'POST',
@@ -660,14 +660,12 @@ $(document).ready(function() {
       delay: 250,
       data: function (params) {
         return {
-          search: params.term, /* Lo que escribe el usuario */
-          current: 1 /* Muestra las naves que cuentan con una ETA mayor a la fecha actual */
+          search: params.term,
+          current: 1
         };
       },
       processResults: function (data) {
-        return {
-          results: data
-        };
+        return { results: data };
       },
       cache: true
     }
