@@ -70,38 +70,30 @@ $interval = $start->diff($end);
                         </div>
 
                         <div class="maintenance-countdown mt-4 mb-4">
-                            <div class="schedule-header">
-                                <i class="fas fa-hourglass-half"></i>
+                            <h5 class="countdown-title">
+                                <i class="fas fa-hourglass-half mr-2"></i>
                                 Tiempo Restante
-                            </div>
+                            </h5>
 
-                            <div class="row text-center">
-                                <div class="col-3">
-                                    <div class="schedule-box">
-                                        <div class="schedule-date" id="days">00</div>
-                                        <div class="schedule-label">Días</div>
-                                    </div>
+                            <div class="countdown-grid">
+                                <div class="countdown-card">
+                                    <span class="countdown-number" id="days">00</span>
+                                    <span class="countdown-label">Días</span>
                                 </div>
 
-                                <div class="col-3">
-                                    <div class="schedule-box">
-                                        <div class="schedule-date" id="hours">00</div>
-                                        <div class="schedule-label">Horas</div>
-                                    </div>
+                                <div class="countdown-card">
+                                    <span class="countdown-number" id="hours">00</span>
+                                    <span class="countdown-label">Horas</span>
                                 </div>
 
-                                <div class="col-3">
-                                    <div class="schedule-box">
-                                        <div class="schedule-date" id="minutes">00</div>
-                                        <div class="schedule-label">Minutos</div>
-                                    </div>
+                                <div class="countdown-card">
+                                    <span class="countdown-number" id="minutes">00</span>
+                                    <span class="countdown-label">Min</span>
                                 </div>
 
-                                <div class="col-3">
-                                    <div class="schedule-box">
-                                        <div class="schedule-date" id="seconds">00</div>
-                                        <div class="schedule-label">Segundos</div>
-                                    </div>
+                                <div class="countdown-card">
+                                    <span class="countdown-number" id="seconds">00</span>
+                                    <span class="countdown-label">Seg</span>
                                 </div>
                             </div>
                         </div>
