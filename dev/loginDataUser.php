@@ -1,0 +1,179 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$timeout = 1800;
+
+if (isset($_SESSION['last_session']) && (time() - $_SESSION['last_session'] > $timeout)) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
+
+if (!isset($_SESSION['ip'])) {
+    $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+} elseif ($_SESSION['ip'] !== $_SERVER['REMOTE_ADDR']) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
+
+if (!isset($_SESSION['user_agent'])) {
+    $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+} elseif ($_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit();
+}
+
+$_SESSION['last_session'] = time();
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cargando...</title>
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+
+    <!-- Fonts -->
+    <link href="../assets/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Estilos del sistema -->
+    <link href="../assets/css/fygroup.css" rel="stylesheet">
+    <link href="../assets/css/app.css" rel="stylesheet">
+
+    <style>
+       body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container preload-panel">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10">
+                <div class="card preload-card">
+                    <div class="preload-banner text-center">
+                        <img src="../logos/logo-fygroup-circle-v1.png" class="page-logo">
+
+                        <h1>Bienvenido</h1>
+
+                        <p class="mb-0">
+                            <h4><?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?></h4>
+                        </p>
+                    </div>
+
+                    <div class="preload-body text-center">
+                        <div class="loading-spinner"></div>
+
+                        <h3 class="mb-4">
+                            Iniciando Sistema
+                        </h3>
+
+                        <p id="status" class="loading-step">
+                            Inicializando sistema...
+                        </p>
+
+                        <div class="progress mt-4 mb-5">
+                            <div id="bar"
+                                class="progress-bar"
+                                role="progressbar"
+                                style="width:0%">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="status-item">
+                                    <div class="status-icon">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+
+                                    <strong>Usuario</strong>
+
+                                    <div class="text-success mt-2">
+                                        Validado
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <div class="status-item">
+                                    <div class="status-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+
+                                    <strong>Sesión</strong>
+
+                                    <div class="text-success mt-2">
+                                        Activa
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <div class="status-item">
+                                    <div class="status-icon">
+                                        <i class="fas fa-server"></i>
+                                    </div>
+
+                                    <strong>Sistema</strong>
+
+                                    <div class="text-primary mt-2">
+                                        Cargando
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
+</body>
+
+<script>
+    const steps = [
+        { text: "Validando datos...", progress: 25 },
+        { text: "Validando sesión...", progress: 50 },
+        { text: "Cargando preferencias...", progress: 75 },
+        { text: "Entrando al sistema...", progress: 100 }
+    ];
+
+    let i = 0;
+
+    function nextStep() {
+        if (i < steps.length) {
+            document.getElementById("status").innerText = steps[i].text;
+            document.getElementById("bar").style.width = steps[i].progress + "%";
+            i++;
+
+            setTimeout(nextStep, 800);
+        } else {
+            setTimeout(() => {
+            window.location.href = "dashboard.php";
+            }, 400);
+        }
+    }
+
+    nextStep();
+</script>
+</html>

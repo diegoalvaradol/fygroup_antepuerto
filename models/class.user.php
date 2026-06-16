@@ -16,6 +16,7 @@ class user extends iQuery
     public $email = 'email';
     public $password = 'password';
     public $division = 'division'; /* Indica si el usuario pertenece a FYGroup o Portal clientes */
+    public $isdev = 'is_dev'; /* Indica si el usuario es un usuario desarrollador */
     public $isadmin = 'is_admin'; /* Indica si el usuario es un usuario administrador */
     public $isadminedit = 'is_admin_edit'; /* Indica si el usuario es un usuario administrador editor */
     public $isactive = 'is_active'; /* Indica si el usuario se encuentra habilitado */
@@ -32,7 +33,7 @@ class user extends iQuery
 
     public function save()
     {
-        $query = "INSERT INTO $this->table (run, name, last_name, email, password, division, is_admin, is_admin_edit, is_active, last_session, created, last_update) VALUES (:run, :name, :lastname, :email, :password, :division, :isadmin, :isadminedit, :isactive, :lastsession, :created, :lastupdate)";
+        $query = "INSERT INTO $this->table (run, name, last_name, email, password, division, is_dev, is_admin, is_admin_edit, is_active, last_session, created, last_update) VALUES (:run, :name, :lastname, :email, :password, :division, :isdev, :isadmin, :isadminedit, :isactive, :lastsession, :created, :lastupdate)";
         $stmt = $this->db->prepare($query);
 
         $this->run = htmlspecialchars(strip_tags($this->run));
@@ -41,6 +42,7 @@ class user extends iQuery
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         $this->division = htmlspecialchars(strip_tags($this->division));
+        $this->isdev = (int) $this->isdev;
         $this->isadmin = (int) $this->isadmin;
         $this->isadminedit = (int) $this->isadminedit;
         $this->isactive = (int) $this->isactive;
@@ -54,6 +56,7 @@ class user extends iQuery
         $stmt->bindParam(':email', $this->email, PDO::PARAM_STR);
         $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
         $stmt->bindParam(':division', $this->division, PDO::PARAM_STR);
+        $stmt->bindParam(':isdev', $this->isdev, PDO::PARAM_INT);
         $stmt->bindParam(':isadmin', $this->isadmin, PDO::PARAM_INT);
         $stmt->bindParam(':isadminedit', $this->isadminedit, PDO::PARAM_INT);
         $stmt->bindParam(':isactive', $this->isactive, PDO::PARAM_INT);
@@ -109,7 +112,41 @@ class user extends iQuery
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':run', $this->run, PDO::PARAM_STR);
-        $stmt->bindParam(':division', $this->division);
+        $stmt->bindParam(':division', $this->division, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($this->password, $user['password'])) {
+            session_regenerate_id(true);
+
+            unset($user['password']);
+
+            $_SESSION['user'] = $user;
+            $_SESSION['last_session'] = time();
+
+            $updateQuery = 'UPDATE app_users SET last_session = NOW() WHERE run = :run';
+            $updateStmt = $this->db->prepare($updateQuery);
+            $updateStmt->bindParam(':run', $this->run, PDO::PARAM_STR);
+            $updateStmt->execute();
+
+            return $user;
+        }
+
+        return false;
+    }
+
+    public function loginDev()
+    {
+        if (!$this->run || !$this->password) {
+            return false;
+        }
+
+        $query = "SELECT run, name, last_name, email, password, division, is_dev, is_active FROM $this->table WHERE run = :run AND is_dev = :isdev AND is_active = 1 LIMIT 1";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':run', $this->run, PDO::PARAM_STR);
+        $stmt->bindParam(':isdev', $this->isdev, PDO::PARAM_INT);
         $stmt->execute();
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -170,6 +207,18 @@ class user extends iQuery
         }
 
         return false;
+    }
+
+    public function isDev($run)
+    {
+        $query = "SELECT is_dev FROM {$this->table} WHERE run = :run LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':run', $run, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result && (int) $result['is_dev'] === 1;
     }
 
     public function isAdmin($run)
@@ -261,6 +310,7 @@ class user extends iQuery
         $thead .= '<th>Apellido</th>';
         $thead .= '<th>Email</th>';
         $thead .= '<th>División</th>';
+        $thead .= '<th>Desarrollador</th>';
         $thead .= '<th>Administrador</th>';
         $thead .= '<th>Administrador Editor</th>';
         $thead .= '<th>¿Activo?</th>';
@@ -272,6 +322,7 @@ class user extends iQuery
 
         foreach ($result as $data) {
             $lastSession = formatDate($data[$this->lastsession]);
+            $colorDev = $data[$this->isdev] ? 'text-success' : 'text-danger';
             $colorAdmin = $data[$this->isadmin] ? 'text-success' : 'text-danger';
             $colorAdminEdit = $data[$this->isadminedit] ? 'text-success' : 'text-danger';
             $colorActive = $data[$this->isactive] ? 'text-success' : 'text-danger';
@@ -301,6 +352,7 @@ class user extends iQuery
             $tr .= "<td>{$data[$this->lastname]}</td>";
             $tr .= "<td>{$data[$this->email]}</td>";
             $tr .= "<td>{$arrayDivision[$data[$this->division]]}</td>";
+            $tr .= "<td class='{$colorDev}'>{$arrayYesNo[$data[$this->isdev]]}</td>";
             $tr .= "<td class='{$colorAdmin}'>{$arrayYesNo[$data[$this->isadmin]]}</td>";
             $tr .= "<td class='{$colorAdminEdit}'>{$arrayYesNo[$data[$this->isadminedit]]}</td>";
             $tr .= "<td class='{$colorActive}'>{$arrayYesNo[$data[$this->isactive]]}</td>";

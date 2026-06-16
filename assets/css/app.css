@@ -4,16 +4,19 @@
 @import 'forms.css';
 @import 'select2.css';
 @import 'components.css';
+@import 'modal.css';
 
 /* layout */
+@import 'layout.css';
 @import 'sidebar.css';
 @import 'tapbar.css';
 @import 'footer.css';
 
-/* overlays */
-@import 'modal.css';
+/* mobile */
 @import 'mobile.css';
-@import 'layout.css';
+
+/* página preload */
+@import 'preload.css';
 
 /* páginas especiales */
 @import 'error.css';

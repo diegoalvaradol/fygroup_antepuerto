@@ -18,11 +18,17 @@ $user->password = $password;
 $user->division = $division;
 $user->lastsession = date('Y-m-d H:i:s');
 
-$sql = 'SELECT run, division, is_active FROM app_users WHERE run = :run LIMIT 1';
+$sql = 'SELECT run, is_dev, division, is_active FROM app_users WHERE run = :run LIMIT 1';
 $list = $user->getFirstMember($sql, ['run' => $run]);
 
 if (!$list) {
     echo 'NOOK';
+
+    exit;
+}
+
+if ((int) $list['is_dev'] === 1) {
+    echo 'NOOK4';
 
     exit;
 }
@@ -35,6 +41,7 @@ if ((int) $list['is_active'] === 0) {
 
 if ($list['division'] !== $division) {
     echo 'NOOK2';
+
     exit;
 }
 

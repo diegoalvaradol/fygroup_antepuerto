@@ -43,79 +43,91 @@ $footer = menu::footerSSL();
 </head>
 
 <style>
-  body {
-    background: url("../images/coquimbo_port_background_5.jpg") no-repeat center center fixed;
-    background-size: cover;
-    position: relative;
-  }
-
-  body::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-  }
-
-  .login-wrapper {
-    position: relative;
-    z-index: 2;
-  }
-
-  .login-card {
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 25px 60px rgba(0,0,0,.25);
-  }
-
-  .login-card input {
-    border-radius: 12px;
-    height: 48px;
-  }
-
-  .login-card .input-group-text {
-    background: #f8f9fc;
-    border-radius: 12px 0 0 12px;
-  }
-
-  .btn-login {
-    height: 48px;
-    border-radius: 12px;
-    font-weight: 600;
-    letter-spacing: .5px;
-  }
-
-  .logo-img {
-    max-height: 100px;
-  }
-
-  .divider {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-  }
-
-  .divider::before,
-  .divider::after {
-    content: '';
-    flex: 1;
-    border-top: 1px solid #b9bcc0;
-  }
-
-  .divider span {
-    padding: 0 12px;
-    color: #6c757d;
-    font-size: 12px;
-  }
-
-  @media (max-width: 576px) {
-    .login-card {
-      margin: 1rem;
-      padding: 1rem;
+    #bg-video {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        z-index: 0;
+        filter: brightness(-0.5);
     }
-  }
+
+    .video-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1;
+    }
+
+    .login-wrapper {
+        position: relative;
+        z-index: 2;
+    }
+
+    .login-card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 25px 60px rgba(0,0,0,.25);
+    }
+
+    .login-card input {
+        border-radius: 12px;
+        height: 48px;
+    }
+
+    .login-card .input-group-text {
+        background: #f8f9fc;
+        border-radius: 12px 0 0 12px;
+    }
+
+    .btn-login {
+        height: 48px;
+        border-radius: 12px;
+        font-weight: 600;
+        letter-spacing: .5px;
+    }
+
+    .logo-img {
+        max-height: 100px;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-top: 1px solid #b9bcc0;
+    }
+
+    .divider span {
+        padding: 0 12px;
+        color: #6c757d;
+        font-size: 12px;
+    }
+
+    @media (max-width: 576px) {
+        .login-card {
+        margin: 1rem;
+        padding: 1rem;
+        }
+    }
 </style>
 
 <body>
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="../images/fygroup_port.mov" type="video/mp4">
+    </video>
+
+    <div class="video-overlay"></div>
     <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-xl-4 col-lg-5 col-md-7">
             <div class="card login-card p-4">
@@ -150,25 +162,25 @@ $footer = menu::footerSSL();
                         <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
                         <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                     </button>
-
-                    <div class="divider">
-                        <span>Soporte</span>
-                    </div>
-
-                    <div class="mt-3">
-                        <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" class="btn btn-outline-success btn-block">
-                            <i class="fab fa-whatsapp mr-2"></i>
-                            Soporte por WhatsApp
-                        </a>
-                    </div>
-
-                    <div class="text-center mt-3">
-                        <small class="text-muted">
-                            ¿Tienes problemas con tu cuenta?
-                            <a href="mailto:soporte@fygroup.cl">Escríbenos</a>
-                        </small>
-                    </div>
                 </form>
+
+                <div class="divider">
+                    <span>Soporte</span>
+                </div>
+
+                <div class="mt-3">
+                    <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" class="btn btn-outline-success btn-block">
+                        <i class="fab fa-whatsapp mr-2"></i>
+                        Soporte por WhatsApp
+                    </a>
+                </div>
+
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        ¿Tienes problemas con tu cuenta?
+                        <a href="mailto:soporte@fygroup.cl">Escríbenos</a>
+                    </small>
+                </div>
             </div>
         </div>
 
@@ -252,6 +264,13 @@ $footer = menu::footerSSL();
       switch (res) {
         case 'OK':
           window.location.href = 'loginDataUser.php';
+          break;
+
+        case 'NOOK4':
+          showError(
+            'Tu usuario se emcuentra asociado a perfil de desarrollador.',
+            'info'
+          );
           break;
 
         case 'NOOK3':

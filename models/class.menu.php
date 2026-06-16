@@ -12,8 +12,41 @@ class menu extends iQuery
 
     public static function menu()
     {
-        $admin = (new user())->isAdmin($_SESSION['user']['run']);
+        $user = new user();
 
+        if ($user->isDev($_SESSION['user']['run'])) {
+            return self::developerMenu();
+        }
+
+        $menus = self::userMenu();
+
+        if ($user->isAdmin($_SESSION['user']['run'])) {
+            $menus = array_merge($menus, self::adminMenu());
+        }
+
+        return $menus;
+    }
+
+    private static function developerMenu()
+    {
+        $menus = [
+                [
+                    'title' => 'Desarrollador',
+                    'icon' => 'fa-code',
+                    'id' => 'collapseDeveloper',
+                    'items' => [
+                        ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console', 'dev')],
+                        ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup', 'dev')],
+                    ],
+                ],
+
+            ];
+
+        return $menus;
+    }
+
+    private static function userMenu()
+    {
         $menus = [
             [
                 'title' => 'Operaciones',
@@ -73,7 +106,7 @@ class menu extends iQuery
                     ['label' => 'Crear Portada', 'link' => generateMkey('cover_maker')],
                 ],
             ],
-            $menus[] = [
+            [
                 'title' => 'Layout',
                 'icon' => 'fa-satellite',
                 'id' => 'collapseLayout',
@@ -83,8 +116,13 @@ class menu extends iQuery
             ],
         ];
 
-        if ($admin) {
-            $menus[] = [
+        return $menus;
+    }
+
+    private static function adminMenu()
+    {
+        $menus = [
+            [
                 'title' => 'Maersk',
                 'icon' => 'fa-ship',
                 'id' => 'collapseMaersk',
@@ -95,9 +133,8 @@ class menu extends iQuery
                     ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
                     ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')],
                 ],
-            ];
-
-            $menus[] = [
+            ],
+            [
                 'title' => 'MSC',
                 'icon' => 'fa-ship',
                 'id' => 'collapseMedlog',
@@ -106,9 +143,8 @@ class menu extends iQuery
                     ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
                     ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')],
                 ],
-            ];
-
-            $menus[] = [
+            ],
+            [
                 'title' => 'Reportes',
                 'icon' => 'fa-file-pdf',
                 'id' => 'collapseReporte',
@@ -117,46 +153,40 @@ class menu extends iQuery
                     ['label' => 'Liquidación de Nave', 'link' => generateMkey('vessel_liquidation')],
                     ['label' => 'Reporte de Turno', 'link' => generateMkey('shifts_report')],
                 ],
-            ];
-
-            $menus[] = [
+            ],
+            [
                 'title' => 'Estadística',
                 'icon' => 'fa-chart-bar',
                 'id' => 'collapseEstadistica',
                 'items' => [
                     ['label' => 'Estadística Naves', 'link' => generateMkey('stadistics_by_vessel')],
                 ],
-            ];
-
-            $menus[] = [
+            ],
+            [
                 'title' => 'Tarifario',
                 'icon' => 'fa-dollar-sign',
                 'id' => 'collapsePrecio',
                 'items' => [
                     ['label' => 'Lista de Tarifas ', 'link' => generateMkey('list_price_indicators')],
                 ],
-            ];
-
-            $menus[] = [
+            ],
+            [
                 'title' => 'Usuarios',
                 'icon' => 'fa-users',
                 'id' => 'collapseUser',
                 'items' => [
                     ['label' => 'Usuarios', 'link' => generateMkey('enter_user')],
                 ],
-            ];
-
-            $menus[] = [
+            ],
+            [
                 'title' => 'Servidor',
                 'icon' => 'fa-server',
                 'id' => 'collapseServer',
                 'items' => [
-                    ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console')],
-                    ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup')],
                     ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')],
                 ],
-            ];
-        }
+            ],
+        ];
 
         return $menus;
     }

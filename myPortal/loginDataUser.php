@@ -39,131 +39,115 @@ $_SESSION['last_session'] = time();
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Cargando...</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Cargando...</title>
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
 
-  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-  <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-  <link href="../assets/css/fygroup.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Fonts -->
+    <link href="../assets/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
+
+    <!-- Estilos del sistema -->
+    <link href="../assets/css/fygroup.css" rel="stylesheet">
+    <link href="../assets/css/app.css" rel="stylesheet">
 
     <style>
-    body {
-        margin: 0;
-        font-family: system-ui, -apple-system, sans-serif;
-        background: linear-gradient(135deg, #0f172a, #1e293b);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-    }
-
-    .card {
-        backdrop-filter: blur(14px);
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.08);
-        padding: 2.5rem 2rem;
-        border-radius: 18px;
-        text-align: center;
-        color: #fff;
-        width: 320px;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    }
-
-    h1 {
-        margin: 0;
-        font-size: 1.6rem;
-    }
-
-    h2 {
-        font-size: 0.95rem;
-        font-weight: 400;
-        color: #94a3b8;
-        margin-bottom: 1.5rem;
-    }
-
-    p {
-        margin: 0.3rem 0;
-        font-size: 0.9rem;
-        color: #94a3b8;
-    }
-
-    /* PROGRESS BAR */
-    .progress {
-        margin-top: 1.5rem;
-        width: 100%;
-        height: 6px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .progress-bar {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #38bdf8, #6366f1);
-        transition: width 0.2s ease;
-    }
-
-    /* LOADER */
-    .loader-wrap {
-        display: flex;
-        justify-content: center;
-        margin-top: 1.5rem;
-    }
-
-    .loader {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: 3px solid rgba(255,255,255,0.2);
-        border-top-color: #38bdf8;
-        animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
+       body {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 
-<body class="bg-light d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow-lg border-0 rounded-lg p-5 text-center" style="max-width: 500px; width: 95%;">
-        <div class="mb-4">
-            <div class=" d-inline-flex justify-content-center align-items-center" style="width:90px; height:90px; font-size:40px;">
-                <img src="../logos/logo-fygroup-circle-v1.png" style="width:90%">
+<body>
+    <div class="container preload-panel">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10">
+                <div class="card preload-card">
+                    <div class="preload-banner text-center">
+                        <img src="../logos/logo-fygroup-circle-v1.png" class="page-logo">
+
+                        <h1>Bienvenido</h1>
+
+                        <p class="mb-0">
+                            <h4><?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?></h4>
+                        </p>
+                    </div>
+
+                    <div class="preload-body text-center">
+                        <div class="loading-spinner"></div>
+
+                        <h3 class="mb-4">
+                            Iniciando Sistema
+                        </h3>
+
+                        <p id="status" class="loading-step">
+                            Inicializando sistema...
+                        </p>
+
+                        <div class="progress mt-4 mb-5">
+                            <div id="bar"
+                                class="progress-bar"
+                                role="progressbar"
+                                style="width:0%">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="status-item">
+                                    <div class="status-icon">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+
+                                    <strong>Usuario</strong>
+
+                                    <div class="text-success mt-2">
+                                        Validado
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <div class="status-item">
+                                    <div class="status-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+
+                                    <strong>Sesión</strong>
+
+                                    <div class="text-success mt-2">
+                                        Activa
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <div class="status-item">
+                                    <div class="status-icon">
+                                        <i class="fas fa-server"></i>
+                                    </div>
+
+                                    <strong>Sistema</strong>
+
+                                    <div class="text-primary mt-2">
+                                        Cargando
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <h1 class="h3 font-weight-bold text-muted mb-2">
-            Bienvenido 👋
-        </h1>
-
-        <h2 class="h5 text-primary mb-4">
-            <?= htmlspecialchars($_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name']) ?>
-        </h2>
-
-        <p id="status" class="text-muted mb-4">
-            Inicializando sistema...
-        </p>
-
-        <div class="progress mb-4" style="height: 12px; border-radius: 20px; overflow: hidden;">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="bar" role="progressbar" style="width: 0%"></div>
-        </div>
-
-        <div class="loader-wrap d-flex justify-content-center">
-            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
-                <span class="sr-only">Cargando...</span>
-            </div>
-        </div>
-
-        <div class="mt-4 text-muted small">
-            Espere un momento mientras cargamos tu información.
         </div>
     </div>
+
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
 </body>
 
 <script>
@@ -177,17 +161,17 @@ $_SESSION['last_session'] = time();
     let i = 0;
 
     function nextStep() {
-    if (i < steps.length) {
-        document.getElementById("status").innerText = steps[i].text;
-        document.getElementById("bar").style.width = steps[i].progress + "%";
-        i++;
+        if (i < steps.length) {
+            document.getElementById("status").innerText = steps[i].text;
+            document.getElementById("bar").style.width = steps[i].progress + "%";
+            i++;
 
-        setTimeout(nextStep, 800);
-    } else {
-        setTimeout(() => {
-        window.location.href = "dashboard.php";
-        }, 400);
-    }
+            setTimeout(nextStep, 800);
+        } else {
+            setTimeout(() => {
+            window.location.href = "dashboard.php";
+            }, 400);
+        }
     }
 
     nextStep();
