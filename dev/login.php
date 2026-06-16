@@ -35,32 +35,20 @@ $footer = menu::footerSSL();
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <script src="../assets/js/sidebar.js"></script>
 </head>
 
 <style>
-    #bg-video {
+    canvas {
+        background: url('../images/developer_background.png');
+        background: #0f172a;
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        min-width: 100%;
-        min-height: 100%;
-        object-fit: cover;
-        pointer-events: none;
-        z-index: 0;
-        filter: brightness(-0.5);
-    }
-
-    .video-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: 1;
     }
 
     .login-wrapper {
@@ -114,6 +102,48 @@ $footer = menu::footerSSL();
         font-size: 12px;
     }
 
+    .btn-access{
+        width:48%;
+        height:70px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:12px;
+        border-radius:14px;
+        text-decoration:none;
+        font-weight:600;
+        background:#fff;
+        transition:all .25s ease;
+    }
+
+    .btn-access i{
+        font-size:22px;
+    }
+
+    /* FY */
+    .btn-fy{
+        border:2px solid #0d6efd;
+        color:#0d6efd;
+    }
+
+    .btn-fy:hover{
+        background:#0d6efd;
+        color:#fff;
+        text-decoration:none;
+    }
+
+    /* Portal */
+    .btn-portal{
+        border:2px solid #198754;
+        color:#198754;
+    }
+
+    .btn-portal:hover{
+        background:#198754;
+        color:#fff;
+        text-decoration:none;
+    }
+
     @media (max-width: 576px) {
         .login-card {
         margin: 1rem;
@@ -123,18 +153,14 @@ $footer = menu::footerSSL();
 </style>
 
 <body>
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="../images/fygroup_port.mov" type="video/mp4">
-    </video>
-
-    <div class="video-overlay"></div>
+    <canvas id="canvas"></canvas>
     <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-xl-4 col-lg-5 col-md-7">
             <div class="card login-card p-4">
                 <div class="text-center mb-4">
                     <img src="../logos/logo-fygroup-circle-v1.png" class="logo-img mb-3">
                     <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
-                    <small class="text-muted">Acceso Personal</small>
+                    <small class="text-muted">Acceso Desarrolladores</small>
                 </div>
 
                 <form id="loginForm">
@@ -162,25 +188,24 @@ $footer = menu::footerSSL();
                         <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
                         <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                     </button>
+
+                    <div class="divider">
+                        <span>Acceso Rápido</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="../myFY/login.php" class="btn-access btn-fy">
+                            <i class="fas fa-ship"></i>
+                            <span>MY FY</span>
+                        </a>
+
+                        <a href="../myPortal/login.php" class="btn-access btn-portal">
+                            <i class="fas fa-user"></i>
+                            <span>PORTAL</span>
+                        </a>
+                    </div>
+
                 </form>
-
-                <div class="divider">
-                    <span>Soporte</span>
-                </div>
-
-                <div class="mt-3">
-                    <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" class="btn btn-outline-success btn-block">
-                        <i class="fab fa-whatsapp mr-2"></i>
-                        Soporte por WhatsApp
-                    </a>
-                </div>
-
-                <div class="text-center mt-3">
-                    <small class="text-muted">
-                        ¿Tienes problemas con tu cuenta?
-                        <a href="mailto:soporte@fygroup.cl">Escríbenos</a>
-                    </small>
-                </div>
             </div>
         </div>
 
@@ -192,10 +217,122 @@ $footer = menu::footerSSL();
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="../assets/js/fygroup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/js/sidebar.js"></script>
 </body>
 </html>
 
 <script>
+  var canvas = document.getElementById("canvas"),
+  ctx = canvas.getContext('2d');
+
+  // Ajustar el número de estrellas según el tamaño de la ventana
+  var screenWidth = window.innerWidth;
+  var x = 100; // Número de estrellas por defecto
+
+  if (screenWidth < 768) {
+    // Si la pantalla es menor a 768px (típico de un teléfono), reducimos los puntos
+    x = 20; // Reducir el número de estrellas
+  } else if (screenWidth < 480) {
+    // Si es menor a 480px (teléfonos más pequeños)
+    x = 15; // Aún menos estrellas
+  }
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var stars = [],
+    FPS = 60,
+    mouse = {
+      x: 0,
+      y: 0
+    };  // Ubicación del mouse
+
+    // Añadir estrellas al array
+  for (var i = 0; i < x; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1 + 1,
+      vx: Math.floor(Math.random() * 50) - 25,
+      vy: Math.floor(Math.random() * 50) - 25
+    });
+  }
+
+    // Dibuja la escena
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.globalCompositeOperation = "lighter";
+
+    for (var i = 0, x = stars.length; i < x; i++) {
+      var s = stars[i];
+
+      ctx.fillStyle = "#ff6f00";
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillStyle = 'black';
+      ctx.stroke();
+    }
+
+    ctx.beginPath();
+    for (var i = 0, x = stars.length; i < x; i++) {
+      var starI = stars[i];
+      ctx.moveTo(starI.x, starI.y);
+      if (distance(mouse, starI) < 150) ctx.lineTo(mouse.x, mouse.y);
+        for (var j = 0, x = stars.length; j < x; j++) {
+          var starII = stars[j];
+          if (distance(starI, starII) < 150) {
+            ctx.lineTo(starII.x, starII.y);
+          }
+        }
+    }
+    ctx.lineWidth = 0.05;
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+  }
+
+  function distance(point1, point2) {
+    var xs = 0;
+    var ys = 0;
+
+    xs = point2.x - point1.x;
+    xs = xs * xs;
+
+    ys = point2.y - point1.y;
+    ys = ys * ys;
+
+    return Math.sqrt(xs + ys);
+  }
+
+    // Actualizar la ubicación de las estrellas
+  function update() {
+    for (var i = 0, x = stars.length; i < x; i++) {
+      var s = stars[i];
+
+      s.x += s.vx / FPS;
+      s.y += s.vy / FPS;
+
+      if (s.x < 0 || s.x > canvas.width) s.vx = -s.vx;
+      if (s.y < 0 || s.y > canvas.height) s.vy = -s.vy;
+    }
+  }
+
+  canvas.addEventListener('mousemove', function (e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  // Actualizar y dibujar
+  function tick() {
+    draw();
+    update();
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+
   var formatearRun = function (inputRun) {
     let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
     let cuerpo = rut.slice(0, -1);
@@ -229,7 +366,6 @@ $footer = menu::footerSSL();
   var loadSession = function () {
     const run      = $('#run').val().trim();
     const password = $('#password').val();
-    const division = 'fy';
 
     const $btn     = $('#loadBtn');
     const $text    = $('#loadBtnText');
@@ -255,8 +391,8 @@ $footer = menu::footerSSL();
 
     toggleLoading(true);
 
-    $.post('../controllers/loginController.php',
-      $('#loginForm').serialize() + '&division=' + encodeURIComponent(division)
+    $.post('../controllers/loginDevController.php',
+      $('#loginForm').serialize()
     )
     .done((res) => {
       res = res.trim();
@@ -264,13 +400,6 @@ $footer = menu::footerSSL();
       switch (res) {
         case 'OK':
           window.location.href = 'loginDataUser.php';
-          break;
-
-        case 'NOOK4':
-          showError(
-            'Tu usuario se emcuentra asociado a perfil de desarrollador.',
-            'info'
-          );
           break;
 
         case 'NOOK3':
@@ -281,7 +410,7 @@ $footer = menu::footerSSL();
           break;
 
         case 'NOOK2':
-          showError('Tu perfil no se encuentra asociado a FYGroup.');
+          showError('Tu perfil no pertenece a una cuenta de Desarrollador.');
           break;
 
         case 'NOOK':

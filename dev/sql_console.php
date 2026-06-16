@@ -3,10 +3,10 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
 $user = new user();
-$admin = $user->isAdmin($_SESSION['user']['run']);
+$dev = $user->isDev($_SESSION['user']['run']);
 $footer = menu::footerSSL();
 
-if (!$admin) {
+if (!$dev) {
     $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
     $pag = basename(__FILE__);
     $url = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";

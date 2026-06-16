@@ -3,9 +3,10 @@ session_start();
 
 // Tiempo máximo de inactividad en segundos (30 minutos)
 $max_inactivity = 30 * 60;
+$uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 // Por defecto, redirigir a login
-$redirect_url = 'myFY/login.php';
+$redirect_url = $uriPath . 'login.php';
 
 // Verifica si hay sesión activa y no expirada
 if (isset($_SESSION['user_id'])) {
@@ -15,7 +16,7 @@ if (isset($_SESSION['user_id'])) {
         // Sesión expirada
         session_unset();
         session_destroy();
-        $redirect_url = 'myFY/login.php';
+        $redirect_url = $uriPath . 'login.php';
     }
 }
 
@@ -36,22 +37,22 @@ http_response_code(401);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Error 401</title>
     <meta http-equiv="refresh" content="5;url=<?php echo $redirect_url; ?>">
-    <link rel="icon" type="image/png" href="favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
 
     <!-- Fonts -->
-    <link href="assets/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Estilos del sistema -->
-    <link href="assets/css/fygroup.css" rel="stylesheet">
-    <link href="assets/css/app.css" rel="stylesheet">
+    <link href="../assets/css/fygroup.css" rel="stylesheet">
+    <link href="../assets/css/app.css" rel="stylesheet">
 
     <style>
        body {
-        background: #f4f6fb;
-        font-family: 'Nunito', sans-serif;
-        margin: 0;
-        padding: 0;
+            background: #f4f6fb;
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
@@ -62,7 +63,7 @@ http_response_code(401);
             <div class="col-xl-8 col-lg-10">
                 <div class="card error-card">
                     <div class="error-banner text-center">
-                        <img src="logos/logo-fygroup-circle-v1.png" alt="FYGroup" class="page-logo">
+                        <img src="../logos/logo-fygroup-circle-v1.png" alt="FYGroup" class="page-logo">
 
                         <h1>Error 401</h1>
 
@@ -150,10 +151,10 @@ http_response_code(401);
         </div>
     </div>
 
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="assets/js/fygroup.js"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
 </body>
 </html>
 
