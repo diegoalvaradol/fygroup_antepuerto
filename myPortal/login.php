@@ -86,6 +86,14 @@ $footer = menu::footerSSL();
   .logo-img {
     max-height: 90px;
   }
+
+  .input-group{
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: 100%;
+  }
 </style>
 
 <body>
