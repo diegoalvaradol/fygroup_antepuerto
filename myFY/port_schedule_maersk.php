@@ -257,62 +257,59 @@ var loadPortSchedules = function() {
 };
 
 var bookVesselSystem = function(vessel, line, voyage, eta, etd, pol, pod, api) {
-  $.ajax({
-    url: '../controllers/shipController.php',
-    type: 'POST',
-    data: {
-      vessel: vessel,
-      line: line,
-      voyage: voyage,
-      eta: eta,
-      etd: etd,
-      pol: pol,
-      pod: pod,
-      api: api
-    },
-  }).done(function(x) {
-    Swal.fire({
-      title: "¿Estás seguro de realizar esta acción?",
-      text: "Crear nave de manera automática en el sistema a partir de los datos entregados por Itinerario de Maersk.",
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonColor: "#4CAF50",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, crear",
-      cancelButtonText: "No, cancelar"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if(x == 'OK'){
+  Swal.fire({
+    title: "¿Estás seguro de realizar esta acción?",
+    text: "Crear nave de manera automática en el sistema a partir de los datos entregados por Itinerario de Maersk.",
+    icon: "info",
+    showCancelButton: true,
+    confirmButtonColor: "#4CAF50",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, crear",
+    cancelButtonText: "No, cancelar"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: '../controllers/shipController.php',
+        type: 'POST',
+        data: {
+          vessel: vessel,
+          line: line,
+          voyage: voyage,
+          eta: eta,
+          etd: etd,
+          pol: pol,
+          pod: pod,
+          api: api
+        }
+      }).done(function(x) {
+        if (x === 'OK') {
           Swal.fire({
             title: '¡Éxito!',
             text: '¡Motonave creada con éxito!',
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           });
-        } else if (x == 'NOOK'){
+        } else if (x === 'NOOK') {
           Swal.fire({
             title: 'Oops...',
             text: 'Error al crear la nave.',
-            icon: 'error',
-            cancelButtonColor: '#d33',
+            icon: 'error'
           });
-        }else{
+        } else {
           Swal.fire({
             title: 'Validación',
             text: x,
-            icon: 'warning',
-            cancelButtonColor: '#d33',
+            icon: 'warning'
           });
         }
-      }else if(result.dismiss){
-        Swal.fire({
-        title: 'Oops...',
-        text: 'Operación cancelado por el usuario.',
-        icon: 'error',
-        cancelButtonColor: '#d33',
-        });
-      }
-    });
+      });
+    } else {
+      Swal.fire({
+        title: 'Cancelado',
+        text: 'Operación cancelada por el usuario.',
+        icon: 'info'
+      });
+    }
   });
 }
 
