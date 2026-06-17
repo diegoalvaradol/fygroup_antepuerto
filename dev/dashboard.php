@@ -16,7 +16,6 @@ $sideBarSSL = menu::sideBarSSL();
 $mainTapBarSSL = menu::mainTapBarSSL();
 $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
-$whatsAppBtn = UIComponents::whatsappChatBox();
 $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 ?>
 
@@ -111,9 +110,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
     <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-    <!-- Chat flotante expandible estilo WhatsApp - Responsive -->
-    <?php echo $whatsAppBtn; ?>
 </body>
 </html>
 
