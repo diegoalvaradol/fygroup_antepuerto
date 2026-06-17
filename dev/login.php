@@ -101,49 +101,6 @@ $footer = menu::footerSSL();
         color: #6c757d;
         font-size: 12px;
     }
-
-    .btn-access{
-        width:48%;
-        height:70px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:12px;
-        border-radius:14px;
-        text-decoration:none;
-        font-weight:600;
-        background:#fff;
-        transition:all .25s ease;
-    }
-
-    .btn-access i{
-        font-size:22px;
-    }
-
-    /* FY */
-    .btn-fy{
-        border:2px solid #0d6efd;
-        color:#0d6efd;
-    }
-
-    .btn-fy:hover{
-        background:#0d6efd;
-        color:#fff;
-        text-decoration:none;
-    }
-
-    /* Portal */
-    .btn-portal{
-        border:2px solid #198754;
-        color:#198754;
-    }
-
-    .btn-portal:hover{
-        background:#198754;
-        color:#fff;
-        text-decoration:none;
-    }
-
     @media (max-width: 576px) {
         .login-card {
         margin: 1rem;
@@ -190,21 +147,22 @@ $footer = menu::footerSSL();
                     </button>
 
                     <div class="divider">
-                        <span>Acceso Rápido</span>
+                        <span>Accesos Rápidos Login</span>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="../myFY/login.php" class="btn-access btn-fy">
+                    <div class="mt-3">
+                        <a href="../myFY/login.php" class="btn btn-outline-primary btn-block">
                             <i class="fas fa-ship"></i>
-                            <span>MY FY</span>
-                        </a>
-
-                        <a href="../myPortal/login.php" class="btn-access btn-portal">
-                            <i class="fas fa-user"></i>
-                            <span>PORTAL</span>
+                            Acceso FYGroup
                         </a>
                     </div>
 
+                    <div class="mt-3">
+                        <a href="../myPortal/login.php" class="btn btn-outline-success btn-block">
+                            <i class="fas fa-user"></i>
+                            Acceso Portal Cliente
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
