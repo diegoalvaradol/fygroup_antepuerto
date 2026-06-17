@@ -5,6 +5,7 @@ declare(strict_types=1);
 $fromDate = $_POST['fromDate'] ?? date('Y-m-d');
 $toDate = $_POST['toDate'] ?? date('Y-m-d', strtotime('+30 days'));
 $port = $_POST['port'];
+$hoy = new DateTime();
 
 $url = 'https://api.maersk.com/synergy/schedules/port-calls?' . http_build_query([
     'portCode' => $port,
@@ -28,8 +29,7 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 $data = json_decode($response, true);
-
-$hoy = new DateTime();
+$totalPortCalls = count($data['portCalls'] ?? []);
 
 ob_start();
 ?>
@@ -53,6 +53,8 @@ ob_start();
 }
 </style>
 
+<h1 class='h3 mb-1 text-gray-800 d-inline'>Listado</h1>
+<em>(Total: <span id='totalPortCalls'><?php echo number_format($totalPortCalls, 0, ',', '.')?></span>)</em>
 <?php foreach (($data['portCalls'] ?? []) as $row): ?>
     <?php
     $fechaLlegada = new DateTime($row['arrivalTime']);
@@ -125,7 +127,7 @@ ob_start();
                     </div>
                 </div>
 
-                <div class="col-lg-1 col-md-12 mb-3">
+                <div class="col-lg-2 col-md-12 mb-3">
                     <div class="text-muted small font-weight-bold text-uppercase mb-1">
                         Destino <em>(POD)</em>
                     </div>
@@ -145,31 +147,32 @@ ob_start();
                     </div>
                 </div>
 
-                <div class="col-lg-1 col-md-12 mb-3">
+                <div class="col-lg-2 col-md-12 mb-3">
                     <div class="text-muted small font-weight-bold text-uppercase mb-1">
                         Añadir a Sistema
                     </div>
 
                     <div>
                         <?php if ($allowCreate) : ?>
-                            <button
-                                type="button"
-                                class="btn btn-success btn-user"
-                                onclick="bookVesselSystem(
-                                    '<?= addslashes($row['vesselName']) ?>',
-                                    'MAERSK LINE',
-                                    '<?= addslashes($row['departureVoyageNumber']) ?>',
-                                    '<?= $row['arrivalTime'] ?>',
-                                    '<?= $row['departureTime'] ?>',
-                                    '<?= $pol ?>',
-                                    '<?= $podCode ?>',
-                                    'API_MAERSK'
-                                )">
-                                <i class="fas fa-circle-plus"></i> Añadir
-                            </button>
+                            <form class="form-container" id="portScheduleForm_<?= $row['departureVoyageNumber'] ?>">
+                                <input type="hidden" name="vessel" value="<?= htmlspecialchars($row['vesselName']) ?>">
+                                <input type="hidden" name="line" value="MAERSK LINE">
+                                <input type="hidden" name="voyage" value="<?= htmlspecialchars($row['departureVoyageNumber']) ?>">
+                                <input type="hidden" name="eta" value="<?= $row['arrivalTime'] ?>">
+                                <input type="hidden" name="etd" value="<?= $row['departureTime'] ?>">
+                                <input type="hidden" name="pol" value="<?= $pol ?>">
+                                <input type="hidden" name="pod" value="<?= $podCode ?>">
+                                <input type="hidden" name="api" value="API_MAERSK">
+
+                                <button type="button" class="btn btn-success btn-user" onclick="bookVesselSystem('<?= $row['departureVoyageNumber'] ?>')">
+                                    <i class="fas fa-circle-plus"></i> Añadir
+                                </button>
+                            </form>
                         <?php else : ?>
-                            <button type="button" class="btn btn-danger btn-user" disabled> <i class="fas fa-circle-xmark"></i> Añadir</button>
-                        <?php endif ; ?>
+                            <button type="button" class="btn btn-danger btn-user" disabled>
+                                <i class="fas fa-circle-xmark"></i> Añadir
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

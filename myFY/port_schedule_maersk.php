@@ -115,15 +115,15 @@ if (!$admin) {
                                             </div>
                                         </div>
                                     </form>
-
-                                    <div id="loader" style="display:none; text-align:center; padding:20px;">
-                                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Buscando itinerarios...
-                                    </div>
-
-                                    <!-- Tabla Puertos Confirmados -->
-                                    <div id="maersk-port-schedules"></div>
                                 </div>
                             </div>
+
+                            <div id="loader" style="display:none; text-align:center; padding:20px;">
+                                <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Buscando itinerarios...
+                            </div>
+
+                            <!-- Tabla Puertos Confirmados -->
+                            <div id="maersk-port-schedules"></div>
 
                             <div class="text-center mb-4">
                                 <img src="../logos/logo-maersk.png" class="logo-responsive">
@@ -256,7 +256,7 @@ var loadPortSchedules = function() {
   })
 }
 
-var bookVesselSystem = function(vessel, line, voyage, eta, etd, pol, pod, api) {
+var bookVesselSystem = function(voyage) {
   Swal.fire({
     title: "¿Estás seguro de realizar esta acción?",
     text: "Crear nave de manera automática en el sistema a partir de los datos entregados por Itinerario de Maersk.",
@@ -270,17 +270,8 @@ var bookVesselSystem = function(vessel, line, voyage, eta, etd, pol, pod, api) {
     if (result.isConfirmed) {
       $.ajax({
         url: '../controllers/shipController.php',
+        data: $('#portScheduleForm_'+voyage).serialize(),
         type: 'POST',
-        data: {
-          vessel: vessel,
-          line: line,
-          voyage: voyage,
-          eta: eta,
-          etd: etd,
-          pol: pol,
-          pod: pod,
-          api: api
-        }
       }).done(function(x) {
         if (x === 'OK') {
           Swal.fire({
