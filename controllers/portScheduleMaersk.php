@@ -177,7 +177,4 @@ ob_start();
     </div>
 
 <?php endforeach; ?>
-
-<?php
-    echo ob_get_clean();
-?>
+<?php echo ob_get_clean();?>

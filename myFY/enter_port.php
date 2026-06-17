@@ -76,28 +76,28 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
 
                                 <div class="card-body">
-                                        <form class="form-container" id="portForm">
-                                            <div class="form-group row">
-                                                <div class="col-sm-3">
-                                                    <label for='city' class='text-gray-800 font-weight-bold'>Ciudad</label>
-                                                    <input type="text" class="form-control form-control-user" id="city" name="city" onblur="verifyPort(this.value)" placeholder="Coquimbo">
-                                                    <small class="text-danger" id="error-city"></small>
-                                                </div>
-
-                                                <div class="col-sm-3">
-                                                    <label for='country' class='text-gray-800 font-weight-bold'>País</label>
-                                                    <input type="text" class="form-control form-control-user" id="country" name="country" placeholder="Chile">
-                                                    <small class="text-danger" id="error-country"></small>
-                                                </div>
+                                    <form class="form-container" id="portForm">
+                                        <div class="form-group row">
+                                            <div class="col-sm-3">
+                                                <label for='city' class='text-gray-800 font-weight-bold'>Ciudad</label>
+                                                <input type="text" class="form-control form-control-user" id="city" name="city" onblur="verifyPort(this.value)" placeholder="Coquimbo">
+                                                <small class="text-danger" id="error-city"></small>
                                             </div>
 
-                                            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-                                            <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="savePort()">
-                                              <span id="loadBtnText"><i class="fas fa-check-circle"></i> Guardar</span>
-                                              <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                            </button>
-                                            <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
-                                        </form>
+                                            <div class="col-sm-3">
+                                                <label for='country' class='text-gray-800 font-weight-bold'>País</label>
+                                                <input type="text" class="form-control form-control-user" id="country" name="country" placeholder="Chile">
+                                                <small class="text-danger" id="error-country"></small>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+                                        <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="savePort()">
+                                            <span id="loadBtnText"><i class="fas fa-check-circle"></i> Guardar</span>
+                                            <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                        </button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

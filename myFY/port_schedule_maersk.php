@@ -253,8 +253,8 @@ var loadPortSchedules = function() {
       $loader.hide();
       $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
     }
-  });
-};
+  })
+}
 
 var bookVesselSystem = function(vessel, line, voyage, eta, etd, pol, pod, api) {
   Swal.fire({
