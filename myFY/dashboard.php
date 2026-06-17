@@ -81,7 +81,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <!-- Contenedores -->
                         <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
-                            <div class="card-body">
+                            <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #4e73df !important;border-radius:8px;">
                               <div class="text-center">
                                 <i class="fas fa-boxes-stacked fa-2x text-primary mb-2"></i>
                                 <h6 class="text-primary text-uppercase mb-3">Contenedores</h6>
@@ -104,7 +104,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <!-- Termos -->
                         <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
-                            <div class="card-body">
+                            <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #1cc88a !important;border-radius:8px;">
                               <div class="text-center">
                                 <i class="fas fa-snowflake fa-2x text-success mb-2"></i>
                                 <h6 class="text-success text-uppercase mb-3">Termos</h6>
@@ -131,7 +131,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <!-- Camiones por día -->
                         <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
-                            <div class="card-body">
+                            <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #5a5c69 !important;border-radius:8px;">
                               <div class="text-center">
                                 <i class="fas fa-ranking-star fa-2x text-dark mb-2"></i>
                                 <h6 class="text-dark text-uppercase mb-3">Camiones por día</h6>
@@ -148,7 +148,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <!-- Arrivos -->
                         <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
-                            <div class="card-body">
+                            <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #f6c23e !important;border-radius:8px;">
                               <div class="text-center">
                                 <i class="fas fa-truck-moving fa-2x text-warning mb-2"></i>
                                 <h6 class="text-warning text-uppercase mb-3">Arrivos</h6>
@@ -192,7 +192,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <!-- Capacidad -->
                         <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
-                            <div class="card-body">
+                            <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #36b9cc !important;border-radius:8px;">
                               <div class="text-center mb-3">
                                 <i class="fas fa-chart-pie fa-2x text-info mb-2"></i>
                                 <h6 class="text-info text-uppercase">Ocupación</h6>
@@ -219,7 +219,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <!-- Camiones Enviados -->
                         <div class="col-xl-2 col-md-6 mb-4">
                           <div class="card bg-light shadow-sm h-100">
-                            <div class="card-body">
+                            <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #e74a3b !important;border-radius:8px;">
                               <div class="text-center mb-3">
                                 <i class="fas fa-anchor-circle-check fa-2x text-danger mb-2"></i>
                                 <h6 class="text-danger text-uppercase">Últimos Camiones Enviados</h6>
@@ -238,7 +238,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                         <?php if ($admin): ?>
                           <div class="col-xl-12 col-md-6 mb-4">
                             <div class="card bg-light shadow-sm h-100">
-                              <div class="card-body">
+                              <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #36b9cc !important;border-radius:8px;">
                                 <div class="text-center mb-3">
                                   <i class="fas fa-chart-column fa-2x text-info mb-2"></i>
                                   <h6 class="text-info text-uppercase">Movimientos por Día</h6>
