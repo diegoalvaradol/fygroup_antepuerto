@@ -1,31 +1,15 @@
 <?php
+declare(strict_types=1);
 session_start();
 
-// Tiempo máximo de inactividad en segundos (30 minutos)
-$max_inactivity = 30 * 60;
-$uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$seconds = $_SESSION['redirect_seconds_403'] ?? 5;
+$redirect_url = $_SESSION['redirect_after_403'] ?? 'login.php';
 
-// Por defecto, redirigir a login
-$redirect_url = $uriPath . 'login.php';
+unset(
+    $_SESSION['redirect_seconds_403'],
+    $_SESSION['redirect_after_403']
+);
 
-// Verifica si hay sesión activa y no expirada
-if (isset($_SESSION['user_id'])) {
-    if (!isset($_SESSION['last_activity']) || (time() - $_SESSION['last_activity'] <= $max_inactivity)) {
-        $redirect_url = 'dashboard.php';
-    } else {
-        // Sesión expirada
-        session_unset();
-        session_destroy();
-        $redirect_url = $uriPath . 'login.php';
-    }
-}
-
-// Actualiza última actividad si la sesión sigue activa
-if ($redirect_url === 'dashboard.php') {
-    $_SESSION['last_activity'] = time();
-}
-
-// Establece código HTTP 403 para área inválida
 http_response_code(403);
 ?>
 
@@ -36,19 +20,19 @@ http_response_code(403);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Error 403</title>
-    <meta http-equiv="refresh" content="5;url=<?php echo $redirect_url; ?>">
+    <meta http-equiv="refresh" content="<?= $seconds ?>;url=<?= htmlspecialchars($redirect_url, ENT_QUOTES, 'UTF-8') ?>">
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
 
     <!-- Fonts -->
     <link href="../assets/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
 
-    <!-- Estilos del sistema -->
+    <!-- Estilos -->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
     <link href="../assets/css/app.css" rel="stylesheet">
 
     <style>
-       body {
+        body {
             background: #f4f6fb;
             font-family: 'Nunito', sans-serif;
             margin: 0;
@@ -56,11 +40,13 @@ http_response_code(403);
         }
     </style>
 </head>
+
 <body>
     <div class="error-topbar"></div>
     <div class="container error-panel">
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">
+
                 <div class="card error-card">
                     <div class="error-banner text-center">
                         <img src="../logos/logo-fygroup-circle-v1.png" alt="FYGroup" class="page-logo">
@@ -92,7 +78,7 @@ http_response_code(403);
                         <div class="alert alert-warning mt-4 mb-4">
                             <i class="fas fa-clock mr-2"></i>
                             Serás redirigido automáticamente en
-                            <strong id="countdown">5</strong> segundos
+                            <strong id="countdown"><?= $seconds ?></strong> segundos
                         </div>
 
                         <div class="row mt-5">
@@ -133,14 +119,14 @@ http_response_code(403);
                                     <strong>Destino</strong>
 
                                     <div class="text-success mt-2">
-                                        <?= ($redirect_url === 'dashboard.php') ? 'Dashboard' : 'Login' ?>
+                                        Redirección
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-3">
-                            <a href="<?= $redirect_url; ?>" class="btn btn-fy btn-lg">
+                            <a href="<?= htmlspecialchars($redirect_url, ENT_QUOTES, 'UTF-8') ?>" class="btn btn-fy btn-lg">
                                 <i class="fas fa-home mr-2"></i>
                                 Ir Ahora
                             </a>
@@ -155,22 +141,22 @@ http_response_code(403);
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="../assets/js/fygroup.js"></script>
+
+    <script>
+        let seconds = <?= (int) $seconds ?>;
+        const countdownElement = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            seconds--;
+
+            if (countdownElement) {
+                countdownElement.textContent = seconds;
+            }
+
+            if (seconds <= 0) {
+                clearInterval(timer);
+                window.location.href = <?= json_encode($redirect_url) ?>;
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
-
-<script>
-let seconds = 5;
-
-const countdownElement = document.getElementById('countdown');
-
-const timer = setInterval(() => {
-    seconds--;
-
-    countdownElement.textContent = seconds;
-
-    if (seconds <= 0) {
-        clearInterval(timer);
-        window.location.href = "<?= $redirect_url ?>";
-    }
-}, 1000);
-</script>

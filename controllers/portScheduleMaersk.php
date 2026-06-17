@@ -172,13 +172,9 @@ ob_start();
                         <?php endif ; ?>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
 <?php endforeach; ?>
-
-<?php
-    echo ob_get_clean();
-?>
+<?php echo ob_get_clean();?>
