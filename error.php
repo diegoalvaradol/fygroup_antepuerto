@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 session_start();
 
 $seconds = $_SESSION['redirect_seconds_403'] ?? 5;

@@ -1,10 +1,9 @@
 <?php
-require_once __DIR__ . '/config/includes.php';
 session_start();
 
 // Tiempo máximo de inactividad en segundos (30 minutos)
 $max_inactivity = 30 * 60;
-$uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uriPath = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') . '/';
 
 // Por defecto, redirigir a login
 $redirect_url = $uriPath . 'login.php';
