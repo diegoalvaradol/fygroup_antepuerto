@@ -165,11 +165,16 @@ class outerPort extends iQuery
 
     public function getTotalContainer($admin)
     {
-        $query = " SELECT COUNT(*) AS totalContainer FROM $this->table AS p";
+        $query = "SELECT COUNT(*) AS totalContainer FROM $this->table AS p";
         $params = [];
 
         if ($admin) {
             $query .= ' WHERE p.origin = 1';
+        } elseif (!$admin) {
+            $query .= '
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 1 AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
                 JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
@@ -216,6 +221,12 @@ class outerPort extends iQuery
 
         if ($admin) {
             $query .= ' WHERE p.origin = 1';
+        } elseif (!$admin) {
+            $query .= '
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 1
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
                 JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
@@ -261,6 +272,12 @@ class outerPort extends iQuery
 
         if ($admin) {
             $query .= ' WHERE p.origin = 2';
+        } elseif (!$admin) {
+            $query .= '
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 2
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
                 JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
@@ -306,6 +323,12 @@ class outerPort extends iQuery
 
         if ($admin) {
             $query .= ' WHERE p.origin = 2';
+        } elseif (!$admin) {
+            $query .= '
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE p.origin = 2
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
                 JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
@@ -351,6 +374,12 @@ class outerPort extends iQuery
 
         if ($admin) {
             $query .= ' WHERE 1';
+        } elseif (!$admin) {
+            $query .= '
+                JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
+                WHERE 1
+                AND sh.finished = 0
+            ';
         } elseif ($_SESSION['user']['division'] === 'terminal') {
             $query .= '
                 JOIN app_ships AS sh ON sh.ship_id = p.vessel_id
@@ -434,6 +463,54 @@ class outerPort extends iQuery
         return number_format($percent, 0, ',', '');
     }
 
+    public function getTotalArrivedTrucks($admin)
+    {
+        $from = " FROM {$this->table} AS p";
+        $joins = '';
+        $where = ['1=1'];
+        $params = [];
+
+        if (!$admin) {
+            $division = strtolower(trim($_SESSION['user']['division'] ?? ''));
+
+            $joins .= ' JOIN app_ships sh ON sh.ship_id = p.vessel_id';
+            $where[] = 'sh.finished = 0';
+
+            if ($division === 'terminal') {
+                $joins .= ' JOIN app_ships sh ON sh.ship_id = p.vessel_id';
+                $where[] = 'sh.finished = 0';
+            }
+
+            if ($division === 'shipper') {
+                $joins .= '
+                JOIN app_ships sh ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines sl ON sl.line_id = sh.ship_line
+            ';
+                $where[] = 'sh.finished = 0';
+                $where[] = 'sl.rut = :rut';
+                $params[':rut'] = $_SESSION['user']['run'];
+            }
+        }
+
+        $sql = '
+        SELECT COUNT(*) AS total
+        ' . $from . '
+        ' . $joins . '
+        WHERE ' . implode(' AND ', $where) . '
+        AND p.departure_date IS NOT NULL
+    ';
+
+        $stmt = $this->db->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->execute();
+
+        return number_format((int) $stmt->fetchColumn(), 0, ',', '.');
+    }
+
     public function getTotalTrucksInAnpuerto($admin)
     {
         $query = "SELECT COUNT(*) AS total FROM $this->table AS p";
@@ -474,55 +551,6 @@ class outerPort extends iQuery
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return number_format((int) $result['total'], 0, ',', '.');
-    }
-
-    public function getTotalArrivedTrucks($admin)
-    {
-        $from = " FROM $this->table AS p";
-        $joins = '';
-        $where = ['1=1'];
-        $params = [];
-
-        if (!$admin) {
-
-            if ($_SESSION['user']['division'] === 'terminal') {
-                $joins .= ' JOIN app_ships sh ON sh.ship_id = p.vessel_id';
-                $where[] = 'sh.finished = 0';
-            }
-
-            if ($_SESSION['user']['division'] === 'shipper') {
-                $joins .= ' JOIN app_ships sh ON sh.ship_id = p.vessel_id
-                  JOIN app_ship_lines sl ON sl.line_id = sh.ship_line';
-
-                $where[] = 'sh.finished = 0';
-                $where[] = 'sl.rut = :rut';
-                $params[':rut'] = $_SESSION['user']['run'];
-            }
-        }
-
-        $whereAll = ' WHERE ' . implode(' AND ', $where);
-
-        /* Total arribados */
-        $sqlTotal = 'SELECT COUNT(*) AS total' . $from . $joins . $whereAll;
-
-        /* Antepuerto (sin salida) */
-        $sqlAntepuerto = $sqlTotal . ' AND p.departure_date IS NULL';
-
-        $stmt = $this->db->prepare($sqlTotal);
-        foreach ($params as $k => $v) {
-            $stmt->bindValue($k, $v);
-        }
-        $stmt->execute();
-        $totalArrivado = (int) $stmt->fetchColumn();
-
-        $stmt = $this->db->prepare($sqlAntepuerto);
-        foreach ($params as $k => $v) {
-            $stmt->bindValue($k, $v);
-        }
-        $stmt->execute();
-        $totalAntepuerto = (int) $stmt->fetchColumn();
-
-        return number_format($totalArrivado - $totalAntepuerto, 0, ',', '.');
     }
 
     public function avgTrucksPerDay()

@@ -155,8 +155,8 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                               </div>
                               <div class="text-center">
                                 <?php $totalTrucks = $port->getTotalTrucks($admin); ?>
-                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin); ?>
                                 <?php $trucksArrivedTrucks = $port->getTotalArrivedTrucks($admin); ?>
+                                <?php $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin); ?>
                                 <div class="text-muted small">Total Camiones Arrivados</div>
                                 <div class="h5 font-weight-bold text-dark"><?=$totalTrucks?></div>
 
