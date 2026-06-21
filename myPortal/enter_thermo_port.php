@@ -28,7 +28,7 @@ if (time() - $_SESSION['last_session'] > $tiempoMaximo) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
     <title>Portal - FYGroup | Listado de Contenedores</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">

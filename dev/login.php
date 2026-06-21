@@ -29,88 +29,18 @@ $footer = menu::footerSSL();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>FYGroup | Login</title>
+    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <title>Dev FYGroup | Login</title>
 
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-
-    <!-- Custom styles FYGroup-->
-    <link rel="stylesheet" href="../assets/css/footer.css">
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 </head>
 
-<style>
-    canvas {
-        background: url('../images/developer_background.png');
-        background: #0f172a;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .login-wrapper {
-        position: relative;
-        z-index: 2;
-    }
-
-    .login-card {
-        background: #ffffff;
-        border-radius: 20px;
-        box-shadow: 0 25px 60px rgba(0,0,0,.25);
-    }
-
-    .login-card input {
-        border-radius: 12px;
-        height: 48px;
-    }
-
-    .login-card .input-group-text {
-        background: #f8f9fc;
-        border-radius: 12px 0 0 12px;
-    }
-
-    .btn-login {
-        height: 48px;
-        border-radius: 12px;
-        font-weight: 600;
-        letter-spacing: .5px;
-    }
-
-    .logo-img {
-        max-height: 100px;
-    }
-
-    .divider {
-        display: flex;
-        align-items: center;
-        margin: 20px 0;
-    }
-
-    .divider::before,
-    .divider::after {
-        content: '';
-        flex: 1;
-        border-top: 1px solid #b9bcc0;
-    }
-
-    .divider span {
-        padding: 0 12px;
-        color: #6c757d;
-        font-size: 12px;
-    }
-    @media (max-width: 576px) {
-        .login-card {
-        margin: 1rem;
-        padding: 1rem;
-        }
-    }
-</style>
-
-<body>
-    <canvas id="canvas"></canvas>
+<body class="login-dev">
+    <canvas class="login-bg" id="canvas"></canvas>
     <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-xl-4 col-lg-5 col-md-7">
             <div class="card login-card p-4">
@@ -170,13 +100,12 @@ $footer = menu::footerSSL();
         <?php echo $footer; ?>
     </div>
 
-    <!-- Scripts -->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="../assets/js/fygroup.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
 

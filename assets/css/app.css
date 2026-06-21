@@ -6,18 +6,21 @@
 @import 'components.css';
 @import 'modal.css';
 
-/* layout */
+/* layout (solo sistema logueado) */
 @import 'layout.css';
 @import 'sidebar.css';
 @import 'tapbar.css';
 @import 'footer.css';
 
+/* páginas login (fuera del layout) */
+@import 'loginfy.css';
+@import 'loginportal.css';
+@import 'logindev.css';
+
 /* mobile */
 @import 'mobile.css';
 
-/* página preload */
-@import 'preload.css';
-
 /* páginas especiales */
+@import 'preload.css';
 @import 'error.css';
 @import 'maintenance.css';

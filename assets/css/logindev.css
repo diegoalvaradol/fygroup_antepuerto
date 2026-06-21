@@ -1,0 +1,88 @@
+/* Login Developers */
+/* Login Dev - Scoped para no romper el sistema */
+
+/* Fondo SOLO del login */
+body.login-dev {
+  background: #0f172a;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Canvas SOLO decorativo del login */
+body.login-dev canvas.login-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/developer_background.png') no-repeat center center;
+  background-size: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Contenedor principal */
+.login-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/* Card login */
+.login-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+}
+
+/* Inputs */
+.login-card input {
+  border-radius: 12px;
+  height: 48px;
+}
+
+/* Input group */
+.login-card .input-group-text {
+  background: #f8f9fc;
+  border-radius: 12px 0 0 12px;
+}
+
+/* Botón login */
+.btn-login {
+  height: 48px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Logo */
+.logo-img {
+  max-height: 100px;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #b9bcc0;
+}
+
+.divider span {
+  padding: 0 12px;
+  color: #6c757d;
+  font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .login-card {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}

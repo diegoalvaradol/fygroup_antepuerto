@@ -1,0 +1,52 @@
+/* Login Portal Cliente */
+body.login-portal {
+  background: url('../../images/coquimbo_port_background_5.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+body.login-portal::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.login-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+}
+
+.login-card input,
+.login-card select {
+  border-radius: 12px;
+  height: 48px;
+}
+
+.input-group-text {
+  background: #f8f9fc;
+}
+
+.btn-login {
+  height: 48px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.logo-img {
+  max-height: 90px;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+}

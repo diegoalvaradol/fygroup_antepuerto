@@ -37,7 +37,7 @@ http_response_code(404);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Error 404</title>
     <meta http-equiv="refresh" content="5;url=<?php echo $redirect_url; ?>">
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
 
     <!-- Fonts -->
     <link href="../assets/css/all.min.css" rel="stylesheet">
