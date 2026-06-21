@@ -31,16 +31,11 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Ingreso Cámiones</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 </head>
 
 <body id="page-top">
@@ -211,89 +206,78 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <!-- SALIDA PUERTO -->
     <div id="modalAddHourDeparturePort" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
     <div id="addHourDeparturePort" class="modal-box" style="display:none; position:fixed; width:80%; top:10%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-      <h4 id="h4-departure-hour-port"></h4>
-      <h6 id="h6-carplates-departure-port"></h6>
+        <h4 id="h4-departure-hour-port"></h4>
+        <h6 id="h6-carplates-departure-port"></h6>
 
-      <form id="formDeparturePort">
-        <div class="form-group row">
-          <div class="col-sm-12">
-            <label id="label-stay-departure-port"></label><br>
-            <label>Hora salida:</label>
-            <input type="datetime-local" name="departure_date_port" class="form-control">
-            <small class="text-danger" id="error-departure_date_port"></small>
-          </div>
-        </div>
+        <form id="formDeparturePort">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label id="label-stay-departure-port"></label><br>
+                    <label>Hora salida:</label>
+                    <input type="datetime-local" name="departure_date_port" class="form-control">
+                    <small class="text-danger" id="error-departure_date_port"></small>
+                </div>
+            </div>
 
-        <input type="hidden" name="id">
-        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formDeparturePort')"><i class='fas fa-check-circle'></i> Guardar</button>
-        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
-      </form>
+            <input type="hidden" name="id">
+            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formDeparturePort')"><i class='fas fa-check-circle'></i> Guardar</button>
+            <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
+        </form>
     </div>
 
     <!-- ENTRADA DEPÓSITO -->
     <div id="modalAddHourArrivalDeposit" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
     <div id="addHourArrivalDeposit" class="modal-box" style="display:none; position:fixed; width:80%; top:10%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-      <h4 id="h4-arrival-hour-deposit"></h4>
-      <h6 id="h6-carplates-arrival-deposit"></h6>
+        <h4 id="h4-arrival-hour-deposit"></h4>
+        <h6 id="h6-carplates-arrival-deposit"></h6>
 
-      <form id="formArrivalDepot">
-         <div class="form-group row">
-            <div class="col-sm-12">
-              <label id="label-stay-arrival-deposit"></label><br>
-              <label>Hora entrada:</label>
-              <input type="datetime-local" name="arrival_date_deposit" class="form-control">
-              <small class="text-danger" id="error-arrival_date_deposit"></small>
+        <form id="formArrivalDepot">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label id="label-stay-arrival-deposit"></label><br>
+                    <label>Hora entrada:</label>
+                    <input type="datetime-local" name="arrival_date_deposit" class="form-control">
+                    <small class="text-danger" id="error-arrival_date_deposit"></small>
+                </div>
             </div>
-        </div>
 
-        <input type="hidden" name="id">
-        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formArrivalDepot')"><i class='fas fa-check-circle'></i> Guardar</button>
-        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
-      </form>
+            <input type="hidden" name="id">
+            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formArrivalDepot')"><i class='fas fa-check-circle'></i> Guardar</button>
+            <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
+        </form>
     </div>
 
     <!-- SALIDA DEPÓSITO -->
     <div id="modalAddHourDepartureDeposit" class="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
     <div id="addHourDepartureDeposit" class="modal-box" style="display:none; position:fixed; width:80%; top:10%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-      <h4 id="h4-departure-hour-deposit"></h4>
-      <h6 id="h6-carplates-departure-deposit"></h6>
+        <h4 id="h4-departure-hour-deposit"></h4>
+        <h6 id="h6-carplates-departure-deposit"></h6>
 
-      <form id="formDepartureDepot">
-        <div class="form-group row">
-          <div class="col-sm-12">
-            <label id="label-stay-departure-deposit"></label><br>
-            <label>Hora salida:</label>
-            <input type="datetime-local" name="departure_date_deposit" class="form-control">
-            <small class="text-danger" id="error-departure_date_deposit"></small>
-          </div>
-        </div>
+        <form id="formDepartureDepot">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label id="label-stay-departure-deposit"></label><br>
+                    <label>Hora salida:</label>
+                    <input type="datetime-local" name="departure_date_deposit" class="form-control">
+                    <small class="text-danger" id="error-departure_date_deposit"></small>
+                </div>
+            </div>
 
-        <input type="hidden" name="id">
-        <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formDepartureDepot')"><i class='fas fa-check-circle'></i> Guardar</button>
-        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
-      </form>
+            <input type="hidden" name="id">
+            <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
+            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges('#formDepartureDepot')"><i class='fas fa-check-circle'></i> Guardar</button>
+            <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm"  onclick="closeModal()">Cancelar</button>
+        </form>
     </div>
 
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Bootstrap core JavaScript-->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="../assets/js/fygroup.js"></script>
-
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-    <!-- Select2 JS -->
+    <script src="../assets/js/sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 </html>
@@ -643,32 +627,6 @@ function limitarTelefono(input) {
   if (input.value.length > 9) {
     input.value = input.value.slice(0, 9);
   }
-}
-
-var saveNewGoals = function() {
-  $.ajax({
-    url: '../controllers/configSaveController.php',
-    data: $('#addGoalForm').serialize(),
-    type: 'POST',
-  }).done(function(x) {
-    if(x == 'OK'){
-      Swal.fire({
-        title: '¡Éxito!',
-        text: '¡Ocupación actualizada con éxito!',
-        icon: 'success',
-        confirmButtonColor: '#4CAF50'
-      }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_truck_famesa'); ?>';
-      });
-    } else {
-      Swal.fire({
-        title: 'Oops...',
-        text: 'Error al actualizar la ocupación.',
-        icon: 'error',
-        cancelButtonColor: '#d33',
-      });
-    }
-  });
 }
 
 $(document).ready(function() {

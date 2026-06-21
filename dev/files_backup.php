@@ -24,128 +24,114 @@ if (!$dev) {
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Respaldo de Archivos</title>
 
-    <!-- Custom fonts for this template-->
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
-</head>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
-  <style>
-    html, body {
-      height: 100%;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-    .content-wrapper {
-      flex: 1;
-    }
-  </style>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content-wrapper {
+            flex: 1;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="content-wrapper">
-    <div class="container py-5">
-      <div class="text-center mb-4">
-        <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
-        <h3 class="mt-3">Respaldo de Archivos</h3>
+    <div class="content-wrapper">
+        <div class="container py-5">
+            <div class="text-center mb-4">
+                <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
+                <h3 class="mt-3">Respaldo de Archivos</h3>
 
-        <div class="card shadow mx-auto" style="max-width: 600px;">
-          <!-- Breadcrumb -->
-          <?= menu::breadcrumb(); ?>
-        </div>
-      </div>
-
-      <div class="card shadow mx-auto" style="max-width: 600px;">
-        <div class="card-header bg-primary text-white">
-          <h6 class="mb-0"><i class="fas fa-upload"></i> Subir archivo</h6>
-        </div>
-        <div class="card-body">
-          <form id="uploadForm" enctype="multipart/form-data">
-            <div class="mb-3">
-              <label class="form-label">Archivo</label>
-              <input type="file" name="archivo" id="archivo" class="form-control" required>
+                <div class="card shadow mx-auto" style="max-width: 600px;">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+                </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Nombre personalizado</label>
-              <input type="text" name="customName" id="customName" class="form-control" placeholder="Ej: respaldo_2025">
+
+            <div class="card shadow mx-auto" style="max-width: 600px;">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0"><i class="fas fa-upload"></i> Subir archivo</h6>
+                </div>
+
+                <div class="card-body">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Archivo</label>
+                            <input type="file" name="archivo" id="archivo" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre personalizado</label>
+                            <input type="text" name="customName" id="customName" class="form-control" placeholder="Ej: respaldo_2025">
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" onclick="uploadFile()" class="btn btn-primary w-100">
+                                <i class="fas fa-cloud-upload-alt"></i> Subir Archivo
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="text-center">
-              <button type="button" onclick="uploadFile()" class="btn btn-primary w-100">
-                <i class="fas fa-cloud-upload-alt"></i> Subir Archivo
-              </button>
+
+            <div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
+                <div class="card-header bg-secondary text-white">
+                    <h6 class="mb-0"><i class="fas fa-folder-open"></i> Archivos cargados</h6>
+                </div>
+
+                <div class="card-body">
+                    <?php $dir = __DIR__ . '/../uploads/'; ?>
+                    <?php $archivos = array_diff(scandir($dir), ['.', '..']); ?>
+
+                    <?php if (empty($archivos)): ?>
+                        <p class="text-muted text-center">No hay archivos cargados.</p>
+                    <?php else: ?>
+                        <ul class="list-group" id="fileList">
+                            <?php foreach ($archivos as $archivo): ?>
+                                <li class="list-group-item d-flex justify-content-between align-items-center" data-file="<?=htmlspecialchars($archivo)?>">
+                                    <?=htmlspecialchars($archivo)?>
+                                    <div>
+                                        <a href="../controllers/downloadFiles.php?file=<?=urlencode($archivo)?>" class="btn btn-sm btn-success me-1" title="Descargar">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+
+                                        <button class="btn btn-sm btn-danger btn-delete" title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
             </div>
-          </form>
+
+            <div class="text-center mt-4">
+                <a href="dashboard.php" class="btn btn-sm btn-primary">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
         </div>
-      </div>
-
-			<div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
-				<div class="card-header bg-secondary text-white">
-					<h6 class="mb-0"><i class="fas fa-folder-open"></i> Archivos cargados</h6>
-				</div>
-				<div class="card-body">
-					<?php $dir = __DIR__ . '/../uploads/'; ?>
-					<?php $archivos = array_diff(scandir($dir), ['.', '..']); ?>
-
-					<?php if (empty($archivos)): ?>
-						<p class="text-muted text-center">No hay archivos cargados.</p>
-					<?php else: ?>
-						<ul class="list-group" id="fileList">
-							<?php foreach ($archivos as $archivo): ?>
-								<li class="list-group-item d-flex justify-content-between align-items-center" data-file="<?=htmlspecialchars($archivo)?>">
-									<?=htmlspecialchars($archivo)?>
-									<div>
-										<a href="../controllers/downloadFiles.php?file=<?=urlencode($archivo)?>" class="btn btn-sm btn-success me-1" title="Descargar">
-											<i class="fas fa-download"></i>
-										</a>
-										<button class="btn btn-sm btn-danger btn-delete" title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>">
-											<i class="fas fa-trash"></i>
-										</button>
-									</div>
-								</li>
-							<?php endforeach; ?>
-						</ul>
-					<?php endif; ?>
-				</div>
-			</div>
-
-      <div class="text-center mt-4">
-				<a href="dashboard.php" class="btn btn-sm btn-primary">
-					<i class="fas fa-arrow-left"></i> Volver al Inicio
-				</a>
-			</div>
     </div>
-  </div>
 
-  <?=$footer;?>
+    <?=$footer;?>
 
-	<!-- SweetAlert2 CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-	<!-- Bootstrap core JavaScript-->
 	<script src="../assets/vendor/jquery/jquery.min.js"></script>
 	<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Core plugin JavaScript-->
 	<script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-	<!-- Custom scripts for all pages-->
 	<script src="../assets/js/fygroup.js"></script>
-
-	<!-- Select2 CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-	<!-- Select2 JS -->
+    <script src="../assets/js/sidebar.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-	<!-- Bootstrap JS (necesario para popover) -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </body>
@@ -199,27 +185,27 @@ $(document).ready(function() {
         confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar'
         }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-            url: '../controllers/deleteFiles.php',
-            method: 'POST',
-            data: { file: file },
-            success: function(response) {
-                if (response === 'OK') {
-                Swal.fire('Eliminado', 'El archivo fue eliminado.', 'success');
-                listItem.remove();
-                if ($('#fileList li').length === 0) {
-                    $('#fileList').html('<p class="text-muted text-center">No hay archivos cargados.</p>');
+            if (result.isConfirmed) {
+                $.ajax({
+                url: '../controllers/deleteFiles.php',
+                method: 'POST',
+                data: { file: file },
+                success: function(response) {
+                    if (response === 'OK') {
+                    Swal.fire('Eliminado', 'El archivo fue eliminado.', 'success');
+                    listItem.remove();
+                    if ($('#fileList li').length === 0) {
+                        $('#fileList').html('<p class="text-muted text-center">No hay archivos cargados.</p>');
+                    }
+                    } else {
+                    Swal.fire('Error', response, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Error', 'Error en la comunicación con el servidor.', 'error');
                 }
-                } else {
-                Swal.fire('Error', response, 'error');
-                }
-            },
-            error: function() {
-                Swal.fire('Error', 'Error en la comunicación con el servidor.', 'error');
+                });
             }
-            });
-        }
         });
     });
 });

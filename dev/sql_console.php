@@ -96,101 +96,99 @@ $resultado = ejecutarQuery($user);
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>FYGroup | SQL Administrador</title>
-  <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
+    <title>FYGroup | SQL Administrador</title>
 
-  <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-  <link href="../assets/css/fygroup.css" rel="stylesheet">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="../assets/css/fygroup.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"/>
+    <link rel="stylesheet" href="../assets/css/app.css">
 
-  <!-- DataTables -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"/>
+    <style>
+        textarea {
+            resize: none; overflow: hidden; transition: height 0.2s; margin-bottom: 1rem;
+        }
 
-  <style>
-    textarea {
-        resize: none; overflow: hidden; transition: height 0.2s; margin-bottom: 1rem;
-    }
+        .btn-submit-wrapper {
+            display:flex; justify-content:center; margin-bottom:2rem;
+        }
 
-    .btn-submit-wrapper {
-        display:flex; justify-content:center; margin-bottom:2rem;
-    }
+        .dataTables_wrapper .dataTables_info {
+            float:left; margin-bottom:0.5rem;
+        }
 
-    .dataTables_wrapper .dataTables_info {
-        float:left; margin-bottom:0.5rem;
-    }
+        .dataTables_wrapper .dataTables_paginate {
+            display:flex !important; justify-content:center; margin-top:1rem; float:none !important;
+        }
 
-    .dataTables_wrapper .dataTables_paginate {
-        display:flex !important; justify-content:center; margin-top:1rem; float:none !important;
-    }
+        .dataTables_wrapper .dataTables_filter {
+            float:right; margin-bottom:0.5rem; text-align:right;
+        }
 
-    .dataTables_wrapper .dataTables_filter {
-        float:right; margin-bottom:0.5rem; text-align:right;
-    }
-
-    .table-responsive {
-        margin-bottom:1rem;
-    }
-  </style>
+        .table-responsive {
+            margin-bottom:1rem;
+        }
+    </style>
 </head>
 
 <body>
-<div id="wrapper">
-  <div id="content-wrapper" class="d-flex flex-column min-vh-100">
-    <div id="content">
-      <div class="container py-4">
-        <div class="text-center mb-4">
-          <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width:180px;">
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-10 col-lg-8">
-            <h4 class="text-center mb-3">Ejecutar Consulta SQL</h4>
+    <div id="wrapper">
+        <div id="content-wrapper" class="d-flex flex-column min-vh-100">
+            <div id="content">
+                <div class="container py-4">
+                    <div class="text-center mb-4">
+                        <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width:180px;">
+                    </div>
 
-            <div class="card shadow mx-auto" style="max-width: 600px;">
-              <!-- Breadcrumb -->
-              <?= menu::breadcrumb(); ?>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <h4 class="text-center mb-3">Ejecutar Consulta SQL</h4>
+
+                            <div class="card shadow mx-auto" style="max-width: 600px;">
+                                <!-- Breadcrumb -->
+                                <?= menu::breadcrumb(); ?>
+                            </div>
+
+                            </br>
+                            <?=$resultado?>
+
+                            <form method="POST" class="mb-4">
+                                <textarea name="sql_query" id="sql_query" class="form-control" rows="5" placeholder="Escribe aquí tu consulta SQL..." required></textarea>
+
+                                <div class="btn-submit-wrapper">
+                                    <button type="submit" class="btn btn-primary btn-user px-4">
+                                        <i class="fas fa-check-circle"></i> Ejecutar
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="text-center mt-4">
+                                <a href="dashboard.php" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </br>
-            <?=$resultado?>
 
-            <form method="POST" class="mb-4">
-              <textarea name="sql_query" id="sql_query" class="form-control" rows="5" placeholder="Escribe aquí tu consulta SQL..." required></textarea>
-              <div class="btn-submit-wrapper">
-                <button type="submit" class="btn btn-primary btn-user px-4">
-                  <i class="fas fa-check-circle"></i> Ejecutar
-                </button>
-              </div>
-            </form>
-
-            <div class="text-center mt-4">
-              <a href="dashboard.php" class="btn btn-sm btn-primary">
-                <i class="fas fa-arrow-left"></i> Volver al Inicio
-              </a>
-            </div>
-          </div>
+            <?php echo $footer; ?>
         </div>
-      </div>
     </div>
 
-    <?php echo $footer; ?>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="../assets/vendor/jquery/jquery.min.js"></script>
-<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="../assets/js/fygroup.js"></script>
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-<!-- Custom styles FYGroup-->
-<link rel="stylesheet" href="../assets/css/app.css">
-<script src="../assets/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+</body>
 
 <script>
   window.onload = () => {
@@ -223,5 +221,4 @@ $resultado = ejecutarQuery($user);
     textarea.style.height = (textarea.scrollHeight) + 'px';
   });
 </script>
-</body>
 </html>

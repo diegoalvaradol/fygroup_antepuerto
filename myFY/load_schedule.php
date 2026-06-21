@@ -24,16 +24,11 @@ if (!$admin) {
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Carga Planificación</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 </head>
 
   <style>
@@ -51,109 +46,100 @@ if (!$admin) {
 </head>
 
 <body>
-  <div class="content-wrapper">
-    <div class="container py-5">
-      <div class="text-center mb-4">
-        <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
-        <h3 class="mt-3">Carga Planificación Naviera</h3>
+    <div class="content-wrapper">
+        <div class="container py-5">
+            <div class="text-center mb-4">
+                <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
+                <h3 class="mt-3">Carga Planificación Naviera</h3>
 
-        <div class="card shadow mx-auto" style="max-width: 600px;">
-          <!-- Breadcrumb -->
-          <?= menu::breadcrumb(); ?>
-        </div>
-      </div>
+                <div class="card shadow mx-auto" style="max-width: 600px;">
+                <!-- Breadcrumb -->
+                <?= menu::breadcrumb(); ?>
+                </div>
+            </div>
 
-      <div class="card shadow mx-auto" style="max-width: 600px;">
-        <div class="card-header bg-primary text-white">
-          <h6 class="mb-0"><i class="fas fa-upload"></i> Cargar Planificación</h6>
-        </div>
-        <div class="card-body">
-          <form id="uploadForm" enctype="multipart/form-data">
-            <div class="mb-3">
-              <label class="form-label">Archivo Planificación</label>
-              <input type="file" name="archivo" id="archivo" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Nombre Planificación</label>
-              <input type="text" name="shppingPlanningName" id="shppingPlanningName" class="form-control" placeholder="Ej: Planificación_14-12-2025">
-            </div>
-            <div class="text-center">
-              <button type="button" onclick="uploadFile()" class="btn btn-primary w-100">
-                <i class="fas fa-cloud-upload-alt"></i> Subir Planificación
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+            <div class="card shadow mx-auto" style="max-width: 600px;">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0"><i class="fas fa-upload"></i> Cargar Planificación</h6>
+                </div>
 
-        <div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
-            <div class="card-header bg-success text-white">
-                <h6 class="mb-0"><i class="fas fa-folder-open"></i> Planificaciones Cargadas</h6>
-            </div>
-            <div class="card-body">
-                <?php $dir = __DIR__ . '/../shipping_planning/'; ?>
-                <?php $archivos = array_diff(scandir($dir), ['.', '..']); ?>
+                <div class="card-body">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">Archivo Planificación</label>
+                            <input type="file" name="archivo" id="archivo" class="form-control" required>
+                        </div>
 
-                <?php if (empty($archivos)): ?>
-                        <p class="text-muted text-center">No hay archivos cargados.</p>
-                <?php else: ?>
-                <table class="table table-bordered table-hover">
-                    <thead style="background-color:#4e73df; color:white;">
-                        <tr>
-                            <th style="width:5%">#</th>
-                            <th>Nombre</th>
-                            <th style="width:20%" class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($archivos as $i => $archivo): ?>
-                            <tr data-file="<?=htmlspecialchars($archivo)?>">
-                                <td><?=$i + 1?></td>
-                                <td><?=htmlspecialchars($archivo)?></td>
-                                <td class="text-center">
-                                    <a href="../controllers/downloadFilesSchedule.php?file=<?=urlencode($archivo)?>"class="btn btn-sm btn-success me-1" title="Descargar"><i class="fas fa-download"></i></a>
-                                    <button class="btn btn-sm btn-danger btn-delete"title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>"><i class="fas fa-trash"></i></button>
-                                </td>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre Planificación</label>
+                            <input type="text" name="shppingPlanningName" id="shppingPlanningName" class="form-control" placeholder="Ej: Planificación_14-12-2025">
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" onclick="uploadFile()" class="btn btn-primary w-100">
+                                <i class="fas fa-cloud-upload-alt"></i> Subir Planificación
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
+                <div class="card-header bg-success text-white">
+                    <h6 class="mb-0"><i class="fas fa-folder-open"></i> Planificaciones Cargadas</h6>
+                </div>
+
+                <div class="card-body">
+                    <?php $dir = __DIR__ . '/../shipping_planning/'; ?>
+                    <?php $archivos = array_diff(scandir($dir), ['.', '..']); ?>
+
+                    <?php if (empty($archivos)): ?>
+                            <p class="text-muted text-center">No hay archivos cargados.</p>
+                    <?php else: ?>
+                    <table class="table table-bordered table-hover">
+                        <thead style="background-color:#4e73df; color:white;">
+                            <tr>
+                                <th style="width:5%">#</th>
+                                <th>Nombre</th>
+                                <th style="width:20%" class="text-center">Acciones</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <?php endif; ?>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($archivos as $i => $archivo): ?>
+                                <tr data-file="<?=htmlspecialchars($archivo)?>">
+                                    <td><?=$i + 1?></td>
+                                    <td><?=htmlspecialchars($archivo)?></td>
+                                    <td class="text-center">
+                                        <a href="../controllers/downloadFilesSchedule.php?file=<?=urlencode($archivo)?>"class="btn btn-sm btn-success me-1" title="Descargar"><i class="fas fa-download"></i></a>
+                                        <button class="btn btn-sm btn-danger btn-delete"title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
 
-      <div class="text-center mt-4">
-            <a href="dashboard.php" class="btn btn-sm btn-primary">
-                <i class="fas fa-arrow-left"></i> Volver al Inicio
-            </a>
+            <div class="text-center mt-4">
+                <a href="dashboard.php" class="btn btn-sm btn-primary">
+                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                </a>
+            </div>
         </div>
     </div>
-  </div>
 
-  <?=$footer;?>
+    <?=$footer;?>
 
-  <!-- SweetAlert2 CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="../assets/vendor/jquery/jquery.min.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="../assets/js/fygroup.js"></script>
-
-  <!-- Bootstrap JS (necesario para popover) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../assets/js/fygroup.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-  <!-- Select2 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-  <!-- Select2 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 </html>
 

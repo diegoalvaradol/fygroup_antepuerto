@@ -1,7 +1,4 @@
 <?php
-//header("Location: maintenance.php");
-//exit;
-
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
@@ -32,19 +29,11 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Seguimiento de Carga</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-
-    <!-- Requiere FontAwesome para los íconos -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 </head>
 
 <body id="page-top">
@@ -99,7 +88,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     </div>
 
                     <!-- Tabla de Tracking -->
-										<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['container'])) {?>
+					<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['container'])) {?>
                     <?php echo $tracking->getTableTracking($_POST['container']); ?>
                     <?php }?>
                 </div>
@@ -123,41 +112,31 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
 	<!-- Modal Añadir hora de salida del camión termo -->
     <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998;"></div>
-    <div id="addHourItemTracking" style="display:none; position:fixed; width:80%; top:10%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-    <h4 id="h4-status-hour"></h4>
-    <form id="addHourStackingForm">
-        <div class="form-group row">
-            <div class="col-sm-12">
-              <label>Hora de Registro:</label>
-              <input type="datetime-local" class="form-control form-control-user" id="statusdate" name="statusdate">
-              <small class="text-danger" id="error-statusdate"></small>
-            </div>
-        </div>
+        <div id="addHourItemTracking" style="display:none; position:fixed; width:80%; top:10%; left:50%; transform:translateX(-50%);background:#fff; border-radius:10px; padding:20px; z-index:999; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+        <h4 id="h4-status-hour"></h4>
 
-        <input type="hidden" id="chargueId" name="chargueId">
-        <input type="hidden" id="itemId" name="itemId">
-        <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-check-circle'></i> Guardar</button>
-        <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
-    </form>
+        <form id="addHourStackingForm">
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <label>Hora de Registro:</label>
+                    <input type="datetime-local" class="form-control form-control-user" id="statusdate" name="statusdate">
+                    <small class="text-danger" id="error-statusdate"></small>
+                </div>
+            </div>
+
+            <input type="hidden" id="chargueId" name="chargueId">
+            <input type="hidden" id="itemId" name="itemId">
+            <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()"><i class='fas fa-check-circle'></i> Guardar</button>
+            <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
+        </form>
     </div>
 
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Bootstrap core JavaScript-->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="../assets/js/fygroup.js"></script>
-
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-    <!-- Select2 JS -->
+    <script src="../assets/js/sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 </html>
@@ -227,32 +206,6 @@ var saveChanges = function() {
       }
     });
   }
-}
-
-var saveNewGoals = function() {
-  $.ajax({
-    url: '../controllers/configSaveController.php',
-    data: $('#addGoalForm').serialize(),
-    type: 'POST',
-  }).done(function(x) {
-    if(x == 'OK'){
-      Swal.fire({
-        title: '¡Éxito!',
-        text: '¡Ocupación actualizada con éxito!',
-        icon: 'success',
-        confirmButtonColor: '#4CAF50'
-      }).then((result) => {
-        window.location = '<?php echo generateMkey('tracking'); ?>';
-      });
-    } else {
-      Swal.fire({
-        title: 'Oops...',
-        text: 'Error al actualizar la ocupación.',
-        icon: 'error',
-        cancelButtonColor: '#d33',
-      });
-    }
-  });
 }
 
 $(document).ready(function() {

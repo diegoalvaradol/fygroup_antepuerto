@@ -28,73 +28,71 @@ $footer = menu::footerSSL();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>Portal FYGroup | Login</title>
 
-    <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <link href="../assets/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+    <style>
+        body {
+            background: url("../images/coquimbo_port_background_5.jpg") no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+        }
+
+        .login-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,.25);
+        }
+
+        .login-card input,
+        .login-card select {
+            border-radius: 12px;
+            height: 48px;
+        }
+
+        .input-group-text {
+            background: #f8f9fc;
+        }
+
+        .btn-login {
+            height: 48px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: .5px;
+        }
+
+        .logo-img {
+            max-height: 90px;
+        }
+
+        .input-group{
+            position: relative;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            width: 100%;
+        }
+    </style>
 </head>
 
-<style>
-  body {
-    background: url("../images/coquimbo_port_background_5.jpg") no-repeat center center fixed;
-    background-size: cover;
-    position: relative;
-  }
-
-  body::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-  }
-
-  .login-wrapper {
-    position: relative;
-    z-index: 2;
-  }
-
-  .login-card {
-    background: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 25px 60px rgba(0,0,0,.25);
-  }
-
-  .login-card input,
-  .login-card select {
-    border-radius: 12px;
-    height: 48px;
-  }
-
-  .input-group-text {
-    background: #f8f9fc;
-  }
-
-  .btn-login {
-    height: 48px;
-    border-radius: 12px;
-    font-weight: 600;
-    letter-spacing: .5px;
-  }
-
-  .logo-img {
-    max-height: 90px;
-  }
-
-  .input-group{
-    position: relative;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    width: 100%;
-  }
-</style>
 
 <body>
     <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
@@ -153,6 +151,7 @@ $footer = menu::footerSSL();
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/fygroup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
 

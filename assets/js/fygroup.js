@@ -105,6 +105,30 @@ var saveInfoUser = function () {
   }
 };
 
+var saveNewGoals = function () {
+  $.ajax({
+    url: '../controllers/configSaveController.php',
+    data: $('#addGoalForm').serialize(),
+    type: 'POST',
+  }).done(function (x) {
+    if (x == 'OK') {
+      Swal.fire({
+        title: '¡Éxito!',
+        text: '¡Ocupación actualizada con éxito!',
+        icon: 'success',
+        confirmButtonColor: '#4CAF50',
+      });
+    } else {
+      Swal.fire({
+        title: 'Oops...',
+        text: 'Error al actualizar la ocupación.',
+        icon: 'error',
+        cancelButtonColor: '#d33',
+      });
+    }
+  });
+};
+
 /* Actualiza reloj */
 function actualizarReloj() {
   const ahora = new Date();

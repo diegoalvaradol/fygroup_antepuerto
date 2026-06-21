@@ -158,6 +158,15 @@ h1.h3.text-gray-800::after {
   background: linear-gradient(to right, var(--color-accent), transparent);
 }
 
+/* Input group */
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  width: 100%;
+}
+
 /* Breadcrumb */
 .breadcrumb {
   margin: 0;

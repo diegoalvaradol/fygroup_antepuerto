@@ -32,7 +32,7 @@ $footer = menu::footerSSL();
     <title>FYGroup | Login</title>
 
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
 

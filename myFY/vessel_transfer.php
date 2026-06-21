@@ -30,16 +30,11 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Roleo de Carga</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 </head>
 
 <body id="page-top">
@@ -87,64 +82,64 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                 <form class="form-container" id="vesselTransferForm">
                                     <div class="form-group row">
-                                    <div class="col-sm-4">
-                                        <div class="form-inline mb-3">
-                                        <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Origen</label>
-                                        <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de origen del roleo."></i>
+                                        <div class="col-sm-4">
+                                            <div class="form-inline mb-3">
+                                                <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Origen</label>
+                                                <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de origen del roleo."></i>
 
-                                        <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel">
-                                            <option value="-">Seleccione una motonave...</option>
-                                        </select>
+                                                <select class="form-control select2 form-control-user" id="fromvessel" name="fromvessel">
+                                                    <option value="-">Seleccione una motonave...</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-sm-4">
-                                        <div class="form-inline mb-3">
-                                        <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Destino</label>
-                                        <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de destino del roleo."></i>
+                                        <div class="col-sm-4">
+                                            <div class="form-inline mb-3">
+                                                <label class="mr-2 text-gray-800 font-weight-bold">Motonave de Destino</label>
+                                                <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica la nave de destino del roleo."></i>
 
-                                        <select class="form-control select2 form-control-user" id="tovessel" name="tovessel">
-                                            <option value="-">Seleccione una motonave...</option>
-                                        </select>
+                                                <select class="form-control select2 form-control-user" id="tovessel" name="tovessel">
+                                                    <option value="-">Seleccione una motonave...</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-sm-4">
-                                        <div class="form-inline mb-3">
-                                        <label class="mr-2 text-gray-800 font-weight-bold">Camiones Disponibles</label>
-                                        <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica los camiones disponibles para el roleo."></i>
-                                        <select class="form-control select2 form-control-user" id="rowId" name="rowId[]" multiple>
-                                            <option value="-">Seleccione uno o más camiones...</option>
-                                        </select>
+                                        <div class="col-sm-4">
+                                            <div class="form-inline mb-3">
+                                                <label class="mr-2 text-gray-800 font-weight-bold">Camiones Disponibles</label>
+                                                <i class="fas fa-info-circle text-info" role="right" data-toggle="popover" data-trigger="hover focus" data-placement="right" data-content="Indica los camiones disponibles para el roleo."></i>
+                                                <select class="form-control select2 form-control-user" id="rowId" name="rowId[]" multiple>
+                                                    <option value="-">Seleccione uno o más camiones...</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
 
                                     <div class="form-group row">
-                                    <div class="col-sm-4">
-                                        <div class="form-inline mb-3">
-                                        <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Origen</label>
+                                        <div class="col-sm-4">
+                                            <div class="form-inline mb-3">
+                                                <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Origen</label>
+                                            </div>
+
+                                            <div class="form-inline mb-3">
+                                                <small class="text-black" id="info-fromvessel"></small>
+                                            </div>
                                         </div>
 
-                                        <div class="form-inline mb-3">
-                                        <small class="text-black" id="info-fromvessel"></small>
-                                        </div>
-                                    </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-inline mb-3">
+                                                <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Destino</label>
+                                            </div>
 
-                                    <div class="col-sm-4">
-                                        <div class="form-inline mb-3">
-                                        <label class="mr-2 text-gray-800 font-weight-bold">Información Motonave de Destino</label>
+                                            <div class="form-inline mb-3">
+                                                <small class="text-black" id="info-tovessel"></small>
+                                            </div>
                                         </div>
-
-                                        <div class="form-inline mb-3">
-                                        <small class="text-black" id="info-tovessel"></small>
-                                        </div>
-                                    </div>
                                     </div>
 
                                     <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveVesselTransfer()">
-                                    <span id="loadBtnText"><i class="fas fa-check-circle"></i> Realizar Roleo</span>
-                                    <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                        <span id="loadBtnText"><i class="fas fa-check-circle"></i> Realizar Roleo</span>
+                                        <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                     </button>
                                     <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                 </form>
@@ -171,23 +166,12 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <!-- Modales -->
     <?php echo $modals->render();?>
 
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Bootstrap core JavaScript-->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="../assets/js/fygroup.js"></script>
-
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-    <!-- Select2 JS -->
+    <script src="../assets/js/sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 </html>
@@ -350,32 +334,6 @@ var saveVesselTransfer = function() {
       });
     });
   }
-}
-
-var saveNewGoals = function() {
-  $.ajax({
-    url: '../controllers/configSaveController.php',
-    data: $('#addGoalForm').serialize(),
-    type: 'POST',
-  }).done(function(x) {
-    if(x == 'OK'){
-      Swal.fire({
-        title: '¡Éxito!',
-        text: '¡Ocupación actualizada con éxito!',
-        icon: 'success',
-        confirmButtonColor: '#4CAF50'
-      }).then((result) => {
-        window.location = '<?php echo generateMkey('vessel_transfer'); ?>';
-      });
-    } else {
-      Swal.fire({
-        title: 'Oops...',
-        text: 'Error al actualizar la ocupación.',
-        icon: 'error',
-        cancelButtonColor: '#d33',
-      });
-    }
-  });
 }
 
 $(document).ready(function() {

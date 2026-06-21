@@ -32,14 +32,10 @@ $footer = menu::footerSSL();
     <title>FYGroup | Login</title>
 
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <script src="../assets/js/sidebar.js"></script>
 </head>
 
 <style>
@@ -187,11 +183,12 @@ $footer = menu::footerSSL();
         <?php echo $footer; ?>
     </div>
 
-    <!-- Scripts -->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="../assets/js/fygroup.js"></script>
+    <script src="../assets/js/sidebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
 

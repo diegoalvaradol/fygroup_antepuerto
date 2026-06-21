@@ -30,21 +30,11 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <link rel="icon" type="image/png" href="../favicon/apple-touch-icon.png"/>
     <title>FYGroup | Dashboard</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template-->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-
-    <!-- Custom styles FYGroup-->
     <link rel="stylesheet" href="../assets/css/app.css">
-    <script src="../assets/js/sidebar.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
     <style>
       body {
@@ -93,23 +83,16 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <!-- Modales -->
     <?php echo $modals->render();?>
 
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Bootstrap core JavaScript-->
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="../assets/js/fygroup.js"></script>
-    <!-- Select2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-
-    <!-- Select2 JS -->
+    <script src="../assets/js/sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </body>
 </html>
 
@@ -122,30 +105,4 @@ document.addEventListener('DOMContentLoaded', function () {
     new bootstrap.Popover(el);
   });
 });
-
-var saveNewGoals = function() {
-  $.ajax({
-    url: '../controllers/configSaveController.php',
-    data: $('#addGoalForm').serialize(),
-    type: 'POST',
-  }).done(function(x) {
-    if(x == 'OK'){
-      Swal.fire({
-        title: '¡Éxito!',
-        text: '¡Ocupación actualizada con éxito!',
-        icon: 'success',
-        confirmButtonColor: '#4CAF50'
-      }).then((result) => {
-        window.location = 'dashboard.php';
-      });
-    } else {
-      Swal.fire({
-        title: 'Oops...',
-        text: 'Error al actualizar la ocupación.',
-        icon: 'error',
-        cancelButtonColor: '#d33',
-      });
-    }
-  });
-}
 </script>
