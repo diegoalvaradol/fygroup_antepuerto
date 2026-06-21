@@ -1,31 +1,23 @@
 <?php
 session_start();
 
-// Tiempo máximo de inactividad en segundos (30 minutos)
 $max_inactivity = 30 * 60;
-$uriPath = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') . '/';
+$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+$login = $base . 'login.php';
+$dashboard = $base . 'dashboard.php';
+$redirect_url = $login;
 
-// Por defecto, redirigir a login
-$redirect_url = $uriPath . 'login.php';
-
-// Verifica si hay sesión activa y no expirada
 if (isset($_SESSION['user_id'])) {
     if (!isset($_SESSION['last_activity']) || (time() - $_SESSION['last_activity'] <= $max_inactivity)) {
-        $redirect_url = 'dashboard.php';
+        $redirect_url = $dashboard;
+        $_SESSION['last_activity'] = time();
     } else {
-        // Sesión expirada
         session_unset();
         session_destroy();
-        $redirect_url = $uriPath . 'login.php';
+        $redirect_url = $login;
     }
 }
 
-// Actualiza última actividad si la sesión sigue activa
-if ($redirect_url === 'dashboard.php') {
-    $_SESSION['last_activity'] = time();
-}
-
-// Código HTTP 404
 http_response_code(404);
 ?>
 
