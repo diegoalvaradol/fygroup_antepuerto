@@ -23,7 +23,7 @@ $footer = menu::footerSSL();
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 
 <head>
     <meta charset="utf-8">

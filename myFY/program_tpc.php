@@ -30,7 +30,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
 <!-- JAVASCRIPT -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 
 <head>
     <meta charset="utf-8">

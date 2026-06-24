@@ -22,7 +22,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
 <!-- HTML -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 
 <head>
     <meta charset="utf-8">

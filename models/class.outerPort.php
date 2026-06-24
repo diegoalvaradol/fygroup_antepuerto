@@ -2511,7 +2511,7 @@ class outerPort extends iQuery
         ob_start();
         ?>
             <!DOCTYPE html>
-            <html lang="es">
+            <html lang="es-CL">
                 <head>
                     <meta charset="UTF-8">
                     <style>

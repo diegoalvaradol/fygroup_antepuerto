@@ -129,7 +129,7 @@ $fecha = date('d-m-Y H:i:s');
 ob_start();
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
     <head>
         <meta charset="UTF-8">
         <style>
