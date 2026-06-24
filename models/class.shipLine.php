@@ -99,104 +99,114 @@ class shipLine extends iQuery
         }
     }
 
-    public function getTableShipLine()
+    public function getTableShipLine(): string
     {
-        $query = "SELECT * FROM $this->table WHERE 1 ORDER BY $this->id ASC";
+        $query = "SELECT * FROM {$this->table} WHERE 1 ORDER BY {$this->id} ASC";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $count = 0;
+        $count = count($result);
 
-        $thead = "<thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>";
-        $thead .= '<tr>';
-        $thead .= '<th>Id</th>';
-        $thead .= '<th>Nombre</th>';
-        $thead .= '<th>R.U.T</th>';
-        $thead .= '<th>Creado</th>';
-        $thead .= '<th>Actualizado</th>';
-        $thead .= '<th>Acciones</th>';
-        $thead .= '</tr>';
-        $thead .= '</thead><tbody>';
+        ob_start();
+        ?>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+                    <div>
+                        <h1 class="h3 mb-1 text-gray-800 d-inline">
+                            Listado
+                        </h1>
 
-        $tr = '';
-
-        foreach ($result as $data) {
-            $created = formatDate($data[$this->created]);
-            $updated = formatDate($data[$this->lastupdate]);
-
-            $btnEdit = "<button class='btn btn-warning btn-sm' onclick='editShipLine(" . $data[$this->id] . ")'><i class='fas fa-pen'></i> Editar</button>";
-            $btnDelete = "<button class='btn btn-danger btn-sm' onclick='deleteShipLine(" . $data[$this->id] . ")'><i class='fas fa-trash'></i> Eliminar</button>";
-
-            $tr .= '<tr>';
-            $tr .= "<td>{$data[$this->id]}</td>";
-            $tr .= "<td>{$data[$this->name]}</td>";
-            $tr .= "<td>{$data[$this->rut]}</td>";
-            $tr .= "<td>{$created}</td>";
-            $tr .= "<td>{$updated}</td>";
-            $tr .= "<td>{$btnEdit} {$btnDelete}</td>";
-            $tr .= '</tr>';
-
-            $count++;
-        }
-
-        $table = "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='d-flex justify-content-between align-items-center mb-3 flex-wrap'>
-                        <div>
-                            <h1 class='h3 mb-1 text-gray-800 d-inline'>
-                                Listado
-                            </h1>
-
-                            <em>
-                                (Total: <span id='totalShipLines'>" . number_format($count, 0, ',', '.') . "</span>)
-                            </em>
-                        </div>
-
-                        <div class='input-search'>
-                            <i class='fas fa-search'></i>
-                            <input type='text' id='searchTableShipLine' placeholder='Buscar por nombre' class='form-control form-control-sm'>
-                        </div>
+                        <em>
+                            (Total:
+                            <span id="totalShipLines">
+                                <?= number_format($count, 0, ',', '.') ?>
+                            </span>)
+                        </em>
                     </div>
 
-                    <div class='card shadow mb-4'>
-                        <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                            <table id='shipLineTable' class='table' style='min-width:700px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                                $thead
-                                $tr
-                            </table>
-                        </div>
+                    <div class="input-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text"  id="searchTableShipLine" placeholder="Buscar por nombre" class="form-control form-control-sm">
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="table-responsive"
+                        style="width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;">
+
+                        <table id="shipLineTable" class="table" style="min-width:700px; white-space:nowrap; border-collapse:separate; border-spacing:0;">
+                            <thead style="background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>R.U.T</th>
+                                    <th>Creado</th>
+                                    <th>Actualizado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($result as $data): ?>
+                                    <?php
+                                    $created = formatDate($data[$this->created]);
+                                    $updated = formatDate($data[$this->lastupdate]);
+                                    ?>
+
+                                    <tr>
+                                        <td><?= $data[$this->id] ?></td>
+                                        <td><?= htmlspecialchars($data[$this->name]) ?></td>
+                                        <td><?= htmlspecialchars($data[$this->rut]) ?></td>
+                                        <td><?= $created ?></td>
+                                        <td><?= $updated ?></td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm" onclick="editShipLine(<?= $data[$this->id] ?>)">
+                                                <i class="fas fa-pen"></i> Editar
+                                            </button>
+
+                                            <button class="btn btn-danger btn-sm" onclick="deleteShipLine(<?= $data[$this->id] ?>)">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <script>
-                document.getElementById('searchTableShipLine').addEventListener('keyup', function() {
-                    let filter = this.value.toLowerCase().trim();
-                    let rows = document.querySelectorAll('#shipLineTable tbody tr');
-                    let visibleCount = 0;
+        <script>
+            document.getElementById('searchTableShipLine').addEventListener('keyup', function () {
+                let filter = this.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('#shipLineTable tbody tr');
+                let visibleCount = 0;
 
-                    rows.forEach(row => {
-                        let cell = row.cells[1];
-                        let text = cell ? cell.innerText.toLowerCase() : '';
-                        let match = text.includes(filter);
+                rows.forEach(row => {
+                    let cell = row.cells[1];
+                    let text = cell ? cell.innerText.toLowerCase() : '';
+                    let match = text.includes(filter);
 
-                        if (filter.includes(' ')) {
+                    if (filter.includes(' ')) {
                         let words = filter.split(' ');
                         match = words.every(w => text.includes(w));
-                        }
+                    }
 
-                        row.style.display = match ? '' : 'none';
+                    row.style.display = match ? '' : 'none';
 
-                        if (match) visibleCount++;
-                    });
-
-                    document.getElementById('totalShipLines').innerText = visibleCount;
+                    if (match) {
+                        visibleCount++;
+                    }
                 });
-            </script>
-        ";
 
-        return $table;
+                document.getElementById('totalShipLines').innerText = visibleCount;
+            });
+        </script>
+        <?php
+
+        return ob_get_clean();
     }
 }

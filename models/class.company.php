@@ -87,127 +87,138 @@ class company extends iQuery
         }
     }
 
-    public function getTableCompany()
+    public function getTableCompany(): string
     {
-        $arrayYesNo = get::arrayYesNo();
-
-        $query = "SELECT * FROM $this->table WHERE name != 'N/A' ORDER BY $this->id ASC";
+        $query = "SELECT * FROM {$this->table} WHERE name != 'N/A' ORDER BY {$this->id} ASC";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
+
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $count = count($result);
+        $arrayYesNo = get::arrayYesNo();
 
-        $count = 0;
+        ob_start();
+        ?>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+                    <div>
+                        <h1 class="h3 mb-1 text-gray-800 d-inline">
+                            Listado
+                        </h1>
 
-        $thead = "<thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>";
-        $thead .= '<tr>';
-        $thead .= '<th>Id</th>';
-        $thead .= '<th>Nombre</th>';
-        $thead .= '<th>Tipo</th>';
-        $thead .= '<th>Exportador</th>';
-        $thead .= '<th>Agencia</th>';
-        $thead .= '<th>Creado</th>';
-        $thead .= '<th>Actualizado</th>';
-        $thead .= '<th>Acciones</th>';
-        $thead .= '</tr>';
-        $thead .= '</thead><tbody>';
-
-        $tr = '';
-
-        foreach ($result as $data) {
-            $created = formatDate($data[$this->created]);
-            $updated = formatDate($data[$this->lastupdate]);
-
-            $isExporter = $arrayYesNo[$data[$this->exporter]];
-            $isAgency = $arrayYesNo[$data[$this->agency]];
-
-            $type = '';
-            if ($data[$this->exporter]) {
-                $type = 'Exportador';
-            }
-
-            if ($data[$this->agency]) {
-                $type = 'Agencia';
-            }
-
-            if ($data[$this->exporter] && $data[$this->agency]) {
-                $type = 'Exportador/Agencia';
-            }
-
-            $btnEdit = "<button class='btn btn-warning btn-sm' onclick='editCompany(" . $data[$this->id] . ")'><i class='fas fa-pen'></i> Editar</button>";
-            $btnDelete = "<button class='btn btn-danger btn-sm' onclick=\"deleteCompany(" . $data[$this->id] . ",'" . $data[$this->name] . "'," . $data[$this->exporter] . ',' . $data[$this->agency] . ")\"><i class='fas fa-trash'></i> Eliminar</button>";
-
-            $tr .= '<tr>';
-            $tr .= "<td>{$data[$this->id]}</td>";
-            $tr .= "<td>{$data[$this->name]}</td>";
-            $tr .= "<td><b>$type</b></td>";
-            $tr .= "<td><b>$isExporter</b></td>";
-            $tr .= "<td><b>$isAgency</b></td>";
-            $tr .= "<td>$created</td>";
-            $tr .= "<td>$updated</td>";
-            $tr .= "<td>$btnEdit $btnDelete</td>";
-            $tr .= '</tr>';
-
-            $count++;
-        }
-
-        $table = "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='d-flex justify-content-between align-items-center mb-3 flex-wrap'>
-                        <div>
-                            <h1 class='h3 mb-1 text-gray-800 d-inline'>
-                                Listado
-                            </h1>
-
-                            <em>
-                                (Total: <span id='totalCompanies'>" . number_format($count, 0, ',', '.') . "</span>)
-                            </em>
-                        </div>
-
-                        <div class='input-search'>
-                            <i class='fas fa-search'></i>
-                            <input type='text' id='searchCompanyTable' placeholder='Buscar por nombre' class='form-control form-control-sm'>
-                        </div>
+                        <em>
+                            (Total:
+                            <span id="totalCompanies">
+                                <?= number_format($count, 0, ',', '.') ?>
+                            </span>)
+                        </em>
                     </div>
 
-                    <div class='card shadow mb-4'>
-                        <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6;'>
-                            <table id='companyTable' class='table' style='min-width:900px; white-space:nowrap;'>
-                                $thead
-                                $tr
-                            </table>
-                        </div>
+                    <div class="input-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchCompanyTable" placeholder="Buscar por nombre" class="form-control form-control-sm">
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="table-responsive" style="width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6;">
+                        <table id="companyTable" class="table" style="min-width:900px; white-space:nowrap;">
+                            <thead style="background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Exportador</th>
+                                    <th>Agencia</th>
+                                    <th>Creado</th>
+                                    <th>Actualizado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($result as $data): ?>
+                                    <?php
+                                    $created = formatDate($data[$this->created]);
+                                    $updated = formatDate($data[$this->lastupdate]);
+
+                                    $isExporter = $arrayYesNo[$data[$this->exporter]];
+                                    $isAgency = $arrayYesNo[$data[$this->agency]];
+
+                                    $type = '';
+
+                                    if ($data[$this->exporter] && $data[$this->agency]) {
+                                        $type = 'Exportador/Agencia';
+                                    } elseif ($data[$this->exporter]) {
+                                        $type = 'Exportador';
+                                    } elseif ($data[$this->agency]) {
+                                        $type = 'Agencia';
+                                    }
+                                    ?>
+
+                                    <tr>
+                                        <td><?= $data[$this->id] ?></td>
+                                        <td><?= htmlspecialchars($data[$this->name]) ?></td>
+                                        <td><b><?= $type ?></b></td>
+                                        <td><b><?= $isExporter ?></b></td>
+                                        <td><b><?= $isAgency ?></b></td>
+                                        <td><?= $created ?></td>
+                                        <td><?= $updated ?></td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm" onclick="editCompany(<?= $data[$this->id] ?>)">
+                                                <i class="fas fa-pen"></i> Editar
+                                            </button>
+
+                                            <button
+                                                class="btn btn-danger btn-sm"
+                                                onclick="deleteCompany(
+                                                    <?= $data[$this->id] ?>,
+                                                    '<?= addslashes($data[$this->name]) ?>',
+                                                    <?= $data[$this->exporter] ?>,
+                                                    <?= $data[$this->agency] ?>
+                                                )">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <script>
-                document.getElementById('searchCompanyTable').addEventListener('keyup', function() {
-                    let filter = this.value.toLowerCase().trim();
-                    let rows = document.querySelectorAll('#companyTable tbody tr');
-                    let visibleCount = 0;
+        <script>
+            document.getElementById('searchCompanyTable').addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase().trim();
+                let rows = document.querySelectorAll('#companyTable tbody tr');
+                let visibleCount = 0;
 
-                    rows.forEach(row => {
-                        let cell = row.cells[1];
-                        let text = cell ? cell.innerText.toLowerCase() : '';
-                        let match = text.includes(filter);
+                rows.forEach(row => {
+                    let cell = row.cells[1];
+                    let text = cell ? cell.innerText.toLowerCase() : '';
+                    let match = text.includes(filter);
 
-                        if (filter.includes(' ')) {
+                    if (filter.includes(' ')) {
                         let words = filter.split(' ');
                         match = words.every(w => text.includes(w));
-                        }
+                    }
 
-                        row.style.display = match ? '' : 'none';
+                    row.style.display = match ? '' : 'none';
 
-                        if (match) visibleCount++;
-                    });
-
-                    document.getElementById('totalCompanies').innerText = visibleCount;
+                    if (match) {
+                        visibleCount++;
+                    }
                 });
-            </script>
-        ";
 
-        return $table;
+                document.getElementById('totalCompanies').innerText = visibleCount;
+            });
+        </script>
+        <?php
+
+        return ob_get_clean();
     }
 
 }
