@@ -470,35 +470,26 @@ class outerPort extends iQuery
         $where = ['1=1'];
         $params = [];
 
-        if (!$admin) {
-            $division = strtolower(trim($_SESSION['user']['division'] ?? ''));
+        $division = strtolower(trim($_SESSION['user']['division'] ?? ''));
 
+        if (!$admin) {
             $joins .= ' JOIN app_ships sh ON sh.ship_id = p.vessel_id';
             $where[] = 'sh.finished = 0';
 
-            if ($division === 'terminal') {
-                $joins .= ' JOIN app_ships sh ON sh.ship_id = p.vessel_id';
-                $where[] = 'sh.finished = 0';
-            }
-
             if ($division === 'shipper') {
-                $joins .= '
-                JOIN app_ships sh ON sh.ship_id = p.vessel_id
-                JOIN app_ship_lines sl ON sl.line_id = sh.ship_line
-            ';
-                $where[] = 'sh.finished = 0';
+                $joins .= ' JOIN app_ship_lines sl ON sl.line_id = sh.ship_line';
                 $where[] = 'sl.rut = :rut';
                 $params[':rut'] = $_SESSION['user']['run'];
             }
         }
 
         $sql = '
-        SELECT COUNT(*) AS total
-        ' . $from . '
-        ' . $joins . '
-        WHERE ' . implode(' AND ', $where) . '
-        AND p.departure_date IS NOT NULL
-    ';
+            SELECT COUNT(*) AS total
+            ' . $from . '
+            ' . $joins . '
+            WHERE ' . implode(' AND ', $where) . '
+            AND p.departure_date IS NOT NULL
+        ';
 
         $stmt = $this->db->prepare($sql);
 

@@ -2,6 +2,17 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
+/* Validación de URL */
+$module = $_GET['pag'] ?? '';
+$area = $_GET['area'] ?? '';
+$time = $_GET['t'] ?? '';
+$ttl = $_GET['ttl'] ?? '';
+$sig = $_GET['sig'] ?? '';
+
+if (!validateSecureLink($module, $area, $time, $ttl, $sig)) {
+    die('Acceso inválido o expirado');
+}
+
 $port = new outerPort();
 $cfg = new cfg();
 $user = new user();
@@ -360,7 +371,7 @@ var saveChanges = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+          window.location = '<?php echo generateSecureLink('enter_thermo_port'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({
@@ -439,7 +450,7 @@ var saveInTermo = function() {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateSecureLink('enter_thermo_port'); ?>&page=' + paginaActual;
           });
         }else if(x == 'NOOKUT') {
           Swal.fire({
@@ -461,7 +472,7 @@ var saveInTermo = function() {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateSecureLink('enter_thermo_port'); ?>&page=' + paginaActual;
           });
         }else if(x == 'NOOKT') {
           Swal.fire({
@@ -506,7 +517,7 @@ var deleteTruck = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_thermo_port'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateSecureLink('enter_thermo_port'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK'){
           Swal.fire({

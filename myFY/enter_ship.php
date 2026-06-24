@@ -2,6 +2,17 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
+/* Validación de URL */
+$module = $_GET['pag'] ?? '';
+$area = $_GET['area'] ?? '';
+$time = $_GET['t'] ?? '';
+$ttl = $_GET['ttl'] ?? '';
+$sig = $_GET['sig'] ?? '';
+
+if (!validateSecureLink($module, $area, $time, $ttl, $sig)) {
+    die('Acceso inválido o expirado');
+}
+
 $ship = new ship();
 $cfg = new cfg();
 $user = new user();
@@ -284,7 +295,7 @@ var saveChanges = function() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then((result) => {
-        window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
+        window.location = '<?php echo generateSecureLink('enter_ship'); ?>&page=' + paginaActual;
       });
     } else {
       Swal.fire({
@@ -323,7 +334,7 @@ var deleteShip = function(id) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateSecureLink('enter_ship'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK') {
           Swal.fire({
@@ -383,7 +394,7 @@ var stackingShip = function(id, name, voyage, status) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateSecureLink('enter_ship'); ?>&page=' + paginaActual;
           });
         } else  {
           Swal.fire({
@@ -461,7 +472,7 @@ var saveShip = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_ship'); ?>&page=' + paginaActual;
+          window.location = '<?php echo generateSecureLink('enter_ship'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({

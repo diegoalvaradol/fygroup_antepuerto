@@ -197,7 +197,7 @@ var saveChanges = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('tracking'); ?>';
+          window.location = '<?php echo generateSecureLink('tracking'); ?>';
         });
       } else {
         Swal.fire({

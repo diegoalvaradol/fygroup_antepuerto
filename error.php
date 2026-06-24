@@ -1,13 +1,14 @@
 <?php
 session_start();
 
-$seconds = $_SESSION['redirect_seconds_403'] ?? 5;
+$seconds = 5;
 $redirect_url = $_SESSION['redirect_after_403'] ?? 'login.php';
 
-unset(
-    $_SESSION['redirect_seconds_403'],
-    $_SESSION['redirect_after_403']
-);
+unset($_SESSION['redirect_after_403'], $_SESSION['redirect_seconds_403']);
+
+if (!is_string($redirect_url) || $redirect_url === '') {
+    $redirect_url = 'login.php';
+}
 
 http_response_code(403);
 ?>
@@ -19,7 +20,7 @@ http_response_code(403);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Error 403</title>
-    <meta http-equiv="refresh" content="<?= $seconds ?>;url=<?= htmlspecialchars($redirect_url, ENT_QUOTES, 'UTF-8') ?>">
+    <meta http-equiv="refresh" content="<?= (int) $seconds ?>;url=<?= htmlspecialchars($redirect_url, ENT_QUOTES, 'UTF-8') ?>">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
 
     <!-- Fonts -->
@@ -140,22 +141,24 @@ http_response_code(403);
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="../assets/js/fygroup.js"></script>
-
-    <script>
-        let seconds = <?= (int) $seconds ?>;
-        const countdownElement = document.getElementById('countdown');
-        const timer = setInterval(() => {
-            seconds--;
-
-            if (countdownElement) {
-                countdownElement.textContent = seconds;
-            }
-
-            if (seconds <= 0) {
-                clearInterval(timer);
-                window.location.href = <?= json_encode($redirect_url) ?>;
-            }
-        }, 1000);
-    </script>
 </body>
 </html>
+
+<script>
+let seconds = <?= (int) $seconds ?>;
+const redirectUrl = <?= json_encode($redirect_url) ?>;
+const countdownElement = document.getElementById('countdown');
+
+const timer = setInterval(() => {
+    seconds--;
+
+    if (countdownElement) {
+        countdownElement.textContent = seconds;
+    }
+
+    if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = redirectUrl;
+    }
+}, 1000);
+</script>

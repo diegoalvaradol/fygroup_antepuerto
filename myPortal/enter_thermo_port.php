@@ -2,8 +2,20 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
+/* Validación de URL */
+$module = $_GET['pag'] ?? '';
+$area = $_GET['area'] ?? '';
+$time = $_GET['t'] ?? '';
+$ttl = $_GET['ttl'] ?? '';
+$sig = $_GET['sig'] ?? '';
+
+if (!validateSecureLink($module, $area, $time, $ttl, $sig)) {
+    die('Acceso inválido o expirado');
+}
+
 $port = new outerPort();
 $cfg = new cfg();
+
 $sideBarPortal = menu::sideBarPortal();
 $tapBarPortal = menu::secondTapBarPortal();
 $footer = menu::footerSSL();

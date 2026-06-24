@@ -181,7 +181,7 @@ class internationalChargue extends iQuery
         $porPagina = 25; /* Número de registros por página */
         $pagina = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $inicio = ($pagina - 1) * $porPagina;
-        $urlBase = generateMkey('enter_container_international') . '&page=';
+        $urlBase = generateSecureLink('enter_container_international') . '&page=';
 
         $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
         $stmt = $this->db->prepare($query);

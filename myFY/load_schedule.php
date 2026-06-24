@@ -2,6 +2,17 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
+/* Validación de URL */
+$module = $_GET['pag'] ?? '';
+$area = $_GET['area'] ?? '';
+$time = $_GET['t'] ?? '';
+$ttl = $_GET['ttl'] ?? '';
+$sig = $_GET['sig'] ?? '';
+
+if (!validateSecureLink($module, $area, $time, $ttl, $sig)) {
+    die('Acceso inválido o expirado');
+}
+
 $user = new user();
 $admin = $user->isAdmin($_SESSION['user']['run']);
 $footer = menu::footerSSL();
@@ -174,7 +185,7 @@ function uploadFile() {
         success: function (res) {
             if (res === "OK") {
                 Swal.fire('Éxito', 'Archivo subido correctamente', 'success').then(() => {
-                    window.location.href = "<?=generateMkey('load_schedule');?>";
+                    window.location.href = "<?=generateSecureLink('load_schedule');?>";
                 });
             } else {
                 Swal.fire('Error', 'No se pudo subir el archivo.', 'error');

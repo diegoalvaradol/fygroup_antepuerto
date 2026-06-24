@@ -2,19 +2,30 @@
 session_start();
 
 $max_inactivity = 30 * 60;
+
 $base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
 $login = $base . 'login.php';
 $dashboard = $base . 'dashboard.php';
+
 $redirect_url = $login;
 
-if (isset($_SESSION['user_id'])) {
-    if (!isset($_SESSION['last_activity']) || (time() - $_SESSION['last_activity'] <= $max_inactivity)) {
-        $redirect_url = $dashboard;
+/* sin sesión */
+if (!isset($_SESSION['user_id'])) {
+    $redirect_url = $login;
+} else {
+
+    if (!isset($_SESSION['last_activity'])) {
         $_SESSION['last_activity'] = time();
-    } else {
+    }
+
+    if (time() - $_SESSION['last_activity'] > $max_inactivity) {
         session_unset();
         session_destroy();
+
         $redirect_url = $login;
+    } else {
+        $_SESSION['last_activity'] = time();
+        $redirect_url = $dashboard;
     }
 }
 
@@ -121,7 +132,7 @@ http_response_code(404);
                                     <strong>Destino</strong>
 
                                     <div class="text-success mt-2">
-                                        <?= ($redirect_url === 'dashboard.php') ? 'Dashboard' : 'Login' ?>
+                                        <?= (str_contains($redirect_url, 'dashboard')) ? 'Dashboard' : 'Login' ?>
                                     </div>
                                 </div>
                             </div>
@@ -150,17 +161,17 @@ http_response_code(404);
 
 <script>
 let seconds = 5;
-
 const countdownElement = document.getElementById('countdown');
-
 const timer = setInterval(() => {
     seconds--;
 
-    countdownElement.textContent = seconds;
+    if (countdownElement) {
+        countdownElement.textContent = seconds;
+    }
 
     if (seconds <= 0) {
         clearInterval(timer);
-        window.location.href = "<?= $redirect_url ?>";
+        window.location.href = <?= json_encode($redirect_url) ?>;
     }
 }, 1000);
 </script>

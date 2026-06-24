@@ -35,8 +35,8 @@ class menu extends iQuery
                     'icon' => 'fa-code',
                     'id' => 'collapseDeveloper',
                     'items' => [
-                        ['label' => 'SQL Administrador', 'link' => generateMkey('sql_console', 'dev')],
-                        ['label' => 'Respaldo de Archivos', 'link' => generateMkey('files_backup', 'dev')],
+                        ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console', 'dev')],
+                        ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup', 'dev')],
                     ],
                 ],
 
@@ -53,11 +53,11 @@ class menu extends iQuery
                 'icon' => 'fa-truck',
                 'id' => 'collapseOperaciones',
                 'items' => [
-                    ['label' => 'Ingreso Contenedores', 'link' => generateMkey('enter_container_port')],
-                    ['label' => 'Ingreso Termos', 'link' => generateMkey('enter_thermo_port')],
-                    ['label' => 'Carga Internacional', 'link' => generateMkey('enter_container_international')],
-                    ['label' => 'Seguimiento', 'link' => generateMkey('tracking')],
-                    ['label' => 'Roleo de Carga', 'link' => generateMkey('vessel_transfer')],
+                    ['label' => 'Ingreso Contenedores', 'link' => generateSecureLink('enter_container_port')],
+                    ['label' => 'Ingreso Termos', 'link' => generateSecureLink('enter_thermo_port')],
+                    ['label' => 'Carga Internacional', 'link' => generateSecureLink('enter_container_international')],
+                    ['label' => 'Seguimiento', 'link' => generateSecureLink('tracking')],
+                    ['label' => 'Roleo de Carga', 'link' => generateSecureLink('vessel_transfer')],
                 ],
             ],
             [
@@ -65,9 +65,9 @@ class menu extends iQuery
                 'icon' => 'fa-anchor',
                 'id' => 'collapsePuerto',
                 'items' => [
-                    ['label' => 'Naves', 'link' => generateMkey('enter_ship')],
-                    ['label' => 'Lineas Navieras', 'link' => generateMkey('enter_ship_line')],
-                    ['label' => 'Puertos', 'link' => generateMkey('enter_port')],
+                    ['label' => 'Naves', 'link' => generateSecureLink('enter_ship')],
+                    ['label' => 'Lineas Navieras', 'link' => generateSecureLink('enter_ship_line')],
+                    ['label' => 'Puertos', 'link' => generateSecureLink('enter_port')],
                 ],
             ],
             [
@@ -75,7 +75,7 @@ class menu extends iQuery
                 'icon' => 'fa-building',
                 'id' => 'collapseEmpresas',
                 'items' => [
-                    ['label' => 'Empresa', 'link' => generateMkey('enter_company')],
+                    ['label' => 'Empresa', 'link' => generateSecureLink('enter_company')],
                 ],
             ],
             [
@@ -83,11 +83,11 @@ class menu extends iQuery
                 'icon' => 'fa-calendar-days',
                 'id' => 'collapseProgramacion',
                 'items' => [
-                    ['label' => 'Itinerarios FY', 'link' => generateMkey('program_fygroup')],
-                    ['label' => 'Itinerarios TPC', 'link' => generateMkey('program_tpc')],
-                    ['label' => 'Itinerarios EPCO', 'link' => generateMkey('program_epco')],
-                    ['label' => 'Cool Carriers', 'link' => generateMkey('program_cool_carriers')],
-                    ['label' => 'Global Reefers', 'link' => generateMkey('program_global_reefers')],
+                    ['label' => 'Itinerarios FY', 'link' => generateSecureLink('program_fygroup')],
+                    ['label' => 'Itinerarios TPC', 'link' => generateSecureLink('program_tpc')],
+                    ['label' => 'Itinerarios EPCO', 'link' => generateSecureLink('program_epco')],
+                    ['label' => 'Cool Carriers', 'link' => generateSecureLink('program_cool_carriers')],
+                    ['label' => 'Global Reefers', 'link' => generateSecureLink('program_global_reefers')],
                 ],
             ],
             [
@@ -95,7 +95,7 @@ class menu extends iQuery
                 'icon' => 'fa-satellite',
                 'id' => 'collapseLivePosition',
                 'items' => [
-                    ['label' => 'Live Position', 'link' => generateMkey('marinetraffic_live_map')],
+                    ['label' => 'Live Position', 'link' => generateSecureLink('marinetraffic_live_map')],
                 ],
             ],
             [
@@ -103,7 +103,7 @@ class menu extends iQuery
                 'icon' => 'fa-file-pen',
                 'id' => 'collapsePortadas',
                 'items' => [
-                    ['label' => 'Crear Portada', 'link' => generateMkey('cover_maker')],
+                    ['label' => 'Crear Portada', 'link' => generateSecureLink('cover_maker')],
                 ],
             ],
             [
@@ -111,7 +111,7 @@ class menu extends iQuery
                 'icon' => 'fa-satellite',
                 'id' => 'collapseLayout',
                 'items' => [
-                    ['label' => 'Layout Antepuerto', 'link' => generateMkey('layout_antepuerto')],
+                    ['label' => 'Layout Antepuerto', 'link' => generateSecureLink('layout_antepuerto')],
                 ],
             ],
         ];
@@ -127,11 +127,11 @@ class menu extends iQuery
                 'icon' => 'fa-ship',
                 'id' => 'collapseMaersk',
                 'items' => [
-                    ['label' => 'Punto a Punto', 'link' => generateMkey('point_schedule_maersk')],
-                    ['label' => 'Puerto', 'link' => generateMkey('port_schedule_maersk')],
-                    ['label' => 'Nave', 'link' => generateMkey('vessel_schedule_maersk')],
-                    ['label' => 'Programación', 'link' => generateMkey('program_maersk')],
-                    ['label' => 'Seguimiento de Carga', 'link' => generateMkey('tracking_schedule_maersk')],
+                    ['label' => 'Punto a Punto', 'link' => generateSecureLink('point_schedule_maersk')],
+                    ['label' => 'Puerto', 'link' => generateSecureLink('port_schedule_maersk')],
+                    ['label' => 'Nave', 'link' => generateSecureLink('vessel_schedule_maersk')],
+                    ['label' => 'Programación', 'link' => generateSecureLink('program_maersk')],
+                    ['label' => 'Seguimiento de Carga', 'link' => generateSecureLink('tracking_schedule_maersk')],
                 ],
             ],
             [
@@ -139,9 +139,9 @@ class menu extends iQuery
                 'icon' => 'fa-ship',
                 'id' => 'collapseMedlog',
                 'items' => [
-                    ['label' => 'Stacking MSC', 'link' => generateMkey('program_msc')],
-                    ['label' => 'Importación MSC', 'link' => generateMkey('program_import_msc')],
-                    ['label' => 'EIR Medlog', 'link' => generateMkey('eir_msc')],
+                    ['label' => 'Stacking MSC', 'link' => generateSecureLink('program_msc')],
+                    ['label' => 'Importación MSC', 'link' => generateSecureLink('program_import_msc')],
+                    ['label' => 'EIR Medlog', 'link' => generateSecureLink('eir_msc')],
                 ],
             ],
             [
@@ -149,9 +149,9 @@ class menu extends iQuery
                 'icon' => 'fa-file-pdf',
                 'id' => 'collapseReporte',
                 'items' => [
-                    ['label' => 'Reporte por Nave', 'link' => generateMkey('ship_report')],
-                    ['label' => 'Liquidación de Nave', 'link' => generateMkey('vessel_liquidation')],
-                    ['label' => 'Reporte de Turno', 'link' => generateMkey('shifts_report')],
+                    ['label' => 'Reporte por Nave', 'link' => generateSecureLink('ship_report')],
+                    ['label' => 'Liquidación de Nave', 'link' => generateSecureLink('vessel_liquidation')],
+                    ['label' => 'Reporte de Turno', 'link' => generateSecureLink('shifts_report')],
                 ],
             ],
             [
@@ -159,7 +159,7 @@ class menu extends iQuery
                 'icon' => 'fa-chart-bar',
                 'id' => 'collapseEstadistica',
                 'items' => [
-                    ['label' => 'Estadística Naves', 'link' => generateMkey('stadistics_by_vessel')],
+                    ['label' => 'Estadística Naves', 'link' => generateSecureLink('stadistics_by_vessel')],
                 ],
             ],
             [
@@ -167,7 +167,7 @@ class menu extends iQuery
                 'icon' => 'fa-dollar-sign',
                 'id' => 'collapsePrecio',
                 'items' => [
-                    ['label' => 'Lista de Tarifas ', 'link' => generateMkey('list_price_indicators')],
+                    ['label' => 'Lista de Tarifas ', 'link' => generateSecureLink('list_price_indicators')],
                 ],
             ],
             [
@@ -175,7 +175,7 @@ class menu extends iQuery
                 'icon' => 'fa-users',
                 'id' => 'collapseUser',
                 'items' => [
-                    ['label' => 'Usuarios', 'link' => generateMkey('enter_user')],
+                    ['label' => 'Usuarios', 'link' => generateSecureLink('enter_user')],
                 ],
             ],
             [
@@ -183,7 +183,7 @@ class menu extends iQuery
                 'icon' => 'fa-server',
                 'id' => 'collapseServer',
                 'items' => [
-                    ['label' => 'Carga Planificación', 'link' => generateMkey('load_schedule')],
+                    ['label' => 'Carga Planificación', 'link' => generateSecureLink('load_schedule')],
                 ],
             ],
         ];
@@ -437,12 +437,12 @@ class menu extends iQuery
 
                         <div class="collapse-inner">
                             <a class="collapse-item submenu-item"
-                            href="<?= generateMkey('enter_container_port', 'myPortal') ?>">
+                            href="<?= generateSecureLink('enter_container_port', 'myPortal') ?>">
                                 Ingreso Contenedores
                             </a>
 
                             <a class="collapse-item submenu-item"
-                            href="<?= generateMkey('enter_thermo_port', 'myPortal') ?>">
+                            href="<?= generateSecureLink('enter_thermo_port', 'myPortal') ?>">
                                 Ingreso Termos
                             </a>
                         </div>

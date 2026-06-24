@@ -1,9 +1,17 @@
 <?php
-//header("Location: maintenance.php");
-//exit;
-
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
+
+/* Validación de URL */
+$module = $_GET['pag'] ?? '';
+$area = $_GET['area'] ?? '';
+$time = $_GET['t'] ?? '';
+$ttl = $_GET['ttl'] ?? '';
+$sig = $_GET['sig'] ?? '';
+
+if (!validateSecureLink($module, $area, $time, $ttl, $sig)) {
+    die('Acceso inválido o expirado');
+}
 
 $port = new internationalChargue();
 $cfg = new cfg();
@@ -345,7 +353,7 @@ var saveIntContainer = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_container_international'); ?>';
+          window.location = '<?php echo generateSecureLink('enter_container_international'); ?>';
         });
       } else {
         Swal.fire({

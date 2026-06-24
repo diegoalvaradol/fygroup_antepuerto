@@ -42,8 +42,8 @@ $_SESSION['last_session'] = time();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Cargando...</title>
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <title>Cargando...</title>
 
     <link href="../assets/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
@@ -51,7 +51,7 @@ $_SESSION['last_session'] = time();
     <link href="../assets/css/app.css" rel="stylesheet">
 
     <style>
-       body {
+        body {
             margin: 0;
             padding: 0;
         }
@@ -85,11 +85,12 @@ $_SESSION['last_session'] = time();
                         </p>
 
                         <div class="progress mt-4 mb-5">
-                            <div id="bar"
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width:0%">
-                            </div>
+                            <div id="bar" class="progress-bar" role="progressbar" style="width:0%"></div>
+                        </div>
+
+                        <div class="alert alert-success mt-4 mb-4">
+                            <i class="fas fa-clock mr-2"></i>
+                            Ingresndo en <strong id="countdown">5</strong> segundos
                         </div>
 
                         <div class="row">
@@ -146,31 +147,48 @@ $_SESSION['last_session'] = time();
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="../assets/js/fygroup.js"></script>
 </body>
+</html>
 
 <script>
-    const steps = [
-        { text: "Validando datos...", progress: 25 },
-        { text: "Validando sesión...", progress: 50 },
-        { text: "Cargando preferencias...", progress: 75 },
-        { text: "Entrando al sistema...", progress: 100 }
-    ];
+const steps = [
+    { text: "Cargando...", progress: 0 },
+    { text: "Validando datos...", progress: 25 },
+    { text: "Validando sesión...", progress: 50 },
+    { text: "Cargando preferencias...", progress: 75 },
+    { text: "Entrando al sistema...", progress: 100 }
+];
 
-    let i = 0;
+let i = 0;
 
-    function nextStep() {
-        if (i < steps.length) {
-            document.getElementById("status").innerText = steps[i].text;
-            document.getElementById("bar").style.width = steps[i].progress + "%";
-            i++;
+function nextStep() {
+    if (i < steps.length) {
+        document.getElementById("status").innerText = steps[i].text;
+        document.getElementById("status").style.fontStyle = "italic";
+        document.getElementById("bar").style.width = steps[i].progress + "%";
+        i++;
 
-            setTimeout(nextStep, 800);
-        } else {
-            setTimeout(() => {
+        setTimeout(nextStep, 1000);
+    } else {
+        setTimeout(() => {
             window.location.href = "dashboard.php";
-            }, 400);
-        }
+        }, 500);
+    }
+}
+
+nextStep();
+
+let seconds = 5;
+const countdownElement = document.getElementById('countdown');
+const timer = setInterval(() => {
+    seconds--;
+
+    if (countdownElement) {
+        countdownElement.textContent = seconds;
     }
 
-    nextStep();
+    if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = "dashboard.php";
+    }
+}, 1000);
 </script>
-</html>

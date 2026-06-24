@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($list && $user->setResetToken($email, $token, $expiration)) {
         $nombreUsuario = $list['name'];
         $userDivision = $list['division'];
-        $url = generateMkey('reset_form') . '&token=' . $token;
+        $url = generateSecureLink('reset_form') . '&token=' . $token;
 
         if ($userDivision == 'fy') {
             $link = $localHost ? 'http://localhost/ssl-chile/myFY/' . $url : 'https://myfy.fygroup.cl/myFY/' . $url;

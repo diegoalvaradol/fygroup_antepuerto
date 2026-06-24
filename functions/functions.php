@@ -10,20 +10,61 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set('America/Santiago');
 
 /**
- * Method generateMkey //Genera un token de seguridad para acceder a un módulo específico.
+ * Method generateSecureLink //Genera un token de seguridad para acceder a un módulo específico.
  *
  * @param  $module [modulo]
  * @param  $area   [area]
  * @return String
  */
-function generateMkey($module, $area = 'myFY')
+function generateSecureLink($module, $area = 'myFY', $ttl = 300)
 {
-    $secretKey = 'FYGROUP_DIEGO_2026_0517';
-    $time = time();
-    $random = bin2hex(random_bytes(5));
-    $token = md5($secretKey . $module . $time . $random);
+    $secret = 'FYGROUP_DIEGO_2026_0517';
+    $t = time();
 
-    return './?pag=' . $module . '&area=' . $area . '&mkey=' . $token;
+    $data = $module . '|' . $area . '|' . $t . '|' . $ttl;
+
+    $sig = hash_hmac('sha256', $data, $secret);
+
+    return "./?pag={$module}&area={$area}&t={$t}&ttl={$ttl}&sig={$sig}";
+}
+
+/**
+ * Valida mkey con expiración y módulo
+ */
+function validateSecureLink($module, $area, $time, $ttl, $sig)
+{
+    $secret = 'FYGROUP_DIEGO_2026_0517';
+
+    // 1. verificar expiración
+    if ((time() - (int) $time) > (int) $ttl) {
+        return false;
+    }
+
+    // 2. reconstruir firma
+    $data = $module . '|' . $area . '|' . $time . '|' . $ttl;
+
+    $expected = hash_hmac('sha256', $data, $secret);
+
+    // 3. comparar seguro
+    return hash_equals($expected, $sig);
+}
+
+/**
+ * Limpieza de tokens expirados (opcional)
+ */
+function cleanExpiredMkeys()
+{
+    if (!isset($_SESSION['mkeys'])) {
+        return;
+    }
+
+    $now = time();
+
+    foreach ($_SESSION['mkeys'] as $key => $data) {
+        if (($now - $data['time']) > $data['ttl']) {
+            unset($_SESSION['mkeys'][$key]);
+        }
+    }
 }
 
 /**
@@ -36,6 +77,11 @@ function esLocalhost()
     $whitelist = ['127.0.0.1', '::1', 'localhost'];
 
     return in_array($_SERVER['REMOTE_ADDR'], $whitelist) || in_array($_SERVER['SERVER_NAME'], $whitelist);
+}
+
+function isDev()
+{
+    return in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
 }
 
 /**
@@ -97,6 +143,58 @@ function formatCarPlate($plate)
     }
 
     return $plate;
+}
+
+function timeAgo($datetime)
+{
+    if (!$datetime) {
+        return '';
+    }
+
+    $time = strtotime($datetime);
+    $diff = time() - $time;
+
+    if ($diff < 60) {
+        return 'hace segundos';
+    }
+    if ($diff < 3600) {
+        return 'hace ' . floor($diff / 60) . ' min';
+    }
+    if ($diff < 86400) {
+        return 'hace ' . floor($diff / 3600) . ' h';
+    }
+
+    return 'hace ' . floor($diff / 86400) . ' días';
+}
+
+function cleanInput($value)
+{
+    return htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8');
+}
+
+function dd($data)
+{
+    echo '<pre>';
+    var_dump($data);
+    echo '</pre>';
+    die();
+}
+
+function jsonResponse($data, $code = 200)
+{
+    http_response_code($code);
+    header('Content-Type: application/json');
+
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+function normalizeString($str)
+{
+    $str = strtolower($str);
+    $str = preg_replace('/[^a-z0-9 ]/', '', $str);
+
+    return trim($str);
 }
 
 /**

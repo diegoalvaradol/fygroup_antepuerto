@@ -2,6 +2,17 @@
 require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 
+/* Validación de URL */
+$module = $_GET['pag'] ?? '';
+$area = $_GET['area'] ?? '';
+$time = $_GET['t'] ?? '';
+$ttl = $_GET['ttl'] ?? '';
+$sig = $_GET['sig'] ?? '';
+
+if (!validateSecureLink($module, $area, $time, $ttl, $sig)) {
+    die('Acceso inválido o expirado');
+}
+
 $corp = new company();
 $cfg = new cfg();
 $user = new user();
@@ -248,7 +259,7 @@ var saveChanges = function() {
         icon: 'success',
         confirmButtonColor: '#4CAF50'
       }).then(() => {
-        window.location = '<?php echo generateMkey('enter_company'); ?>&page='+ paginaActual;
+        window.location = '<?php echo generateSecureLink('enter_company'); ?>&page='+ paginaActual;
       });
     } else {
       Swal.fire({
@@ -293,7 +304,7 @@ var deleteCompany = function(id, name, exporter, agency) {
             icon: 'success',
             confirmButtonColor: '#4CAF50'
           }).then((result) => {
-            window.location = '<?php echo generateMkey('enter_company'); ?>&page=' + paginaActual;
+            window.location = '<?php echo generateSecureLink('enter_company'); ?>&page=' + paginaActual;
           });
         } else if(x == 'NOOK'){
           Swal.fire({
@@ -360,7 +371,7 @@ var saveCompany = function() {
           icon: 'success',
           confirmButtonColor: '#4CAF50'
         }).then((result) => {
-          window.location = '<?php echo generateMkey('enter_company'); ?>&page=' + paginaActual;
+          window.location = '<?php echo generateSecureLink('enter_company'); ?>&page=' + paginaActual;
         });
       } else {
         Swal.fire({
