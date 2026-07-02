@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/maintenance.php';
-echo $_SERVER['DOCUMENT_ROOT'];
+
 $now = new DateTime();
 $start = new DateTime(MAINTENANCE_START);
 $end = new DateTime(MAINTENANCE_END);
