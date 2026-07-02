@@ -10,42 +10,38 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set('America/Santiago');
 
 /**
- * Method generateSecureLink //Genera un token de seguridad para acceder a un módulo específico.
+ * Genera un enlace seguro para un módulo.
  *
- * @param  $module [modulo]
- * @param  $area   [area]
- * @return String
  */
-function generateSecureLink($module, $area = 'myFY', $ttl = 300)
+function generateSecureLink(string $module, int $ttl = 3600): string
 {
     $secret = 'FYGROUP_DIEGO_2026_0517';
+
     $t = time();
 
-    $data = $module . '|' . $area . '|' . $t . '|' . $ttl;
+    $data = $module . '|' . $t . '|' . $ttl;
 
     $sig = hash_hmac('sha256', $data, $secret);
 
-    return "./?pag={$module}&area={$area}&t={$t}&ttl={$ttl}&sig={$sig}";
+    return "./?pag={$module}&t={$t}&ttl={$ttl}&sig={$sig}";
 }
 
 /**
- * Valida mkey con expiración y módulo
+ * Valida un enlace seguro.
+ *
  */
-function validateSecureLink($module, $area, $time, $ttl, $sig)
+function validateSecureLink(string $module, int $time, int $ttl, string $sig): bool
 {
     $secret = 'FYGROUP_DIEGO_2026_0517';
 
-    // 1. verificar expiración
-    if ((time() - (int) $time) > (int) $ttl) {
+    if ((time() - $time) > $ttl) {
         return false;
     }
 
-    // 2. reconstruir firma
-    $data = $module . '|' . $area . '|' . $time . '|' . $ttl;
+    $data = $module . '|' . $time . '|' . $ttl;
 
     $expected = hash_hmac('sha256', $data, $secret);
 
-    // 3. comparar seguro
     return hash_equals($expected, $sig);
 }
 

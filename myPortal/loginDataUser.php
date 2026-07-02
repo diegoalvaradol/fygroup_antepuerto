@@ -58,7 +58,7 @@ $_SESSION['last_session'] = time();
     </style>
 </head>
 
-<body>
+<body class="preload-body">
     <div class="container preload-panel">
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">

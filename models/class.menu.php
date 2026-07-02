@@ -35,8 +35,8 @@ class menu extends iQuery
                     'icon' => 'fa-code',
                     'id' => 'collapseDeveloper',
                     'items' => [
-                        ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console', 'dev')],
-                        ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup', 'dev')],
+                        ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console')],
+                        ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup')],
                     ],
                 ],
 
@@ -437,12 +437,12 @@ class menu extends iQuery
 
                         <div class="collapse-inner">
                             <a class="collapse-item submenu-item"
-                            href="<?= generateSecureLink('enter_container_port', 'myPortal') ?>">
+                            href="<?= generateSecureLink('enter_container_port') ?>">
                                 Ingreso Contenedores
                             </a>
 
                             <a class="collapse-item submenu-item"
-                            href="<?= generateSecureLink('enter_thermo_port', 'myPortal') ?>">
+                            href="<?= generateSecureLink('enter_thermo_port') ?>">
                                 Ingreso Termos
                             </a>
                         </div>

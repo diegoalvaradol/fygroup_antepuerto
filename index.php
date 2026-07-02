@@ -4,70 +4,48 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config/includes.php';
 
+/* Obtener módulo desde GET o desde la URL */
 $pag = $_GET['pag'] ?? '';
-$area = $_GET['area'] ?? 'myFY';
 
+if ($pag === '') {
+    $pag = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+}
+
+$pag = preg_replace('/\.php$/', '', $pag);
 $t = $_GET['t'] ?? '';
 $ttl = $_GET['ttl'] ?? '';
 $sig = $_GET['sig'] ?? '';
 
-/* Áreas permitidas */
-$allowedAreas = ['dev', 'myFY', 'myPortal'];
+/* Detectar área por dominio */
+$host = strtolower($_SERVER['HTTP_HOST']);
 
-if (!in_array($area, $allowedAreas, true)) {
+$hostAreas = [
+    'antepuerto.fygroup.cl' => 'myFY',
+    'www.antepuerto.fygroup.cl' => 'myFY',
+
+    'portalcliente.fygroup.cl' => 'myPortal',
+    'www.portalcliente.fygroup.cl' => 'myPortal',
+
+    'dev.fygroup.cl' => 'dev',
+    'www.dev.fygroup.cl' => 'dev',
+];
+
+if (esLocalhost()) {
+    $area = $_GET['area'] ?? 'myFY';
+} elseif (isset($hostAreas[$host])) {
+    $area = $hostAreas[$host];
+} else {
     http_response_code(404);
     require __DIR__ . '/404.php';
     exit;
 }
 
-/* Carpeta desde URL */
-$uriParts = explode('/', trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
-
-$folderFromUrl = esLocalhost()
-    ? ($uriParts[1] ?? '')
-    : ($uriParts[0] ?? '');
-
-/* validar firma obligatoria */
-if ($sig === '' || $t === '' || $ttl === '') {
-    http_response_code(401);
-    require __DIR__ . '/mkey_error.php';
-    exit;
-}
-
-/* validar área vs URL */
-if ($folderFromUrl !== $area) {
-    http_response_code(403);
-    require __DIR__ . '/error.php';
-    exit;
-}
-
-/* validar expiración */
-if ((time() - (int) $t) > (int) $ttl) {
-    http_response_code(401);
-    require __DIR__ . '/mkey_error.php';
-    exit;
-}
-
-/* validar firma */
-$secret = 'FYGROUP_DIEGO_2026_0517';
-
-$data = $pag . '|' . $area . '|' . $t . '|' . $ttl;
-
-$expectedSig = hash_hmac('sha256', $data, $secret);
-
-if (!hash_equals($expectedSig, $sig)) {
-    http_response_code(403);
-    require __DIR__ . '/error.php';
-    exit;
-}
-
-/* vista por defecto */
+/* Página principal */
 if ($pag === '') {
-    require __DIR__ . '/dashboard.php';
-    exit;
+    $pag = 'dashboard';
 }
 
-/* protección path traversal */
+/* Protección */
 if (
     str_contains($pag, '..') ||
     str_contains($pag, '\\') ||
@@ -78,7 +56,34 @@ if (
     exit;
 }
 
-/* ruta final */
+/* Validar firma (excepto login si así lo deseas) */
+if ($pag !== 'login') {
+    if ($sig === '' || $t === '' || $ttl === '') {
+        http_response_code(401);
+        require __DIR__ . '/mkey_error.php';
+        exit;
+    }
+
+    if ((time() - (int) $t) > (int) $ttl) {
+        http_response_code(401);
+        require __DIR__ . '/mkey_error.php';
+        exit;
+    }
+
+    $secret = 'FYGROUP_DIEGO_2026_0517';
+
+    $data = $pag . '|' . $t . '|' . $ttl;
+
+    $expectedSig = hash_hmac('sha256', $data, $secret);
+
+    if (!hash_equals($expectedSig, $sig)) {
+        http_response_code(403);
+        require __DIR__ . '/error.php';
+        exit;
+    }
+}
+
+/* Cargar archivo */
 $filePath = __DIR__ . "/{$area}/{$pag}.php";
 
 if (is_file($filePath)) {
