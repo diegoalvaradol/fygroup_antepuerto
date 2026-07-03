@@ -1,52 +1,113 @@
 /* Login Portal Cliente */
 body.login-portal {
-  background: url('../../images/coquimbo_port_background_5.jpg') no-repeat center center fixed;
-  background-size: cover;
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+  min-height: 100vh;
 }
 
+/* IMAGEN DE FONDO */
 body.login-portal::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: url('../../images/coquimbo_port_background_5.jpg') no-repeat center center;
+  background-size: cover;
+  filter: brightness(0.55) contrast(1.1) saturate(1.1);
+  z-index: 0;
 }
 
-.login-wrapper {
+/* OVERLAY */
+body.login-portal .video-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* WRAPPER */
+body.login-portal .login-wrapper {
   position: relative;
   z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
-.login-card {
+/* CARD */
+body.login-portal .login-card {
+  width: 100%;
+  max-width: 420px;
   background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  padding: 2rem;
 }
 
-.login-card input,
-.login-card select {
-  border-radius: 12px;
+/* INPUTS */
+body.login-portal .login-card input,
+body.login-portal .login-card select {
   height: 48px;
+  border-radius: 12px;
 }
 
-.input-group-text {
-  background: #f8f9fc;
+/* INPUT GROUP */
+body.login-portal .input-group-text {
+  background: #f1f3f5;
+  border: none;
+  border-radius: 12px 0 0 12px;
 }
 
-.btn-login {
+/* BUTTON */
+body.login-portal .btn-login {
   height: 48px;
   border-radius: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
+  transition: all 0.2s ease;
 }
 
-.logo-img {
+body.login-portal .btn-login:hover {
+  transform: translateY(-1px);
+}
+
+/* LOGO */
+body.login-portal .logo-img {
   max-height: 90px;
+  width: auto;
 }
 
-.input-group {
-  position: relative;
+/* DIVIDER */
+body.login-portal .divider {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  width: 100%;
+  align-items: center;
+  margin: 20px 0;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+body.login-portal .divider::before,
+body.login-portal .divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #dee2e6;
+}
+
+body.login-portal .divider span {
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+/* RESPONSIVE */
+@media (max-width: 576px) {
+  body.login-portal .login-card {
+    padding: 1.5rem;
+    border-radius: 14px;
+  }
+
+  body.login-portal .logo-img {
+    max-height: 70px;
+  }
 }

@@ -3,11 +3,14 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+.error-panel {
+  max-width: 850px;
+}
+
 .error-card {
   border: none;
   border-top: 4px solid #293c74;
   border-radius: 12px;
-  margin-bottom: 50px;
   overflow: hidden;
   box-shadow: 0 0.15rem 1.75rem rgba(58, 59, 69, 0.15);
 }
@@ -15,46 +18,65 @@ body {
 .error-banner {
   background: linear-gradient(135deg, #293c74, #3b5297);
   color: #fff;
-  padding: 50px;
+  padding: 35px;
+  text-align: center;
 }
 
 .error-banner h1 {
   font-weight: 800;
   margin-bottom: 10px;
+  font-size: 2rem;
 }
 
-.error-topbar {
-  background: #293c74;
-  height: 70px;
-  box-shadow: 0 0.15rem 1.75rem rgba(58, 59, 69, 0.15);
-}
-
-.error-panel {
-  margin-top: 50px;
-  margin-bottom: 50px;
+.error-banner p {
+  margin: 0;
+  opacity: 0.9;
 }
 
 .error-body {
-  padding: 50px;
+  padding: 40px;
+}
+
+.page-logo {
+  width: 90px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.page-icon {
+  font-size: 4rem;
+  color: #293c74;
+  margin-bottom: 25px;
 }
 
 .status-item {
   background: #f8f9fc;
   border-radius: 10px;
-  padding: 25px;
-  transition: 0.3s;
+  padding: 20px;
   height: 100%;
   border: 1px solid #e3e6f0;
+  transition: transform 0.2s ease;
 }
 
 .status-item:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .status-icon {
   font-size: 2rem;
   color: #293c74;
   margin-bottom: 15px;
+}
+
+.status-item h6 {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.status-item p,
+.status-item small {
+  margin: 0;
+  color: #6c757d;
 }
 
 .btn-fy {
@@ -71,26 +93,16 @@ body {
   color: #fff;
 }
 
-.page-logo {
-  width: 100px;
-  height: auto;
-  margin-bottom: 15px;
-}
-
-.page-icon {
-  font-size: 4rem;
-  color: #293c74;
-  margin-bottom: 25px;
+@media (max-width: 992px) {
+  .error-panel {
+    max-width: 95%;
+  }
 }
 
 @media (max-width: 768px) {
   .error-panel {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .error-card {
-    margin-bottom: 25px;
+    max-width: 95%;
+    padding: 5px;
   }
 
   .error-body {
@@ -101,24 +113,21 @@ body {
     padding: 25px;
   }
 
-  .page-logo {
-    width: 60px;
+  .error-banner h1 {
+    font-size: 1.6rem;
   }
 
-  .btn-fy {
-    width: 100%;
+  .page-logo {
+    width: 70px;
+  }
+
+  .page-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
   }
 
   .status-item {
     margin-bottom: 15px;
-  }
-
-  .page-body {
-    padding: 25px;
-  }
-
-  .page-logo {
-    width: 60px;
   }
 
   .btn-fy {

@@ -1,14 +1,12 @@
 /* Login Developers */
-/* Login Dev - Scoped para no romper el sistema */
-
-/* Fondo SOLO del login */
 body.login-dev {
-  background: #0f172a;
   margin: 0;
   min-height: 100vh;
+  background: #0f172a;
+  overflow: hidden;
 }
 
-/* Canvas SOLO decorativo del login */
+/* BACKGROUND */
 body.login-dev canvas.login-bg {
   position: fixed;
   inset: 0;
@@ -20,68 +18,67 @@ body.login-dev canvas.login-bg {
   pointer-events: none;
 }
 
-/* Contenedor principal */
-.login-wrapper {
+/* WRAPPER */
+body.login-dev .login-wrapper {
   position: relative;
   z-index: 2;
 }
 
-/* Card login */
-.login-card {
-  background: #ffffff;
+/* CARD */
+body.login-dev .login-card {
+  background: #fff;
   border-radius: 20px;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
   padding: 2rem;
 }
 
-/* Inputs */
-.login-card input {
-  border-radius: 12px;
+/* INPUTS */
+body.login-dev .login-card input {
   height: 48px;
+  border-radius: 12px;
 }
 
-/* Input group */
-.login-card .input-group-text {
+/* INPUT GROUP */
+body.login-dev .login-card .input-group-text {
   background: #f8f9fc;
   border-radius: 12px 0 0 12px;
 }
 
-/* Botón login */
-.btn-login {
+/* BUTTON */
+body.login-dev .btn-login {
   height: 48px;
   border-radius: 12px;
   font-weight: 600;
-  letter-spacing: 0.5px;
 }
 
-/* Logo */
-.logo-img {
+/* LOGO */
+body.login-dev .logo-img {
   max-height: 100px;
 }
 
-/* Divider */
-.divider {
+/* DIVIDER */
+body.login-dev .divider {
   display: flex;
   align-items: center;
   margin: 20px 0;
+  font-size: 12px;
+  color: #6c757d;
 }
 
-.divider::before,
-.divider::after {
+body.login-dev .divider::before,
+body.login-dev .divider::after {
   content: '';
   flex: 1;
   border-top: 1px solid #b9bcc0;
 }
 
-.divider span {
+body.login-dev .divider span {
   padding: 0 12px;
-  color: #6c757d;
-  font-size: 12px;
 }
 
-/* Responsive */
+/* MOBILE */
 @media (max-width: 576px) {
-  .login-card {
+  body.login-dev .login-card {
     margin: 1rem;
     padding: 1rem;
   }

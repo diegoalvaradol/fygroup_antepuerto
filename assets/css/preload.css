@@ -12,7 +12,7 @@
 
 .preload-panel {
   max-width: 850px;
-  margin: 25px auto;
+  padding-bottom: 25px;
 }
 
 .preload-card {

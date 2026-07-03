@@ -42,7 +42,6 @@ http_response_code(403);
 </head>
 
 <body>
-    <div class="error-topbar"></div>
     <div class="container error-panel">
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">

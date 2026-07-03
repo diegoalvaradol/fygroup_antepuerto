@@ -81,6 +81,6 @@ if ($forbidden) {
     $_SESSION['redirect_after_403'] = $redirect;
     $_SESSION['redirect_seconds_403'] = $seconds;
 
-    require_once __DIR__ . '/../403.php';
+    require_once __DIR__ . '/../error.php';
     exit();
 }

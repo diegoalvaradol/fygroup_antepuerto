@@ -1,18 +1,45 @@
 <?php
-
 session_start();
 
 $max_inactivity = 30 * 60;
 
-$base = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/';
+/* tomar SOLO el path de la URL real */
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+/* romper por segmentos */
+$parts = array_values(array_filter(explode('/', $path)));
+
+/* buscar base real del sistema (ssl-chile, dev, myfy, myportal) */
+$allowed = ['ssl-chile', 'dev', 'myfy', 'myportal'];
+
+$base = '/';
+
+foreach ($parts as $i => $p) {
+    if (in_array($p, $allowed)) {
+
+        $base = '/' . $p . '/';
+
+        /* si existe segundo nivel tipo /ssl-chile/dev/ */
+        if (isset($parts[$i + 1]) && in_array($parts[$i + 1], $allowed)) {
+            $base = '/' . $p . '/' . $parts[$i + 1] . '/';
+        }
+
+        break;
+    }
+}
+
+/* rutas */
 $login = $base . 'login.php';
 $dashboard = $base . 'dashboard.php';
 
+/* sesión */
 $redirect_url = $login;
 
+/* sin sesión */
 if (!isset($_SESSION['user_id'])) {
     $redirect_url = $login;
 } else {
+
     if (!isset($_SESSION['last_activity'])) {
         $_SESSION['last_activity'] = time();
     }
@@ -20,7 +47,6 @@ if (!isset($_SESSION['user_id'])) {
     if (time() - $_SESSION['last_activity'] > $max_inactivity) {
         session_unset();
         session_destroy();
-
         $redirect_url = $login;
     } else {
         $_SESSION['last_activity'] = time();
@@ -59,7 +85,6 @@ http_response_code(401);
     </style>
 </head>
 <body>
-    <div class="error-topbar"></div>
     <div class="container error-panel">
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">

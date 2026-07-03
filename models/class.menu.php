@@ -30,17 +30,17 @@ class menu extends iQuery
     private static function developerMenu()
     {
         $menus = [
-                [
-                    'title' => 'Desarrollador',
-                    'icon' => 'fa-code',
-                    'id' => 'collapseDeveloper',
-                    'items' => [
-                        ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console')],
-                        ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup')],
-                    ],
+            [
+                'title' => 'Desarrollador',
+                'icon' => 'fa-code',
+                'id' => 'collapseDeveloper',
+                'items' => [
+                    ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console')],
+                    ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup')],
                 ],
+            ],
 
-            ];
+        ];
 
         return $menus;
     }
