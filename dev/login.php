@@ -17,6 +17,14 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 
+if ($_SERVER['HTTP_HOST'] === 'localhost') {
+    $myFyUrl = '/ssl-chile/myFY/login.php';
+    $myPortalUrl = '/ssl-chile/myPortal/login.php';
+} else {
+    $myFyUrl = 'https://antepuerto.fygroup.cl/myFY/login.php';
+    $myPortalUrl = 'https://portalcliente.fygroup.cl/myPortal/login.php';
+}
+
 require_once __DIR__ . '/../config/includes.php';
 
 $footer = menu::footerSSL();
@@ -81,16 +89,14 @@ $footer = menu::footerSSL();
                     </div>
 
                     <div class="mt-3">
-                        <a href="../myFY/login.php" class="btn btn-outline-primary btn-block">
-                            <i class="fas fa-ship"></i>
-                            Acceso FYGroup
+                        <a href="<?= $myFyUrl ?>" class="btn btn-outline-primary btn-block">
+                            <i class="fas fa-ship"></i> Acceso FYGroup
                         </a>
                     </div>
 
                     <div class="mt-3">
-                        <a href="../myPortal/login.php" class="btn btn-outline-success btn-block">
-                            <i class="fas fa-user"></i>
-                            Acceso Portal Cliente
+                        <a href="<?= $myPortalUrl ?>" class="btn btn-outline-success btn-block">
+                            <i class="fas fa-user"></i> Acceso Portal Cliente
                         </a>
                     </div>
                 </form>

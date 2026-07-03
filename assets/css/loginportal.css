@@ -1,9 +1,10 @@
 /* Login Portal Cliente */
 body.login-portal {
   margin: 0;
-  background: #000;
-  overflow: hidden;
   min-height: 100vh;
+  background: #000;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* IMAGEN DE FONDO */
@@ -31,19 +32,36 @@ body.login-portal .login-wrapper {
   z-index: 2;
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 1rem;
+  align-items: flex-start;
+  padding: 30px 15px 100px;
+  box-sizing: border-box;
 }
 
 /* CARD */
 body.login-portal .login-card {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 18px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
   padding: 2rem;
+}
+
+/* LOGO */
+body.login-portal .logo-img {
+  max-height: 90px;
+  width: auto;
+}
+
+/* TITULOS */
+body.login-portal h2 {
+  font-size: 2.4rem;
+  margin-bottom: 0.4rem;
+}
+
+body.login-portal p {
+  margin-bottom: 1.5rem;
 }
 
 /* INPUTS */
@@ -60,23 +78,17 @@ body.login-portal .input-group-text {
   border-radius: 12px 0 0 12px;
 }
 
-/* BUTTON */
+/* BOTÓN */
 body.login-portal .btn-login {
   height: 48px;
   border-radius: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  transition: all 0.2s ease;
+  transition: 0.2s;
 }
 
 body.login-portal .btn-login:hover {
   transform: translateY(-1px);
-}
-
-/* LOGO */
-body.login-portal .logo-img {
-  max-height: 90px;
-  width: auto;
 }
 
 /* DIVIDER */
@@ -100,14 +112,107 @@ body.login-portal .divider span {
   white-space: nowrap;
 }
 
-/* RESPONSIVE */
-@media (max-width: 576px) {
+/* =======================================================
+   TABLETS
+======================================================= */
+@media (max-width: 992px) {
   body.login-portal .login-card {
-    padding: 1.5rem;
-    border-radius: 14px;
+    max-width: 400px;
+    padding: 1.75rem;
   }
 
   body.login-portal .logo-img {
-    max-height: 70px;
+    max-height: 80px;
+  }
+}
+
+/* =======================================================
+   MÓVILES
+======================================================= */
+@media (max-width: 768px) {
+  body.login-portal .login-wrapper {
+    padding: 20px 12px 90px;
+  }
+
+  body.login-portal .login-card {
+    max-width: 380px;
+    padding: 1.3rem;
+    border-radius: 16px;
+  }
+
+  body.login-portal .logo-img {
+    max-height: 60px;
+  }
+
+  body.login-portal h2 {
+    font-size: 2rem;
+  }
+
+  body.login-portal p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  body.login-portal .login-card input,
+  body.login-portal .login-card select,
+  body.login-portal .btn-login {
+    height: 44px;
+  }
+
+  body.login-portal .divider {
+    margin: 12px 0;
+  }
+}
+
+/* =======================================================
+   TELÉFONOS PEQUEÑOS
+======================================================= */
+@media (max-width: 480px) {
+  body.login-portal .login-wrapper {
+    padding: 15px 10px 90px;
+  }
+
+  body.login-portal .login-card {
+    padding: 1rem;
+  }
+
+  body.login-portal .logo-img {
+    max-height: 55px;
+  }
+
+  body.login-portal h2 {
+    font-size: 1.8rem;
+  }
+
+  body.login-portal p {
+    font-size: 0.9rem;
+  }
+
+  body.login-portal .login-card input,
+  body.login-portal .login-card select,
+  body.login-portal .btn-login {
+    height: 42px;
+  }
+}
+
+/* =======================================================
+   PANTALLAS BAJAS
+======================================================= */
+@media (max-height: 700px) {
+  body.login-portal .login-wrapper {
+    padding-top: 15px;
+    padding-bottom: 90px;
+  }
+
+  body.login-portal .logo-img {
+    max-height: 50px;
+  }
+
+  body.login-portal .login-card {
+    padding: 1rem;
+  }
+
+  body.login-portal .divider {
+    margin: 10px 0;
   }
 }
