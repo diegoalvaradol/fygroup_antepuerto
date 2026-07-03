@@ -37,9 +37,9 @@ if (str_contains($host, 'fygroup.cl')) {
 
     /* LOCAL POR RUTA */
 } else {
-    if (str_contains($uri, '/ssl-chile/myfy')) {
+    if (str_contains($uri, '/ssl-chile/myFY')) {
         $area = 'myFY';
-    } elseif (str_contains($uri, '/ssl-chile/myportal')) {
+    } elseif (str_contains($uri, '/ssl-chile/myPortal')) {
         $area = 'myPortal';
     } elseif (str_contains($uri, '/ssl-chile/dev')) {
         $area = 'dev';
