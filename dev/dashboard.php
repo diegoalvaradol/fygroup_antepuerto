@@ -63,6 +63,241 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+
+                        <span class="badge badge-success p-2">AMBIENTE: DEV</span>
+                    </div>
+
+                    <div class="container-fluid-custom">
+                        <!-- Resumen -->
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            PHP
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?= phpversion(); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            DB
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?= $cfg->getMysqlVersion(); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            TABLAS
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?= $cfg->getTotalTables(); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-danger shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                            BASE DE DATOS
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?= $cfg->getDatabaseName(); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BD + Servicios -->
+                        <div class="row">
+                            <!-- BD -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Base de Datos</h6>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <th>Estado</th>
+                                                <td><span class="badge badge-success">ONLINE</span></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Versión</th>
+                                                <td><?= $cfg->getMysqlVersion(); ?></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Tablas</th>
+                                                <td><?= $cfg->getTotalTables(); ?></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Tamaño</th>
+                                                <td><?= $cfg->getDatabaseSize(); ?></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Servicios -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-success">Servicios</h6>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <?php foreach ($cfg->getServicesStatus() as $k => $v): ?>
+                                            <div class="d-flex justify-content-between border-bottom py-2">
+                                                <strong><?= $k ?></strong>
+
+                                                <span class="badge badge-<?= $v ? 'success' : 'danger' ?>">
+                                                    <?= $v ? 'ONLINE' : 'OFFLINE' ?>
+                                                </span>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Seguridad + Disco -->
+                        <div class="row">
+                            <!-- Seguridad -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-danger">Seguridad</h6>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <?php foreach ($cfg->getSecurityStatus() as $k => $v): ?>
+                                            <div class="d-flex justify-content-between border-bottom py-2">
+                                                <strong><?= $k ?></strong>
+                                                <span><?= $v ? '<i class="fas fa-check-circle fa-lg text-success"></i>' : '<i class="fas fa-times-circle fa-lg text-danger"></i>' ?></span>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Disco -->
+                            <div class="col-lg-6 mb-4">
+                                <?php $disk = $cfg->getDiskUsage(); ?>
+
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-info">Almacenamiento</h6>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="progress mb-3" style="height:12px;">
+                                            <div class="progress-bar
+                                                <?= $disk['percent'] < 70 ? 'bg-success' : ($disk['percent'] < 90 ? 'bg-warning' : 'bg-danger'); ?>"
+                                                style="width: <?= $disk['percent'] ?>%;">
+                                                <?= $disk['percent'] ?>%
+                                            </div>
+                                        </div>
+
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <th>Usado</th>
+                                                <td><?= $disk['used_gb'] ?> GB</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Libre</th>
+                                                <td><?= $disk['free_gb'] ?> GB</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Total</th>
+                                                <td><?= $disk['total_gb'] ?> GB</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Datadog Interno Content -->
+                    <div class="container-fluid-custom">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h3>Datadog Interno</h3>
+                            <span class="badge badge-success p-2">LIVE</span>
+                        </div>
+
+                        <!-- KPIs -->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-body text-center">
+                                        <h6>PHP</h6>
+                                        <h4 id="phpVersion">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-body text-center">
+                                        <h6>DB Status</h6>
+                                        <h4 id="dbStatus">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-body text-center">
+                                        <h6>Tables</h6>
+                                        <h4 id="dbTables">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-body text-center">
+                                        <h6>Disk Usage</h6>
+                                        <h4 id="diskUsage">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Servicios -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h5>Servicios</h5>
+                                        <div id="servicesBox" class="row"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -105,4 +340,41 @@ document.addEventListener('DOMContentLoaded', function () {
     new bootstrap.Popover(el);
   });
 });
+
+async function loadMetrics() {
+  const res = await fetch('../controllers/metricsController.php');
+  const data = await res.json();
+
+  // System
+  document.getElementById('phpVersion').innerText = data.system.php;
+
+  // DB
+  document.getElementById('dbStatus').innerHTML =
+  data.database.status ? '<i class="fas fa-circle fa-lg text-success"></i>' : '<i class="fas fa-circle fa-lg text-danger"></i>';
+
+  document.getElementById('dbTables').innerText = data.database.tables;
+
+  document.getElementById('diskUsage').innerText =
+  data.disk.percent + '%';
+
+  // Services
+  let html = '';
+
+  Object.entries(data.services).forEach(([name, status]) => {
+    html += `
+        <div class="col-md-3 mb-2">
+            <div class="border rounded p-2 text-center">
+                <strong>${name}</strong><br>
+                ${status ? '<i class="fas fa-circle fa-lg text-success"></i> ONLINE' : '<i class="fas fa-circle fa-lg text-danger"></i> OFFLINE'}
+            </div>
+        </div>
+    `;
+  });
+
+  document.getElementById('servicesBox').innerHTML = html;
+}
+
+// loop tipo observabilidad real
+loadMetrics();
+setInterval(loadMetrics, 5000);
 </script>

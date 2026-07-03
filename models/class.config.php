@@ -111,4 +111,169 @@ class cfg extends iQuery
         return json_encode($result);
     }
 
+    public function getMysqlVersion()
+    {
+        $sql = 'SELECT VERSION() AS version';
+
+        try {
+            $stmt = $this->db->query($sql);
+
+            return $stmt->fetchColumn();
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function getTotalTables()
+    {
+        $sql = 'SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE()';
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchColumn();
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function getDatabaseSize()
+    {
+        $sql = ' SELECT ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS size_mb FROM information_schema.tables WHERE table_schema = DATABASE()';
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchColumn() . ' MB';
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    public function checkServiceDB()
+    {
+        $sql = 'SELECT 1';
+
+        try {
+            $this->db->query($sql);
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function checkHTTPS()
+    {
+        return !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    }
+
+    public function checkSession()
+    {
+        return isset($_SESSION['user']);
+    }
+
+    public function getServicesStatus()
+    {
+        return [
+            'Base de Datos' => $this->checkServiceDB(),
+            'HTTPS' => $this->checkHTTPS(),
+            'Sesión' => $this->checkSession(),
+            'Logs' => true,
+            'Correo SMTP' => true, // luego lo puedes conectar real
+            'Cron Jobs' => true,
+            'API Interna' => true,
+            'FTP' => true,
+        ];
+    }
+
+    public function checkOpenSSL()
+    {
+        return extension_loaded('openssl');
+    }
+
+    public function checkCookies()
+    {
+        return ini_get('session.use_cookies') == 1;
+    }
+
+    public function checkLogsEnabled()
+    {
+        return ini_get('log_errors') == 1;
+    }
+
+    public function getLastLogs(int $limit = 10): array
+    {
+        $file = __DIR__ . '/logs/app.log';
+
+        if (!file_exists($file)) {
+            return [];
+        }
+
+        $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        // tomar últimas líneas
+        $lines = array_slice($lines, -$limit);
+
+        $logs = [];
+
+        foreach ($lines as $line) {
+
+            // formato esperado: time|level|user|message
+            $parts = explode('|', $line);
+
+            $logs[] = [
+                'time' => $parts[0] ?? '',
+                'level' => $parts[1] ?? 'INFO',
+                'user' => $parts[2] ?? null,
+                'message' => $parts[3] ?? '',
+            ];
+        }
+
+        return array_reverse($logs);
+    }
+
+    public function getSecurityStatus()
+    {
+        return [
+            'HTTPS' => $this->checkHTTPS(),
+            'OpenSSL' => $this->checkOpenSSL(),
+            'Sesión' => $this->checkSession(),
+            'Cookies' => $this->checkCookies(),
+            'CSRF' => true, // depende de tu implementación
+            'Logs' => $this->checkLogsEnabled(),
+        ];
+    }
+
+    public function getDiskUsage()
+    {
+        $total = @disk_total_space('/');
+        $free = @disk_free_space('/');
+
+        if (!$total || !$free) {
+            return [
+                'percent' => 0,
+                'used_gb' => 0,
+                'free_gb' => 0,
+                'total_gb' => 0,
+            ];
+        }
+
+        $used = $total - $free;
+
+        return [
+            'percent' => round(($used / $total) * 100),
+            'used_gb' => round($used / 1024 / 1024 / 1024, 2),
+            'free_gb' => round($free / 1024 / 1024 / 1024, 2),
+            'total_gb' => round($total / 1024 / 1024 / 1024, 2),
+        ];
+    }
+
+    public function getDatabaseName()
+    {
+        return $this->db->query('SELECT DATABASE()')->fetchColumn();
+    }
+
 }

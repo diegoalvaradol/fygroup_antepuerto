@@ -39,7 +39,16 @@ class menu extends iQuery
                     ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup')],
                 ],
             ],
-
+            [
+                'title' => 'Información',
+                'icon' => 'fa-circle-info',
+                'id' => 'collapseInfo',
+                'items' => [
+                    ['label' => 'Info PHP', 'link' => generateSecureLink('php_info')],
+                    ['label' => 'Info Servidor', 'link' => generateSecureLink('server_info')],
+                    ['label' => 'Info Sistema', 'link' => generateSecureLink('system_info')],
+                ],
+            ],
         ];
 
         return $menus;
@@ -260,15 +269,15 @@ class menu extends iQuery
                 <br>
 
                 <a class="nav-link d-flex align-items-center justify-content-start" href="dashboard.php" style="color:#fff; padding:8px 12px;">
-                    <i class="fa fa-home"></i>
+                    <i class="fas fa-home"></i>
                     <span style="margin-left:8px;">Inicio</span>
                 </a>
 
                 <?php foreach ($menus as $menu): ?>
                     <li class="nav-item">
                         <a class="nav-link collapsed" data-toggle="collapse" href="#<?= $menu['id'] ?>">
-                            <span><i class="fa <?= $menu['icon'] ?>"></i> <?= $menu['title'] ?></span>
-                            <i class="fa fa-angle-right caret"></i>
+                            <span><i class="fas <?= $menu['icon'] ?>"></i> <?= $menu['title'] ?></span>
+                            <i class="fas fa-angle-right caret"></i>
                         </a>
 
                         <div id="<?= $menu['id'] ?>" class="collapse" data-parent="#accordionSidebar">
@@ -419,22 +428,21 @@ class menu extends iQuery
                 <br>
 
                 <a class="nav-link d-flex align-items-center justify-content-start" href="dashboard.php" style="color:#fff;padding:8px 12px;">
-                    <i class="fa fa-home"></i>
+                    <i class="fas fa-home"></i>
                     <span style="margin-left:8px;">Inicio</span>
                 </a>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#collapseAntepuerto" data-toggle="collapse" aria-expanded="false">
                         <span>
-                            <i class="fa fa-truck"></i>
+                            <i class="fas fa-truck"></i>
                             Antepuerto
                         </span>
 
-                        <i class="fa fa-angle-right caret"></i>
+                        <i class="fas fa-angle-right caret"></i>
                     </a>
 
                     <div id="collapseAntepuerto" class="collapse" data-parent="#accordionSidebar">
-
                         <div class="collapse-inner">
                             <a class="collapse-item submenu-item"
                             href="<?= generateSecureLink('enter_container_port') ?>">
