@@ -177,16 +177,30 @@ class cfg extends iQuery
 
     public function getServicesStatus()
     {
-        return [
+        $services = [
             'Base de Datos' => $this->checkServiceDB(),
             'HTTPS' => $this->checkHTTPS(),
             'Sesión' => $this->checkSession(),
             'Logs' => true,
-            'Correo SMTP' => true, // luego lo puedes conectar real
+            'Correo SMTP' => true,
             'Cron Jobs' => true,
             'API Interna' => true,
             'FTP' => true,
         ];
+
+        $result = [];
+
+        foreach ($services as $name => $status) {
+            $result[] = [
+                'name' => $name,
+                'status' => $status,
+                'badge' => $status ? 'success' : 'danger',
+                'text' => $status ? 'ONLINE' : 'OFFLINE',
+                'icon' => $status ? '<i class="fas fa-circle fa-fade text-success ml-2"></i>' : '<i class="fas fa-circle text-danger ml-2"></i>',
+            ];
+        }
+
+        return $result;
     }
 
     public function checkOpenSSL()

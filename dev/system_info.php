@@ -112,7 +112,10 @@ if (!$dev) {
 
                                         <tr>
                                             <th>Estado general</th>
-                                            <td><span class="badge badge-success">OPERATIVO</span></td>
+                                            <td>
+                                                <span class="badge badge-success">OPERATIVO</span>
+                                                <i class="fas fa-circle fa-fade text-success ml-2"></i>
+                                            </td>
                                         </tr>
                                     </table>
                                 </div>

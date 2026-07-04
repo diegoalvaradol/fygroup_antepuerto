@@ -81,7 +81,7 @@ if (!$dev) {
                     <!-- Content Row -->
                     <div class="row">
                         <!-- Información del sistema -->
-                        <div class="col-lg">
+                        <div class="col-lg-6 mb-4">
                             <div class="card bg-light shadow-sm h-100">
                                 <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #4e73df;border-radius:8px;">
                                     <div class="text-center mb-3">
@@ -131,7 +131,7 @@ if (!$dev) {
 
                                         <tr>
                                             <th>Hora Servidor</th>
-                                            <td id="clockTable"></td>
+                                            <td id="clock"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -258,21 +258,7 @@ if (!$dev) {
                                         <h6 class="text-warning text-uppercase">Extensiones PHP</h6>
                                     </div>
 
-                                    <?php
-                                    $extensiones = [
-                                        'pdo',
-                                        'mysqli',
-                                        'curl',
-                                        'openssl',
-                                        'gd',
-                                        'mbstring',
-                                        'zip',
-                                        'intl',
-                                        'json',
-                                        'fileinfo',
-                                    ];
-?>
-
+                                    <?php  $extensiones = ['pdo','mysqli', 'curl','openssl','gd','mbstring','zip','intl','json','fileinfo',];?>
                                     <?php foreach ($extensiones as $ext):?>
                                         <div class="d-flex justify-content-between border-bottom py-2">
                                             <strong><?= strtoupper($ext); ?></strong>
@@ -336,7 +322,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function actualizarHora() {
   const ahora = new Date();
-  document.getElementById("clock").innerHTML = ahora.toLocaleTimeString("es-CL");
+
+  document.getElementById("clock").innerHTML = ahora.toLocaleTimeString("es-CL", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
 }
 
 actualizarHora();

@@ -74,7 +74,7 @@ if (!$dev) {
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Información del PHP</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Información PHP</h1>
                     <p class="mb-4">Acá puedes revisar la información de la instalación de PHP.</p>
 
                     <!-- Content Row -->
@@ -237,6 +237,7 @@ if (!$dev) {
                                                     <h6 class="text-warning text-uppercase">Estado</h6>
 
                                                     <span class="badge badge-success p-2">OPERATIVO</span>
+                                                    <i class="fas fa-circle fa-fade text-success ml-2"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -289,7 +290,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function actualizarHora() {
   const ahora = new Date();
-  document.getElementById("clock").innerHTML = ahora.toLocaleTimeString("es-CL");
+
+  document.getElementById("clock").innerHTML = ahora.toLocaleTimeString("es-CL", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
 }
 
 actualizarHora();

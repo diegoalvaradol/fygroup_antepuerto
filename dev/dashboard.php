@@ -40,6 +40,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
       body {
         background: #f7f9fc;
       }
+
+      .progress-bar{
+        background: #f7f9fc;
+      }
     </style>
 </head>
 
@@ -123,7 +127,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                             </div>
                         </div>
 
-                        <!-- BD + Servicios -->
+                        <!-- BD + Disco -->
                         <div class="row">
                             <!-- BD -->
                             <div class="col-lg-6 mb-4">
@@ -136,7 +140,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                         <table class="table table-sm">
                                             <tr>
                                                 <th>Estado</th>
-                                                <td><span class="badge badge-success">ONLINE</span></td>
+                                                <td>
+                                                    <span class="badge badge-success">ONLINE</span>
+                                                    <i class="fas fa-circle fa-fade text-success ml-2"></i>
+                                                </td>
                                             </tr>
 
                                             <tr>
@@ -158,48 +165,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
                             </div>
 
-                            <!-- Servicios -->
-                            <div class="col-lg-6 mb-4">
-                                <div class="card shadow">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-success">Servicios</h6>
-                                    </div>
-
-                                    <div class="card-body">
-                                        <?php foreach ($cfg->getServicesStatus() as $k => $v): ?>
-                                            <div class="d-flex justify-content-between border-bottom py-2">
-                                                <strong><?= $k ?></strong>
-
-                                                <span class="badge badge-<?= $v ? 'success' : 'danger' ?>">
-                                                    <?= $v ? 'ONLINE' : 'OFFLINE' ?>
-                                                </span>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Seguridad + Disco -->
-                        <div class="row">
-                            <!-- Seguridad -->
-                            <div class="col-lg-6 mb-4">
-                                <div class="card shadow">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-danger">Seguridad</h6>
-                                    </div>
-
-                                    <div class="card-body">
-                                        <?php foreach ($cfg->getSecurityStatus() as $k => $v): ?>
-                                            <div class="d-flex justify-content-between border-bottom py-2">
-                                                <strong><?= $k ?></strong>
-                                                <span><?= $v ? '<i class="fas fa-check-circle fa-lg text-success"></i>' : '<i class="fas fa-times-circle fa-lg text-danger"></i>' ?></span>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- Disco -->
                             <div class="col-lg-6 mb-4">
                                 <?php $disk = $cfg->getDiskUsage(); ?>
@@ -210,10 +175,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </div>
 
                                     <div class="card-body">
-                                        <div class="progress mb-3" style="height:12px;">
+                                        <div class="progress mb-3" style="height:15px;">
                                             <div class="progress-bar
-                                                <?= $disk['percent'] < 70 ? 'bg-success' : ($disk['percent'] < 90 ? 'bg-warning' : 'bg-danger'); ?>"
-                                                style="width: <?= $disk['percent'] ?>%;">
+                                                <?= $disk['percent'] < 70 ? 'bg-success' : ($disk['percent'] < 90 ? 'bg-warning' : 'bg-danger'); ?>" style="width: <?= $disk['percent'] ?>%;">
                                                 <?= $disk['percent'] ?>%
                                             </div>
                                         </div>
@@ -238,13 +202,65 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Seguridad + Servicios -->
+                        <div class="row">
+                            <!-- Seguridad -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-danger">Seguridad</h6>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <?php foreach ($cfg->getSecurityStatus() as $k => $v): ?>
+                                            <div class="d-flex justify-content-between border-bottom py-2">
+                                                <strong><?= $k ?></strong>
+                                                <span><?= $v ? '<i class="fas fa-check-circle fa-lg text-success"></i>' : '<i class="fas fa-times-circle fa-lg text-danger"></i>' ?></span>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Servicios -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-success">Servicios</h6>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <?php foreach ($cfg->getServicesStatus() as $service): ?>
+                                        <div class="d-flex justify-content-between border-bottom py-2">
+                                            <strong><?= $service['name'] ?></strong>
+                                            <span>
+                                                <span class="badge badge-<?= $service['badge'] ?>">
+                                                    <?= $service['text'] ?>
+                                                </span>
+
+                                                <?= $service['icon'] ?>
+                                            </span>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Datadog Interno Content -->
                     <div class="container-fluid-custom">
-                        <div class="d-flex justify-content-between mb-3">
-                            <h3>Datadog Interno</h3>
-                            <span class="badge badge-success p-2">LIVE</span>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="mb-0 font-weight-bold text-dark">
+                                <i class="fas fa-server text-primary mr-2"></i>
+                                FYGroup Monitor
+                            </h3>
+
+                            <span class="badge badge-success px-3 py-2">
+                                <i class="fas fa-circle fa-fade mr-1"></i>
+                                Todos los servicios operativos
+                            </span>
                         </div>
 
                         <!-- KPIs -->
@@ -350,7 +366,7 @@ async function loadMetrics() {
 
   // DB
   document.getElementById('dbStatus').innerHTML =
-  data.database.status ? '<i class="fas fa-circle fa-lg text-success"></i>' : '<i class="fas fa-circle fa-lg text-danger"></i>';
+  data.database.status ? '<i class="fas fa-circle fa-fade text-success ml-2"></i>' : '<i class="fas fa-circle  text-danger ml-2"></i>';
 
   document.getElementById('dbTables').innerText = data.database.tables;
 
@@ -365,7 +381,7 @@ async function loadMetrics() {
         <div class="col-md-3 mb-2">
             <div class="border rounded p-2 text-center">
                 <strong>${name}</strong><br>
-                ${status ? '<i class="fas fa-circle fa-lg text-success"></i> ONLINE' : '<i class="fas fa-circle fa-lg text-danger"></i> OFFLINE'}
+                ${status ? '<i class="fas fa-circle fa-fade text-success ml-2"></i> ONLINE' : '<i class="fas fa-circle text-danger ml-2"></i> OFFLINE'}
             </div>
         </div>
     `;
