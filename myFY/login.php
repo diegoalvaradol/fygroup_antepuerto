@@ -18,8 +18,6 @@ if (isset($_SESSION['user'])) {
 }
 
 require_once __DIR__ . '/../config/includes.php';
-
-$footer = menu::footerSSL();
 ?>
 
 <!DOCTYPE html>
@@ -100,8 +98,6 @@ $footer = menu::footerSSL();
                 </div>
             </div>
         </div>
-
-        <?php echo $footer; ?>
     </div>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>

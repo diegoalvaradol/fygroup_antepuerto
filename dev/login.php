@@ -26,8 +26,6 @@ if ($_SERVER['HTTP_HOST'] === 'localhost') {
 }
 
 require_once __DIR__ . '/../config/includes.php';
-
-$footer = menu::footerSSL();
 ?>
 
 <!DOCTYPE html>
@@ -102,8 +100,6 @@ $footer = menu::footerSSL();
                 </form>
             </div>
         </div>
-
-        <?php echo $footer; ?>
     </div>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
