@@ -12,7 +12,20 @@ if (!validateSecureLink($module, $time, $ttl, $sig)) {
     die('Acceso inválido o expirado');
 }
 
+$cfg = new cfg();
 $user = new user();
+
+$infoCfg = json_decode($cfg->getInfo(1), true);
+$dev = $user->isDev($_SESSION['user']['run']);
+$admin = $user->isAdmin($_SESSION['user']['run']);
+$releasedTime = new DateTime($infoCfg['released_date']);
+$updateTime = new DateTime($infoCfg['update_date']);
+$arrayDivision = get::getDivisionName();
+$sideBarSSL = menu::sideBarSSL();
+$mainTapBarSSL = menu::mainTapBarSSL();
+$footer = menu::footerSSL();
+$top = UIComponents::scrollToTopButton();
+$modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
 $dev = $user->isDev($_SESSION['user']['run']);
 $footer = menu::footerSSL();
@@ -26,86 +39,118 @@ if (!$dev) {
 
 function ejecutarQuery($user)
 {
-    $resultado = '';
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['sql_query'])) {
-        $sql = trim($_POST['sql_query']);
-
-        if (!preg_match('/^\s*(SELECT|UPDATE|DELETE|DROP)\b/i', $sql)) {
-            return "
-        <script>
-          Swal.fire({icon:'error', title:'Instrucción no permitida', text:'Solo SELECT, UPDATE, DELETE y DROP son permitidas.', timer:4000, showConfirmButton:false});
-        </script>
-      ";
-        }
-
-        // SweetAlert confirmación para DELETE y DROP
-        if (preg_match('/^\s*(DELETE|DROP)\b/i', $sql)) {
-            echo "
-        <script>
-          let ejecutar = confirm('Esta operación puede modificar o eliminar datos. ¿Deseas continuar?');
-          if(!ejecutar){ window.history.back(); }
-        </script>
-      ";
-        }
-
-        try {
-            $stmt = $user->getDb()->prepare($sql);
-            $stmt->execute();
-
-            if (stripos($sql, 'SELECT') === 0) {
-                $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                if ($resultados) {
-                    $resultado .= '<div class="table-responsive mt-3 mb-3"><table id="sqlResults" class="table table-bordered table-striped table-sm"><thead><tr>';
-
-                    foreach (array_keys($resultados[0]) as $col) {
-                        $resultado .= '<th>' . htmlspecialchars($col) . '</th>';
-                    }
-
-                    $resultado .= '</tr></thead><tbody>';
-
-                    foreach ($resultados as $fila) {
-                        $resultado .= '<tr>';
-
-                        foreach ($fila as $val) {
-                            $resultado .= '<td>' . htmlspecialchars($val ?? '') . '</td>';
-                        }
-
-                        $resultado .= '</tr>';
-                    }
-
-                    $resultado .= '</tbody></table></div>';
-                } else {
-                    $resultado .= "
-              <script>
-                Swal.fire({icon:'info', title:'Consulta ejecutada', text:'No se encontraron resultados.', timer:3500, showConfirmButton:false});
-              </script>
-            ";
-                }
-            } else {
-                $resultado .= "
-            <script>
-              Swal.fire({icon:'success', title:'Query ejecutada correctamente', timer:3000, showConfirmButton:false});
-            </script>
-          ";
-            }
-        } catch (PDOException $e) {
-            $resultado .= "
-          <script>
-            Swal.fire({icon:'error', title:'Error al ejecutar', text:'" . htmlspecialchars($e->getMessage()) . "', showConfirmButton:true});
-          </script>
-        ";
-        }
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['sql_query'])) {
+        return '';
     }
 
-    return $resultado;
+    $sql = trim($_POST['sql_query']);
+
+    if (!preg_match('/^\s*(SELECT|UPDATE|DELETE|DROP)\b/i', $sql)) {
+        return "
+        <script>
+            Swal.fire({
+                icon:'error',
+                title:'Instrucción no permitida',
+                text:'Solo SELECT, UPDATE, DELETE y DROP son permitidas.',
+                timer:4000,
+                showConfirmButton:false
+            });
+        </script>";
+    }
+
+    ob_start();
+
+    try {
+        $stmt = $user->getDb()->prepare($sql);
+        $stmt->execute();
+
+        if (stripos($sql, 'SELECT') === 0) {
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($resultados) {
+                ?>
+                <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                    <table id='sqlResults' class='table' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                        <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                        <tr>
+                            <?php foreach (array_keys($resultados[0]) as $col): ?>
+                                <th><?= htmlspecialchars($col) ?></th>
+                            <?php endforeach; ?>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <?php foreach ($resultados as $fila): ?>
+                            <tr>
+                                <?php foreach ($fila as $valor): ?>
+                                    <td><?= htmlspecialchars($valor ?? '') ?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Consulta ejecutada',
+                        text: 'Se encontraron <?= count($resultados) ?> registros.',
+                        timer: 2500,
+                        showConfirmButton: false
+                    });
+                </script>
+                <?php
+            } else {
+                ?>
+                <script>
+                    Swal.fire({
+                        icon:'info',
+                        title:'Consulta ejecutada',
+                        text:'No se encontraron resultados.',
+                        timer:3500,
+                        showConfirmButton:false
+                    });
+                </script>
+                <?php
+            }
+        } else {
+            ?>
+            <script>
+                Swal.fire({
+                    icon:'success',
+                    title:'Query ejecutada correctamente',
+                    text:'Filas afectadas: <?= $stmt->rowCount() ?>',
+                    timer:3000,
+                    showConfirmButton:false
+                });
+            </script>
+            <?php
+        }
+
+    } catch (PDOException $e) {
+        ?>
+        <script>
+            Swal.fire({
+                icon:'error',
+                title:'Error al ejecutar',
+                text:<?= json_encode($e->getMessage()) ?>,
+                confirmButtonText:'Aceptar'
+            });
+        </script>
+        <?php
+    }
+
+    return ob_get_clean();
 }
 
 $resultado = ejecutarQuery($user);
 ?>
 
+<!-- HTML -->
 <!DOCTYPE html>
 <html lang="es-CL">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -113,93 +158,106 @@ $resultado = ejecutarQuery($user);
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
     <title>FYGroup | SQL Administrador</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css"/>
-    <link rel="stylesheet" href="../assets/css/app.css">
-
-    <style>
-        textarea {
-            resize: none; overflow: hidden; transition: height 0.2s; margin-bottom: 1rem;
-        }
-
-        .btn-submit-wrapper {
-            display:flex; justify-content:center; margin-bottom:2rem;
-        }
-
-        .dataTables_wrapper .dataTables_info {
-            float:left; margin-bottom:0.5rem;
-        }
-
-        .dataTables_wrapper .dataTables_paginate {
-            display:flex !important; justify-content:center; margin-top:1rem; float:none !important;
-        }
-
-        .dataTables_wrapper .dataTables_filter {
-            float:right; margin-bottom:0.5rem; text-align:right;
-        }
-
-        .table-responsive {
-            margin-bottom:1rem;
-        }
-    </style>
+    <link href="../assets/css/app.css" rel="stylesheet">
+    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body id="page-top">
+    <!-- Page Wrapper -->
     <div id="wrapper">
-        <div id="content-wrapper" class="d-flex flex-column min-vh-100">
+        <!-- Sidebar -->
+        <?php echo $sideBarSSL; ?>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
             <div id="content">
-                <div class="container py-4">
-                    <div class="text-center mb-4">
-                        <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width:180px;">
+                <!-- Topbar -->
+                <?php echo $mainTapBarSSL; ?>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid-custom">
+                    <!-- Breadcrumb -->
+                    <?= menu::breadcrumb(); ?>
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-1 text-gray-800">Consulta SQL</h1>
+                    <p class="mb-4">Acá puedes ejecutar consultas SQL en la base de datos.</p>
+
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- First Column -->
+                        <div class="col-lg">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Consulta SQL</h6>
+                                </div>
+
+                                <div class="card-body">
+                                    <form class="form-container"  method="POST">
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea name="sql_query" id="sql_query" class="form-control" rows="5" placeholder="Escribe aquí tu consulta SQL..." required><?= htmlspecialchars($_POST['sql_query'] ?? '') ?></textarea>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle"></i> Ejecutar</button>
+                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-md-10 col-lg-8">
-                            <h4 class="text-center mb-3">Ejecutar Consulta SQL</h4>
-
-                            <div class="card shadow mx-auto" style="max-width: 600px;">
-                                <!-- Breadcrumb -->
-                                <?= menu::breadcrumb(); ?>
+                    <div class='row'>
+                        <div class='col-lg-12'>
+                            <div class='d-flex justify-content-between align-items-center mb-3 flex-wrap'>
+                                <div>
+                                    <h1 class='h3 mb-1 text-gray-800 d-inline'>Listado</h1>
+                                </div>
                             </div>
 
-                            </br>
-                            <?=$resultado?>
-
-                            <form method="POST" class="mb-4">
-                                <textarea name="sql_query" id="sql_query" class="form-control" rows="5" placeholder="Escribe aquí tu consulta SQL..." required></textarea>
-
-                                <div class="btn-submit-wrapper">
-                                    <button type="submit" class="btn btn-primary btn-user px-4">
-                                        <i class="fas fa-check-circle"></i> Ejecutar
-                                    </button>
-                                </div>
-                            </form>
-
-                            <div class="text-center mt-4">
-                                <a href="dashboard.php" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-arrow-left"></i> Volver al Inicio
-                                </a>
+                            <div class='card shadow mb-4'>
+                                <?= $resultado ?>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /.container-fluid -->
             </div>
+            <!-- End of Main Content -->
 
+            <!-- Footer -->
             <?php echo $footer; ?>
+            <!-- End of Footer -->
         </div>
+        <!-- End of Content Wrapper -->
     </div>
+    <!-- End of Page Wrapper -->
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
+    <!-- Scroll to Top Button -->
+    <?php echo $top; ?>
+
+    <!-- Modales -->
+    <?php echo $modals->render();?>
+
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <script src="../assets/js/fygroup.js"></script>
     <script src="../assets/js/sidebar.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 </body>
+</html>
 
 <script>
   window.onload = () => {
