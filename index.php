@@ -21,11 +21,13 @@ $sig = $_GET['sig'] ?? '';
 
 /* Detecta área */
 $host = strtolower($_SERVER['HTTP_HOST']);
-$uri = strtolower($_SERVER['REQUEST_URI']);
+$path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
 $area = null;
 
-/* PRODUCCIÓN POR DOMINIO */
+/* ================================
+ * PRODUCCIÓN (por dominio)
+ * ================================ */
 if (str_contains($host, 'fygroup.cl')) {
     $hostAreas = [
         'antepuerto.fygroup.cl' => 'myFY',
@@ -34,42 +36,57 @@ if (str_contains($host, 'fygroup.cl')) {
     ];
 
     $area = $hostAreas[$host] ?? null;
-
-    /* LOCAL POR RUTA */
 } else {
-    if (str_contains($uri, '/ssl-chile/myFY')) {
-        $area = 'myFY';
-    } elseif (str_contains($uri, '/ssl-chile/myPortal')) {
-        $area = 'myPortal';
-    } elseif (str_contains($uri, '/ssl-chile/dev')) {
-        $area = 'dev';
+    /* ================================
+     * LOCALHOST (por carpeta)
+     * Ej:
+     * /ssl-chile/myFY/
+     * /ssl-chile/myPortal/
+     * /ssl-chile/dev/
+     * ================================ */
+    $segments = explode('/', $path);
+
+    /*
+        [0] ssl-chile
+        [1] myFY
+    */
+    if (isset($segments[0], $segments[1]) && strtolower($segments[0]) === 'ssl-chile') {
+        switch (strtolower($segments[1])) {
+            case 'myfy':
+                $area = 'myFY';
+                break;
+
+            case 'myportal':
+                $area = 'myPortal';
+                break;
+
+            case 'dev':
+                $area = 'dev';
+                break;
+        }
     }
 }
 
-/* Fallback obligatorio */
-if (!$area) {
+/* Área inválida */
+if ($area === null) {
     http_response_code(404);
     require __DIR__ . '/404.php';
     exit;
 }
 
-/* Default */
+/* Página por defecto */
 if ($pag === '') {
     $pag = 'dashboard';
 }
 
 /* Seguridad */
-if (
-    str_contains($pag, '..') ||
-    str_contains($pag, '\\') ||
-    str_starts_with($pag, '/')
-) {
+if (str_contains($pag, '..') || str_contains($pag, '\\') || str_starts_with($pag, '/')) {
     http_response_code(403);
     require __DIR__ . '/error.php';
     exit;
 }
 
-/* Firma */
+/* Validación de firma */
 if ($pag !== 'login') {
     if ($sig === '' || $t === '' || $ttl === '') {
         http_response_code(401);
@@ -96,8 +113,8 @@ if ($pag !== 'login') {
     }
 }
 
-/* Carga Final */
-$filePath = __DIR__ . "/{$area}/{$pag}.php";
+/* Archivo solicitado */
+$filePath = __DIR__ . DIRECTORY_SEPARATOR . $area . DIRECTORY_SEPARATOR . $pag . '.php';
 
 if (is_file($filePath)) {
     require $filePath;

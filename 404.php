@@ -9,8 +9,8 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 /* romper por segmentos */
 $parts = array_values(array_filter(explode('/', $path)));
 
-/* buscar base real del sistema (ssl-chile, dev, myfy, myportal) */
-$allowed = ['ssl-chile', 'dev', 'myfy', 'myportal'];
+/* buscar base real del sistema (ssl-chile, dev, myFY, myPortal) */
+$allowed = ['ssl-chile', 'dev', 'myFY', 'myPortal'];
 
 $base = '/';
 

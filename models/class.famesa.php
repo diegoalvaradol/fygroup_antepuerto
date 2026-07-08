@@ -249,12 +249,6 @@ class famesa extends iQuery
         $pagina = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $inicio = ($pagina - 1) * $porPagina;
 
-        if ($_SESSION['user']['division'] === 'fy') {
-            $urlBase = generateMkey('enter_thermo_port', 'myFY') . '&page=';
-        } else {
-            $urlBase = generateMkey('enter_thermo_port', 'myPortal') . '&page=';
-        }
-
         $query = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE $whereClause AND sh.finished = 0 ORDER BY p.counter_vessel ASC, p.vessel_id ASC LIMIT :inicio, :porPagina";
         $stmt = $this->db->prepare($query);
         foreach ($params as $key => $value) {
