@@ -11,6 +11,15 @@
   --color-secondary-light: #eaf8fd;
   --color-accent: #4db8e6;
 
+  /* Hover / Estados UI */
+  --color-primary-hover: #00466f;
+  --color-primary-dark-hover: #003152;
+
+  --color-secondary-hover: #c4ebf7;
+  --color-secondary-dark-hover: #7bc5e2;
+
+  --color-accent-hover: #2aa9df;
+
   /* Estados */
   --color-info: #0ea5e9;
   --color-success: #16a34a;

@@ -175,9 +175,7 @@ class menu extends iQuery
 
     private static function developerMenu()
     {
-        $menus = array_merge(self::userMenu(), self::adminMenu());
-
-        $menus = array_merge($menus, [
+        $menus = [
             [
                 'title' => 'Desarrollador',
                 'icon' => 'fa-code',
@@ -197,7 +195,7 @@ class menu extends iQuery
                     ['label' => 'Info Sistema', 'link' => generateSecureLink('system_info')],
                 ],
             ],
-        ]);
+        ];
 
         return $menus;
     }
