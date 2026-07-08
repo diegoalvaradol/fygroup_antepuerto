@@ -27,33 +27,6 @@ class menu extends iQuery
         return $menus;
     }
 
-    private static function developerMenu()
-    {
-        $menus = [
-            [
-                'title' => 'Desarrollador',
-                'icon' => 'fa-code',
-                'id' => 'collapseDeveloper',
-                'items' => [
-                    ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console')],
-                    ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup')],
-                ],
-            ],
-            [
-                'title' => 'Información',
-                'icon' => 'fa-circle-info',
-                'id' => 'collapseInfo',
-                'items' => [
-                    ['label' => 'Info PHP', 'link' => generateSecureLink('php_info')],
-                    ['label' => 'Info Servidor', 'link' => generateSecureLink('server_info')],
-                    ['label' => 'Info Sistema', 'link' => generateSecureLink('system_info')],
-                ],
-            ],
-        ];
-
-        return $menus;
-    }
-
     private static function userMenu()
     {
         $menus = [
@@ -196,6 +169,35 @@ class menu extends iQuery
                 ],
             ],
         ];
+
+        return $menus;
+    }
+
+    private static function developerMenu()
+    {
+        $menus = array_merge(self::userMenu(), self::adminMenu());
+
+        $menus = array_merge($menus, [
+            [
+                'title' => 'Desarrollador',
+                'icon' => 'fa-code',
+                'id' => 'collapseDeveloper',
+                'items' => [
+                    ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console')],
+                    ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup')],
+                ],
+            ],
+            [
+                'title' => 'Información',
+                'icon' => 'fa-circle-info',
+                'id' => 'collapseInfo',
+                'items' => [
+                    ['label' => 'Info PHP', 'link' => generateSecureLink('php_info')],
+                    ['label' => 'Info Servidor', 'link' => generateSecureLink('server_info')],
+                    ['label' => 'Info Sistema', 'link' => generateSecureLink('system_info')],
+                ],
+            ],
+        ]);
 
         return $menus;
     }
