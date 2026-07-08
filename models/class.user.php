@@ -302,7 +302,7 @@ class user extends iQuery
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $thead = "<thead style='background-color:#4e73df; color:white; top:0; z-index:1;'>";
+        $thead = "<thead style='color:white; top:0; z-index:1;'>";
         $thead .= '<tr>';
         $thead .= '<th>Id</th>';
         $thead .= '<th>R.U.N</th>';

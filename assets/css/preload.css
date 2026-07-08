@@ -1,151 +1,182 @@
+/* ==========================================================
+   PRELOAD
+========================================================== */
 .preload-body {
-  background: #f4f6fb;
-  font-family: 'Nunito', sans-serif;
-  padding-top: 0px;
+  background: #f4f7fb;
+  font-family: 'Source Sans 3', sans-serif;
+  padding-top: 0;
 }
 
+/* TOPBAR */
 .preload-topbar {
-  background: #293c74;
+  background: linear-gradient(135deg, #003152, #0b5f8a);
   height: 70px;
-  box-shadow: 0 0.15rem 1.75rem rgba(58, 59, 69, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 49, 82, 0.18);
 }
 
+/* PANEL */
 .preload-panel {
   max-width: 850px;
   padding-bottom: 25px;
 }
 
+/* CARD */
 .preload-card {
   border: none;
-  border-top: 4px solid #293c74;
-  border-radius: 12px;
+  border-top: 4px solid #003152;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 0.15rem 1.75rem rgba(58, 59, 69, 0.15);
+  background: #ffffff;
+  box-shadow: 0 15px 40px rgba(0, 49, 82, 0.12);
 }
 
+/* BANNER */
 .preload-banner {
-  background: linear-gradient(135deg, #293c74, #3b5297);
+  background: linear-gradient(135deg, #003152, #0b5f8a);
   color: #fff;
   padding: 35px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.preload-banner::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(173, 223, 241, 0.12);
+  top: -150px;
+  right: -80px;
 }
 
 .preload-banner h1 {
   font-weight: 800;
   margin-bottom: 10px;
   font-size: 2rem;
+  position: relative;
 }
 
 .preload-banner p {
   margin: 0;
   opacity: 0.9;
+  position: relative;
 }
 
+/* BODY */
 .preload-body {
   padding: 40px;
 }
 
+/* LOGO */
 .page-logo {
   width: 90px;
   margin-bottom: 20px;
 }
 
+/* SPINNER */
 .loading-spinner {
   width: 75px;
   height: 75px;
-  border: 5px solid #e3e6f0;
-  border-top: 5px solid #293c74;
+  border: 5px solid #dcecf3;
+  border-top: 5px solid #003152;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 25px;
 }
 
+/* PROGRESS */
 .progress {
   height: 12px;
   border-radius: 20px;
   overflow: hidden;
-  background: #e3e6f0;
+  background: #dcecf3;
 }
 
 .progress-bar {
-  background: linear-gradient(90deg, #293c74, #3b5297);
+  background: linear-gradient(90deg, #003152, #addff1);
   transition: width 0.5s ease;
 }
 
+/* LOADING TEXT */
 .loading-step {
-  color: #6c757d;
+  color: #64748b;
   font-size: 1rem;
   min-height: 30px;
 }
 
+/* STATUS */
 .status-item {
-  background: #f8f9fc;
-  border-radius: 10px;
+  background: #f8fbfd;
+  border-radius: 12px;
   padding: 20px;
   height: 100%;
-  border: 1px solid #e3e6f0;
-  transition: transform 0.2s ease;
+  border: 1px solid #dcecf3;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .status-item:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 49, 82, 0.12);
 }
 
+/* ICONOS */
 .status-icon {
   font-size: 2rem;
-  color: #293c74;
+  color: #003152;
   margin-bottom: 15px;
 }
 
 .status-item h6 {
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 8px;
+  color: #003152;
 }
 
 .status-item p,
 .status-item small {
   margin: 0;
-  color: #6c757d;
+  color: #64748b;
 }
 
+/* ANIMATION */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
+/* TABLET */
 @media (max-width: 992px) {
   .preload-panel {
     max-width: 95%;
   }
 }
 
+/* MOBILE */
 @media (max-width: 768px) {
   .preload-panel {
     margin: 20px auto;
   }
-
   .preload-body {
     padding: 25px;
   }
-
   .preload-banner {
     padding: 25px;
   }
-
   .preload-banner h1 {
     font-size: 1.6rem;
   }
-
   .page-logo {
     width: 70px;
   }
-
   .loading-spinner {
     width: 60px;
     height: 60px;
   }
-
   .status-item {
     margin-bottom: 15px;
   }

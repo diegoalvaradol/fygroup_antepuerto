@@ -260,7 +260,7 @@ class menu extends iQuery
 
             <ul id="accordionSidebar" class="navbar-nav">
                 <a class="sidebar-brand" href="dashboard.php">
-                    <img src="../logos/logo-fygroup-circle-bg-removed.png">
+                    <img src="../logos/logo-fygroup-circle.png">
                 </a>
 
                 <div style="align-self: center;color: #fff; font-size: larger;">

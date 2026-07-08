@@ -124,7 +124,7 @@ class company extends iQuery
                 <div class="card shadow mb-4">
                     <div class="table-responsive" style="width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6;">
                         <table id="companyTable" class="table" style="min-width:900px; white-space:nowrap;">
-                            <thead style="background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;">
+                            <thead style="color:white; position:sticky; top:0; z-index:1;">
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombre</th>

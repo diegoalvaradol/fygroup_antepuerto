@@ -771,7 +771,7 @@ class outerPort extends iQuery
             </div>
         ";
 
-        $thead = "<thead style='background-color:#4e73df; color:white;'>";
+        $thead = "<thead style='color:white;'>";
         $thead .= '<tr>';
         $thead .= '<th>Posición</th>';
         $thead .= '<th>Nave</th>';
@@ -892,8 +892,8 @@ class outerPort extends iQuery
                     <div class='card shadow mb-4'>
                         <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                             <table id='containerTable' class='table' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                                " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                                <thead style='color:white; position:sticky; top:0; z-index:1;'>
+                                " . str_replace("<thead style='color:white;'>", '', $thead) . '
                                 ' . $tr . $tbclose . "
                             </table>
                         </div>
@@ -1172,7 +1172,7 @@ class outerPort extends iQuery
             </div>
         ";
 
-        $thead = "<thead style='background-color:#4e73df; color:white;'>";
+        $thead = "<thead style='color:white;'>";
         $thead .= '<tr>';
         $thead .= '<th>Posición</th>';
         $thead .= '<th>Nave</th>';
@@ -1286,8 +1286,8 @@ class outerPort extends iQuery
                     <div class='card shadow mb-4'>
                         <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                             <table id='thermoTable' class='table' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                                " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                                <thead style='color:white; position:sticky; top:0; z-index:1;'>
+                                " . str_replace("<thead style='color:white;'>", '', $thead) . '
                                 ' . $tr . $tbclose . "
                             </table>
                         </div>
@@ -1554,7 +1554,7 @@ class outerPort extends iQuery
             </div>
         ";
 
-        $thead = "<thead style='background-color:#4e73df; color:white;'>";
+        $thead = "<thead style='color:white;'>";
         $thead .= '<tr>';
         $thead .= '<th>Posición</th>';
         $thead .= '<th>Nave</th>';
@@ -1660,8 +1660,8 @@ class outerPort extends iQuery
                     <div class='card shadow mb-4'>
                         <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                             <table id='shipReportTable' class='table' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                                " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                                <thead style='color:white; position:sticky; top:0; z-index:1;'>
+                                " . str_replace("<thead style='color:white;'>", '', $thead) . '
                                 ' . $tr . $tbclose . "
                             </table>
                         </div>
@@ -1874,8 +1874,8 @@ class outerPort extends iQuery
 
         $html = "<div class='table-responsive'>";
         $html .= "<table id='detailTable' class='table'>";
-        $html .= "
-            <thead style='background:#4e73df;color:white'>
+        $html .= '
+            <thead>
                 <tr>
                 <th>#</th>
                 <th>Camión</th>
@@ -1888,7 +1888,7 @@ class outerPort extends iQuery
                 </tr>
             </thead>
             <tbody>
-        ";
+        ';
 
         $i = 1;
         $total = 0;
@@ -2049,7 +2049,7 @@ class outerPort extends iQuery
                     <div class='card shadow mb-4'>
                         <div style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                             <table id='stadisticsByShipTable' class='table table-hover mb-0 align-middle' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                                <thead style='background:#4e73df; color:white; position:sticky; top:0; z-index:2;'>
+                                <thead style='position:sticky; top:0; z-index:2;'>
                                     <tr>
                                         <th>#</th>
                                         <th>Nave</th>
@@ -2264,7 +2264,7 @@ class outerPort extends iQuery
                 <div class='card shadow mb-4'>
                     <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                         <table id='shiftsTable' class='table'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                            <thead style='background:#4e73df;color:white; position:sticky; top:0; z-index:1;'>
+                            <thead style='position:sticky; top:0; z-index:1;'>
                                 <tr>
                                     <th>#</th>
                                     <th>Estado</th>

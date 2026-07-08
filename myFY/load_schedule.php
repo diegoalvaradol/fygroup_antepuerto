@@ -34,7 +34,6 @@ if (!$admin) {
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
     <title>FYGroup | Carga Planificación</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
@@ -107,7 +106,7 @@ if (!$admin) {
                             <p class="text-muted text-center">No hay archivos cargados.</p>
                     <?php else: ?>
                     <table class="table table-bordered table-hover">
-                        <thead style="background-color:#4e73df; color:white;">
+                        <thead style="color:white;">
                             <tr>
                                 <th style="width:5%">#</th>
                                 <th>Nombre</th>

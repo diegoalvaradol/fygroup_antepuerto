@@ -137,7 +137,7 @@ class shipLine extends iQuery
                         style="width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;">
 
                         <table id="shipLineTable" class="table" style="min-width:700px; white-space:nowrap; border-collapse:separate; border-spacing:0;">
-                            <thead style="background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;">
+                            <thead style="color:white; position:sticky; top:0; z-index:1;">
                                 <tr>
                                     <th>Id</th>
                                     <th>Nombre</th>

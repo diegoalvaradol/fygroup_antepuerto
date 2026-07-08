@@ -1,35 +1,49 @@
+/* ==========================================================
+   COMPONENTS.CSS
+   ========================================================== */
+
 /* Botones */
 .btn {
   border-radius: var(--radius-xl);
   transition: all var(--transition-normal);
+  font-weight: 600;
 }
 
 .btn:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
 /* Cards */
 .card {
-  border: none;
+  border: 1px solid rgba(0, 49, 82, 0.06);
   border-radius: var(--radius-lg);
   transition:
     transform var(--transition-fast),
     box-shadow var(--transition-fast);
-  background: var(--color-bg);
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }
 
 /* Progress */
+.progress {
+  height: 8px;
+  border-radius: 30px;
+  background: rgba(173, 223, 241, 0.35);
+}
+
 .progress-bar {
-  background: linear-gradient(90deg, #36d1dc, #5b86e5);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   transition: width 1s ease-in-out;
 }
 
-/* Alerts */
+/* ==========================================================
+   Alerts
+   ========================================================== */
 .custom-alert-info,
 .custom-alert-warning,
 .custom-alert-danger,
@@ -39,14 +53,12 @@
   align-items: center;
   gap: 14px;
   padding: 16px 18px;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  margin-bottom: 10px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 49, 82, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 49, 82, 0.08);
+  margin-bottom: 12px;
 }
 
 .custom-alert-info::before,
@@ -57,42 +69,49 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 6px;
+  width: 5px;
   height: 100%;
 }
 
+/* INFO */
 .custom-alert-info {
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  background: linear-gradient(135deg, #ffffff, rgba(173, 223, 241, 0.45));
 }
 
 .custom-alert-info::before {
   background: var(--color-info);
 }
 
+/* SUCCESS */
 .custom-alert-success {
-  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  background: linear-gradient(135deg, #ffffff, rgba(34, 197, 94, 0.1));
 }
 
 .custom-alert-success::before {
   background: var(--color-success);
 }
 
+/* WARNING */
 .custom-alert-warning {
-  background: linear-gradient(135deg, #fefce8, #fde68a);
+  background: linear-gradient(135deg, #ffffff, rgba(245, 158, 11, 0.12));
 }
 
 .custom-alert-warning::before {
   background: var(--color-warning);
 }
 
+/* DANGER */
 .custom-alert-danger {
-  background: linear-gradient(135deg, #fef2f2, #fecaca);
+  background: linear-gradient(135deg, #ffffff, rgba(220, 38, 38, 0.1));
 }
 
 .custom-alert-danger::before {
   background: var(--color-danger);
 }
 
+/* ==========================================================
+   Alert Icon
+   ========================================================== */
 .custom-alert-icon {
   width: 48px;
   height: 48px;
@@ -101,13 +120,15 @@
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.7);
+  background: #ffffff;
+  color: var(--color-primary);
   font-size: 20px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 18px rgba(0, 49, 82, 0.08);
 }
 
+/* ==========================================================
+   Alert Content
+   ========================================================== */
 .custom-alert-content {
   flex: 1;
 }
@@ -115,31 +136,35 @@
 .custom-alert-title {
   font-size: 15px;
   font-weight: 700;
-  color: #111827;
-  margin-bottom: 3px;
+  color: var(--color-primary);
+  margin-bottom: 4px;
 }
 
 .custom-alert-message {
   font-size: 14px;
   line-height: 1.6;
-  color: #374151;
+  color: var(--color-text);
 }
 
-/* Badge */
+/* ==========================================================
+   Badge
+   ========================================================== */
 .flag-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: var(--color-bg);
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid #ffe0b2;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 30px;
+  background: rgba(173, 223, 241, 0.22);
+  border: 1px solid rgba(0, 49, 82, 0.1);
   font-size: 12px;
   font-weight: 600;
+  color: var(--color-primary);
   box-shadow: var(--shadow-sm);
 }
 
 .flag-badge img {
   width: 18px;
-  border-radius: 3px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 49, 82, 0.08);
 }

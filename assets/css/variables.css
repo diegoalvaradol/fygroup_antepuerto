@@ -1,32 +1,61 @@
 :root {
-  /* Colores */
-  --color-primary: #1f5f8b;
-  --color-primary-dark: #174a6b;
-  --color-accent: #3787ba;
+  /* ==========================================================
+     PALETA CORPORATIVA
+     Dark Azure + Soft Blue
+     ========================================================== */
+  --color-primary: #003152;
+  --color-primary-dark: #00253f;
+  --color-primary-light: #0b466f;
+  --color-secondary: #addff1;
+  --color-secondary-dark: #8fcfe8;
+  --color-secondary-light: #eaf8fd;
+  --color-accent: #4db8e6;
 
-  --color-info: #0d6efd;
+  /* Estados */
+  --color-info: #0ea5e9;
+  --color-success: #16a34a;
   --color-warning: #f59e0b;
-  --color-danger: #dc3545;
-  --color-success: #198754;
+  --color-danger: #dc2626;
 
-  --color-bg: #ffffff;
-  --color-soft: #f8f9fa;
+  /* Fondo */
+  --color-bg: #f5f8fb;
+  --color-bg-secondary: #ffffff;
+  --color-soft: #eef7fb;
+  --color-surface: #ffffff;
+
+  /* Texto */
+  --color-text: #1f2937;
+  --color-text-light: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-white: #ffffff;
 
   /* Bordes */
+  --color-border: #d8e6ee;
+  --color-border-light: #edf3f7;
+
+  /* Bordes redondeados */
   --radius-sm: 6px;
   --radius-md: 12px;
-  --radius-lg: 1rem;
+  --radius-lg: 18px;
   --radius-xl: 30px;
 
   /* Sombras */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 3px 8px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 6px 18px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 49, 82, 0.06);
+  --shadow-md: 0 8px 22px rgba(0, 49, 82, 0.1);
+  --shadow-lg: 0 20px 45px rgba(0, 49, 82, 0.16);
+  --shadow-xl: 0 28px 60px rgba(0, 49, 82, 0.2);
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.28);
+  --glass-blur: blur(14px);
 
   /* Transiciones */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
+  --transition-slow: 0.45s ease;
 
+  /* Z-Index */
   --z-sidebar: 1060;
   --z-overlay: 1050;
   --z-topbar: 1030;

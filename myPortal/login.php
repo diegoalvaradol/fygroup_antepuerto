@@ -5,7 +5,7 @@ $now = new DateTime();
 $start = new DateTime(MAINTENANCE_START);
 $end = new DateTime(MAINTENANCE_END);
 
-if (MAINTENANCE_MODE_PORTAL && $now >= $start && $now <= $end) {
+if (MAINTENANCE_MODE_PORTALCLIENTE && $now >= $start && $now <= $end) {
     require_once __DIR__ . '/../maintenance.php';
 
     exit;
@@ -30,7 +30,6 @@ require_once __DIR__ . '/../config/includes.php';
     <title>Portal FYGroup | Login</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/app.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>

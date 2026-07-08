@@ -26,7 +26,7 @@ $interval = $start->diff($end);
     <style>
        body {
         background: #f4f6fb;
-        font-family: 'Nunito', sans-serif;
+        font-family: 'Source Sans 3', sans-serif;
         margin: 0;
         padding: 0;
         }
@@ -34,7 +34,6 @@ $interval = $start->diff($end);
 </head>
 
 <body>
-    <div class="maintenance-topbar"></div>
     <div class="container maintenance-panel">
         <div class="row justify-content-center">
             <div class="col-xl-8 col-lg-10">

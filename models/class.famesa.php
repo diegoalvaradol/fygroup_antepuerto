@@ -302,7 +302,7 @@ class famesa extends iQuery
             </div>
         ";
 
-        $thead = "<thead style='background-color:#4e73df; color:white;'>";
+        $thead = "<thead style='color:white;'>";
         $thead .= '<tr>';
         $thead .= '<th>Posición</th>';
         $thead .= '<th>Nave</th>';
@@ -382,8 +382,8 @@ class famesa extends iQuery
                     <div class='card shadow mb-4'>
                         <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                             <table id='famesaTruckTable' class='table' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                                <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
-                                " . str_replace("<thead style='background-color:#4e73df; color:white;'>", '', $thead) . '
+                                <thead style='color:white; position:sticky; top:0; z-index:1;'>
+                                " . str_replace("<thead style='color:white;'>", '', $thead) . '
                                 ' . $tr . $tbclose . "
                             </table>
                         </div>
@@ -623,7 +623,7 @@ class famesa extends iQuery
             <div class='card shadow'>
                 <div class='table-responsive'>
                     <table class='table table-bordered table-hover' $style>
-                        <thead style='background:#4e73df;color:white'>
+                        <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Estado</th>

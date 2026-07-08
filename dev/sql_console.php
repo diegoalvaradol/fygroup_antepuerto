@@ -71,7 +71,7 @@ function ejecutarQuery($user)
                 ?>
                 <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                     <table id='sqlResults' class='table' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                        <thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>
+                        <thead style='color:white; position:sticky; top:0; z-index:1;'>
                         <tr>
                             <?php foreach (array_keys($resultados[0]) as $col): ?>
                                 <th><?= htmlspecialchars($col) ?></th>
@@ -158,7 +158,6 @@ $resultado = ejecutarQuery($user);
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
     <title>FYGroup | SQL Administrador</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">

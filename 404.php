@@ -78,7 +78,7 @@ http_response_code(404);
     <style>
        body {
             background: #f4f6fb;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Source Sans 3', sans-serif;
             margin: 0;
             padding: 0;
         }

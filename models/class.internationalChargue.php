@@ -230,7 +230,7 @@ class internationalChargue extends iQuery
             </div>
         ";
 
-        $thead = "<thead style='background-color:#4e73df; color:white;'>";
+        $thead = "<thead style='color:white;'>";
         $thead .= '<tr>';
         $thead .= '<th>Posición</th>';
         $thead .= '<th>Nave</th>';

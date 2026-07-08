@@ -146,7 +146,7 @@ class ship extends iQuery
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $thead = "<thead style='background-color:#4e73df; color:white; position:sticky; top:0; z-index:1;'>";
+        $thead = "<thead style='color:white; position:sticky; top:0; z-index:1;'>";
         $thead .= '<tr>';
         $thead .= '<th>Id</th>';
         $thead .= '<th>Nave</th>';

@@ -40,7 +40,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
     <title>FYGroup | Naves</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
@@ -311,14 +310,14 @@ var deleteShip = function(id) {
   var paginaActual = $('input[name="page"]').val();
 
   Swal.fire({
-    title: 'Eliminar Motonave.',
-    text: '¿Estas seguro de eliminar esta motonave?',
+    title: 'Eliminar Motonave',
+    text: '¿Estás seguro de eliminar esta motonave?',
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "¡Si, elimimar!",
-    cancelButtonText : 'Cancelar',
+    confirmButtonColor: '#dc3545',
+    cancelButtonColor: '#6c757d',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
   }).then((result) => {
     if (result.isConfirmed) {
       $.ajax({
@@ -368,12 +367,12 @@ var stackingShip = function(id, name, voyage, status) {
   }
 
   Swal.fire({
-    title: statusLabel + ' Embarque de Motonave.',
-    html: 'Motonave: '+name+' - Viaje: '+voyage+'.'+'</br>'+'¿Estas seguro de '+statusLabel+' el embarque de esta motonave?',
+    title: statusLabel + ' Embarque de Motonave',
+    html: 'Motonave: '+name+' - Viaje: '+voyage+'.'+'</br>'+'¿Estás seguro de '+statusLabel+' el embarque de esta motonave?',
     icon: 'info',
     showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
+    confirmButtonColor: '#dc3545',
+    cancelButtonColor: '#6c757d',
     confirmButtonText: "¡Si, "+statusLabel+" embarque!",
     cancelButtonText : 'Cancelar',
   }).then((result) => {
