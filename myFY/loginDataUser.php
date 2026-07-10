@@ -57,7 +57,7 @@ $_SESSION['last_session'] = time();
             <div class="col-xl-8 col-lg-10">
                 <div class="card preload-card">
                     <div class="preload-banner text-center">
-                        <img src="../logos/logo-fygroup-circle-v1.png" class="page-logo">
+                        <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="preload-logo">
 
                         <h1>Bienvenido</h1>
 

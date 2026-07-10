@@ -69,28 +69,18 @@ http_response_code(404);
 
     <!-- Fonts -->
     <link href="../assets/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Estilos del sistema -->
     <link href="../assets/css/fygroup.css" rel="stylesheet">
     <link href="../assets/css/app.css" rel="stylesheet">
-
-    <style>
-       body {
-            background: #f4f6fb;
-            font-family: 'Source Sans 3', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 </head>
 <body>
     <div class="container error-panel">
         <div class="row justify-content-center">
-            <div class="col-xl-8 col-lg-10">
+            <div class="col-xl-8 col-lg-10" style="margin-bottom: 50px;">
                 <div class="card error-card">
                     <div class="error-banner text-center">
-                        <img src="../logos/logo-fygroup-circle-v1.png" alt="FYGroup" class="page-logo">
+                        <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="error-logo">
 
                         <h1>Error 404</h1>
 

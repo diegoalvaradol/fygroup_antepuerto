@@ -30,7 +30,7 @@
                 Antepuerto Panul
             </h4>
 
-            <p class="lead text-muted mx-auto" style="max-width:900px;">
+            <p class="lead mx-auto" style="max-width:900px;">
                 Plataforma desarrollada por FYGroup para la administración,
                 monitoreo y control de operaciones logísticas, integrando
                 procesos, indicadores e información estratégica en una única solución.

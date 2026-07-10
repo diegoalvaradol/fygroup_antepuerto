@@ -47,7 +47,7 @@
   align-items: center;
   justify-content: center;
   margin: 14px;
-  padding: 18px 12px;
+  padding: 12px 12px;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
@@ -57,7 +57,7 @@
 }
 
 .sidebar-brand img {
-  max-width: 130px;
+  max-width: 120px;
   transition: transform 0.25s ease;
 }
 

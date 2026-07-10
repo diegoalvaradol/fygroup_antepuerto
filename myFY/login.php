@@ -1,15 +1,7 @@
 <?php
-require_once __DIR__ . '/../config/maintenance.php';
 
-$now = new DateTime();
-$start = new DateTime(MAINTENANCE_START);
-$end = new DateTime(MAINTENANCE_END);
-
-if (MAINTENANCE_MODE_FYGROUP && $now >= $start && $now <= $end) {
-    require_once __DIR__ . '/../maintenance.php';
-
-    exit;
-}
+define('APP_MODE', 'FYGROUP');
+require_once __DIR__ . '/../config/status_mode.php';
 
 if (isset($_SESSION['user'])) {
     header('Location: loginDataUser.php');

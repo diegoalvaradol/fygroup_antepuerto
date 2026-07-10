@@ -1,21 +1,7 @@
 <?php
-require_once __DIR__ . '/../config/maintenance.php';
 
-$now = new DateTime();
-$start = new DateTime(MAINTENANCE_START);
-$end = new DateTime(MAINTENANCE_END);
-
-if (MAINTENANCE_MODE_DEV && $now >= $start && $now <= $end) {
-    require_once __DIR__ . '/../maintenance.php';
-
-    exit;
-}
-
-if (isset($_SESSION['user'])) {
-    header('Location: loginDataUser.php');
-
-    exit();
-}
+define('APP_MODE', 'DEV');
+require_once __DIR__ . '/../config/status_mode.php';
 
 if ($_SERVER['HTTP_HOST'] === 'localhost') {
     $myFyUrl = '/ssl-chile/myFY/login.php';
@@ -23,6 +9,12 @@ if ($_SERVER['HTTP_HOST'] === 'localhost') {
 } else {
     $myFyUrl = 'https://antepuerto.fygroup.cl/myFY/login.php';
     $myPortalUrl = 'https://portalcliente.fygroup.cl/myPortal/login.php';
+}
+
+if (isset($_SESSION['user'])) {
+    header('Location: loginDataUser.php');
+
+    exit();
 }
 
 require_once __DIR__ . '/../config/includes.php';

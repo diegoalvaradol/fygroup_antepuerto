@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/config/includes.php';
 
-$period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
+$period = getPeriodInfo(CLOSED_START, CLOSED_END);
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>FYGroup | Mantención</title>
+    <title>FYGroup | Fuera de Servicio</title>
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
 
     <!-- Fonts -->
@@ -29,7 +29,7 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
                 <div class="card maintenance-card">
                     <div class="maintenance-banner text-center">
                         <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="maintenance-logo">
-                        <h1>Mantención Programada</h1>
+                        <h1>Sistema Temporalmente Fuera de Servicio</h1>
 
                         <p class="mb-0">
                             Sistema Antepuerto FYGroup
@@ -38,26 +38,28 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
 
                     <!-- Cuerpo -->
                     <div class="maintenance-body text-center">
-                        <i class="fas fa-tools fa-4x mb-4" style="color:#293c74;"></i>
+                        <i class="fas fa-road-barrier fa-4x mb-4" style="color:#293c74;"></i>
 
                         <h3 class="text-gray-800">
-                            Estamos realizando mejoras
+                            Servicio Temporalmente Suspendido
                         </h3>
 
                         <p class="text-muted mt-3">
-                            Nos encontramos trabajando para optimizar la plataforma,
-                            mejorar la estabilidad del sistema y entregar una mejor experiencia
-                            a nuestros usuarios.
+                            El acceso al Sistema Antepuerto FYGroup se encuentra temporalmente cerrado debido a una mantención programada de la plataforma.
                         </p>
 
                         <p class="text-muted">
-                            El acceso será restablecido una vez finalizadas las tareas de mantención.
+                            Nuestro equipo se encuentra ejecutando tareas de actualización, optimización y revisión de componentes internos para mejorar la estabilidad y disponibilidad del sistema.
+                        </p>
+
+                        <p class="text-muted mb-0">
+                            Agradecemos su comprensión durante este proceso. El sistema será habilitado nuevamente una vez finalizada la ventana de mantención programada.
                         </p>
 
                         <div class="alert alert-primary mt-4 mb-4">
                             <i class="fas fa-clock mr-2"></i>
 
-                            Duración estimada:
+                            Tiempo programado de cierre:
 
                             <strong>
                                 <?= $period['duration_days'] > 0 ? $period['duration_days'] . ' días ' : '' ?>
@@ -70,7 +72,7 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
                         <div class="maintenance-countdown">
                             <div class="countdown-header">
                                 <i class="fas fa-hourglass-half"></i>
-                                Tiempo Restante
+                                Tiempo para reapertura
                             </div>
 
                             <div class="countdown-digital" id="countdown-digital-div">
@@ -132,7 +134,7 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
                         <div class="maintenance-schedule">
                             <div class="schedule-header">
                                 <i class="fas fa-calendar-alt"></i>
-                                Ventana de Mantención
+                                Horario de cierre programado
                             </div>
 
                             <div class="row text-center">
@@ -192,10 +194,10 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
                                         <i class="fas fa-cogs"></i>
                                     </div>
 
-                                    <strong>Estado</strong>
+                                    <strong>Disponibilidad</strong>
 
                                     <div class="text-warning mt-2">
-                                        En Mantención
+                                        Acceso suspendido temporalmente
                                     </div>
                                 </div>
                             </div>
@@ -206,10 +208,10 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
                                         <i class="fas fa-headset"></i>
                                     </div>
 
-                                    <strong>Soporte</strong>
+                                    <strong>Atención</strong>
 
                                     <div class="text-success mt-2">
-                                        Disponible
+                                        Soporte disponible
                                     </div>
                                 </div>
                             </div>
@@ -218,13 +220,13 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
                         <!-- Soporte -->
                         <div class="mt-3">
                             <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" class="btn btn-outline-success btn-lg">
-                                <i class="fab fa-whatsapp mr-2"></i>Soporte por WhatsApp
+                                <i class="fab fa-whatsapp mr-2"></i>Contactar Soporte
                             </a>
                         </div>
 
                         <div class="mt-3">
                             <button type="button" class="btn btn-fy btn-lg" onclick="location.reload();">
-                                <i class="fas fa-sync-alt mr-2"></i>Reintentar
+                                <i class="fas fa-sync-alt mr-2"></i>Verificar disponibilidad
                             </button>
                         </div>
                     </div>
