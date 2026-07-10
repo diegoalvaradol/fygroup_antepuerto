@@ -162,16 +162,10 @@ function getPeriodInfo(string $start, string $end): array
     ];
 }
 
-/*
-|--------------------------------------------------------------------------
-| Validación según aplicación
-|--------------------------------------------------------------------------
-*/
-
+/* Validación según aplicación */
 switch (APP_MODE) {
     /* FYGROUP */
     case 'FYGROUP':
-
         if (isPeriodActive(MAINTENANCE_MODE_FYGROUP, MAINTENANCE_START, MAINTENANCE_END)) {
             $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
 
