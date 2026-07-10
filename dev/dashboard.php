@@ -17,6 +17,15 @@ $mainTapBarSSL = menu::mainTapBarSSL();
 $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
 $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
+$services = $cfg->getServicesStatus();
+
+$allOnline = true;
+foreach ($services as $service) {
+    if (!$service['status']) {
+        $allOnline = false;
+        break;
+    }
+}
 ?>
 
 <!-- HTML -->
@@ -225,8 +234,20 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                             <!-- Servicios -->
                             <div class="col-lg-6 mb-4">
                                 <div class="card shadow">
-                                    <div class="card-header py-3">
+                                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                         <h6 class="m-0 font-weight-bold text-success">Servicios</h6>
+
+                                        <?php if ($allOnline): ?>
+                                            <span class="badge badge-success px-3 py-2">
+                                                <i class="fas fa-circle fa-fade mr-1"></i>
+                                                Todos los servicios operativos
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="badge badge-warning px-3 py-2">
+                                                <i class="fas fa-exclamation-circle mr-1"></i>
+                                                Uno o más servicios presentan problemas
+                                            </span>
+                                        <?php endif; ?>
                                     </div>
 
                                     <div class="card-body">
@@ -242,73 +263,6 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             </span>
                                         </div>
                                         <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Datadog Interno Content -->
-                    <div class="container-fluid-custom">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h3 class="mb-0 font-weight-bold text-dark">
-                                <i class="fas fa-server text-primary mr-2"></i>
-                                FYGroup Monitor
-                            </h3>
-
-                            <span class="badge badge-success px-3 py-2">
-                                <i class="fas fa-circle fa-fade mr-1"></i>
-                                Todos los servicios operativos
-                            </span>
-                        </div>
-
-                        <!-- KPIs -->
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="card shadow-sm">
-                                    <div class="card-body text-center">
-                                        <h6>PHP</h6>
-                                        <h4 id="phpVersion">-</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="card shadow-sm">
-                                    <div class="card-body text-center">
-                                        <h6>DB Status</h6>
-                                        <h4 id="dbStatus">-</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="card shadow-sm">
-                                    <div class="card-body text-center">
-                                        <h6>Tables</h6>
-                                        <h4 id="dbTables">-</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="card shadow-sm">
-                                    <div class="card-body text-center">
-                                        <h6>Disk Usage</h6>
-                                        <h4 id="diskUsage">-</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Servicios -->
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5>Servicios</h5>
-                                        <div id="servicesBox" class="row"></div>
                                     </div>
                                 </div>
                             </div>
@@ -371,20 +325,6 @@ async function loadMetrics() {
 
   document.getElementById('diskUsage').innerText =
   data.disk.percent + '%';
-
-  // Services
-  let html = '';
-
-  Object.entries(data.services).forEach(([name, status]) => {
-    html += `
-        <div class="col-md-3 mb-2">
-            <div class="border rounded p-2 text-center">
-                <strong>${name}</strong><br>
-                ${status ? '<i class="fas fa-circle fa-fade text-success ml-2"></i> ONLINE' : '<i class="fas fa-circle text-danger ml-2"></i> OFFLINE'}
-            </div>
-        </div>
-    `;
-  });
 
   document.getElementById('servicesBox').innerHTML = html;
 }

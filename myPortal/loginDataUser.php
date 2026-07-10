@@ -46,16 +46,8 @@ $_SESSION['last_session'] = time();
     <title>Cargando...</title>
 
     <link href="../assets/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
     <link href="../assets/css/app.css" rel="stylesheet">
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 </head>
 
 <body class="preload-body">

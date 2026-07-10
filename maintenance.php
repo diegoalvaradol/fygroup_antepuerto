@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/config/includes.php';
 
-$period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
+$status = SYSTEM_STATUS[APP_MODE];
+$period = getPeriodInfo($status['maintenance_start'], $status['maintenance_end']);
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +16,6 @@ $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
 
     <!-- Fonts -->
     <link href="../assets/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
 
     <!-- Estilos del sistema -->
     <link href="../assets/css/fygroup.css" rel="stylesheet">

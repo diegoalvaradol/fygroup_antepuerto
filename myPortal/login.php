@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 define('APP_MODE', 'PORTALCLIENTE');
 require_once __DIR__ . '/../config/status_mode.php';
 

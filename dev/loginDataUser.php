@@ -46,16 +46,8 @@ $_SESSION['last_session'] = time();
     <title>Cargando...</title>
 
     <link href="../assets/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet">
     <link href="../assets/css/fygroup.css" rel="stylesheet">
     <link href="../assets/css/app.css" rel="stylesheet">
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-    </style>
 </head>
 
 <body class="preload-body">
@@ -64,7 +56,7 @@ $_SESSION['last_session'] = time();
             <div class="col-xl-8 col-lg-10">
                 <div class="card preload-card">
                     <div class="preload-banner text-center">
-                        <img src="../logos/logo-fygroup-circle-v1.png" class="page-logo">
+                        <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="preload-logo">
 
                         <h1>Bienvenido</h1>
 

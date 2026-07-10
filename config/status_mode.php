@@ -10,20 +10,34 @@ if (!defined('APP_MODE')) {
 }
 
 /* Modo Mantenimiento */
-define('MAINTENANCE_MODE_FYGROUP', false);
-define('MAINTENANCE_MODE_PORTALCLIENTE', false);
-define('MAINTENANCE_MODE_DEV', false);
+const SYSTEM_STATUS = [
+    'FYGROUP' => [
+        'maintenance' => false,
+        'maintenance_start' => '2026-07-10 08:30:00',
+        'maintenance_end' => '2026-07-10 19:00:00',
+        'closed' => true,
+        'closed_start' => '2026-07-10 00:00:00',
+        'closed_end' => '2026-12-20 23:59:59',
+    ],
 
-define('MAINTENANCE_START', '2026-07-10 08:30:00');
-define('MAINTENANCE_END', '2026-07-10 19:00:00');
+    'PORTALCLIENTE' => [
+        'maintenance' => false,
+        'maintenance_start' => '2026-07-10 08:30:00',
+        'maintenance_end' => '2026-07-10 19:00:00',
+        'closed' => true,
+        'closed_start' => '2026-07-10 00:00:00',
+        'closed_end' => '2026-12-20 23:59:59',
+    ],
 
-/* Sistema Cerrado Temporalmente */
-define('CLOSED_MODE_FYGROUP', true);
-define('CLOSED_MODE_PORTALCLIENTE', true);
-define('CLOSED_MODE_DEV', false);
-
-define('CLOSED_START', '2026-07-10 00:00:00');
-define('CLOSED_END', '2026-12-20 23:59:59');
+    'DEV' => [
+        'maintenance' => false,
+        'maintenance_start' => '2026-07-10 08:30:00',
+        'maintenance_end' => '2026-07-10 19:00:00',
+        'closed' => false,
+        'closed_start' => null,
+        'closed_end' => null,
+    ],
+];
 
 /* Funciones */
 /**
@@ -95,7 +109,6 @@ function getPeriodInfo(string $start, string $end): array
     }
 
     return [
-
         // Objetos
         'start_object' => $startDate,
         'end_object' => $endDate,
@@ -163,58 +176,43 @@ function getPeriodInfo(string $start, string $end): array
 }
 
 /* Validación según aplicación */
-switch (APP_MODE) {
-    /* FYGROUP */
-    case 'FYGROUP':
-        if (isPeriodActive(MAINTENANCE_MODE_FYGROUP, MAINTENANCE_START, MAINTENANCE_END)) {
-            $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
+/* Validación según aplicación */
+$status = SYSTEM_STATUS[APP_MODE] ?? null;
 
-            require_once __DIR__ . '/../maintenance.php';
-            exit;
-        }
+if ($status === null) {
+    throw new RuntimeException('APP_MODE no válido: ' . APP_MODE);
+}
 
-        if (isPeriodActive(CLOSED_MODE_FYGROUP, CLOSED_START, CLOSED_END)) {
-            $period = getPeriodInfo(CLOSED_START, CLOSED_END);
+/* Mantención */
+if (
+    isPeriodActive(
+        $status['maintenance'],
+        $status['maintenance_start'],
+        $status['maintenance_end']
+    )
+) {
+    $period = getPeriodInfo(
+        $status['maintenance_start'],
+        $status['maintenance_end']
+    );
 
-            require_once __DIR__ . '/../closed.php';
-            exit;
-        }
+    require_once __DIR__ . '/../maintenance.php';
+    exit;
+}
 
-        break;
+/* Sistema cerrado */
+if (
+    isPeriodActive(
+        $status['closed'],
+        $status['closed_start'] ?? '',
+        $status['closed_end'] ?? ''
+    )
+) {
+    $period = getPeriodInfo(
+        $status['closed_start'],
+        $status['closed_end']
+    );
 
-        /* PORTAL CLIENTE*/
-    case 'PORTALCLIENTE':
-        if (isPeriodActive(MAINTENANCE_MODE_PORTALCLIENTE, MAINTENANCE_START, MAINTENANCE_END)) {
-            $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
-
-            require_once __DIR__ . '/../maintenance.php';
-            exit;
-        }
-
-        if (isPeriodActive(CLOSED_MODE_PORTALCLIENTE, CLOSED_START, CLOSED_END)) {
-            $period = getPeriodInfo(CLOSED_START, CLOSED_END);
-
-            require_once __DIR__ . '/../closed.php';
-            exit;
-        }
-
-        break;
-
-        /* DEV */
-    case 'DEV':
-        if (isPeriodActive(MAINTENANCE_MODE_DEV, MAINTENANCE_START, MAINTENANCE_END)) {
-            $period = getPeriodInfo(MAINTENANCE_START, MAINTENANCE_END);
-
-            require_once __DIR__ . '/../maintenance.php';
-            exit;
-        }
-
-        if (isPeriodActive(CLOSED_MODE_DEV, CLOSED_START, CLOSED_END)) {
-            $period = getPeriodInfo(CLOSED_START, CLOSED_END);
-
-            require_once __DIR__ . '/../closed.php';
-            exit;
-        }
-
-        break;
+    require_once __DIR__ . '/../closed.php';
+    exit;
 }
