@@ -27,7 +27,7 @@ $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
 $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
-/* Validar superadmin */
+/* Validar desarrollador */
 if (!$dev) {
     $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
     $pag = basename(__FILE__);
@@ -45,7 +45,7 @@ if (!$dev) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
-    <title>FYGroup | Info Servidor</title>
+    <title>FYGroup | Información Servidor</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -74,7 +74,7 @@ if (!$dev) {
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Información del Servidor</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Servidor</h1>
                     <p class="mb-4">Acá puedes revisar la información del servidor.</p>
 
                     <!-- Content Row -->
