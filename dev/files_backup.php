@@ -13,10 +13,10 @@ if (!validateSecureLink($module, $time, $ttl, $sig)) {
 }
 
 $user = new user();
-
 $dev = $user->isDev($_SESSION['user']['run']);
 $footer = menu::footerSSL();
 
+/* Validar desarrollador */
 if (!$dev) {
     $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
     $pag = basename(__FILE__);

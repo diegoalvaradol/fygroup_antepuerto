@@ -17,7 +17,6 @@ $user = new user();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $dev = $user->isDev($_SESSION['user']['run']);
-$admin = $user->isAdmin($_SESSION['user']['run']);
 $releasedTime = new DateTime($infoCfg['released_date']);
 $updateTime = new DateTime($infoCfg['update_date']);
 $arrayDivision = get::getDivisionName();
@@ -30,6 +29,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 $dev = $user->isDev($_SESSION['user']['run']);
 $footer = menu::footerSSL();
 
+/* Validar desarrollador */
 if (!$dev) {
     $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
     $pag = basename(__FILE__);
@@ -208,7 +208,7 @@ $resultado = ejecutarQuery($user);
                                         </div>
 
                                         <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle"></i> Ejecutar</button>
-                                        <button type='button' class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                        <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                     </form>
                                 </div>
                             </div>

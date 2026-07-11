@@ -106,25 +106,25 @@ $period = getPeriodInfo($status['maintenance_start'], $status['maintenance_end']
                         <div class="maintenance-progress mt-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="text-muted">
-                                    <i class="fas fa-chart-line mr-2"></i>
-                                    Progreso de mantención
+                                    <i class="fas fa-tools mr-2"></i>
+                                    Mantención programada
                                 </span>
-
-                                <strong>
-                                    <?= $period['progress_text'] ?>
-                                </strong>
                             </div>
 
-                            <div class="progress" style="height: 12px;">
-                                <div
-                                    class="progress-bar bg-primary"
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar"
                                     role="progressbar"
-                                    style="width: <?= $period['progress'] ?>%;">
+                                    style="width: <?= $period['progress'] ?>%;"
+                                    aria-valuenow="<?= $period['progress'] ?>"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100">
+
+                                    <?= $period['progress_text'] ?>
                                 </div>
                             </div>
 
                             <small class="text-muted d-block mt-2">
-                                Tiempo transcurrido de la ventana de cierre programado
+                                Avance de la ventana de mantención programada
                             </small>
                         </div>
 
