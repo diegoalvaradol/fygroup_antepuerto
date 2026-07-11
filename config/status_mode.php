@@ -9,50 +9,22 @@ if (!defined('APP_MODE')) {
     define('APP_MODE', 'FYGROUP');
 }
 
-/* Modo Mantenimiento */
-const SYSTEM_STATUS = [
-    'FYGROUP' => [
-        'maintenance' => false,
-        'maintenance_start' => '2026-07-10 08:30:00',
-        'maintenance_end' => '2026-07-10 19:00:00',
-        'closed' => true,
-        'closed_start' => '2026-07-10 00:00:00',
-        'closed_end' => '2026-12-20 23:59:59',
-    ],
+/* Configuración de estados */
+require_once __DIR__ . '/system_status_config.php';
 
-    'PORTALCLIENTE' => [
-        'maintenance' => false,
-        'maintenance_start' => '2026-07-10 08:30:00',
-        'maintenance_end' => '2026-07-10 19:00:00',
-        'closed' => true,
-        'closed_start' => '2026-07-10 00:00:00',
-        'closed_end' => '2026-12-20 23:59:59',
-    ],
-
-    'DEV' => [
-        'maintenance' => false,
-        'maintenance_start' => '2026-07-10 08:30:00',
-        'maintenance_end' => '2026-07-10 19:00:00',
-        'closed' => false,
-        'closed_start' => null,
-        'closed_end' => null,
-    ],
-];
-
-/* Funciones */
 /**
  * Indica si un período está activo.
  *
- * Si el modo está habilitado y las fechas están vacías,
- * permanecerá activo indefinidamente.
+ * Si está habilitado y no tiene fechas,
+ * queda activo indefinidamente.
  */
-function isPeriodActive(bool $enabled, string $start = '', string $end = ''): bool
+function isPeriodActive(bool $enabled, ?string $start = null, ?string $end = null): bool
 {
     if (!$enabled) {
         return false;
     }
 
-    if (trim($start) === '' || trim($end) === '') {
+    if (empty($start) || empty($end)) {
         return true;
     }
 
@@ -62,21 +34,35 @@ function isPeriodActive(bool $enabled, string $start = '', string $end = ''): bo
 }
 
 /**
- * Obtiene toda la información del período.
+ * Obtiene información del período.
  */
-function getPeriodInfo(string $start, string $end): array
+function getPeriodInfo(?string $start, ?string $end): array
 {
+    if (empty($start) || empty($end)) {
+        return [
+            'has_dates' => false,
+
+            'remaining_days' => null,
+            'remaining_hours' => null,
+            'remaining_minutes' => null,
+            'remaining_seconds' => null,
+
+            'remaining_text' => 'Activo indefinidamente',
+
+            'progress' => 0,
+            'progress_text' => '0%',
+
+            'status_text' => 'Activo',
+            'status_class' => 'warning',
+        ];
+    }
+
     $now = new DateTime();
     $startDate = new DateTime($start);
     $endDate = new DateTime($end);
 
     $totalSeconds = max(1, $endDate->getTimestamp() - $startDate->getTimestamp());
-
-    $elapsed = max(0, min(
-        $totalSeconds,
-        $now->getTimestamp() - $startDate->getTimestamp()
-    ));
-
+    $elapsed = max(0, min($totalSeconds, $now->getTimestamp() - $startDate->getTimestamp()));
     $remaining = max(0, $endDate->getTimestamp() - $now->getTimestamp());
 
     // Tiempo restante
@@ -85,7 +71,7 @@ function getPeriodInfo(string $start, string $end): array
     $minutes = intdiv($remaining % 3600, 60);
     $seconds = $remaining % 60;
 
-    // Duración total
+    // Duración
     $duration = $endDate->diff($startDate);
 
     // Progreso
@@ -98,17 +84,19 @@ function getPeriodInfo(string $start, string $end): array
     $isRunning = $isStarted && !$isFinished;
 
     if ($isFinished) {
-        $statusText = 'Mantención finalizada';
+        $statusText = 'Finalizado';
         $statusClass = 'success';
     } elseif ($isRunning) {
-        $statusText = 'Mantención en curso';
+        $statusText = 'En curso';
         $statusClass = 'warning';
     } else {
-        $statusText = 'Mantención programada';
+        $statusText = 'Programado';
         $statusClass = 'info';
     }
 
     return [
+        'has_dates' => true,
+
         // Objetos
         'start_object' => $startDate,
         'end_object' => $endDate,
@@ -130,7 +118,6 @@ function getPeriodInfo(string $start, string $end): array
         'remaining_hours' => $hours,
         'remaining_minutes' => $minutes,
         'remaining_seconds' => $seconds,
-
         'remaining_total_seconds' => $remaining,
 
         'remaining_text' => sprintf(
@@ -176,43 +163,29 @@ function getPeriodInfo(string $start, string $end): array
 }
 
 /* Validación según aplicación */
-/* Validación según aplicación */
+
 $status = SYSTEM_STATUS[APP_MODE] ?? null;
 
 if ($status === null) {
-    throw new RuntimeException('APP_MODE no válido: ' . APP_MODE);
+    throw new RuntimeException(
+        'APP_MODE no válido: ' . APP_MODE
+    );
 }
 
-/* Mantención */
-if (
-    isPeriodActive(
-        $status['maintenance'],
-        $status['maintenance_start'],
-        $status['maintenance_end']
-    )
-) {
-    $period = getPeriodInfo(
-        $status['maintenance_start'],
-        $status['maintenance_end']
-    );
+/* Modo Mantenimiento */
+if (isPeriodActive($status['maintenance'], $status['maintenance_start'] ?? null, $status['maintenance_end'] ?? null)) {
+    $period = getPeriodInfo($status['maintenance_start'] ?? null, $status['maintenance_end'] ?? null);
 
     require_once __DIR__ . '/../maintenance.php';
+
     exit;
 }
 
-/* Sistema cerrado */
-if (
-    isPeriodActive(
-        $status['closed'],
-        $status['closed_start'] ?? '',
-        $status['closed_end'] ?? ''
-    )
-) {
-    $period = getPeriodInfo(
-        $status['closed_start'],
-        $status['closed_end']
-    );
+/* Sistema Cerrado */
+if (isPeriodActive($status['closed'], $status['closed_start'] ?? null, $status['closed_end'] ?? null)) {
+    $period = getPeriodInfo($status['closed_start'] ?? null, $status['closed_end'] ?? null);
 
     require_once __DIR__ . '/../closed.php';
+
     exit;
 }
