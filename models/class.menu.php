@@ -177,6 +177,14 @@ class menu extends iQuery
     {
         $menus = [
             [
+                'title' => 'Estados',
+                'icon' => 'fa-bars-progress',
+                'id' => 'collapseStatus',
+                'items' => [
+                    ['label' => 'Estados', 'link' => generateSecureLink('system_status_manager')],
+                ],
+            ],
+            [
                 'title' => 'Desarrollador',
                 'icon' => 'fa-code',
                 'id' => 'collapseDeveloper',
@@ -190,9 +198,9 @@ class menu extends iQuery
                 'icon' => 'fa-circle-info',
                 'id' => 'collapseInfo',
                 'items' => [
-                    ['label' => 'Info PHP', 'link' => generateSecureLink('php_info')],
-                    ['label' => 'Info Servidor', 'link' => generateSecureLink('server_info')],
-                    ['label' => 'Info Sistema', 'link' => generateSecureLink('system_info')],
+                    ['label' => 'PHP', 'link' => generateSecureLink('php_info')],
+                    ['label' => 'Servidor', 'link' => generateSecureLink('server_info')],
+                    ['label' => 'Sistema', 'link' => generateSecureLink('system_info')],
                 ],
             ],
         ];

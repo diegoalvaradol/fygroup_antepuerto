@@ -17,7 +17,6 @@ $user = new user();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $dev = $user->isDev($_SESSION['user']['run']);
-$admin = $user->isAdmin($_SESSION['user']['run']);
 $releasedTime = new DateTime($infoCfg['released_date']);
 $updateTime = new DateTime($infoCfg['update_date']);
 $arrayDivision = get::getDivisionName();
@@ -27,7 +26,7 @@ $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
 $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
-/* Validar superadmin */
+/* Validar desarrollador */
 if (!$dev) {
     $usuario = $_SESSION['user']['name'] . ' ' . $_SESSION['user']['last_name'] . ' (' . $_SESSION['user']['run'] . ')';
     $pag = basename(__FILE__);
@@ -45,7 +44,7 @@ if (!$dev) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
-    <title>FYGroup | Info Sistema</title>
+    <title>FYGroup | Información Sistema</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -74,7 +73,7 @@ if (!$dev) {
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Información del Sistema</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Sistema</h1>
                     <p class="mb-4">Acá puedes revisar la información del sistema.</p>
 
                     <!-- Content Row -->
@@ -85,7 +84,7 @@ if (!$dev) {
                                 <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #858796;border-radius:8px;">
                                     <div class="text-center mb-3">
                                         <i class="fas fa-info-circle fa-2x text-secondary mb-2"></i>
-                                        <h6 class="text-secondary text-uppercase">Información del Proyecto</h6>
+                                        <h6 class="text-secondary text-uppercase">Información del Sistem</h6>
                                     </div>
 
                                     <table class="table table-sm table-hover">
@@ -112,8 +111,8 @@ if (!$dev) {
                                         <tr>
                                             <th>Estado general</th>
                                             <td>
-                                                <span class="badge badge-success">OPERATIVO</span>
-                                                <i class="fas fa-circle fa-fade text-success ml-2"></i>
+                                                <span class="badge badge-warning">SUSPENDIDO</span>
+                                                <i class="fas fa-circle text-warning ml-2"></i>
                                             </td>
                                         </tr>
                                     </table>
