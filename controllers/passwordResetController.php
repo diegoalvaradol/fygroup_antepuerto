@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $url = generateSecureLink('reset_form') . '&token=' . $token;
 
         if ($userDivision == 'fy') {
-            $link = $localHost ? 'http://localhost/ssl-chile/myFY/' . $url : 'https://myfy.fygroup.cl/myFY/' . $url;
+            $link = $localHost ? 'http://localhost/fygroup-antepuerto/myFY/' . $url : 'https://myfy.fygroup.cl/myFY/' . $url;
         } elseif ($userDivision == 'terminal' || $userDivision == 'exporter') {
-            $link = $localHost ? 'http://localhost/ssl-chile/myPortal/' . $url : 'https://myfy.fygroup.cl/myPortal/' . $url;
+            $link = $localHost ? 'http://localhost/fygroup-antepuerto/myPortal/' . $url : 'https://myfy.fygroup.cl/myPortal/' . $url;
         }
 
         try {

@@ -4,7 +4,7 @@ pipelines:
   branches:
     master:
       - step:
-          name: Deploy a FTP (SSL-CHILE)
+          name: Deploy a FTP (fygroup-antepuerto)
           deployment: production
           script:
             - apt-get update && apt-get install -y lftp
@@ -19,5 +19,5 @@ pipelines:
                 --exclude node_modules \
                 --exclude vendor \
                 --exclude bitbucket-pipelines.yml \
-                ./ /public_html/ssl-chile;
+                ./ /public_html/fygroup-antepuerto;
               quit"
