@@ -134,6 +134,7 @@ class menu extends iQuery
                     ['label' => 'Reporte por Nave', 'link' => generateSecureLink('ship_report')],
                     ['label' => 'Liquidación de Nave', 'link' => generateSecureLink('vessel_liquidation')],
                     ['label' => 'Reporte de Turno', 'link' => generateSecureLink('shifts_report')],
+                    ['label' => 'Reporte de Temporada', 'link' => generateSecureLink('seasons_report')],
                 ],
             ],
             [

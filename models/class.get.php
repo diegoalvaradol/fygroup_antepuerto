@@ -95,12 +95,49 @@ class get
      */
     public static function arrayShiftsFamesa()
     {
-        $arrayShifts = [
+        $arrayShiftsFamesa = [
           '08:00 - 20:00' => '1° Turno',
           '20:00 - 08:00' => '2° Turno',
         ];
 
-        return $arrayShifts;
+        return $arrayShiftsFamesa;
+    }
+
+    /**
+     * Method arraySeasons //Array de temporadas
+     *
+     * @return Object
+     */
+    public static function arraySeasons()
+    {
+        $arraySeasons = [
+            [
+                'start' => '2025-01-01',
+                'end' => '2025-03-31',
+                'label' => 'Temporada 24/25',
+                'season' => 'summer',
+            ],
+            [
+                'start' => '2025-05-01',
+                'end' => '2025-08-15',
+                'label' => 'Cítricos 2025',
+                'season' => 'citrus',
+            ],
+            [
+                'start' => '2026-01-01',
+                'end' => '2026-02-28',
+                'label' => 'Temporada 25/26',
+                'season' => 'summer',
+            ],
+            [
+                'start' => '2026-05-08',
+                'end' => '2026-07-15',
+                'label' => 'Cítricos 2026',
+                'season' => 'citrus',
+            ],
+        ];
+
+        return $arraySeasons;
     }
 
     /**
