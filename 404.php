@@ -9,17 +9,16 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 /* romper por segmentos */
 $parts = array_values(array_filter(explode('/', $path)));
 
-/* buscar base real del sistema (ssl-chile, dev, myFY, myPortal) */
-$allowed = ['ssl-chile', 'dev', 'myFY', 'myPortal'];
+/* buscar base real del sistema (fygroup-antepuerto, dev, myFY, myPortal) */
+$allowed = ['fygroup-antepuerto', 'dev', 'myFY', 'myPortal'];
 
 $base = '/';
 
 foreach ($parts as $i => $p) {
     if (in_array($p, $allowed)) {
-
         $base = '/' . $p . '/';
 
-        /* si existe segundo nivel tipo /ssl-chile/dev/ */
+        /* si existe segundo nivel tipo /fygroup-antepuerto/dev/ */
         if (isset($parts[$i + 1]) && in_array($parts[$i + 1], $allowed)) {
             $base = '/' . $p . '/' . $parts[$i + 1] . '/';
         }

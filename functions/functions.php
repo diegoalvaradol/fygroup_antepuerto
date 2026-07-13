@@ -204,7 +204,7 @@ function normalizeString($str)
 function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
     $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
-    $baseUrl = $isLocal ? 'http://localhost/ssl-chile/' : 'https://antepuerto.fygroup.cl/';
+    $baseUrl = $isLocal ? 'http://localhost/fygroup-antepuerto/' : 'https://antepuerto.fygroup.cl/';
     $logo = $baseUrl . 'logos/logo-fygroup-circle-bg-removed.png';
 
     $emails = [
