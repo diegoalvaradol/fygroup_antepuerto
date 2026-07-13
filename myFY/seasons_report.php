@@ -95,6 +95,7 @@ if (!$admin) {
                                                 <label for="seasons" class="text-gray-800 font-weight-bold">Temporada</label>
                                                 <select class="form-control select2 form-control-user" id="seasons" name="seasons">
                                                     <option value="">Seleccione una temporada...</option>
+                                                    <option value="all">Todas las temporadas</option>
                                                     <?php foreach (get::arraySeasons() as $index => $period): ?>
                                                         <option value="<?= $index ?>">
                                                             <?= htmlspecialchars($period['label']) ?>

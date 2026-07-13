@@ -7,6 +7,12 @@ $outerPort = new outerPort();
 $periods = get::arraySeasons();
 $selectedIndex = $_POST['seasons'] ?? '';
 
+/* Muestra el total de todas las temporadas */
+if ($selectedIndex === 'all') {
+    echo $outerPort->seasonsReportAll();
+    exit;
+}
+
 if (!ctype_digit((string) $selectedIndex) || !isset($periods[(int) $selectedIndex])) {
     http_response_code(422);
     exit('Temporada inválida.');
