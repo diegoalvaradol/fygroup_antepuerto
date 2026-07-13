@@ -2743,6 +2743,142 @@ class outerPort extends iQuery
         exit;
     }
 
+    public function seasonsReport($inicio, $fin, $season, $label)
+    {
+        $seasonClausule = null;
+
+        if ($season == 'citrus') {
+            $seasonClausule = 'AND origin = 1';
+        }
+
+        $sql = "
+            SELECT
+                COUNT($this->id) AS total_camiones,
+                SUM($this->pallets) AS total_pallets,
+                SUM(
+                    CASE
+                        WHEN $this->container IS NOT NULL
+                            AND $this->container <> 'N/A'
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS total_contenedores
+            FROM $this->table
+            WHERE arrival_date BETWEEN :inicio AND :fin
+            $seasonClausule
+        ";
+
+        $list = parent::getFirstMember($sql, ['inicio' => $inicio, 'fin' => $fin]);
+        if ($list > 0) {
+            $totalCamiones = $list['total_camiones'] > 0 ? number_format((int) $list['total_camiones'], 0, ',', '.') : 0 ;
+            $totalPallets = $list['total_pallets'] > 0 ? number_format((int) $list['total_pallets'], 0, ',', '.') : 0 ;
+            $totalContenedores = $list['total_contenedores'] > 0 ? number_format((int) $list['total_contenedores'], 0, ',', '.') : 0 ;
+
+            $rows = "
+                <tr>
+                    <td>{$label}</td>
+                    <td>{$totalCamiones}</td>
+                    <td>{$totalPallets}</td>
+                    <td>{$totalContenedores}</td>
+                </tr>
+            ";
+
+            return "
+                <div class='card shadow mb-4'>
+                    <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                        <table id='shiftsTable' class='table'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
+                            <thead style='position:sticky; top:0; z-index:1;'>
+                                <tr>
+                                    <th>Temporada</th>
+                                    <th>Total Camiones</th>
+                                    <th>Total Pallets</th>
+                                    <th>Total Contenedores</th>
+                                </tr>
+                            </thead>
+                            <tbody>$rows</tbody>
+                        </table>
+                    </div>
+                </div>
+            ";
+        } else {
+            return null;
+        }
+    }
+
+    public function seasonsReportExcel($inicio, $fin, $season, $label)
+    {
+        $seasonClause = '';
+
+        if ($season === 'citrus') {
+            $seasonClause = 'AND origin = 1';
+        }
+
+        $sql = "
+        SELECT
+            COUNT($this->id) AS total_camiones,
+            COALESCE(SUM($this->pallets), 0) AS total_pallets,
+            SUM(
+                CASE
+                    WHEN $this->container IS NOT NULL
+                        AND TRIM($this->container) <> ''
+                        AND $this->container <> 'N/A'
+                    THEN 1
+                    ELSE 0
+                END
+            ) AS total_contenedores
+        FROM $this->table
+        WHERE arrival_date BETWEEN :inicio AND :fin
+        $seasonClause
+    ";
+
+        $list = parent::getFirstMember($sql, [
+            'inicio' => $inicio,
+            'fin' => $fin,
+        ]);
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $headers = [
+            'Temporada',
+            'Total Camiones',
+            'Total Pallets',
+            'Total Contenedores',
+        ];
+
+        $sheet->fromArray($headers, null, 'A1');
+
+        $totalCamiones = $list['total_camiones'] > 0 ? number_format((int) $list['total_camiones'], 0, ',', '.') : 0 ;
+        $totalPallets = $list['total_pallets'] > 0 ? number_format((int) $list['total_pallets'], 0, ',', '.') : 0 ;
+        $totalContenedores = $list['total_contenedores'] > 0 ? number_format((int) $list['total_contenedores'], 0, ',', '.') : 0 ;
+
+        $sheet->fromArray([
+            $label,
+            $totalCamiones,
+            $totalPallets,
+            $totalContenedores,
+        ], null, 'A2');
+
+        $sheet->setAutoFilter('A1:D1');
+
+        foreach (range('A', 'D') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $safeLabel = preg_replace('/[^A-Za-z0-9_-]/', '_', $label);
+        $fileName = 'Reporte_Temporada_' . $safeLabel . '_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        $sheet->setTitle('Reporte Temporada');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        header('Cache-Control: max-age=0');
+
+        (new Xlsx($spreadsheet))->save('php://output');
+
+        exit;
+    }
+
     public function layoutAntepuerto()
     {
         $result = [];
