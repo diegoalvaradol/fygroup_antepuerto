@@ -3,10 +3,6 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 require_once __DIR__ . '/../config/system_status_config.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-
 /* Validación de URL */
 $module = $_GET['pag'] ?? '';
 $time = $_GET['t'] ?? '';
@@ -30,6 +26,17 @@ $mainTapBarSSL = menu::mainTapBarSSL();
 $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
 $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
+
+/* Rutas de acceso */
+if ($_SERVER['HTTP_HOST'] === 'localhost') {
+    $myFyUrl = '/fygroup-antepuerto/myFY/login.php';
+    $myPortalUrl = '/fygroup-antepuerto/myPortal/login.php';
+    $myDevlUrl = '/fygroup-antepuerto/dev/login.php';
+} else {
+    $myFyUrl = 'https://antepuerto.fygroup.cl/myFY/login.php';
+    $myPortalUrl = 'https://portalcliente.fygroup.cl/myPortal/login.php';
+    $myDevlUrl = 'https://dev.fygroup.cl/dev/login.php';
+}
 
 /* Validar desarrollador */
 if (!$dev) {
@@ -166,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="card-body">
                                     <form class="form-container"  method="POST">
                                         <?php $apps = ['FYGROUP' => 'FYGroup (Antepuerto)','PORTALCLIENTE' => 'Portal Cliente','DEV' => 'Dev',];?>
+                                        <?php $accessLink = null; ?>
 
                                         <?php foreach ($apps as $key => $title) :?>
                                             <?php $item = SYSTEM_STATUS[$key]; ?>
@@ -177,7 +185,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             } else {
                                                 $mode = 'online';
                                             }
+
+                                            if ($key == 'FYGROUP') {
+                                                $accessLink = '
+                                                    <a href="' . $myFyUrl . '" class="btn btn-outline-primary btn-block" target="_blank">
+                                                        <i class="fas fa-ship"></i> Acceso FYGroup
+                                                    </a>
+                                                ';
+                                            } elseif ($key == 'PORTALCLIENTE') {
+                                                $accessLink = '
+                                                    <a href="' . $myPortalUrl . '" class="btn btn-outline-success btn-block" target="_blank">
+                                                        <i class="fas fa-user"></i> Acceso Portal Cliente
+                                                    </a>
+                                                ';
+                                            } elseif ($key == 'DEV') {
+                                                $accessLink = '
+                                                    <a href="' . $myDevlUrl . '" class="btn btn-outline-primary btn-block" target="_blank">
+                                                        <i class="fas fa-code"></i> Acceso Developers
+                                                    </a>
+                                                ';
+                                            }
                                             ?>
+
                                             <div class="form-group row">
                                                 <div class="col-sm-2">
                                                     <h6 class="m-0 font-weight-bold text-primary">
@@ -211,22 +240,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                                 <div class="col-sm-3">
                                                     <label for="<?= $key ?>[start]" class="text-gray-800 font-weight-bold">Inicio</label>
-                                                    <input type="datetime-local"
-                                                        class="form-control"
-                                                        id="<?= $key ?>[start]"
-                                                        name="<?= $key ?>[start]"
-                                                        value="<?= $item['maintenance'] ? date('Y-m-d\TH:i', strtotime($item['maintenance_start'])) : ($item['closed'] && !empty($item['closed_start']) ? date('Y-m-d\TH:i', strtotime($item['closed_start'])) : '') ?>">
+                                                    <div class="input-group">
+                                                        <input type="datetime-local"
+                                                            class="form-control"
+                                                            id="<?= $key ?>[start]"
+                                                            name="<?= $key ?>[start]"
+                                                            value="<?= $item['maintenance'] ? date('Y-m-d\TH:i', strtotime($item['maintenance_start'])) : ($item['closed'] && !empty($item['closed_start']) ? date('Y-m-d\TH:i', strtotime($item['closed_start'])) : '') ?>">
+
+                                                        <div class="input-group-append">
+                                                            <button type="button"
+                                                                class="btn btn-outline-danger clear-datetime"
+                                                                data-target="<?= $key ?>[start]"
+                                                                title="Eliminar fecha">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                     <small class="text-danger" id="<?= $key ?>[start]-error"></small>
                                                 </div>
 
                                                 <div class="col-sm-3">
                                                     <label for="<?= $key ?>[end]" class="text-gray-800 font-weight-bold">Término</label>
-                                                    <input type="datetime-local"
-                                                        class="form-control"
-                                                        id="<?= $key ?>[end]"
-                                                        name="<?= $key ?>[end]"
-                                                        value="<?= $item['maintenance'] ? date('Y-m-d\TH:i', strtotime($item['maintenance_end'])) : ($item['closed'] && !empty($item['closed_end']) ? date('Y-m-d\TH:i', strtotime($item['closed_end'])) : '') ?>">
+                                                    <div class="input-group">
+                                                        <input type="datetime-local"
+                                                            class="form-control"
+                                                            id="<?= $key ?>[end]"
+                                                            name="<?= $key ?>[end]"
+                                                            value="<?= $item['maintenance'] ? date('Y-m-d\TH:i', strtotime($item['maintenance_end'])) : ($item['closed'] && !empty($item['closed_end']) ? date('Y-m-d\TH:i', strtotime($item['closed_end'])) : '') ?>">
+
+                                                        <div class="input-group-append">
+                                                            <button type="button"
+                                                                class="btn btn-outline-danger clear-datetime"
+                                                                data-target="<?= $key ?>[end]"
+                                                                title="Eliminar fecha">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                     <small class="text-danger" id="<?= $key ?>[end]-error"></small>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <label for="accessLinks" class="text-gray-800 font-weight-bold">Link de Accesos</label>
+                                                    <?php echo  $accessLink; ?>
                                                 </div>
                                             </div>
                                         <?php endforeach; ?>
@@ -270,6 +326,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 </html>
 <script>
+document.addEventListener('click', function (event) {
+  const button = event.target.closest('.clear-datetime');
+
+  if (!button) return;
+
+  const input = document.getElementById(button.dataset.target);
+  if (input) {
+    input.value = '';
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
   const errors = <?= json_encode($errors ?? []) ?>;
@@ -316,5 +383,5 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   <?php endif; ?>
-})
+});
 </script>

@@ -45,7 +45,7 @@ if (!$admin) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
-    <title>FYGroup | Reporte de Turno</title>
+    <title>FYGroup | Reporte de Temporada</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -75,8 +75,8 @@ if (!$admin) {
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Reporte de Turno</h1>
-                    <p class="mb-4">Acá puedes visualizar la carga movilizada por cada turno.</p>
+                    <h1 class="h3 mb-1 text-gray-800">Reporte de Temporada</h1>
+                    <p class="mb-4">Acá puedes visualizar la carga movilizada en cada temporada.</p>
 
                     <!-- Content Row -->
                     <div class="row">
@@ -89,36 +89,29 @@ if (!$admin) {
                                 </div>
 
                                 <div class="card-body">
-                                    <form class="form-container" id="shiftsReportForm">
+                                    <form class="form-container" id="seasonsReportForm">
                                         <div class="form-group row justify-content-center">
                                             <div class="col-sm-2">
-                                                <label for="dateForm" class="text-gray-800 font-weight-bold">Fecha</label>
-                                                <input type="text" class="form-control form-control-user" id="dateForm" name="dateForm">
-                                                <small class="text-danger" id="error-dateForm"></small>
-                                            </div>
-
-                                            <div class="col-sm-2">
-                                                <label for="shifts" class="text-gray-800 font-weight-bold">Turno</label>
-                                                <select class="form-control select2 form-control-user" id="shifts" name="shifts">
-                                                    <option value="-">Seleccione un turno...</option>
-                                                    <?php foreach ((object) get::arrayShifts() as $k => $v): ?>
-                                                            <option value="<?= $k ?>"><?= $v ?></option>
+                                                <label for="seasons" class="text-gray-800 font-weight-bold">Temporada</label>
+                                                <select class="form-control select2 form-control-user" id="seasons" name="seasons">
+                                                    <option value="">Seleccione una temporada...</option>
+                                                    <option value="all">Todas las temporadas</option>
+                                                    <?php foreach (get::arraySeasons() as $index => $period): ?>
+                                                        <option value="<?= $index ?>">
+                                                            <?= htmlspecialchars($period['label']) ?>
+                                                        </option>
                                                     <?php endforeach; ?>
                                                 </select>
-                                                <small class="text-danger" id="error-shifts"></small>
+                                                <small class="text-danger" id="error-seasons"></small>
                                             </div>
 
                                             <div class="col-sm-4" style="margin-top: 30px;">
-                                                <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReport()">
+                                                <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadSeasonsReport()">
                                                     <i class="fas fa-search"></i> Buscar
                                                 </button>
 
-                                                <button type="button" class="btn btn-success btn-user" id="btnExcel" onclick="exportShift(1,0)" disabled>
+                                                <button type="button" class="btn btn-success btn-user" id="btnExcel" onclick="exportSeason()" disabled>
                                                     <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i> Excel
-                                                </button>
-
-                                                <button type="button" class="btn btn-success btn-user" id="btnPDF" onclick="exportShift(0,1)" disabled>
-                                                    <i class="fas fa-download"></i> <i class="fas fa-file-pdf"></i> PDF
                                                 </button>
                                             </div>
                                         </div>
@@ -128,10 +121,10 @@ if (!$admin) {
 
                             <!-- Div de contenido Dinamico -->
                             <div class="d-flex justify-content-center mt-3 mb-3">
-                                <div id="shiftCardMini" style="border:1px solid #e5e7eb; border-left:4px solid #2563eb; border-radius:8px; padding:8px 16px; background:#f9fafb; display:none">
+                                <div id="seasonCardMini" style="border:1px solid #e5e7eb; border-left:4px solid #2563eb; border-radius:8px; padding:8px 16px; background:#f9fafb; display:none">
                                     <div style="margin-bottom:6px;">
                                         <b style="color:#2563eb;">Información:</b>
-                                        <span id="shiftTextMini" style="margin:0 6px; color:#9ca3af;"></span>
+                                        <span id="seasonTextMini" style="margin:0 6px; color:#9ca3af;"></span>
                                     </div>
                                 </div>
                             </div>
@@ -140,8 +133,8 @@ if (!$admin) {
                                 <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando información...
                             </div>
 
-                            <!-- Tabla Reporte de Turnos -->
-                            <div id="shiftsDiv"></div>
+                            <!-- Tabla Reporte de Temporadas -->
+                            <div id="seasonsDiv"></div>
                         </div>
                     </div>
                 </div>
@@ -180,29 +173,19 @@ if (!$admin) {
 
 <!-- JAVASCRIPT -->
 <script>
-function loadShiftsReport() {
+var loadSeasonsReport = function() {
   const $btn = $('#btnBuscar');
-  const $div = $('#shiftsDiv');
-  const date = $('#dateForm').val();
-  const shifts = $('#shifts').val();
-  const textShifts = $('#shifts option:selected').text();
+  const $div = $('#seasonsDiv');
+  const seasons = $('#seasons').val();
+  const textSeasons = $('#seasons option:selected').text();
 
   const MIN_TIME = 2000;
   let startTime = Date.now();
-  const [day, month, year] = date.split('-').map(Number);
-  const dateTitle = new Date(day, month - 1, year);
 
-  const dateName = dateTitle.toLocaleDateString('es-CL', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'America/Santiago'
-  });
-
-  if (!date || shifts === '-' || !shifts) {
+  if (seasons === '-' || !seasons) {
     Swal.fire({
       title: 'Datos incompletos',
-      text: 'Debe seleccionar fecha y turno.',
+      text: 'Debe seleccionar una temporada.',
       icon: 'warning'
     });
 
@@ -210,10 +193,10 @@ function loadShiftsReport() {
   }
 
   $.ajax({
-    url: '../controllers/shiftsReportController.php',
+    url: '../controllers/seasonsReportController.php',
     type: 'POST',
     dataType: 'html',
-    data: { date, shifts },
+    data: { seasons },
 
     beforeSend() {
       $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Buscando...');
@@ -226,22 +209,20 @@ function loadShiftsReport() {
 
       if (clean.length > 0) {
         $div.html(clean);
-        $('#shiftTextMini').html(`</br> Turno: ${textShifts} </br> Fecha: ${dateName} </br> Horario: ${shifts}`).css('font-size', '14px').css('font-weight', 'bold');
-        $('#shiftCardMini').fadeIn(150);
-        $('#btnPrintShiftsReport').prop('disabled', false);
+        $('#seasonTextMini').html(`</br> Temporada: ${textSeasons}`).css('font-size', '14px').css('font-weight', 'bold');
+        $('#seasonCardMini').fadeIn(150);
+        $('#btnPrintSeasonsReport').prop('disabled', false);
         $('#btnExcel').prop('disabled', false);
-        $('#btnPDF').prop('disabled', false);
       } else {
         $div.hide().empty();
-        $('#shiftCardMini').fadeOut(150);
-        $('#btnPrintShiftsReport').prop('disabled', true);
+        $('#seasonCardMini').fadeOut(150);
+        $('#btnPrintSeasonsReport').prop('disabled', true);
         $('#btnExcel').prop('disabled', true);
-        $('#btnPDF').prop('disabled', true);
 
         Swal.fire({
           icon: 'warning',
           title: 'Sin resultados',
-          text: 'No se encontraron registros para el turno seleccionado.'
+          text: 'No se encontraron registros para la temporada seleccionado.'
         }).then((result) => {
           $('#loader').hide();
           $div.hide();
@@ -251,7 +232,7 @@ function loadShiftsReport() {
 
     error(xhr) {
       console.error(xhr.responseText);
-      $('#btnPrintShiftsReport').prop('disabled', true);
+      $('#btnPrintSeasonsReport').prop('disabled', true);
 
       Swal.fire({
         title: 'Error',
@@ -276,46 +257,10 @@ function loadShiftsReport() {
   });
 }
 
-let fpInstance = null;
+var exportSeason = function() {
+  const seasons = $('#seasons').val();
 
-function loadDatePicker() {
-  fetch('../controllers/dateWithMovs.php').then(res => res.json()).then(data => {
-    const fechasValidas = Array.isArray(data) ? data : [];
-
-    if (fpInstance) {
-      fpInstance.destroy();
-    }
-
-    fpInstance = flatpickr("#dateForm", {
-      dateFormat: "Y-m-d",
-      enable: fechasValidas,
-
-      locale: {
-        ...flatpickr.l10ns.es,
-        firstDayOfWeek: 1
-      },
-
-      onDayCreate: function (dObj, dStr, fp, dayElem) {
-        const fecha = dayElem.dateObj.toLocaleDateString('en-CA');
-
-        if (fechasValidas.includes(fecha)) {
-          dayElem.style.background = "#28a745";
-          dayElem.style.color = "#fff";
-          dayElem.style.borderRadius = "50%";
-        }
-      }
-    });
-  })
-  .catch(err => console.error(err));
-}
-
-document.addEventListener("DOMContentLoaded", loadDatePicker);
-
-var exportShift = function(excel, pdf) {
-  const date = $('#dateForm').val();
-  const shifts = $('#shifts').val();
-
-  if (!date || shifts === '-' || !shifts) return;
-  window.location = `../controllers/shiftsReportExportController.php?date=${date}&shifts=${shifts}&excel=${excel}&pdf=${pdf}`;
+  if (seasons === '-' || !seasons) return;
+  window.location = `../controllers/seasonsReportExportController.php?seasons=${seasons}`;
 }
 </script>
