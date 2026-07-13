@@ -295,7 +295,7 @@ class user extends iQuery
         $arrayDivision = get::getDivisionName();
         $count = 0;
         $tr = '';
-        $url = esLocalhost() ? 'localhost/ssl-chile' : 'antepuerto.fygroup.cl';
+        $url = esLocalhost() ? 'localhost/fygroup-antepuerto' : 'antepuerto.fygroup.cl';
 
         $query = "SELECT * FROM $this->table ORDER BY user_id ASC";
         $stmt = $this->db->prepare($query);

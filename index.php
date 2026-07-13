@@ -40,17 +40,17 @@ if (str_contains($host, 'fygroup.cl')) {
     /* ================================
      * LOCALHOST (por carpeta)
      * Ej:
-     * /ssl-chile/myFY/
-     * /ssl-chile/myPortal/
-     * /ssl-chile/dev/
+     * /fygroup-antepuerto/myFY/
+     * /fygroup-antepuerto/myPortal/
+     * /fygroup-antepuerto/dev/
      * ================================ */
     $segments = explode('/', $path);
 
     /*
-        [0] ssl-chile
+        [0] fygroup-antepuerto
         [1] myFY
     */
-    if (isset($segments[0], $segments[1]) && strtolower($segments[0]) === 'ssl-chile') {
+    if (isset($segments[0], $segments[1]) && strtolower($segments[0]) === 'fygroup-antepuerto') {
         switch (strtolower($segments[1])) {
             case 'myfy':
                 $area = 'myFY';

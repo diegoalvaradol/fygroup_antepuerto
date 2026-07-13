@@ -6,8 +6,8 @@ define('APP_MODE', 'DEV');
 require_once __DIR__ . '/../config/status_mode.php';
 
 if ($_SERVER['HTTP_HOST'] === 'localhost') {
-    $myFyUrl = '/ssl-chile/myFY/login.php';
-    $myPortalUrl = '/ssl-chile/myPortal/login.php';
+    $myFyUrl = '/fygroup-antepuerto/myFY/login.php';
+    $myPortalUrl = '/fygroup-antepuerto/myPortal/login.php';
 } else {
     $myFyUrl = 'https://antepuerto.fygroup.cl/myFY/login.php';
     $myPortalUrl = 'https://portalcliente.fygroup.cl/myPortal/login.php';
