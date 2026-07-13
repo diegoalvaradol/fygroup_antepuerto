@@ -2808,6 +2808,9 @@ class outerPort extends iQuery
     public function seasonsReportAll()
     {
         $rows = '';
+        $totalCamiones = 0;
+        $totalPallets = 0;
+        $totalContenedores = 0;
 
         foreach (get::arraySeasons() as $period) {
             $seasonClause = $period['season'] === 'citrus' ? 'AND origin = 1' : '';
@@ -2835,11 +2838,15 @@ class outerPort extends iQuery
                 'fin' => $period['end'],
             ]);
 
-            $totalCamiones = number_format((int) ($list['total_camiones'] ?? 0), 0, ',', '.');
-            $totalPallets = number_format((int) ($list['total_pallets'] ?? 0), 0, ',', '.');
-            $totalContenedores = number_format((int) ($list['total_contenedores'] ?? 0), 0, ',', '.');
-
             $label = htmlspecialchars($period['label'], ENT_QUOTES, 'UTF-8');
+
+            $camiones = (int) ($list['total_camiones'] ?? 0);
+            $pallets = (int) ($list['total_pallets'] ?? 0);
+            $contenedores = (int) ($list['total_contenedores'] ?? 0);
+
+            $totalCamiones += $camiones;
+            $totalPallets += $pallets;
+            $totalContenedores += $contenedores;
 
             $rows .= "
                 <tr>
@@ -2850,6 +2857,15 @@ class outerPort extends iQuery
                 </tr>
             ";
         }
+
+        $rows .= "
+            <tr class='font-weight-bold bg-light'>
+                <td>TOTAL GENERAL</td>
+                <td>" . number_format($totalCamiones, 0, ',', '.') . '</td>
+                <td>' . number_format($totalPallets, 0, ',', '.') . '</td>
+                <td>' . number_format($totalContenedores, 0, ',', '.') . '</td>
+            </tr>
+        ';
 
         return "
             <div class='card shadow mb-4'>
@@ -2966,6 +2982,9 @@ class outerPort extends iQuery
         ], null, 'A1');
 
         $row = 2;
+        $totalCamiones = 0;
+        $totalPallets = 0;
+        $totalContenedores = 0;
 
         foreach ($periods as $period) {
             $seasonClause = $period['season'] === 'citrus' ? 'AND origin = 1' : '';
@@ -2993,15 +3012,34 @@ class outerPort extends iQuery
                 'fin' => $period['end'],
             ]);
 
+            $camiones = (int) ($list['total_camiones'] ?? 0);
+            $pallets = (int) ($list['total_pallets'] ?? 0);
+            $contenedores = (int) ($list['total_contenedores'] ?? 0);
+
             $sheet->fromArray([
                 $period['label'],
-                (int) ($list['total_camiones'] ?? 0),
-                (int) ($list['total_pallets'] ?? 0),
-                (int) ($list['total_contenedores'] ?? 0),
+                $camiones,
+                $pallets,
+                $contenedores,
             ], null, "A{$row}");
+
+            $totalCamiones += $camiones;
+            $totalPallets += $pallets;
+            $totalContenedores += $contenedores;
 
             $row++;
         }
+
+        $sheet->fromArray([
+            'TOTAL GENERAL',
+            $totalCamiones,
+            $totalPallets,
+            $totalContenedores,
+        ], null, "A{$row}");
+
+        $sheet->getStyle("A{$row}:D{$row}")
+            ->getFont()
+            ->setBold(true);
 
         $sheet->setAutoFilter('A1:D1');
 
