@@ -84,7 +84,7 @@ if (!$dev) {
                                 <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #858796;border-radius:8px;">
                                     <div class="text-center mb-3">
                                         <i class="fas fa-info-circle fa-2x text-secondary mb-2"></i>
-                                        <h6 class="text-secondary text-uppercase">Información del Sistem</h6>
+                                        <h6 class="text-secondary text-uppercase">Información del Sistema</h6>
                                     </div>
 
                                     <table class="table table-sm table-hover">
