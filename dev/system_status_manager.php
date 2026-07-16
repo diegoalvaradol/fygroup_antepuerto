@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($errors)) {
         $message = 'Revise los campos marcados.';
         $messageType = 'error';
-        $saved = true;
+        $saved = false;
     } else {
         $content = "<?php\n\n";
         $content .= "declare(strict_types=1);\n\n";
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $message = 'No se pudo guardar el archivo.';
             $messageType = 'error';
-            $saved = true;
+            $saved = false;
         }
     }
 }
@@ -287,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </div>
                                         <?php endforeach; ?>
 
-                                        <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle"></i> Ejecutar</button>
+                                        <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle"></i> Guardar</button>
                                         <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
                                     </form>
                                 </div>
@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
- // Mostrar Swal SOLO después de enviar formulario
+  // Mostrar Swal SOLO después de enviar formulario
   <?php if ($saved): ?>
     Swal.fire({
       icon: <?= json_encode($messageType) ?>,

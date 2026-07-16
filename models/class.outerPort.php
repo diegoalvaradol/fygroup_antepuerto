@@ -2783,7 +2783,8 @@ class outerPort extends iQuery
                 </tr>
             ";
 
-            return "
+            ob_start();
+            ?>
                 <div class='card shadow mb-4'>
                     <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                         <table id='shiftsTable' class='table'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
@@ -2795,11 +2796,14 @@ class outerPort extends iQuery
                                     <th>Total Contenedores</th>
                                 </tr>
                             </thead>
-                            <tbody>$rows</tbody>
+                            <tbody><?= $rows ?></tbody>
                         </table>
                     </div>
                 </div>
-            ";
+            <?php
+            $html = ob_get_clean();
+
+            return $html;
         } else {
             return null;
         }
@@ -2808,6 +2812,9 @@ class outerPort extends iQuery
     public function seasonsReportAll()
     {
         $rows = '';
+        $totalCamiones = 0;
+        $totalPallets = 0;
+        $totalContenedores = 0;
 
         foreach (get::arraySeasons() as $period) {
             $seasonClause = $period['season'] === 'citrus' ? 'AND origin = 1' : '';
@@ -2830,16 +2837,16 @@ class outerPort extends iQuery
                 $seasonClause
             ";
 
-            $list = parent::getFirstMember($sql, [
-                'inicio' => $period['start'],
-                'fin' => $period['end'],
-            ]);
-
-            $totalCamiones = number_format((int) ($list['total_camiones'] ?? 0), 0, ',', '.');
-            $totalPallets = number_format((int) ($list['total_pallets'] ?? 0), 0, ',', '.');
-            $totalContenedores = number_format((int) ($list['total_contenedores'] ?? 0), 0, ',', '.');
-
+            $list = parent::getFirstMember($sql, ['inicio' => $period['start'], 'fin' => $period['end'], ]);
             $label = htmlspecialchars($period['label'], ENT_QUOTES, 'UTF-8');
+
+            $camiones = (int) ($list['total_camiones'] ?? 0);
+            $pallets = (int) ($list['total_pallets'] ?? 0);
+            $contenedores = (int) ($list['total_contenedores'] ?? 0);
+
+            $totalCamiones += $camiones;
+            $totalPallets += $pallets;
+            $totalContenedores += $contenedores;
 
             $rows .= "
                 <tr>
@@ -2851,14 +2858,20 @@ class outerPort extends iQuery
             ";
         }
 
-        return "
+        $rows .= "
+            <tr class='font-weight-bold bg-light'>
+                <td>Totales</td>
+                <td>" . number_format($totalCamiones, 0, ',', '.') . '</td>
+                <td>' . number_format($totalPallets, 0, ',', '.') . '</td>
+                <td>' . number_format($totalContenedores, 0, ',', '.') . '</td>
+            </tr>
+        ';
+
+        ob_start();
+        ?>
             <div class='card shadow mb-4'>
-                <div class='table-responsive'
-                    style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-
-                    <table id='shiftsTable' class='table'
-                        style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-
+                <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                    <table id='shiftsTable' class='table' style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
                         <thead style='position:sticky; top:0; z-index:1;'>
                             <tr>
                                 <th>Temporada</th>
@@ -2867,14 +2880,14 @@ class outerPort extends iQuery
                                 <th>Total Contenedores</th>
                             </tr>
                         </thead>
-
-                        <tbody>
-                            {$rows}
-                        </tbody>
+                        <tbody> <?= $rows ?></tbody>
                     </table>
                 </div>
             </div>
-        ";
+        <?php
+        $html = ob_get_clean();
+
+        return $html;
     }
 
     public function seasonsReportExcel($inicio, $fin, $season, $label)
@@ -2966,6 +2979,9 @@ class outerPort extends iQuery
         ], null, 'A1');
 
         $row = 2;
+        $totalCamiones = 0;
+        $totalPallets = 0;
+        $totalContenedores = 0;
 
         foreach ($periods as $period) {
             $seasonClause = $period['season'] === 'citrus' ? 'AND origin = 1' : '';
@@ -2988,20 +3004,35 @@ class outerPort extends iQuery
                 $seasonClause
             ";
 
-            $list = parent::getFirstMember($sql, [
-                'inicio' => $period['start'],
-                'fin' => $period['end'],
-            ]);
+            $list = parent::getFirstMember($sql, ['inicio' => $period['start'], 'fin' => $period['end'],]);
+            $camiones = (int) ($list['total_camiones'] ?? 0);
+            $pallets = (int) ($list['total_pallets'] ?? 0);
+            $contenedores = (int) ($list['total_contenedores'] ?? 0);
 
             $sheet->fromArray([
                 $period['label'],
-                (int) ($list['total_camiones'] ?? 0),
-                (int) ($list['total_pallets'] ?? 0),
-                (int) ($list['total_contenedores'] ?? 0),
+                $camiones,
+                $pallets,
+                $contenedores,
             ], null, "A{$row}");
+
+            $totalCamiones += $camiones;
+            $totalPallets += $pallets;
+            $totalContenedores += $contenedores;
 
             $row++;
         }
+
+        $sheet->fromArray([
+            'Totales',
+            $totalCamiones,
+            $totalPallets,
+            $totalContenedores,
+        ], null, "A{$row}");
+
+        $sheet->getStyle("A{$row}:D{$row}")
+            ->getFont()
+            ->setBold(true);
 
         $sheet->setAutoFilter('A1:D1');
 
