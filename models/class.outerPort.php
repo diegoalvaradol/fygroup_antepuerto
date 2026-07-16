@@ -2783,7 +2783,8 @@ class outerPort extends iQuery
                 </tr>
             ";
 
-            return "
+            ob_start();
+            ?>
                 <div class='card shadow mb-4'>
                     <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
                         <table id='shiftsTable' class='table'style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
@@ -2795,11 +2796,14 @@ class outerPort extends iQuery
                                     <th>Total Contenedores</th>
                                 </tr>
                             </thead>
-                            <tbody>$rows</tbody>
+                            <tbody><?= $rows ?></tbody>
                         </table>
                     </div>
                 </div>
-            ";
+            <?php
+            $html = ob_get_clean();
+
+            return $html;
         } else {
             return null;
         }
@@ -2833,11 +2837,7 @@ class outerPort extends iQuery
                 $seasonClause
             ";
 
-            $list = parent::getFirstMember($sql, [
-                'inicio' => $period['start'],
-                'fin' => $period['end'],
-            ]);
-
+            $list = parent::getFirstMember($sql, ['inicio' => $period['start'], 'fin' => $period['end'], ]);
             $label = htmlspecialchars($period['label'], ENT_QUOTES, 'UTF-8');
 
             $camiones = (int) ($list['total_camiones'] ?? 0);
@@ -2860,21 +2860,18 @@ class outerPort extends iQuery
 
         $rows .= "
             <tr class='font-weight-bold bg-light'>
-                <td>TOTAL GENERAL</td>
+                <td>Totales</td>
                 <td>" . number_format($totalCamiones, 0, ',', '.') . '</td>
                 <td>' . number_format($totalPallets, 0, ',', '.') . '</td>
                 <td>' . number_format($totalContenedores, 0, ',', '.') . '</td>
             </tr>
         ';
 
-        return "
+        ob_start();
+        ?>
             <div class='card shadow mb-4'>
-                <div class='table-responsive'
-                    style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-
-                    <table id='shiftsTable' class='table'
-                        style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-
+                <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
+                    <table id='shiftsTable' class='table' style='min-width:1300px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
                         <thead style='position:sticky; top:0; z-index:1;'>
                             <tr>
                                 <th>Temporada</th>
@@ -2883,14 +2880,14 @@ class outerPort extends iQuery
                                 <th>Total Contenedores</th>
                             </tr>
                         </thead>
-
-                        <tbody>
-                            {$rows}
-                        </tbody>
+                        <tbody> <?= $rows ?></tbody>
                     </table>
                 </div>
             </div>
-        ";
+        <?php
+        $html = ob_get_clean();
+
+        return $html;
     }
 
     public function seasonsReportExcel($inicio, $fin, $season, $label)
@@ -3007,11 +3004,7 @@ class outerPort extends iQuery
                 $seasonClause
             ";
 
-            $list = parent::getFirstMember($sql, [
-                'inicio' => $period['start'],
-                'fin' => $period['end'],
-            ]);
-
+            $list = parent::getFirstMember($sql, ['inicio' => $period['start'], 'fin' => $period['end'],]);
             $camiones = (int) ($list['total_camiones'] ?? 0);
             $pallets = (int) ($list['total_pallets'] ?? 0);
             $contenedores = (int) ($list['total_contenedores'] ?? 0);
@@ -3031,7 +3024,7 @@ class outerPort extends iQuery
         }
 
         $sheet->fromArray([
-            'TOTAL GENERAL',
+            'Totales',
             $totalCamiones,
             $totalPallets,
             $totalContenedores,
