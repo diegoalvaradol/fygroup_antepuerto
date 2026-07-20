@@ -1,6 +1,8 @@
 # Sistema FYGroup | Antepuerto Panul
 
-<img src="logos/logo-fygroup-circle-v1.png" alt="Sistema FYGroup" width="180">
+<p align="center">
+  <img src="logos/logo-fygroup-circle-v1.png" alt="Sistema FYGroup" width="180">
+</p>
 
 Sistema web para la gestión del **Antepuerto Panul**, enfocado en el **control de ingreso de camiones** y en la generación de **reportes operacionales del flujo logístico**.
 
