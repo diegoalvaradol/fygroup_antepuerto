@@ -1,11 +1,11 @@
 # Licencia de Uso de Software
 
-**Software:** Sistema Integral FYGroup | Antepuerto Panul
-**Compilacion:** FYGPPR10.080526.021.
-**Version:** 21.01.6.pbx
-**Titular:** FYGroup
-**Lanzamiento:** 01-05-2025
-**Ultima actualizacion:** 20-07-2026
+**Software:** Sistema Integral FYGroup | Antepuerto Panul<br>
+**Compilación:** FYGPPR10.080526.021.<br>
+**Versión:** 21.01.6.pbx<br>
+**Titular:** FYGroup<br>
+**Lanzamiento:** 01-05-2025<br>
+**Última actualización:** 20-07-2026
 
 ## 1. Objeto
 
