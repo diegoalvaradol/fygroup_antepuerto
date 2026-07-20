@@ -48,7 +48,7 @@ Esta licencia se rige por las leyes de la Republica de Chile.
 
 ---
 
-**Firmado:**
+**Firmado:**<br>
 FYGroup
 
 > Este documento es una base operativa y no sustituye la revision de un abogado antes de su uso contractual.
