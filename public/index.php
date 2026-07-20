@@ -19,7 +19,7 @@
             </div>
 
             <span class="badge badge-primary px-3 py-2 mb-3">
-                FYGROUP PLATFORM
+                Sistema Integral FY Group
             </span>
 
             <h1 class="font-weight-bold mb-2">
