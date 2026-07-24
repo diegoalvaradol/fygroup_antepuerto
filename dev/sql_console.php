@@ -45,84 +45,95 @@ function ejecutarQuery($user)
 
     $sql = trim($_POST['sql_query']);
 
-    if (!preg_match('/^\s*(SELECT|UPDATE|DELETE|DROP)\b/i', $sql)) {
-        return "
-        <script>
-            Swal.fire({
-                icon:'error',
-                title:'Instrucción no permitida',
-                text:'Solo SELECT, UPDATE, DELETE y DROP son permitidas.',
-                timer:4000,
-                showConfirmButton:false
-            });
-        </script>";
-    }
-
     ob_start();
 
     try {
-        $stmt = $user->getDb()->prepare($sql);
+        $db = $user->getDb();
+
+        // Necesario para ejecutar varias sentencias separadas por ";"
+        $db->setAttribute(PDO::MYSQL_ATTR_MULTI_STATEMENTS, true);
+
+        $stmt = $db->prepare($sql);
         $stmt->execute();
 
-        if (stripos($sql, 'SELECT') === 0) {
-            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $huboResultados = false;
+        $filasAfectadas = 0;
+        $totalRegistros = 0;
+        $numeroResultado = 1;
 
-            if ($resultados) {
-                ?>
-                <div class='table-responsive' style='width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;'>
-                    <table id='sqlResults' class='table' style='min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;'>
-                        <thead style='color:white; position:sticky; top:0; z-index:1;'>
-                        <tr>
-                            <?php foreach (array_keys($resultados[0]) as $col): ?>
-                                <th><?= htmlspecialchars($col) ?></th>
-                            <?php endforeach; ?>
-                        </tr>
-                        </thead>
+        do {
+            // SELECT, SHOW, DESCRIBE, EXPLAIN, SHOW GRANTS, SHOW DATABASES, etc.
+            if ($stmt->columnCount() > 0) {
+                $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                        <tbody>
-                        <?php foreach ($resultados as $fila): ?>
-                            <tr>
-                                <?php foreach ($fila as $valor): ?>
-                                    <td><?= htmlspecialchars($valor ?? '') ?></td>
-                                <?php endforeach; ?>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                if (!empty($resultados)) {
+                    $huboResultados = true;
+                    $totalRegistros += count($resultados);
+                    ?>
+                    <div style="margin-bottom: 25px;">
+                        <h5 style="margin-bottom: 10px;">
+                            Resultado <?= $numeroResultado ?>
+                            <small>(<?= count($resultados) ?> registros)</small>
+                        </h5>
 
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Consulta ejecutada',
-                        text: 'Se encontraron <?= count($resultados) ?> registros.',
-                        timer: 2500,
-                        showConfirmButton: false
-                    });
-                </script>
-                <?php
+                        <div class="table-responsive"
+                             style="width:100%; max-height:500px; overflow:auto; border:1px solid #dee2e6; border-radius:12px;">
+                            <table class="table"
+                                   style="min-width:1200px; white-space:nowrap; border-collapse:separate; border-spacing:0;">
+                                <thead style="color:white; position:sticky; top:0; z-index:1;">
+                                    <tr>
+                                        <?php foreach (array_keys($resultados[0]) as $col): ?>
+                                            <th><?= htmlspecialchars($col, ENT_QUOTES, 'UTF-8') ?></th>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php foreach ($resultados as $fila): ?>
+                                        <tr>
+                                            <?php foreach ($fila as $valor): ?>
+                                                <td>
+                                                    <?= htmlspecialchars((string)($valor ?? ''), ENT_QUOTES, 'UTF-8') ?>
+                                                </td>
+                                            <?php endforeach; ?>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <?php
+                }
+
+                $numeroResultado++;
             } else {
-                ?>
-                <script>
-                    Swal.fire({
-                        icon:'info',
-                        title:'Consulta ejecutada',
-                        text:'No se encontraron resultados.',
-                        timer:3500,
-                        showConfirmButton:false
-                    });
-                </script>
-                <?php
+                // INSERT, UPDATE, DELETE, CREATE, DROP, USE, etc.
+                $filasAfectadas += $stmt->rowCount();
             }
+
+        } while ($stmt->nextRowset());
+
+        if ($huboResultados) {
+            ?>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Consulta ejecutada',
+                    text: 'Se encontraron <?= $totalRegistros ?> registros en total.',
+                    timer: 2500,
+                    showConfirmButton: false
+                });
+            </script>
+            <?php
         } else {
             ?>
             <script>
                 Swal.fire({
-                    icon:'success',
-                    title:'Query ejecutada correctamente',
-                    text:'Filas afectadas: <?= $stmt->rowCount() ?>',
-                    timer:3000,
-                    showConfirmButton:false
+                    icon: 'success',
+                    title: 'Query ejecutada correctamente',
+                    text: 'Filas afectadas: <?= $filasAfectadas ?>',
+                    timer: 3000,
+                    showConfirmButton: false
                 });
             </script>
             <?php
@@ -132,10 +143,10 @@ function ejecutarQuery($user)
         ?>
         <script>
             Swal.fire({
-                icon:'error',
-                title:'Error al ejecutar',
-                text:<?= json_encode($e->getMessage()) ?>,
-                confirmButtonText:'Aceptar'
+                icon: 'error',
+                title: 'Error al ejecutar',
+                text: <?= json_encode($e->getMessage()) ?>,
+                confirmButtonText: 'Aceptar'
             });
         </script>
         <?php
@@ -289,4 +300,3 @@ $resultado = ejecutarQuery($user);
     textarea.style.height = (textarea.scrollHeight) + 'px';
   });
 </script>
-</html>

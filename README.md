@@ -1,57 +1,62 @@
-# Sistema FYGroup | Antepuerto Panul
+# Sistema Integral FYGroup | Antepuerto Panul
 
-![Sistema FYGroup](logos/logo-fygroup.png)
+<p align="center">
+  <img src="logos/logo-fygroup-circle-bg-removed.png" alt="Logo FYGroup" width="220">
+</p>
 
-Sistema web para la gestión del **Antepuerto Panul**, enfocado en el **control de ingreso de camiones** y en la generación de **reportes operacionales del flujo logístico**.
+<p align="center">
+  <strong>Sistema de Gestión Operacional</strong><br>
+  Antepuerto Panul
+</p>
 
-La plataforma centraliza información relevante de la operación del antepuerto, permitiendo registrar movimientos, monitorear la actividad y obtener reportes que apoyen la gestión y la toma de decisiones.
+Plataforma desarrollada por **FYGroup** para la administración, monitoreo y control de operaciones logísticas. Integra procesos, indicadores e información estratégica en una única solución.
+
+El sistema permite controlar accesos, gestionar procesos operacionales y consolidar información relevante para la toma de decisiones. Centraliza procesos logísticos, reportes operacionales y herramientas de gestión, proporcionando visibilidad de la operación.
 
 ## Funcionalidades
 
-- Control y registro de **ingreso de camiones**
-- Gestión de **turnos de atención**
-- Reportes de **naves**
-- Reportes de **thermos**
-- Reportes de **contenedores**
-- **Dashboard** con indicadores de operación
-- Panel administrativo para la gestión del sistema
+- Control de ingreso de camiones.
+- Gestión de turnos.
+- Reporte de naves.
+- Reporte de termos.
+- Reporte de contenedores.
+- Dashboard operativo.
+- Panel administrativo.
+- Liquidación de naves.
+- Proforma de naves.
+- Reportes personalizados.
 
 ## Integraciones
 
-El sistema consume APIs de distintas compañías y terminales portuarios para obtener y actualizar información operativa:
+El sistema integra información de distintos actores de la cadena logística para mantener datos actualizados y disponibles en tiempo real.
 
-- **Maersk**
-- **MSC**
-- **EPCO**
-- **TPC**
-- **Seatrade**
-- **Cool Carriers**
+- Maersk
+- MSC
+- EPCO
+- TPC
+- Seatrade
+- Cool Carriers
 
-Estas integraciones permiten mantener información actualizada sobre **naves, cargas y movimientos logísticos**.
+## Plataforma FYGroup
 
-## Interfaz
+El sistema utiliza **FYFramework**, un framework corporativo desarrollado por FYGroup para construir aplicaciones empresariales, logísticas y operacionales.
 
-La interfaz del sistema está basada en el template administrativo **SB Admin 2**, construido sobre **Bootstrap**, proporcionando una estructura moderna y responsiva para la administración del sistema.
+Incluye:
 
-Template utilizado:
-https://startbootstrap.com/theme/sb-admin-2/
+- Template FYGroup.
+- Framework UI.
+- Arquitectura modular.
+- Seguridad integrada.
 
-Framework UI:
-https://getbootstrap.com/
-
-## Tecnologías utilizadas
+## Tecnologías
 
 - PHP
 - JavaScript
+- MySQL
 - Bootstrap
 - jQuery
-- PHPMyAdmin
-- Integración con **APIs externas**
+- REST API
 
 ## Objetivo
 
-Centralizar y administrar la información operativa del **Antepuerto Panul**, permitiendo controlar el acceso de camiones y generar reportes de la operación logística del sistema.
-
-## Licencia del Template
-
-El diseño utiliza el template **SB Admin 2**, liberado bajo licencia **MIT** por Start Bootstrap.
+Administrar las operaciones del **Antepuerto Panul**, facilitando el control de accesos, la gestión de procesos operacionales y el acceso a información relevante para la gestión y toma de decisiones.
