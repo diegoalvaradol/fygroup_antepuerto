@@ -191,6 +191,7 @@ class menu extends iQuery
                 'id' => 'collapseDeveloper',
                 'items' => [
                     ['label' => 'SQL Administrador', 'link' => generateSecureLink('sql_console')],
+                    ['label' => 'Backup', 'link' => generateSecureLink('backup_database')],
                     ['label' => 'Respaldo de Archivos', 'link' => generateSecureLink('files_backup')],
                 ],
             ],
