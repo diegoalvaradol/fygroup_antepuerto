@@ -84,7 +84,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                             </div>
 
                             <div class="text-center mb-4">
-                                <img src="../logos/logo-fygroup.png" class="logo-responsive">
+                                <img src="../logos/logo-fygroup-bg-removed.png" class="logo-responsive">
                                 <h6 class="m-0 font-weight-bold text-center small text-primary">
                                     Powered by FYGroup.
                                 </h6>

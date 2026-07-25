@@ -325,6 +325,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../assets/js/sidebar.js"></script>
 </body>
 </html>
+
 <script>
 document.addEventListener('click', function (event) {
   const button = event.target.closest('.clear-datetime');
