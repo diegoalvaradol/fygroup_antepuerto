@@ -14,6 +14,7 @@ if (!validateSecureLink($module, $time, $ttl, $sig)) {
 
 $cfg = new cfg();
 $user = new user();
+$alerts = new UIComponents();
 
 $infoCfg = json_decode($cfg->getInfo(1), true);
 $dev = $user->isDev($_SESSION['user']['run']);
@@ -40,7 +41,6 @@ if (!$dev) {
 require_once __DIR__ . '/../config/database.php';
 
 $db = Database::get();
-
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +59,6 @@ $db = Database::get();
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
 
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -81,7 +80,7 @@ $db = Database::get();
                     <!-- Breadcrumb -->
                     <?= menu::breadcrumb(); ?>
 
-                    <h1 class="h3 mb-1 text-gray-800">Respaldo de Base de Datos</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Respaldo Base de Datos</h1>
                     <p class="mb-4">Genera un respaldo completo de la base de datos incluyendo estructura,tablas y registros almacenados actualmente.</p>
 
                     <!-- Content Row -->
@@ -94,7 +93,7 @@ $db = Database::get();
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                         <?php
                                         try {
-                                            $database = $db->query( "SELECT DATABASE()")->fetchColumn();
+                                            $database = $db->query("SELECT DATABASE()")->fetchColumn();
                                             echo htmlspecialchars($database);
                                         } catch(Exception $e){
                                             echo "Error conexión";
@@ -108,13 +107,9 @@ $db = Database::get();
                         <div class="col-lg-6">
                             <div class="card shadow mb-4 border-left-success">
                                 <div class="card-body">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Generar respaldo
-                                    </div>
-
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Generar respaldo</div>
                                     <p class="text-muted">El archivo generado contendrá la estructura de las tablas y los datos registrados.</p>
-
-                                    <button class='btn btn-success btn-sm' onclick='downloadBakup()'><i class='fas fa-download mr-2'></i>Generar respaldo SQL</button>
+                                    <button class="btn btn-success btn-sm" onclick="downloadBakup()"><i class="fas fa-download mr-2"></i>Respaldo SQL</button>
                                 </div>
                             </div>
                         </div>
@@ -164,6 +159,7 @@ $db = Database::get();
     <script src="../assets/js/sidebar.js"></script>
 </body>
 </html>
+
 <script>
 var downloadBakup = function () {
   Swal.fire({

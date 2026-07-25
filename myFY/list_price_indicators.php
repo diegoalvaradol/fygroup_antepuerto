@@ -79,7 +79,7 @@ if (!$admin) {
                     <?= menu::breadcrumb(); ?>
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-1 text-gray-800">Lista de Precios</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Lista de Tarifas</h1>
                     <p class="mb-1">Acá encontraras los precios de Gate In y Gate Out de cada naviera respectivamente.</p>
                     <div class="col-sm-6">
                       <?php echo $alerts->customAlert('info', 'Atención', 'Los valores se encuentran actualizados a la fecha: <b>14 de mayo de 2026</b>.'); ?>

@@ -284,7 +284,7 @@ class UIComponents
                 </div>
 
                 <div class="custom-alert-message">
-                    <?= strip_tags($message, '<b><strong><i><em><s><strike><mark><br>') ?>
+                    <?= strip_tags($message,'<b><strong><i><em><s><strike><mark><br><ul><ol><li>')?>
                 </div>
             </div>
         </div>
