@@ -1,28 +1,28 @@
-/* ==========================================================
-   MAINTENANCE.CSS
-   ========================================================== */
+/* ==========================================================    MAINTENANCE.CSS    ========================================================== */
+/* ==========================================================    BASE ========================================================== */
 body {
   background: #ffffff;
 }
 
+/* ==========================================================    PANEL ========================================================== */
 .maintenance-panel {
   margin-bottom: 50px;
 }
 
-/* Card */
+/* ==========================================================    CARD ========================================================== */
 .maintenance-card {
-  border: none;
-  border-top: 2px solid #003152;
-  border-radius: 16px;
+  border: 1px solid rgba(0, 49, 82, 0.08);
+  border-top: 4px solid var(--color-primary);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   background: #ffffff;
-  box-shadow: 0 15px 40px rgba(0, 49, 82, 0.12);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Banner */
+/* ==========================================================    BANNER ========================================================== */
 .maintenance-banner {
-  background: linear-gradient(135deg, #003152, #0b5f8a);
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+  color: #ffffff;
   padding: 35px;
   text-align: center;
   position: relative;
@@ -53,11 +53,11 @@ body {
   position: relative;
 }
 
-/* Logo */
+/* ==========================================================    LOGO ========================================================== */
 .maintenance-logo {
   width: 120px;
   height: 120px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -69,6 +69,7 @@ body {
   z-index: 2;
 }
 
+/* ==========================================================    BODY ========================================================== */
 .maintenance-body {
   padding: 50px;
   background: #ffffff;
@@ -79,15 +80,15 @@ body {
   color: var(--color-primary);
 }
 
-/* Status */
+/* ==========================================================    STATUS ========================================================== */
 .status-item {
   background: #ffffff;
   border-radius: var(--radius-lg);
   padding: 25px;
-  transition: 0.25s ease;
   height: 100%;
   border: 1px solid rgba(0, 49, 82, 0.08);
   box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
 }
 
 .status-item:hover {
@@ -101,7 +102,7 @@ body {
   margin-bottom: 15px;
 }
 
-/* Botón */
+/* ==========================================================    BOTÓN ========================================================== */
 .btn-fy {
   background: var(--color-primary);
   border-color: var(--color-primary);
@@ -109,7 +110,7 @@ body {
   font-weight: 600;
   padding: 12px 25px;
   border-radius: var(--radius-md);
-  transition: 0.25s ease;
+  transition: var(--transition-fast);
 }
 
 .btn-fy:hover {
@@ -120,7 +121,7 @@ body {
   box-shadow: 0 10px 22px rgba(0, 49, 82, 0.2);
 }
 
-/* Horario */
+/* ==========================================================    HORARIO ========================================================== */
 .maintenance-schedule {
   margin: 30px 0;
   background: #ffffff;
@@ -166,7 +167,7 @@ body {
   margin-top: 5px;
 }
 
-/* Countdown */
+/* ==========================================================    COUNTDOWN ========================================================== */
 .maintenance-countdown {
   background: linear-gradient(135deg, var(--color-primary), #0b466f);
   border-radius: var(--radius-xl);
@@ -191,7 +192,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* Time Box */
+/* ==========================================================    TIME BOX ========================================================== */
 .time-box {
   min-width: 90px;
   text-align: center;
@@ -222,7 +223,7 @@ body {
   opacity: 0.8;
 }
 
-/* Responsive */
+/* ==========================================================    RESPONSIVE ========================================================== */
 @media (max-width: 768px) {
   .maintenance-panel {
     margin-bottom: 20px;

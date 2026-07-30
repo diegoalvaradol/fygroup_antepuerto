@@ -10,6 +10,102 @@ require_once __DIR__ . '/../config/includes.php';
 date_default_timezone_set('America/Santiago');
 
 /**
+ * Devuelve el texto en negrita.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <strong>.
+ */
+function b(string $text): string
+{
+    return '<strong>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</strong>';
+}
+
+/**
+ * Devuelve el texto en cursiva.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <i>.
+ */
+function i(string $text): string
+{
+    return '<i>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</i>';
+}
+
+/**
+ * Devuelve el texto con énfasis.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <em>.
+ */
+function em(string $text): string
+{
+    return '<em>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</em>';
+}
+
+/**
+ * Devuelve el texto subrayado.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <u>.
+ */
+function u(string $text): string
+{
+    return '<u>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</u>';
+}
+
+/**
+ * Devuelve el texto tachado.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <del>.
+ */
+function s(string $text): string
+{
+    return '<del>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</del>';
+}
+
+/**
+ * Devuelve el texto resaltado.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <mark>.
+ */
+function mark(string $text): string
+{
+    return '<mark>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</mark>';
+}
+
+/**
+ * Devuelve el texto en tamaño pequeño.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <small>.
+ */
+function small(string $text): string
+{
+    return '<small>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</small>';
+}
+
+/**
+ * Devuelve el texto como código.
+ *
+ * @param string $text Texto a mostrar.
+ *
+ * @return string HTML con la etiqueta <code>.
+ */
+function code(string $text): string
+{
+    return '<code>' . htmlspecialchars($text, ENT_QUOTES, 'UTF-8') . '</code>';
+}
+
+/**
  * Genera un enlace seguro para un módulo.
  *
  */

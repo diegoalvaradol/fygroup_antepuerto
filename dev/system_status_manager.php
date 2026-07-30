@@ -3,6 +3,11 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 require_once __DIR__ . '/../config/system_status_config.php';
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+
+error_reporting(E_ALL);
+
 /* Validación de URL */
 $module = $_GET['pag'] ?? '';
 $time = $_GET['t'] ?? '';

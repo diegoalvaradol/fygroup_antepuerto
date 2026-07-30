@@ -1,117 +1,162 @@
-/* ==========================================================
-   ERROR.CSS
-   ========================================================== */
-body {
+/* ==========================================================    ERROR.CSS ========================================================== */
+/* ==========================================================    BODY ========================================================== */
+.error-page {
+  min-height: 100vh;
   background: linear-gradient(180deg, #f8fbfd 0%, #eef6f9 100%);
   font-family: var(--font-family);
 }
 
-/* ==========================================================
-   Panel
-   ========================================================== */
+/* ==========================================================    PANEL ========================================================== */
 .error-panel {
+  width: 100%;
   max-width: 850px;
 }
 
-/* ==========================================================
-   Card
-   ========================================================== */
+/* ==========================================================    CARD ========================================================== */
 .error-card {
+  overflow: hidden;
+  background: #ffffff;
   border: 1px solid rgba(0, 49, 82, 0.08);
   border-top: 5px solid var(--color-primary);
   border-radius: var(--radius-xl);
-  overflow: hidden;
-  background: #ffffff;
   box-shadow: 0 20px 50px rgba(0, 49, 82, 0.08);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
-/* ==========================================================
-   Banner
-   ========================================================== */
+.error-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ==========================================================    BANNER ========================================================== */
 .error-banner {
-  background: linear-gradient(135deg, var(--color-primary), #0b466f);
-  color: #ffffff;
+  position: relative;
+  overflow: hidden;
   padding: 40px;
   text-align: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
 }
 
+/* Decoración */
+.error-banner::before {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(173, 223, 241, 0.14);
+  top: -150px;
+  right: -70px;
+}
+
+.error-banner::after {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  bottom: -60px;
+  left: -40px;
+}
+
+/* Título */
 .error-banner h1 {
+  position: relative;
+  z-index: 1;
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 12px;
   letter-spacing: 0.5px;
 }
 
+/* Texto */
 .error-banner p {
+  position: relative;
+  z-index: 1;
   margin: 0;
   opacity: 0.92;
   font-size: 15px;
 }
 
-/* ==========================================================
-   Body
-   ========================================================== */
+/* ==========================================================    BODY CARD ========================================================== */
 .error-body {
   padding: 40px;
   background: #ffffff;
 }
 
-/* ==========================================================
-   Logo
-   ========================================================== */
+/* ==========================================================    LOGO ========================================================== */
 .error-logo {
   width: 120px;
   height: 120px;
-  background: #fff;
-  border-radius: 50%;
+  margin: 0 auto 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 25px;
-  box-shadow: 0 15px 40px rgba(0, 49, 82, 0.25);
+  background: #ffffff;
+  border-radius: 50%;
   border: 8px solid rgba(173, 223, 241, 0.35);
+  box-shadow: 0 15px 40px rgba(0, 49, 82, 0.25);
   position: relative;
   z-index: 2;
 }
 
-/* ==========================================================
-   Icono principal
-   ========================================================== */
+.error-logo img {
+  max-width: 75%;
+  max-height: 75%;
+  object-fit: contain;
+}
+
+/* ==========================================================    ICONO PRINCIPAL ========================================================== */
 .page-icon {
   font-size: 4rem;
   color: var(--color-primary);
   margin-bottom: 25px;
+  animation: errorPulse 2s infinite;
 }
 
-/* ==========================================================
-   Status
-   ========================================================== */
+@keyframes errorPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+/* ==========================================================    STATUS ========================================================== */
 .status-item {
-  background: #ffffff;
-  border-radius: var(--radius-lg);
-  padding: 22px;
   height: 100%;
+  padding: 22px;
+  background: #ffffff;
   border: 1px solid rgba(0, 49, 82, 0.08);
+  border-radius: var(--radius-lg);
   box-shadow: 0 8px 20px rgba(0, 49, 82, 0.05);
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .status-item:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(0, 49, 82, 0.1);
+  box-shadow: 0 14px 30px rgba(0, 49, 82, 0.12);
 }
 
+/* ==========================================================    STATUS ICON ========================================================== */
 .status-icon {
   font-size: 2rem;
-  color: var(--color-primary);
   margin-bottom: 15px;
+  color: var(--color-primary);
 }
 
 .status-item h6 {
-  font-weight: 700;
   margin-bottom: 8px;
+  font-weight: 700;
   color: var(--color-primary);
 }
 
@@ -119,38 +164,48 @@ body {
 .status-item small {
   margin: 0;
   color: var(--color-text-light);
+  line-height: 1.6;
 }
 
-/* ==========================================================
-   Botón
-   ========================================================== */
+/* ==========================================================    BOTÓN ========================================================== */
 .btn-fy {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: #ffffff;
-  font-weight: 600;
-  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 12px 28px;
-  transition: 0.25s ease;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background var(--transition-fast);
 }
 
 .btn-fy:hover {
+  color: #ffffff;
   background: var(--color-primary-hover);
   border-color: var(--color-primary-hover);
-  color: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 49, 82, 0.2);
+  box-shadow: 0 10px 24px rgba(0, 49, 82, 0.22);
 }
 
-/* ==========================================================
-   Responsive
-   ========================================================== */
+.btn-fy:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(173, 223, 241, 0.55);
+}
+
+/* ==========================================================    TABLET ========================================================== */
 @media (max-width: 992px) {
   .error-panel {
     max-width: 95%;
   }
 }
 
+/* ==========================================================    MOBILE ========================================================== */
 @media (max-width: 768px) {
   .error-panel {
     max-width: 95%;
@@ -185,5 +240,35 @@ body {
 
   .btn-fy {
     width: 100%;
+  }
+}
+
+/* ==========================================================    SMALL DEVICES ========================================================== */
+@media (max-width: 480px) {
+  .error-banner h1 {
+    font-size: 1.4rem;
+  }
+
+  .error-banner p {
+    font-size: 0.9rem;
+  }
+
+  .error-body {
+    padding: 20px;
+  }
+
+  .status-item {
+    padding: 16px;
+  }
+}
+
+/* ==========================================================    REDUCIR ANIMACIONES ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

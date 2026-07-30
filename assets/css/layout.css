@@ -1,257 +1,241 @@
-/* ==========================================================
-   LAYOUT ANTEPUERTO
-   ========================================================== */
-
-/* Layout Antepuerto */
+/* ==========================================================    LAYOUT-ANTEPUERTO.CSS    ========================================================== */
+/* ==========================================================    MAPA    ========================================================== */
 #map {
-  padding: 25px;
-  background: linear-gradient(180deg, #ffffff, rgba(173, 223, 241, 0.18));
-  border-radius: var(--radius-xl);
+  padding: 24px;
+  background: linear-gradient(180deg, #fff, rgba(173, 223, 241, 0.18));
   border: 1px solid rgba(0, 49, 82, 0.08);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
 }
-
-/* ==========================================================
-   Encabezado
-   ========================================================== */
+/* ==========================================================    ENCABEZADO    ========================================================== */
 .topbar-layout {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .logo h2 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 700;
   color: var(--color-primary);
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
 .logo span {
+  display: block;
+  margin-top: 4px;
   color: var(--color-text-light);
-  font-size: 13px;
-  text-transform: uppercase;
+  font-size: 0.75rem;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
-
-/* ==========================================================
-   Estadísticas
-   ========================================================== */
+/* ==========================================================    ESTADÍSTICAS    ========================================================== */
 .stats {
   display: flex;
-  gap: 14px;
   flex-wrap: wrap;
+  gap: 16px;
 }
 
 .stat-card {
-  background: #ffffff;
-  min-width: 150px;
-  padding: 16px 20px;
-  border-radius: var(--radius-lg);
+  min-width: 160px;
+  padding: 18px;
+  background: #fff;
   border-left: 5px solid var(--color-primary);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: 0.25s ease;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .stat-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }
 
-.card-title {
-  font-size: 11px;
+.stat-card .card-title {
+  margin-bottom: 6px;
   color: var(--color-text-light);
-  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 600;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.card-value {
-  font-size: 28px;
-  font-weight: 700;
+.stat-card .card-value {
   color: var(--color-primary);
-}
-
-/* ==========================================================
-   Flujo
-   ========================================================== */
-.flow {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 30px;
+  font-size: 2rem;
   font-weight: 700;
-  color: var(--color-success);
 }
-
-/* ==========================================================
-   Patio
-   ========================================================== */
+/* ==========================================================    FLUJO    ========================================================== */
+.flow {
+  margin: 24px 0;
+  color: var(--color-success);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+/* ==========================================================    PATIO    ========================================================== */
 .parking {
-  margin-top: 20px;
-  background: #ffffff;
-  border-radius: var(--radius-xl);
-  padding: 25px;
+  margin-top: 24px;
+  padding: 24px;
+  background: #fff;
   border: 1px solid rgba(0, 49, 82, 0.08);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
 }
 
 .parking-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 22px;
+  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 22px;
 }
 
 .parking-title {
-  font-size: 26px;
-  font-weight: 700;
+  margin: 0;
   color: var(--color-primary);
+  font-size: 1.7rem;
+  font-weight: 700;
 }
 
 .parking-status {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
-
-/* ==========================================================
-   Badge
-   ========================================================== */
+/* ==========================================================    BADGES    ========================================================== */
 .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
-.green {
+.badge-success {
   background: var(--color-success);
   color: #fff;
 }
 
-.yellow {
+.badge-warning {
   background: var(--color-warning);
   color: #fff;
 }
 
-.red {
+.badge-danger {
   background: var(--color-danger);
   color: #fff;
 }
-
-/* ==========================================================
-   Grid
-   ========================================================== */
+/* ==========================================================    GRID    ========================================================== */
 #parkingGrid {
-  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 18px;
+  margin-top: 20px;
 }
-
-/* ==========================================================
-   Bahías
-   ========================================================== */
+/* ==========================================================    BAHÍAS    ========================================================== */
 .truck-slot {
   position: relative;
-  background: #ffffff;
-  border-radius: var(--radius-lg);
-  padding: 18px;
   min-height: 200px;
+  padding: 18px;
+  background: #fff;
   border: 1px solid rgba(0, 49, 82, 0.08);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: 0.25s ease;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .truck-slot:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
 }
-
+/* ==========================================================    TIPO    ========================================================== */
 .slot-type {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 5px 10px;
-  border-radius: 30px;
-  font-size: 11px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  background: var(--color-primary);
-  color: #ffffff;
 }
 
 .slot-type.container {
   background: var(--color-primary);
-  color: #ffffff;
 }
 
 .slot-type.thermo {
   background: var(--color-danger);
-  color: #ffffff;
 }
-
+/* ==========================================================    NÚMERO    ========================================================== */
 .slot-number {
   position: absolute;
   top: 14px;
   right: 14px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  color: #fff;
   font-weight: 700;
   box-shadow: 0 6px 14px rgba(0, 49, 82, 0.2);
 }
-
+/* ==========================================================    PATENTE    ========================================================== */
 .truck-plate {
-  text-align: center;
-  font-size: 28px;
-  font-weight: 700;
-  background: rgba(173, 223, 241, 0.18);
-  color: var(--color-primary);
-  padding: 12px;
-  border-radius: var(--radius-md);
   margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(173, 223, 241, 0.18);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  font-size: 2rem;
+  font-weight: 700;
   letter-spacing: 2px;
+  text-align: center;
 }
-
+/* ==========================================================    INFORMACIÓN    ========================================================== */
 .truck-info {
-  font-size: 13px;
-  line-height: 1.8;
   color: var(--color-text);
+  font-size: 0.875rem;
+  line-height: 1.8;
 }
-
-/* ==========================================================
-   Estados
-   ========================================================== */
-.normal {
+/* ==========================================================    ESTADOS    ========================================================== */
+.slot-normal {
   border-left: 8px solid var(--color-success);
 }
 
-.medium {
+.slot-medium {
   border-left: 8px solid var(--color-warning);
 }
 
-.high {
+.slot-high {
   border-left: 8px solid var(--color-danger);
 }
-
-/* ==========================================================
-   Vacío
-   ========================================================== */
-.empty {
+/* ==========================================================    VACÍO    ========================================================== */
+.slot-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
   background: rgba(173, 223, 241, 0.12);
   border: 2px dashed rgba(0, 49, 82, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
   border-radius: var(--radius-lg);
   color: var(--color-primary);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 700;
+  text-align: center;
 }

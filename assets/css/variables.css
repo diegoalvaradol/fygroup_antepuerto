@@ -1,8 +1,9 @@
-:root {
-  /* ==========================================================
+/* ==========================================================
      PALETA CORPORATIVA
      Dark Azure + Soft Blue
      ========================================================== */
+
+:root {
   --color-primary: #003152;
   --color-primary-dark: #00253f;
   --color-primary-light: #0b466f;
@@ -11,64 +12,76 @@
   --color-secondary-light: #eaf8fd;
   --color-accent: #4db8e6;
 
-  /* Hover / Estados UI */
+  /* HOVER / INTERACCIONES */
   --color-primary-hover: #00466f;
   --color-primary-dark-hover: #003152;
-
   --color-secondary-hover: #c4ebf7;
   --color-secondary-dark-hover: #7bc5e2;
-
   --color-accent-hover: #2aa9df;
 
-  /* Estados */
+  /* GRADIENTES CORPORATIVOS */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  --gradient-dark: linear-gradient(180deg, var(--color-primary), var(--color-primary-dark));
+  --gradient-soft: linear-gradient(180deg, #ffffff, rgba(173, 223, 241, 0.18));
+  --gradient-button: linear-gradient(135deg, var(--color-primary), #0b5f8a);
+
+  /* ESTADOS */
   --color-info: #0ea5e9;
   --color-success: #16a34a;
   --color-warning: #f59e0b;
   --color-danger: #dc2626;
 
-  /* Fondo */
+  /* BACKGROUND / SUPERFICIES */
   --color-bg: #f5f8fb;
   --color-bg-secondary: #ffffff;
   --color-soft: #eef7fb;
   --color-surface: #ffffff;
+  --color-surface-hover: rgba(173, 223, 241, 0.18);
 
-  /* Texto */
+  /* TEXTO */
   --color-text: #1f2937;
   --color-text-light: #64748b;
   --color-text-muted: #94a3b8;
   --color-white: #ffffff;
 
-  /* Bordes */
+  /* BORDES */
   --color-border: #d8e6ee;
   --color-border-light: #edf3f7;
+  --border-soft: 1px solid rgba(0, 49, 82, 0.08);
 
-  /* Bordes redondeados */
+  /* BORDER RADIUS */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 18px;
-  --radius-xl: 30px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
 
-  /* Sombras */
+  /* SOMBRAS */
   --shadow-sm: 0 2px 8px rgba(0, 49, 82, 0.06);
   --shadow-md: 0 8px 22px rgba(0, 49, 82, 0.1);
   --shadow-lg: 0 20px 45px rgba(0, 49, 82, 0.16);
   --shadow-xl: 0 28px 60px rgba(0, 49, 82, 0.2);
 
-  /* Glass */
+  /* GLASS EFFECT */
   --glass-bg: rgba(255, 255, 255, 0.72);
   --glass-border: rgba(255, 255, 255, 0.28);
   --glass-blur: blur(14px);
 
-  /* Transiciones */
+  /* TRANSICIONES */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.45s ease;
 
-  /* Z-Index */
+  /* LAYOUT */
+  --sidebar-width: 240px;
+  --topbar-height: 64px;
+  --footer-height: 50px;
+
+  /* Z INDEX */
   --z-sidebar: 1060;
   --z-overlay: 1050;
+  --z-modal: 1060;
   --z-topbar: 1030;
   --z-dropdown: 1040;
   --z-modal-backdrop: 1040;
-  --z-modal: 1060;
 }
