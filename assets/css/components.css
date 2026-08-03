@@ -28,6 +28,7 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+
 /* ==========================================================    CARDS    ========================================================== */
 .card {
   overflow: hidden;
@@ -63,6 +64,7 @@
   background: transparent;
   border-top: 1px solid rgba(0, 49, 82, 0.06);
 }
+
 /* ==========================================================    PROGRESS    ========================================================== */
 .progress {
   overflow: hidden;
@@ -75,6 +77,7 @@
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   transition: width 0.8s ease;
 }
+
 /* ==========================================================    ALERTS    ========================================================== */
 .custom-alert-info,
 .custom-alert-success,
@@ -134,6 +137,7 @@
 .custom-alert-danger::before {
   background: var(--color-danger);
 }
+
 /* ==========================================================    ALERT ICON    ========================================================== */
 .custom-alert-icon {
   display: flex;
@@ -166,6 +170,7 @@
   font-size: 0.875rem;
   line-height: 1.6;
 }
+
 /* ==========================================================    BADGES    ========================================================== */
 .flag-badge {
   display: inline-flex;

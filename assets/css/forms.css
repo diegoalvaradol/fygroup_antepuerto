@@ -12,18 +12,21 @@ textarea.form-control {
   min-height: 100px;
   resize: vertical;
 }
+
 /* ==========================================================    PLACEHOLDER    ========================================================== */
 .form-control::placeholder,
 textarea::placeholder {
   color: var(--color-text-light);
   opacity: 1;
 }
+
 /* ==========================================================    READONLY    ========================================================== */
 .form-control[readonly],
 textarea[readonly] {
   background: #f8fafc;
   cursor: default;
 }
+
 /* ==========================================================    DISABLED    ========================================================== */
 .form-control:disabled,
 .form-select:disabled,
@@ -34,6 +37,7 @@ select:disabled {
   opacity: 0.85;
   cursor: not-allowed;
 }
+
 /* ==========================================================    VALIDACIÓN    ========================================================== */
 .form-control.is-valid,
 .form-select.is-valid,
@@ -48,6 +52,7 @@ select:disabled {
 .was-validated .form-select:invalid {
   border-color: #dc3545;
 }
+
 /* ==========================================================    AUTOFILL (Chrome)    ========================================================== */
 input:-webkit-autofill,
 textarea:-webkit-autofill,
@@ -56,11 +61,13 @@ select:-webkit-autofill {
   -webkit-text-fill-color: var(--color-text);
   transition: background-color 9999s ease-in-out 0s;
 }
+
 /* ==========================================================    SELECT    ========================================================== */
 select,
 .form-select {
   cursor: pointer;
 }
+
 /* ==========================================================    INPUT GROUP    ========================================================== */
 .input-group-text {
   display: flex;
@@ -88,6 +95,7 @@ select,
   border-color: var(--color-primary);
   background: rgba(173, 223, 241, 0.28);
 }
+
 /* ==========================================================    CHECKBOX Y RADIO    ========================================================== */
 .form-check-input {
   cursor: pointer;
@@ -97,6 +105,7 @@ select,
   cursor: pointer;
   user-select: none;
 }
+
 /* ==========================================================    BOTONES DESHABILITADOS    ========================================================== */
 button:disabled,
 .btn:disabled {

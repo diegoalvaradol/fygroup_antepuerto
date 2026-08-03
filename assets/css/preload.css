@@ -205,6 +205,15 @@
     padding: 25px;
   }
 
+  .preload-logo {
+    max-width: 90%;
+  }
+
+  .preload-logo img {
+    max-width: min(320px, 90vw);
+    max-height: 140px;
+  }
+
   .preload-banner {
     padding: 25px;
   }
@@ -220,6 +229,17 @@
 
   .status-item {
     margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .preload-logo {
+    max-width: 95%;
+  }
+
+  .preload-logo img {
+    max-width: min(260px, 92vw);
+    max-height: 110px;
   }
 }
 
