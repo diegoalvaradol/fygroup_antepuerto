@@ -39,6 +39,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Ingreso Termos</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -202,10 +203,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <input type="hidden" id="createdby" name="createdby" value="<?php echo $_SESSION['user']['run']; ?>">
                                             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveInTermo()">
-                                              <span id="loadBtnText"><i class="fas fa-check-circle"></i> Guardar</span>
+                                              <span id="loadBtnText"><i class="fas fa-check-circle mr-2"></i>Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
-                                            <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                            <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser mr-2'></i>Limpiar</button>
                                         </form>
                                 </div>
                             </div>
@@ -253,10 +254,12 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
 
             <button type="button" name="savechanges" class="btn btn-success btn-user btn-sm" onclick="saveChanges()">
-                <i class='fas fa-check-circle'></i> Guardar
+                <i class='fas fa-check-circle mr-2'></i> Guardar
             </button>
 
-            <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">Cancelar</button>
+            <button type="button" name="closemodal" class="btn btn-danger btn-user btn-sm" onclick="closeModal()">
+                <i class='fas fa-times mr-2'></i>Cancelar
+            </button>
         </form>
     </div>
 
@@ -588,7 +591,7 @@ var editThermo = function(id) {
       $('#stay').val(data.stay);
       $('#observations').val(data.observations);
       $('#loadBtn').addClass('btn-info');
-      $('#loadBtnText').html('<i class="fas fa-check-circle"></i> Actualizar Termo');
+      $('#loadBtnText').html('<i class="fas fa-check-circle mr-2"></i>Actualizar Termo');
       $('#scrollTopBtn').trigger('click');
     },
     error: function() {

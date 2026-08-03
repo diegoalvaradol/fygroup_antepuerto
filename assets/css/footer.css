@@ -1,7 +1,7 @@
 /* ==========================================================    FOOTER.CSS    ========================================================== */
 /* ==========================================================    FOOTER    ========================================================== */
 body {
-  padding-bottom: 50px;
+  padding-bottom: 70px;
 }
 
 .footer-ssl {
@@ -34,7 +34,7 @@ body {
 }
 
 .footer-logo {
-  height: 35px;
+  height: 50px;
   transition: transform var(--transition-fast);
 }
 
@@ -65,17 +65,20 @@ body {
   color: var(--color-secondary);
   font-size: 0.875rem;
 }
+
 /* ==========================================================    ACCESIBILIDAD    ========================================================== */
 .footer-logo:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.45);
   outline-offset: 4px;
 }
+
 /* ==========================================================    REDUCIR ANIMACIONES    ========================================================== */
 @media (prefers-reduced-motion: reduce) {
   .footer-logo {
     transition: none;
   }
 }
+
 /* ==========================================================    MOBILE    ========================================================== */
 @media (max-width: 600px) {
   body {

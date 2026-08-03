@@ -93,16 +93,27 @@
 
 /* ==========================================================    LOGO    ========================================================== */
 .preload-logo {
-  width: 120px;
-  height: 120px;
-  display: flex;
+  display: initial;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 25px;
-  background: white;
-  border-radius: 50%;
-  border: 8px solid rgba(173, 223, 241, 0.35);
-  box-shadow: 0 20px 45px rgba(0, 49, 82, 0.25);
+  padding: 0;
+  max-width: 75%;
+  background: transparent;
+}
+
+.preload-logo img {
+  display: initial;
+  width: auto;
+  height: auto;
+  max-width: min(450px, 90vw);
+  max-height: 200px;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 18px rgba(0, 49, 82, 0.18));
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
 }
 
 /* ==========================================================    LOADING SPINNER    ========================================================== */

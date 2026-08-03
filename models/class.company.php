@@ -167,7 +167,7 @@ class company extends iQuery
                                         <td><?= $updated ?></td>
                                         <td>
                                             <button class="btn btn-warning btn-sm" onclick="editCompany(<?= $data[$this->id] ?>)">
-                                                <i class="fas fa-pen"></i> Editar
+                                                <i class="fas fa-pen mr-2"></i>Editar
                                             </button>
 
                                             <button
@@ -178,7 +178,7 @@ class company extends iQuery
                                                     <?= $data[$this->exporter] ?>,
                                                     <?= $data[$this->agency] ?>
                                                 )">
-                                                <i class="fas fa-trash"></i> Eliminar
+                                                <i class="fas fa-trash mr-2"></i>Eliminar
                                             </button>
                                         </td>
                                     </tr>

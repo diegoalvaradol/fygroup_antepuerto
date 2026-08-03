@@ -44,6 +44,7 @@ if (!$admin) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Programación Maersk</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -88,7 +89,7 @@ if (!$admin) {
 
                                 <div class="card-body" style="align-self:anchor-center;">
                                     <button type="button" class="btn btn-info btn-lg" onclick="window.open('https://sway.cloud.microsoft/U5rT4hqClDmMHjqE?ref=Link', '_blank')">
-                                        <i class="fas fa-fw fa-ship"></i> Itinerarios Maersk
+                                        <i class="fas fa-fw fa-ship mr-2"></i>Itinerarios Maersk
                                     </button>
                                 </div>
                             </div>

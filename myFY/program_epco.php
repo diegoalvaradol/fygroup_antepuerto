@@ -36,6 +36,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Planificación EPCO</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -95,11 +96,11 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <div class="col-12 col-md-auto me-md-4 mb-3">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadEpcoProgram()">
-                                                        <i class="fas fa-search"></i> Buscar
+                                                        <i class="fas fa-search mr-2"></i>Buscar
                                                 </button>
 
                                                 <button type="button" class="btn btn-success btn-user" id="btnPrintEpcoProgram" onclick="printEpcoProgram()" disabled>
-                                                        <i class="fas fa-print"></i> Imprimir
+                                                        <i class="fas fa-print mr-2"></i>Imprimir
                                                 </button>
                                             </div>
                                         </div>
@@ -172,7 +173,7 @@ function loadEpcoProgram() {
   const btnPrint = $('#btnPrintEpcoProgram');
 
   btn.prop('disabled', true)
-     .html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+     .html('<i class="fas fa-spinner fa-spin mr-2"></i>Cargando...');
 
   container.hide().empty();
   btnPrint.prop('disabled', true);
@@ -224,7 +225,7 @@ function loadEpcoProgram() {
     btnPrint.prop('disabled', true);
   })
   .always(function() {
-    btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
+    btn.prop('disabled', false).html('<i class="fas fa-search mr-2"></i>Buscar');
   });
 }
 

@@ -229,7 +229,7 @@ ob_start();
 
     <body>
         <div class="header-box">
-            <img src="../logos/logo-fygroup-bg-removed.png" style="height:50px;">
+            <img src="../logos/new-logo-fygroup-bg-removed.png" style="height:100px;">
             <h2>Liquidación de Nave</h2>
         </div>
 
@@ -337,7 +337,7 @@ ob_start();
         </div>
 
         <div class="signature">
-            <img src="../images/timbre-fygroup-bg-removed.png" alt="Firma" class="signature-logo">
+            <img src="../images/new-timbre-fygroup-bg-removed.png" alt="Firma FYGroup Digital" class="signature-logo">
 
             <div class="signature-text">
                 <div style="margin: 1px auto; width: 70px; border-top: 1px solid #000;"></div>

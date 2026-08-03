@@ -301,7 +301,7 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
 {
     $isLocal = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']);
     $baseUrl = $isLocal ? 'http://localhost/fygroup-antepuerto/' : 'https://antepuerto.fygroup.cl/';
-    $logo = $baseUrl . 'logos/logo-fygroup-circle-bg-removed.png';
+    $logo = $baseUrl . 'logos/new-logo-fygroup-bg-removed.png';
 
     $emails = [
         'diego.alvaraado@gmail.com',
@@ -317,6 +317,7 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
             <title>FYGroup | Acceso Denegado</title>
             <meta http-equiv="refresh" content="5;url=dashboard.php">
 

@@ -38,6 +38,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Roleo de Carga</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -147,10 +148,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </div>
 
                                     <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveVesselTransfer()">
-                                        <span id="loadBtnText"><i class="fas fa-check-circle"></i> Realizar Roleo</span>
+                                        <span id="loadBtnText"><i class="fas fa-check-circle mr-2"></i>Realizar Roleo</span>
                                         <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                     </button>
-                                    <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                    <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser mr-2'></i>Limpiar</button>
                                 </form>
                             </div>
                         </div>

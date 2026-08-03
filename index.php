@@ -28,11 +28,11 @@ $area = null;
 /* ================================
  * PRODUCCIÓN (por dominio)
  * ================================ */
-if (str_contains($host, 'fygroup.cl')) {
+if (str_contains($host, 'fy-group.cl')) {
     $hostAreas = [
-        'antepuerto.fygroup.cl' => 'myFY',
-        'portalcliente.fygroup.cl' => 'myPortal',
-        'dev.fygroup.cl' => 'dev',
+        'antepuerto.fy-group.cl' => 'myFY',
+        'portalcliente.fy-group.cl' => 'myPortal',
+        'dev.fy-group.cl' => 'dev',
     ];
 
     $area = $hostAreas[$host] ?? null;

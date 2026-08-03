@@ -21,6 +21,7 @@ require_once __DIR__ . '/../config/includes.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>Portal FYGroup | Login</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -34,7 +35,7 @@ require_once __DIR__ . '/../config/includes.php';
         <div class="col-xl-4 col-lg-5 col-md-7">
             <div class="card login-card p-4">
                 <div class="text-center mb-4">
-                    <img src="../logos/logo-fygroup-circle-v1.png" class="logo-img mb-3">
+                    <img src="../logos/new-logo-fygroup-bg-removed.png" class="mb-3">
                     <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
                     <small class="text-muted">Portal Cliente</small>
                 </div>
@@ -44,7 +45,7 @@ require_once __DIR__ . '/../config/includes.php';
                         <label class="small text-muted">División</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                <span class="input-group-text"><i class="fas fa-building mr-2"></i></span>
                             </div>
                             <select class="form-control text-center" id="division" name="division">
                                 <option value="-" selected>Seleccione...</option>
@@ -58,7 +59,7 @@ require_once __DIR__ . '/../config/includes.php';
                         <label class="small text-muted">R.U.N</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <span class="input-group-text"><i class="fas fa-user mr-2"></i></span>
                             </div>
                             <input type="text" class="form-control text-center" id="run" name="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRut(this)" onblur="validaRut(this.value)">
                         </div>
@@ -68,14 +69,14 @@ require_once __DIR__ . '/../config/includes.php';
                         <label class="small text-muted">Contraseña</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <span class="input-group-text"><i class="fas fa-lock mr-2"></i></span>
                             </div>
                             <input type="password" class="form-control text-center" id="password" name="password" placeholder="••••••••">
                         </div>
                     </div>
 
                     <button id="loadBtn" type="button" onclick="loadSession()" class="btn btn-success btn-login btn-block">
-                        <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
+                        <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i>Iniciar Sesión</span>
                         <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                     </button>
                 </form>

@@ -1,7 +1,7 @@
 # Sistema Integral FYGroup | Antepuerto Panul
 
 <p align="center">
-  <img src="logos/logo-fygroup-circle-bg-removed.png" alt="Logo FYGroup" width="220">
+  <img src="logos/new-logo-fygroup-bg-removed.png" alt="Logo FYGroup" width="220">
 </p>
 
 <p align="center">

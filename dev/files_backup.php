@@ -32,6 +32,7 @@ if (!$dev) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Respaldo de Archivos</title>
 
     <link href="../assets/css/all.min.css" rel="stylesheet" type="text/css">
@@ -57,7 +58,7 @@ if (!$dev) {
     <div class="content-wrapper">
         <div class="container py-5">
             <div class="text-center mb-4">
-                <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
+                <img src="../logos/new-logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
                 <h3 class="mt-3">Respaldo de Archivos</h3>
 
                 <div class="card shadow mx-auto" style="max-width: 600px;">
@@ -68,7 +69,7 @@ if (!$dev) {
 
             <div class="card shadow mx-auto" style="max-width: 600px;">
                 <div class="card-header bg-primary text-white">
-                    <h6 class="mb-0"><i class="fas fa-upload"></i> Subir archivo</h6>
+                    <h6 class="mb-0"><i class="fas fa-upload mr-2"></i>Subir archivo</h6>
                 </div>
 
                 <div class="card-body">
@@ -85,7 +86,7 @@ if (!$dev) {
 
                         <div class="text-center">
                             <button type="button" onclick="uploadFile()" class="btn btn-primary w-100">
-                                <i class="fas fa-cloud-upload-alt"></i> Subir Archivo
+                                <i class="fas fa-cloud-upload-alt mr-2"></i>Subir Archivo
                             </button>
                         </div>
                     </form>
@@ -94,7 +95,7 @@ if (!$dev) {
 
             <div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
                 <div class="card-header bg-secondary text-white">
-                    <h6 class="mb-0"><i class="fas fa-folder-open"></i> Archivos cargados</h6>
+                    <h6 class="mb-0"><i class="fas fa-folder-open mr-2"></i>Archivos cargados</h6>
                 </div>
 
                 <div class="card-body">
@@ -126,7 +127,7 @@ if (!$dev) {
 
             <div class="text-center mt-4">
                 <a href="dashboard.php" class="btn btn-sm btn-primary">
-                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                    <i class="fas fa-arrow-left mr-2"></i>Volver al Inicio
                 </a>
             </div>
         </div>

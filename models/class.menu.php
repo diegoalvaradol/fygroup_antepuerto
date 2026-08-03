@@ -270,7 +270,7 @@ class menu extends iQuery
 
             <ul id="accordionSidebar" class="navbar-nav">
                 <a class="sidebar-brand" href="dashboard.php">
-                    <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="preload-logo">
+                    <img src="../logos/new-logo-fygroup-bg-removed.png" alt="FYGroup" class="preload-logo">
                 </a>
 
                 <div style="align-self: center;color: #fff; font-size: larger;">
@@ -364,7 +364,7 @@ class menu extends iQuery
                                 <div class="px-3 py-3 text-center border-bottom">
                                     <div class="d-flex justify-content-center mb-2">
                                         <div class="logo-box">
-                                            <img src="../logos/logo-fygroup-circle-bg-removed.png" width="70">
+                                            <img src="../logos/new-logo-fygroup-bg-removed.png" width="100">
                                         </div>
                                     </div>
 
@@ -424,7 +424,7 @@ class menu extends iQuery
 
             <ul id="accordionSidebar" class="navbar-nav">
                 <a class="sidebar-brand" href="dashboard.php">
-                    <img src="../logos/logo-fygroup-circle-bg-removed.png">
+                    <img src="../logos/new-logo-fygroup-bg-removed.png">
                 </a>
 
                 <div style="align-self:center;color:#fff;font-size:larger;">
@@ -547,7 +547,7 @@ class menu extends iQuery
                                 <div class="px-3 py-3 text-center border-bottom">
                                     <div class="d-flex justify-content-center mb-2">
                                         <div class="logo-box">
-                                            <img src="../logos/logo-fygroup-circle-bg-removed.png" width="70" alt="Logo">
+                                            <img src="../logos/new-logo-fygroup-bg-removed.png" width="70" alt="Logo">
                                         </div>
                                     </div>
 
@@ -584,7 +584,7 @@ class menu extends iQuery
         ?>
             <footer class="footer-ssl">
                 <div class="footer-inner">
-                    <img class="footer-logo". src="../logos/logo-fygroup-circle-v1.png" alt="FYGroup - Sistema Integral">
+                    <img class="footer-logo". src="../logos/new-logo-fygroup-bg-removed.png" alt="FYGroup - Sistema Integral">
 
                     <div class="footer-text">
                         <i class="fas fa-copyright footer-icon"></i>

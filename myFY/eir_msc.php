@@ -44,6 +44,7 @@ if (!$admin) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | EIR Medlog</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -88,7 +89,7 @@ if (!$admin) {
 
                                 <div class="card-body" style="align-self:anchor-center;">
                                     <button type="button" class="btn btn-lg" style="background-color: #eed484; color: black;" onclick="window.open('https://portal.medlogchile.cl/#/auth/buscar-eir', '_blank')">
-                                        <i class="fas fa-fw fa-ship"></i> EIR Medlog
+                                        <i class="fas fa-fw fa-ship mr-2"></i>EIR Medlog
                                     </button>
                                 </div>
                             </div>

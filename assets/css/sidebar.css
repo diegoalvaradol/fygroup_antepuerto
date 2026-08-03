@@ -56,7 +56,7 @@
 }
 
 .sidebar-brand img {
-  max-width: 120px;
+  max-width: 200px;
   transition: transform var(--transition-fast);
 }
 

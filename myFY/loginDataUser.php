@@ -43,6 +43,7 @@ $_SESSION['last_session'] = time();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>Cargando...</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -57,8 +58,7 @@ $_SESSION['last_session'] = time();
             <div class="col-xl-8 col-lg-10">
                 <div class="card preload-card">
                     <div class="preload-banner text-center">
-                        <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="preload-logo">
-
+                        <img src="../logos/new-logo-fygroup-bg-removed.png" alt="FYGroup" class="preload-logo">
                         <h1>Bienvenido</h1>
 
                         <p class="mb-0">

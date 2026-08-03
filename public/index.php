@@ -4,18 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png" />
+    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
     <title>Sistema FYGroup | Antepuerto Panul</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/basepublic.css" rel="stylesheet">
+    <link rel="manifest" href="../favicon/site.webmanifest">
 </head>
 
 <body>
     <div class="main-wrapper">
         <div class="hero text-center py-5">
             <div class="logo mb-4">
-                <img src="../logos/logo-fygroup-circle-bg-removed.png" style="max-width:220px; width:90%; height:auto;">
+                <img src="../logos/new-logo-fygroup-bg-removed.png" style="max-width:220px; width:90%; height:auto;">
             </div>
 
             <span class="badge badge-primary px-3 py-2 mb-3">

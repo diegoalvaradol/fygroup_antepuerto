@@ -36,6 +36,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Planificación TPC</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -108,7 +109,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <div class="col-12 col-md-auto mb-3">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadPDF()">
-                                                    <i class="fas fa-search"></i> Buscar
+                                                    <i class="fas fa-search mr-2"></i>Buscar
                                                 </button>
                                             </div>
                                         </div>
@@ -218,7 +219,7 @@ function loadPDF() {
   // loading UI
   $('#btnBuscar')
     .prop('disabled', true)
-    .html('<i class="fas fa-spinner fa-spin"></i> Cargando...');
+    .html('<i class="fas fa-spinner fa-spin mr-2"></i>Cargando...');
 
   $('#divFrame').hide();
 
@@ -232,7 +233,7 @@ function loadPDF() {
 
     $('#btnBuscar')
       .prop('disabled', false)
-      .html('<i class="fas fa-search"></i> Buscar');
+      .html('<i class="fas fa-search mr-2"></i>Buscar');
   };
 
   // manejar error real (PDF no existe)
@@ -245,7 +246,7 @@ function loadPDF() {
 
     $('#btnBuscar')
       .prop('disabled', false)
-      .html('<i class="fas fa-search"></i> Buscar');
+      .html('<i class="fas fa-search mr-2"></i>Buscar');
   };
 
   // cargar PDF

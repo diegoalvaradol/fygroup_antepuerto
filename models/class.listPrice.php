@@ -12,7 +12,7 @@ class listPrice extends iQuery
                 <thead style="background-color:#eed484; color:black;">
                     <tr>
                         <div class="card-header" style="background-color:#eed484; color:black;">
-                            <h6 class="mb-0" style="text-align:center;"><i class="fas fa-building"></i> Mediterranean Shipping Company (Medlog)</h6>
+                            <h6 class="mb-0" style="text-align:center;"><i class="fas fa-building mr-2"></i>Mediterranean Shipping Company (Medlog)</h6>
                         </div>
                     </tr>
                     <tr style="text-align: center;">
@@ -46,7 +46,7 @@ class listPrice extends iQuery
                 <thead style="background-color:#42b0d5; color:white;">
                     <tr>
                         <div class="card-header" style="background-color:#42b0d5; color:white;">
-                            <h6 class="mb-0" style="text-align:center;"><i class="fas fa-building"></i> Maersk Line (Ex Contopsa)</h6>
+                            <h6 class="mb-0" style="text-align:center;"><i class="fas fa-building mr-2"></i>Maersk Line (Ex Contopsa)</h6>
                         </div>
                     </tr>
                     <tr style="text-align: center;">
@@ -81,7 +81,7 @@ class listPrice extends iQuery
                     <thead style="background-color:#2A5CAA; color:white;">
                         <tr>
                             <div class="card-header" style="background-color:#2A5CAA; color:white;">
-                                <h6 class="mb-0" style="text-align:center;"><i class="fas fa-building"></i> Cool Carriers</h6>
+                                <h6 class="mb-0" style="text-align:center;"><i class="fas fa-building mr-2"></i>Cool Carriers</h6>
                             </div>
                         </tr>
                     </thead>

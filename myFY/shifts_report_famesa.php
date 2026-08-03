@@ -45,6 +45,7 @@ if (!$admin) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Reporte de Turnos</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -110,11 +111,11 @@ if (!$admin) {
 
                                             <div class="col-12 col-md-auto me-md-4 mb-3">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadShiftsReportFamesa()">
-                                                    <i class="fas fa-search"></i> Buscar
+                                                    <i class="fas fa-search mr-2"></i>Buscar
                                                 </button>
 
                                                 <button type="button" class="btn btn-success btn-user" id="btnPrintShiftsReportFamesa" onclick="printShiftsReportFamesa()" disabled>
-                                                    <i class="fas fa-print"></i> Imprimir
+                                                    <i class="fas fa-print mr-2"></i>Imprimir
                                                 </button>
                                             </div>
                                         </div>
@@ -242,7 +243,7 @@ function loadShiftsReportFamesa() {
     },
 
     complete() {
-      $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
+      $btn.prop('disabled', false).html('<i class="fas fa-search mr-2"></i>Buscar');
     }
   });
 }
