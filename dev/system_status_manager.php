@@ -3,11 +3,6 @@ require_once __DIR__ . '/../config/auth.php';
 require_once __DIR__ . '/../config/includes.php';
 require_once __DIR__ . '/../config/system_status_config.php';
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-
-error_reporting(E_ALL);
-
 /* Validación de URL */
 $module = $_GET['pag'] ?? '';
 $time = $_GET['t'] ?? '';
@@ -38,9 +33,9 @@ if ($_SERVER['HTTP_HOST'] === 'localhost') {
     $myPortalUrl = '/fygroup-antepuerto/myPortal/login.php';
     $myDevlUrl = '/fygroup-antepuerto/dev/login.php';
 } else {
-    $myFyUrl = 'https://antepuerto.fygroup.cl/myFY/login.php';
-    $myPortalUrl = 'https://portalcliente.fygroup.cl/myPortal/login.php';
-    $myDevlUrl = 'https://dev.fygroup.cl/dev/login.php';
+    $myFyUrl = 'https://antepuerto.fy-group.cl/myFY/login.php';
+    $myPortalUrl = 'https://portalcliente.fy-group.cl/myPortal/login.php';
+    $myDevlUrl = 'https://dev.fy-group.cl/dev/login.php';
 }
 
 /* Validar desarrollador */
