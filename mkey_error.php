@@ -64,7 +64,8 @@ http_response_code(401);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Error 401</title>
     <meta http-equiv="refresh" content="5;url=<?php echo $redirect_url; ?>">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
     <link rel="manifest" href="../favicon/site.webmanifest">
 
     <!-- Fonts -->

@@ -316,7 +316,8 @@ function mostrarAccesoDenegado($usuario, $pagina, $url)
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+            <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
     <link rel="manifest" href="../favicon/site.webmanifest">
             <title>FYGroup | Acceso Denegado</title>
             <meta http-equiv="refresh" content="5;url=dashboard.php">
