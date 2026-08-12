@@ -64,7 +64,9 @@ http_response_code(404);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Error 404</title>
     <meta http-equiv="refresh" content="5;url=<?php echo $redirect_url; ?>">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
 
     <!-- Fonts -->
     <link href="../assets/css/all.min.css" rel="stylesheet">
@@ -79,7 +81,7 @@ http_response_code(404);
             <div class="col-xl-8 col-lg-10" style="margin-bottom: 50px;">
                 <div class="card error-card">
                     <div class="error-banner text-center">
-                        <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="error-logo">
+                        <img src="../logos/new-logo-fygroup-bg-removed.png" alt="FYGroup" class="error-logo">
 
                         <h1>Error 404</h1>
 

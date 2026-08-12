@@ -4,18 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png" />
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
     <title>Sistema FYGroup | Antepuerto Panul</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/basepublic.css" rel="stylesheet">
+    <link rel="manifest" href="../favicon/site.webmanifest">
+
+
 </head>
 
 <body>
     <div class="main-wrapper">
         <div class="hero text-center py-5">
             <div class="logo mb-4">
-                <img src="../logos/logo-fygroup-circle-bg-removed.png" style="max-width:220px; width:90%; height:auto;">
+                <img src="../logos/new-logo-fygroup-bg-removed.png" style="max-width:220px; width:100%; height:auto;">
             </div>
 
             <span class="badge badge-primary px-3 py-2 mb-3">
@@ -272,24 +276,33 @@
             </div>
 
             <!-- FOOTER CORPORATIVO -->
-            <div class="card bg-primary text-white shadow-lg border-0 p-4">
-                <div class="row align-items-center">
-                    <div class="col-md-2 text-center">
-                        <img src="../logos/logo-fygroup-circle-v1.png" style="max-width:90px;">
-                    </div>
+            <a href="https://fy-group.cl" target="_blank" rel="noopener noreferrer" class="text-decoration-none">
+                <div class="card bg-primary text-white shadow-lg border-0 p-4 fygroup-card">
+                    <div class="row align-items-center">
+                        <!-- LOGO -->
+                        <div class="col-md-2 text-center mb-3 mb-md-0">
+                            <img src="../logos/new-logo-fygroup-icon.png" alt="FY Group SpA" class="img-fluid fygroup-logo">
+                        </div>
 
-                    <div class="col-md-10">
-                        <h4 class="font-weight-bold mb-2">
-                            FYGroup
-                        </h4>
+                        <!-- CONTENIDO -->
+                        <div class="col-md-10">
+                            <h4 class="font-weight-bold mb-2">
+                                FY Group SpA
+                            </h4>
 
-                        <p class="mb-0">
-                            Soluciones tecnológicas para logística, transporte,
-                            operaciones portuarias y gestión empresarial.
-                        </p>
+                            <p class="mb-3">
+                                Soluciones tecnológicas para logística, transporte,
+                                operaciones portuarias y gestión empresarial.
+                            </p>
+
+                            <span class="fygroup-link">
+                                <em><u>Visitar Sitio Web</u></em>
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </body>

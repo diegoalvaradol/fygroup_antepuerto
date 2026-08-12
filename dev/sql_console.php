@@ -166,7 +166,9 @@ $resultado = ejecutarQuery($user);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | SQL Administrador</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -218,8 +220,8 @@ $resultado = ejecutarQuery($user);
                                             </div>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle"></i> Ejecutar</button>
-                                        <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                        <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle mr-2"></i>Ejecutar</button>
+                                        <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser mr-2'></i>Limpiar</button>
                                     </form>
                                 </div>
                             </div>

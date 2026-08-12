@@ -31,7 +31,9 @@ if (!$admin) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Carga Planificación</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -58,7 +60,7 @@ if (!$admin) {
     <div class="content-wrapper">
         <div class="container py-5">
             <div class="text-center mb-4">
-                <img src="../logos/logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
+                <img src="../logos/new-logo-fygroup-bg-removed.png" class="img-fluid" style="max-width: 180px;">
                 <h3 class="mt-3">Carga Planificación Naviera</h3>
 
                 <div class="card shadow mx-auto" style="max-width: 600px;">
@@ -69,7 +71,7 @@ if (!$admin) {
 
             <div class="card shadow mx-auto" style="max-width: 600px;">
                 <div class="card-header bg-primary text-white">
-                    <h6 class="mb-0"><i class="fas fa-upload"></i> Cargar Planificación</h6>
+                    <h6 class="mb-0"><i class="fas fa-upload mr-2"></i>Cargar Planificación</h6>
                 </div>
 
                 <div class="card-body">
@@ -86,7 +88,7 @@ if (!$admin) {
 
                         <div class="text-center">
                             <button type="button" onclick="uploadFile()" class="btn btn-primary w-100">
-                                <i class="fas fa-cloud-upload-alt"></i> Subir Planificación
+                                <i class="fas fa-cloud-upload-alt mr-2"></i>Subir Planificación
                             </button>
                         </div>
                     </form>
@@ -95,7 +97,7 @@ if (!$admin) {
 
             <div class="card shadow mt-4 mx-auto" style="max-width: 600px;">
                 <div class="card-header bg-success text-white">
-                    <h6 class="mb-0"><i class="fas fa-folder-open"></i> Planificaciones Cargadas</h6>
+                    <h6 class="mb-0"><i class="fas fa-folder-open mr-2"></i>Planificaciones Cargadas</h6>
                 </div>
 
                 <div class="card-body">
@@ -119,8 +121,8 @@ if (!$admin) {
                                     <td><?=$i + 1?></td>
                                     <td><?=htmlspecialchars($archivo)?></td>
                                     <td class="text-center">
-                                        <a href="../controllers/downloadFilesSchedule.php?file=<?=urlencode($archivo)?>"class="btn btn-sm btn-success me-1" title="Descargar"><i class="fas fa-download"></i></a>
-                                        <button class="btn btn-sm btn-danger btn-delete"title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>"><i class="fas fa-trash"></i></button>
+                                        <a href="../controllers/downloadFilesSchedule.php?file=<?=urlencode($archivo)?>"class="btn btn-sm btn-success me-1" title="Descargar"><i class="fas fa-download mr-2"></i></a>
+                                        <button class="btn btn-sm btn-danger btn-delete"title="Eliminar" data-file="<?=htmlspecialchars($archivo)?>"><i class="fas fa-trash mr-2"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -132,7 +134,7 @@ if (!$admin) {
 
             <div class="text-center mt-4">
                 <a href="dashboard.php" class="btn btn-sm btn-primary">
-                    <i class="fas fa-arrow-left"></i> Volver al Inicio
+                    <i class="fas fa-arrow-left mr-2"></i>Volver al Inicio
                 </a>
             </div>
         </div>

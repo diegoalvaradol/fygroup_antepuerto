@@ -1,132 +1,242 @@
-/* Login Portal Cliente */
-body.login-portal {
-  margin: 0;
+/* ==========================================================    LOGIN PORTAL CLIENTE    ========================================================== */
+.login-portal {
   min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
   background: #001f35;
-  font-family: 'Source Sans 3', sans-serif;
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
-/* IMAGEN DE FONDO */
-body.login-portal::before {
+/* ==========================================================    BACKGROUND IMAGE    ========================================================== */
+.login-portal::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: url('../../images/coquimbo_port_background_5.jpg') no-repeat center center;
+  background: url('../../images/coquimbo_port_background_5.jpg') no-repeat center;
   background-size: cover;
-  filter: brightness(0.45) contrast(1.15) saturate(1.1);
+  filter: brightness(0.42) contrast(1.18) saturate(1.15);
   z-index: 0;
 }
 
-/* OVERLAY */
-body.login-portal .video-overlay {
+/* ==========================================================    OVERLAY    ========================================================== */
+.login-portal .video-overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, rgba(0, 49, 82, 0.82), rgba(0, 21, 38, 0.65));
   z-index: 1;
+  background:
+    radial-gradient(circle at top right, rgba(173, 223, 241, 0.22), transparent 35%),
+    linear-gradient(135deg, rgba(0, 49, 82, 0.88), rgba(0, 21, 38, 0.75));
 }
 
-/* WRAPPER */
-body.login-portal .login-wrapper {
+/* ==========================================================    WRAPPER    ========================================================== */
+.login-wrapper {
   position: relative;
   z-index: 2;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 30px 15px 100px;
-  box-sizing: border-box;
+  align-items: center;
+  padding: 30px 15px;
+  animation: portalFade 0.6s ease;
 }
 
-/* CARD */
-body.login-portal .login-card {
+@keyframes portalFade {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==========================================================    CARD    ========================================================== */
+.login-card {
   width: 100%;
   max-width: 420px;
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 22px;
-  box-shadow: 0 30px 80px rgba(0, 49, 82, 0.45);
-  padding: 2rem;
-  border: 1px solid rgba(173, 223, 241, 0.45);
-  backdrop-filter: blur(10px);
+  padding: 2.2rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 253, 0.94));
+  border: 1px solid rgba(173, 223, 241, 0.55);
+  border-radius: 24px;
+  backdrop-filter: blur(15px);
+  box-shadow:
+    0 35px 90px rgba(0, 49, 82, 0.5),
+    inset 0 0 25px rgba(255, 255, 255, 0.45);
+  transition: 0.3s ease;
 }
 
-/* LOGO */
-body.login-portal .logo-img {
-  max-height: 90px;
+.login-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 45px 100px rgba(0, 49, 82, 0.6);
+}
+
+/* ==========================================================    LOGO    ========================================================== */
+.logo-img {
   width: auto;
+  max-height: 90px;
+  object-fit: contain;
 }
 
-/* TITULOS */
-body.login-portal h2 {
-  font-size: 2.4rem;
+/* ==========================================================    TITULOS    ========================================================== */
+.login-card h2 {
   margin-bottom: 0.4rem;
+  color: var(--color-primary);
+  font-size: 2.4rem;
   font-weight: 800;
-  color: #003152;
+  letter-spacing: 0.4px;
 }
 
-body.login-portal p {
+.login-card p {
   margin-bottom: 1.5rem;
-  color: #64748b;
+  color: var(--color-text-light);
 }
 
-/* INPUTS */
-body.login-portal .login-card input,
-body.login-portal .login-card select {
+/* ==========================================================    INPUTS / SELECT    ========================================================== */
+.login-card input,
+.login-card select {
   height: 48px;
   border-radius: 12px;
-  border: 1px solid #d9e7ef;
+  border: 1px solid var(--color-border);
+  transition: 0.25s ease;
 }
 
-body.login-portal .login-card input:focus,
-body.login-portal .login-card select:focus {
-  border-color: #003152;
+.login-card input:hover,
+.login-card select:hover {
+  border-color: #9fc9dd;
+}
+
+.login-card input:focus,
+.login-card select:focus {
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 4px rgba(173, 223, 241, 0.45);
 }
 
-/* INPUT GROUP */
-body.login-portal .input-group-text {
+/* ==========================================================    INPUT GROUP    ========================================================== */
+.input-group-text {
   background: #f3f8fb;
-  color: #003152;
-  border: 1px solid #d9e7ef;
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
   border-radius: 12px 0 0 12px;
 }
 
-/* BOTÓN */
-body.login-portal .btn-login {
+/* ==========================================================    BUTTON    ========================================================== */
+.btn-login {
   height: 48px;
   border-radius: 12px;
+  border: none;
+  color: white;
   font-weight: 700;
   letter-spacing: 0.5px;
-  color: #fff;
-  background: linear-gradient(135deg, #003152, #0b5f8a);
-  border: none;
-  box-shadow: 0 10px 25px rgba(0, 49, 82, 0.3);
-  transition: all 0.25s ease;
+  background: linear-gradient(135deg, var(--color-primary), #0b5f8a);
+  box-shadow: 0 12px 25px rgba(0, 49, 82, 0.35);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-body.login-portal .btn-login:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(0, 49, 82, 0.4);
+.btn-login:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 35px rgba(0, 49, 82, 0.45);
 }
 
-/* DIVIDER */
-body.login-portal .divider {
+.btn-login:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================    FOCUS    ========================================================== */
+input:focus-visible,
+select:focus-visible,
+.btn-login:focus-visible {
+  outline: 3px solid rgba(173, 223, 241, 0.7);
+  outline-offset: 3px;
+}
+
+/* ==========================================================    DIVIDER    ========================================================== */
+.divider {
   display: flex;
   align-items: center;
-  margin: 20px 0;
-  font-size: 12px;
-  color: #64748b;
+  gap: 12px;
+  margin: 22px 0;
+  color: var(--color-text-light);
+  font-size: 0.75rem;
 }
 
-body.login-portal .divider::before,
-body.login-portal .divider::after {
+.divider::before,
+.divider::after {
   content: '';
   flex: 1;
   border-top: 1px solid #cbdde7;
 }
 
-body.login-portal .divider span {
-  padding: 0 12px;
+.divider span {
   white-space: nowrap;
+}
+
+/* ==========================================================    MOBILE    ========================================================== */
+@media (max-width: 768px) {
+  .login-wrapper {
+    padding: 20px 12px;
+  }
+
+  .login-card {
+    max-width: 380px;
+    padding: 1.4rem;
+    border-radius: 20px;
+  }
+
+  .logo-img {
+    max-height: 65px;
+  }
+
+  .login-card h2 {
+    font-size: 2rem;
+  }
+
+  .login-card input,
+  .login-card select,
+  .btn-login {
+    height: 44px;
+  }
+}
+
+/* ==========================================================    SMALL MOBILE    ========================================================== */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1rem;
+  }
+
+  .login-card h2 {
+    font-size: 1.75rem;
+  }
+}
+
+/* ==========================================================    LOW HEIGHT    ========================================================== */
+@media (max-height: 700px) {
+  .login-wrapper {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .login-card {
+    padding: 1.15rem;
+  }
+
+  .logo-img {
+    max-height: 55px;
+  }
+
+  .divider {
+    margin: 12px 0;
+  }
+}
+
+/* ==========================================================    REDUCIR MOVIMIENTO    ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .login-card,
+  .btn-login {
+    animation: none;
+    transition: none;
+  }
 }

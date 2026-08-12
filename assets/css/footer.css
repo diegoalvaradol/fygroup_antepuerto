@@ -1,43 +1,41 @@
-/* ==========================================================
-   FOOTER.CSS
-   ========================================================== */
-
-/* Footer */
+/* ==========================================================    FOOTER.CSS    ========================================================== */
+/* ==========================================================    FOOTER    ========================================================== */
 body {
-  padding-bottom: 50px;
+  padding-bottom: 70px;
 }
 
 .footer-ssl {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
+  inset: auto 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, var(--color-primary), #0b466f);
-  color: rgba(255, 255, 255, 0.82);
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 -8px 22px rgba(0, 49, 82, 0.18);
   backdrop-filter: blur(10px);
-  z-index: 1000;
-  font-size: 13px;
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 -8px 22px rgba(0, 49, 82, 0.18);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.8125rem;
+  z-index: var(--z-footer);
 }
 
 .footer-inner {
-  width: 100%;
-  max-width: 1200px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
   gap: 12px;
-  padding: 0 20px;
 }
 
 .footer-logo {
-  height: 35px;
-  transition: transform 0.25s ease;
+  height: 50px;
+  transition: transform var(--transition-fast);
 }
 
 .footer-logo:hover {
@@ -54,8 +52,8 @@ body {
 }
 
 .footer-mark {
+  color: #fff;
   font-weight: 700;
-  color: #ffffff;
   letter-spacing: 0.3px;
 }
 
@@ -65,17 +63,32 @@ body {
 
 .footer-icon {
   color: var(--color-secondary);
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
-/* ==========================================================
-   Responsive
-   ========================================================== */
+/* ==========================================================    ACCESIBILIDAD    ========================================================== */
+.footer-logo:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: 4px;
+}
+
+/* ==========================================================    REDUCIR ANIMACIONES    ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .footer-logo {
+    transition: none;
+  }
+}
+
+/* ==========================================================    MOBILE    ========================================================== */
 @media (max-width: 600px) {
+  body {
+    padding-bottom: 46px;
+  }
+
   .footer-ssl {
     height: 46px;
-    font-size: 11px;
     padding: 0 10px;
+    font-size: 0.6875rem;
   }
 
   .footer-inner {

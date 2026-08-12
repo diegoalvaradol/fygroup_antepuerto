@@ -128,7 +128,7 @@ ob_start();
     </div>
 
     <div class="signature">
-        <img src="<?= realpath(__DIR__ . '/../logos/logo-fygroup-bg-removed.png') ?>" class="signature-logo">
+        <img src="<?= realpath(__DIR__ . '/../logos/new-logo-fygroup-bg-removed.png') ?>" class="signature-logo">
     </div>
 
     <div class="footer">

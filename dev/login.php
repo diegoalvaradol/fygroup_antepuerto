@@ -29,7 +29,9 @@ require_once __DIR__ . '/../config/includes.php';
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>Dev FYGroup | Login</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -44,7 +46,7 @@ require_once __DIR__ . '/../config/includes.php';
         <div class="col-xl-4 col-lg-5 col-md-7">
             <div class="card login-card p-4">
                 <div class="text-center mb-4">
-                    <img src="../logos/logo-fygroup-circle-v1.png" class="logo-img mb-3">
+                    <img src="../logos/new-logo-fygroup-bg-removed.png" class="mb-3">
                     <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
                     <small class="text-muted">Acceso Desarrolladores</small>
                 </div>
@@ -81,13 +83,13 @@ require_once __DIR__ . '/../config/includes.php';
 
                     <div class="mt-3">
                         <a href="<?= $myFyUrl ?>" class="btn btn-outline-primary btn-block">
-                            <i class="fas fa-ship"></i> Acceso FYGroup
+                            <i class="fas fa-ship mr-2"></i>Acceso FYGroup
                         </a>
                     </div>
 
                     <div class="mt-3">
                         <a href="<?= $myPortalUrl ?>" class="btn btn-outline-success btn-block">
-                            <i class="fas fa-user"></i> Acceso Portal Cliente
+                            <i class="fas fa-user mr-2"></i>Acceso Portal Cliente
                         </a>
                     </div>
                 </form>

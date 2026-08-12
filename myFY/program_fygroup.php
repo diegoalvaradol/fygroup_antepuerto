@@ -35,7 +35,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Itinerarios FY Group</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -84,7 +86,7 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                             </div>
 
                             <div class="text-center mb-4">
-                                <img src="../logos/logo-fygroup-bg-removed.png" class="logo-responsive">
+                                <img src="../logos/new-logo-fygroup-bg-removed.png" class="logo-responsive">
                                 <h6 class="m-0 font-weight-bold text-center small text-primary">
                                     Powered by FYGroup.
                                 </h6>

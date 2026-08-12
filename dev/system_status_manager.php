@@ -33,9 +33,9 @@ if ($_SERVER['HTTP_HOST'] === 'localhost') {
     $myPortalUrl = '/fygroup-antepuerto/myPortal/login.php';
     $myDevlUrl = '/fygroup-antepuerto/dev/login.php';
 } else {
-    $myFyUrl = 'https://antepuerto.fygroup.cl/myFY/login.php';
-    $myPortalUrl = 'https://portalcliente.fygroup.cl/myPortal/login.php';
-    $myDevlUrl = 'https://dev.fygroup.cl/dev/login.php';
+    $myFyUrl = 'https://antepuerto.fy-group.cl/myFY/login.php';
+    $myPortalUrl = 'https://portalcliente.fy-group.cl/myPortal/login.php';
+    $myDevlUrl = 'https://dev.fy-group.cl/dev/login.php';
 }
 
 /* Validar desarrollador */
@@ -127,7 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Estado Sistemas</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -189,19 +191,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             if ($key == 'FYGROUP') {
                                                 $accessLink = '
                                                     <a href="' . $myFyUrl . '" class="btn btn-outline-primary btn-block" target="_blank">
-                                                        <i class="fas fa-ship"></i> Acceso FYGroup
+                                                        <i class="fas fa-ship mr-2"></i>Acceso FYGroup
                                                     </a>
                                                 ';
                                             } elseif ($key == 'PORTALCLIENTE') {
                                                 $accessLink = '
                                                     <a href="' . $myPortalUrl . '" class="btn btn-outline-success btn-block" target="_blank">
-                                                        <i class="fas fa-user"></i> Acceso Portal Cliente
+                                                        <i class="fas fa-user mr-2"></i>Acceso Portal Cliente
                                                     </a>
                                                 ';
                                             } elseif ($key == 'DEV') {
                                                 $accessLink = '
                                                     <a href="' . $myDevlUrl . '" class="btn btn-outline-primary btn-block" target="_blank">
-                                                        <i class="fas fa-code"></i> Acceso Developers
+                                                        <i class="fas fa-code mr-2"></i>Acceso Developers
                                                     </a>
                                                 ';
                                             }
@@ -210,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <div class="form-group row">
                                                 <div class="col-sm-2">
                                                     <h6 class="m-0 font-weight-bold text-primary">
-                                                        <i class="fas fa-desktop"></i>
+                                                        <i class="fas fa-desktop mr-2"></i>
                                                         <?= $title ?>
                                                     </h6>
                                                 </div>
@@ -287,8 +289,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </div>
                                         <?php endforeach; ?>
 
-                                        <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle"></i> Guardar</button>
-                                        <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                        <button type="submit" class="btn btn-primary btn-sm btn-user"><i class="fas fa-check-circle mr-2"></i>Guardar</button>
+                                        <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser mr-2'></i>Limpiar</button>
                                     </form>
                                 </div>
                             </div>

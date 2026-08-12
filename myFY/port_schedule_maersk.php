@@ -43,7 +43,9 @@ if (!$admin) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Itinerarios Puerto Maersk</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -114,7 +116,7 @@ if (!$admin) {
 
                                             <div class="col-sm-2" style="margin-top: 30px;">
                                                 <button type="button" class="btn btn-primary btn-user" id="btnBuscar" onclick="loadPortSchedules()">
-                                                    <i class="fas fa-search"></i> Buscar
+                                                    <i class="fas fa-search mr-2"></i>Buscar
                                                 </button>
                                             </div>
                                         </div>
@@ -247,7 +249,7 @@ var loadPortSchedules = function() {
 
     complete() {
       $loader.hide();
-      $btn.prop('disabled', false).html('<i class="fas fa-search"></i> Buscar');
+      $btn.prop('disabled', false).html('<i class="fas fa-search mr-2"></i>Buscar');
     }
   })
 }

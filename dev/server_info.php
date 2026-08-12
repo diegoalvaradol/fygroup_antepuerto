@@ -44,7 +44,9 @@ if (!$dev) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Información Servidor</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -143,7 +145,6 @@ if (!$dev) {
                                 <div class="card-body" style="border:1px solid #e5e7eb;border-left:4px solid #1cc88a;border-radius:8px;">
                                     <div class="text-center mb-3">
                                         <i class="fas fa-server fa-2x text-success mb-2"></i>
-
                                         <h6 class="text-success text-uppercase">Servidor</h6>
                                     </div>
 

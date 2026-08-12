@@ -165,12 +165,12 @@ ob_start();
                                 <input type="hidden" name="api" value="API_MAERSK">
 
                                 <button type="button" class="btn btn-success btn-user" onclick="bookVesselSystem('<?= $row['departureVoyageNumber'] ?>')">
-                                    <i class="fas fa-circle-plus"></i> Añadir
+                                    <i class="fas fa-circle-plus mr-2"></i>Añadir
                                 </button>
                             </form>
                         <?php else : ?>
                             <button type="button" class="btn btn-danger btn-user" disabled>
-                                <i class="fas fa-circle-xmark"></i> Añadir
+                                <i class="fas fa-circle-xmark mr-2"></i>Añadir
                             </button>
                         <?php endif; ?>
                     </div>

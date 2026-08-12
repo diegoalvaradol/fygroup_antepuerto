@@ -21,7 +21,9 @@ http_response_code(403);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Error 403</title>
     <meta http-equiv="refresh" content="<?= (int) $seconds ?>;url=<?= htmlspecialchars($redirect_url, ENT_QUOTES, 'UTF-8') ?>">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
 
     <!-- Fonts -->
     <link href="../assets/css/all.min.css" rel="stylesheet">
@@ -37,7 +39,7 @@ http_response_code(403);
             <div class="col-xl-8 col-lg-10" style="margin-bottom: 50px;">
                 <div class="card error-card">
                     <div class="error-banner text-center">
-                        <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="error-logo">
+                        <img src="../logos/new-logo-fygroup-bg-removed.png" alt="FYGroup" class="error-logo">
 
                         <h1>Error 403</h1>
 

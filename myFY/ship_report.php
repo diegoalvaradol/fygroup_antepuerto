@@ -44,7 +44,9 @@ if (!$admin) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Reporte de Naves</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -80,7 +82,7 @@ if (!$admin) {
                     <?php echo $port->shipReport(); ?>
 
                     <div id="loader" style="display:none; text-align:center; padding:20px;">
-                        <i class="fas fa-spinner fa-spin fa-3x" style="color: #4e73df;"></i></br> Cargando...
+                        <i class="fas fa-spinner fa-spin fa-3x mr-2" style="color: #4e73df;"></i></br>Cargando...
                     </div>
                 </div>
                 <!-- container-fluid -->

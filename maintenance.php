@@ -12,7 +12,9 @@ $period = getPeriodInfo($status['maintenance_start'], $status['maintenance_end']
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>FYGroup | Mantención</title>
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
 
     <!-- Fonts -->
     <link href="../assets/css/all.min.css" rel="stylesheet">
@@ -28,7 +30,7 @@ $period = getPeriodInfo($status['maintenance_start'], $status['maintenance_end']
             <div class="col-xl-8 col-lg-10 maintenance-panel">
                 <div class="card maintenance-card">
                     <div class="maintenance-banner text-center">
-                        <img src="../logos/logo-fygroup-circle-bg-removed.png" alt="FYGroup" class="maintenance-logo">
+                        <img src="../logos/new-logo-fygroup-bg-removed.png" alt="FYGroup" class="maintenance-logo">
                         <h1>Mantención Programada</h1>
 
                         <p class="mb-0">

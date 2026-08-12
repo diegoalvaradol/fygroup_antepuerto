@@ -37,7 +37,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="../favicon/fygroup.png"/>
+    <link href="../favicon/fygroup.ico" rel="icon">
+    <link href="../favicon/fygroup-256x256.png" rel="apple-touch-icon">
+    <link rel="manifest" href="../favicon/site.webmanifest">
     <title>FYGroup | Naves</title>
 
     <link href="../assets/css/all.css" rel="stylesheet" type="text/css">
@@ -139,10 +141,10 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                                             <input type="hidden" name="page" value="<?php echo $paginaActual; ?>">
                                             <button id="loadBtn" type="button" class="btn btn-primary btn-sm btn-user" onclick="saveShip()">
-                                              <span id="loadBtnText"><i class="fas fa-check-circle"></i> Guardar</span>
+                                              <span id="loadBtnText"><i class="fas fa-check-circle mr-2"></i>Guardar</span>
                                               <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                                             </button>
-                                            <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser'></i> Limpiar</button>
+                                            <button type="reset" class='btn btn-warning btn-sm btn-user' onclick='location.href=window.location.href'><i class='fas fa-eraser mr-2'></i>Limpiar</button>
                                         </form>
                                 </div>
 
