@@ -1,17 +1,27 @@
-/* ==========================================================    SIDEBAR.CSS    ========================================================== */
-/* ==========================================================    SIDEBAR    ========================================================== */
+/* ==========================================================
+   SIDEBAR.CSS
+   FYGROUP — FLOATING / MINIMAL
+   ========================================================== */
+
+/* ==========================================================
+   SIDEBAR
+   ========================================================== */
 #accordionSidebar {
   position: fixed;
-  inset: 0 auto 0 0;
-  width: 200px;
-  height: 100vh;
-  transform: translate3d(-100%, 0, 0);
-  background: linear-gradient(180deg, var(--color-primary), var(--color-primary-dark));
-  font-size: 0.8125rem;
+  inset: 12px auto 12px 12px;
+  width: 220px;
+  height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  transform: translate3d(calc(-100% - 20px), 0, 0);
+  background: #003152;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 30, 50, 0.22);
   overflow-x: hidden;
   overflow-y: auto;
-  box-shadow: 12px 0 35px rgba(0, 49, 82, 0.22);
-  transition: transform var(--transition-normal);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: var(--z-sidebar);
 }
 
@@ -19,18 +29,20 @@
   transform: translate3d(0, 0, 0);
 }
 
-/* ==========================================================    OVERLAY    ========================================================== */
+/* ==========================================================
+   OVERLAY
+   ========================================================== */
 #sidebarOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 49, 82, 0.35);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 25, 43, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   opacity: 0;
   visibility: hidden;
   transition:
-    opacity var(--transition-normal),
-    visibility var(--transition-normal);
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   z-index: var(--z-overlay);
 }
 
@@ -39,131 +51,246 @@
   visibility: visible;
 }
 
-/* ==========================================================    BRAND    ========================================================== */
+/* ==========================================================
+   BRAND / LOGO
+   ========================================================== */
 .sidebar-brand {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 14px;
-  padding: 14px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(12px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  color: #fff;
+  height: 82px;
+  margin: 2px 4px 18px;
+  padding: 10px 12px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #ffffff;
+  overflow: hidden;
 }
 
 .sidebar-brand img {
-  max-width: 200px;
-  transition: transform var(--transition-fast);
+  display: block;
+  width: auto;
+  max-width: 210px;
+  /* max-height: 65px; */
+  object-fit: contain;
+  filter: drop-shadow(0 5px 14px rgba(0, 0, 0, 0.22));
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
 }
 
 .sidebar-brand:hover img {
   transform: scale(1.03);
+  opacity: 0.96;
 }
 
-/* ==========================================================    LINKS    ========================================================== */
+/* ==========================================================
+   LINEA DEL LOGO
+   ========================================================== */
+.sidebar-brand::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(173, 223, 241, 0.25), transparent);
+}
+
+/* ==========================================================
+   DIVIDER
+   ========================================================== */
+#accordionSidebar .sidebar-divider {
+  height: 1px;
+  margin: 0 8px 14px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ==========================================================
+   NAV ITEM
+   ========================================================== */
+#accordionSidebar .nav-item {
+  margin: 2px 0;
+}
+
+/* ==========================================================
+   NAV LINK
+   ========================================================== */
+
 #accordionSidebar .nav-link {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 3px 8px;
-  padding: 11px 14px;
-  border-radius: var(--radius-md);
-  color: rgba(255, 255, 255, 0.92);
+  width: 100%;
+  min-height: 43px;
+  margin: 3px 0;
+  padding: 10px 11px;
+  gap: 11px;
+  border-radius: 11px;
+  color: rgba(255, 255, 255, 0.67);
+  font-size: 0.9rem;
   font-weight: 500;
+  text-decoration: none;
   transition:
-    background-color var(--transition-fast),
-    transform var(--transition-fast),
-    color var(--transition-fast);
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
-#accordionSidebar .nav-link i {
-  width: 20px;
-  color: var(--color-secondary);
+/* ==========================================================
+   ICONOS
+   ========================================================== */
+#accordionSidebar .nav-link > i {
+  width: 21px;
+  flex-shrink: 0;
+  color: rgba(173, 223, 241, 0.7);
   text-align: center;
-  transition: color var(--transition-fast);
+  font-size: 14px;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
+/* ==========================================================
+   TEXTO
+   ========================================================== */
+#accordionSidebar .nav-link span {
+  flex: 1;
+  white-space: nowrap;
+}
+
+/* ==========================================================
+   HOVER
+   ========================================================== */
 #accordionSidebar .nav-link:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
 }
 
-#accordionSidebar .nav-link:active {
-  transform: translateX(2px);
+#accordionSidebar .nav-link:hover > i {
+  color: #addff1;
+  transform: scale(1.08);
 }
 
-#accordionSidebar .nav-link:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.45);
-  outline-offset: 2px;
-}
-
+/* ==========================================================
+   ACTIVE
+   ========================================================== */
 #accordionSidebar .nav-link.active {
-  background: rgba(173, 223, 241, 0.22);
-  color: #fff;
-  box-shadow: inset 3px 0 0 var(--color-secondary);
+  background: #ffffff;
+  color: #003152;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
 }
 
-#accordionSidebar .nav-link.active i {
-  color: #fff;
+#accordionSidebar .nav-link.active > i {
+  color: #00719f;
 }
 
-/* ==========================================================    CARET    ========================================================== */
-.caret {
-  transition: transform var(--transition-fast);
+/* ==========================================================
+   CARET
+   ========================================================== */
+#accordionSidebar .caret {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 8px;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
-.nav-link.collapsed .caret {
+#accordionSidebar .nav-link:hover .caret {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#accordionSidebar .nav-link.collapsed .caret {
   transform: rotate(0deg);
 }
 
-.nav-link:not(.collapsed) .caret {
+#accordionSidebar .nav-link:not(.collapsed) .caret {
   transform: rotate(90deg);
 }
 
-/* ==========================================================    SUBMENÚ    ========================================================== */
-.collapse-inner {
-  margin: 6px 10px;
-  padding: 8px;
-  background: #fff;
-  border: 1px solid rgba(0, 49, 82, 0.06);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+/* ==========================================================
+   SUBMENU
+   ========================================================== */
+#accordionSidebar .collapse {
+  padding: 2px 0 5px;
 }
 
-.submenu-item {
-  display: block;
-  margin: 4px 0;
-  padding: 9px 12px;
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  font-size: 0.75rem;
+#accordionSidebar .collapse-inner {
+  margin: 4px 0 7px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 11px;
+}
+
+/* ==========================================================
+   SUBMENU ITEM
+   ========================================================== */
+#accordionSidebar .submenu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+  margin: 2px 0;
+  padding: 7px 10px 7px 33px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 1.53);
+  font-size: 0.8rem;
+  text-decoration: none;
   transition:
-    background-color var(--transition-fast),
-    color var(--transition-fast),
-    transform var(--transition-fast);
+    background 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.2s ease;
 }
 
-.submenu-item:hover {
-  background: rgba(173, 223, 241, 0.25);
-  color: var(--color-primary);
-  transform: translateX(5px);
+#accordionSidebar .submenu-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  padding-left: 36px;
 }
 
-.submenu-item.active {
-  background: rgba(173, 223, 241, 0.35);
-  color: var(--color-primary);
+#accordionSidebar .submenu-item.active {
+  background: rgba(173, 223, 241, 0.12);
+  color: #addff1;
   font-weight: 600;
 }
 
-/* ==========================================================    SCROLLBAR    ========================================================== */
+/* ==========================================================
+   SUBMENU BULLET
+   ========================================================== */
+#accordionSidebar .submenu-item::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(173, 223, 241, 0.35);
+}
+
+#accordionSidebar .submenu-item.active::before {
+  background: #addff1;
+}
+
+/* ==========================================================
+   SECTION TITLE
+   ========================================================== */
+#accordionSidebar .sidebar-heading {
+  margin: 20px 10px 8px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* ==========================================================
+   SCROLLBAR
+   ========================================================== */
 #accordionSidebar::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 #accordionSidebar::-webkit-scrollbar-track {
@@ -171,21 +298,42 @@
 }
 
 #accordionSidebar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.13);
   border-radius: 999px;
 }
 
 #accordionSidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(173, 223, 241, 0.3);
 }
 
-/* ==========================================================    REDUCIR ANIMACIONES    ========================================================== */
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+@media (max-width: 768px) {
+  #accordionSidebar {
+    inset: 8px auto 8px 8px;
+    width: 245px;
+    height: calc(100vh - 16px);
+    border-radius: 16px;
+  }
+
+  .sidebar-brand {
+    height: 78px;
+  }
+
+  .sidebar-brand img {
+    max-width: 210px;
+    max-height: 62px;
+  }
+}
+
+/* ==========================================================
+   REDUCIR ANIMACIONES
+   ========================================================== */
 @media (prefers-reduced-motion: reduce) {
   #accordionSidebar,
-  #accordionSidebar .nav-link,
-  .submenu-item,
-  .caret,
+  #accordionSidebar *,
   #sidebarOverlay {
-    transition: none;
+    transition: none !important;
   }
 }

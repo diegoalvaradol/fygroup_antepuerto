@@ -1,240 +1,569 @@
-/* ==========================================================    LOGIN DEVELOPERS    ========================================================== */
-.login-dev {
-  min-height: 100vh;
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background:
-    radial-gradient(circle at top right, rgba(173, 223, 241, 0.25), transparent 35%),
-    linear-gradient(135deg, #001522, #003152 55%, #0b5f8a);
-  overflow-x: hidden;
+/* ==========================================================   LOGIN DEV   ========================================================== */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* ==========================================================    BACKGROUND    ========================================================== */
-.login-dev canvas.login-bg {
-  position: fixed;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ==========================================================   LOGIN   ========================================================== */
+.login-dev {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+  background: #ffffff;
+  font-family: 'Inter', 'Source Sans 3', Arial, sans-serif;
+}
+
+/* ==========================================================   PAGE   ========================================================== */
+.login-dev .login-page {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ==========================================================   PANEL IZQUIERDO   ========================================================== */
+.login-dev .login-visual {
+  position: relative;
+  width: 58%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #07141d;
+}
+
+/* ==========================================================   CANVAS DEV   ========================================================== */
+.login-dev .login-bg {
+  position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background: url('../images/developer_background.png') no-repeat center;
-  background-size: cover;
-  opacity: 0.3;
-  z-index: 0;
-  pointer-events: none;
-  filter: contrast(1.15) saturate(1.2);
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 
-/* ==========================================================    WRAPPER    ========================================================== */
-.login-wrapper {
+/* ==========================================================   OVERLAY   ========================================================== */
+.login-dev .visual-overlay {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, rgba(3, 15, 24, 0.94), rgba(0, 49, 82, 0.72));
+}
+
+/* ==========================================================   CONTENIDO IZQUIERDO   ========================================================== */
+.login-dev .visual-content {
   position: relative;
   z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 10%;
+  color: #ffffff;
+}
+
+/* ==========================================================   LOGO   ========================================================== */
+.login-dev .visual-logo {
+  display: block;
+  width: 260px;
+  max-width: 70%;
+  max-height: 100px;
+  height: auto;
+  margin: 0 0 45px 0;
+  padding: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+}
+
+/* ==========================================================
+   LINEA
+   ========================================================== */
+
+.login-dev .visual-line {
+  width: 55px;
+  height: 4px;
+
+  margin: 0 0 25px 0;
+  padding: 0;
+
+  border-radius: 20px;
+
+  background: #addff1;
+}
+
+/* ==========================================================   TITULO   ========================================================== */
+.login-dev .visual-content h1 {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(42px, 5vw, 72px);
+  line-height: 1.02;
+  font-weight: 300;
+  letter-spacing: -2px;
+}
+
+.login-dev .visual-content h1 strong {
+  font-weight: 800;
+  color: #addff1;
+}
+
+/* ==========================================================   DESCRIPCION   ========================================================== */
+.login-dev .visual-content p {
+  max-width: 500px;
+  margin: 25px 0 0 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* ==========================================================   FOOTER VISUAL   ========================================================== */
+.login-dev .visual-footer {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin: 70px 0 0 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.login-dev .visual-footer span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.login-dev .visual-footer i {
+  color: #addff1;
+}
+
+.login-dev .visual-footer .fa-circle {
+  font-size: 6px;
+}
+
+/* ==========================================================   PANEL DERECHO   ========================================================== */
+.login-dev .login-panel {
+  width: 42%;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 30px 15px;
-  animation: loginDevFade 0.6s ease;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
 }
 
-@keyframes loginDevFade {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* ==========================================================    CARD    ========================================================== */
-.login-card {
+/* ==========================================================   CONTENIDO LOGIN   ========================================================== */
+.login-dev .login-content {
   width: 100%;
-  max-width: 420px;
-  padding: 2.2rem;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 253, 0.94));
-  border-radius: 24px;
-  border: 1px solid rgba(173, 223, 241, 0.55);
-  backdrop-filter: blur(15px);
-  box-shadow:
-    0 35px 90px rgba(0, 49, 82, 0.45),
-    inset 0 0 25px rgba(255, 255, 255, 0.4);
-  transition: 0.3s ease;
+  max-width: 430px;
+  margin: 0;
+  padding: 50px;
 }
 
-.login-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 45px 100px rgba(0, 49, 82, 0.55);
+/* ==========================================================   HEADER   ========================================================== */
+.login-dev .login-heading {
+  margin: 0 0 40px 0;
+  padding: 0;
 }
 
-/* ==========================================================    LOGO    ========================================================== */
-.logo-img {
-  max-height: 90px;
-  width: auto;
-  object-fit: contain;
-}
-
-/* ==========================================================    TITULOS    ========================================================== */
-.login-card h2 {
-  margin-bottom: 0.4rem;
-  font-size: 2.4rem;
+.login-dev .welcome {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: #00719f;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--color-primary);
+  letter-spacing: 2px;
 }
 
-.login-card p {
-  margin-bottom: 1.5rem;
-  color: var(--color-text-light);
+.login-dev .login-heading h2 {
+  margin: 8px 0 6px 0;
+  padding: 0;
+  color: #122936;
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
-/* ==========================================================    INPUTS    ========================================================== */
-.login-card input {
-  height: 48px;
-  font-size: 15px;
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
-  transition: 0.25s ease;
+.login-dev .login-heading p {
+  margin: 0;
+  padding: 0;
+  color: #84919a;
+  font-size: 14px;
 }
 
-.login-card input:hover {
-  border-color: #9fc9dd;
+/* ==========================================================   FORM   ========================================================== */
+.login-dev #loginForm {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.login-card input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(173, 223, 241, 0.45);
+/* ==========================================================   FIELD   ========================================================== */
+.login-dev .field {
+  position: relative;
+  width: 100%;
+  margin: 0 0 22px 0;
+  padding: 0;
 }
 
-/* ==========================================================    INPUT GROUP    ========================================================== */
-.input-group-text {
-  background: #f3f8fb;
-  color: var(--color-primary);
-  border: 1px solid var(--color-border);
-  border-radius: 12px 0 0 12px;
-}
-
-/* ==========================================================    BOTON LOGIN    ========================================================== */
-.btn-login {
-  height: 48px;
-  border-radius: 12px;
-  border: none;
+.login-dev .field label {
+  display: block;
+  margin: 0 0 8px 0;
+  padding: 0;
+  color: #344854;
+  font-size: 12px;
   font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, var(--color-primary), #0b5f8a);
-  box-shadow: 0 12px 25px rgba(0, 49, 82, 0.35);
+}
+
+/* ==========================================================   INPUT CONTAINER   ========================================================== */
+.login-dev .field-input {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================   INPUT ICON   ========================================================== */
+.login-dev .field-input > i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  color: #9aa8b0;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* ==========================================================   INPUT   ========================================================== */
+.login-dev .field-input input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  margin: 0;
+  padding: 0 45px;
+  border: 1px solid #dce3e7;
+  border-radius: 10px;
+  background: #f8fafb;
+  color: #172b36;
+  font-size: 14px;
+  outline: none;
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.btn-login:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 35px rgba(0, 49, 82, 0.45);
+.login-dev .field-input input::placeholder {
+  color: #aab5bb;
+  opacity: 1;
 }
 
-.btn-login:active {
-  transform: scale(0.98);
+.login-dev .field-input input:focus {
+  border-color: #00719f;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 113, 159, 0.08);
 }
 
-/* ==========================================================    FOCUS    ========================================================== */
-input:focus-visible,
-.btn-login:focus-visible {
-  outline: 3px solid rgba(173, 223, 241, 0.7);
-  outline-offset: 3px;
-}
-
-/* ==========================================================    DIVIDER    ========================================================== */
-.divider {
+/* ==========================================================   PASSWORD TOGGLE   ========================================================== */
+.login-dev .show-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 22px 0;
-  font-size: 0.75rem;
-  color: var(--color-text-light);
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #8d9ba3;
+  cursor: pointer;
 }
 
-.divider::before,
-.divider::after {
-  content: '';
+.login-dev .show-password:hover {
+  color: #003152;
+}
+
+/* ==========================================================   OPCIONES   ========================================================== */
+.login-dev .login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 4px 0 25px 0;
+  padding: 0;
+  font-size: 10px;
+}
+
+.login-dev .login-options span {
+  color: #9aa5ab;
+}
+
+.login-dev .login-options span i {
+  margin-right: 5px;
+}
+
+.login-dev .login-options a {
+  color: #00719f;
+  text-decoration: none;
+}
+
+.login-dev .login-options a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================   BOTON LOGIN   ========================================================== */
+.login-dev .login-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 54px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: #003152;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-dev .login-button i {
+  margin-left: 12px;
+}
+
+.login-dev .login-button:hover {
+  background: #004b72;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(0, 49, 82, 0.18);
+}
+
+.login-dev .login-button:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================   ACCESOS RAPIDOS   ========================================================== */
+.login-dev .quick-access {
+  margin: 35px 0 0 0;
+  padding: 25px 0 0 0;
+  border-top: 1px solid #edf0f2;
+}
+
+.login-dev .quick-access-title {
+  margin-bottom: 12px;
+  color: #9aa5ab;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.login-dev .quick-access-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  margin: 8px 0;
+  padding: 8px 12px;
+  border: 1px solid #e4eaed;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #334650;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.login-dev .quick-access-btn:hover {
+  border-color: #addff1;
+  background: #f8fbfc;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.login-dev .quick-access-btn .quick-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border-radius: 8px;
+  background: #eef8fb;
+  color: #00719f;
+}
+
+.login-dev .quick-access-btn span:nth-child(2) {
   flex: 1;
-  border-top: 1px solid #cbdde7;
 }
 
-/* ==========================================================    TABLET    ========================================================== */
-@media (max-width: 992px) {
-  .login-card {
-    max-width: 400px;
-    padding: 1.8rem;
+.login-dev .quick-access-btn strong {
+  display: block;
+  color: #334650;
+  font-size: 11px;
+}
+
+.login-dev .quick-access-btn small {
+  display: block;
+  margin-top: 2px;
+  color: #9aa5ab;
+  font-size: 9px;
+}
+
+.login-dev .quick-access-btn > i {
+  color: #aab5bb;
+  font-size: 11px;
+}
+
+/* ==========================================================   FOOTER   ========================================================== */
+.login-dev .login-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 35px 0 0 0;
+  padding: 0;
+  color: #aab3b8;
+  font-size: 9px;
+}
+
+/* ==========================================================   MOBILE LOGO   ========================================================== */
+.login-dev .mobile-logo {
+  display: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.login-dev .mobile-logo img {
+  display: inline-block;
+  width: auto;
+  max-width: 210px;
+  max-height: 70px;
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================   TABLET   ========================================================== */
+@media (max-width: 900px) {
+  .login-dev .login-visual {
+    width: 45%;
+  }
+
+  .login-dev .login-panel {
+    width: 55%;
+  }
+
+  .login-dev .login-content {
+    padding: 35px;
+  }
+
+  .login-dev .visual-content {
+    padding: 8%;
+  }
+
+  .login-dev .visual-content h1 {
+    font-size: 42px;
   }
 }
 
-/* ==========================================================    MOBILE    ========================================================== */
-@media (max-width: 768px) {
-  .login-wrapper {
-    padding: 20px 12px;
+/* ==========================================================   MOBILE   ========================================================== */
+@media (max-width: 700px) {
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
   }
 
-  .login-card {
-    max-width: 380px;
-    padding: 1.4rem;
-    border-radius: 20px;
+  .login-dev .login-page {
+    width: 100%;
+    min-height: 100vh;
   }
 
-  .logo-img {
-    max-height: 65px;
+  .login-dev .login-visual {
+    display: none;
   }
 
-  .login-card h2 {
-    font-size: 2rem;
+  .login-dev .login-panel {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
 
-  .login-card input,
-  .btn-login {
-    height: 44px;
+  .login-dev .login-content {
+    width: 100%;
+    max-width: 430px;
+    padding: 30px 25px;
+  }
+
+  .login-dev .mobile-logo {
+    display: block;
+    margin-bottom: 45px;
+  }
+
+  .login-dev .login-heading {
+    margin-bottom: 30px;
+  }
+
+  .login-dev .login-heading h2 {
+    font-size: 30px;
   }
 }
 
-/* ==========================================================    SMALL MOBILE    ========================================================== */
-@media (max-width: 480px) {
-  .login-wrapper {
-    padding: 15px 10px;
+/* ==========================================================   MOBILE PEQUEÑO   ========================================================== */
+@media (max-width: 400px) {
+  .login-dev .login-content {
+    padding: 25px 20px;
   }
 
-  .login-card {
-    padding: 1rem;
+  .login-dev .mobile-logo {
+    margin-bottom: 30px;
   }
 
-  .login-card h2 {
-    font-size: 1.75rem;
+  .login-dev .login-heading h2 {
+    font-size: 27px;
   }
-}
 
-/* ==========================================================    LOW HEIGHT    ========================================================== */
-@media (max-height: 700px) {
-  .login-wrapper {
+  .login-dev .login-options {
+    flex-direction: column;
     align-items: flex-start;
-    padding-top: 20px;
-  }
 
-  .login-card {
-    padding: 1.15rem;
-  }
-
-  .logo-img {
-    max-height: 55px;
-  }
-
-  .divider {
-    margin: 12px 0;
-  }
-}
-
-/* ==========================================================    REDUCIR MOVIMIENTO    ========================================================== */
-@media (prefers-reduced-motion: reduce) {
-  .login-card,
-  .btn-login {
-    animation: none;
-    transition: none;
+    gap: 8px;
   }
 }

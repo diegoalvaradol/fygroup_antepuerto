@@ -33,66 +33,163 @@ require_once __DIR__ . '/../config/includes.php';
 </head>
 
 <body class="login-fygroup">
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="../images/fygroup_port.mov" type="video/mp4">
-    </video>
+    <div class="login-page">
+        <!-- =====================================================
+             PANEL IZQUIERDO
+        ====================================================== -->
+        <section class="login-visual">
+            <video autoplay muted loop playsinline>
+                <source src="../images/fygroup_port.mov" type="video/mp4">
+            </video>
 
-    <div class="video-overlay"></div>
-    <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
-        <div class="col-xl-4 col-lg-5 col-md-7">
-            <div class="card login-card p-4">
-                <div class="text-center mb-4">
-                    <img src="../logos/new-logo-fygroup-bg-removed.png" class="mb-3">
-                    <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
-                    <small class="text-muted">Acceso Personal</small>
+            <div class="visual-overlay"></div>
+            <div class="visual-content">
+                <img src="../logos/new-logo-fygroup-bg-removed.png" class="visual-logo" alt="FYGroup">
+
+                <div class="visual-line"></div>
+
+                <h1>
+                    Conectamos<br>
+                    <strong>operaciones.</strong>
+                </h1>
+
+                <p>
+                    Gestión integral para logística,
+                    transporte y operaciones portuarias.
+                </p>
+
+                <div class="visual-footer">
+                    <span>
+                        <i class="fas fa-shield-alt"></i>
+                        Plataforma segura
+                    </span>
+
+                    <span>
+                        <i class="fas fa-circle"></i>
+                        Sistema Integral
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             PANEL DERECHO
+        ====================================================== -->
+        <section class="login-panel">
+            <div class="login-content">
+                <!-- Logo mobile -->
+                <div class="mobile-logo">
+                    <img src="../logos/new-logo-fygroup-bg-removed.png"alt="FYGroup">
                 </div>
 
+                <!-- Header -->
+                <div class="login-heading">
+                    <span class="welcome">
+                        BIENVENIDO
+                    </span>
+
+                    <h2>
+                        Iniciar sesión
+                    </h2>
+
+                    <p>
+                        Accede a Sistema Integral FYGroup
+                    </p>
+                </div>
+
+                <!-- =================================================
+                     FORMULARIO
+                ================================================== -->
                 <form id="loginForm">
-                    <div class="form-group mb-3">
-                        <label class="small text-muted">R.U.N</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control text-center" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRun(this)" onblur="validaRun(this.value)">
+                    <!-- R.U.N -->
+                    <div class="field">
+                        <label for="run">
+                            R.U.N
+                        </label>
+
+                        <div class="field-input">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="run" name="run" autocomplete="username" maxlength="12" placeholder="12.345.678-9" oninput="formatearRun(this)" onblur="validaRun(this.value)">
                         </div>
                     </div>
 
-                    <div class="form-group mb-4">
-                        <label class="small text-muted">Contraseña</label>
-                            <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            </div>
-                            <input type="password" class="form-control text-center" id="password" name="password" autocomplete="current-password" placeholder="••••••••">
+                    <!-- CONTRASEÑA -->
+                    <div class="field">
+                        <label for="password">
+                            Contraseña
+                        </label>
+
+                        <div class="field-input">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Ingresa tu contraseña">
+                            <button type="button" class="show-password" onclick="togglePassword()" tabindex="-1">
+                                <i id="passwordIcon" class="fas fa-eye"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <button id="loadBtn" type="button" onclick="loadSession()"class="btn btn-primary btn-login btn-block">
-                        <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
+                    <!-- OPCIONES -->
+                    <div class="login-options">
+                        <span>
+                            <i class="fas fa-lock"></i>
+                            Acceso protegido
+                        </span>
+
+                        <a href="mailto:soporte@fygroup.cl">
+                            ¿Problemas para ingresar?
+                        </a>
+                    </div>
+
+                    <!-- LOGIN -->
+                    <button id="loadBtn" type="button" onclick="loadSession()" class="login-button">
+                        <span id="loadBtnText">
+                            Iniciar Sesión
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+
                         <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                     </button>
                 </form>
 
-                <div class="divider">
-                    <span>Soporte</span>
-                </div>
+                <!-- =================================================
+                     SOPORTE
+                ================================================== -->
+                <div class="support">
+                    <div class="support-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
 
-                <div class="mt-3">
-                    <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank" class="btn btn-outline-success btn-block">
-                        <i class="fab fa-whatsapp mr-2"></i>
-                        Soporte por WhatsApp
+                    <div class="support-text">
+                        <strong>
+                            ¿Necesitas asistencia?
+                        </strong>
+
+                        <span>
+                            Nuestro equipo está disponible para ayudarte.
+                        </span>
+                    </div>
+
+                    <a href="https://wa.me/56923816700?text=Hola%20necesito%20ayuda" target="_blank"rel="noopener noreferrer">
+                        Contactar
                     </a>
                 </div>
 
-                <div class="text-center mt-3">
-                    <small class="text-muted">
-                        ¿Tienes problemas con tu cuenta?
-                        <a href="mailto:soporte@fygroup.cl">Escríbenos</a>
-                    </small>
-                </div>
+                <!-- =================================================
+                     FOOTER
+                ================================================== -->
+                <footer class="login-footer">
+                    <span>
+                        © <?= date('Y') ?> FYGroup
+                    </span>
+
+                    <span>•</span>
+
+                    <span>
+                        Sistema Integral
+                    </span>
+                </footer>
             </div>
-        </div>
+        </section>
     </div>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
@@ -109,6 +206,21 @@ require_once __DIR__ . '/../config/includes.php';
 </html>
 
 <script>
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('passwordIcon');
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  }
+
   var formatearRun = function (inputRun) {
     let rut = inputRun.value.replace(/[^0-9kK]/g, '').toUpperCase();
     let cuerpo = rut.slice(0, -1);
