@@ -41,72 +41,200 @@ require_once __DIR__ . '/../config/includes.php';
 </head>
 
 <body class="login-dev">
-    <canvas class="login-bg" id="canvas"></canvas>
-    <div class="container login-wrapper d-flex justify-content-center align-items-center min-vh-100">
-        <div class="col-xl-4 col-lg-5 col-md-7">
-            <div class="card login-card p-4">
-                <div class="text-center mb-4">
-                    <img src="../logos/new-logo-fygroup-bg-removed.png" class="mb-3">
-                    <h4 class="font-weight-bold text-dark mb-1">Sistema Integral FYGroup</h4>
-                    <small class="text-muted">Acceso Desarrolladores</small>
+    <div class="login-page">
+        <!-- =====================================================
+             PANEL IZQUIERDO
+        ====================================================== -->
+        <section class="login-visual">
+            <canvas class="login-bg" id="canvas"></canvas>
+            <div class="visual-overlay"></div>
+            <div class="visual-content">
+                <img src="../logos/new-logo-fygroup-bg-removed.png" class="visual-logo" alt="FYGroup">
+
+                <div class="visual-line"></div>
+
+                <h1>
+                    Construimos<br>
+                    <strong>soluciones.</strong>
+                </h1>
+
+                <p>
+                    Entorno de desarrollo para la
+                    administración y evolución del
+                    Sistema Integral FYGroup.
+                </p>
+
+                <div class="visual-footer">
+                    <span>
+                        <i class="fas fa-shield-alt"></i>
+                        Plataforma segura
+                    </span>
+
+                    <span>
+                        <i class="fas fa-code"></i>
+                        Entorno de Desarrollo
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             PANEL DERECHO
+        ====================================================== -->
+        <section class="login-panel">
+            <div class="login-content">
+                <!-- Logo mobile -->
+                <div class="mobile-logo">
+                    <img src="../logos/new-logo-fygroup-bg-removed.png" alt="FYGroup">
                 </div>
 
+                <!-- Header -->
+                <div class="login-heading">
+                    <span class="welcome">
+                        BIENVENIDO
+                    </span>
+
+                    <h2>
+                        Iniciar sesión
+                    </h2>
+
+                    <p>
+                        Accede a Entorno de Desarrollo
+                    </p>
+                </div>
+
+                <!-- =================================================
+                     FORMULARIO
+                ================================================== -->
                 <form id="loginForm">
-                    <div class="form-group mb-3">
-                        <label class="small text-muted">R.U.N</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control text-center" id="run" name="run" autocomplete="run" maxlength="12" placeholder="12.345.678-9" oninput="formatearRun(this)" onblur="validaRun(this.value)">
+                    <!-- R.U.N -->
+                    <div class="field">
+                        <label for="run">
+                            R.U.N
+                        </label>
+
+                        <div class="field-input">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="run" name="run" autocomplete="username" maxlength="12" placeholder="12.345.678-9" oninput="formatearRun(this)" onblur="validaRun(this.value)">
                         </div>
                     </div>
 
-                    <div class="form-group mb-4">
-                        <label class="small text-muted">Contraseña</label>
-                            <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            </div>
-                            <input type="password" class="form-control text-center" id="password" name="password" autocomplete="current-password" placeholder="••••••••">
+                    <!-- CONTRASEÑA -->
+                    <div class="field">
+                        <label for="password">
+                            Contraseña
+                        </label>
+
+                        <div class="field-input">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Ingresa tu contraseña">
+                            <button type="button" class="show-password" onclick="togglePassword()" tabindex="-1">
+                                <i id="passwordIcon" class="fas fa-eye"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <button id="loadBtn" type="button" onclick="loadSession()"class="btn btn-primary btn-login btn-block">
-                        <span id="loadBtnText"><i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión</span>
+                    <!-- OPCIONES -->
+                    <div class="login-options">
+                        <span>
+                            <i class="fas fa-shield-alt"></i>
+                            Acceso protegido
+                        </span>
+
+                        <a href="mailto:soporte@fygroup.cl">
+                            ¿Problemas para ingresar?
+                        </a>
+                    </div>
+
+                    <!-- LOGIN -->
+                    <button id="loadBtn" type="button" onclick="loadSession()" class="login-button">
+                        <span id="loadBtnText">
+                            Iniciar Sesión
+                            <i class="fas fa-arrow-right"></i>
+                        </span>
+
                         <span id="loadBtnSpinner" class="spinner-border spinner-border-sm d-none"></span>
                     </button>
-
-                    <div class="divider">
-                        <span>Accesos Rápidos Login</span>
-                    </div>
-
-                    <div class="mt-3">
-                        <a href="<?= $myFyUrl ?>" class="btn btn-outline-primary btn-block">
-                            <i class="fas fa-ship mr-2"></i>Acceso FYGroup
-                        </a>
-                    </div>
-
-                    <div class="mt-3">
-                        <a href="<?= $myPortalUrl ?>" class="btn btn-outline-success btn-block">
-                            <i class="fas fa-user mr-2"></i>Acceso Portal Cliente
-                        </a>
-                    </div>
                 </form>
+
+                <!-- =================================================
+                     ACCESOS RÁPIDOS
+                ================================================== -->
+                <div class="quick-access">
+                    <div class="quick-access-title">
+                        <span>Accesos rápidos</span>
+                    </div>
+
+                    <a href="<?= $myFyUrl ?>" class="quick-access-btn">
+                        <span class="quick-icon">
+                            <i class="fas fa-ship"></i>
+                        </span>
+
+                        <span>
+                            <strong>FYGroup</strong>
+                            <small>Sistema Integral</small>
+                        </span>
+
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+
+                    <a href="<?= $myPortalUrl ?>" class="quick-access-btn">
+                        <span class="quick-icon">
+                            <i class="fas fa-user"></i>
+                        </span>
+
+                        <span>
+                            <strong>Portal Cliente</strong>
+                            <small>Acceso clientes</small>
+                        </span>
+
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- =================================================
+                     FOOTER
+                ================================================== -->
+                <footer class="login-footer">
+                    <span>
+                        © <?= date('Y') ?> FYGroup
+                    </span>
+
+                    <span>•</span>
+
+                    <span>
+                        Entorno de Desarrollo
+                    </span>
+                </footer>
             </div>
-        </div>
+        </section>
     </div>
 
     <script src="../assets/vendor/jquery/jquery.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/js/fygroup.js"></script>
     <script src="../assets/js/sidebar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
 
 <script>
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('passwordIcon');
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  }
+
   var canvas = document.getElementById("canvas"),
   ctx = canvas.getContext('2d');
 
