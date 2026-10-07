@@ -173,8 +173,7 @@ function loadEpcoProgram() {
   const container = $('#divFrame');
   const btnPrint = $('#btnPrintEpcoProgram');
 
-  btn.prop('disabled', true)
-     .html('<i class="fas fa-spinner fa-spin mr-2"></i>Cargando...');
+  btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i>Cargando...');
 
   container.hide().empty();
   btnPrint.prop('disabled', true);
@@ -209,17 +208,29 @@ function loadEpcoProgram() {
       btnPrint.prop('disabled', true);
     }
   })
-  .fail(function(xhr, status) {
+  .fail(function(xhr, status, error) {
+    console.error('AJAX ERROR');
+    console.error('Status:', xhr.status);
+    console.error('Status Text:', xhr.statusText);
+    console.error('Error:', error);
+    console.error('Response:', xhr.responseText);
+
     let msg = 'Ocurrió un error al consultar la planificación.';
 
     if (status === 'timeout') {
-      msg = 'La consulta tardó demasiado (timeout).';
+        msg = 'La consulta tardó demasiado (timeout).';
+    } else if (xhr.status === 404) {
+        msg = 'No se encontró programEpco.php (404).';
+    } else if (xhr.status === 403) {
+        msg = 'Acceso denegado al controlador (403).';
+    } else if (xhr.status === 500) {
+        msg = 'Error interno del servidor (500).';
     }
 
     Swal.fire({
-      title: 'Error',
-      text: msg,
-      icon: 'error'
+        title: 'Error',
+        text: msg,
+        icon: 'error'
     });
 
     container.hide().empty();

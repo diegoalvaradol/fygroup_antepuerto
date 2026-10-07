@@ -81,7 +81,7 @@ foreach ($services as $service) {
                         <span class="badge badge-success p-2">AMBIENTE: DEV</span>
                     </div>
 
-                    <div class="container-fluid-custom">
+                    <div>
                         <!-- Resumen -->
                         <div class="row">
                             <div class="col-xl-3 col-md-6 mb-4">

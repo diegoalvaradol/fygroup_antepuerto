@@ -40,14 +40,14 @@ if (!post('trucks')) {
     $where = implode(' AND ', $conditions);
 
     $sql = "SELECT
-      ship_id,
-      vessel_name,
-      voyage
-    FROM app_ships
-    WHERE $where
-    ORDER BY vessel_name ASC
-    LIMIT 10
-  ";
+        ship_id,
+        vessel_name,
+        voyage
+        FROM app_ships
+        WHERE $where
+        ORDER BY vessel_name ASC
+        LIMIT 10
+    ";
 
     $listShip = $ship->findAllStatic($sql, $params);
 
@@ -65,19 +65,31 @@ if (!post('trucks')) {
 
     /* CARGA DE CAMIONES */
 } else {
-    $sql = 'SELECT
-      row_id,
-      car_plate,
-      container,
-      counter_vessel,
-      origin
-    FROM app_outer_port
-    WHERE vessel_id = :vessel AND (row_id LIKE :field OR car_plate LIKE :field)
-    ORDER BY row_id ASC
-    LIMIT 10
-  ';
+    $sql = "
+        SELECT
+            row_id,
+            car_plate,
+            container,
+            counter_vessel,
+            origin
+        FROM app_outer_port
+        WHERE vessel_id = :vessel
+        AND (
+            row_id LIKE :fieldRow
+            OR car_plate LIKE :fieldPlate
+        )
+        ORDER BY row_id ASC
+        LIMIT 10
+    ";
 
-    $listOuterPort = $outerPort->findAllStatic($sql, ['vessel' => $vesselId, 'field' => $searchLikeField]);
+    $listOuterPort = $outerPort->findAllStatic(
+        $sql,
+        [
+            'vessel'     => $vesselId,
+            'fieldRow'   => $searchLikeField,
+            'fieldPlate' => $searchLikeField
+        ]
+    );
 
     $data = [[]];
 
