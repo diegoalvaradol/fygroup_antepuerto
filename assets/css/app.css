@@ -1,4 +1,4 @@
-/* base */
+/* Base */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @import 'variables.css';
@@ -8,21 +8,24 @@
 @import 'components.css';
 @import 'modal.css';
 
-/* layout (solo sistema logueado) */
+/* Componentes específicos */
+@import 'dashboard-cards.css';
+
+/* Layout: sistema logueado */
 @import 'layout.css';
 @import 'sidebar.css';
 @import 'tapbar.css';
 @import 'footer.css';
 
-/* páginas login (fuera del layout) */
+/* Páginas de login */
 @import 'loginfy.css';
 @import 'loginportal.css';
 @import 'logindev.css';
 
-/* mobile */
+/* Mobile */
 @import 'mobile.css';
 
-/* páginas especiales */
+/* Páginas especiales */
 @import 'preload.css';
 @import 'error.css';
 @import 'maintenance.css';
