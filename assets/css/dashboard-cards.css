@@ -1,0 +1,459 @@
+/* ===== Dashboard FYGroup - Bootstrap 4 ===== */
+
+/* =========================================================
+   1. TARJETAS GENERALES
+========================================================= */
+.dashboard-card {
+  --card-accent: #4e73df;
+  --card-tint: #e8efff;
+  height: 100%;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #dce5ef;
+  border-left: 5px solid var(--card-accent);
+  border-radius: 11px;
+  box-shadow: 0 3px 12px rgba(31, 55, 80, 0.07);
+  overflow: hidden;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(31, 55, 80, 0.12);
+}
+
+.dashboard-card .card-body {
+  padding: 1.4rem 0.85rem;
+}
+
+/* =========================================================
+   2. COLORES POR MÓDULO
+========================================================= */
+.card-containers {
+  --card-accent: #3979ed;
+  --card-tint: #e5efff;
+}
+
+.card-thermos {
+  --card-accent: #19b978;
+  --card-tint: #def8ed;
+}
+
+.card-daily {
+  --card-accent: #647994;
+  --card-tint: #edf2f8;
+}
+
+.card-arrivals {
+  --card-accent: #f2a900;
+  --card-tint: #fff3d9;
+}
+
+.card-capacity {
+  --card-accent: #079fbe;
+  --card-tint: #dcf6fb;
+}
+
+.card-dispatched {
+  --card-accent: #f04444;
+  --card-tint: #ffe7e7;
+}
+
+/* =========================================================
+   3. CABECERA E ICONOS
+========================================================= */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 1.35rem;
+}
+
+.dashboard-icon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background: var(--card-tint);
+  color: var(--card-accent);
+  font-size: 1.65rem;
+}
+
+.dashboard-title {
+  color: var(--card-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  margin: 0;
+  min-height: 2.4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-wrap: break-word;
+}
+
+/* =========================================================
+   4. INDICADORES Y MÉTRICAS
+========================================================= */
+.dashboard-metrics {
+  border-top: 1px solid #dce5ef;
+  padding-top: 1.1rem;
+}
+
+.metric-divider {
+  border-right: 1px solid #dce5ef;
+}
+
+.metric-label {
+  color: #77849a;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.metric-value {
+  color: #203e60;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.metric-value-lg {
+  font-size: 2.25rem;
+}
+
+.dashboard-single-metric {
+  text-align: center;
+  border-top: 1px solid #dce5ef;
+  padding-top: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+/* =========================================================
+   5. ESTADO DE ARRIBOS
+========================================================= */
+.dashboard-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5px;
+  border-top: 1px solid #e7edf4;
+  padding: 0.7rem 0;
+  font-size: 0.76rem;
+}
+
+.dashboard-status strong {
+  margin-left: auto;
+  font-size: 0.95rem;
+}
+
+.status-success,
+.status-success strong {
+  color: #19a967;
+}
+
+.status-danger,
+.status-danger strong {
+  color: #e04444;
+}
+
+.dashboard-status i {
+  cursor: help;
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   6. BARRA DE OCUPACIÓN
+========================================================= */
+.dashboard-progress {
+  height: 10px;
+  margin: 1rem 0 0.75rem;
+  border-radius: 20px;
+  background: #dceaf1;
+  overflow: hidden;
+}
+
+.dashboard-progress .progress-bar {
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.capacity-caption {
+  color: #77849a;
+  font-size: 0.76rem;
+  line-height: 1.6;
+}
+
+.capacity-caption strong {
+  color: #344e68;
+}
+
+/* =========================================================
+   7. ÚLTIMOS CAMIONES ENVIADOS
+========================================================= */
+.dispatched-caption {
+  color: #77849a;
+  font-size: 0.73rem;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 0.6rem;
+}
+
+.dispatched-list {
+  color: #53647a;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.dispatched-list > div,
+.dispatched-list > p {
+  padding: 0.55rem 0;
+  margin: 0;
+  border-bottom: 1px solid #e3ebf3;
+}
+
+.dispatched-list > div:last-child,
+.dispatched-list > p:last-child {
+  border-bottom: 0;
+}
+
+/* =========================================================
+   8. GRÁFICO - MOVIMIENTOS POR DÍA
+========================================================= */
+/* La tarjeta utiliza el mismo borde celeste que Ocupación */
+.dashboard-chart-card {
+  --card-accent: #36b9cc;
+  --card-tint: #dcf6fb;
+}
+
+.dashboard-chart-card .card-body {
+  padding: 1.5rem;
+}
+
+/* Cabecera horizontal */
+
+.dashboard-chart-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-chart-header .dashboard-icon {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.dashboard-chart-header .dashboard-title {
+  display: block;
+  min-height: 0;
+  margin-bottom: 0.3rem;
+  text-align: left;
+}
+
+.dashboard-chart-subtitle {
+  color: #858796;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* Separador */
+.dashboard-chart-divider {
+  border-top: 1px solid #e3e6f0;
+  margin: 1.25rem 0;
+}
+
+/* Filtros de fecha */
+.chart-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  place-content: center;
+}
+
+.chart-filters .form-group {
+  width: 190px;
+  max-width: 100%;
+}
+
+.chart-filters label {
+  display: block;
+  color: #5a5c69;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.chart-filters .form-control {
+  width: 100%;
+  height: 38px;
+  border: 1px solid #dce2eb;
+  border-radius: 7px;
+  background-color: #ffffff;
+  color: #343a40;
+  font-size: 0.85rem;
+  box-shadow: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.chart-filters .form-control:focus {
+  border-color: #36b9cc;
+  box-shadow: 0 0 0 3px rgba(54, 185, 204, 0.13);
+  outline: 0;
+}
+
+/* Área de dibujo */
+.dashboard-chart-container {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  min-height: 280px;
+  padding: 1rem;
+  border: 1px solid #edf0f5;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+/*
+ * La altura se controla en el contenedor del canvas.
+ * Compatible con Chart.js usando:
+ * responsive: true
+ * maintainAspectRatio: false
+ */
+#divGraficoCamiones {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  min-width: 0;
+}
+
+#divGraficoCamiones canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Mensaje sin datos */
+#mensajeSinDatos {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.96);
+  text-align: center;
+}
+
+#mensajeSinDatos .alert {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   9. RESPONSIVE - TABLETS Y PANTALLAS MEDIANAS
+========================================================= */
+@media (max-width: 1199.98px) {
+  .dashboard-card .card-body {
+    padding: 1.2rem 0.65rem;
+  }
+
+  .dashboard-title {
+    font-size: 0.82rem;
+  }
+
+  .metric-value {
+    font-size: 1.55rem;
+  }
+
+  .metric-value-lg {
+    font-size: 1.9rem;
+  }
+
+  .dashboard-chart-card .card-body {
+    padding: 1.25rem;
+  }
+}
+
+/* =========================================================
+   10. RESPONSIVE - MÓVILES
+========================================================= */
+@media (max-width: 767.98px) {
+  .dashboard-card .card-body {
+    padding: 1.3rem 1rem;
+  }
+
+  .dashboard-header {
+    margin-bottom: 1.1rem;
+  }
+
+  .metric-value {
+    font-size: 1.8rem;
+  }
+
+  .dashboard-chart-card .card-body {
+    padding: 1rem;
+  }
+
+  .dashboard-chart-header {
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .dashboard-chart-header .dashboard-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.4rem;
+    border-radius: 12px;
+  }
+
+  .dashboard-chart-header .dashboard-title {
+    font-size: 0.82rem;
+  }
+
+  .dashboard-chart-subtitle {
+    font-size: 0.76rem;
+  }
+
+  .chart-filters {
+    display: block;
+  }
+
+  .chart-filters .form-group {
+    width: 100%;
+    margin-bottom: 0.85rem;
+  }
+
+  .dashboard-chart-container {
+    padding: 0.5rem;
+    min-height: 250px;
+  }
+
+  #divGraficoCamiones {
+    height: 280px;
+  }
+}
+
+/* =========================================================
+   11. ACCESIBILIDAD
+========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-card,
+  .dashboard-progress .progress-bar,
+  .chart-filters .form-control {
+    transition: none;
+  }
+
+  .dashboard-card:hover {
+    transform: none;
+  }
+}
