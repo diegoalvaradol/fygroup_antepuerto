@@ -1,70 +1,258 @@
 <?php
 class UIComponents
 {
+
     public static function scrollToTopButton()
     {
         ob_start();
         ?>
-            <style>
+
+        <style>
+            /* =====================================================
+            FYGROUP — SCROLL TO TOP
+            Compatible con Bootstrap 4
+            ===================================================== */
+
+            #scrollTopBtn {
+                position: fixed !important;
+                right: 25px !important;
+                bottom: 60px !important;
+                z-index: 999999 !important;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+
+                padding: 12px 18px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                border-radius: 30px;
+
+                background: #003152;
+                color: #ffffff;
+
+                font-family: inherit;
+                font-size: 12px;
+                font-weight: 600;
+
+                box-shadow: 0 4px 12px rgba(0, 31, 53, 0.25);
+
+                cursor: pointer;
+                outline: none;
+
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+
+                transform: translateY(15px);
+
+                transition:
+                    opacity 0.35s ease,
+                    transform 0.35s ease,
+                    visibility 0.35s ease,
+                    background-color 0.25s ease,
+                    box-shadow 0.25s ease;
+            }
+
+            /* Botón visible */
+            #scrollTopBtn.show {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+
+            /* Hover */
+            #scrollTopBtn:hover {
+                background: #001f35;
+                box-shadow: 0 6px 16px rgba(0, 31, 53, 0.35);
+                transform: translateY(-3px);
+            }
+
+            #scrollTopBtn:active {
+                transform: translateY(0);
+            }
+
+            #scrollTopBtn:focus-visible {
+                outline: 3px solid #addff1;
+                outline-offset: 3px;
+            }
+
+            #scrollTopBtn i {
+                font-size: 15px;
+            }
+
+            /* Móviles */
+            @media (max-width: 768px) {
                 #scrollTopBtn {
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
-
-                    background-color: #1e293b;
-                    color: white;
-                    border: none;
-
-                    padding: 10px 15px;
-                    border-radius: 50px;
-                    font-size: 14px;
-
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-                    cursor: pointer;
-
-                    z-index: 1100;
-
-                    opacity: 0;
-                    transform: translateY(40px);
-                    transition: transform 0.4s ease, opacity 0.4s ease;
-
-                    pointer-events: none;
-                }
-
-                #scrollTopBtn.show {
-                    opacity: 1;
-                    transform: translateY(0);
-                    pointer-events: auto;
+                    right: 15px !important;
+                    bottom: 60px !important;
+                    padding: 10px 14px;
+                    font-size: 12px;
                 }
 
                 #scrollTopBtn i {
-                    margin-right: 5px;
+                    font-size: 13px;
+                }
+            }
+
+            /* Accesibilidad: reducir animaciones */
+            @media (prefers-reduced-motion: reduce) {
+                #scrollTopBtn {
+                    transition: none;
+                }
+            }
+        </style>
+
+        <button
+            type="button"
+            id="scrollTopBtn"
+            aria-label="Volver al inicio"
+            title="Volver al inicio"
+        >
+            <i class="fas fa-arrow-up" aria-hidden="true"></i>
+            <span>Ir al inicio</span>
+        </button>
+
+        <script>
+            (function () {
+                'use strict';
+
+                function initScrollTop() {
+                    var btn = document.getElementById('scrollTopBtn');
+
+                    if (!btn || btn.dataset.scrollReady === '1') {
+                        return;
+                    }
+
+                    btn.dataset.scrollReady = '1';
+
+                    var animationFrame = null;
+
+                    /*
+                    * Detectar el desplazamiento de la página.
+                    */
+                    function getScrollPosition() {
+                        return Math.max(
+                            document.body.scrollTop || 0,
+                            document.documentElement.scrollTop || 0,
+                            window.pageYOffset || 0
+                        );
+                    }
+
+                    /*
+                    * Mostrar u ocultar el botón.
+                    */
+                    function updateButton() {
+                        btn.classList.toggle(
+                            'show',
+                            getScrollPosition() > 200
+                        );
+                    }
+
+                    /*
+                    * Desplazamiento suave hacia el inicio.
+                    * Duración: 900 milisegundos.
+                    */
+                    function scrollToTop() {
+                        if (animationFrame !== null) {
+                            cancelAnimationFrame(animationFrame);
+                            animationFrame = null;
+                        }
+
+                        var startPosition = getScrollPosition();
+
+                        if (startPosition <= 0) {
+                            updateButton();
+                            return;
+                        }
+
+                        var startTime = null;
+                        var duration = 900;
+
+                        function animateScroll(currentTime) {
+                            if (startTime === null) {
+                                startTime = currentTime;
+                            }
+
+                            var elapsed = currentTime - startTime;
+                            var progress = Math.min(
+                                elapsed / duration,
+                                1
+                            );
+
+                            /*
+                            * Curva ease-out:
+                            * movimiento rápido al principio
+                            * y desaceleración suave al final.
+                            */
+                            var easing = 1 - Math.pow(1 - progress, 4);
+
+                            var position = Math.round(
+                                startPosition * (1 - easing)
+                            );
+
+                            document.body.scrollTop = position;
+                            document.documentElement.scrollTop = position;
+
+                            if (progress < 1) {
+                                animationFrame =
+                                    requestAnimationFrame(animateScroll);
+                            } else {
+                                document.body.scrollTop = 0;
+                                document.documentElement.scrollTop = 0;
+
+                                animationFrame = null;
+                                updateButton();
+                            }
+                        }
+
+                        animationFrame = requestAnimationFrame(animateScroll);
+                    }
+
+                    /*
+                    * Eventos.
+                    */
+                    btn.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        scrollToTop();
+                    });
+
+                    window.addEventListener(
+                        'scroll',
+                        updateButton,
+                        { passive: true }
+                    );
+
+                    document.addEventListener(
+                        'scroll',
+                        updateButton,
+                        { passive: true }
+                    );
+
+                    document.body.addEventListener(
+                        'scroll',
+                        updateButton,
+                        { passive: true }
+                    );
+
+                    /*
+                    * Estado inicial.
+                    */
+                    updateButton();
                 }
 
-                @media (max-width: 768px) {
-                    #scrollTopBtn {
-                        font-size: 12px;
-                        padding: 8px 12px;
-                    }
+                if (document.readyState === 'loading') {
+                    document.addEventListener(
+                        'DOMContentLoaded',
+                        initScrollTop
+                    );
+                } else {
+                    initScrollTop();
                 }
-            </style>
+            })();
+        </script>
 
-            <button id="scrollTopBtn"
-                    onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
-                <i class="fas fa-circle-arrow-up"></i> Ir al inicio
-            </button>
-
-            <script>
-                let scrollBtn = document.getElementById("scrollTopBtn");
-
-                window.addEventListener("scroll", () => {
-                    if (window.scrollY > 200) {
-                        scrollBtn.classList.add("show");
-                    } else {
-                        scrollBtn.classList.remove("show");
-                    }
-                });
-            </script>
         <?php
 
         return ob_get_clean();
@@ -77,25 +265,36 @@ class UIComponents
             <style>
                 #whatsapp-chat-box {
                     position: fixed;
-                    bottom: 20px;
-                    left: 20px;
+                    right: 25px;
+                    bottom: 175px; /* 90px del botón + 55px de alto + 10px de separación */
+                    left: auto;
+
                     width: 320px;
-                    max-width: 92%;
+                    max-width: calc(100vw - 30px);
+
                     background: #fff;
                     border-radius: 16px;
-                    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
                     font-family: "Segoe UI", sans-serif;
-                    z-index: 1100;
+
+                    z-index: 999999;
                     overflow: hidden;
-                    transform: translateY(20px);
+
+                    transform: translateY(15px);
                     opacity: 0;
+                    visibility: hidden;
                     pointer-events: none;
-                    transition: all 0.25s ease;
+
+                    transition:
+                        opacity 0.25s ease,
+                        transform 0.25s ease,
+                        visibility 0.25s ease;
                 }
 
                 #whatsapp-chat-box.active {
                     transform: translateY(0);
                     opacity: 1;
+                    visibility: visible;
                     pointer-events: auto;
                 }
 
@@ -158,22 +357,35 @@ class UIComponents
 
                 #whatsapp-float-btn {
                     position: fixed;
-                    bottom: 20px;
-                    left: 20px;
-                    width: 65px;
-                    height: 65px;
+                    right: 25px;
+                    bottom: 110px; /* Encima del botón Ir al inicio */
+
+                    width: 55px;
+                    height: 55px;
+
                     background: linear-gradient(135deg, #25d366, #1ebe5d);
                     border-radius: 50%;
-                    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+
+                    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+
                     display: flex;
                     align-items: center;
                     justify-content: center;
+
                     cursor: pointer;
-                    z-index: 1100;
+                    z-index: 999998;
+
+                    transition: transform 0.25s ease, box-shadow 0.25s ease;
+                }
+
+                #whatsapp-float-btn:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 9px 20px rgba(0, 0, 0, 0.25);
                 }
 
                 #whatsapp-float-btn img {
-                    width: 32px;
+                    width: 30px;
+                    height: 30px;
                 }
 
                 #whatsapp-chat-box a {
@@ -183,6 +395,29 @@ class UIComponents
                 #whatsapp-chat-box.active a.btn-chat {
                     pointer-events: auto;
                     color: white;
+                }
+
+                /* Ajustes para móviles */
+                @media (max-width: 768px) {
+                    #whatsapp-float-btn {
+                        right: 15px;
+                        bottom: 110px;
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                    #whatsapp-float-btn img {
+                        width: 27px;
+                        height: 27px;
+                    }
+
+                    #whatsapp-chat-box {
+                        right: 15px;
+                        bottom: 175px;
+                        left: auto;
+                        width: 320px;
+                        max-width: calc(100vw - 30px);
+                    }
                 }
             </style>
 

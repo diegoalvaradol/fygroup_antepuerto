@@ -76,6 +76,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <i class="fas fa-boxes-stacked"></i>
                                         </div>
                                         <h6 class="dashboard-title">Contenedores</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Contenedores movilizados
+                                        </p>
                                     </div>
 
                                     <div class="row no-gutters dashboard-metrics">
@@ -105,6 +108,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <i class="fas fa-snowflake"></i>
                                         </div>
                                         <h6 class="dashboard-title">Termos</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Termos movilizados
+                                        </p>
                                     </div>
 
                                     <div class="row no-gutters dashboard-metrics">
@@ -134,6 +140,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <i class="fas fa-ranking-star"></i>
                                         </div>
                                         <h6 class="dashboard-title">Camiones por día</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Camiones ingresados por día (promedio)
+                                        </p>
                                     </div>
 
                                     <div class="text-center dashboard-single-metric">
@@ -156,6 +165,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <i class="fas fa-truck-moving"></i>
                                         </div>
                                         <h6 class="dashboard-title">Arribos</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Arribos y pendientes de camiones
+                                        </p>
                                     </div>
 
                                     <?php
@@ -209,6 +221,9 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <i class="fas fa-chart-pie"></i>
                                         </div>
                                         <h6 class="dashboard-title">Ocupación</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Ocupación del antepuerto
+                                        </p>
                                     </div>
 
                                     <?php
@@ -256,13 +271,12 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                             <i class="fas fa-anchor-circle-check"></i>
                                         </div>
                                         <h6 class="dashboard-title">Últimos camiones enviados</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Últimos 5 camiones enviados
+                                        </p>
                                     </div>
 
-                                    <div class="dispatched-caption">
-                                        Últimos 5 camiones enviados
-                                    </div>
-
-                                    <div class="dispatched-list">
+                                    <div class="dispatched-list text-center dashboard-single-metric">
                                         <?=$port->getLastSentTrucks();?>
                                     </div>
                                 </div>

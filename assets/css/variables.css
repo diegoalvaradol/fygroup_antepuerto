@@ -84,4 +84,22 @@
   --z-dropdown: 1040;
   --z-modal-backdrop: 1040;
   --z-footer: 1020;
+
+  /* PRELOAD */
+  --color-primary: #003152;
+  --color-primary-dark: #00253f;
+  --color-primary-light: #0b466f;
+  --color-secondary: #addff1;
+  --color-secondary-dark: #8fcfe8;
+  --color-secondary-light: #eaf8fd;
+  --color-accent: #4db8e6;
+  --preload-primary: #003152;
+  --preload-dark: #001f35;
+  --preload-secondary: #addff1;
+  --preload-blue: #168de2;
+  --preload-text: #24445f;
+  --preload-muted: #7b8fa2;
+  --preload-border: #e5edf4;
+  --preload-background: #f2f6fa;
+  --preload-success: #159b72;
 }
