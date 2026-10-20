@@ -1,314 +1,593 @@
 /* ==========================================================
-   PRELOAD SYSTEM
+    PRELOAD.CSS
+    Estilos específicos para Preload
+    ========================================================== */
+
+/* ==========================================================
+   PRELOAD
    ========================================================== */
 .preload-body {
+  min-height: 100vh;
   margin: 0;
-  background: #f4f7fb;
+  background: var(--preload-background);
+  color: var(--preload-text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
 }
 
-/* ==========================================================
-   TOPBAR
-   ========================================================== */
-.preload-topbar {
-  height: 70px;
-  background: linear-gradient(135deg, #003152, #0b5f8a);
-  box-shadow: 0 10px 30px rgba(0, 49, 82, 0.2);
+.preload-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 35px 20px;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(173, 223, 241, 0.45), transparent 27%),
+    radial-gradient(circle at 90% 90%, rgba(0, 49, 82, 0.07), transparent 28%), #f3f7fb;
 }
 
-/* ==========================================================
-   PANEL
-   ========================================================== */
-.preload-panel {
+.preload-container {
   width: 100%;
-  max-width: 850px;
-  margin: 40px auto 40px;
-  animation: preloadFade 0.6s ease;
+  max-width: 740px;
 }
 
-@keyframes preloadFade {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* CABECERA */
+.preload-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+  padding: 0 8px;
 }
 
-/* ==========================================================
-   CARD
-   ========================================================== */
+.preload-brand {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.preload-logo {
+  display: block;
+  width: auto;
+  max-width: 190px;
+  max-height: 68px;
+  object-fit: contain;
+}
+
+.preload-version {
+  padding: 8px 12px;
+  border: 1px solid #dbe7f0;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--preload-primary);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* TARJETA */
 .preload-card {
-  border: none;
-  border-top: 4px solid #003152;
-  border-radius: 20px;
   overflow: hidden;
+  border: 1px solid rgba(0, 49, 82, 0.07);
+  border-radius: 16px;
   background: #fff;
-  box-shadow: 0 25px 60px rgba(0, 49, 82, 0.15);
+  box-shadow:
+    0 18px 55px rgba(0, 31, 53, 0.08),
+    0 3px 10px rgba(0, 31, 53, 0.025);
 }
 
-/* ==========================================================
-   BANNER
-   ========================================================== */
+/* BIENVENIDA */
 .preload-banner {
   position: relative;
   overflow: hidden;
-  padding: 30px;
-  text-align: center;
+  padding: 33px 38px 29px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(173, 223, 241, 0.17), transparent 42%),
+    linear-gradient(120deg, #001f35 0%, #003152 65%, #06446b 100%);
   color: #fff;
-  background: linear-gradient(135deg, #003152, #0b5f8a);
-}
-
-.preload-banner::before {
-  content: '';
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  background: rgba(173, 223, 241, 0.15);
-  top: -180px;
-  right: -100px;
 }
 
 .preload-banner::after {
-  content: '';
   position: absolute;
-  width: 200px;
-  height: 200px;
+  right: -45px;
+  bottom: -115px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  bottom: -120px;
-  left: -60px;
+  box-shadow:
+    0 0 0 28px rgba(255, 255, 255, 0.025),
+    0 0 0 56px rgba(255, 255, 255, 0.02);
+  content: '';
+  pointer-events: none;
+}
+
+.welcome-label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: #b8e7fa;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.welcome-label-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #42d7a0;
+  box-shadow: 0 0 0 4px rgba(66, 215, 160, 0.12);
 }
 
 .preload-banner h1 {
   position: relative;
   z-index: 1;
-  font-size: 2.1rem;
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: 32px;
   font-weight: 800;
-  margin: 0 0 10px;
+  letter-spacing: -1px;
 }
 
-.preload-banner p {
+.welcome-description {
   position: relative;
   z-index: 1;
   margin: 0;
-  opacity: 0.9;
+  color: #c2d9e8;
+  font-size: 13px;
+  line-height: 1.7;
 }
 
-/* ==========================================================
-   BODY CONTENT
-   ========================================================== */
-.preload-body {
-  padding: 40px;
-}
-
-/* ==========================================================
-   LOGO
-   ========================================================== */
-.preload-logo {
+.preload-user {
+  position: relative;
+  z-index: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 0;
-  max-width: 75%;
-  margin: 0 auto;
-  background: transparent;
+  gap: 13px;
+  margin-top: 25px;
+  padding-top: 21px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.preload-logo img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: min(450px, 90vw);
-  max-height: 200px;
-  object-fit: contain;
-  user-select: none;
-  pointer-events: none;
-  filter: drop-shadow(0 8px 18px rgba(0, 49, 82, 0.18));
-  transition:
-    transform 0.25s ease,
-    filter 0.25s ease;
+.preload-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 47px;
+  height: 47px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #d8f3ff;
+  font-size: 19px;
 }
 
-/* ==========================================================
-   LOADING SPINNER
-   ========================================================== */
+.preload-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.preload-user-info > span {
+  color: #b6ccdc;
+  font-size: 11px;
+}
+
+.preload-user-info > strong {
+  overflow-wrap: anywhere;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.preload-user-info > small {
+  margin-top: 3px;
+  color: #b6ccdc;
+  font-size: 11px;
+}
+
+.preload-user-info > small i {
+  margin-right: 5px;
+}
+
+/* CONTENIDO */
+.preload-content {
+  padding: 30px 38px 32px;
+}
+
+.loading-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 28px;
+}
+
+.loading-heading h2 {
+  margin: 0 0 6px;
+  color: var(--preload-primary);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.loading-heading p {
+  margin: 0;
+  color: var(--preload-muted);
+  font-size: 12px;
+}
+
+/* SPINNER */
 .loading-spinner {
-  width: 75px;
-  height: 75px;
-  margin: 0 auto 25px;
-  border: 5px solid #dcecf3;
-  border-top-color: #003152;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 47px;
+  height: 47px;
+  flex-shrink: 0;
+  border: 3px solid #e4eef6;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
+.loading-spinner::before {
+  position: absolute;
+  inset: -3px;
+  border: 3px solid transparent;
+  border-top-color: var(--preload-blue);
+  border-right-color: var(--preload-blue);
+  border-radius: 50%;
+  animation: preload-spin 0.9s linear infinite;
+  content: '';
+}
+
+.loading-spinner span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--preload-blue);
+}
+
+/* PROGRESO */
+.progress-information {
+  margin-bottom: 25px;
+}
+
+.progress-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 11px;
+}
+
+.progress-labels span {
+  color: #526d85;
+  font-size: 11px;
+}
+
+.progress-labels strong {
+  color: var(--preload-primary);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.preload-progress {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #eaf0f5;
+}
+
+.preload-progress-bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0876bd, #27b6d5);
+  box-shadow: 0 0 10px rgba(22, 141, 226, 0.18);
+  transition: width 0.55s ease;
+}
+
+/* VALIDACIONES */
+.preload-checks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.check-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 145px;
+  padding: 16px 13px;
+  border: 1px solid var(--preload-border);
+  border-radius: 10px;
+  background: #fff;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.check-item.check-complete {
+  border-color: #d7eee6;
+  background: #f8fcfa;
+}
+
+.check-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  margin-bottom: 14px;
+  border-radius: 9px;
+  background: #edf6fc;
+  color: #147ab8;
+  font-size: 15px;
+}
+
+.check-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-right: 15px;
+}
+
+.check-info strong {
+  color: var(--preload-primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.check-info span {
+  color: var(--preload-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.check-result {
+  position: absolute;
+  top: 17px;
+  right: 13px;
+  color: var(--preload-success);
+  font-size: 14px;
+}
+
+.check-result.pending {
+  color: #278fca;
+}
+
+.check-result.pending i {
+  animation: preload-spin 1.3s linear infinite;
+}
+
+/* CUENTA REGRESIVA */
+.preload-countdown {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 16px;
+  border: 1px solid #dcecf6;
+  border-radius: 10px;
+  background: #f3f9fd;
+}
+
+.countdown-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e2f2fc;
+  color: #117dc2;
+  font-size: 17px;
+}
+
+.countdown-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.countdown-text > strong {
+  color: var(--preload-primary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.countdown-text > span {
+  color: var(--preload-muted);
+  font-size: 11px;
+}
+
+.countdown-text > span strong {
+  color: var(--preload-blue);
+}
+
+.countdown-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border: 1px solid #d5e9f6;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--preload-primary);
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* FOOTER */
+.preload-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 19px;
+  padding: 0 8px;
+  color: #8193a5;
+  font-size: 10px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--preload-primary);
+}
+
+.footer-brand i {
+  font-size: 13px;
+}
+
+.footer-brand strong {
+  font-size: 11px;
+}
+
+.footer-security {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ANIMACIONES */
+@keyframes preload-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-/* ==========================================================
-   PROGRESS
-   ========================================================== */
-.progress {
-  height: 14px;
-  border-radius: 30px;
-  overflow: hidden;
-  background: #dcecf3;
-}
-
-.progress-bar {
-  background: linear-gradient(90deg, #003152, #addff1);
-  transition: width 0.6s ease;
-}
-
-/* ==========================================================
-   LOADING TEXT
-   ========================================================== */
-.loading-step {
-  min-height: 30px;
-  color: #64748b;
-  font-size: 1rem;
-}
-
-/* ==========================================================
-   STATUS CARDS
-   ========================================================== */
-.status-item {
-  height: 100%;
-  padding: 22px;
-  background: #f8fbfd;
-  border-radius: 14px;
-  border: 1px solid #dcecf3;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.status-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(0, 49, 82, 0.14);
-}
-
-.status-icon {
-  font-size: 2rem;
-  color: #003152;
-  margin-bottom: 15px;
-}
-
-.status-item h6 {
-  margin-bottom: 8px;
-  font-weight: 800;
-  color: #003152;
-}
-
-.status-item p,
-.status-item small {
-  margin: 0;
-  color: #64748b;
-}
-
-/* ==========================================================
-   TABLET
-   ========================================================== */
-@media (max-width: 992px) {
-  .preload-panel {
-    width: calc(100% - 40px);
-    max-width: 850px;
-    margin-top: 45px;
-  }
-}
-
-/* ==========================================================
-   MOBILE
-   ========================================================== */
-@media (max-width: 768px) {
-  .preload-panel {
-    width: calc(100% - 30px);
-    margin: 30px auto;
+/* RESPONSIVE */
+@media (max-width: 575.98px) {
+  .preload-page {
+    align-items: flex-start;
+    padding: 20px 12px;
   }
 
-  .preload-body {
-    padding: 25px;
+  .preload-header {
+    margin-bottom: 17px;
   }
 
   .preload-logo {
-    max-width: 90%;
+    max-width: 145px;
+    max-height: 52px;
   }
 
-  .preload-logo img {
-    max-width: min(320px, 90vw);
-    max-height: 140px;
+  .preload-version {
+    padding: 7px 8px;
+    font-size: 8px;
+    letter-spacing: 0.5px;
   }
 
-  .preload-banner {
-    padding: 25px;
-  }
-
-  .preload-banner h1 {
-    font-size: 1.6rem;
-  }
-
-  .loading-spinner {
-    width: 60px;
-    height: 60px;
-  }
-
-  .status-item {
-    margin-bottom: 15px;
-  }
-}
-
-/* ==========================================================
-   SMALL MOBILE
-   ========================================================== */
-@media (max-width: 480px) {
-  .preload-panel {
-    width: calc(100% - 20px);
-    margin: 20px auto;
-  }
-
-  .preload-body {
-    padding: 20px;
-  }
-
-  .preload-logo {
-    max-width: 95%;
-  }
-
-  .preload-logo img {
-    max-width: min(260px, 92vw);
-    max-height: 110px;
+  .preload-card {
+    border-radius: 12px;
   }
 
   .preload-banner {
-    padding: 22px 18px;
+    padding: 26px 22px 23px;
   }
 
   .preload-banner h1 {
-    font-size: 1.4rem;
+    font-size: 27px;
   }
 
-  .preload-banner p {
-    font-size: 0.9rem;
+  .welcome-description {
+    font-size: 12px;
+  }
+
+  .preload-user-info > strong {
+    font-size: 13px;
+  }
+
+  .preload-content {
+    padding: 25px 20px;
+  }
+
+  .loading-heading h2 {
+    font-size: 16px;
+  }
+
+  .preload-checks {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .check-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .check-icon {
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+    margin: 0;
+  }
+
+  .check-info {
+    flex: 1;
+    gap: 4px;
+  }
+
+  .check-result {
+    position: static;
+    margin-left: auto;
+    padding: 0 3px;
+  }
+
+  .preload-countdown {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .countdown-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .countdown-text > strong {
+    font-size: 10px;
+  }
+
+  .countdown-text > span {
+    font-size: 10px;
+  }
+
+  .preload-footer {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px 17px;
+    padding: 0;
   }
 }
 
-/* ==========================================================
-   REDUCIR MOVIMIENTO
-   ========================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .preload-panel,
-  .loading-spinner {
+  .loading-spinner::before,
+  .check-result.pending i {
     animation: none;
   }
 
-  .status-item {
+  .preload-progress-bar {
     transition: none;
   }
 }
