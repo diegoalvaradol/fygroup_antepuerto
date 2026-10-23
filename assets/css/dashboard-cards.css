@@ -46,6 +46,16 @@
   --card-tint: #edf2f8;
 }
 
+.card-avgstay {
+  --card-accent: #f2a900;
+  --card-tint: #fff3d9;
+}
+
+.card-avgports {
+  --card-accent: #19b978;
+  --card-tint: #def8ed;
+}
+
 .card-arrivals {
   --card-accent: #f2a900;
   --card-tint: #fff3d9;
@@ -208,7 +218,7 @@
 
 .dispatched-list {
   color: #53647a;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }

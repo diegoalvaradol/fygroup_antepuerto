@@ -269,4 +269,14 @@ class ship extends iQuery
 
         return $table;
     }
+
+    public function rankingPortsByVessel()
+    {
+        $query = "SELECT COUNT(sh.$this->pod) as total_pod, sh.$this->pod AS id, po.city AS ciudad FROM `$this->table` AS sh INNER JOIN `app_ports` AS po ON sh.$this->pod = po.port_id GROUP BY sh.$this->pod ORDER BY total_pod DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

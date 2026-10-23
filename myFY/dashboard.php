@@ -18,6 +18,42 @@ $footer = menu::footerSSL();
 $top = UIComponents::scrollToTopButton();
 $whatsAppBtn = UIComponents::whatsappChatBox();
 $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
+
+/* =============================================
+   ESTADO DEL ANTEPUERTO
+   ============================================= */
+/* 1. Ocupación */
+$percentUsage = $port->getPercentUsage($infoCfg['goals'],$admin);
+$trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin);
+$progressWidth = max(0,min(100, (float) $percentUsage));
+
+/* 2. Capacidad disponible */
+$capacity = $port->availableCapacity();
+
+/* 3. Arribos */
+$totalTrucksArrived = $port->getTotalTrucks($admin);
+$trucksArrived = $port->getTotalArrivedTrucks($admin);
+
+/* 4. Promedio de permanencia */
+$avgstay = $port->avgStayInAntepuerto();
+
+/* =============================================
+   MOVIMIENTO Y PRODUCTIVIDAD
+   ============================================= */
+
+/* 5. Contenedores */
+$totalContainers = $port->getTotalContainer($admin);
+$totalContainerPallets = $port->getTotalContainerPallets($admin);
+
+/* 6. Termos */
+$totalThermos = $port->getTotalThermo($admin);
+$totalPallets = $port->getTotalPallets($admin);
+
+/* 7. Camiones por día */
+$avgTrucksPerDay = $port->avgTrucksPerDay();
+
+/* 8. Últimos camiones enviados */
+$lastSentTrucks = $port->getLastSentTrucks();
 ?>
 
 <!-- HTML -->
@@ -67,10 +103,180 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
 
                     <!-- Content Row -->
                     <div class="row">
-                        <!-- Contenedores -->
-                        <div class="col-xl-2 col-md-6 mb-4">
+                        <!-- SECCIÓN 1: ESTADO DEL ANTEPUERTO -->
+                        <div class="col-12 mb-3">
+                            <h6 class="font-weight-bold text-primary mb-0">
+                                <i class="fas fa-gauge-high mr-2"></i>
+                                Estado del antepuerto
+                            </h6>
+                            <hr class="mt-2 mb-0">
+                        </div>
+
+                        <!-- 1. Ocupación -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card dashboard-card card-capacity h-100">
+                                <div class="card-body">
+
+                                    <div class="dashboard-header text-center">
+                                        <div class="dashboard-icon">
+                                            <i class="fas fa-chart-pie"></i>
+                                        </div>
+                                        <h6 class="dashboard-title">Ocupación</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Ocupación del antepuerto
+                                        </p>
+                                    </div>
+
+                                    <div class="text-center dashboard-single-metric">
+                                        <div class="metric-label">Ocupación</div>
+                                        <div class="metric-value metric-value-lg">
+                                            <?= htmlspecialchars((string) $percentUsage, ENT_QUOTES, 'UTF-8') ?>%
+                                        </div>
+                                    </div>
+
+                                    <div class="progress dashboard-progress">
+                                        <div id="myProgressBar"
+                                            class="progress-bar bg-info"
+                                            role="progressbar"
+                                            style="width: <?= $progressWidth ?>%;"
+                                            aria-valuenow="<?= $progressWidth ?>"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100">
+                                        </div>
+                                    </div>
+
+                                    <div class="capacity-caption text-center">
+                                        <strong><?= $trucksInAntepuerto ?></strong>
+                                        camión(es) de un total de
+                                        <strong><?= $infoCfg['goals'] ?></strong>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Capacidad disponible -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card dashboard-card card-capacity h-100">
+                                <div class="card-body">
+
+                                    <div class="dashboard-header text-center">
+                                        <div class="dashboard-icon">
+                                            <i class="fas fa-circle-check"></i>
+                                        </div>
+                                        <h6 class="dashboard-title">Capacidad disponible</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Espacios disponibles en antepuerto
+                                        </p>
+                                    </div>
+
+                                    <div class="text-center dashboard-single-metric">
+                                        <div class="metric-label">Espacios disponibles</div>
+                                        <div class="metric-value metric-value-lg">
+                                            <?= $capacity ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Arribos -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card dashboard-card card-arrivals h-100">
+                                <div class="card-body">
+
+                                    <div class="dashboard-header text-center">
+                                        <div class="dashboard-icon">
+                                            <i class="fas fa-truck-moving"></i>
+                                        </div>
+                                        <h6 class="dashboard-title">Arribos</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Arribos y pendientes de camiones
+                                        </p>
+                                    </div>
+
+                                    <div class="text-center dashboard-single-metric">
+                                        <div class="metric-label">Total camiones arribados</div>
+                                        <div class="metric-value metric-value-lg">
+                                            <?= $totalTrucksArrived ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="dashboard-status status-success">
+                                        <span>Solicitados</span>
+                                        <strong><?= $trucksArrived ?></strong>
+                                        <i class="fas fa-info-circle text-info"
+                                        role="button"
+                                        tabindex="0"
+                                        data-toggle="popover"
+                                        data-trigger="hover focus"
+                                        data-placement="top"
+                                        data-content="Camiones solicitados por terminal."
+                                        aria-label="Información sobre camiones solicitados"></i>
+                                    </div>
+
+                                    <div class="dashboard-status status-danger">
+                                        <span>Pendientes</span>
+                                        <strong><?= $trucksInAntepuerto ?></strong>
+                                        <i class="fas fa-info-circle text-info"
+                                        role="button"
+                                        tabindex="0"
+                                        data-toggle="popover"
+                                        data-trigger="hover focus"
+                                        data-placement="top"
+                                        data-content="Camiones que se encuentran en antepuerto."
+                                        aria-label="Información sobre camiones en antepuerto"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Promedio de permanencia -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card dashboard-card card-avgstay h-100">
+                                <div class="card-body">
+
+                                    <div class="dashboard-header text-center">
+                                        <div class="dashboard-icon">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <h6 class="dashboard-title">Promedio de permanencia</h6>
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Tiempo promedio en antepuerto
+                                        </p>
+                                    </div>
+
+                                    <div class="text-center dashboard-single-metric">
+                                        <div class="metric-label">Tiempo promedio</div>
+                                        <div class="metric-value metric-value-lg">
+                                            <?= htmlspecialchars((string) $avgstay, ENT_QUOTES, 'UTF-8') ?>
+                                        </div>
+
+                                        <p class="dashboard-chart-subtitle mb-0">
+                                            Formato (H:M:S)
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 2: MOVIMIENTO Y PRODUCTIVIDAD -->
+                        <div class="col-12 mb-3 mt-2">
+                            <h6 class="font-weight-bold text-primary mb-0">
+                                <i class="fas fa-chart-line mr-2"></i>
+                                Movimiento y productividad
+                            </h6>
+                            <hr class="mt-2 mb-0">
+                        </div>
+
+                        <!-- 5. Contenedores -->
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-containers h-100">
                                 <div class="card-body">
+
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-boxes-stacked"></i>
@@ -85,24 +291,27 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                         <div class="col-6 text-center metric-divider">
                                             <div class="metric-label">Contenedores</div>
                                             <div class="metric-value">
-                                                <?=$port->getTotalContainer($admin);?>
+                                                <?= $totalContainers ?>
                                             </div>
                                         </div>
+
                                         <div class="col-6 text-center">
                                             <div class="metric-label">Pallets</div>
                                             <div class="metric-value">
-                                                <?=$port->getTotalContainerPallets($admin);?>
+                                                <?= $totalContainerPallets ?>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Termos -->
-                        <div class="col-xl-2 col-md-6 mb-4">
+                        <!-- 6. Termos -->
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-thermos h-100">
                                 <div class="card-body">
+
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-snowflake"></i>
@@ -117,155 +326,53 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                         <div class="col-6 text-center metric-divider">
                                             <div class="metric-label">Camiones</div>
                                             <div class="metric-value">
-                                                <?=$port->getTotalThermo($admin);?>
+                                                <?= $totalThermos ?>
                                             </div>
                                         </div>
+
                                         <div class="col-6 text-center">
                                             <div class="metric-label">Pallets</div>
                                             <div class="metric-value">
-                                                <?=$port->getTotalPallets($admin);?>
+                                                <?= $totalPallets ?>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Camiones por día -->
-                        <div class="col-xl-2 col-md-6 mb-4">
+                        <!-- 7. Camiones por día -->
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-daily h-100">
                                 <div class="card-body">
+
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-ranking-star"></i>
                                         </div>
                                         <h6 class="dashboard-title">Camiones por día</h6>
                                         <p class="dashboard-chart-subtitle mb-0">
-                                            Camiones ingresados por día (promedio)
+                                            Promedio de ingresos diarios
                                         </p>
                                     </div>
 
                                     <div class="text-center dashboard-single-metric">
                                         <div class="metric-label">Promedio por día</div>
-                                        <?php $totalTrucks = $port->avgTrucksPerDay(); ?>
                                         <div class="metric-value metric-value-lg">
-                                            <?=$totalTrucks?>
+                                            <?= $avgTrucksPerDay ?>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Arribos -->
-                        <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card dashboard-card card-arrivals h-100">
-                                <div class="card-body">
-                                    <div class="dashboard-header text-center">
-                                        <div class="dashboard-icon">
-                                            <i class="fas fa-truck-moving"></i>
-                                        </div>
-                                        <h6 class="dashboard-title">Arribos</h6>
-                                        <p class="dashboard-chart-subtitle mb-0">
-                                            Arribos y pendientes de camiones
-                                        </p>
-                                    </div>
-
-                                    <?php
-                                    $totalTrucks = $port->getTotalTrucks($admin);
-                                    $trucksArrivedTrucks = $port->getTotalArrivedTrucks($admin);
-                                    $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin);
-                                    ?>
-
-                                    <div class="text-center dashboard-single-metric">
-                                        <div class="metric-label">Total camiones arribados</div>
-                                        <div class="metric-value metric-value-lg">
-                                            <?=$totalTrucks?>
-                                        </div>
-                                    </div>
-
-                                    <div class="dashboard-status status-success">
-                                        <span>Solicitados</span>
-                                        <strong><?=$trucksArrivedTrucks?></strong>
-                                        <i class="fas fa-info-circle text-info"
-                                        role="button"
-                                        tabindex="0"
-                                        data-toggle="popover"
-                                        data-trigger="hover focus"
-                                        data-placement="top"
-                                        data-content="Camiones solicitados por terminal."
-                                        aria-label="Información sobre camiones solicitados"></i>
-                                    </div>
-
-                                    <div class="dashboard-status status-danger">
-                                        <span>Pendientes</span>
-                                        <strong><?=$trucksInAntepuerto?></strong>
-                                        <i class="fas fa-info-circle text-info"
-                                        role="button"
-                                        tabindex="0"
-                                        data-toggle="popover"
-                                        data-trigger="hover focus"
-                                        data-placement="top"
-                                        data-content="Camiones que se encuentran en antepuerto."
-                                        aria-label="Información sobre camiones en antepuerto"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Ocupación -->
-                        <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card dashboard-card card-capacity h-100">
-                                <div class="card-body">
-                                    <div class="dashboard-header text-center">
-                                        <div class="dashboard-icon">
-                                            <i class="fas fa-chart-pie"></i>
-                                        </div>
-                                        <h6 class="dashboard-title">Ocupación</h6>
-                                        <p class="dashboard-chart-subtitle mb-0">
-                                            Ocupación del antepuerto
-                                        </p>
-                                    </div>
-
-                                    <?php
-                                    $percentUsage = $port->getPercentUsage(
-                                        $infoCfg['goals'],
-                                        $admin
-                                    );
-                                    $trucksInAntepuerto = $port->getTotalTrucksInAnpuerto($admin);
-                                    $progressWidth = max(0, min(100, (float) $percentUsage));
-                                    ?>
-
-                                    <div class="text-center dashboard-single-metric">
-                                        <div class="metric-label">Ocupación antepuerto</div>
-                                        <div class="metric-value metric-value-lg">
-                                            <?=htmlspecialchars((string) $percentUsage, ENT_QUOTES, 'UTF-8')?>%
-                                        </div>
-                                    </div>
-
-                                    <div class="progress dashboard-progress">
-                                        <div id="myProgressBar"
-                                            class="progress-bar bg-info"
-                                            role="progressbar"
-                                            style="width: <?=$progressWidth?>%;"
-                                            aria-valuenow="<?=$progressWidth?>"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100">
-                                        </div>
-                                    </div>
-
-                                    <div class="capacity-caption text-center">
-                                        <strong><?=$trucksInAntepuerto?></strong>
-                                        camiones de un total de
-                                        <strong><?=$infoCfg['goals']?></strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Últimos camiones enviados -->
-                        <div class="col-xl-2 col-md-6 mb-4">
+                        <!-- 8. Últimos camiones enviados -->
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-dispatched h-100">
                                 <div class="card-body">
+
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-anchor-circle-check"></i>
@@ -277,78 +384,68 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     </div>
 
                                     <div class="dispatched-list text-center dashboard-single-metric">
-                                        <?=$port->getLastSentTrucks();?>
+                                        <?= $lastSentTrucks ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Gráfico de Camiones Por Día -->
+                        <!-- 9. Gráfico de Camiones Por Día -->
                         <?php if ($admin): ?>
-                        <div class="col-xl-12 col-md-12 mb-4">
-                            <div class="card dashboard-card dashboard-chart-card card-capacity h-100">
-                                <div class="card-body">
-                                    <!-- Cabecera -->
-                                    <div class="dashboard-chart-header">
-                                        <div class="dashboard-icon">
-                                            <i class="fas fa-chart-column"></i>
-                                        </div>
-
-                                        <div>
-                                            <h6 class="dashboard-title">
-                                                Movimientos por Día
-                                            </h6>
-                                            <p class="dashboard-chart-subtitle mb-0">
-                                                Consulta y analiza los movimientos por período
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="dashboard-chart-divider"></div>
-
-                                    <!-- Filtros -->
-                                    <div class="chart-filters">
-                                        <div class="form-group mb-3">
-                                            <label for="fechaInicio">Desde</label>
-                                            <input
-                                                type="date"
-                                                class="form-control"
-                                                id="fechaInicio">
-                                        </div>
-
-                                        <div class="form-group mb-3">
-                                            <label for="fechaFin">Hasta</label>
-                                            <input
-                                                type="date"
-                                                class="form-control"
-                                                id="fechaFin">
-                                        </div>
-                                    </div>
-
-                                    <!-- Gráfico -->
-                                    <div class="dashboard-chart-container">
-                                        <div id="divGraficoCamiones">
-                                            <div
-                                                id="mensajeSinDatos"
-                                                class="d-none justify-content-center align-items-center">
-                                                <?php
-                                                echo $alerts->customAlert(
-                                                    'danger',
-                                                    'Atención',
-                                                    'No hay datos disponibles para las fechas seleccionadas. Por favor, ajusta el rango e intenta nuevamente.'
-                                                );
-                                                ?>
+                            <div class="col-xl-12 col-md-12 mb-4">
+                                <div class="card dashboard-card dashboard-chart-card card-capacity h-100">
+                                    <div class="card-body">
+                                        <!-- Cabecera -->
+                                        <div class="dashboard-chart-header">
+                                            <div class="dashboard-icon">
+                                                <i class="fas fa-chart-column"></i>
                                             </div>
 
-                                            <canvas id="graficoCamiones"></canvas>
+                                            <div>
+                                                <h6 class="dashboard-title">
+                                                    Movimientos por Día
+                                                </h6>
+                                                <p class="dashboard-chart-subtitle mb-0">
+                                                    Consulta y analiza los movimientos por período
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="dashboard-chart-divider"></div>
+
+                                        <!-- Filtros -->
+                                        <div class="chart-filters">
+                                            <div class="form-group mb-3">
+                                                <label for="fechaInicio">Desde</label>
+                                                <input type="date" class="form-control" id="fechaInicio">
+                                            </div>
+
+                                            <div class="form-group mb-3">
+                                                <label for="fechaFin">Hasta</label>
+                                                <input type="date" class="form-control" id="fechaFin">
+                                            </div>
+                                        </div>
+
+                                        <!-- Gráfico -->
+                                        <div class="dashboard-chart-container">
+                                            <div id="divGraficoCamiones">
+                                                <div id="mensajeSinDatos" class="d-none justify-content-center align-items-center">
+                                                    <?php
+                                                    echo $alerts->customAlert(
+                                                        'danger',
+                                                        'Atención',
+                                                        'No hay datos disponibles para las fechas seleccionadas. Por favor, ajusta el rango e intenta nuevamente.'
+                                                    );
+                                                    ?>
+                                                </div>
+
+                                                <canvas id="graficoCamiones"></canvas>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
                         <?php endif; ?>
-
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -480,7 +577,7 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
   // UI estado
   mensaje.style.display = hayDatos ? 'none' : 'flex';
   canvas.style.display = hayDatos ? 'block' : 'none';
-  divCanvas.style.height = hayDatos ? '400px' : '120px';
+  divCanvas.style.height = hayDatos ? '400px' : null;
 
   if (hayDatos) {
     mensaje.classList.add('d-none');
@@ -489,7 +586,7 @@ async function filtrarYActualizar(fechaInicio, fechaFin) {
   } else {
     mensaje.classList.remove('d-none');
     canvas.style.display = 'none';
-    divCanvas.style.height = '120px';
+    divCanvas.style.height = null;
 
     if (chart) {
       chart.destroy();
