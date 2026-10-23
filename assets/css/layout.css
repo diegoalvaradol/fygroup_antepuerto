@@ -1,21 +1,21 @@
 /* ==========================================================
     LAYOUT-ANTEPUERTO.CSS
-     ========================================================== */
+    ========================================================== */
 
 /* ==========================================================
-    MAPA
-    ========================================================== */
+   MAPA
+   ========================================================== */
 #map {
   padding: 24px;
-  background: linear-gradient(180deg, #fff, rgba(173, 223, 241, 0.18));
+  background: linear-gradient(180deg, #ffffff 0%, rgba(173, 223, 241, 0.18) 100%);
   border: 1px solid rgba(0, 49, 82, 0.08);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
 }
 
 /* ==========================================================
-    ENCABEZADO
-    ========================================================== */
+   ENCABEZADO
+   ========================================================== */
 .topbar-layout {
   display: flex;
   align-items: center;
@@ -42,8 +42,8 @@
 }
 
 /* ==========================================================
-    ESTADÍSTICAS
-    ========================================================== */
+   ESTADÍSTICAS
+   ========================================================== */
 .stats {
   display: flex;
   flex-wrap: wrap;
@@ -53,25 +53,27 @@
 .stat-card {
   min-width: 160px;
   padding: 18px;
-  background: #fff;
+  background: #ffffff;
+  border: 1px solid rgba(0, 49, 82, 0.08);
   border-left: 5px solid var(--color-primary);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition:
     transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
 }
 
 .stat-card .card-title {
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   color: var(--color-text-light);
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -80,11 +82,12 @@
   color: var(--color-primary);
   font-size: 2rem;
   font-weight: 700;
+  line-height: 1.2;
 }
 
 /* ==========================================================
-    FLUJO
-    ========================================================== */
+   FLUJO
+   ========================================================== */
 .flow {
   margin: 24px 0;
   color: var(--color-success);
@@ -94,12 +97,12 @@
 }
 
 /* ==========================================================
-    PATIO
-    ========================================================== */
+   PATIO
+   ========================================================== */
 .parking {
   margin-top: 24px;
   padding: 24px;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid rgba(0, 49, 82, 0.08);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
@@ -123,41 +126,96 @@
 
 .parking-status {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 /* ==========================================================
-    BADGES
-    ========================================================== */
+   BADGES GENERALES
+   ========================================================== */
 .badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 16px;
+  padding: 7px 13px;
+  border: 1px solid transparent;
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
 }
 
-.badge-success {
-  background: var(--color-success);
-  color: #fff;
+/* Verde: estado normal */
+.badge-success,
+.badge.green {
+  color: #146c43;
+  background: #d1e7dd;
+  border-color: #a3cfbb;
 }
 
-.badge-warning {
-  background: var(--color-warning);
-  color: #fff;
+/* Amarillo: advertencia */
+.badge-warning,
+.badge.yellow {
+  color: #795900;
+  background: #fff3cd;
+  border-color: #ffdf80;
 }
 
-.badge-danger {
-  background: var(--color-danger);
-  color: #fff;
+/* Rojo: estado crítico */
+.badge-danger,
+.badge.red {
+  color: #842029;
+  background: #f8d7da;
+  border-color: #f1aeb5;
+}
+
+/* Azul: identidad corporativa */
+.badge-primary {
+  color: #003152;
+  background: #addff1;
+  border-color: #8bcde6;
+}
+
+/* Gris: estado neutro */
+.badge-secondary {
+  color: #495057;
+  background: #e9ecef;
+  border-color: #ced4da;
+}
+
+/* Interacción de badges */
+.parking-status .badge {
+  padding: 7px 11px;
+  border-radius: 7px;
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
+}
+
+.parking-status .badge:hover {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
 }
 
 /* ==========================================================
-    GRID
-    ========================================================== */
+   PERIODO DE ESTADÍA
+   ========================================================== */
+.stat-card.stat-card-stay {
+  border-left-color: #168de2;
+  background: linear-gradient(145deg, #ffffff 65%, rgba(173, 223, 241, 0.12) 100%);
+}
+
+.stat-card.stat-card-stay .card-title {
+  color: var(--color-primary);
+}
+
+/* ==========================================================
+   GRID DE ESTACIONAMIENTOS
+   ========================================================== */
 #parkingGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -166,36 +224,37 @@
 }
 
 /* ==========================================================
-    BAHÍAS
-    ========================================================== */
+   BAHÍAS / CAMIONES
+   ========================================================== */
 .truck-slot {
   position: relative;
   min-height: 200px;
   padding: 18px;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid rgba(0, 49, 82, 0.08);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition:
     transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .truck-slot:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
 }
 
 /* ==========================================================
-    TIPO
-    ========================================================== */
+   TIPO DE CARGA
+   ========================================================== */
 .slot-type {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 5px 10px;
   border-radius: 999px;
-  color: #fff;
+  color: #ffffff;
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -210,8 +269,8 @@
 }
 
 /* ==========================================================
-    NÚMERO
-    ========================================================== */
+   NÚMERO DE BAHÍA
+   ========================================================== */
 .slot-number {
   position: absolute;
   top: 14px;
@@ -223,58 +282,86 @@
   height: 38px;
   background: var(--color-primary);
   border-radius: 50%;
-  color: #fff;
+  color: #ffffff;
   font-weight: 700;
   box-shadow: 0 6px 14px rgba(0, 49, 82, 0.2);
 }
 
 /* ==========================================================
-    PATENTE
-    ========================================================== */
+   PATENTE
+   ========================================================== */
 .truck-plate {
   margin-bottom: 16px;
   padding: 12px;
-  background: rgba(173, 223, 241, 0.18);
+  background: rgba(173, 223, 241, 0.22);
+  border: 1px solid rgba(0, 49, 82, 0.06);
   border-radius: var(--radius-md);
   color: var(--color-primary);
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 /* ==========================================================
-    INFORMACIÓN
-    ========================================================== */
+   INFORMACIÓN DEL CAMIÓN
+   ========================================================== */
 .truck-info {
   color: var(--color-text);
   font-size: 0.875rem;
   line-height: 1.8;
 }
 
+.truck-info strong {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
 /* ==========================================================
-    ESTADOS
-    ========================================================== */
+   ESTADOS DE ESTADÍA DE BAHÍAS
+   ========================================================== */
+
+/* Estadía normal: menos de 2 horas */
 .slot-normal {
-  border-left: 8px solid var(--color-success);
+  border-left: 6px solid #198754;
+  background: linear-gradient(135deg, #ffffff 75%, rgba(209, 231, 221, 0.35) 100%);
 }
 
+/* Estadía moderada: de 2 a 4 horas */
 .slot-medium {
-  border-left: 8px solid var(--color-warning);
+  border-left: 6px solid #e0a800;
+  background: linear-gradient(135deg, #ffffff 75%, rgba(255, 243, 205, 0.45) 100%);
 }
 
+/* Estadía prolongada: más de 4 horas */
 .slot-high {
-  border-left: 8px solid var(--color-danger);
+  border-left: 6px solid #dc3545;
+  background: linear-gradient(135deg, #ffffff 75%, rgba(248, 215, 218, 0.45) 100%);
+}
+
+/* Resaltar visualmente la patente según el estado */
+.slot-normal .truck-plate {
+  background: rgba(25, 135, 84, 0.08);
+}
+
+.slot-medium .truck-plate {
+  background: rgba(224, 168, 0, 0.12);
+}
+
+.slot-high .truck-plate {
+  background: rgba(220, 53, 69, 0.09);
 }
 
 /* ==========================================================
-    VACÍO
-    ========================================================== */
+   BAHÍA VACÍA
+   ========================================================== */
 .slot-empty {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 200px;
+  padding: 18px;
   background: rgba(173, 223, 241, 0.12);
   border: 2px dashed rgba(0, 49, 82, 0.2);
   border-radius: var(--radius-lg);
@@ -282,4 +369,80 @@
   font-size: 1.125rem;
   font-weight: 700;
   text-align: center;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.slot-empty:hover {
+  background: rgba(173, 223, 241, 0.22);
+  border-color: rgba(0, 49, 82, 0.4);
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 768px) {
+  #map,
+  .parking {
+    padding: 16px;
+  }
+
+  .topbar-layout {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .parking-title {
+    font-size: 1.4rem;
+  }
+
+  #parkingGrid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .truck-plate {
+    font-size: 1.65rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .stats {
+    gap: 10px;
+  }
+
+  .stat-card {
+    min-width: 0;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .stat-card .card-value {
+    font-size: 1.7rem;
+  }
+
+  .parking-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #parkingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .truck-slot {
+    min-height: 180px;
+    padding: 15px;
+  }
+
+  .truck-plate {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+
+  .parking-status {
+    gap: 7px;
+  }
 }

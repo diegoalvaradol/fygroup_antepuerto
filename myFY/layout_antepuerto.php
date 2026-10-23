@@ -86,12 +86,12 @@ $modals = new Modals($infoCfg, $arrayDivision, $releasedTime, $updateTime);
                                     <div class="stats">
                                         <div class="stat-card">
                                             <div class="card-title">CAMIONES</div>
-                                            <div class="card-value" id="truckCounter">0 / 0</div>
+                                            <div class="card-value" id="truckCounter">- / -</div>
                                         </div>
 
                                         <div class="stat-card">
                                             <div class="card-title">ESTADO</div>
-                                            <div class="card-value" id="statusCounter">NORMAL</div>
+                                            <div class="card-value" id="statusCounter">-</div>
                                         </div>
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@ var loadMap = function () {
       }
 
       const div = document.createElement('div');
-      div.className = `truck-slot ${t.status}`;
+      div.className = `truck-slot slot-${t.status}`;
       div.innerHTML = `
         <div class="slot-number">${index + 1}</div>
 

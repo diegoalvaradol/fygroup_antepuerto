@@ -605,7 +605,6 @@ class outerPort extends iQuery
             SUM(ingresos) AS total_ingresos,
             SUM(egresos) AS total_egresos
         FROM (
-
             SELECT
                 DATE($this->arrivaldate) AS dia,
                 COUNT(*) AS ingresos,
@@ -623,7 +622,6 @@ class outerPort extends iQuery
             FROM $this->table
             WHERE $this->departuredate BETWEEN :inicio2 AND :fin2
             GROUP BY dia
-
         ) AS movimientos
 
         GROUP BY dia
@@ -645,7 +643,6 @@ class outerPort extends iQuery
         $data = [];
 
         foreach ($rows as $row) {
-
             $ingresos = (int) $row['total_ingresos'];
             $egresos = (int) $row['total_egresos'];
 
@@ -661,6 +658,58 @@ class outerPort extends iQuery
         }
 
         return json_encode($data);
+    }
+
+    public function avgStayInAntepuerto()
+    {
+        $query = "
+            SELECT AVG(
+                TIMESTAMPDIFF(
+                    SECOND,
+                    arrival_date,
+                    departure_date
+                )
+            ) AS promedio_segundos
+            FROM $this->table
+            WHERE arrival_date IS NOT NULL
+            AND departure_date IS NOT NULL
+            AND departure_date >= arrival_date
+            AND TIMESTAMPDIFF(
+                SECOND,
+                arrival_date,
+                departure_date
+            ) <= 432000
+        ";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+
+        $segundos = $stmt->fetchColumn();
+
+        if ($segundos === false || $segundos === null) {
+            return '00:00:00';
+        }
+
+        $segundos = (int) round((float) $segundos);
+
+        return sprintf(
+            '%02d:%02d:%02d',
+            intdiv($segundos, 3600),
+            intdiv($segundos % 3600, 60),
+            $segundos % 60
+
+        );
+    }
+
+    public function availableCapacity()
+    {
+        $cfg = new cfg();
+        $infoCfg = json_decode($cfg->getInfo(1), true);
+
+        $total = $this->getTotalTrucksInAnpuerto(true);
+        $capacity =$infoCfg['goals'];
+
+        return (int) ($capacity - $total);
     }
 
     public function tableContainer()
@@ -3057,16 +3106,39 @@ class outerPort extends iQuery
         $result = [];
         $status = '';
 
-        $sql = "SELECT * FROM $this->table AS p JOIN app_ships AS sh ON sh.ship_id = p.vessel_id JOIN app_ship_lines AS sl ON sh.ship_line = sl.line_id WHERE sh.finished = 0 AND p.departure_date IS NULL ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
+        $sql = "SELECT *
+                FROM $this->table AS p
+                JOIN app_ships AS sh
+                    ON sh.ship_id = p.vessel_id
+                JOIN app_ship_lines AS sl
+                    ON sh.ship_line = sl.line_id
+                WHERE sh.finished = 0
+                AND p.departure_date IS NULL
+                ORDER BY p.counter_vessel ASC, p.vessel_id ASC";
+
         $list = parent::findAllStatic($sql);
+
         if ($list->length()) {
             foreach ($list->getCollection() as $data) {
-                $arrival = $data[$this->arrivaldate] ;
-                $origin = (int) ($data[$this->origin]);
-                $arrivalDate = new DateTime($data[$this->arrivaldate]);
-                $today = new DateTime(date('Y-m-d H:i:s'));
 
+                $arrival = $data[$this->arrivaldate];
+                $origin = (int) $data[$this->origin];
+
+                // Validar fecha de ingreso
+                if (
+                    empty($arrival) ||
+                    $arrival === '0000-00-00 00:00:00' ||
+                    $arrival === '0000-00-00'
+                ) {
+                    continue;
+                }
+
+                $arrivalDate = new DateTime($arrival);
+                $today = new DateTime();
+
+                // Calcular tiempo transcurrido
                 $interval = $arrivalDate->diff($today);
+
                 $days = $interval->days;
                 $hours = $interval->h;
                 $minutes = $interval->i;
@@ -3074,17 +3146,24 @@ class outerPort extends iQuery
 
                 $stayTime = "{$days}d {$hours}h {$minutes}m {$seconds}s";
 
-                if ($hours < 2) {
+                // Calcular horas totales de estadía
+                $totalHours = ($days * 24) + $hours;
+
+                // Determinar estado visual del card
+                if ($totalHours < 2) {
                     $status = 'normal';
-                } elseif ($hours >= 2 && $hours < 4) {
+                } elseif ($totalHours < 4) {
                     $status = 'medium';
                 } else {
                     $status = 'high';
                 }
 
-                if ($data[$this->arrivaldate] !== '0000-00-00 00:00:00' && $data[$this->departuredate] === null) {
+                // Agregar registro si sigue dentro del antepuerto
+                if ($data[$this->departuredate] === null) {
                     $result[] = [
-                        'carplate' => formatCarPlate($data[$this->carplate]),
+                        'carplate' => formatCarPlate(
+                            $data[$this->carplate]
+                        ),
                         'container' => $data[$this->container],
                         'exporter' => $data[$this->exporter],
                         'ship' => $data['vessel_name'],
@@ -3093,6 +3172,7 @@ class outerPort extends iQuery
                         'guide' => $data[$this->guide],
                         'status' => $status,
                         'origin' => $origin,
+                        'totalhours' => $totalHours
                     ];
                 }
             }
@@ -3100,5 +3180,6 @@ class outerPort extends iQuery
 
         return $result;
     }
+
 
 }

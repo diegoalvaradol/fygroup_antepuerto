@@ -87,7 +87,7 @@ class port extends iQuery
     {
         $searchName = "%{$name}%";
 
-        $query = "SELECT port_id FROM  $this->table WHERE $this->city LIKE :name LIMIT 1";
+        $query = "SELECT port_id FROM $this->table WHERE $this->city LIKE :name LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':name', $searchName, PDO::PARAM_STR);
         $stmt->execute();
