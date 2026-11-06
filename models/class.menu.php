@@ -146,12 +146,11 @@ class menu extends iQuery
                 ],
             ],
             [
-                'title' => 'Control y Gestión',
+                'title' => 'Gestión',
                 'icon' => 'fa-gauge-high',
                 'id' => 'collapseControlGestion',
                 'items' => [
                     ['label' => 'Gestión Antepuerto', 'link' => generateSecureLink('antepuerto_management')],
-                    ['label' => 'Control Antepuerto', 'link' => generateSecureLink('antepuerto_control')],
                 ],
             ],
             [
