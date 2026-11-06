@@ -146,6 +146,15 @@ class menu extends iQuery
                 ],
             ],
             [
+                'title' => 'Control y Gestión',
+                'icon' => 'fa-gauge-high',
+                'id' => 'collapseControlGestion',
+                'items' => [
+                    ['label' => 'Gestión Antepuerto', 'link' => generateSecureLink('antepuerto_management')],
+                    ['label' => 'Control Antepuerto', 'link' => generateSecureLink('antepuerto_control')],
+                ],
+            ],
+            [
                 'title' => 'Tarifario',
                 'icon' => 'fa-dollar-sign',
                 'id' => 'collapsePrecio',

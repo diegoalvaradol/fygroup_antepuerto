@@ -116,7 +116,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-capacity h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-chart-pie"></i>
@@ -150,7 +149,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                                         camión(es) de un total de
                                         <strong><?= $infoCfg['goals'] ?></strong>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -159,7 +157,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-capacity h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-circle-check"></i>
@@ -176,7 +173,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                                             <?= $capacity ?>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -185,7 +181,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-arrivals h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-truck-moving"></i>
@@ -228,7 +223,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                                         data-content="Camiones que se encuentran en antepuerto."
                                         aria-label="Información sobre camiones en antepuerto"></i>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -237,7 +231,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-avgstay h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-clock"></i>
@@ -258,7 +251,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                                             Formato (H:M:S)
                                         </p>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -276,7 +268,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-containers h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-boxes-stacked"></i>
@@ -302,7 +293,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -311,7 +301,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-thermos h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-snowflake"></i>
@@ -337,7 +326,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -346,7 +334,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-daily h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-ranking-star"></i>
@@ -363,7 +350,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                                             <?= $avgTrucksPerDay ?>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -372,7 +358,6 @@ $lastSentTrucks = $port->getLastSentTrucks();
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card dashboard-card card-dispatched h-100">
                                 <div class="card-body">
-
                                     <div class="dashboard-header text-center">
                                         <div class="dashboard-icon">
                                             <i class="fas fa-anchor-circle-check"></i>
